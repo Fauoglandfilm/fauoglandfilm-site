@@ -1,6 +1,8 @@
 import type { Metadata, Viewport } from "next";
 import { Manrope, Sora } from "next/font/google";
+import Script from "next/script";
 
+import { SitePreferencesProvider } from "@/components/providers/site-preferences";
 import { Footer } from "@/components/layout/footer";
 import { Header } from "@/components/layout/header";
 import { TrackingScripts } from "@/components/layout/tracking-scripts";
@@ -30,8 +32,24 @@ export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
   viewportFit: "cover",
-  themeColor: "#050a13",
+  themeColor: "#f3efe8",
 };
+
+const preferenceBootScript = `
+  (function () {
+    try {
+      var theme = localStorage.getItem('fauoglandfilm-theme');
+      var language = localStorage.getItem('fauoglandfilm-language');
+      if (theme === 'light' || theme === 'dark') {
+        document.documentElement.dataset.theme = theme;
+      }
+      if (language === 'no' || language === 'en') {
+        document.documentElement.dataset.language = language;
+        document.documentElement.lang = language === 'no' ? 'nb' : 'en';
+      }
+    } catch (error) {}
+  })();
+`;
 
 export default function RootLayout({
   children,
@@ -39,17 +57,24 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="nb">
+    <html lang="nb" data-theme="light" data-language="no" suppressHydrationWarning>
       <body
         className={`${manrope.variable} ${sora.variable} antialiased`}
       >
+        <Script
+          id="preference-boot"
+          strategy="beforeInteractive"
+          dangerouslySetInnerHTML={{ __html: preferenceBootScript }}
+        />
         <JsonLd data={organizationSchema} />
         <TrackingScripts />
-        <div className="relative min-h-screen overflow-x-clip">
-          <Header />
-          {children}
-          <Footer />
-        </div>
+        <SitePreferencesProvider>
+          <div className="relative min-h-screen overflow-x-clip">
+            <Header />
+            {children}
+            <Footer />
+          </div>
+        </SitePreferencesProvider>
       </body>
     </html>
   );

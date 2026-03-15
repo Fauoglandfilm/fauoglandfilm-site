@@ -8,6 +8,7 @@ import {
   processSteps,
   serviceAreas,
 } from "@/data/site-content";
+import { uiCopy } from "@/data/ui-copy";
 import { buildMetadata } from "@/lib/seo";
 
 export const metadata = buildMetadata({
@@ -18,23 +19,31 @@ export const metadata = buildMetadata({
 });
 
 export default function ServicesPage() {
+  const copy = uiCopy.pages;
+
   return (
     <main>
       <PageHero
-        eyebrow="Tjenester"
-        title="Video og innhold som er lett å forstå"
-        description="Vi fokuserer på fire områder som gjør det enklere å skape synlighet, tillit og respons."
-        primaryCta={{ label: "Book et møte", href: "/kontakt" }}
+        eyebrow={{ no: copy.no.servicesHeroEyebrow, en: copy.en.servicesHeroEyebrow }}
+        title={{ no: copy.no.servicesHeroTitle, en: copy.en.servicesHeroTitle }}
+        description={{ no: copy.no.servicesHeroDescription, en: copy.en.servicesHeroDescription }}
+        primaryCta={{
+          label: { no: copy.no.servicesPrimaryCta, en: copy.en.servicesPrimaryCta },
+          href: "/kontakt",
+        }}
       />
       <ServicesSection
         services={serviceAreas}
-        title="Tjenester for bedrifter og organisasjoner"
-        description="Kort forklart, visuelt vist og bygget for å være enkle å kjøpe."
+        title={{ no: copy.no.servicesSectionTitle, en: copy.en.servicesSectionTitle }}
+        description={{
+          no: copy.no.servicesSectionDescription,
+          en: copy.en.servicesSectionDescription,
+        }}
       />
       <ProcessSection steps={processSteps} />
       <CtaBanner
-        title="Usikre på hvilken type innhold dere trenger?"
-        description="Vi anbefaler raskt riktig format, riktig omfang og et realistisk oppsett for målene deres."
+        title={{ no: copy.no.servicesCtaTitle, en: copy.en.servicesCtaTitle }}
+        description={{ no: copy.no.servicesCtaDescription, en: copy.en.servicesCtaDescription }}
         secondaryLabel={null}
         align="center"
       />

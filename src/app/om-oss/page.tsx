@@ -7,6 +7,7 @@ import {
   aboutBullets,
   teamMembers,
 } from "@/data/site-content";
+import { uiCopy } from "@/data/ui-copy";
 import { buildMetadata } from "@/lib/seo";
 
 export const metadata = buildMetadata({
@@ -17,18 +18,20 @@ export const metadata = buildMetadata({
 });
 
 export default function AboutPage() {
+  const copy = uiCopy.pages;
+
   return (
     <main>
       <PageHero
-        eyebrow="Om oss"
-        title="Et lite team med tydelig ansvar"
-        description="Fau&Land Film drives av Gard Ruben Fauske og Tommy R.A. Garland."
-        primaryCta={{ label: "Book et møte", href: "/kontakt" }}
+        eyebrow={{ no: copy.no.aboutHeroEyebrow, en: copy.en.aboutHeroEyebrow }}
+        title={{ no: copy.no.aboutHeroTitle, en: copy.en.aboutHeroTitle }}
+        description={{ no: copy.no.aboutHeroDescription, en: copy.en.aboutHeroDescription }}
+        primaryCta={{ label: { no: copy.no.aboutPrimaryCta, en: copy.en.aboutPrimaryCta }, href: "/kontakt" }}
       />
       <TeamSection team={teamMembers} bullets={aboutBullets} />
       <CtaBanner
-        title="Vil dere ha et lite team som følger prosjektet tett?"
-        description="Vi tar gjerne en kort prat om hvordan et samarbeid kan se ut for deres marked og behov."
+        title={{ no: copy.no.aboutCtaTitle, en: copy.en.aboutCtaTitle }}
+        description={{ no: copy.no.aboutCtaDescription, en: copy.en.aboutCtaDescription }}
         secondaryLabel={null}
         align="center"
       />

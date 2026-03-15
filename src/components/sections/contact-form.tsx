@@ -2,7 +2,10 @@
 
 import { useState } from "react";
 
+import { useSitePreferences } from "@/components/providers/site-preferences";
 import { siteConfig } from "@/data/site-content";
+import { uiCopy } from "@/data/ui-copy";
+import { resolveLocalizedValue } from "@/lib/i18n";
 
 type FormState = {
   name: string;
@@ -22,22 +25,24 @@ const initialState: FormState = {
 
 export function ContactForm() {
   const [formState, setFormState] = useState<FormState>(initialState);
+  const { language } = useSitePreferences();
+  const copy = uiCopy.form[language];
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
     // Koble denne formen til CRM, API-rute eller Calendly-flow når backend er klar.
     const subject = encodeURIComponent(
-      `Ny forespørsel fra ${formState.company || formState.name || "nettsiden"}`,
+      `${copy.subjectPrefix} ${formState.company || formState.name || copy.subjectFallback}`,
     );
     const body = encodeURIComponent(
       [
-        `Navn: ${formState.name}`,
-        `Firma: ${formState.company}`,
-        `E-post: ${formState.email}`,
-        `Telefon: ${formState.phone}`,
+        `${copy.name}: ${formState.name}`,
+        `${copy.company}: ${formState.company}`,
+        `${copy.email}: ${formState.email}`,
+        `${copy.phone}: ${formState.phone}`,
         "",
-        "Melding:",
+        copy.messageLabel,
         formState.message,
       ].join("\n"),
     );
@@ -49,7 +54,7 @@ export function ContactForm() {
     <form className="grid gap-3.5" onSubmit={handleSubmit} id="foresporsel">
       <div className="grid gap-3.5 sm:grid-cols-2">
         <label className="space-y-2">
-          <span className="text-sm font-medium text-[#111111]">Navn</span>
+          <span className="text-sm font-medium text-[color:var(--foreground)]">{copy.name}</span>
           <input
             className="form-input"
             name="name"
@@ -62,7 +67,7 @@ export function ContactForm() {
           />
         </label>
         <label className="space-y-2">
-          <span className="text-sm font-medium text-[#111111]">Firma</span>
+          <span className="text-sm font-medium text-[color:var(--foreground)]">{copy.company}</span>
           <input
             className="form-input"
             name="company"
@@ -77,7 +82,7 @@ export function ContactForm() {
 
       <div className="grid gap-3.5 sm:grid-cols-2">
         <label className="space-y-2">
-          <span className="text-sm font-medium text-[#111111]">E-post</span>
+          <span className="text-sm font-medium text-[color:var(--foreground)]">{copy.email}</span>
           <input
             className="form-input"
             name="email"
@@ -92,7 +97,7 @@ export function ContactForm() {
           />
         </label>
         <label className="space-y-2">
-          <span className="text-sm font-medium text-[#111111]">Telefon</span>
+          <span className="text-sm font-medium text-[color:var(--foreground)]">{copy.phone}</span>
           <input
             className="form-input"
             name="phone"
@@ -108,7 +113,7 @@ export function ContactForm() {
       </div>
 
       <label className="space-y-2">
-        <span className="text-sm font-medium text-[#111111]">Melding</span>
+        <span className="text-sm font-medium text-[color:var(--foreground)]">{copy.message}</span>
         <textarea
           className="form-input min-h-32 resize-y"
           name="message"
@@ -117,15 +122,17 @@ export function ContactForm() {
           onChange={(event) =>
             setFormState((current) => ({ ...current, message: event.target.value }))
           }
-          placeholder="Fortell kort hva dere trenger og hva innholdet skal brukes til."
+          placeholder={copy.placeholder}
           required
         />
       </label>
 
       <div className="flex flex-col gap-3 pt-1 sm:flex-row sm:items-center sm:justify-between">
-        <p className="text-sm leading-6 text-[var(--muted)]">{siteConfig.responseTime}</p>
+        <p className="text-sm leading-6 text-[var(--muted)]">
+          {resolveLocalizedValue(siteConfig.responseTime, language)}
+        </p>
         <button type="submit" className="button-primary w-full sm:w-auto">
-          Send forespørsel
+          {copy.submit}
         </button>
       </div>
     </form>

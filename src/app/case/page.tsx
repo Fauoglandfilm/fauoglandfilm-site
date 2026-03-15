@@ -4,6 +4,7 @@ import {
   PageHero,
 } from "@/components/sections/site-sections";
 import { caseStudies } from "@/data/site-content";
+import { uiCopy } from "@/data/ui-copy";
 import { buildMetadata } from "@/lib/seo";
 
 export const metadata = buildMetadata({
@@ -14,18 +15,20 @@ export const metadata = buildMetadata({
 });
 
 export default function CasePage() {
+  const copy = uiCopy.pages;
+
   return (
     <main>
       <PageHero
-        eyebrow="Case"
-        title="Case som viser behov, leveranse og effekt"
-        description="Få, tydelige prosjekter med premium presentasjon og kort vei videre til kontakt."
-        primaryCta={{ label: "Book et møte", href: "/kontakt" }}
+        eyebrow={{ no: copy.no.caseHeroEyebrow, en: copy.en.caseHeroEyebrow }}
+        title={{ no: copy.no.caseHeroTitle, en: copy.en.caseHeroTitle }}
+        description={{ no: copy.no.caseHeroDescription, en: copy.en.caseHeroDescription }}
+        primaryCta={{ label: { no: copy.no.casePrimaryCta, en: copy.en.casePrimaryCta }, href: "/kontakt" }}
       />
       <FeaturedCasesSection cases={caseStudies} />
       <CtaBanner
-        title="Vil dere lage noe lignende?"
-        description="Fortell kort hva dere vil oppnå, så viser vi hva som er relevant for deres marked og budsjett."
+        title={{ no: copy.no.caseCtaTitle, en: copy.en.caseCtaTitle }}
+        description={{ no: copy.no.caseCtaDescription, en: copy.en.caseCtaDescription }}
         secondaryLabel={null}
         align="center"
       />
