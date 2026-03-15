@@ -4,20 +4,22 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 
-import { navItems } from "@/data/site-content";
+import { navItems, siteConfig } from "@/data/site-content";
 import { cn } from "@/lib/utils";
 
 import { BrandLogo } from "../ui/brand-logo";
+import { ButtonLink } from "../ui/button-link";
 import { CloseIcon, MenuIcon } from "../ui/icons";
 
 export function Header() {
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const overlayMode = pathname === "/" && !scrolled && !open;
 
   useEffect(() => {
     const onScroll = () => {
-      setScrolled(window.scrollY > 24);
+      setScrolled(window.scrollY > 28);
     };
 
     onScroll();
@@ -49,87 +51,123 @@ export function Header() {
   return (
     <header
       style={{ paddingTop: "env(safe-area-inset-top, 0px)" }}
-      className={cn(
-        "fixed inset-x-0 top-0 z-50 transition duration-300",
-        scrolled || open
-          ? "border-b border-white/8 bg-[rgba(5,10,19,0.82)] backdrop-blur-xl"
-          : "border-b border-transparent bg-transparent",
-      )}
+      className={cn("fixed inset-x-0 top-0 z-50 transition duration-300")}
     >
-      <div className="mx-auto flex max-w-7xl items-center justify-between px-5 py-3 sm:px-6 lg:px-8 lg:py-3.5">
-        <Link
-          href="/"
-          className="flex items-center"
-          aria-label="Fau&Land Film"
-          onClick={() => setOpen(false)}
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div
+          className={cn(
+            "mt-3 flex items-center justify-between rounded-full px-3.5 py-3 transition duration-300 sm:px-4",
+            overlayMode
+              ? "border border-white/14 bg-[rgba(12,12,12,0.18)] text-white backdrop-blur-xl"
+              : "border border-black/8 bg-[rgba(255,255,255,0.78)] text-[#111111] shadow-[0_12px_40px_rgba(14,14,14,0.08)] backdrop-blur-xl",
+          )}
         >
-          <div className="w-6 sm:w-7 lg:hidden">
-            <BrandLogo variant="mark" className="opacity-95" priority />
-          </div>
-          <div className="hidden w-[100px] xl:w-[104px] lg:block">
-            <BrandLogo variant="full" className="opacity-95" priority />
-          </div>
-        </Link>
-
-        <nav className="hidden items-center gap-5 lg:flex">
-          {navItems.map((item) => {
-            const active =
-              item.href === "/" ? pathname === "/" : pathname.startsWith(item.href);
-
-            return (
-              <Link
-                key={item.href}
-                href={item.href}
-                className={cn(
-                  "text-[0.82rem] font-medium transition",
-                  active ? "text-white" : "text-white/66 hover:text-white",
-                )}
-                onClick={() => setOpen(false)}
-              >
-                {item.label}
-              </Link>
-            );
-          })}
-        </nav>
-
-        <button
-          type="button"
-          className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-white/10 bg-black/20 text-white backdrop-blur lg:hidden"
-          aria-label={open ? "Lukk meny" : "Åpne meny"}
-          aria-expanded={open}
-          onClick={() => setOpen((value) => !value)}
-        >
-          {open ? <CloseIcon className="h-5 w-5" /> : <MenuIcon className="h-5 w-5" />}
-        </button>
-      </div>
-
-      {open ? (
-        <div className="border-t border-white/10 bg-[rgba(5,10,19,0.96)] px-5 pb-5 pt-3 sm:px-6 lg:hidden">
-          <nav
-            className="flex max-h-[calc(100svh-5rem)] flex-col gap-2 overflow-y-auto"
-            style={{ paddingBottom: "calc(0.75rem + env(safe-area-inset-bottom, 0px))" }}
+          <Link
+            href="/"
+            className="flex items-center gap-3"
+            aria-label="Fau&Land Film"
+            onClick={() => setOpen(false)}
           >
+            <div className="flex h-10 w-10 items-center justify-center rounded-full bg-[#111111] p-2.5 shadow-[0_12px_28px_rgba(0,0,0,0.2)]">
+              <BrandLogo variant="mark" className="opacity-100" priority />
+            </div>
+            <div className="hidden sm:block">
+              <p className={cn("font-display text-[1rem] tracking-[-0.05em]", overlayMode ? "text-white" : "text-[#111111]")}>
+                Fau&amp;Land Film
+              </p>
+              <p className={cn("text-[0.72rem] uppercase tracking-[0.22em]", overlayMode ? "text-white/62" : "text-[#111111]/45")}>
+                Production company
+              </p>
+            </div>
+          </Link>
+
+          <nav className="hidden items-center gap-5 lg:flex">
             {navItems.map((item) => {
-              const active =
-                item.href === "/" ? pathname === "/" : pathname.startsWith(item.href);
+              const active = item.href === "/" ? pathname === "/" : pathname.startsWith(item.href);
 
               return (
                 <Link
                   key={item.href}
                   href={item.href}
                   className={cn(
-                    "rounded-[1.1rem] px-4 py-3.5 text-base transition",
-                    active
-                      ? "bg-white/10 text-white"
-                      : "text-white/72 hover:bg-white/5 hover:text-white",
+                    "text-[0.82rem] font-semibold transition",
+                    overlayMode
+                      ? active
+                        ? "text-white"
+                        : "text-white/70 hover:text-white"
+                      : active
+                        ? "text-[#111111]"
+                        : "text-[#111111]/58 hover:text-[#111111]",
                   )}
-                  onClick={() => setOpen(false)}
                 >
                   {item.label}
                 </Link>
               );
             })}
           </nav>
+
+          <div className="hidden lg:block">
+            <ButtonLink
+              href={siteConfig.bookingHref}
+              className={cn(
+                overlayMode && "border-white/20 bg-white text-[#111111] hover:bg-white/92",
+              )}
+            >
+              Kontakt
+            </ButtonLink>
+          </div>
+
+          <button
+            type="button"
+            className={cn(
+              "inline-flex h-11 w-11 items-center justify-center rounded-full transition lg:hidden",
+              overlayMode
+                ? "border border-white/16 bg-white/8 text-white"
+                : "border border-black/8 bg-white/70 text-[#111111]",
+            )}
+            aria-label={open ? "Lukk meny" : "Åpne meny"}
+            aria-expanded={open}
+            onClick={() => setOpen((value) => !value)}
+          >
+            {open ? <CloseIcon className="h-5 w-5" /> : <MenuIcon className="h-5 w-5" />}
+          </button>
+        </div>
+      </div>
+
+      {open ? (
+        <div className="mx-auto max-w-7xl px-4 pb-4 sm:px-6 lg:hidden">
+          <div className="mt-3 rounded-[2rem] border border-black/8 bg-[rgba(255,255,255,0.94)] p-4 shadow-[0_24px_70px_rgba(14,14,14,0.12)] backdrop-blur-xl">
+            <nav
+              className="flex max-h-[calc(100svh-8rem)] flex-col gap-1 overflow-y-auto"
+              style={{ paddingBottom: "calc(0.75rem + env(safe-area-inset-bottom, 0px))" }}
+            >
+              {navItems.map((item) => {
+                const active = item.href === "/" ? pathname === "/" : pathname.startsWith(item.href);
+
+                return (
+                  <Link
+                    key={item.href}
+                    href={item.href}
+                    className={cn(
+                      "rounded-[1.1rem] px-4 py-3.5 text-base font-medium transition",
+                      active
+                        ? "bg-[#111111] text-white"
+                        : "text-[#111111]/72 hover:bg-black/[0.04] hover:text-[#111111]",
+                    )}
+                    onClick={() => setOpen(false)}
+                  >
+                    {item.label}
+                  </Link>
+                );
+              })}
+            </nav>
+
+            <div className="mt-4 border-t border-black/8 pt-4">
+              <ButtonLink href={siteConfig.bookingHref} fullWidth>
+                {siteConfig.bookingLabel}
+              </ButtonLink>
+            </div>
+          </div>
         </div>
       ) : null}
     </header>

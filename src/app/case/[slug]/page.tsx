@@ -3,10 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 
-import {
-  CtaBanner,
-  PageHero,
-} from "@/components/sections/site-sections";
+import { CtaBanner, PageHero } from "@/components/sections/site-sections";
 import { caseStudies } from "@/data/site-content";
 import { absoluteUrl, buildMetadata } from "@/lib/seo";
 
@@ -79,7 +76,7 @@ export default async function CaseDetailPage({ params }: CaseDetailPageProps) {
       />
 
       <section className="section-space">
-        <div className="mx-auto grid max-w-7xl gap-6 px-6 lg:grid-cols-[0.95fr_1.05fr] lg:px-8">
+        <div className="mx-auto grid max-w-7xl gap-5 px-5 sm:px-6 lg:grid-cols-[0.94fr_1.06fr] lg:px-8">
           <div className="space-y-5">
             <article className="card-surface overflow-hidden rounded-[2rem]">
               {caseStudy.video ? (
@@ -95,7 +92,7 @@ export default async function CaseDetailPage({ params }: CaseDetailPageProps) {
                   >
                     <source src={caseStudy.video.src} type="video/mp4" />
                   </video>
-                  <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(4,8,15,0.12),rgba(4,8,15,0.72))]" />
+                  <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(17,17,17,0.04),rgba(17,17,17,0.24))]" />
                 </div>
               ) : caseStudy.image ? (
                 <div className="relative aspect-[4/5] w-full">
@@ -109,21 +106,27 @@ export default async function CaseDetailPage({ params }: CaseDetailPageProps) {
                 </div>
               ) : (
                 <div
-                  className={`flex aspect-[4/5] items-end bg-gradient-to-br ${caseStudy.palette ?? "from-[#111827] via-[#0f172a] to-[#020617]"} p-6`}
+                  className={`flex aspect-[4/5] items-end bg-gradient-to-br ${
+                    caseStudy.palette ?? "from-[#efe9df] via-[#d4c8b5] to-[#bba68a]"
+                  } p-6 sm:p-8`}
                 >
-                  <div className="max-w-sm rounded-[1.4rem] border border-white/10 bg-black/25 p-5 backdrop-blur">
-                    <p className="text-xs font-semibold uppercase tracking-[0.24em] text-[var(--accent-2)]">
+                  <div className="max-w-sm rounded-[1.6rem] border border-white/28 bg-white/62 p-5 backdrop-blur">
+                    <p className="text-[0.72rem] font-semibold uppercase tracking-[0.22em] text-[var(--muted)]">
                       {caseStudy.category}
                     </p>
-                    <h2 className="mt-2.5 font-display text-[2.3rem] text-white">{caseStudy.client}</h2>
-                    <p className="mt-3 text-sm leading-6 text-white/78 sm:text-base sm:leading-7">{caseStudy.summary}</p>
+                    <h2 className="mt-3 font-display text-[2rem] leading-[0.95] text-[#111111] sm:text-[2.5rem]">
+                      {caseStudy.client}
+                    </h2>
+                    <p className="mt-3 text-sm leading-6 text-[var(--muted-2)] sm:text-base sm:leading-7">
+                      {caseStudy.summary}
+                    </p>
                   </div>
                 </div>
               )}
             </article>
 
             <article className="card-surface rounded-[2rem] p-5 sm:p-6">
-              <p className="text-xs font-semibold uppercase tracking-[0.24em] text-[var(--accent-2)]">
+              <p className="text-[0.72rem] font-semibold uppercase tracking-[0.22em] text-[var(--muted)]">
                 Prosjektfakta
               </p>
               <dl className="mt-5 grid gap-3">
@@ -135,19 +138,21 @@ export default async function CaseDetailPage({ params }: CaseDetailPageProps) {
                 ].map(([label, value]) => (
                   <div
                     key={label}
-                    className="rounded-[1.2rem] border border-white/10 bg-[var(--panel-2)] px-4 py-3.5"
+                    className="rounded-[1.2rem] border border-black/8 bg-white/74 px-4 py-3.5"
                   >
-                    <dt className="text-xs font-semibold uppercase tracking-[0.18em] text-[var(--muted)]">
+                    <dt className="text-[0.7rem] font-semibold uppercase tracking-[0.18em] text-[var(--muted)]">
                       {label}
                     </dt>
-                    <dd className="mt-1.5 text-sm leading-6 text-white sm:text-base sm:leading-7">{value}</dd>
+                    <dd className="mt-1.5 text-sm leading-6 text-[var(--muted-2)] sm:text-base sm:leading-7">
+                      {value}
+                    </dd>
                   </div>
                 ))}
               </dl>
             </article>
 
             {caseStudy.verificationNote ? (
-              <div className="rounded-[1.4rem] border border-dashed border-[var(--accent)]/35 bg-[var(--accent)]/8 p-4 text-sm leading-6 text-[#f1deab]">
+              <div className="rounded-[1.4rem] border border-dashed border-[var(--accent)]/35 bg-[var(--accent)]/10 p-4 text-sm leading-6 text-[var(--accent-2)]">
                 {caseStudy.verificationNote}
               </div>
             ) : null}
@@ -156,35 +161,41 @@ export default async function CaseDetailPage({ params }: CaseDetailPageProps) {
           <div className="space-y-5">
             <div className="grid gap-4 sm:grid-cols-3">
               {caseStudy.metrics.map((metric) => (
-                <div key={metric.label} className="card-surface rounded-[1.4rem] p-4">
-                  <p className="text-xs font-semibold uppercase tracking-[0.18em] text-[var(--muted)]">
+                <div key={metric.label} className="card-surface rounded-[1.6rem] p-4 sm:p-5">
+                  <p className="text-[0.7rem] font-semibold uppercase tracking-[0.18em] text-[var(--muted)]">
                     {metric.label}
                   </p>
-                  <p className="mt-2 text-[1.7rem] font-semibold text-white sm:text-[1.9rem]">{metric.value}</p>
+                  <p className="mt-3 font-display text-[1.7rem] leading-none text-[#111111] sm:text-[2rem]">
+                    {metric.value}
+                  </p>
                 </div>
               ))}
             </div>
 
             <div className="grid gap-4">
               <article className="card-surface rounded-[2rem] p-5 sm:p-6">
-                <p className="text-xs font-semibold uppercase tracking-[0.24em] text-[var(--accent-2)]">
+                <p className="text-[0.72rem] font-semibold uppercase tracking-[0.22em] text-[var(--muted)]">
                   Mål
                 </p>
-                <h2 className="mt-2.5 font-display text-[2.2rem] text-white sm:text-[2.5rem]">
+                <h2 className="mt-3 font-display text-[2rem] leading-[0.95] text-[#111111] sm:text-[2.6rem]">
                   Hva kunden trengte at innholdet skulle løse
                 </h2>
-                <p className="mt-3 text-sm leading-6 text-[var(--muted-2)] sm:text-base sm:leading-7">{caseStudy.goal}</p>
+                <p className="mt-4 text-sm leading-6 text-[var(--muted-2)] sm:text-base sm:leading-7">
+                  {caseStudy.goal}
+                </p>
               </article>
 
               <article className="card-surface rounded-[2rem] p-5 sm:p-6">
-                <p className="text-xs font-semibold uppercase tracking-[0.24em] text-[var(--accent-2)]">
+                <p className="text-[0.72rem] font-semibold uppercase tracking-[0.22em] text-[var(--muted)]">
                   Løsning
                 </p>
-                <p className="mt-3 text-sm leading-6 text-[var(--muted-2)] sm:text-base sm:leading-7">{caseStudy.solution}</p>
+                <p className="mt-4 text-sm leading-6 text-[var(--muted-2)] sm:text-base sm:leading-7">
+                  {caseStudy.solution}
+                </p>
 
-                <div className="mt-5 rounded-[1.3rem] border border-white/10 bg-[var(--panel-2)] p-4">
-                  <p className="text-sm font-semibold text-white">Det vi leverte</p>
-                  <ul className="mt-3 space-y-2.5 text-sm leading-6 text-[var(--muted)]">
+                <div className="mt-5 rounded-[1.3rem] border border-black/8 bg-white/72 p-4">
+                  <p className="text-sm font-semibold text-[#111111]">Det vi leverte</p>
+                  <ul className="mt-3 space-y-2.5 text-sm leading-6 text-[var(--muted-2)]">
                     {caseStudy.deliverables.map((item) => (
                       <li key={item} className="flex gap-3">
                         <span className="mt-2 h-1.5 w-1.5 rounded-full bg-[var(--accent)]" />
@@ -196,16 +207,18 @@ export default async function CaseDetailPage({ params }: CaseDetailPageProps) {
               </article>
 
               <article className="card-surface rounded-[2rem] p-5 sm:p-6">
-                <p className="text-xs font-semibold uppercase tracking-[0.24em] text-[var(--accent-2)]">
+                <p className="text-[0.72rem] font-semibold uppercase tracking-[0.22em] text-[var(--muted)]">
                   Effekt
                 </p>
-                <p className="mt-3 text-sm leading-6 text-[var(--muted-2)] sm:text-base sm:leading-7">{caseStudy.impact}</p>
+                <p className="mt-4 text-sm leading-6 text-[var(--muted-2)] sm:text-base sm:leading-7">
+                  {caseStudy.impact}
+                </p>
 
                 <div className="mt-5 flex flex-wrap gap-2.5">
                   {caseStudy.tags.map((tag) => (
                     <span
                       key={tag}
-                      className="rounded-full border border-white/10 px-3.5 py-1.5 text-sm text-white/84"
+                      className="rounded-full border border-black/8 bg-white/64 px-3.5 py-1.5 text-sm text-[#111111]"
                     >
                       {tag}
                     </span>
@@ -218,19 +231,17 @@ export default async function CaseDetailPage({ params }: CaseDetailPageProps) {
       </section>
 
       <section className="section-space pt-0">
-        <div className="mx-auto max-w-7xl px-6 lg:px-8">
+        <div className="mx-auto max-w-7xl px-5 sm:px-6 lg:px-8">
           <div className="flex flex-wrap items-end justify-between gap-4">
             <div>
-              <p className="text-xs font-semibold uppercase tracking-[0.26em] text-[var(--accent-2)]">
-                Flere prosjekter
-              </p>
-              <h2 className="mt-2.5 font-display text-[2.2rem] text-white sm:text-[2.6rem]">
+              <p className="eyebrow">Flere prosjekter</p>
+              <h2 className="mt-3 font-display text-[2rem] leading-[0.94] text-[#111111] sm:text-[2.8rem]">
                 Se lignende case eller gå rett til en prat
               </h2>
             </div>
             <Link
               href="/case"
-              className="rounded-full border border-white/10 px-4 py-2 text-sm text-[var(--muted)] transition hover:border-white/24 hover:text-white"
+              className="rounded-full border border-black/10 bg-white/72 px-4 py-2 text-sm font-semibold text-[#111111]/68 transition hover:text-[#111111]"
             >
               Tilbake til caseoversikt
             </Link>
@@ -241,13 +252,15 @@ export default async function CaseDetailPage({ params }: CaseDetailPageProps) {
               <Link
                 key={entry.slug}
                 href={`/case/${entry.slug}`}
-                className="card-surface rounded-[1.7rem] p-5 transition duration-200 hover:-translate-y-1"
+                className="card-surface rounded-[1.8rem] p-5 transition duration-200 hover:-translate-y-1"
               >
-                <p className="text-xs font-semibold uppercase tracking-[0.22em] text-[var(--accent-2)]">
+                <p className="text-[0.68rem] font-semibold uppercase tracking-[0.22em] text-[var(--muted)]">
                   {entry.client}
                 </p>
-                <h3 className="mt-2.5 font-display text-[1.9rem] text-white">{entry.title}</h3>
-                <p className="mt-3 text-sm leading-6 text-[var(--muted)]">{entry.summary}</p>
+                <h3 className="mt-3 font-display text-[1.8rem] leading-[0.98] text-[#111111]">
+                  {entry.title}
+                </h3>
+                <p className="mt-3 text-sm leading-6 text-[var(--muted-2)]">{entry.summary}</p>
               </Link>
             ))}
           </div>
