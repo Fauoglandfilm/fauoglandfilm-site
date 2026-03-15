@@ -13,7 +13,45 @@
   --accent: #b59a67;
   --accent-2: #8a7347;
   --shadow: 0 24px 80px rgba(25, 21, 17, 0.08);
+  --button-primary-bg: #111111;
+  --button-primary-fg: #ffffff;
+  --button-primary-border: rgba(17, 17, 17, 0.08);
+  --button-primary-hover: #242424;
+  --button-secondary-bg: rgba(255, 255, 255, 0.8);
+  --button-secondary-fg: #111111;
+  --button-secondary-border: rgba(17, 17, 17, 0.12);
+  --button-secondary-hover: #ffffff;
+  --header-surface: rgba(255, 255, 255, 0.78);
+  --header-overlay-surface: rgba(12, 12, 12, 0.18);
+  --header-overlay-border: rgba(255, 255, 255, 0.14);
   color-scheme: light;
+}
+
+html[data-theme="dark"] {
+  --background: #0d0f12;
+  --foreground: #f2ece3;
+  --surface: rgba(17, 18, 22, 0.74);
+  --surface-strong: rgba(17, 18, 22, 0.92);
+  --surface-muted: rgba(255, 255, 255, 0.06);
+  --line: rgba(255, 255, 255, 0.1);
+  --line-strong: rgba(255, 255, 255, 0.18);
+  --muted: #ada295;
+  --muted-2: #d8cec2;
+  --accent: #c5a56a;
+  --accent-2: #ecd0a1;
+  --shadow: 0 30px 90px rgba(0, 0, 0, 0.26);
+  --button-primary-bg: #f2ece3;
+  --button-primary-fg: #111111;
+  --button-primary-border: rgba(255, 255, 255, 0.12);
+  --button-primary-hover: #ffffff;
+  --button-secondary-bg: rgba(255, 255, 255, 0.06);
+  --button-secondary-fg: #f2ece3;
+  --button-secondary-border: rgba(255, 255, 255, 0.14);
+  --button-secondary-hover: rgba(255, 255, 255, 0.1);
+  --header-surface: rgba(17, 18, 22, 0.86);
+  --header-overlay-surface: rgba(12, 12, 12, 0.24);
+  --header-overlay-border: rgba(255, 255, 255, 0.12);
+  color-scheme: dark;
 }
 
 @theme inline {
@@ -38,7 +76,12 @@ body {
   background:
     radial-gradient(circle at top left, rgba(212, 197, 164, 0.24), transparent 28%),
     radial-gradient(circle at top right, rgba(185, 177, 163, 0.16), transparent 24%),
-    linear-gradient(180deg, #f5f1eb 0%, #f2eee8 42%, #eee8e0 100%);
+    linear-gradient(
+      180deg,
+      color-mix(in srgb, var(--background) 92%, white) 0%,
+      var(--background) 42%,
+      color-mix(in srgb, var(--background) 92%, black) 100%
+    );
   color: var(--foreground);
   font-family: var(--font-manrope), sans-serif;
   text-rendering: optimizeLegibility;
@@ -101,14 +144,18 @@ summary::-webkit-details-marker {
 
   .card-surface {
     border: 1px solid var(--line);
-    background: linear-gradient(180deg, var(--surface-strong), rgba(255, 255, 255, 0.7));
+    background: linear-gradient(
+      180deg,
+      var(--surface-strong),
+      color-mix(in srgb, var(--surface-strong) 84%, transparent)
+    );
     box-shadow: var(--shadow);
     backdrop-filter: blur(18px);
   }
 
   .glass-panel {
-    border: 1px solid rgba(255, 255, 255, 0.28);
-    background: rgba(255, 255, 255, 0.14);
+    border: 1px solid color-mix(in srgb, var(--line) 66%, transparent);
+    background: color-mix(in srgb, var(--surface) 72%, transparent);
     box-shadow: 0 24px 60px rgba(6, 6, 6, 0.14);
     backdrop-filter: blur(24px);
   }
@@ -119,12 +166,12 @@ summary::-webkit-details-marker {
     justify-content: center;
     min-height: 3.1rem;
     border-radius: 999px;
-    border: 1px solid rgba(17, 17, 17, 0.08);
-    background: #111111;
+    border: 1px solid var(--button-primary-border);
+    background: var(--button-primary-bg);
     padding: 0.9rem 1.3rem;
     font-size: 0.94rem;
     font-weight: 700;
-    color: white;
+    color: var(--button-primary-fg);
     transition:
       transform 200ms ease,
       background-color 200ms ease,
@@ -133,15 +180,15 @@ summary::-webkit-details-marker {
 
   .button-primary:hover {
     transform: translateY(-1px);
-    background: #242424;
+    background: var(--button-primary-hover);
   }
 
   .form-input {
     width: 100%;
     min-height: 3.35rem;
     border-radius: 1.2rem;
-    border: 1px solid rgba(17, 17, 17, 0.1);
-    background: rgba(255, 255, 255, 0.84);
+    border: 1px solid var(--line);
+    background: color-mix(in srgb, var(--surface-strong) 92%, transparent);
     padding: 0.88rem 1rem;
     font-size: 16px;
     line-height: 1.5;
@@ -159,7 +206,7 @@ summary::-webkit-details-marker {
 
   .form-input:focus {
     border-color: rgba(181, 154, 103, 0.6);
-    background: rgba(255, 255, 255, 0.96);
+    background: color-mix(in srgb, var(--surface-strong) 100%, transparent);
     box-shadow: 0 0 0 4px rgba(181, 154, 103, 0.12);
   }
 
@@ -195,7 +242,7 @@ summary::-webkit-details-marker {
     display: inline-block;
     height: 1px;
     width: 2.75rem;
-    background: rgba(17, 17, 17, 0.15);
+    background: var(--line-strong);
   }
 
   @media (min-width: 640px) {

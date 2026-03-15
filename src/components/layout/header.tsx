@@ -4,18 +4,89 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 
+import {
+  useSitePreferences,
+} from "@/components/providers/site-preferences";
+import { BrandLogo } from "@/components/ui/brand-logo";
+import { ButtonLink } from "@/components/ui/button-link";
+import { CloseIcon, MenuIcon } from "@/components/ui/icons";
 import { navItems, siteConfig } from "@/data/site-content";
+import { uiCopy } from "@/data/ui-copy";
+import { resolveLocalizedValue } from "@/lib/i18n";
 import { cn } from "@/lib/utils";
 
-import { BrandLogo } from "../ui/brand-logo";
-import { ButtonLink } from "../ui/button-link";
-import { CloseIcon, MenuIcon } from "../ui/icons";
+type SegmentedToggleProps<T extends string> = {
+  label: string;
+  value: T;
+  options: Array<{ label: string; value: T }>;
+  onChange: (value: T) => void;
+  overlayMode: boolean;
+};
+
+function SegmentedToggle<T extends string>({
+  label,
+  value,
+  options,
+  onChange,
+  overlayMode,
+}: SegmentedToggleProps<T>) {
+  return (
+    <div className="flex items-center gap-2">
+      <span
+        className={cn(
+          "hidden text-[0.62rem] font-semibold uppercase tracking-[0.2em] xl:inline",
+          overlayMode ? "text-white/58" : "text-[var(--muted)]",
+        )}
+      >
+        {label}
+      </span>
+      <div
+        className={cn(
+          "inline-flex rounded-full border p-1 backdrop-blur-xl",
+          overlayMode
+            ? "border-white/14 bg-white/8"
+            : "border-[color:var(--line)] bg-[color:var(--surface)]",
+        )}
+        role="group"
+        aria-label={label}
+      >
+        {options.map((option) => {
+          const active = option.value === value;
+
+          return (
+            <button
+              key={option.value}
+              type="button"
+              className={cn(
+                "min-h-9 rounded-full px-3 text-[0.74rem] font-semibold uppercase tracking-[0.16em] transition sm:px-3.5",
+                active
+                  ? overlayMode
+                    ? "bg-white text-[#111111]"
+                    : "bg-[color:var(--foreground)] text-[color:var(--background)]"
+                  : overlayMode
+                    ? "text-white/68 hover:text-white"
+                    : "text-[var(--muted)] hover:text-[var(--foreground)]",
+              )}
+              onClick={() => onChange(option.value)}
+              aria-pressed={active}
+            >
+              {option.label}
+            </button>
+          );
+        })}
+      </div>
+    </div>
+  );
+}
 
 export function Header() {
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const { language, setLanguage, theme, setTheme } = useSitePreferences();
+  const copy = uiCopy.header[language];
   const overlayMode = pathname === "/" && !scrolled && !open;
+  const bookingLabel = resolveLocalizedValue(siteConfig.bookingLabel, language);
 
   useEffect(() => {
     const onScroll = () => {
@@ -51,15 +122,15 @@ export function Header() {
   return (
     <header
       style={{ paddingTop: "env(safe-area-inset-top, 0px)" }}
-      className={cn("fixed inset-x-0 top-0 z-50 transition duration-300")}
+      className="fixed inset-x-0 top-0 z-50 transition duration-300"
     >
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div
           className={cn(
-            "mt-3 flex items-center justify-between rounded-full px-3.5 py-3 transition duration-300 sm:px-4",
+            "mt-3 flex items-center justify-between gap-3 rounded-full px-3.5 py-3 transition duration-300 sm:px-4",
             overlayMode
-              ? "border border-white/14 bg-[rgba(12,12,12,0.18)] text-white backdrop-blur-xl"
-              : "border border-black/8 bg-[rgba(255,255,255,0.78)] text-[#111111] shadow-[0_12px_40px_rgba(14,14,14,0.08)] backdrop-blur-xl",
+              ? "border border-[color:var(--header-overlay-border)] bg-[color:var(--header-overlay-surface)] text-white backdrop-blur-xl"
+              : "border border-[color:var(--line)] bg-[color:var(--header-surface)] text-[color:var(--foreground)] shadow-[0_12px_40px_rgba(14,14,14,0.08)] backdrop-blur-xl",
           )}
         >
           <Link
@@ -72,11 +143,21 @@ export function Header() {
               <BrandLogo variant="mark" className="opacity-100" priority />
             </div>
             <div className="hidden sm:block">
-              <p className={cn("font-display text-[1rem] tracking-[-0.05em]", overlayMode ? "text-white" : "text-[#111111]")}>
+              <p
+                className={cn(
+                  "font-display text-[1rem] tracking-[-0.05em]",
+                  overlayMode ? "text-white" : "text-[color:var(--foreground)]",
+                )}
+              >
                 Fau&amp;Land Film
               </p>
-              <p className={cn("text-[0.72rem] uppercase tracking-[0.22em]", overlayMode ? "text-white/62" : "text-[#111111]/45")}>
-                Production company
+              <p
+                className={cn(
+                  "text-[0.72rem] uppercase tracking-[0.22em]",
+                  overlayMode ? "text-white/62" : "text-[var(--muted)]",
+                )}
+              >
+                {copy.productionCompany}
               </p>
             </div>
           </Link>
@@ -96,24 +177,44 @@ export function Header() {
                         ? "text-white"
                         : "text-white/70 hover:text-white"
                       : active
-                        ? "text-[#111111]"
-                        : "text-[#111111]/58 hover:text-[#111111]",
+                        ? "text-[color:var(--foreground)]"
+                        : "text-[var(--muted)] hover:text-[color:var(--foreground)]",
                   )}
                 >
-                  {item.label}
+                  {resolveLocalizedValue(item.label, language)}
                 </Link>
               );
             })}
           </nav>
 
-          <div className="hidden lg:block">
+          <div className="hidden items-center gap-2 lg:flex">
+            <SegmentedToggle
+              label={copy.languageLabel}
+              value={language}
+              options={[
+                { label: "NO", value: "no" },
+                { label: "EN", value: "en" },
+              ]}
+              onChange={setLanguage}
+              overlayMode={overlayMode}
+            />
+            <SegmentedToggle
+              label={copy.themeLabel}
+              value={theme}
+              options={[
+                { label: "Light", value: "light" },
+                { label: "Dark", value: "dark" },
+              ]}
+              onChange={setTheme}
+              overlayMode={overlayMode}
+            />
             <ButtonLink
               href={siteConfig.bookingHref}
               className={cn(
                 overlayMode && "border-white/20 bg-white text-[#111111] hover:bg-white/92",
               )}
             >
-              Kontakt
+              {bookingLabel}
             </ButtonLink>
           </div>
 
@@ -123,9 +224,9 @@ export function Header() {
               "inline-flex h-11 w-11 items-center justify-center rounded-full transition lg:hidden",
               overlayMode
                 ? "border border-white/16 bg-white/8 text-white"
-                : "border border-black/8 bg-white/70 text-[#111111]",
+                : "border border-[color:var(--line)] bg-[color:var(--surface)] text-[color:var(--foreground)]",
             )}
-            aria-label={open ? "Lukk meny" : "Åpne meny"}
+            aria-label={open ? copy.menuClose : copy.menuOpen}
             aria-expanded={open}
             onClick={() => setOpen((value) => !value)}
           >
@@ -136,35 +237,60 @@ export function Header() {
 
       {open ? (
         <div className="mx-auto max-w-7xl px-4 pb-4 sm:px-6 lg:hidden">
-          <div className="mt-3 rounded-[2rem] border border-black/8 bg-[rgba(255,255,255,0.94)] p-4 shadow-[0_24px_70px_rgba(14,14,14,0.12)] backdrop-blur-xl">
-            <nav
-              className="flex max-h-[calc(100svh-8rem)] flex-col gap-1 overflow-y-auto"
-              style={{ paddingBottom: "calc(0.75rem + env(safe-area-inset-bottom, 0px))" }}
-            >
-              {navItems.map((item) => {
-                const active = item.href === "/" ? pathname === "/" : pathname.startsWith(item.href);
+          <div className="mt-3 rounded-[2rem] border border-[color:var(--line)] bg-[color:var(--surface-strong)] p-4 shadow-[0_24px_70px_rgba(14,14,14,0.12)] backdrop-blur-xl">
+            <div className="flex flex-col gap-4">
+              <div className="grid gap-3 sm:grid-cols-2">
+                <SegmentedToggle
+                  label={copy.languageLabel}
+                  value={language}
+                  options={[
+                    { label: "NO", value: "no" },
+                    { label: "EN", value: "en" },
+                  ]}
+                  onChange={setLanguage}
+                  overlayMode={false}
+                />
+                <SegmentedToggle
+                  label={copy.themeLabel}
+                  value={theme}
+                  options={[
+                    { label: "Light", value: "light" },
+                    { label: "Dark", value: "dark" },
+                  ]}
+                  onChange={setTheme}
+                  overlayMode={false}
+                />
+              </div>
 
-                return (
-                  <Link
-                    key={item.href}
-                    href={item.href}
-                    className={cn(
-                      "rounded-[1.1rem] px-4 py-3.5 text-base font-medium transition",
-                      active
-                        ? "bg-[#111111] text-white"
-                        : "text-[#111111]/72 hover:bg-black/[0.04] hover:text-[#111111]",
-                    )}
-                    onClick={() => setOpen(false)}
-                  >
-                    {item.label}
-                  </Link>
-                );
-              })}
-            </nav>
+              <nav
+                className="flex max-h-[calc(100svh-13rem)] flex-col gap-1 overflow-y-auto"
+                style={{ paddingBottom: "calc(0.75rem + env(safe-area-inset-bottom, 0px))" }}
+              >
+                {navItems.map((item) => {
+                  const active = item.href === "/" ? pathname === "/" : pathname.startsWith(item.href);
 
-            <div className="mt-4 border-t border-black/8 pt-4">
-              <ButtonLink href={siteConfig.bookingHref} fullWidth>
-                {siteConfig.bookingLabel}
+                  return (
+                    <Link
+                      key={item.href}
+                      href={item.href}
+                      className={cn(
+                        "rounded-[1.1rem] px-4 py-3.5 text-base font-medium transition",
+                        active
+                          ? "bg-[color:var(--foreground)] text-[color:var(--background)]"
+                          : "text-[color:var(--foreground)]/72 hover:bg-black/[0.04] hover:text-[color:var(--foreground)]",
+                      )}
+                      onClick={() => setOpen(false)}
+                    >
+                      {resolveLocalizedValue(item.label, language)}
+                    </Link>
+                  );
+                })}
+              </nav>
+            </div>
+
+            <div className="mt-4 border-t border-[color:var(--line)] pt-4">
+              <ButtonLink href={siteConfig.bookingHref} fullWidth onClick={() => setOpen(false)}>
+                {bookingLabel}
               </ButtonLink>
             </div>
           </div>

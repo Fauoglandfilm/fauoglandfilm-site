@@ -1,7 +1,12 @@
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
 
+import { useSitePreferences } from "@/components/providers/site-preferences";
 import type { CaseStudy } from "@/data/site-content";
+import { uiCopy } from "@/data/ui-copy";
+import { resolveLocalizedValue } from "@/lib/i18n";
 
 import { ArrowUpRightIcon } from "../ui/icons";
 
@@ -19,10 +24,12 @@ export function CaseCard({
   const image = caseStudy.image;
   const video = caseStudy.video;
   const isFeature = layout === "feature";
+  const { language } = useSitePreferences();
+  const copy = uiCopy.siteSections[language];
 
   return (
     <article
-      className={`group overflow-hidden rounded-[1.9rem] border border-black/8 bg-white/72 shadow-[0_24px_70px_rgba(18,18,18,0.06)] ${
+      className={`group overflow-hidden rounded-[1.9rem] border border-[color:var(--line)] bg-[color:var(--surface)] shadow-[0_24px_70px_rgba(18,18,18,0.06)] ${
         isFeature ? "lg:grid lg:grid-cols-[1.02fr_0.98fr]" : "md:grid md:grid-cols-[0.95fr_1.05fr]"
       }`}
     >
@@ -46,7 +53,7 @@ export function CaseCard({
         ) : image ? (
           <Image
             src={image}
-            alt={caseStudy.imageAlt ?? caseStudy.client}
+            alt={caseStudy.imageAlt ? resolveLocalizedValue(caseStudy.imageAlt, language) : caseStudy.client}
             fill
             sizes={isFeature ? "(min-width: 1024px) 50vw, 100vw" : "(min-width: 1280px) 33vw, 100vw"}
             className="object-cover transition duration-500 group-hover:scale-[1.03]"
@@ -66,21 +73,24 @@ export function CaseCard({
           <p className="text-[0.68rem] font-semibold uppercase tracking-[0.22em] text-[var(--muted)]">
             {caseStudy.client}
           </p>
-          <h3 className="max-w-xl font-display text-[1.75rem] leading-[0.98] text-[#111111] sm:text-[2.2rem]">
-            {caseStudy.title}
+          <h3 className="max-w-xl font-display text-[1.75rem] leading-[0.98] text-[color:var(--foreground)] sm:text-[2.2rem]">
+            {resolveLocalizedValue(caseStudy.title, language)}
           </h3>
           <p className="max-w-2xl text-[0.95rem] leading-6 text-[var(--muted-2)] sm:text-base sm:leading-7">
-            {caseStudy.summary}
+            {resolveLocalizedValue(caseStudy.summary, language)}
           </p>
         </div>
 
         <div className="grid gap-3 sm:grid-cols-3">
           {[
-            { label: "Behov", value: caseStudy.goal },
-            { label: "Leveranse", value: caseStudy.deliverables.slice(0, 2).join(", ") },
-            { label: "Effekt", value: caseStudy.impact },
+            { label: copy.relatedCaseGoal, value: resolveLocalizedValue(caseStudy.goal, language) },
+            {
+              label: copy.relatedCaseDeliverables,
+              value: caseStudy.deliverables.slice(0, 2).map((item) => resolveLocalizedValue(item, language)).join(", "),
+            },
+            { label: copy.relatedCaseImpact, value: resolveLocalizedValue(caseStudy.impact, language) },
           ].map((item) => (
-            <div key={item.label} className="border-t border-black/8 pt-3">
+            <div key={item.label} className="border-t border-[color:var(--line)] pt-3">
               <p className="text-[0.66rem] uppercase tracking-[0.18em] text-[var(--muted)]">
                 {item.label}
               </p>
@@ -90,26 +100,26 @@ export function CaseCard({
         </div>
 
         {caseStudy.metrics.length ? (
-          <p className="text-sm font-medium text-[#111111]/76">
+          <p className="text-sm font-medium text-[color:var(--foreground)]/76">
             {caseStudy.metrics
               .slice(0, 2)
-              .map((metric) => `${metric.value} ${metric.label}`)
+              .map((metric) => `${metric.value} ${resolveLocalizedValue(metric.label, language)}`)
               .join(" · ")}
           </p>
         ) : null}
 
         {showVerificationNote && caseStudy.verificationNote ? (
           <div className="rounded-[1rem] border border-dashed border-[var(--accent)]/28 bg-[var(--accent)]/10 px-4 py-3 text-sm text-[var(--accent-2)]">
-            {caseStudy.verificationNote}
+            {resolveLocalizedValue(caseStudy.verificationNote, language)}
           </div>
         ) : null}
 
         <div className="mt-auto pt-1">
           <Link
             href={`/case/${caseStudy.slug}`}
-            className="inline-flex min-h-11 items-center gap-2 text-sm font-semibold text-[#111111] transition hover:text-[var(--accent-2)]"
+            className="inline-flex min-h-11 items-center gap-2 text-sm font-semibold text-[color:var(--foreground)] transition hover:text-[var(--accent-2)]"
           >
-            Se hele caset
+            {copy.viewCase}
             <ArrowUpRightIcon className="h-4 w-4" />
           </Link>
         </div>

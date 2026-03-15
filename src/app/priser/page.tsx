@@ -12,6 +12,7 @@ import {
   priceGuides,
   pricingFaq,
 } from "@/data/site-content";
+import { uiCopy } from "@/data/ui-copy";
 import { buildMetadata } from "@/lib/seo";
 
 export const metadata = buildMetadata({
@@ -22,24 +23,29 @@ export const metadata = buildMetadata({
 });
 
 export default function PricingPage() {
+  const copy = uiCopy.pages;
+
   return (
     <main>
       <PageHero
-        eyebrow="Priser"
-        title="Tydelige pakker og prisrammer"
-        description="Pris skal gjøre neste steg enklere, ikke mer uklart."
-        primaryCta={{ label: "Få et prisestimat", href: "/kontakt" }}
+        eyebrow={{ no: copy.no.pricingHeroEyebrow, en: copy.en.pricingHeroEyebrow }}
+        title={{ no: copy.no.pricingHeroTitle, en: copy.en.pricingHeroTitle }}
+        description={{ no: copy.no.pricingHeroDescription, en: copy.en.pricingHeroDescription }}
+        primaryCta={{
+          label: { no: copy.no.pricingPrimaryCta, en: copy.en.pricingPrimaryCta },
+          href: "/kontakt",
+        }}
       />
       <PackagesSection packages={offerPackages} />
       <PriceGuideSection items={priceGuides} />
       <FaqList
-        title="Spørsmål om pris, omfang og samarbeid"
-        description="Her er de vanligste avklaringene om pakker, prosjektpriser og hva som driver nivået opp eller ned."
+        title={{ no: copy.no.pricingFaqTitle, en: copy.en.pricingFaqTitle }}
+        description={{ no: copy.no.pricingFaqDescription, en: copy.en.pricingFaqDescription }}
         items={pricingFaq}
       />
       <CtaBanner
-        title="Vil dere ha et konkret forslag til nivå?"
-        description="Vi kan raskt si om dere bør starte med et prosjekt, en innholdspakke eller et mer løpende samarbeid."
+        title={{ no: copy.no.pricingCtaTitle, en: copy.en.pricingCtaTitle }}
+        description={{ no: copy.no.pricingCtaDescription, en: copy.en.pricingCtaDescription }}
         secondaryLabel={null}
         align="center"
       />

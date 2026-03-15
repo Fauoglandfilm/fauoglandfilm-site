@@ -1,7 +1,9 @@
+"use client";
+
 import Image from "next/image";
-import Link from "next/link";
 import type { ReactNode } from "react";
 
+import { useSitePreferences } from "@/components/providers/site-preferences";
 import {
   aboutStudioContent,
   caseStudies,
@@ -9,13 +11,14 @@ import {
   homeHeroContent,
   servicePillars,
   siteConfig,
-  type CaseStudy,
   type ServicePillar,
   type WorkSample,
   videoLibrary,
 } from "@/data/site-content";
+import { uiCopy } from "@/data/ui-copy";
+import { resolveLocalizedValue } from "@/lib/i18n";
 
-import { Reveal } from "../motion/reveal";
+import { FloatingLayer, Reveal } from "../motion/reveal";
 import { ButtonLink } from "../ui/button-link";
 import { ArrowUpRightIcon, MailIcon, PhoneIcon, PinIcon } from "../ui/icons";
 import { ClientLogoMarquee } from "./client-logo-marquee";
@@ -24,6 +27,8 @@ import { WorkGrid } from "./home-work-grid";
 
 export function HeroSection() {
   const heroVideo = videoLibrary.hero;
+  const { language } = useSitePreferences();
+  const copy = uiCopy.home[language];
 
   return (
     <section className="relative isolate overflow-hidden">
@@ -48,15 +53,15 @@ export function HeroSection() {
       <div className="relative mx-auto flex min-h-[88svh] max-w-7xl items-end px-5 pb-10 pt-30 sm:px-6 sm:pb-12 lg:min-h-[84vh] lg:px-8 lg:pb-14 lg:pt-32">
         <div className="grid w-full gap-10 lg:grid-cols-[1.15fr_0.85fr] lg:items-end">
           <div className="max-w-4xl">
-            <Reveal className="space-y-5">
+            <Reveal className="space-y-5" y={36}>
               <div className="inline-flex rounded-full border border-white/18 bg-white/10 px-4 py-2 text-[0.7rem] font-semibold uppercase tracking-[0.22em] text-white/82 backdrop-blur">
-                Oslo / International clients / High-end production
+                {copy.heroBadge}
               </div>
               <h1 className="max-w-4xl text-balance font-display text-[3rem] leading-[0.88] text-white sm:text-[4.6rem] lg:text-[5.9rem]">
-                {homeHeroContent.title}
+                {resolveLocalizedValue(homeHeroContent.title, language)}
               </h1>
               <p className="max-w-xl text-[1rem] leading-7 text-white/76 sm:text-[1.08rem]">
-                {homeHeroContent.description}
+                {resolveLocalizedValue(homeHeroContent.description, language)}
               </p>
             </Reveal>
 
@@ -65,33 +70,35 @@ export function HeroSection() {
                 href={homeHeroContent.ctaHref}
                 className="bg-white text-[#111111] hover:bg-white/92"
               >
-                {homeHeroContent.ctaLabel}
+                {resolveLocalizedValue(homeHeroContent.ctaLabel, language)}
               </ButtonLink>
               <ButtonLink
                 href="/kontakt"
                 variant="secondary"
                 className="border-white/16 bg-white/8 text-white hover:border-white/28 hover:bg-white/14"
               >
-                Contact us
+                {copy.heroSecondaryCta}
               </ButtonLink>
             </Reveal>
           </div>
 
-          <Reveal delay={0.16} className="hidden lg:block">
-            <div className="rounded-[2rem] border border-white/12 bg-[rgba(255,255,255,0.08)] p-6 text-white backdrop-blur-xl">
-              <div className="space-y-3">
-                <p className="text-[0.72rem] font-semibold uppercase tracking-[0.24em] text-white/58">
-                  Film-first studio
-                </p>
-                <p className="font-display text-[2rem] leading-[0.96]">
-                  Large visual surfaces, lighter editorial framing and a more international posture.
-                </p>
-                <p className="text-sm leading-6 text-white/68">
-                  Built for decision-makers who want the work to feel premium before a single call is booked.
-                </p>
+          <FloatingLayer className="hidden lg:block">
+            <Reveal delay={0.16}>
+              <div className="rounded-[2rem] border border-white/12 bg-[rgba(255,255,255,0.08)] p-6 text-white backdrop-blur-xl">
+                <div className="space-y-3">
+                  <p className="text-[0.72rem] font-semibold uppercase tracking-[0.24em] text-white/58">
+                    {copy.heroPanelEyebrow}
+                  </p>
+                  <p className="font-display text-[2rem] leading-[0.96]">
+                    {copy.heroPanelTitle}
+                  </p>
+                  <p className="text-sm leading-6 text-white/68">
+                    {copy.heroPanelDescription}
+                  </p>
+                </div>
               </div>
-            </div>
-          </Reveal>
+            </Reveal>
+          </FloatingLayer>
         </div>
       </div>
     </section>
@@ -99,20 +106,23 @@ export function HeroSection() {
 }
 
 export function SelectedWorkSection({ items }: { items: WorkSample[] }) {
+  const { language } = useSitePreferences();
+  const copy = uiCopy.home[language];
+
   return (
     <section id="selected-work" className="section-space">
       <div className="mx-auto max-w-7xl px-5 sm:px-6 lg:px-8">
         <div className="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
           <div className="max-w-3xl space-y-3">
-            <span className="eyebrow">Selected work</span>
-            <h2 className="font-display text-[2.2rem] leading-[0.94] text-[#111111] sm:text-[3rem] lg:text-[4rem]">
-              A tighter, more cinematic front page built around motion first.
+            <span className="eyebrow">{copy.selectedWorkEyebrow}</span>
+            <h2 className="font-display text-[2.2rem] leading-[0.94] text-[color:var(--foreground)] sm:text-[3rem] lg:text-[4rem]">
+              {copy.selectedWorkTitle}
             </h2>
             <p className="max-w-2xl text-[0.98rem] leading-7 text-[var(--muted-2)]">
-              Six films, a lighter editorial UI and a modal viewing flow that keeps the work central on both desktop and mobile.
+              {copy.selectedWorkDescription}
             </p>
           </div>
-          <div className="text-sm text-[var(--muted)]">Tap or hover to open the film player.</div>
+          <div className="text-sm text-[var(--muted)]">{copy.selectedWorkHint}</div>
         </div>
 
         <div className="mt-8">
@@ -124,12 +134,15 @@ export function SelectedWorkSection({ items }: { items: WorkSample[] }) {
 }
 
 export function ClientSlider() {
+  const { language } = useSitePreferences();
+  const copy = uiCopy.home[language];
+
   return (
-    <section className="border-y border-black/8 bg-[#f2eee7] py-5 sm:py-6">
+    <section className="border-y border-[color:var(--line)] bg-[color:color-mix(in_srgb,var(--background)_84%,var(--surface-strong))] py-5 sm:py-6">
       <div className="mx-auto max-w-7xl px-5 sm:px-6 lg:px-8">
         <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-          <p className="eyebrow">Clients</p>
-          <p className="text-sm text-[var(--muted)]">Selected brands, organizations and collaborators</p>
+          <p className="eyebrow">{copy.clientsEyebrow}</p>
+          <p className="text-sm text-[var(--muted)]">{copy.clientsDescription}</p>
         </div>
         <div className="mt-5">
           <ClientLogoMarquee logos={clientLogos} durationSeconds={34} />
@@ -140,19 +153,22 @@ export function ClientSlider() {
 }
 
 export function ServicesSection() {
+  const { language } = useSitePreferences();
+  const copy = uiCopy.home[language];
+
   return (
     <section className="section-space">
       <div className="mx-auto max-w-7xl px-5 sm:px-6 lg:px-8">
         <div className="max-w-3xl space-y-3">
-          <span className="eyebrow">What we do</span>
-          <h2 className="font-display text-[2.2rem] leading-[0.94] text-[#111111] sm:text-[3rem] lg:text-[4rem]">
-            Three clear production lanes, framed to be understood fast.
+          <span className="eyebrow">{copy.servicesEyebrow}</span>
+          <h2 className="font-display text-[2.2rem] leading-[0.94] text-[color:var(--foreground)] sm:text-[3rem] lg:text-[4rem]">
+            {copy.servicesTitle}
           </h2>
         </div>
 
         <div className="mt-8 grid gap-4 lg:grid-cols-3">
           {servicePillars.map((pillar, index) => (
-            <ServicePillarCard key={pillar.title} pillar={pillar} delay={0.05 * index} />
+            <ServicePillarCard key={pillar.eyebrow} pillar={pillar} delay={0.05 * index} />
           ))}
         </div>
       </div>
@@ -167,17 +183,19 @@ function ServicePillarCard({
   pillar: ServicePillar;
   delay: number;
 }) {
+  const { language } = useSitePreferences();
+
   return (
     <Reveal delay={delay}>
       <article className="card-surface rounded-[1.8rem] p-5 sm:p-6">
-        <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-[#111111] text-sm font-semibold text-white">
+        <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-[color:var(--foreground)] text-sm font-semibold text-[color:var(--background)]">
           {pillar.eyebrow}
         </div>
-        <h3 className="mt-5 font-display text-[1.6rem] leading-[0.98] text-[#111111]">
-          {pillar.title}
+        <h3 className="mt-5 font-display text-[1.6rem] leading-[0.98] text-[color:var(--foreground)]">
+          {resolveLocalizedValue(pillar.title, language)}
         </h3>
         <p className="mt-3 text-sm leading-6 text-[var(--muted-2)] sm:text-base">
-          {pillar.summary}
+          {resolveLocalizedValue(pillar.summary, language)}
         </p>
       </article>
     </Reveal>
@@ -185,142 +203,148 @@ function ServicePillarCard({
 }
 
 export function FeaturedCase() {
+  const { language } = useSitePreferences();
+  const copy = uiCopy.home[language];
   const featuredCase =
     caseStudies.find((entry) => entry.slug === "nei-til-atomvapen") ?? caseStudies[0];
 
   return (
     <section className="section-space pt-0">
       <div className="mx-auto max-w-7xl px-5 sm:px-6 lg:px-8">
-        <div className="overflow-hidden rounded-[2rem] border border-black/8 bg-[#111111] text-white shadow-[0_40px_120px_rgba(15,15,15,0.14)]">
-          <div className="grid gap-0 lg:grid-cols-[0.95fr_1.05fr]">
-            <div
-              className="relative min-h-[21rem] overflow-hidden p-6 sm:p-8 lg:min-h-[30rem] lg:p-10"
-              style={{
-                background:
-                  "linear-gradient(135deg, rgba(214,193,154,0.3), rgba(97,84,64,0.08) 42%, rgba(8,8,8,0.82) 100%)",
-              }}
-            >
-              <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(255,255,255,0.24),transparent_34%),radial-gradient(circle_at_bottom_right,rgba(181,154,103,0.24),transparent_28%)]" />
-              <div className="relative flex h-full flex-col justify-between">
-                <div className="space-y-3">
-                  <span className="text-[0.72rem] font-semibold uppercase tracking-[0.24em] text-white/58">
-                    Featured case
-                  </span>
-                  <h2 className="max-w-md font-display text-[2.2rem] leading-[0.92] sm:text-[3rem]">
-                    {featuredCase.client}
-                  </h2>
-                  <p className="max-w-md text-sm leading-6 text-white/72 sm:text-base sm:leading-7">
-                    {featuredCase.summary}
-                  </p>
-                </div>
+        <FloatingLayer>
+          <div className="overflow-hidden rounded-[2rem] border border-[color:var(--line)] bg-[#111111] text-white shadow-[0_40px_120px_rgba(15,15,15,0.14)]">
+            <div className="grid gap-0 lg:grid-cols-[0.95fr_1.05fr]">
+              <div
+                className="relative min-h-[21rem] overflow-hidden p-6 sm:p-8 lg:min-h-[30rem] lg:p-10"
+                style={{
+                  background:
+                    "linear-gradient(135deg, rgba(214,193,154,0.3), rgba(97,84,64,0.08) 42%, rgba(8,8,8,0.82) 100%)",
+                }}
+              >
+                <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(255,255,255,0.24),transparent_34%),radial-gradient(circle_at_bottom_right,rgba(181,154,103,0.24),transparent_28%)] transition duration-700 motion-safe:group-hover:scale-[1.02]" />
+                <div className="relative flex h-full flex-col justify-between">
+                  <div className="space-y-3">
+                    <span className="text-[0.72rem] font-semibold uppercase tracking-[0.24em] text-white/58">
+                      {copy.featuredCaseEyebrow}
+                    </span>
+                    <h2 className="max-w-md font-display text-[2.2rem] leading-[0.92] sm:text-[3rem]">
+                      {featuredCase.client}
+                    </h2>
+                    <p className="max-w-md text-sm leading-6 text-white/72 sm:text-base sm:leading-7">
+                      {resolveLocalizedValue(featuredCase.summary, language)}
+                    </p>
+                  </div>
 
-                <div className="mt-10 grid grid-cols-3 gap-3">
-                  {featuredCase.metrics.slice(0, 3).map((metric) => (
-                    <div key={metric.label} className="rounded-[1.2rem] border border-white/10 bg-white/8 p-4 backdrop-blur">
-                      <p className="text-[0.7rem] uppercase tracking-[0.18em] text-white/48">
-                        {metric.label}
-                      </p>
-                      <p className="mt-2 font-display text-[1.35rem]">{metric.value}</p>
-                    </div>
-                  ))}
+                  <div className="mt-10 grid grid-cols-3 gap-3">
+                    {featuredCase.metrics.slice(0, 3).map((metric, index) => (
+                      <div key={`${metric.value}-${index}`} className="rounded-[1.2rem] border border-white/10 bg-white/8 p-4 backdrop-blur">
+                        <p className="text-[0.7rem] uppercase tracking-[0.18em] text-white/48">
+                          {resolveLocalizedValue(metric.label, language)}
+                        </p>
+                        <p className="mt-2 font-display text-[1.35rem]">{metric.value}</p>
+                      </div>
+                    ))}
+                  </div>
                 </div>
               </div>
-            </div>
 
-            <div className="bg-[#161616] p-6 sm:p-8 lg:p-10">
-              <div className="max-w-xl space-y-5">
-                <div>
-                  <p className="text-[0.72rem] font-semibold uppercase tracking-[0.24em] text-white/44">
-                    Why it stands out
-                  </p>
-                  <h3 className="mt-3 font-display text-[2rem] leading-[0.96] sm:text-[2.6rem]">
-                    {featuredCase.title}
-                  </h3>
+              <div className="bg-[#161616] p-6 sm:p-8 lg:p-10">
+                <div className="max-w-xl space-y-5">
+                  <div>
+                    <p className="text-[0.72rem] font-semibold uppercase tracking-[0.24em] text-white/44">
+                      {copy.featuredCaseWhy}
+                    </p>
+                    <h3 className="mt-3 font-display text-[2rem] leading-[0.96] sm:text-[2.6rem]">
+                      {resolveLocalizedValue(featuredCase.title, language)}
+                    </h3>
+                  </div>
+
+                  <div className="grid gap-4 sm:grid-cols-3">
+                    {[
+                      { label: copy.featuredCaseGoal, value: resolveLocalizedValue(featuredCase.goal, language) },
+                      { label: copy.featuredCaseSolution, value: resolveLocalizedValue(featuredCase.solution, language) },
+                      { label: copy.featuredCaseImpact, value: resolveLocalizedValue(featuredCase.impact, language) },
+                    ].map((item) => (
+                      <div key={item.label} className="border-t border-white/10 pt-4">
+                        <p className="text-[0.7rem] uppercase tracking-[0.18em] text-white/42">
+                          {item.label}
+                        </p>
+                        <p className="mt-2 text-sm leading-6 text-white/68">{item.value}</p>
+                      </div>
+                    ))}
+                  </div>
+
+                  <div className="flex flex-wrap gap-2">
+                    {featuredCase.tags.map((tag, index) => (
+                      <span
+                        key={`${featuredCase.slug}-tag-${index}`}
+                        className="rounded-full border border-white/10 px-3 py-1.5 text-xs uppercase tracking-[0.16em] text-white/60"
+                      >
+                        {resolveLocalizedValue(tag, language)}
+                      </span>
+                    ))}
+                  </div>
+
+                  <ButtonLink
+                    href={`/case/${featuredCase.slug}`}
+                    className="bg-white text-[#111111] hover:bg-white/92"
+                    icon={<ArrowUpRightIcon className="h-4 w-4" />}
+                  >
+                    {copy.featuredCaseCta}
+                  </ButtonLink>
                 </div>
-
-                <div className="grid gap-4 sm:grid-cols-3">
-                  {[
-                    { label: "Goal", value: featuredCase.goal },
-                    { label: "Solution", value: featuredCase.solution },
-                    { label: "Impact", value: featuredCase.impact },
-                  ].map((item) => (
-                    <div key={item.label} className="border-t border-white/10 pt-4">
-                      <p className="text-[0.7rem] uppercase tracking-[0.18em] text-white/42">
-                        {item.label}
-                      </p>
-                      <p className="mt-2 text-sm leading-6 text-white/68">{item.value}</p>
-                    </div>
-                  ))}
-                </div>
-
-                <div className="flex flex-wrap gap-2">
-                  {featuredCase.tags.map((tag) => (
-                    <span
-                      key={tag}
-                      className="rounded-full border border-white/10 px-3 py-1.5 text-xs uppercase tracking-[0.16em] text-white/60"
-                    >
-                      {tag}
-                    </span>
-                  ))}
-                </div>
-
-                <ButtonLink
-                  href={`/case/${featuredCase.slug}`}
-                  className="bg-white text-[#111111] hover:bg-white/92"
-                  icon={<ArrowUpRightIcon className="h-4 w-4" />}
-                >
-                  View case
-                </ButtonLink>
               </div>
             </div>
           </div>
-        </div>
+        </FloatingLayer>
       </div>
     </section>
   );
 }
 
 export function AboutSection() {
+  const { language } = useSitePreferences();
+  const copy = uiCopy.home[language];
+
   return (
     <section className="section-space">
       <div className="mx-auto max-w-7xl px-5 sm:px-6 lg:px-8">
         <div className="grid gap-6 lg:grid-cols-[1.02fr_0.98fr] lg:items-center">
-          <div className="relative overflow-hidden rounded-[2rem] border border-black/8 bg-white/70 shadow-[0_32px_100px_rgba(18,18,18,0.08)]">
+          <FloatingLayer className="relative overflow-hidden rounded-[2rem] border border-[color:var(--line)] bg-[color:var(--surface)] shadow-[0_32px_100px_rgba(18,18,18,0.08)]">
             <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(255,255,255,0)_34%,rgba(17,17,17,0.36)_100%)]" />
             <Image
               src={aboutStudioContent.image}
-              alt={aboutStudioContent.imageAlt}
+              alt={resolveLocalizedValue(aboutStudioContent.imageAlt, language)}
               width={6000}
               height={3375}
               sizes="(min-width: 1024px) 48vw, 100vw"
               className="aspect-[4/3] w-full object-cover"
-              priority
             />
-          </div>
+          </FloatingLayer>
 
           <div className="max-w-2xl space-y-5">
-            <span className="eyebrow">{aboutStudioContent.eyebrow}</span>
-            <h2 className="font-display text-[2.2rem] leading-[0.94] text-[#111111] sm:text-[3rem] lg:text-[4rem]">
-              {aboutStudioContent.title}
+            <span className="eyebrow">{resolveLocalizedValue(aboutStudioContent.eyebrow, language)}</span>
+            <h2 className="font-display text-[2.2rem] leading-[0.94] text-[color:var(--foreground)] sm:text-[3rem] lg:text-[4rem]">
+              {resolveLocalizedValue(aboutStudioContent.title, language)}
             </h2>
             <p className="text-[0.98rem] leading-7 text-[var(--muted-2)] sm:text-base sm:leading-8">
-              {aboutStudioContent.description}
+              {resolveLocalizedValue(aboutStudioContent.description, language)}
             </p>
 
             <div className="grid gap-4 sm:grid-cols-3">
-              {aboutStudioContent.stats.map((stat) => (
-                <div key={stat.label} className="rounded-[1.5rem] border border-black/8 bg-white/70 p-4 shadow-[0_18px_44px_rgba(18,18,18,0.05)]">
+              {aboutStudioContent.stats.map((stat, index) => (
+                <div key={`${stat.value}-${index}`} className="rounded-[1.5rem] border border-[color:var(--line)] bg-[color:var(--surface)] p-4 shadow-[0_18px_44px_rgba(18,18,18,0.05)]">
                   <p className="text-[0.7rem] uppercase tracking-[0.18em] text-[var(--muted)]">
-                    {stat.label}
+                    {resolveLocalizedValue(stat.label, language)}
                   </p>
-                  <p className="mt-2 font-display text-[1.55rem] text-[#111111]">{stat.value}</p>
+                  <p className="mt-2 font-display text-[1.55rem] text-[color:var(--foreground)]">{stat.value}</p>
                 </div>
               ))}
             </div>
 
             <div className="flex flex-wrap gap-3">
               <ButtonLink href="/om-oss" icon={<ArrowUpRightIcon className="h-4 w-4" />}>
-                Meet the team
+                {copy.aboutCta}
               </ButtonLink>
             </div>
           </div>
@@ -331,35 +355,38 @@ export function AboutSection() {
 }
 
 export function ContactSection() {
+  const { language } = useSitePreferences();
+  const copy = uiCopy.home[language];
+
   return (
     <section className="section-space pt-0" id="kontakt">
       <div className="mx-auto max-w-7xl px-5 sm:px-6 lg:px-8">
         <div className="grid gap-4 lg:grid-cols-[0.86fr_1.14fr]">
           <article className="card-surface rounded-[2rem] p-5 sm:p-6 lg:p-7">
-            <span className="eyebrow">Contact</span>
-            <h2 className="mt-4 font-display text-[2.1rem] leading-[0.94] text-[#111111] sm:text-[2.8rem]">
-              Minimal contact flow. Fast response.
+            <span className="eyebrow">{copy.contactEyebrow}</span>
+            <h2 className="mt-4 font-display text-[2.1rem] leading-[0.94] text-[color:var(--foreground)] sm:text-[2.8rem]">
+              {copy.contactTitle}
             </h2>
             <p className="mt-4 max-w-lg text-[0.96rem] leading-7 text-[var(--muted-2)]">
-              Keep the page short, keep the ask simple and make it easy to book the next conversation.
+              {copy.contactDescription}
             </p>
 
             <div className="mt-8 grid gap-5">
               <InfoRow
                 icon={<MailIcon className="h-5 w-5" />}
-                label="Mail"
+                label={copy.contactMail}
                 value={siteConfig.email}
                 href={`mailto:${siteConfig.email}`}
               />
               <InfoRow
                 icon={<PhoneIcon className="h-5 w-5" />}
-                label="Phone"
+                label={copy.contactPhone}
                 value={siteConfig.phonePrimary}
                 href={siteConfig.phonePrimaryHref}
               />
               <InfoRow
                 icon={<PinIcon className="h-5 w-5" />}
-                label="Location"
+                label={copy.contactLocation}
                 value={siteConfig.locationLabel}
               />
             </div>
@@ -368,10 +395,10 @@ export function ContactSection() {
           <article className="card-surface rounded-[2rem] p-5 sm:p-6 lg:p-7">
             <div className="max-w-2xl">
               <p className="text-[0.72rem] font-semibold uppercase tracking-[0.24em] text-[var(--muted)]">
-                Project brief
+                {copy.contactProjectBrief}
               </p>
-              <h3 className="mt-3 font-display text-[2rem] leading-[0.96] text-[#111111] sm:text-[2.6rem]">
-                Tell us what needs to be produced.
+              <h3 className="mt-3 font-display text-[2rem] leading-[0.96] text-[color:var(--foreground)] sm:text-[2.6rem]">
+                {copy.contactProjectTitle}
               </h3>
             </div>
             <div className="mt-6">
@@ -396,115 +423,24 @@ function InfoRow({
   href?: string;
 }) {
   const content = (
-    <div className="flex items-start gap-4 rounded-[1.4rem] border border-black/8 bg-white/64 px-4 py-4">
-      <div className="mt-0.5 flex h-10 w-10 items-center justify-center rounded-full bg-[#111111] text-white">
+    <div className="flex items-start gap-4 rounded-[1.4rem] border border-[color:var(--line)] bg-[color:var(--surface)] px-4 py-4 transition duration-300 hover:-translate-y-0.5">
+      <div className="mt-0.5 flex h-10 w-10 items-center justify-center rounded-full bg-[color:var(--foreground)] text-[color:var(--background)]">
         {icon}
       </div>
       <div>
         <p className="text-[0.72rem] uppercase tracking-[0.18em] text-[var(--muted)]">{label}</p>
-        <p className="mt-1 text-base text-[#111111] sm:text-lg">{value}</p>
+        <p className="mt-1 text-base text-[color:var(--foreground)] sm:text-lg">{value}</p>
       </div>
     </div>
   );
 
   if (href) {
     return (
-      <a href={href} className="transition hover:translate-y-[-1px]">
+      <a href={href} className="transition">
         {content}
       </a>
     );
   }
 
   return content;
-}
-
-export function PageHero({
-  eyebrow,
-  title,
-  description,
-  primaryCta,
-  secondaryCta,
-  video,
-}: {
-  eyebrow: string;
-  title: string;
-  description: string;
-  primaryCta?: { label: string; href: string };
-  secondaryCta?: { label: string; href: string };
-  video?: CaseStudy["video"];
-}) {
-  return (
-    <section className="relative isolate overflow-hidden pt-24 sm:pt-28">
-      <div className="absolute inset-0">
-        {video ? (
-          <>
-            <video
-              className="h-full w-full object-cover"
-              autoPlay
-              muted
-              loop
-              playsInline
-              preload="metadata"
-              poster={video.poster}
-            >
-              {video.mobileSrc ? (
-                <source media="(max-width: 767px)" src={video.mobileSrc} type="video/mp4" />
-              ) : null}
-              <source src={video.src} type="video/mp4" />
-            </video>
-            <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(7,7,7,0.28),rgba(7,7,7,0.12)_34%,rgba(7,7,7,0.58)_100%)]" />
-          </>
-        ) : (
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(210,192,154,0.4),transparent_36%),linear-gradient(180deg,#f5f1eb,#efe8df)]" />
-        )}
-      </div>
-
-      <div className="relative mx-auto flex min-h-[34rem] max-w-7xl items-end px-5 pb-10 sm:px-6 sm:pb-12 lg:min-h-[38rem] lg:px-8 lg:pb-14">
-        <div className={`max-w-4xl ${video ? "text-white" : "text-[#111111]"}`}>
-          <span className={video ? "text-[0.72rem] font-semibold uppercase tracking-[0.24em] text-white/58" : "eyebrow"}>
-            {eyebrow}
-          </span>
-          <h1 className="mt-4 max-w-4xl text-balance font-display text-[2.7rem] leading-[0.9] sm:text-[4rem] lg:text-[5rem]">
-            {title}
-          </h1>
-          <p className={`mt-4 max-w-2xl text-[0.98rem] leading-7 sm:text-base sm:leading-8 ${video ? "text-white/74" : "text-[var(--muted-2)]"}`}>
-            {description}
-          </p>
-          {primaryCta || secondaryCta ? (
-            <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-              {primaryCta ? (
-                <ButtonLink
-                  href={primaryCta.href}
-                  className={video ? "bg-white text-[#111111] hover:bg-white/92" : undefined}
-                >
-                  {primaryCta.label}
-                </ButtonLink>
-              ) : null}
-              {secondaryCta ? (
-                <ButtonLink
-                  href={secondaryCta.href}
-                  variant="secondary"
-                  className={video ? "border-white/16 bg-white/8 text-white hover:border-white/28 hover:bg-white/14" : undefined}
-                >
-                  {secondaryCta.label}
-                </ButtonLink>
-              ) : null}
-            </div>
-          ) : null}
-        </div>
-      </div>
-    </section>
-  );
-}
-
-export function HomeCaseLink({ caseStudy }: { caseStudy: CaseStudy }) {
-  return (
-    <Link
-      href={`/case/${caseStudy.slug}`}
-      className="group inline-flex items-center gap-2 text-sm font-semibold text-[#111111] transition hover:text-[var(--accent-2)]"
-    >
-      Se hele caset
-      <ArrowUpRightIcon className="h-4 w-4 transition group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
-    </Link>
-  );
 }
