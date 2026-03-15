@@ -20,7 +20,7 @@ export function ButtonLink({
   return (
     <Link
       className={cn(
-        "inline-flex items-center justify-center gap-2 rounded-full px-5 py-3 text-sm font-semibold transition duration-200",
+        "inline-flex min-h-12 items-center justify-center gap-2 rounded-full px-5 py-3.5 text-[0.95rem] font-semibold transition duration-200 sm:min-h-11 sm:py-3 sm:text-sm",
         "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--accent)]",
         variant === "primary" &&
           "bg-[var(--accent)] text-[var(--bg-1)] hover:bg-[#f1d89c]",

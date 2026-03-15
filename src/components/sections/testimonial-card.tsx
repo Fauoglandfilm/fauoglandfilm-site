@@ -17,10 +17,10 @@ export function TestimonialCard({
 
   return (
     <article className="border-t border-white/10 pt-4">
-      <p className="font-display text-[1.7rem] leading-[1.08] text-white sm:text-[1.95rem]">
+      <p className="font-display text-[1.45rem] leading-[1.1] text-white sm:text-[1.8rem]">
         &ldquo;{quote}&rdquo;
       </p>
-      <div className="mt-4 space-y-1">
+      <div className="mt-3.5 space-y-1">
         <p className="text-[0.68rem] font-semibold uppercase tracking-[0.22em] text-white/46">
           {name}
         </p>

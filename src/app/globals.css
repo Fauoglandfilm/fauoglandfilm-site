@@ -23,7 +23,8 @@
 
 html {
   scroll-behavior: smooth;
-  scroll-padding-top: 6.5rem;
+  scroll-padding-top: calc(5.5rem + env(safe-area-inset-top, 0px));
+  -webkit-text-size-adjust: 100%;
 }
 
 * {
@@ -35,6 +36,8 @@ body {
   background: linear-gradient(180deg, #060b12 0%, #050a13 48%, #040810 100%);
   color: var(--foreground);
   font-family: var(--font-manrope), sans-serif;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
 }
 
 a {
@@ -73,8 +76,8 @@ summary::-webkit-details-marker {
   }
 
   .section-space {
-    padding-top: 3.75rem;
-    padding-bottom: 3.75rem;
+    padding-top: 3rem;
+    padding-bottom: 3rem;
   }
 
   .card-surface {
@@ -97,8 +100,9 @@ summary::-webkit-details-marker {
     justify-content: center;
     border-radius: 999px;
     background: var(--accent);
-    padding: 0.8rem 1.3rem;
-    font-size: 0.95rem;
+    min-height: 3rem;
+    padding: 0.82rem 1.25rem;
+    font-size: 0.96rem;
     font-weight: 700;
     color: var(--bg-1);
     transition: transform 200ms ease, background-color 200ms ease;
@@ -114,7 +118,10 @@ summary::-webkit-details-marker {
     border-radius: 1.15rem;
     border: 1px solid rgba(255, 255, 255, 0.1);
     background: rgba(255, 255, 255, 0.04);
+    min-height: 3.25rem;
     padding: 0.82rem 0.95rem;
+    font-size: 16px;
+    line-height: 1.5;
     color: white;
     outline: none;
     transition: border-color 180ms ease, background-color 180ms ease;
@@ -141,19 +148,26 @@ summary::-webkit-details-marker {
     display: flex;
     flex-shrink: 0;
     align-items: center;
-    gap: 0.5rem;
-    padding-right: 0.5rem;
+    gap: 0.35rem;
+    padding-right: 0.35rem;
   }
 
   @media (min-width: 640px) {
     .section-space {
-      padding-top: 4.75rem;
-      padding-bottom: 4.75rem;
+      padding-top: 4rem;
+      padding-bottom: 4rem;
     }
 
     .logo-marquee-group {
-      gap: 0.75rem;
-      padding-right: 0.75rem;
+      gap: 0.55rem;
+      padding-right: 0.55rem;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .section-space {
+      padding-top: 4.5rem;
+      padding-bottom: 4.5rem;
     }
   }
 }

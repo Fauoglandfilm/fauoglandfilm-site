@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Fraunces, Manrope } from "next/font/google";
 
 import { Footer } from "@/components/layout/footer";
@@ -25,6 +25,13 @@ export const metadata: Metadata = buildMetadata({
   description: siteConfig.description,
   path: "/",
 });
+
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  viewportFit: "cover",
+  themeColor: "#050a13",
+};
 
 export default function RootLayout({
   children,

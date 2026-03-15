@@ -5,13 +5,13 @@ import { siteConfig } from "@/data/site-content";
 export function Footer() {
   return (
     <footer className="border-t border-white/8 bg-[#040810]">
-      <div className="mx-auto grid max-w-7xl gap-6 px-6 py-8 lg:grid-cols-[1.15fr_0.85fr] lg:px-8 lg:py-9">
+      <div className="mx-auto grid max-w-7xl gap-6 px-5 py-7 sm:px-6 lg:grid-cols-[1.15fr_0.85fr] lg:px-8 lg:py-8">
         <div className="space-y-4">
-          <div className="w-[150px]">
+          <div className="w-[132px] sm:w-[150px]">
             <BrandLogo variant="full" className="opacity-95" />
           </div>
           <div className="max-w-lg space-y-2">
-            <p className="font-display text-[1.8rem] text-white sm:text-[2.15rem]">
+            <p className="font-display text-[1.5rem] text-white sm:text-[1.95rem]">
               Film og innhold som gjør det lettere å bli valgt.
             </p>
             <p className="text-sm leading-6 text-white/62 sm:text-base">
@@ -20,7 +20,7 @@ export function Footer() {
             </p>
           </div>
           <div className="flex flex-wrap gap-2.5">
-            <ButtonLink href={siteConfig.bookingHref}>
+            <ButtonLink href={siteConfig.bookingHref} fullWidth className="sm:w-auto">
               {siteConfig.bookingLabel}
             </ButtonLink>
           </div>
@@ -34,13 +34,13 @@ export function Footer() {
             <div className="space-y-2 text-white/74">
               <p>{siteConfig.locationLabel}</p>
               <a
-                className="block transition hover:text-white"
+                className="block min-h-11 transition hover:text-white"
                 href={`mailto:${siteConfig.email}`}
               >
                 {siteConfig.email}
               </a>
               <a
-                className="block transition hover:text-white"
+                className="block min-h-11 transition hover:text-white"
                 href={siteConfig.phonePrimaryHref}
               >
                 {siteConfig.phonePrimary}
