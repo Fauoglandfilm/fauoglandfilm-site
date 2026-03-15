@@ -3,12 +3,10 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev --webpack",
+    "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "site": "./start-fauland.sh",
-    "lint": "eslint",
-    "testsite": "./start-site.sh"
+    "lint": "eslint"
   },
   "dependencies": {
     "framer-motion": "^12.36.0",

@@ -43,7 +43,7 @@ export function SalesHero() {
   const minimalOverlay = heroVideo.hasEmbeddedText;
 
   return (
-    <section className="relative isolate min-h-screen overflow-hidden">
+    <section className="relative isolate min-h-[100svh] overflow-hidden">
       <div className="absolute inset-0">
         <video
           className="h-full w-full object-cover"
@@ -51,10 +51,13 @@ export function SalesHero() {
           muted
           loop
           playsInline
-          preload="auto"
+          preload="metadata"
           poster={heroVideo.poster}
         >
-          <source src={heroVideo.mobileSrc ?? heroVideo.src} type="video/mp4" />
+          {heroVideo.mobileSrc ? (
+            <source media="(max-width: 767px)" src={heroVideo.mobileSrc} type="video/mp4" />
+          ) : null}
+          <source src={heroVideo.src} type="video/mp4" />
         </video>
         <div
           className={`absolute inset-0 ${
@@ -66,30 +69,35 @@ export function SalesHero() {
       </div>
 
       <div
-        className={`relative mx-auto flex min-h-screen max-w-7xl px-6 pt-24 lg:px-8 lg:pt-28 ${
+        className={`relative mx-auto flex max-w-7xl ${
           minimalOverlay
-            ? "items-end justify-center pb-6 sm:pb-7 lg:justify-start lg:pb-8"
-            : "items-end justify-start pb-14 sm:pb-16"
+            ? "min-h-[100svh] items-end justify-center px-5 pt-24 sm:px-6 lg:justify-start lg:px-8 lg:pt-28"
+            : "min-h-[100svh] items-end justify-start px-5 pb-12 pt-24 sm:px-6 sm:pb-14 lg:px-8 lg:pt-28"
         }`}
+        style={
+          minimalOverlay
+            ? { paddingBottom: "calc(1rem + env(safe-area-inset-bottom, 0px))" }
+            : undefined
+        }
       >
         {minimalOverlay ? (
           <div className="flex w-full justify-center lg:justify-start">
-            <div className="rounded-full border border-white/12 bg-[rgba(5,10,19,0.22)] p-1 backdrop-blur-md">
-              <ButtonLink href={homeHeroContent.ctaHref}>
+            <div className="w-full max-w-sm rounded-full border border-white/12 bg-[rgba(5,10,19,0.22)] p-1 backdrop-blur-md sm:w-auto">
+              <ButtonLink href={homeHeroContent.ctaHref} fullWidth className="sm:w-auto">
                 {homeHeroContent.ctaLabel}
               </ButtonLink>
             </div>
           </div>
         ) : (
           <div className="max-w-[34rem] space-y-4">
-            <h1 className="text-balance font-display text-4xl leading-[0.92] text-white sm:text-5xl lg:text-[4.2rem]">
+            <h1 className="text-balance font-display text-[2.55rem] leading-[0.94] text-white sm:text-5xl lg:text-[4.2rem]">
               {homeHeroContent.title}
             </h1>
-            <p className="max-w-2xl text-sm leading-6 text-white/76 sm:text-base sm:leading-7">
+            <p className="max-w-2xl text-[0.95rem] leading-6 text-white/76 sm:text-base sm:leading-7">
               {homeHeroContent.description}
             </p>
             <div className="flex pt-1">
-              <ButtonLink href={homeHeroContent.ctaHref}>
+              <ButtonLink href={homeHeroContent.ctaHref} fullWidth className="sm:w-auto">
                 {homeHeroContent.ctaLabel}
               </ButtonLink>
             </div>
@@ -103,15 +111,15 @@ export function SalesHero() {
 export function HomeIntroSection() {
   return (
     <section className="border-b border-white/6 bg-[#050a13]">
-      <div className="mx-auto grid max-w-7xl gap-4 px-6 py-8 lg:grid-cols-[0.72fr_1.28fr] lg:items-end lg:px-8 lg:py-9">
+      <div className="mx-auto grid max-w-7xl gap-3 px-5 py-6 sm:px-6 sm:py-7 lg:grid-cols-[0.72fr_1.28fr] lg:items-end lg:px-8 lg:py-8">
         <p className="text-[0.68rem] font-semibold uppercase tracking-[0.26em] text-white/42">
           {homeIntroContent.eyebrow}
         </p>
-        <div className="space-y-2.5">
-          <h2 className="max-w-4xl text-balance font-display text-[2rem] leading-[1] text-white sm:text-[2.5rem] lg:text-[2.9rem]">
+        <div className="space-y-2">
+          <h2 className="max-w-4xl text-balance font-display text-[1.8rem] leading-[1.02] text-white sm:text-[2.25rem] lg:text-[2.7rem]">
             {homeIntroContent.title}
           </h2>
-          <p className="max-w-2xl text-sm leading-6 text-white/68 sm:text-base sm:leading-7">
+          <p className="max-w-2xl text-[0.95rem] leading-6 text-white/68 sm:text-base sm:leading-7">
             {homeIntroContent.description}
           </p>
         </div>
@@ -123,11 +131,11 @@ export function HomeIntroSection() {
 export function SocialProofSection() {
   return (
     <section className="relative isolate overflow-hidden border-b border-white/6 bg-[#050a13]">
-      <div className="mx-auto max-w-7xl px-6 py-7 lg:px-8 lg:py-8">
+      <div className="mx-auto max-w-7xl px-5 py-5 sm:px-6 sm:py-6 lg:px-8 lg:py-7">
         <p className="text-center text-[0.66rem] font-semibold uppercase tracking-[0.28em] text-white/48">
           Utvalgte kunder og samarbeid
         </p>
-        <div className="mt-5 sm:mt-6">
+        <div className="mt-4 sm:mt-5">
           <ClientLogoMarquee logos={clientLogos} />
         </div>
       </div>
@@ -157,6 +165,9 @@ export function PageHero({
               preload="metadata"
               poster={video.poster}
             >
+              {video.mobileSrc ? (
+                <source media="(max-width: 767px)" src={video.mobileSrc} type="video/mp4" />
+              ) : null}
               <source src={video.src} type="video/mp4" />
             </video>
             <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(5,10,19,0.36),rgba(5,10,19,0.74)_52%,rgba(5,10,19,0.9))]" />
@@ -166,24 +177,31 @@ export function PageHero({
         )}
       </div>
 
-      <div className="relative mx-auto flex min-h-[34svh] max-w-7xl items-end px-6 pb-9 pt-24 lg:px-8 lg:pb-10 lg:pt-24">
+      <div className="relative mx-auto flex min-h-[28svh] max-w-7xl items-end px-5 pb-7 pt-24 sm:px-6 sm:pb-8 lg:min-h-[32svh] lg:px-8 lg:pb-9 lg:pt-24">
         <div className="max-w-3xl space-y-3">
           <p className="text-[0.68rem] font-semibold uppercase tracking-[0.26em] text-white/48">
             {eyebrow}
           </p>
-          <h1 className="max-w-4xl text-balance font-display text-[2.3rem] leading-[0.98] text-white sm:text-[3rem] lg:text-[3.5rem]">
+          <h1 className="max-w-4xl text-balance font-display text-[2rem] leading-[0.99] text-white sm:text-[2.65rem] lg:text-[3.35rem]">
             {title}
           </h1>
-          <p className="max-w-2xl text-sm leading-6 text-white/72 sm:text-base sm:leading-7">
+          <p className="max-w-2xl text-[0.95rem] leading-6 text-white/72 sm:text-base sm:leading-7">
             {description}
           </p>
           {primaryCta || secondaryCta ? (
-            <div className="flex flex-wrap gap-2.5 pt-1">
+            <div className="flex flex-col gap-2.5 pt-1 sm:flex-row sm:flex-wrap">
               {primaryCta ? (
-                <ButtonLink href={primaryCta.href}>{primaryCta.label}</ButtonLink>
+                <ButtonLink href={primaryCta.href} fullWidth className="sm:w-auto">
+                  {primaryCta.label}
+                </ButtonLink>
               ) : null}
               {secondaryCta ? (
-                <ButtonLink href={secondaryCta.href} variant="secondary">
+                <ButtonLink
+                  href={secondaryCta.href}
+                  variant="secondary"
+                  fullWidth
+                  className="sm:w-auto"
+                >
                   {secondaryCta.label}
                 </ButtonLink>
               ) : null}
@@ -209,7 +227,7 @@ export function ServicesSection({
 
   return (
     <SectionShell eyebrow="Tjenester" title={title} description={description} id="tjenester">
-      <div className={`grid gap-5 ${gridClassName}`}>
+      <div className={`grid gap-4 ${gridClassName}`}>
         {services.map((service, index) => (
           <Reveal key={service.slug} delay={0.08 * index}>
             <ServiceCard service={service} />
@@ -228,11 +246,11 @@ export function PackagesSection({ packages }: { packages: OfferPackage[] }) {
       description="Lett å lese. Lett å diskutere. Lett å komme i gang med."
       id="pakker"
     >
-      <div className="grid gap-5 xl:grid-cols-3">
+      <div className="grid gap-4 xl:grid-cols-3">
         {packages.map((pkg, index) => (
           <Reveal key={pkg.name} delay={0.08 * index}>
             <article
-              className={`rounded-[1.9rem] border p-5 sm:p-6 ${
+              className={`rounded-[1.7rem] border p-4 sm:p-5 ${
                 pkg.featured
                   ? "border-[var(--accent)]/36 bg-[linear-gradient(180deg,rgba(226,194,122,0.12),rgba(7,12,20,0.9))]"
                   : "border-white/10 bg-[rgba(8,13,22,0.9)]"
@@ -241,12 +259,12 @@ export function PackagesSection({ packages }: { packages: OfferPackage[] }) {
               <p className="text-[0.72rem] font-semibold uppercase tracking-[0.24em] text-[var(--accent-2)]">
                 {pkg.name}
               </p>
-              <h3 className="mt-3 font-display text-[2.3rem] text-white">{pkg.price}</h3>
+              <h3 className="mt-3 font-display text-[2.1rem] text-white">{pkg.price}</h3>
               <p className="mt-3 text-sm leading-6 text-white/68 sm:text-base">{pkg.summary}</p>
               <p className="mt-4 border-t border-white/10 pt-4 text-sm leading-6 text-white/54">
                 {pkg.idealFor}
               </p>
-              <ul className="mt-6 space-y-2.5 text-sm leading-6 text-white/74">
+              <ul className="mt-5 space-y-2.5 text-sm leading-6 text-white/74">
                 {pkg.includes.map((item) => (
                   <li key={item} className="flex gap-3">
                     <span className="mt-2 h-1.5 w-1.5 rounded-full bg-[var(--accent)]" />
@@ -254,7 +272,7 @@ export function PackagesSection({ packages }: { packages: OfferPackage[] }) {
                   </li>
                 ))}
               </ul>
-              <div className="mt-6">
+              <div className="mt-5">
                 <ButtonLink
                   href={pkg.ctaHref}
                   variant={pkg.featured ? "primary" : "secondary"}
@@ -314,7 +332,7 @@ export function FeaturedCasesSection({
       }
       id="case"
     >
-      <div className="grid gap-6">
+      <div className="grid gap-4 sm:gap-5">
         {cases.map((caseStudy, index) => (
           <Reveal key={caseStudy.slug} delay={0.08 * index}>
             <CaseCard
@@ -337,14 +355,14 @@ export function ProcessSection({ steps }: { steps: ProcessStep[] }) {
       description="Fire steg. Lite friksjon. Tydelig vei fra idé til ferdig leveranse."
       align="center"
     >
-      <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
+      <div className="grid gap-3.5 md:grid-cols-2 xl:grid-cols-4">
         {steps.map((step, index) => (
           <Reveal key={step.step} delay={0.06 * index}>
             <article className="border-t border-white/10 pt-4">
-              <p className="font-display text-4xl leading-none text-[var(--accent)]/88 sm:text-5xl">
+              <p className="font-display text-[2.4rem] leading-none text-[var(--accent)]/88 sm:text-[2.9rem]">
                 {step.step}
               </p>
-              <h3 className="mt-3 font-display text-[1.55rem] text-white sm:text-[1.75rem]">
+              <h3 className="mt-2.5 font-display text-[1.35rem] text-white sm:text-[1.55rem]">
                 {step.title}
               </h3>
               <p className="mt-2 text-sm leading-6 text-white/58">{step.description}</p>
@@ -370,7 +388,7 @@ export function TestimonialsSection({
       description="Korte tilbakemeldinger fra kunder og samarbeidspartnere."
       align="center"
     >
-      <div className={`grid gap-3.5 ${gridClassName}`}>
+      <div className={`grid gap-3 ${gridClassName}`}>
         {testimonials.map((testimonial, index) => (
           <Reveal key={`${testimonial.company}-${index}`} delay={0.08 * index}>
             <TestimonialCard {...testimonial} />
@@ -399,12 +417,12 @@ export function AboutPreviewSection({
         </ButtonLink>
       }
     >
-      <div className="grid gap-5 xl:grid-cols-[0.92fr_1.08fr] xl:items-start">
-        <article className="rounded-[1.6rem] border border-white/8 bg-white/[0.015] p-5 sm:p-6">
+      <div className="grid gap-4 xl:grid-cols-[0.92fr_1.08fr] xl:items-start">
+        <article className="rounded-[1.4rem] border border-white/8 bg-white/[0.015] p-4 sm:p-5">
           <p className="text-[0.68rem] font-semibold uppercase tracking-[0.22em] text-white/44">
             Hvem vi er
           </p>
-          <h3 className="mt-2 font-display text-[1.8rem] text-white">
+          <h3 className="mt-2 font-display text-[1.55rem] text-white sm:text-[1.75rem]">
             Gard og Tommy driver hvert prosjekt tett.
           </h3>
           <p className="mt-3 text-sm leading-6 text-white/64 sm:text-base sm:leading-7">
@@ -412,7 +430,7 @@ export function AboutPreviewSection({
           </p>
         </article>
 
-        <div className="grid gap-5">
+        <div className="grid gap-4">
           <article className="border-t border-white/10 pt-4">
             <ul className="space-y-3 text-sm leading-6 text-white/70 sm:text-base">
               {bullets.map((bullet) => (
@@ -433,7 +451,7 @@ export function AboutPreviewSection({
                 <p className="text-[0.68rem] font-semibold uppercase tracking-[0.22em] text-white/46">
                   {member.role}
                 </p>
-                <h3 className="mt-2 font-display text-[1.7rem] text-white">{member.name}</h3>
+                <h3 className="mt-2 font-display text-[1.5rem] text-white">{member.name}</h3>
                 <p className="mt-2.5 text-sm leading-6 text-white/60">{member.summary}</p>
               </article>
             ))}
@@ -457,8 +475,8 @@ export function TeamSection({
       title="Tommy og Gard leder hvert prosjekt tett"
       description="Gard leder den kreative visjonen og regien. Tommy jobber med strategi, produksjon og gjennomføring."
     >
-      <div className="grid gap-5 xl:grid-cols-[0.9fr_1.1fr] xl:items-start">
-        <div className="rounded-[1.6rem] border border-white/8 bg-white/[0.015] p-5 sm:p-6">
+      <div className="grid gap-4 xl:grid-cols-[0.9fr_1.1fr] xl:items-start">
+        <div className="rounded-[1.4rem] border border-white/8 bg-white/[0.015] p-4 sm:p-5">
           <p className="text-[0.68rem] font-semibold uppercase tracking-[0.22em] text-white/44">
             Fau&Land Film
           </p>
@@ -478,11 +496,11 @@ export function TeamSection({
         <div className="grid gap-4 lg:grid-cols-2">
           {team.map((member, index) => (
             <Reveal key={member.name} delay={0.08 * index}>
-              <article className="rounded-[1.6rem] border border-white/8 bg-white/[0.015] p-4">
+              <article className="rounded-[1.4rem] border border-white/8 bg-white/[0.015] p-4">
                 <p className="text-[0.68rem] font-semibold uppercase tracking-[0.22em] text-white/46">
                   {member.role}
                 </p>
-                <h3 className="mt-2 font-display text-[1.7rem] text-white">{member.name}</h3>
+                <h3 className="mt-2 font-display text-[1.5rem] text-white">{member.name}</h3>
                 <p className="mt-3 text-sm leading-6 text-white/64 sm:text-base">{member.summary}</p>
               </article>
             </Reveal>
@@ -509,18 +527,18 @@ export function ContactLeadSection({
       description="Send en kort melding, så følger vi opp raskt med forslag til neste steg."
       id="kontakt"
     >
-      <div className="grid gap-5 xl:grid-cols-[0.78fr_1.22fr]">
-        <article className="rounded-[1.7rem] border border-white/8 bg-white/[0.015] p-5 sm:p-6">
+      <div className="grid gap-4 xl:grid-cols-[0.78fr_1.22fr]">
+        <article className="rounded-[1.5rem] border border-white/8 bg-white/[0.015] p-4 sm:p-5">
           <div className="space-y-4">
-            <h3 className="font-display text-[2rem] text-white">Kontakt Fau&Land Film</h3>
+            <h3 className="font-display text-[1.75rem] text-white sm:text-[1.9rem]">Kontakt Fau&Land Film</h3>
             <p className="text-sm leading-6 text-white/64 sm:text-base">
               Vi holder til i Oslo og svarer som regel innen 24 timer.
             </p>
           </div>
 
-          <div className="mt-6 space-y-4 border-t border-white/10 pt-5">
+          <div className="mt-5 space-y-4 border-t border-white/10 pt-5">
             <a
-              className="flex items-start gap-4 text-white/76 transition hover:text-white"
+              className="flex min-h-11 items-start gap-4 text-white/76 transition hover:text-white"
               href={`mailto:${siteConfig.email}`}
             >
               <MailIcon className="mt-1 h-5 w-5 text-[var(--accent-2)]" />
@@ -533,7 +551,7 @@ export function ContactLeadSection({
             </a>
 
             <a
-              className="flex items-start gap-4 text-white/76 transition hover:text-white"
+              className="flex min-h-11 items-start gap-4 text-white/76 transition hover:text-white"
               href={siteConfig.phonePrimaryHref}
             >
               <PhoneIcon className="mt-1 h-5 w-5 text-[var(--accent-2)]" />
@@ -557,30 +575,30 @@ export function ContactLeadSection({
             </div>
           </div>
 
-          <div className="mt-6">
-            <ButtonLink href={siteConfig.bookingHref} fullWidth>
+          <div className="mt-5">
+            <ButtonLink href={siteConfig.bookingHref} fullWidth className="sm:w-auto">
               {siteConfig.bookingLabel}
             </ButtonLink>
           </div>
         </article>
 
-        <article className="rounded-[1.7rem] border border-white/8 bg-white/[0.02] p-5 sm:p-6">
-          <h3 className="font-display text-[2rem] text-white sm:text-[2.2rem]">
+        <article className="rounded-[1.5rem] border border-white/8 bg-white/[0.02] p-4 sm:p-5">
+          <h3 className="font-display text-[1.75rem] text-white sm:text-[2rem]">
             Fortell kort hva dere trenger
           </h3>
           <p className="mt-3 text-sm leading-6 text-white/64 sm:text-base">
             En enkel brief er nok. Vi følger opp med forslag til format, omfang og neste steg.
           </p>
-          <div className="mt-6">
+          <div className="mt-5">
             <ContactForm />
           </div>
 
           {visibleFaqs.length ? (
-            <div className="mt-6 grid gap-3 border-t border-white/10 pt-5">
+            <div className="mt-5 grid gap-3 border-t border-white/10 pt-5">
               {visibleFaqs.map((faq) => (
                 <details
                   key={faq.question}
-                  className="rounded-[1.4rem] border border-white/10 bg-white/[0.03] px-5 py-4"
+                  className="rounded-[1.2rem] border border-white/10 bg-white/[0.03] px-4 py-4"
                 >
                   <summary className="cursor-pointer list-none text-sm font-semibold text-white">
                     {faq.question}
@@ -643,32 +661,34 @@ export function CtaBanner({
 }) {
   return (
     <section className="section-space">
-      <div className="mx-auto max-w-7xl px-6 lg:px-8">
-        <div className="overflow-hidden rounded-[1.9rem] border border-white/8 bg-[linear-gradient(180deg,rgba(255,255,255,0.028),rgba(255,255,255,0.012))] p-5 sm:p-6 lg:p-7">
+      <div className="mx-auto max-w-7xl px-5 sm:px-6 lg:px-8">
+        <div className="overflow-hidden rounded-[1.6rem] border border-white/8 bg-[linear-gradient(180deg,rgba(255,255,255,0.028),rgba(255,255,255,0.012))] p-4 sm:p-5 lg:p-6">
           <div
             className={
               align === "center"
                 ? "mx-auto max-w-3xl text-center"
-                : "grid gap-6 xl:grid-cols-[1.1fr_0.9fr] xl:items-end"
+                : "grid gap-5 xl:grid-cols-[1.1fr_0.9fr] xl:items-end"
             }
           >
             <div className="space-y-3">
               <p className="text-[0.68rem] font-semibold uppercase tracking-[0.26em] text-white/44">
                 Klar for neste steg
               </p>
-              <h2 className="max-w-3xl font-display text-[2rem] leading-[0.98] text-white sm:text-[2.5rem]">
+              <h2 className="max-w-3xl font-display text-[1.75rem] leading-[0.99] text-white sm:text-[2.25rem]">
                 {title}
               </h2>
-              <p className="max-w-2xl text-sm leading-6 text-white/68 sm:text-base sm:leading-7">{description}</p>
+              <p className="max-w-2xl text-[0.95rem] leading-6 text-white/68 sm:text-base sm:leading-7">{description}</p>
             </div>
             <div
-              className={`flex flex-wrap gap-3 ${
+              className={`flex flex-col gap-3 sm:flex-row sm:flex-wrap ${
                 align === "center" ? "justify-center pt-2" : "xl:justify-end"
               }`}
             >
-              <ButtonLink href={primaryHref}>{primaryLabel}</ButtonLink>
+              <ButtonLink href={primaryHref} fullWidth className="sm:w-auto">
+                {primaryLabel}
+              </ButtonLink>
               {secondaryLabel ? (
-                <ButtonLink href={secondaryHref} variant="secondary">
+                <ButtonLink href={secondaryHref} variant="secondary" fullWidth className="sm:w-auto">
                   {secondaryLabel}
                 </ButtonLink>
               ) : null}

@@ -53,6 +53,7 @@ export function ContactForm() {
           <input
             className="form-input"
             name="name"
+            autoComplete="name"
             value={formState.name}
             onChange={(event) =>
               setFormState((current) => ({ ...current, name: event.target.value }))
@@ -65,6 +66,7 @@ export function ContactForm() {
           <input
             className="form-input"
             name="company"
+            autoComplete="organization"
             value={formState.company}
             onChange={(event) =>
               setFormState((current) => ({ ...current, company: event.target.value }))
@@ -80,6 +82,8 @@ export function ContactForm() {
             className="form-input"
             name="email"
             type="email"
+            autoComplete="email"
+            inputMode="email"
             value={formState.email}
             onChange={(event) =>
               setFormState((current) => ({ ...current, email: event.target.value }))
@@ -93,6 +97,8 @@ export function ContactForm() {
             className="form-input"
             name="phone"
             type="tel"
+            autoComplete="tel"
+            inputMode="tel"
             value={formState.phone}
             onChange={(event) =>
               setFormState((current) => ({ ...current, phone: event.target.value }))
@@ -106,6 +112,7 @@ export function ContactForm() {
         <textarea
           className="form-input min-h-32 resize-y"
           name="message"
+          rows={5}
           value={formState.message}
           onChange={(event) =>
             setFormState((current) => ({ ...current, message: event.target.value }))
@@ -117,7 +124,7 @@ export function ContactForm() {
 
       <div className="flex flex-col gap-3 pt-1 sm:flex-row sm:items-center sm:justify-between">
         <p className="text-sm leading-6 text-[var(--muted)]">{siteConfig.responseTime}</p>
-        <button type="submit" className="button-primary">
+        <button type="submit" className="button-primary w-full sm:w-auto">
           Send forespørsel
         </button>
       </div>

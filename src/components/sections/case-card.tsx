@@ -22,13 +22,13 @@ export function CaseCard({
 
   return (
     <article
-      className={`group overflow-hidden rounded-[1.7rem] border border-white/8 bg-white/[0.015] ${
+      className={`group overflow-hidden rounded-[1.5rem] border border-white/8 bg-white/[0.015] ${
         isFeature ? "lg:grid lg:grid-cols-[1.02fr_0.98fr]" : "md:grid md:grid-cols-[0.95fr_1.05fr]"
       }`}
     >
       <div
         className={`relative overflow-hidden ${
-          isFeature ? "min-h-[18rem] lg:min-h-[20rem]" : "aspect-[1.25/0.74] md:min-h-[15rem]"
+          isFeature ? "min-h-[14.5rem] sm:min-h-[16rem] lg:min-h-[19rem]" : "aspect-[1.25/0.82] min-h-[13rem] md:min-h-[14.5rem]"
         }`}
       >
         {video ? (
@@ -61,20 +61,20 @@ export function CaseCard({
         <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(5,8,14,0.02),rgba(5,8,14,0.08)_36%,rgba(5,8,14,0.32))]" />
       </div>
 
-      <div className="flex flex-1 flex-col gap-4 p-5 sm:p-6">
+      <div className="flex flex-1 flex-col gap-4 p-4 sm:p-5 lg:p-6">
         <div className="space-y-2">
           <p className="text-[0.68rem] font-semibold uppercase tracking-[0.22em] text-white/46">
             {caseStudy.client}
           </p>
-          <h3 className="max-w-xl font-display text-[1.9rem] leading-tight text-white sm:text-[2.2rem]">
+          <h3 className="max-w-xl font-display text-[1.65rem] leading-tight text-white sm:text-[2rem]">
             {caseStudy.title}
           </h3>
-          <p className="max-w-2xl text-sm leading-6 text-white/70 sm:text-base sm:leading-7">
+          <p className="max-w-2xl text-[0.95rem] leading-6 text-white/70 sm:text-base sm:leading-7">
             {caseStudy.summary}
           </p>
         </div>
 
-        <div className="grid gap-4 sm:grid-cols-3">
+        <div className="grid gap-3 sm:grid-cols-3">
           {[
             { label: "Behov", value: caseStudy.goal },
             { label: "Leveranse", value: caseStudy.deliverables.slice(0, 2).join(", ") },
@@ -107,7 +107,7 @@ export function CaseCard({
         <div className="mt-auto pt-1">
           <Link
             href={`/case/${caseStudy.slug}`}
-            className="inline-flex items-center gap-2 text-sm font-semibold text-[var(--accent-2)] transition hover:text-white"
+            className="inline-flex min-h-11 items-center gap-2 text-sm font-semibold text-[var(--accent-2)] transition hover:text-white"
           >
             Se hele caset
             <ArrowUpRightIcon className="h-4 w-4" />
