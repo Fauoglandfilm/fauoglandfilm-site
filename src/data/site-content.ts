@@ -143,7 +143,7 @@ export const homeIntroContent = {
 export const videoLibrary = {
   hero: {
     src: "/media/hero/fau-land-hero-single-source-20260328-final.mp4",
-    mobileSrc: "/media/hero/fau-land-hero-single-source-20260328-final.mp4",
+    mobileSrc: "/media/hero/",
     poster: "/media/placeholders/hero-poster.svg",
     label: "Vinterscene for Fau&Land Film",
     hasEmbeddedText: true,
