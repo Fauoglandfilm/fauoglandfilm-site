@@ -24,6 +24,16 @@ export type ClientLogo = {
   scale?: number;
 };
 
+export type WorkSample = {
+  slug: string;
+  client: string;
+  title: string;
+  category: string;
+  summary: string;
+  video: VideoAsset;
+  accent?: string;
+};
+
 export type ServiceArea = {
   slug: string;
   title: string;
@@ -32,6 +42,12 @@ export type ServiceArea = {
   value: string;
   ctaLabel: string;
   href: string;
+};
+
+export type ServicePillar = {
+  title: string;
+  eyebrow: string;
+  summary: string;
 };
 
 export type OfferPackage = {
@@ -125,18 +141,17 @@ export const siteConfig = {
 };
 
 export const homeHeroContent = {
-  title: "Film som blir sett.",
-  description:
-    "Vi lager video og visuelt innhold som bygger synlighet, tillit og flere henvendelser.",
-  ctaLabel: "Book et uforpliktende møte",
-  ctaHref: "/kontakt",
+  title: "Film that moves brands.",
+  description: "Commercial film production and visual storytelling for ambitious brands.",
+  ctaLabel: "View selected work",
+  ctaHref: "#selected-work",
 };
 
 export const homeIntroContent = {
-  eyebrow: "Oslo-basert produksjonspartner",
-  title: "Video som gjør budskapet lettere å forstå og enklere å velge.",
+  eyebrow: "Oslo-based production company",
+  title: "Premium motion crafted for brands, campaigns and modern content ecosystems.",
   description:
-    "Reklamefilm, SoMe-innhold, bedriftsfilm og eventproduksjon for selskaper som vil bli valgt oftere.",
+    "A senior-led studio for commercial film, brand storytelling and high-performance content production.",
 };
 
 // Hero-media styres her. Resten av siten bruker nå primært tekst, gradienter og placeholders.
@@ -161,89 +176,203 @@ export const navItems: NavItem[] = [
 export const clientLogos: ClientLogo[] = [
   {
     name: "Front B Trading",
-    src: "/media/logos/clients/front-b-trading.png",
+    src: "/media/logos/clients-mono/front-b-trading.png",
     width: 1385,
     height: 958,
     scale: 0.9,
   },
   {
     name: "Client Logo 01",
-    src: "/media/logos/clients/client-logo-01.png",
+    src: "/media/logos/clients-mono/client-logo-01.png",
     width: 765,
     height: 782,
     scale: 0.84,
   },
   {
     name: "ISA",
-    src: "/media/logos/clients/isa.png",
+    src: "/media/logos/clients-mono/isa.png",
     width: 1507,
     height: 684,
     scale: 0.94,
   },
   {
     name: "Nei til Atomvåpen",
-    src: "/media/logos/clients/nei-til-atomvapen.png",
+    src: "/media/logos/clients-mono/nei-til-atomvapen.png",
     width: 1154,
     height: 844,
     scale: 0.88,
   },
   {
     name: "Foreningen Norden",
-    src: "/media/logos/clients/foreningen-norden.png",
+    src: "/media/logos/clients-mono/foreningen-norden.png",
     width: 1306,
     height: 532,
     scale: 0.96,
   },
   {
     name: "Norske Bunader",
-    src: "/media/logos/clients/norske-bunader.png",
+    src: "/media/logos/clients-mono/norske-bunader.png",
     width: 476,
     height: 200,
     scale: 0.96,
   },
   {
     name: "Kulturarena",
-    src: "/media/logos/clients/kulturarena.png",
+    src: "/media/logos/clients-mono/kulturarena.png",
     width: 1429,
     height: 399,
     scale: 1.02,
   },
   {
     name: "STUA",
-    src: "/media/logos/clients/stua.png",
+    src: "/media/logos/clients-mono/stua.png",
     width: 1510,
     height: 577,
     scale: 0.98,
   },
   {
     name: "Underoverskrift",
-    src: "/media/logos/clients/underoverskrift.png",
+    src: "/media/logos/clients-mono/underoverskrift.png",
     width: 746,
     height: 171,
     scale: 1.06,
   },
   {
     name: "Ville Gleder",
-    src: "/media/logos/clients/ville-gleder.png",
+    src: "/media/logos/clients-mono/ville-gleder.png",
     width: 1490,
     height: 500,
     scale: 1.02,
   },
   {
     name: "Actors Hub",
-    src: "/media/logos/clients/actors-hub.png",
+    src: "/media/logos/clients-mono/actors-hub.png",
     width: 1500,
     height: 844,
     scale: 0.88,
   },
   {
     name: "Logo LD",
-    src: "/media/logos/clients/logo-ld.png",
+    src: "/media/logos/clients-mono/logo-ld.png",
     width: 903,
     height: 987,
     scale: 0.8,
   },
 ];
+
+export const selectedWork: WorkSample[] = [
+  {
+    slug: "winter-signature",
+    client: "Fau&Land Film",
+    title: "Winter signature reel",
+    category: "Studio reel",
+    summary: "A cinematic studio cut built to frame the brand with restraint, mood and scale.",
+    accent: "from-[#d8d0c3] via-[#c8bea8] to-[#efe9df]",
+    video: {
+      src: "/media/work/fau-land-winter-english.mp4",
+      label: "Winter signature reel",
+    },
+  },
+  {
+    slug: "magic-bilpleie",
+    client: "Magic Bilpleie",
+    title: "Commercial detail film",
+    category: "Commercial film",
+    summary: "Sharp product-focused visuals designed for premium presentation and digital performance.",
+    accent: "from-[#f2ece2] via-[#d5cab8] to-[#b8a487]",
+    video: {
+      src: "/media/work/magic-bilpleie.mp4",
+      label: "Magic Bilpleie commercial film",
+    },
+  },
+  {
+    slug: "wood-hotel",
+    client: "Wood Hotel",
+    title: "Hospitality architecture cut",
+    category: "Brand storytelling",
+    summary: "Spatial storytelling for hospitality, architecture and destination-led positioning.",
+    accent: "from-[#ece8e1] via-[#d8d1c5] to-[#c1b29b]",
+    video: {
+      src: "/media/work/wood-hotel.mp4",
+      label: "Wood Hotel architecture cut",
+    },
+  },
+  {
+    slug: "incasso-cruisers",
+    client: "Incasso Cruisers",
+    title: "Kinetic campaign vignette",
+    category: "Campaign content",
+    summary: "A short-form cut built for attention, rhythm and memorable visual pacing.",
+    accent: "from-[#efe7db] via-[#d3c7b8] to-[#b7a189]",
+    video: {
+      src: "/media/work/incasso-cruisers.mp4",
+      label: "Incasso Cruisers campaign vignette",
+    },
+  },
+  {
+    slug: "to-historier",
+    client: "To historier",
+    title: "Narrative short format",
+    category: "Story-led production",
+    summary: "Editorial motion with a tighter emotional arc and a more cinematic point of view.",
+    accent: "from-[#f4efe6] via-[#e0d5c7] to-[#c6b39d]",
+    video: {
+      src: "/media/work/to-historier.mp4",
+      label: "To historier narrative short",
+    },
+  },
+  {
+    slug: "promofilm",
+    client: "Fau&Land Film",
+    title: "Studio promo 16:9",
+    category: "Promotional film",
+    summary: "A broader studio-facing promo balancing polish, motion and high-end visual texture.",
+    accent: "from-[#f0ece6] via-[#ddd4c7] to-[#bda88b]",
+    video: {
+      src: "/media/work/promofilm-16-9.mp4",
+      label: "Fau&Land studio promo",
+    },
+  },
+];
+
+export const servicePillars: ServicePillar[] = [
+  {
+    eyebrow: "01",
+    title: "Commercial film",
+    summary: "Campaign films, launches and hero assets built to raise perceived value fast.",
+  },
+  {
+    eyebrow: "02",
+    title: "Brand storytelling",
+    summary: "Editorial films and founder-led narratives that make complex brands feel effortless.",
+  },
+  {
+    eyebrow: "03",
+    title: "Content production",
+    summary: "Always-on cuts, vertical edits and high-volume deliverables with premium consistency.",
+  },
+];
+
+export const aboutStudioContent = {
+  eyebrow: "About Fau&Land Film",
+  title: "Senior-led production from Oslo with a high-end, international point of view.",
+  description:
+    "Fau&Land Film combines commercial strategy, cinematic craft and lean execution for brands, organizations and ambitious teams that need the work to look world-class.",
+  image: "/media/team/tommy-gard.png",
+  imageAlt: "Tommy Garland and Gard Ruben Fauske",
+  stats: [
+    { value: "Oslo", label: "base" },
+    { value: "B2B", label: "focus" },
+    { value: "High-end", label: "production" },
+  ],
+} satisfies {
+  eyebrow: string;
+  title: string;
+  description: string;
+  image: string;
+  imageAlt: string;
+  stats: MetricItem[];
+};
 
 export const serviceAreas: ServiceArea[] = [
   {
@@ -390,7 +519,7 @@ export const caseStudies: CaseStudy[] = [
       { value: "3+", label: "flater" },
     ],
     tags: ["Kampanje", "SoMe", "SMB"],
-    palette: "from-[#2b1c16] via-[#101723] to-[#05070c]",
+    palette: "from-[#efe6da] via-[#d3c3ae] to-[#bda383]",
     featured: true,
   },
   {
@@ -410,7 +539,7 @@ export const caseStudies: CaseStudy[] = [
       { value: "1", label: "tydelig hovedhandling" },
     ],
     tags: ["Organisasjon", "Medlemsvekst", "Kampanje"],
-    palette: "from-[#24120f] via-[#10131b] to-[#05070c]",
+    palette: "from-[#f1e6db] via-[#d7c5b2] to-[#bb9e84]",
     featured: true,
   },
   {
@@ -430,7 +559,7 @@ export const caseStudies: CaseStudy[] = [
       { value: "Videre", label: "bruk" },
     ],
     tags: ["Event", "Organisasjon", "Innhold"],
-    palette: "from-[#241d18] via-[#101823] to-[#06080d]",
+    palette: "from-[#efe9df] via-[#d6cabc] to-[#bfa98c]",
     featured: true,
     verificationNote: "Bytt inn konkret effekt eller kundeuttalelse her når den er verifisert.",
   },
@@ -451,7 +580,7 @@ export const caseStudies: CaseStudy[] = [
       { value: "Brukbart", label: "til flere flater" },
     ],
     tags: ["Promo", "Innhold", "SMB"],
-    palette: "from-[#34211a] via-[#121923] to-[#06070b]",
+    palette: "from-[#f0e7dc] via-[#d7c9b7] to-[#bea58c]",
   },
 ];
 
@@ -482,19 +611,21 @@ export const teamMembers: TeamMember[] = [
   {
     name: "Tommy R.A. Garland",
     role: "Partner, strategi og produksjon",
-    summary: "Tommy jobber med strategi, produksjon og gjennomføring fra første møte til ferdig leveranse.",
+    summary:
+      "Tommy leder strategi, produksjon og gjennomforing med fokus pa tydelig kommersiell retning og presis leveranse.",
   },
   {
     name: "Gard Ruben Fauske",
     role: "Partner, regi og visuell retning",
-    summary: "Gard leder den kreative visjonen, regien og den visuelle kvaliteten gjennom hele prosjektet.",
+    summary:
+      "Gard leder den kreative visjonen, regien og den visuelle kvaliteten gjennom hele prosjektet.",
   },
 ];
 
 export const aboutBullets = [
-  "Vi lager film og visuelt innhold med tydelig budskap og høy produksjonsverdi.",
-  "Vi kombinerer kommersiell forståelse med filmfaglig presisjon.",
-  "Ved behov setter vi sammen et utvidet crew av faste frilansere innen foto, lyd, animasjon og produksjon.",
+  "Oslo-basert produksjonsselskap med en internasjonal, editorial visuell standard.",
+  "Senior-led prosjektflyt fra strategi og regi til produksjon, redigering og uttak.",
+  "Skalerbart crew for foto, lyd, lys, motion design, drone og flerspors leveranser.",
 ];
 
 export const pricingFaq: FaqItem[] = [

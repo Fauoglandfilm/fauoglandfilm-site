@@ -1,4 +1,5 @@
 import Link from "next/link";
+import type { ReactNode } from "react";
 
 import { Reveal } from "@/components/motion/reveal";
 import type {
@@ -10,226 +11,34 @@ import type {
   ServiceArea,
   TeamMember,
   Testimonial,
-  VideoAsset,
 } from "@/data/site-content";
-import {
-  clientLogos,
-  homeHeroContent,
-  homeIntroContent,
-  siteConfig,
-  videoLibrary,
-} from "@/data/site-content";
+import { siteConfig } from "@/data/site-content";
 
 import { ButtonLink } from "../ui/button-link";
 import { MailIcon, PhoneIcon, PinIcon } from "../ui/icons";
 import { SectionShell } from "../ui/section-shell";
 import { CaseCard } from "./case-card";
-import { ClientLogoMarquee } from "./client-logo-marquee";
 import { ContactForm } from "./contact-form";
+import { PageHero } from "./home-sections";
 import { ServiceCard } from "./service-card";
 import { TestimonialCard } from "./testimonial-card";
 
-type PageHeroProps = {
-  eyebrow: string;
-  title: string;
-  description: string;
-  primaryCta?: { label: string; href: string };
-  secondaryCta?: { label: string; href: string };
-  video?: VideoAsset;
-};
-
-export function SalesHero() {
-  const heroVideo = videoLibrary.hero;
-  const minimalOverlay = heroVideo.hasEmbeddedText;
-
-  return (
-    <section className="relative isolate min-h-[100svh] overflow-hidden">
-      <div className="absolute inset-0">
-        <video
-          className="h-full w-full object-cover"
-          autoPlay
-          muted
-          loop
-          playsInline
-          preload="metadata"
-          poster={heroVideo.poster}
-        >
-          {heroVideo.mobileSrc ? (
-            <source media="(max-width: 767px)" src={heroVideo.mobileSrc} type="video/mp4" />
-          ) : null}
-          <source src={heroVideo.src} type="video/mp4" />
-        </video>
-        <div
-          className={`absolute inset-0 ${
-            minimalOverlay
-              ? "bg-[linear-gradient(180deg,rgba(5,10,19,0.22),rgba(5,10,19,0.08)_34%,rgba(5,10,19,0.42)_78%,rgba(5,10,19,0.72))]"
-              : "bg-[linear-gradient(180deg,rgba(5,10,19,0.14),rgba(5,10,19,0.22)_42%,rgba(5,10,19,0.62))]"
-          }`}
-        />
-      </div>
-
-      <div
-        className={`relative mx-auto flex max-w-7xl ${
-          minimalOverlay
-            ? "min-h-[100svh] items-end justify-center px-5 pt-24 sm:px-6 lg:justify-start lg:px-8 lg:pt-28"
-            : "min-h-[100svh] items-end justify-start px-5 pb-12 pt-24 sm:px-6 sm:pb-14 lg:px-8 lg:pt-28"
-        }`}
-        style={
-          minimalOverlay
-            ? { paddingBottom: "calc(1rem + env(safe-area-inset-bottom, 0px))" }
-            : undefined
-        }
-      >
-        {minimalOverlay ? (
-          <div className="flex w-full justify-center lg:justify-start">
-            <div className="w-full max-w-sm rounded-full border border-white/12 bg-[rgba(5,10,19,0.22)] p-1 backdrop-blur-md sm:w-auto">
-              <ButtonLink href={homeHeroContent.ctaHref} fullWidth className="sm:w-auto">
-                {homeHeroContent.ctaLabel}
-              </ButtonLink>
-            </div>
-          </div>
-        ) : (
-          <div className="max-w-[34rem] space-y-4">
-            <h1 className="text-balance font-display text-[2.55rem] leading-[0.94] text-white sm:text-5xl lg:text-[4.2rem]">
-              {homeHeroContent.title}
-            </h1>
-            <p className="max-w-2xl text-[0.95rem] leading-6 text-white/76 sm:text-base sm:leading-7">
-              {homeHeroContent.description}
-            </p>
-            <div className="flex pt-1">
-              <ButtonLink href={homeHeroContent.ctaHref} fullWidth className="sm:w-auto">
-                {homeHeroContent.ctaLabel}
-              </ButtonLink>
-            </div>
-          </div>
-        )}
-      </div>
-    </section>
-  );
-}
-
-export function HomeIntroSection() {
-  return (
-    <section className="border-b border-white/6 bg-[#050a13]">
-      <div className="mx-auto grid max-w-7xl gap-3 px-5 py-6 sm:px-6 sm:py-7 lg:grid-cols-[0.72fr_1.28fr] lg:items-end lg:px-8 lg:py-8">
-        <p className="text-[0.68rem] font-semibold uppercase tracking-[0.26em] text-white/42">
-          {homeIntroContent.eyebrow}
-        </p>
-        <div className="space-y-2">
-          <h2 className="max-w-4xl text-balance font-display text-[1.8rem] leading-[1.02] text-white sm:text-[2.25rem] lg:text-[2.7rem]">
-            {homeIntroContent.title}
-          </h2>
-          <p className="max-w-2xl text-[0.95rem] leading-6 text-white/68 sm:text-base sm:leading-7">
-            {homeIntroContent.description}
-          </p>
-        </div>
-      </div>
-    </section>
-  );
-}
-
-export function SocialProofSection() {
-  return (
-    <section className="relative isolate overflow-hidden border-b border-white/6 bg-[#050a13]">
-      <div className="mx-auto max-w-7xl px-5 py-5 sm:px-6 sm:py-6 lg:px-8 lg:py-7">
-        <p className="text-center text-[0.66rem] font-semibold uppercase tracking-[0.28em] text-white/48">
-          Utvalgte kunder og samarbeid
-        </p>
-        <div className="mt-4 sm:mt-5">
-          <ClientLogoMarquee logos={clientLogos} />
-        </div>
-      </div>
-    </section>
-  );
-}
-
-export function PageHero({
-  eyebrow,
-  title,
-  description,
-  primaryCta,
-  secondaryCta,
-  video,
-}: PageHeroProps) {
-  return (
-    <section className="relative isolate overflow-hidden">
-      <div className="absolute inset-0">
-        {video ? (
-          <>
-            <video
-              className="h-full w-full object-cover"
-              autoPlay
-              muted
-              loop
-              playsInline
-              preload="metadata"
-              poster={video.poster}
-            >
-              {video.mobileSrc ? (
-                <source media="(max-width: 767px)" src={video.mobileSrc} type="video/mp4" />
-              ) : null}
-              <source src={video.src} type="video/mp4" />
-            </video>
-            <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(5,10,19,0.36),rgba(5,10,19,0.74)_52%,rgba(5,10,19,0.9))]" />
-          </>
-        ) : (
-          <div className="absolute inset-0 bg-[linear-gradient(180deg,#09111d,#050a13)]" />
-        )}
-      </div>
-
-      <div className="relative mx-auto flex min-h-[28svh] max-w-7xl items-end px-5 pb-7 pt-24 sm:px-6 sm:pb-8 lg:min-h-[32svh] lg:px-8 lg:pb-9 lg:pt-24">
-        <div className="max-w-3xl space-y-3">
-          <p className="text-[0.68rem] font-semibold uppercase tracking-[0.26em] text-white/48">
-            {eyebrow}
-          </p>
-          <h1 className="max-w-4xl text-balance font-display text-[2rem] leading-[0.99] text-white sm:text-[2.65rem] lg:text-[3.35rem]">
-            {title}
-          </h1>
-          <p className="max-w-2xl text-[0.95rem] leading-6 text-white/72 sm:text-base sm:leading-7">
-            {description}
-          </p>
-          {primaryCta || secondaryCta ? (
-            <div className="flex flex-col gap-2.5 pt-1 sm:flex-row sm:flex-wrap">
-              {primaryCta ? (
-                <ButtonLink href={primaryCta.href} fullWidth className="sm:w-auto">
-                  {primaryCta.label}
-                </ButtonLink>
-              ) : null}
-              {secondaryCta ? (
-                <ButtonLink
-                  href={secondaryCta.href}
-                  variant="secondary"
-                  fullWidth
-                  className="sm:w-auto"
-                >
-                  {secondaryCta.label}
-                </ButtonLink>
-              ) : null}
-            </div>
-          ) : null}
-        </div>
-      </div>
-    </section>
-  );
-}
+export { PageHero };
 
 export function ServicesSection({
   services,
-  title = "Fire tydelige tjenesteområder",
-  description = "Kort forklart. Lett å forstå. Lett å kjøpe.",
+  title = "Tjenester for bedrifter og organisasjoner",
+  description = "Kort forklart, premium presentert og satt opp for en rask vei til neste steg.",
 }: {
   services: ServiceArea[];
   title?: string;
   description?: string;
 }) {
-  const gridClassName =
-    services.length <= 4 ? "md:grid-cols-2" : "md:grid-cols-2 xl:grid-cols-3";
-
   return (
     <SectionShell eyebrow="Tjenester" title={title} description={description} id="tjenester">
-      <div className={`grid gap-4 ${gridClassName}`}>
+      <div className="grid gap-4 md:grid-cols-2">
         {services.map((service, index) => (
-          <Reveal key={service.slug} delay={0.08 * index}>
+          <Reveal key={service.slug} delay={0.06 * index}>
             <ServiceCard service={service} />
           </Reveal>
         ))}
@@ -242,29 +51,30 @@ export function PackagesSection({ packages }: { packages: OfferPackage[] }) {
   return (
     <SectionShell
       eyebrow="Pakker"
-      title="Tre tydelige nivåer"
-      description="Lett å lese. Lett å diskutere. Lett å komme i gang med."
-      id="pakker"
+      title="Tre tydelige samarbeidsnivåer"
+      description="Behold enkelheten i første samtale, men presenter nivåene med mer premium ro og tydelighet."
     >
       <div className="grid gap-4 xl:grid-cols-3">
         {packages.map((pkg, index) => (
-          <Reveal key={pkg.name} delay={0.08 * index}>
+          <Reveal key={pkg.name} delay={0.05 * index}>
             <article
-              className={`rounded-[1.7rem] border p-4 sm:p-5 ${
-                pkg.featured
-                  ? "border-[var(--accent)]/36 bg-[linear-gradient(180deg,rgba(226,194,122,0.12),rgba(7,12,20,0.9))]"
-                  : "border-white/10 bg-[rgba(8,13,22,0.9)]"
+              className={`card-surface rounded-[1.9rem] p-5 sm:p-6 ${
+                pkg.featured ? "ring-1 ring-[var(--accent)]/35" : ""
               }`}
             >
-              <p className="text-[0.72rem] font-semibold uppercase tracking-[0.24em] text-[var(--accent-2)]">
+              <p className="text-[0.68rem] font-semibold uppercase tracking-[0.22em] text-[var(--muted)]">
                 {pkg.name}
               </p>
-              <h3 className="mt-3 font-display text-[2.1rem] text-white">{pkg.price}</h3>
-              <p className="mt-3 text-sm leading-6 text-white/68 sm:text-base">{pkg.summary}</p>
-              <p className="mt-4 border-t border-white/10 pt-4 text-sm leading-6 text-white/54">
+              <h3 className="mt-4 font-display text-[2.2rem] leading-[0.95] text-[#111111]">
+                {pkg.price}
+              </h3>
+              <p className="mt-3 text-sm leading-6 text-[var(--muted-2)] sm:text-base">
+                {pkg.summary}
+              </p>
+              <p className="mt-4 border-t border-black/8 pt-4 text-sm leading-6 text-[var(--muted)]">
                 {pkg.idealFor}
               </p>
-              <ul className="mt-5 space-y-2.5 text-sm leading-6 text-white/74">
+              <ul className="mt-5 space-y-2.5 text-sm leading-6 text-[var(--muted-2)]">
                 {pkg.includes.map((item) => (
                   <li key={item} className="flex gap-3">
                     <span className="mt-2 h-1.5 w-1.5 rounded-full bg-[var(--accent)]" />
@@ -272,12 +82,8 @@ export function PackagesSection({ packages }: { packages: OfferPackage[] }) {
                   </li>
                 ))}
               </ul>
-              <div className="mt-5">
-                <ButtonLink
-                  href={pkg.ctaHref}
-                  variant={pkg.featured ? "primary" : "secondary"}
-                  fullWidth
-                >
+              <div className="mt-6">
+                <ButtonLink href={pkg.ctaHref} variant={pkg.featured ? "primary" : "secondary"} fullWidth>
                   {pkg.ctaLabel}
                 </ButtonLink>
               </div>
@@ -294,17 +100,19 @@ export function PriceGuideSection({ items }: { items: PriceGuide[] }) {
     <SectionShell
       eyebrow="Prisnivå"
       title="Veiledende prisrammer"
-      description="Prisene er her for å gjøre dialogen enklere, ikke for å lage mer friksjon."
+      description="Prisene er ment for å gjøre neste samtale enklere og mer presis."
     >
       <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
         {items.map((item, index) => (
-          <Reveal key={item.title} delay={0.06 * index}>
-            <article className="border-t border-white/10 pt-4">
-              <p className="text-[0.72rem] font-semibold uppercase tracking-[0.24em] text-[var(--accent-2)]">
+          <Reveal key={item.title} delay={0.05 * index}>
+            <article className="card-surface rounded-[1.7rem] p-5">
+              <p className="text-[0.68rem] font-semibold uppercase tracking-[0.2em] text-[var(--muted)]">
                 {item.range}
               </p>
-              <h3 className="mt-3 text-xl font-semibold text-white sm:text-2xl">{item.title}</h3>
-              <p className="mt-2.5 text-sm leading-6 text-white/58">{item.detail}</p>
+              <h3 className="mt-3 font-display text-[1.55rem] leading-[1] text-[#111111]">
+                {item.title}
+              </h3>
+              <p className="mt-3 text-sm leading-6 text-[var(--muted-2)]">{item.detail}</p>
             </article>
           </Reveal>
         ))}
@@ -324,17 +132,12 @@ export function FeaturedCasesSection({
     <SectionShell
       eyebrow="Case"
       title="Utvalgte case"
-      description="Kunde, behov, leveranse og effekt. Kort og tydelig."
-      action={
-        <ButtonLink href="/case" variant="ghost" className="px-0 py-0">
-          Se alle case
-        </ButtonLink>
-      }
-      id="case"
+      description="Kortere, mer visuelle case-presentasjoner med tydelig klient, effekt og vei videre."
+      action={<ButtonLink href="/case" variant="ghost">Se alle case</ButtonLink>}
     >
-      <div className="grid gap-4 sm:gap-5">
+      <div className="grid gap-4">
         {cases.map((caseStudy, index) => (
-          <Reveal key={caseStudy.slug} delay={0.08 * index}>
+          <Reveal key={caseStudy.slug} delay={0.06 * index}>
             <CaseCard
               caseStudy={caseStudy}
               layout={index === 0 ? "feature" : "stack"}
@@ -352,20 +155,18 @@ export function ProcessSection({ steps }: { steps: ProcessStep[] }) {
     <SectionShell
       eyebrow="Prosess"
       title="Slik jobber vi"
-      description="Fire steg. Lite friksjon. Tydelig vei fra idé til ferdig leveranse."
+      description="En enklere, mer senior-led prosess med mindre friksjon og tydeligere beslutningspunkter."
       align="center"
     >
-      <div className="grid gap-3.5 md:grid-cols-2 xl:grid-cols-4">
+      <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
         {steps.map((step, index) => (
-          <Reveal key={step.step} delay={0.06 * index}>
-            <article className="border-t border-white/10 pt-4">
-              <p className="font-display text-[2.4rem] leading-none text-[var(--accent)]/88 sm:text-[2.9rem]">
-                {step.step}
-              </p>
-              <h3 className="mt-2.5 font-display text-[1.35rem] text-white sm:text-[1.55rem]">
+          <Reveal key={step.step} delay={0.05 * index}>
+            <article className="card-surface rounded-[1.7rem] p-5">
+              <p className="font-display text-[2.2rem] leading-none text-[#111111]">{step.step}</p>
+              <h3 className="mt-4 font-display text-[1.45rem] leading-[0.98] text-[#111111]">
                 {step.title}
               </h3>
-              <p className="mt-2 text-sm leading-6 text-white/58">{step.description}</p>
+              <p className="mt-3 text-sm leading-6 text-[var(--muted-2)]">{step.description}</p>
             </article>
           </Reveal>
         ))}
@@ -374,23 +175,19 @@ export function ProcessSection({ steps }: { steps: ProcessStep[] }) {
   );
 }
 
-export function TestimonialsSection({
-  testimonials,
-}: {
-  testimonials: Testimonial[];
-}) {
+export function TestimonialsSection({ testimonials }: { testimonials: Testimonial[] }) {
   const gridClassName = testimonials.length <= 2 ? "xl:grid-cols-2" : "xl:grid-cols-3";
 
   return (
     <SectionShell
       eyebrow="Kundestemmer"
       title="Hva kundene sier"
-      description="Korte tilbakemeldinger fra kunder og samarbeidspartnere."
+      description="Mer editorial presentasjon av sitater og proof."
       align="center"
     >
-      <div className={`grid gap-3 ${gridClassName}`}>
+      <div className={`grid gap-4 ${gridClassName}`}>
         {testimonials.map((testimonial, index) => (
-          <Reveal key={`${testimonial.company}-${index}`} delay={0.08 * index}>
+          <Reveal key={`${testimonial.company}-${index}`} delay={0.05 * index}>
             <TestimonialCard {...testimonial} />
           </Reveal>
         ))}
@@ -410,52 +207,36 @@ export function AboutPreviewSection({
     <SectionShell
       eyebrow="Om Fau&Land"
       title="Et lite team med tydelig ansvar"
-      description="Fau&Land Film drives av Gard Ruben Fauske og Tommy R.A. Garland."
-      action={
-        <ButtonLink href="/om-oss" variant="ghost" className="px-0 py-0">
-          Se mer om oss
-        </ButtonLink>
-      }
+      description="Senior-led prosjektgjennomforing med tydelig visuell retning og kommersiell forstaelse."
+      action={<ButtonLink href="/om-oss" variant="ghost">Se mer om oss</ButtonLink>}
     >
-      <div className="grid gap-4 xl:grid-cols-[0.92fr_1.08fr] xl:items-start">
-        <article className="rounded-[1.4rem] border border-white/8 bg-white/[0.015] p-4 sm:p-5">
-          <p className="text-[0.68rem] font-semibold uppercase tracking-[0.22em] text-white/44">
-            Hvem vi er
+      <div className="grid gap-4 xl:grid-cols-[0.88fr_1.12fr]">
+        <article className="card-surface rounded-[1.8rem] p-5 sm:p-6">
+          <p className="text-[0.68rem] font-semibold uppercase tracking-[0.22em] text-[var(--muted)]">
+            Studio summary
           </p>
-          <h3 className="mt-2 font-display text-[1.55rem] text-white sm:text-[1.75rem]">
-            Gard og Tommy driver hvert prosjekt tett.
-          </h3>
-          <p className="mt-3 text-sm leading-6 text-white/64 sm:text-base sm:leading-7">
-            Et lite seniorledet team med tydelig ansvar fra strategi og regi til produksjon og leveranse.
-          </p>
+          <ul className="mt-5 space-y-3 text-sm leading-6 text-[var(--muted-2)] sm:text-base">
+            {bullets.map((bullet) => (
+              <li key={bullet} className="flex gap-3">
+                <span className="mt-2 h-1.5 w-1.5 rounded-full bg-[var(--accent)]" />
+                <span>{bullet}</span>
+              </li>
+            ))}
+          </ul>
         </article>
 
-        <div className="grid gap-4">
-          <article className="border-t border-white/10 pt-4">
-            <ul className="space-y-3 text-sm leading-6 text-white/70 sm:text-base">
-              {bullets.map((bullet) => (
-                <li key={bullet} className="flex gap-3">
-                  <span className="mt-3 h-1.5 w-1.5 rounded-full bg-[var(--accent)]" />
-                  <span>{bullet}</span>
-                </li>
-              ))}
-            </ul>
-          </article>
-
-          <div className="grid gap-4 lg:grid-cols-2">
-            {team.map((member) => (
-              <article
-                key={member.name}
-                className="border-t border-white/10 pt-4"
-              >
-                <p className="text-[0.68rem] font-semibold uppercase tracking-[0.22em] text-white/46">
-                  {member.role}
-                </p>
-                <h3 className="mt-2 font-display text-[1.5rem] text-white">{member.name}</h3>
-                <p className="mt-2.5 text-sm leading-6 text-white/60">{member.summary}</p>
-              </article>
-            ))}
-          </div>
+        <div className="grid gap-4 lg:grid-cols-2">
+          {team.map((member) => (
+            <article key={member.name} className="card-surface rounded-[1.8rem] p-5">
+              <p className="text-[0.68rem] font-semibold uppercase tracking-[0.22em] text-[var(--muted)]">
+                {member.role}
+              </p>
+              <h3 className="mt-3 font-display text-[1.55rem] leading-[0.98] text-[#111111]">
+                {member.name}
+              </h3>
+              <p className="mt-3 text-sm leading-6 text-[var(--muted-2)]">{member.summary}</p>
+            </article>
+          ))}
         </div>
       </div>
     </SectionShell>
@@ -471,37 +252,33 @@ export function TeamSection({
 }) {
   return (
     <SectionShell
-      eyebrow="Om oss"
+      eyebrow="Team"
       title="Tommy og Gard leder hvert prosjekt tett"
-      description="Gard leder den kreative visjonen og regien. Tommy jobber med strategi, produksjon og gjennomføring."
+      description="Et seniorledet oppsett med faerre ledd, mer kvalitetssikring og et tydelig visuelt ansvar."
     >
-      <div className="grid gap-4 xl:grid-cols-[0.9fr_1.1fr] xl:items-start">
-        <div className="rounded-[1.4rem] border border-white/8 bg-white/[0.015] p-4 sm:p-5">
-          <p className="text-[0.68rem] font-semibold uppercase tracking-[0.22em] text-white/44">
-            Fau&Land Film
-          </p>
-          <p className="mt-3 text-sm leading-6 text-white/68 sm:text-base sm:leading-7">
-            Vi jobber tett med hver produksjon og utvider ved behov med faste frilansere innen foto, lyd, animasjon og produksjon.
-          </p>
-          <ul className="mt-5 space-y-3 text-sm leading-6 text-white/70 sm:text-base">
+      <div className="grid gap-4 xl:grid-cols-[0.86fr_1.14fr]">
+        <article className="card-surface rounded-[1.8rem] p-5 sm:p-6">
+          <ul className="space-y-3 text-sm leading-6 text-[var(--muted-2)] sm:text-base">
             {bullets.map((bullet) => (
               <li key={bullet} className="flex gap-3">
-                <span className="mt-3 h-1.5 w-1.5 rounded-full bg-[var(--accent)]" />
+                <span className="mt-2 h-1.5 w-1.5 rounded-full bg-[var(--accent)]" />
                 <span>{bullet}</span>
               </li>
             ))}
           </ul>
-        </div>
+        </article>
 
         <div className="grid gap-4 lg:grid-cols-2">
           {team.map((member, index) => (
-            <Reveal key={member.name} delay={0.08 * index}>
-              <article className="rounded-[1.4rem] border border-white/8 bg-white/[0.015] p-4">
-                <p className="text-[0.68rem] font-semibold uppercase tracking-[0.22em] text-white/46">
+            <Reveal key={member.name} delay={0.05 * index}>
+              <article className="card-surface rounded-[1.8rem] p-5">
+                <p className="text-[0.68rem] font-semibold uppercase tracking-[0.22em] text-[var(--muted)]">
                   {member.role}
                 </p>
-                <h3 className="mt-2 font-display text-[1.5rem] text-white">{member.name}</h3>
-                <p className="mt-3 text-sm leading-6 text-white/64 sm:text-base">{member.summary}</p>
+                <h3 className="mt-3 font-display text-[1.55rem] leading-[0.98] text-[#111111]">
+                  {member.name}
+                </h3>
+                <p className="mt-3 text-sm leading-6 text-[var(--muted-2)]">{member.summary}</p>
               </article>
             </Reveal>
           ))}
@@ -523,87 +300,49 @@ export function ContactLeadSection({
   return (
     <SectionShell
       eyebrow="Kontakt"
-      title="Lav terskel for å ta kontakt"
-      description="Send en kort melding, så følger vi opp raskt med forslag til neste steg."
-      id="kontakt"
+      title="En lavterskel inngang til neste produksjon"
+      description="Hold kontaktseksjonen lettere, tydeligere og mer premium enn en tradisjonell skjema-blokk."
     >
-      <div className="grid gap-4 xl:grid-cols-[0.78fr_1.22fr]">
-        <article className="rounded-[1.5rem] border border-white/8 bg-white/[0.015] p-4 sm:p-5">
-          <div className="space-y-4">
-            <h3 className="font-display text-[1.75rem] text-white sm:text-[1.9rem]">Kontakt Fau&Land Film</h3>
-            <p className="text-sm leading-6 text-white/64 sm:text-base">
-              Vi holder til i Oslo og svarer som regel innen 24 timer.
+      <div className="grid gap-4 xl:grid-cols-[0.82fr_1.18fr]">
+        <article className="card-surface rounded-[1.9rem] p-5 sm:p-6">
+          <div className="space-y-3">
+            <h3 className="font-display text-[2rem] leading-[0.96] text-[#111111]">
+              Kontakt Fau&Land Film
+            </h3>
+            <p className="text-sm leading-6 text-[var(--muted-2)] sm:text-base">
+              Oslo-basert produksjonspartner med rask respons og tydelig oppfolging.
             </p>
           </div>
 
-          <div className="mt-5 space-y-4 border-t border-white/10 pt-5">
-            <a
-              className="flex min-h-11 items-start gap-4 text-white/76 transition hover:text-white"
-              href={`mailto:${siteConfig.email}`}
-            >
-              <MailIcon className="mt-1 h-5 w-5 text-[var(--accent-2)]" />
-              <span>
-                <span className="block text-xs uppercase tracking-[0.22em] text-[var(--accent-2)]">
-                  E-post
-                </span>
-                <span className="mt-1.5 block text-base sm:text-lg">{siteConfig.email}</span>
-              </span>
-            </a>
-
-            <a
-              className="flex min-h-11 items-start gap-4 text-white/76 transition hover:text-white"
-              href={siteConfig.phonePrimaryHref}
-            >
-              <PhoneIcon className="mt-1 h-5 w-5 text-[var(--accent-2)]" />
-              <span>
-                <span className="block text-xs uppercase tracking-[0.22em] text-[var(--accent-2)]">
-                  Telefon
-                </span>
-                <span className="mt-1.5 block text-base sm:text-lg">{siteConfig.phonePrimary}</span>
-              </span>
-            </a>
-
-            <div className="flex items-start gap-4 text-white/76">
-              <PinIcon className="mt-1 h-5 w-5 text-[var(--accent-2)]" />
-              <span>
-                <span className="block text-xs uppercase tracking-[0.22em] text-[var(--accent-2)]">
-                  Base
-                </span>
-                <span className="mt-1.5 block text-base sm:text-lg">{siteConfig.locationLabel}</span>
-                <span className="mt-1 block text-sm text-white/50">{siteConfig.responseTime}</span>
-              </span>
-            </div>
-          </div>
-
-          <div className="mt-5">
-            <ButtonLink href={siteConfig.bookingHref} fullWidth className="sm:w-auto">
-              {siteConfig.bookingLabel}
-            </ButtonLink>
+          <div className="mt-6 grid gap-4 border-t border-black/8 pt-6">
+            <ContactRow icon={<MailIcon className="h-5 w-5" />} label="E-post" value={siteConfig.email} href={`mailto:${siteConfig.email}`} />
+            <ContactRow icon={<PhoneIcon className="h-5 w-5" />} label="Telefon" value={siteConfig.phonePrimary} href={siteConfig.phonePrimaryHref} />
+            <ContactRow icon={<PinIcon className="h-5 w-5" />} label="Base" value={siteConfig.locationLabel} />
           </div>
         </article>
 
-        <article className="rounded-[1.5rem] border border-white/8 bg-white/[0.02] p-4 sm:p-5">
-          <h3 className="font-display text-[1.75rem] text-white sm:text-[2rem]">
+        <article className="card-surface rounded-[1.9rem] p-5 sm:p-6">
+          <h3 className="font-display text-[2rem] leading-[0.96] text-[#111111] sm:text-[2.5rem]">
             Fortell kort hva dere trenger
           </h3>
-          <p className="mt-3 text-sm leading-6 text-white/64 sm:text-base">
-            En enkel brief er nok. Vi følger opp med forslag til format, omfang og neste steg.
+          <p className="mt-3 text-sm leading-6 text-[var(--muted-2)] sm:text-base">
+            En enkel brief er nok. Vi kommer tilbake med anbefalt format, omfang og neste steg.
           </p>
-          <div className="mt-5">
+          <div className="mt-6">
             <ContactForm />
           </div>
 
           {visibleFaqs.length ? (
-            <div className="mt-5 grid gap-3 border-t border-white/10 pt-5">
+            <div className="mt-6 grid gap-3 border-t border-black/8 pt-6">
               {visibleFaqs.map((faq) => (
                 <details
                   key={faq.question}
-                  className="rounded-[1.2rem] border border-white/10 bg-white/[0.03] px-4 py-4"
+                  className="rounded-[1.3rem] border border-black/8 bg-white/70 px-4 py-4"
                 >
-                  <summary className="cursor-pointer list-none text-sm font-semibold text-white">
+                  <summary className="cursor-pointer list-none text-sm font-semibold text-[#111111] sm:text-base">
                     {faq.question}
                   </summary>
-                  <p className="mt-3 text-sm leading-6 text-white/58">{faq.answer}</p>
+                  <p className="mt-3 text-sm leading-6 text-[var(--muted-2)]">{faq.answer}</p>
                 </details>
               ))}
             </div>
@@ -611,6 +350,40 @@ export function ContactLeadSection({
         </article>
       </div>
     </SectionShell>
+  );
+}
+
+function ContactRow({
+  icon,
+  label,
+  value,
+  href,
+}: {
+  icon: ReactNode;
+  label: string;
+  value: string;
+  href?: string;
+}) {
+  const content = (
+    <div className="flex items-start gap-4 rounded-[1.35rem] border border-black/8 bg-white/72 px-4 py-4">
+      <div className="flex h-10 w-10 items-center justify-center rounded-full bg-[#111111] text-white">
+        {icon}
+      </div>
+      <div>
+        <p className="text-[0.7rem] uppercase tracking-[0.18em] text-[var(--muted)]">{label}</p>
+        <p className="mt-1 text-base text-[#111111]">{value}</p>
+      </div>
+    </div>
+  );
+
+  if (!href) {
+    return content;
+  }
+
+  return (
+    <a href={href} className="transition hover:translate-y-[-1px]">
+      {content}
+    </a>
   );
 }
 
@@ -629,12 +402,14 @@ export function FaqList({
         {items.map((item) => (
           <details
             key={item.question}
-            className="rounded-[1.2rem] border border-white/8 bg-white/[0.015] px-5 py-4"
+            className="card-surface rounded-[1.5rem] px-5 py-4"
           >
-            <summary className="cursor-pointer list-none text-base font-semibold text-white sm:text-lg">
+            <summary className="cursor-pointer list-none text-base font-semibold text-[#111111] sm:text-lg">
               {item.question}
             </summary>
-            <p className="mt-3 text-sm leading-6 text-white/62 sm:text-base sm:leading-7">{item.answer}</p>
+            <p className="mt-3 text-sm leading-6 text-[var(--muted-2)] sm:text-base sm:leading-7">
+              {item.answer}
+            </p>
           </details>
         ))}
       </div>
@@ -662,7 +437,7 @@ export function CtaBanner({
   return (
     <section className="section-space">
       <div className="mx-auto max-w-7xl px-5 sm:px-6 lg:px-8">
-        <div className="overflow-hidden rounded-[1.6rem] border border-white/8 bg-[linear-gradient(180deg,rgba(255,255,255,0.028),rgba(255,255,255,0.012))] p-4 sm:p-5 lg:p-6">
+        <div className="overflow-hidden rounded-[2rem] border border-black/8 bg-[#111111] px-5 py-6 text-white shadow-[0_32px_100px_rgba(15,15,15,0.14)] sm:px-6 sm:py-7 lg:px-8 lg:py-8">
           <div
             className={
               align === "center"
@@ -671,24 +446,28 @@ export function CtaBanner({
             }
           >
             <div className="space-y-3">
-              <p className="text-[0.68rem] font-semibold uppercase tracking-[0.26em] text-white/44">
+              <p className="text-[0.72rem] font-semibold uppercase tracking-[0.24em] text-white/44">
                 Klar for neste steg
               </p>
-              <h2 className="max-w-3xl font-display text-[1.75rem] leading-[0.99] text-white sm:text-[2.25rem]">
+              <h2 className="font-display text-[2rem] leading-[0.94] text-white sm:text-[2.8rem]">
                 {title}
               </h2>
-              <p className="max-w-2xl text-[0.95rem] leading-6 text-white/68 sm:text-base sm:leading-7">{description}</p>
+              <p className="max-w-2xl text-[0.96rem] leading-7 text-white/68">{description}</p>
             </div>
             <div
               className={`flex flex-col gap-3 sm:flex-row sm:flex-wrap ${
-                align === "center" ? "justify-center pt-2" : "xl:justify-end"
+                align === "center" ? "justify-center pt-3" : "xl:justify-end"
               }`}
             >
-              <ButtonLink href={primaryHref} fullWidth className="sm:w-auto">
+              <ButtonLink href={primaryHref} className="bg-white text-[#111111] hover:bg-white/92">
                 {primaryLabel}
               </ButtonLink>
               {secondaryLabel ? (
-                <ButtonLink href={secondaryHref} variant="secondary" fullWidth className="sm:w-auto">
+                <ButtonLink
+                  href={secondaryHref}
+                  variant="secondary"
+                  className="border-white/16 bg-white/8 text-white hover:border-white/28 hover:bg-white/14"
+                >
                   {secondaryLabel}
                 </ButtonLink>
               ) : null}
@@ -706,12 +485,12 @@ export function RelatedLinks({
   links: Array<{ href: string; label: string }>;
 }) {
   return (
-    <div className="flex flex-wrap gap-4">
+    <div className="flex flex-wrap gap-5">
       {links.map((link) => (
         <Link
           key={link.href}
           href={link.href}
-          className="text-sm font-semibold text-white/62 transition hover:text-white"
+          className="text-sm font-semibold text-[#111111]/62 transition hover:text-[#111111]"
         >
           {link.label}
         </Link>

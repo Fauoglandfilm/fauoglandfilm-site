@@ -1,29 +1,31 @@
 @import "tailwindcss";
 
 :root {
-  --background: #050a13;
-  --foreground: #f7f8fb;
-  --bg-1: #050a13;
-  --bg-2: #08111d;
-  --panel: rgba(11, 18, 30, 0.76);
-  --panel-2: rgba(255, 255, 255, 0.04);
-  --muted: #9eabc1;
-  --muted-2: #c7d0de;
-  --accent: #dfc07a;
-  --accent-2: #f1d89d;
-  color-scheme: dark;
+  --background: #f3efe8;
+  --foreground: #131313;
+  --surface: rgba(255, 255, 255, 0.72);
+  --surface-strong: rgba(255, 255, 255, 0.92);
+  --surface-muted: rgba(255, 255, 255, 0.5);
+  --line: rgba(17, 17, 17, 0.1);
+  --line-strong: rgba(17, 17, 17, 0.18);
+  --muted: #746b62;
+  --muted-2: #5d554e;
+  --accent: #b59a67;
+  --accent-2: #8a7347;
+  --shadow: 0 24px 80px rgba(25, 21, 17, 0.08);
+  color-scheme: light;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --font-sans: var(--font-manrope);
-  --font-display: var(--font-fraunces);
+  --font-display: var(--font-sora);
 }
 
 html {
   scroll-behavior: smooth;
-  scroll-padding-top: calc(5.5rem + env(safe-area-inset-top, 0px));
+  scroll-padding-top: calc(5rem + env(safe-area-inset-top, 0px));
   -webkit-text-size-adjust: 100%;
 }
 
@@ -33,14 +35,31 @@ html {
 
 body {
   min-height: 100vh;
-  background: linear-gradient(180deg, #060b12 0%, #050a13 48%, #040810 100%);
+  background:
+    radial-gradient(circle at top left, rgba(212, 197, 164, 0.24), transparent 28%),
+    radial-gradient(circle at top right, rgba(185, 177, 163, 0.16), transparent 24%),
+    linear-gradient(180deg, #f5f1eb 0%, #f2eee8 42%, #eee8e0 100%);
   color: var(--foreground);
   font-family: var(--font-manrope), sans-serif;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
 }
 
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  background:
+    linear-gradient(rgba(17, 17, 17, 0.02) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(17, 17, 17, 0.02) 1px, transparent 1px);
+  background-size: 48px 48px;
+  mask-image: linear-gradient(180deg, rgba(0, 0, 0, 0.42), transparent 75%);
+  opacity: 0.32;
+}
+
 a {
+  color: inherit;
   text-decoration: none;
 }
 
@@ -50,8 +69,8 @@ video {
 }
 
 ::selection {
-  background: var(--accent);
-  color: var(--bg-1);
+  background: rgba(181, 154, 103, 0.24);
+  color: var(--foreground);
 }
 
 summary::-webkit-details-marker {
@@ -65,66 +84,73 @@ summary::-webkit-details-marker {
   h4,
   h5,
   h6 {
-    letter-spacing: -0.03em;
+    letter-spacing: -0.045em;
   }
 }
 
 @layer utilities {
   .font-display {
-    font-family: var(--font-fraunces), serif;
-    letter-spacing: -0.04em;
+    font-family: var(--font-sora), sans-serif;
+    letter-spacing: -0.055em;
   }
 
   .section-space {
-    padding-top: 3rem;
-    padding-bottom: 3rem;
+    padding-top: 4.5rem;
+    padding-bottom: 4.5rem;
   }
 
   .card-surface {
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    background: linear-gradient(180deg, rgba(255, 255, 255, 0.028), rgba(255, 255, 255, 0.014));
-    box-shadow: none;
-    backdrop-filter: blur(10px);
+    border: 1px solid var(--line);
+    background: linear-gradient(180deg, var(--surface-strong), rgba(255, 255, 255, 0.7));
+    box-shadow: var(--shadow);
+    backdrop-filter: blur(18px);
   }
 
   .glass-panel {
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    background: rgba(5, 10, 19, 0.3);
-    box-shadow: none;
-    backdrop-filter: blur(14px);
+    border: 1px solid rgba(255, 255, 255, 0.28);
+    background: rgba(255, 255, 255, 0.14);
+    box-shadow: 0 24px 60px rgba(6, 6, 6, 0.14);
+    backdrop-filter: blur(24px);
   }
 
   .button-primary {
     display: inline-flex;
     align-items: center;
     justify-content: center;
+    min-height: 3.1rem;
     border-radius: 999px;
-    background: var(--accent);
-    min-height: 3rem;
-    padding: 0.82rem 1.25rem;
-    font-size: 0.96rem;
+    border: 1px solid rgba(17, 17, 17, 0.08);
+    background: #111111;
+    padding: 0.9rem 1.3rem;
+    font-size: 0.94rem;
     font-weight: 700;
-    color: var(--bg-1);
-    transition: transform 200ms ease, background-color 200ms ease;
+    color: white;
+    transition:
+      transform 200ms ease,
+      background-color 200ms ease,
+      border-color 200ms ease;
   }
 
   .button-primary:hover {
     transform: translateY(-1px);
-    background: #f1d89c;
+    background: #242424;
   }
 
   .form-input {
     width: 100%;
-    border-radius: 1.15rem;
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    background: rgba(255, 255, 255, 0.04);
-    min-height: 3.25rem;
-    padding: 0.82rem 0.95rem;
+    min-height: 3.35rem;
+    border-radius: 1.2rem;
+    border: 1px solid rgba(17, 17, 17, 0.1);
+    background: rgba(255, 255, 255, 0.84);
+    padding: 0.88rem 1rem;
     font-size: 16px;
     line-height: 1.5;
-    color: white;
+    color: var(--foreground);
     outline: none;
-    transition: border-color 180ms ease, background-color 180ms ease;
+    transition:
+      border-color 180ms ease,
+      background-color 180ms ease,
+      box-shadow 180ms ease;
   }
 
   .form-input::placeholder {
@@ -132,8 +158,9 @@ summary::-webkit-details-marker {
   }
 
   .form-input:focus {
-    border-color: rgba(223, 192, 122, 0.6);
-    background: rgba(255, 255, 255, 0.06);
+    border-color: rgba(181, 154, 103, 0.6);
+    background: rgba(255, 255, 255, 0.96);
+    box-shadow: 0 0 0 4px rgba(181, 154, 103, 0.12);
   }
 
   .logo-marquee-track {
@@ -148,26 +175,45 @@ summary::-webkit-details-marker {
     display: flex;
     flex-shrink: 0;
     align-items: center;
-    gap: 0.35rem;
-    padding-right: 0.35rem;
+    gap: 0.8rem;
+    padding-right: 0.8rem;
+  }
+
+  .eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.55rem;
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  .eyebrow::before {
+    content: "";
+    display: inline-block;
+    height: 1px;
+    width: 2.75rem;
+    background: rgba(17, 17, 17, 0.15);
   }
 
   @media (min-width: 640px) {
     .section-space {
-      padding-top: 4rem;
-      padding-bottom: 4rem;
-    }
-
-    .logo-marquee-group {
-      gap: 0.55rem;
-      padding-right: 0.55rem;
+      padding-top: 5.5rem;
+      padding-bottom: 5.5rem;
     }
   }
 
   @media (min-width: 1024px) {
     .section-space {
-      padding-top: 4.5rem;
-      padding-bottom: 4.5rem;
+      padding-top: 6.5rem;
+      padding-bottom: 6.5rem;
+    }
+
+    .logo-marquee-group {
+      gap: 1rem;
+      padding-right: 1rem;
     }
   }
 }

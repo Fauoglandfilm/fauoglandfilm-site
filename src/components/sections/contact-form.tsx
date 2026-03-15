@@ -49,7 +49,7 @@ export function ContactForm() {
     <form className="grid gap-3.5" onSubmit={handleSubmit} id="foresporsel">
       <div className="grid gap-3.5 sm:grid-cols-2">
         <label className="space-y-2">
-          <span className="text-sm font-medium text-white">Navn</span>
+          <span className="text-sm font-medium text-[#111111]">Navn</span>
           <input
             className="form-input"
             name="name"
@@ -62,7 +62,7 @@ export function ContactForm() {
           />
         </label>
         <label className="space-y-2">
-          <span className="text-sm font-medium text-white">Firma</span>
+          <span className="text-sm font-medium text-[#111111]">Firma</span>
           <input
             className="form-input"
             name="company"
@@ -77,7 +77,7 @@ export function ContactForm() {
 
       <div className="grid gap-3.5 sm:grid-cols-2">
         <label className="space-y-2">
-          <span className="text-sm font-medium text-white">E-post</span>
+          <span className="text-sm font-medium text-[#111111]">E-post</span>
           <input
             className="form-input"
             name="email"
@@ -92,7 +92,7 @@ export function ContactForm() {
           />
         </label>
         <label className="space-y-2">
-          <span className="text-sm font-medium text-white">Telefon</span>
+          <span className="text-sm font-medium text-[#111111]">Telefon</span>
           <input
             className="form-input"
             name="phone"
@@ -108,7 +108,7 @@ export function ContactForm() {
       </div>
 
       <label className="space-y-2">
-        <span className="text-sm font-medium text-white">Melding</span>
+        <span className="text-sm font-medium text-[#111111]">Melding</span>
         <textarea
           className="form-input min-h-32 resize-y"
           name="message"

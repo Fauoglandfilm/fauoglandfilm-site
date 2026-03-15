@@ -22,7 +22,7 @@ export function CaseCard({
 
   return (
     <article
-      className={`group overflow-hidden rounded-[1.5rem] border border-white/8 bg-white/[0.015] ${
+      className={`group overflow-hidden rounded-[1.9rem] border border-black/8 bg-white/72 shadow-[0_24px_70px_rgba(18,18,18,0.06)] ${
         isFeature ? "lg:grid lg:grid-cols-[1.02fr_0.98fr]" : "md:grid md:grid-cols-[0.95fr_1.05fr]"
       }`}
     >
@@ -54,22 +54,22 @@ export function CaseCard({
         ) : (
           <div
             className={`absolute inset-0 bg-gradient-to-br ${
-              caseStudy.palette ?? "from-[#1f2532] via-[#101520] to-[#05070c]"
+              caseStudy.palette ?? "from-[#e6dfd4] via-[#cbbda8] to-[#b9a182]"
             }`}
           />
         )}
-        <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(5,8,14,0.02),rgba(5,8,14,0.08)_36%,rgba(5,8,14,0.32))]" />
+        <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(17,17,17,0.02),rgba(17,17,17,0.06)_36%,rgba(17,17,17,0.24))]" />
       </div>
 
       <div className="flex flex-1 flex-col gap-4 p-4 sm:p-5 lg:p-6">
         <div className="space-y-2">
-          <p className="text-[0.68rem] font-semibold uppercase tracking-[0.22em] text-white/46">
+          <p className="text-[0.68rem] font-semibold uppercase tracking-[0.22em] text-[var(--muted)]">
             {caseStudy.client}
           </p>
-          <h3 className="max-w-xl font-display text-[1.65rem] leading-tight text-white sm:text-[2rem]">
+          <h3 className="max-w-xl font-display text-[1.75rem] leading-[0.98] text-[#111111] sm:text-[2.2rem]">
             {caseStudy.title}
           </h3>
-          <p className="max-w-2xl text-[0.95rem] leading-6 text-white/70 sm:text-base sm:leading-7">
+          <p className="max-w-2xl text-[0.95rem] leading-6 text-[var(--muted-2)] sm:text-base sm:leading-7">
             {caseStudy.summary}
           </p>
         </div>
@@ -80,17 +80,17 @@ export function CaseCard({
             { label: "Leveranse", value: caseStudy.deliverables.slice(0, 2).join(", ") },
             { label: "Effekt", value: caseStudy.impact },
           ].map((item) => (
-            <div key={item.label} className="border-t border-white/8 pt-3">
-              <p className="text-[0.66rem] uppercase tracking-[0.18em] text-white/42">
+            <div key={item.label} className="border-t border-black/8 pt-3">
+              <p className="text-[0.66rem] uppercase tracking-[0.18em] text-[var(--muted)]">
                 {item.label}
               </p>
-              <p className="mt-2 text-sm leading-6 text-white/66">{item.value}</p>
+              <p className="mt-2 text-sm leading-6 text-[var(--muted-2)]">{item.value}</p>
             </div>
           ))}
         </div>
 
         {caseStudy.metrics.length ? (
-          <p className="text-sm font-medium text-white/76">
+          <p className="text-sm font-medium text-[#111111]/76">
             {caseStudy.metrics
               .slice(0, 2)
               .map((metric) => `${metric.value} ${metric.label}`)
@@ -99,7 +99,7 @@ export function CaseCard({
         ) : null}
 
         {showVerificationNote && caseStudy.verificationNote ? (
-          <div className="rounded-[1rem] border border-dashed border-[var(--accent)]/24 bg-[var(--accent)]/7 px-4 py-3 text-sm text-[var(--accent-2)]">
+          <div className="rounded-[1rem] border border-dashed border-[var(--accent)]/28 bg-[var(--accent)]/10 px-4 py-3 text-sm text-[var(--accent-2)]">
             {caseStudy.verificationNote}
           </div>
         ) : null}
@@ -107,7 +107,7 @@ export function CaseCard({
         <div className="mt-auto pt-1">
           <Link
             href={`/case/${caseStudy.slug}`}
-            className="inline-flex min-h-11 items-center gap-2 text-sm font-semibold text-[var(--accent-2)] transition hover:text-white"
+            className="inline-flex min-h-11 items-center gap-2 text-sm font-semibold text-[#111111] transition hover:text-[var(--accent-2)]"
           >
             Se hele caset
             <ArrowUpRightIcon className="h-4 w-4" />

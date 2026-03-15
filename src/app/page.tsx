@@ -1,57 +1,32 @@
 import {
-  AboutPreviewSection,
-  CtaBanner,
-  FeaturedCasesSection,
-  HomeIntroSection,
-  ProcessSection,
-  SalesHero,
-  SocialProofSection,
+  AboutSection,
+  ClientSlider,
+  ContactSection,
+  FeaturedCase,
+  HeroSection,
+  SelectedWorkSection,
   ServicesSection,
-  TestimonialsSection,
-} from "@/components/sections/site-sections";
-import {
-  caseStudies,
-  aboutBullets,
-  processSteps,
-  serviceAreas,
-  teamMembers,
-  testimonials,
-} from "@/data/site-content";
+} from "@/components/sections/home-sections";
+import { selectedWork } from "@/data/site-content";
 import { buildMetadata } from "@/lib/seo";
 
 export const metadata = buildMetadata({
-  title: "Videoproduksjon i Oslo som skaper synlighet, tillit og leads",
+  title: "Premium videoproduksjon i Oslo for brands, campaigns og visual storytelling",
   description:
-    "Fau&Land Film er et premium produksjonsselskap i Oslo som leverer reklamefilm, bedriftsfilm, SoMe-innhold, eventfilm og videodrevet markedsføring for bedrifter.",
+    "Fau&Land Film bygger premium commercial film, brand storytelling og content production for selskaper som vil se større, skarpere og mer internasjonale ut.",
   path: "/",
 });
 
 export default function HomePage() {
-  const featuredCases = caseStudies.filter((caseStudy) => caseStudy.featured).slice(0, 2);
-  const homeServices = serviceAreas.slice(0, 4);
-  const featuredTestimonials = testimonials.slice(0, 2);
-  const previewBullets = aboutBullets.slice(0, 3);
-
   return (
     <main>
-      <SalesHero />
-      <HomeIntroSection />
-      <SocialProofSection />
-      <ServicesSection
-        services={homeServices}
-        title="Fire måter å bruke video på"
-        description="Reklamefilm, SoMe-innhold, bedriftsfilm og eventproduksjon forklart kort og tydelig."
-      />
-      <FeaturedCasesSection cases={featuredCases} showVerificationNote={false} />
-      <ProcessSection steps={processSteps} />
-      <TestimonialsSection testimonials={featuredTestimonials} />
-      <AboutPreviewSection team={teamMembers} bullets={previewBullets} />
-      <CtaBanner
-        title="Klar for neste produksjon?"
-        description="Book et møte, så ser vi raskt på hva dere trenger og hvordan innholdet faktisk skal brukes."
-        secondaryLabel={null}
-        align="center"
-      />
+      <HeroSection />
+      <SelectedWorkSection items={selectedWork} />
+      <ClientSlider />
+      <ServicesSection />
+      <FeaturedCase />
+      <AboutSection />
+      <ContactSection />
     </main>
   );
 }

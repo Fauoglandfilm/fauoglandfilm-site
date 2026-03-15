@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Fraunces, Manrope } from "next/font/google";
+import { Manrope, Sora } from "next/font/google";
 
 import { Footer } from "@/components/layout/footer";
 import { Header } from "@/components/layout/header";
@@ -15,8 +15,8 @@ const manrope = Manrope({
   subsets: ["latin"],
 });
 
-const fraunces = Fraunces({
-  variable: "--font-fraunces",
+const sora = Sora({
+  variable: "--font-sora",
   subsets: ["latin"],
 });
 
@@ -41,7 +41,7 @@ export default function RootLayout({
   return (
     <html lang="nb">
       <body
-        className={`${manrope.variable} ${fraunces.variable} antialiased`}
+        className={`${manrope.variable} ${sora.variable} antialiased`}
       >
         <JsonLd data={organizationSchema} />
         <TrackingScripts />

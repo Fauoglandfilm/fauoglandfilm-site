@@ -37,10 +37,12 @@ export default function LandingTemplatePage() {
           <div className="grid gap-6 lg:grid-cols-3">
             {landingTemplateBullets.map((bullet) => (
               <article key={bullet} className="card-surface rounded-[1.8rem] p-7">
-                <p className="text-xs font-semibold uppercase tracking-[0.24em] text-[var(--accent-2)]">
+                <p className="text-xs font-semibold uppercase tracking-[0.24em] text-[var(--muted)]">
                   Malprinsipp
                 </p>
-                <h2 className="mt-4 font-display text-3xl text-white">{bullet}</h2>
+                <h2 className="mt-4 font-display text-3xl leading-[0.96] text-[#111111]">
+                  {bullet}
+                </h2>
               </article>
             ))}
           </div>
