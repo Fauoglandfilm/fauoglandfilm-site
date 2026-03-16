@@ -11,20 +11,24 @@ import { Button } from "@/components/ui/button";
 import { ButtonLink } from "@/components/ui/button-link";
 import { ArrowUpRightIcon, PlayIcon } from "@/components/ui/icons";
 import {
-  gardProfilePage,
-  type GardProject,
-  type GardProjectCompanion,
-  type GardProjectGroup,
-} from "@/data/gard-profile";
+  tommyProfilePage,
+  type TommyProject,
+  type TommyProjectCompanion,
+  type TommyProjectGroup,
+} from "@/data/tommy-profile";
 import { siteConfig } from "@/data/site-content";
 import { resolveLocalizedValue } from "@/lib/i18n";
 import { cn } from "@/lib/utils";
 
-function hasPlayableMedia(project: GardProject | GardProjectCompanion) {
+function hasProjectSurface(project: TommyProject | TommyProjectCompanion) {
+  return Boolean(project.video || project.externalVideo || project.image);
+}
+
+function hasPlayableMedia(project: TommyProject | TommyProjectCompanion) {
   return Boolean(project.video || project.externalVideo);
 }
 
-function toPreviewProject(project: GardProject, companion?: GardProjectCompanion): GardProject {
+function toPreviewProject(project: TommyProject, companion?: TommyProjectCompanion): TommyProject {
   if (!companion) {
     return project;
   }
@@ -44,33 +48,31 @@ function toPreviewProject(project: GardProject, companion?: GardProjectCompanion
   };
 }
 
-function GardEditorialCase({
+function TommyEditorialCase({
   project,
   index,
   onPreview,
 }: {
-  project: GardProject;
+  project: TommyProject;
   index: number;
-  onPreview: (project: GardProject) => void;
+  onPreview: (project: TommyProject) => void;
 }) {
   const { language } = useSitePreferences();
   const title = resolveLocalizedValue(project.title, language);
   const mediaFirst = index % 2 === 0;
-  const availabilityNote =
-    project.video?.videoType === "request"
-      ? resolveLocalizedValue(project.video.availabilityNote, language)
-      : null;
 
   return (
     <article className="grid gap-5 lg:grid-cols-[minmax(0,1.14fr)_minmax(20rem,0.86fr)] lg:gap-7 lg:items-stretch">
       <div className={cn("order-1", !mediaFirst && "lg:order-2")}>
         <div className="media-frame group relative min-h-[18rem] overflow-hidden rounded-[2rem] bg-[#07090d] sm:min-h-[24rem] lg:min-h-[32rem]">
-          <button
-            type="button"
-            onClick={() => onPreview(project)}
-            aria-label={language === "no" ? `Åpne ${title}` : `Open ${title}`}
-            className="absolute inset-0 z-[3]"
-          />
+          {hasProjectSurface(project) ? (
+            <button
+              type="button"
+              onClick={() => onPreview(project)}
+              aria-label={language === "no" ? `Åpne ${title}` : `Open ${title}`}
+              className="absolute inset-0 z-[3]"
+            />
+          ) : null}
 
           <PreviewMedia
             title={project.title}
@@ -123,32 +125,40 @@ function GardEditorialCase({
             <p className="body-lead max-w-[34rem] text-[var(--muted-2)]">
               {resolveLocalizedValue(project.summary, language)}
             </p>
-            {availabilityNote ? <p className="body-copy text-[var(--muted)]">{availabilityNote}</p> : null}
           </div>
 
           {project.companions?.length ? (
             <div className="mt-6">
               <p className="text-[0.68rem] font-semibold uppercase tracking-[0.2em] text-[var(--muted)]">
-                {language === "no" ? "Flere klipp fra samme spor" : "More from the same body of work"}
+                {language === "no" ? "Relaterte spor" : "Related tracks"}
               </p>
               <div className="mt-3 flex flex-wrap gap-2.5">
-                {project.companions.map((companion) => (
-                  <button
-                    key={companion.slug}
-                    type="button"
-                    onClick={() => onPreview(toPreviewProject(project, companion))}
-                    className="inline-flex items-center gap-2 rounded-full border border-[color:var(--line-strong)] bg-[color:var(--surface)]/78 px-3.5 py-2 text-left text-sm font-medium text-[color:var(--foreground)] transition duration-300 hover:border-[color:var(--accent)]/38 hover:bg-[color:var(--surface-2)]"
-                  >
-                    <span>{resolveLocalizedValue(companion.title, language)}</span>
-                    {hasPlayableMedia(companion) ? <PlayIcon className="h-3.5 w-3.5" /> : null}
-                  </button>
-                ))}
+                {project.companions.map((companion) =>
+                  hasProjectSurface(companion) ? (
+                    <button
+                      key={companion.slug}
+                      type="button"
+                      onClick={() => onPreview(toPreviewProject(project, companion))}
+                      className="inline-flex items-center gap-2 rounded-full border border-[color:var(--line-strong)] bg-[color:var(--surface)]/78 px-3.5 py-2 text-left text-sm font-medium text-[color:var(--foreground)] transition duration-300 hover:border-[color:var(--accent)]/38 hover:bg-[color:var(--surface-2)]"
+                    >
+                      <span>{resolveLocalizedValue(companion.title, language)}</span>
+                      {hasPlayableMedia(companion) ? <PlayIcon className="h-3.5 w-3.5" /> : null}
+                    </button>
+                  ) : (
+                    <span
+                      key={companion.slug}
+                      className="inline-flex items-center rounded-full border border-[color:var(--line)] bg-[color:var(--surface)]/62 px-3.5 py-2 text-sm font-medium text-[var(--muted-2)]"
+                    >
+                      {resolveLocalizedValue(companion.title, language)}
+                    </span>
+                  ),
+                )}
               </div>
             </div>
           ) : null}
 
           <div className="mt-auto flex flex-col gap-2.5 pt-6 sm:flex-row sm:flex-wrap">
-            {hasPlayableMedia(project) ? (
+            {hasProjectSurface(project) ? (
               <Button className="w-full sm:w-auto" onClick={() => onPreview(project)}>
                 {language === "no" ? "Se prosjekt" : "View project"}
               </Button>
@@ -168,8 +178,8 @@ function ProjectGroupSection({
   group,
   onPreview,
 }: {
-  group: GardProjectGroup;
-  onPreview: (project: GardProject) => void;
+  group: TommyProjectGroup;
+  onPreview: (project: TommyProject) => void;
 }) {
   const { language } = useSitePreferences();
 
@@ -188,7 +198,7 @@ function ProjectGroupSection({
         <div className="mt-7 space-y-8 sm:space-y-10 lg:space-y-12">
           {group.projects.map((project, index) => (
             <Reveal key={project.slug} delay={0.04 * index}>
-              <GardEditorialCase project={project} index={index} onPreview={onPreview} />
+              <TommyEditorialCase project={project} index={index} onPreview={onPreview} />
             </Reveal>
           ))}
         </div>
@@ -197,10 +207,10 @@ function ProjectGroupSection({
   );
 }
 
-export function GardProfileContent() {
+export function TommyProfileContent() {
   const { language } = useSitePreferences();
-  const [activeProject, setActiveProject] = useState<GardProject | null>(null);
-  const profile = gardProfilePage.baseProfile;
+  const [activeProject, setActiveProject] = useState<TommyProject | null>(null);
+  const profile = tommyProfilePage.baseProfile;
 
   return (
     <main>
@@ -237,19 +247,19 @@ export function GardProfileContent() {
                   </ButtonLink>
 
                   <span className="hero-badge mt-5 text-white/70">
-                    {resolveLocalizedValue(gardProfilePage.heroTitle, language)}
+                    {resolveLocalizedValue(tommyProfilePage.heroTitle, language)}
                   </span>
                   <h1 className="page-title mt-4 max-w-[10ch] text-white">{profile.name}</h1>
                   <p className="mt-4 max-w-[40rem] text-[1.02rem] leading-7 text-white/84 sm:text-[1.08rem] sm:leading-8">
-                    {resolveLocalizedValue(gardProfilePage.heroIntro, language)}
+                    {resolveLocalizedValue(tommyProfilePage.heroIntro, language)}
                   </p>
 
                   <div className="mt-6 flex flex-col gap-2.5 sm:flex-row sm:flex-wrap">
                     <ButtonLink href="/kontakt" className="w-full sm:w-auto">
-                      {resolveLocalizedValue(gardProfilePage.heroCtaPrimary, language)}
+                      {resolveLocalizedValue(tommyProfilePage.heroCtaPrimary, language)}
                     </ButtonLink>
                     <ButtonLink href="/case" variant="secondary" className="w-full sm:w-auto">
-                      {resolveLocalizedValue(gardProfilePage.heroCtaSecondary, language)}
+                      {resolveLocalizedValue(tommyProfilePage.heroCtaSecondary, language)}
                     </ButtonLink>
                   </div>
                 </div>
@@ -294,16 +304,16 @@ export function GardProfileContent() {
 
             <Reveal delay={0.06}>
               <div className="glass-panel rounded-[2rem] px-5 py-5 sm:px-6 sm:py-6 lg:px-7 lg:py-7">
-                <span className="eyebrow">{resolveLocalizedValue(gardProfilePage.introEyebrow, language)}</span>
+                <span className="eyebrow">{resolveLocalizedValue(tommyProfilePage.introEyebrow, language)}</span>
                 <h2 className="section-title mt-3 text-[color:var(--foreground)]">
-                  {resolveLocalizedValue(gardProfilePage.introTitle, language)}
+                  {resolveLocalizedValue(tommyProfilePage.introTitle, language)}
                 </h2>
                 <p className="body-lead mt-4 text-[var(--muted-2)]">
-                  {resolveLocalizedValue(gardProfilePage.introBody, language)}
+                  {resolveLocalizedValue(tommyProfilePage.introBody, language)}
                 </p>
 
                 <div className="mt-6 flex flex-wrap gap-2.5">
-                  {gardProfilePage.introFacts.map((fact) => (
+                  {tommyProfilePage.introFacts.map((fact) => (
                     <span key={fact} className="founder-profile-chip founder-profile-chip-muted">
                       {fact}
                     </span>
@@ -319,17 +329,17 @@ export function GardProfileContent() {
         <div className="site-container">
           <Reveal className="max-w-2xl">
             <div className="space-y-3">
-              <span className="eyebrow">{resolveLocalizedValue(gardProfilePage.focusEyebrow, language)}</span>
+              <span className="eyebrow">{resolveLocalizedValue(tommyProfilePage.focusEyebrow, language)}</span>
               <h2 className="section-title text-[color:var(--foreground)]">
                 {language === "no"
-                  ? "Fire ting Gard ofte hentes inn for."
-                  : "Four areas Gard is often brought in for."}
+                  ? "Fire ting Tommy ofte hentes inn for."
+                  : "Four areas Tommy is often brought in for."}
               </h2>
             </div>
           </Reveal>
 
           <div className="adaptive-grid-compact mt-6">
-            {gardProfilePage.focusAreas.map((area, index) => (
+            {tommyProfilePage.focusAreas.map((area, index) => (
               <Reveal key={resolveLocalizedValue(area.title, language)} delay={0.05 * index}>
                 <article className="card-surface rounded-[1.7rem] px-4 py-4 sm:px-5 sm:py-5">
                   <h3 className="card-title text-[color:var(--foreground)]">
@@ -349,19 +359,19 @@ export function GardProfileContent() {
         <div className="site-container">
           <Reveal className="max-w-3xl">
             <div className="space-y-3">
-              <span className="eyebrow">{resolveLocalizedValue(gardProfilePage.projectEyebrow, language)}</span>
+              <span className="eyebrow">{resolveLocalizedValue(tommyProfilePage.projectEyebrow, language)}</span>
               <h2 className="section-title text-[color:var(--foreground)]">
-                {resolveLocalizedValue(gardProfilePage.projectTitle, language)}
+                {resolveLocalizedValue(tommyProfilePage.projectTitle, language)}
               </h2>
               <p className="body-lead text-[var(--muted-2)]">
-                {resolveLocalizedValue(gardProfilePage.projectDescription, language)}
+                {resolveLocalizedValue(tommyProfilePage.projectDescription, language)}
               </p>
             </div>
           </Reveal>
         </div>
       </section>
 
-      {gardProfilePage.projectGroups.map((group) => (
+      {tommyProfilePage.projectGroups.map((group) => (
         <ProjectGroupSection key={group.slug} group={group} onPreview={setActiveProject} />
       ))}
 
@@ -374,20 +384,20 @@ export function GardProfileContent() {
                 <div className="space-y-3">
                   <span className="eyebrow">{profile.name}</span>
                   <h2 className="section-title text-[color:var(--foreground)]">
-                    {resolveLocalizedValue(gardProfilePage.ctaTitle, language)}
+                    {resolveLocalizedValue(tommyProfilePage.ctaTitle, language)}
                   </h2>
                   <p className="body-lead text-[var(--muted-2)]">
-                    {resolveLocalizedValue(gardProfilePage.ctaDescription, language)}
+                    {resolveLocalizedValue(tommyProfilePage.ctaDescription, language)}
                   </p>
                 </div>
 
                 <div className="space-y-4">
                   <div className="flex flex-col gap-2.5 sm:flex-row sm:flex-wrap">
                     <ButtonLink href="/kontakt" className="w-full sm:w-auto">
-                      {resolveLocalizedValue(gardProfilePage.ctaPrimaryLabel, language)}
+                      {resolveLocalizedValue(tommyProfilePage.ctaPrimaryLabel, language)}
                     </ButtonLink>
                     <ButtonLink href="/case" variant="secondary" className="w-full sm:w-auto">
-                      {resolveLocalizedValue(gardProfilePage.ctaSecondaryLabel, language)}
+                      {resolveLocalizedValue(tommyProfilePage.ctaSecondaryLabel, language)}
                     </ButtonLink>
                     <ButtonLink href={siteConfig.phonePrimaryHref} variant="ghost" className="w-full sm:w-auto">
                       {siteConfig.phonePrimary}
@@ -395,7 +405,7 @@ export function GardProfileContent() {
                   </div>
 
                   <div className="flex flex-wrap gap-2.5">
-                    {gardProfilePage.internalLinks.map((link) => (
+                    {tommyProfilePage.internalLinks.map((link) => (
                       <ButtonLink key={link.href} href={link.href} variant="ghost" size="compact" className="w-full sm:w-auto">
                         {resolveLocalizedValue(link.label, language)}
                         <ArrowUpRightIcon className="h-4 w-4" />
@@ -404,7 +414,7 @@ export function GardProfileContent() {
                   </div>
 
                   <p className="text-sm leading-6 text-[var(--muted)]">
-                    {siteConfig.email} · {siteConfig.phonePrimary} · {siteConfig.locationLabel}
+                    {tommyProfilePage.contactEmail} · {tommyProfilePage.contactPhone} · {siteConfig.locationLabel}
                   </p>
                 </div>
               </div>

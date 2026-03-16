@@ -1,12 +1,8 @@
-import { FounderProfileContent } from "@/components/pages/founder-profile-content";
-import { getFounderProfile } from "@/data/founder-profiles";
+import { TommyProfileContent } from "@/components/pages/tommy-profile-content";
+import { tommyProfilePage } from "@/data/tommy-profile";
 import { buildMetadata } from "@/lib/seo";
 
-const profile =
-  getFounderProfile("tommy-garland") ??
-  (() => {
-    throw new Error("Missing founder profile: tommy-garland");
-  })();
+const profile = tommyProfilePage.baseProfile;
 
 export const metadata = buildMetadata({
   title: "Tommy R.A. Garland",
@@ -16,5 +12,5 @@ export const metadata = buildMetadata({
 });
 
 export default function TommyGarlandPage() {
-  return <FounderProfileContent profile={profile} />;
+  return <TommyProfileContent />;
 }
