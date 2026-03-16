@@ -16,29 +16,31 @@
   --btn-border: rgba(17, 17, 17, 0.12);
   --btn-primary-bg: #111111;
   --btn-primary-text: #ffffff;
-  --btn-primary-border: rgba(17, 17, 17, 0.08);
+  --btn-primary-border: rgba(255, 255, 255, 0.12);
   --btn-primary-hover-bg: #242424;
   --btn-primary-hover-text: #ffffff;
+  --btn-primary-active-bg: #080808;
+  --btn-primary-active-text: #ffffff;
   --btn-secondary-bg: #e8e2d8;
   --btn-secondary-text: #111111;
-  --btn-secondary-border: rgba(17, 17, 17, 0.08);
-  --btn-secondary-hover-bg: #ddd5c8;
+  --btn-secondary-border: rgba(17, 17, 17, 0.12);
+  --btn-secondary-hover-bg: #dfd6ca;
   --btn-secondary-hover-text: #111111;
-  --btn-secondary-active-bg: #d2c8bb;
+  --btn-secondary-active-bg: #d5cbbe;
   --btn-secondary-active-text: #111111;
   --btn-ghost-bg: transparent;
   --btn-ghost-text: #111111;
-  --btn-ghost-border: rgba(17, 17, 17, 0.14);
-  --btn-ghost-hover-bg: rgba(17, 17, 17, 0.05);
+  --btn-ghost-border: rgba(17, 17, 17, 0.18);
+  --btn-ghost-hover-bg: rgba(17, 17, 17, 0.06);
   --btn-ghost-hover-text: #111111;
-  --btn-ghost-active-bg: rgba(17, 17, 17, 0.08);
+  --btn-ghost-active-bg: rgba(17, 17, 17, 0.1);
   --btn-ghost-active-text: #111111;
-  --btn-icon-bg: #e8e2d8;
+  --btn-icon-bg: rgba(255, 255, 255, 0.84);
   --btn-icon-text: #111111;
-  --btn-icon-border: rgba(17, 17, 17, 0.1);
-  --btn-icon-hover-bg: #ddd5c8;
+  --btn-icon-border: rgba(17, 17, 17, 0.12);
+  --btn-icon-hover-bg: rgba(255, 255, 255, 0.94);
   --btn-icon-hover-text: #111111;
-  --btn-icon-active-bg: #d2c8bb;
+  --btn-icon-active-bg: #efe9df;
   --btn-icon-active-text: #111111;
   --btn-disabled-opacity: 0.52;
   --control-shell-bg: rgba(255, 255, 255, 0.82);
@@ -74,29 +76,31 @@ html[data-theme="dark"] {
   --btn-border: rgba(255, 255, 255, 0.16);
   --btn-primary-bg: #f2ece3;
   --btn-primary-text: #111111;
-  --btn-primary-border: rgba(255, 255, 255, 0.12);
+  --btn-primary-border: rgba(17, 17, 17, 0.1);
   --btn-primary-hover-bg: #ffffff;
   --btn-primary-hover-text: #111111;
+  --btn-primary-active-bg: #e5ddcf;
+  --btn-primary-active-text: #111111;
   --btn-secondary-bg: #23262d;
   --btn-secondary-text: #f2ece3;
-  --btn-secondary-border: rgba(255, 255, 255, 0.14);
-  --btn-secondary-hover-bg: #2c3038;
+  --btn-secondary-border: rgba(255, 255, 255, 0.16);
+  --btn-secondary-hover-bg: #2b3039;
   --btn-secondary-hover-text: #ffffff;
-  --btn-secondary-active-bg: #353a44;
+  --btn-secondary-active-bg: #363b45;
   --btn-secondary-active-text: #ffffff;
   --btn-ghost-bg: transparent;
   --btn-ghost-text: #f2ece3;
-  --btn-ghost-border: rgba(255, 255, 255, 0.18);
-  --btn-ghost-hover-bg: rgba(255, 255, 255, 0.06);
+  --btn-ghost-border: rgba(255, 255, 255, 0.22);
+  --btn-ghost-hover-bg: rgba(255, 255, 255, 0.08);
   --btn-ghost-hover-text: #ffffff;
-  --btn-ghost-active-bg: rgba(255, 255, 255, 0.1);
+  --btn-ghost-active-bg: rgba(255, 255, 255, 0.12);
   --btn-ghost-active-text: #ffffff;
-  --btn-icon-bg: #23262d;
+  --btn-icon-bg: rgba(25, 28, 34, 0.9);
   --btn-icon-text: #f2ece3;
-  --btn-icon-border: rgba(255, 255, 255, 0.14);
-  --btn-icon-hover-bg: #2c3038;
+  --btn-icon-border: rgba(255, 255, 255, 0.16);
+  --btn-icon-hover-bg: rgba(35, 38, 45, 0.98);
   --btn-icon-hover-text: #ffffff;
-  --btn-icon-active-bg: #353a44;
+  --btn-icon-active-bg: #3a3f49;
   --btn-icon-active-text: #ffffff;
   --btn-disabled-opacity: 0.52;
   --control-shell-bg: rgba(24, 27, 32, 0.88);
@@ -200,8 +204,58 @@ summary::-webkit-details-marker {
   }
 
   .section-space {
-    padding-top: 4.5rem;
-    padding-bottom: 4.5rem;
+    padding-top: 3.6rem;
+    padding-bottom: 3.6rem;
+  }
+
+  .hero-title {
+    font-family: var(--font-sora), sans-serif;
+    font-size: clamp(2.55rem, 10vw, 5.9rem);
+    line-height: 0.88;
+    letter-spacing: -0.06em;
+    text-wrap: balance;
+  }
+
+  .page-title {
+    font-family: var(--font-sora), sans-serif;
+    font-size: clamp(2.25rem, 9vw, 5rem);
+    line-height: 0.9;
+    letter-spacing: -0.058em;
+    text-wrap: balance;
+  }
+
+  .section-title {
+    font-family: var(--font-sora), sans-serif;
+    font-size: clamp(1.95rem, 8vw, 4rem);
+    line-height: 0.94;
+    letter-spacing: -0.055em;
+    text-wrap: balance;
+  }
+
+  .feature-title {
+    font-family: var(--font-sora), sans-serif;
+    font-size: clamp(1.8rem, 6.5vw, 3rem);
+    line-height: 0.94;
+    letter-spacing: -0.052em;
+    text-wrap: balance;
+  }
+
+  .card-title {
+    font-family: var(--font-sora), sans-serif;
+    font-size: clamp(1.34rem, 5.6vw, 2.15rem);
+    line-height: 0.98;
+    letter-spacing: -0.05em;
+    text-wrap: balance;
+  }
+
+  .body-lead {
+    font-size: 0.98rem;
+    line-height: 1.68;
+  }
+
+  .body-copy {
+    font-size: 0.95rem;
+    line-height: 1.62;
   }
 
   .card-surface {
@@ -234,12 +288,15 @@ summary::-webkit-details-marker {
     cursor: pointer;
     outline: none;
     text-decoration: none;
-    white-space: nowrap;
+    text-align: center;
+    white-space: normal;
+    -webkit-tap-highlight-color: transparent;
     transition:
       transform 200ms ease,
       background-color 200ms ease,
       border-color 200ms ease,
-      color 200ms ease;
+      color 200ms ease,
+      box-shadow 200ms ease;
   }
 
   .button-base:hover {
@@ -264,22 +321,22 @@ summary::-webkit-details-marker {
   }
 
   .button-size-default {
-    min-height: 3.1rem;
+    min-height: 3rem;
     gap: 0.5rem;
-    padding: 0.9rem 1.3rem;
-    font-size: 0.94rem;
+    padding: 0.86rem 1.12rem;
+    font-size: 0.92rem;
   }
 
   .button-size-compact {
-    min-height: 2.7rem;
+    min-height: 2.6rem;
     gap: 0.45rem;
-    padding: 0.78rem 1rem;
-    font-size: 0.88rem;
+    padding: 0.72rem 0.95rem;
+    font-size: 0.84rem;
   }
 
   .button-size-icon {
-    min-height: 2.75rem;
-    min-width: 2.75rem;
+    min-height: 2.6rem;
+    min-width: 2.6rem;
     padding: 0;
     font-size: 0.95rem;
   }
@@ -288,6 +345,9 @@ summary::-webkit-details-marker {
     border-color: var(--btn-primary-border);
     background: var(--btn-primary-bg);
     color: var(--btn-primary-text);
+    box-shadow:
+      0 16px 34px rgba(0, 0, 0, 0.16),
+      inset 0 1px 0 rgba(255, 255, 255, 0.08);
   }
 
   .button-primary:hover,
@@ -297,8 +357,8 @@ summary::-webkit-details-marker {
   }
 
   .button-primary:active {
-    background: var(--btn-primary-hover-bg);
-    color: var(--btn-primary-hover-text);
+    background: var(--btn-primary-active-bg);
+    color: var(--btn-primary-active-text);
     border-color: var(--btn-primary-border);
   }
 
@@ -313,6 +373,7 @@ summary::-webkit-details-marker {
     border-color: var(--btn-secondary-border);
     background: var(--btn-secondary-bg);
     color: var(--btn-secondary-text);
+    box-shadow: 0 14px 28px rgba(17, 17, 17, 0.08);
   }
 
   .button-secondary:hover,
@@ -363,6 +424,7 @@ summary::-webkit-details-marker {
     border-color: var(--btn-icon-border);
     background: var(--btn-icon-bg);
     color: var(--btn-icon-text);
+    box-shadow: 0 10px 24px rgba(17, 17, 17, 0.12);
   }
 
   .button-icon:hover,
@@ -548,7 +610,7 @@ summary::-webkit-details-marker {
     display: inline-flex;
     align-items: center;
     gap: 0.55rem;
-    font-size: 0.68rem;
+    font-size: 0.64rem;
     font-weight: 700;
     letter-spacing: 0.24em;
     text-transform: uppercase;
@@ -559,21 +621,56 @@ summary::-webkit-details-marker {
     content: "";
     display: inline-block;
     height: 1px;
-    width: 2.75rem;
+    width: 2rem;
     background: var(--line-strong);
   }
 
   @media (min-width: 640px) {
     .section-space {
-      padding-top: 5.5rem;
-      padding-bottom: 5.5rem;
+      padding-top: 4.9rem;
+      padding-bottom: 4.9rem;
+    }
+
+    .body-lead {
+      font-size: 1.01rem;
+      line-height: 1.72;
+    }
+
+    .body-copy {
+      font-size: 0.98rem;
+      line-height: 1.68;
+    }
+
+    .button-size-default {
+      min-height: 3.1rem;
+      padding: 0.9rem 1.24rem;
+      font-size: 0.94rem;
+    }
+
+    .button-size-compact {
+      min-height: 2.72rem;
+      padding: 0.76rem 1rem;
+      font-size: 0.88rem;
+    }
+
+    .button-size-icon {
+      min-height: 2.75rem;
+      min-width: 2.75rem;
+    }
+
+    .eyebrow {
+      font-size: 0.68rem;
+    }
+
+    .eyebrow::before {
+      width: 2.75rem;
     }
   }
 
   @media (min-width: 1024px) {
     .section-space {
-      padding-top: 6.5rem;
-      padding-bottom: 6.5rem;
+      padding-top: 6rem;
+      padding-bottom: 6rem;
     }
 
     .logo-marquee-group {

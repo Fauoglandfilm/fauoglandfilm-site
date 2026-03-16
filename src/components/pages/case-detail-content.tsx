@@ -40,7 +40,7 @@ export function CaseDetailContent({
       />
 
       <section className="section-space">
-        <div className="mx-auto grid max-w-7xl gap-5 px-5 sm:px-6 lg:grid-cols-[0.94fr_1.06fr] lg:px-8">
+        <div className="mx-auto grid max-w-7xl gap-4 px-4 sm:gap-5 sm:px-6 lg:grid-cols-[0.94fr_1.06fr] lg:px-8">
           <div className="space-y-5">
             <article className="card-surface overflow-hidden rounded-[2rem]">
               {caseStudy.video ? (
@@ -78,10 +78,10 @@ export function CaseDetailContent({
                     <p className="text-[0.72rem] font-semibold uppercase tracking-[0.22em] text-[var(--muted)]">
                       {resolveLocalizedValue(caseStudy.category, language)}
                     </p>
-                    <h2 className="mt-3 font-display text-[2rem] leading-[0.95] text-[#111111] sm:text-[2.5rem]">
+                    <h2 className="feature-title mt-3 text-[#111111]">
                       {caseStudy.client}
                     </h2>
-                    <p className="mt-3 text-sm leading-6 text-[var(--muted-2)] sm:text-base sm:leading-7">
+                    <p className="body-copy mt-3 text-[var(--muted-2)] sm:text-base sm:leading-7">
                       {resolveLocalizedValue(caseStudy.summary, language)}
                     </p>
                   </div>
@@ -141,10 +141,10 @@ export function CaseDetailContent({
                 <p className="text-[0.72rem] font-semibold uppercase tracking-[0.22em] text-[var(--muted)]">
                   {copy.caseGoalEyebrow}
                 </p>
-                <h2 className="mt-3 font-display text-[2rem] leading-[0.95] text-[color:var(--foreground)] sm:text-[2.6rem]">
+                <h2 className="feature-title mt-3 text-[color:var(--foreground)]">
                   {copy.caseGoalTitle}
                 </h2>
-                <p className="mt-4 text-sm leading-6 text-[var(--muted-2)] sm:text-base sm:leading-7">
+                <p className="body-copy mt-4 text-[var(--muted-2)] sm:text-base sm:leading-7">
                   {resolveLocalizedValue(caseStudy.goal, language)}
                 </p>
               </article>
@@ -195,11 +195,11 @@ export function CaseDetailContent({
       </section>
 
       <section className="section-space pt-0">
-        <div className="mx-auto max-w-7xl px-5 sm:px-6 lg:px-8">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="flex flex-wrap items-end justify-between gap-4">
             <div>
               <p className="eyebrow">{copy.caseMoreProjectsEyebrow}</p>
-              <h2 className="mt-3 font-display text-[2rem] leading-[0.94] text-[color:var(--foreground)] sm:text-[2.8rem]">
+              <h2 className="section-title mt-3 text-[color:var(--foreground)]">
                 {copy.caseMoreProjectsTitle}
               </h2>
             </div>
@@ -213,15 +213,15 @@ export function CaseDetailContent({
               <Link
                 key={entry.slug}
                 href={`/case/${entry.slug}`}
-                className="card-surface rounded-[1.8rem] p-5 transition duration-200 hover:-translate-y-1"
+                className="card-surface rounded-[1.65rem] p-4.5 transition duration-200 hover:-translate-y-1 sm:rounded-[1.8rem] sm:p-5"
               >
                 <p className="text-[0.68rem] font-semibold uppercase tracking-[0.22em] text-[var(--muted)]">
                   {entry.client}
                 </p>
-                <h3 className="mt-3 font-display text-[1.8rem] leading-[0.98] text-[color:var(--foreground)]">
+                <h3 className="card-title mt-3 text-[color:var(--foreground)] sm:text-[1.8rem]">
                   {resolveLocalizedValue(entry.title, language)}
                 </h3>
-                <p className="mt-3 text-sm leading-6 text-[var(--muted-2)]">
+                <p className="body-copy mt-3 text-[var(--muted-2)]">
                   {resolveLocalizedValue(entry.summary, language)}
                 </p>
               </Link>

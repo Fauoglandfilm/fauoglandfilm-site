@@ -15,9 +15,9 @@ export function Footer() {
 
   return (
     <footer className="border-t border-[color:var(--line)] bg-[color:color-mix(in_srgb,var(--background)_88%,var(--surface-strong))]">
-      <div className="mx-auto max-w-7xl px-5 py-10 sm:px-6 lg:px-8 lg:py-12">
-        <div className="grid gap-10 lg:grid-cols-[1.15fr_0.85fr]">
-          <div className="space-y-5">
+      <div className="mx-auto max-w-7xl px-4 py-9 sm:px-6 lg:px-8 lg:py-12">
+        <div className="grid gap-8 lg:grid-cols-[1.15fr_0.85fr] lg:gap-10">
+          <div className="space-y-4 sm:space-y-5">
             <div className="flex items-center gap-3">
               <div className="flex h-12 w-12 items-center justify-center rounded-full bg-[#111111] p-3">
                 <BrandLogo variant="mark" className="opacity-100" />
@@ -32,17 +32,17 @@ export function Footer() {
               </div>
             </div>
 
-            <div className="max-w-2xl space-y-3">
-              <p className="font-display text-[2rem] leading-[0.95] text-[color:var(--foreground)] sm:text-[2.8rem]">
+            <div className="max-w-2xl space-y-2.5 sm:space-y-3">
+              <p className="feature-title text-[color:var(--foreground)]">
                 {copy.title}
               </p>
-              <p className="max-w-xl text-sm leading-6 text-[var(--muted-2)] sm:text-base sm:leading-7">
+              <p className="body-copy max-w-xl text-[var(--muted-2)]">
                 {copy.description}
               </p>
             </div>
 
             <div className="flex flex-wrap gap-3">
-              <ButtonLink href={siteConfig.bookingHref}>
+              <ButtonLink href={siteConfig.bookingHref} className="w-full sm:w-auto">
                 {resolveLocalizedValue(siteConfig.bookingLabel, language)}
               </ButtonLink>
             </div>

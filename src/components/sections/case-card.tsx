@@ -29,7 +29,7 @@ export function CaseCard({
 
   return (
     <article
-      className={`group overflow-hidden rounded-[1.9rem] border border-[color:var(--line)] bg-[color:var(--surface)] shadow-[0_24px_70px_rgba(18,18,18,0.06)] ${
+      className={`group overflow-hidden rounded-[1.75rem] border border-[color:var(--line)] bg-[color:var(--surface)] shadow-[0_24px_70px_rgba(18,18,18,0.06)] sm:rounded-[1.9rem] ${
         isFeature ? "lg:grid lg:grid-cols-[1.02fr_0.98fr]" : "md:grid md:grid-cols-[0.95fr_1.05fr]"
       }`}
     >
@@ -73,10 +73,10 @@ export function CaseCard({
           <p className="text-[0.68rem] font-semibold uppercase tracking-[0.22em] text-[var(--muted)]">
             {caseStudy.client}
           </p>
-          <h3 className="max-w-xl font-display text-[1.75rem] leading-[0.98] text-[color:var(--foreground)] sm:text-[2.2rem]">
+          <h3 className="card-title max-w-xl text-[color:var(--foreground)] sm:text-[2rem]">
             {resolveLocalizedValue(caseStudy.title, language)}
           </h3>
-          <p className="max-w-2xl text-[0.95rem] leading-6 text-[var(--muted-2)] sm:text-base sm:leading-7">
+          <p className="body-copy max-w-2xl text-[var(--muted-2)] sm:text-base sm:leading-7">
             {resolveLocalizedValue(caseStudy.summary, language)}
           </p>
         </div>
@@ -115,11 +115,7 @@ export function CaseCard({
         ) : null}
 
         <div className="mt-auto pt-1">
-          <ButtonLink
-            href={`/case/${caseStudy.slug}`}
-            variant="ghost"
-            size="compact"
-          >
+          <ButtonLink href={`/case/${caseStudy.slug}`} variant="ghost" size="compact" className="w-full sm:w-auto">
             {copy.viewCase}
             <ArrowUpRightIcon className="h-4 w-4" />
           </ButtonLink>

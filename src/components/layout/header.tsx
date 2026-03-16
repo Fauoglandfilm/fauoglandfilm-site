@@ -114,7 +114,7 @@ export function Header() {
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div
           className={cn(
-            "mt-2.5 flex items-center gap-3 rounded-[1.25rem] px-3 py-2 transition duration-300 sm:px-3.5",
+            "mt-2 flex items-center gap-2.5 rounded-[1.1rem] px-2.5 py-1.5 transition duration-300 sm:mt-2.5 sm:gap-3 sm:px-3 sm:py-2",
             overlayMode
               ? "border border-white/8 bg-[color:var(--header-overlay-surface)] text-white backdrop-blur-xl"
               : "border border-black/[0.05] bg-[color:var(--header-surface)] text-[color:var(--foreground)] shadow-[0_10px_28px_rgba(14,14,14,0.06)] backdrop-blur-xl",
@@ -122,16 +122,16 @@ export function Header() {
         >
           <Link
             href="/"
-            className="flex shrink-0 items-center gap-2.5"
+            className="flex shrink-0 items-center gap-2"
             aria-label="Fau&Land Film"
             onClick={() => setOpen(false)}
           >
-            <div className="flex h-9 w-9 items-center justify-center rounded-full bg-[#111111] p-2 shadow-[0_10px_20px_rgba(0,0,0,0.16)]">
+            <div className="flex h-8 w-8 items-center justify-center rounded-full bg-[#111111] p-2 shadow-[0_10px_20px_rgba(0,0,0,0.16)] sm:h-9 sm:w-9">
               <BrandLogo variant="mark" className="opacity-100" priority />
             </div>
             <p
               className={cn(
-                "font-display text-[0.96rem] tracking-[-0.05em] sm:text-[1rem]",
+                "font-display text-[0.92rem] tracking-[-0.05em] sm:text-[0.98rem]",
                 overlayMode ? "text-white" : "text-[color:var(--foreground)]",
               )}
             >
@@ -164,7 +164,7 @@ export function Header() {
             })}
           </nav>
 
-          <div className="ml-auto hidden items-center gap-1.5 lg:flex">
+          <div className="ml-auto hidden items-center gap-1 lg:flex">
             <SegmentedToggle
               ariaLabel={copy.languageLabel}
               value={language}
@@ -201,33 +201,33 @@ export function Header() {
 
       {open ? (
         <div className="mx-auto max-w-7xl px-4 pb-4 sm:px-6 lg:hidden">
-          <div className="mt-2.5 rounded-[1.6rem] border border-black/[0.06] bg-[color:var(--surface-strong)] p-3.5 shadow-[0_20px_60px_rgba(14,14,14,0.1)] backdrop-blur-xl">
+          <div className="mt-2 rounded-[1.35rem] border border-black/[0.06] bg-[color:var(--surface-strong)] p-3 shadow-[0_20px_60px_rgba(14,14,14,0.1)] backdrop-blur-xl">
             <div className="flex items-center justify-between gap-2">
               <SegmentedToggle
                 ariaLabel={copy.languageLabel}
                 value={language}
-              options={[
-                { label: "NO", value: "no" },
-                { label: "EN", value: "en" },
-              ]}
-              onChange={setLanguage}
-              compact
-            />
-            <SegmentedToggle
-              ariaLabel={copy.themeLabel}
-              value={theme}
                 options={[
-                { value: "light", icon: <SunIcon className="h-3.5 w-3.5" />, label: "Light" },
-                { value: "dark", icon: <MoonIcon className="h-3.5 w-3.5" />, label: "Dark" },
-              ]}
-              onChange={setTheme}
-              compact
-              iconOnly
-            />
+                  { label: "NO", value: "no" },
+                  { label: "EN", value: "en" },
+                ]}
+                onChange={setLanguage}
+                compact
+              />
+              <SegmentedToggle
+                ariaLabel={copy.themeLabel}
+                value={theme}
+                options={[
+                  { value: "light", icon: <SunIcon className="h-3.5 w-3.5" />, label: "Light" },
+                  { value: "dark", icon: <MoonIcon className="h-3.5 w-3.5" />, label: "Dark" },
+                ]}
+                onChange={setTheme}
+                compact
+                iconOnly
+              />
             </div>
 
             <nav
-              className="mt-3 flex max-h-[calc(100svh-11rem)] flex-col gap-1 overflow-y-auto"
+              className="mt-3 flex max-h-[calc(100svh-10rem)] flex-col gap-1.5 overflow-y-auto"
               style={{ paddingBottom: "calc(0.5rem + env(safe-area-inset-bottom, 0px))" }}
             >
               {navItems.map((item) => {
@@ -238,10 +238,10 @@ export function Header() {
                     key={item.href}
                     href={item.href}
                     className={cn(
-                      "rounded-[0.95rem] px-3.5 py-3 text-[0.98rem] font-medium transition",
+                      "rounded-[1rem] border px-3.5 py-3 text-[0.96rem] font-medium transition focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--accent)]",
                       active
-                        ? "bg-[color:var(--foreground)] text-[color:var(--background)]"
-                        : "text-[color:var(--foreground)]/76 hover:bg-black/[0.035] hover:text-[color:var(--foreground)]",
+                        ? "border-[var(--btn-primary-border)] bg-[var(--btn-primary-bg)] text-[var(--btn-primary-text)] shadow-[0_14px_28px_rgba(0,0,0,0.12)]"
+                        : "border-transparent bg-transparent text-[color:var(--foreground)] hover:border-[color:var(--line)] hover:bg-[color:var(--surface)] hover:text-[color:var(--foreground)]",
                     )}
                     onClick={() => setOpen(false)}
                   >

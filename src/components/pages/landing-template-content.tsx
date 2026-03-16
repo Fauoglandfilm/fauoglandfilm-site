@@ -34,14 +34,14 @@ export function LandingTemplateContent() {
       />
 
       <section className="section-space">
-        <div className="mx-auto max-w-7xl px-6 lg:px-8">
-          <div className="grid gap-6 lg:grid-cols-3">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div className="grid gap-4 sm:gap-6 lg:grid-cols-3">
             {landingTemplateBullets.map((bullet, index) => (
-              <article key={`landing-bullet-${index}`} className="card-surface rounded-[1.8rem] p-7">
+              <article key={`landing-bullet-${index}`} className="card-surface rounded-[1.6rem] p-5 sm:rounded-[1.8rem] sm:p-7">
                 <p className="text-xs font-semibold uppercase tracking-[0.24em] text-[var(--muted)]">
                   {copy.landingPrinciple}
                 </p>
-                <h2 className="mt-4 font-display text-3xl leading-[0.96] text-[color:var(--foreground)]">
+                <h2 className="feature-title mt-4 text-[color:var(--foreground)]">
                   {resolveLocalizedValue(bullet, language)}
                 </h2>
               </article>
@@ -54,7 +54,7 @@ export function LandingTemplateContent() {
       <PackagesSection packages={offerPackages} />
 
       <section className="section-space pt-0">
-        <div className="mx-auto max-w-7xl px-6 lg:px-8">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <RelatedLinks
             links={[
               { href: "/", label: { no: uiCopy.pages.no.landingHome, en: uiCopy.pages.en.landingHome } },
