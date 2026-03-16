@@ -29,7 +29,7 @@ export function SectionShell({
 
   return (
     <section id={id} className={cn("section-space", className)}>
-      <div className={cn("mx-auto max-w-7xl px-4 sm:px-6 lg:px-8", innerClassName)}>
+      <div className={cn("site-container", innerClassName)}>
         <div
           className={cn(
             "flex flex-col gap-3 sm:gap-4",
@@ -56,7 +56,7 @@ export function SectionShell({
           {!isCentered && action ? <div className="shrink-0 pt-1 max-sm:w-full">{action}</div> : null}
           {isCentered && action ? <div className="pt-1 max-sm:w-full">{action}</div> : null}
         </div>
-        {children ? <div className="mt-5 sm:mt-8">{children}</div> : null}
+        {children ? <div className="mt-[clamp(1.5rem,3vw,2.25rem)]">{children}</div> : null}
       </div>
     </section>
   );

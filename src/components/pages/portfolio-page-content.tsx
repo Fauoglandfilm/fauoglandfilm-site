@@ -4,7 +4,7 @@ import Image from "next/image";
 import { useState } from "react";
 
 import { ProjectVideoModal } from "@/components/media/project-video-modal";
-import { EmbeddedVideoPlayer } from "@/components/media/embedded-video-player";
+import { PreviewMedia } from "@/components/media/preview-media";
 import { Reveal } from "@/components/motion/reveal";
 import { useSitePreferences } from "@/components/providers/site-preferences";
 import { CtaBanner, PageHero } from "@/components/sections/site-sections";
@@ -154,7 +154,7 @@ export function PortfolioPageContent() {
       />
 
       <section className="section-space pt-0">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div className="site-container">
           <div className="grid gap-4 lg:grid-cols-[1.16fr_0.84fr]">
             <Reveal>
               <article className="cinematic-panel group overflow-hidden rounded-[2rem] shadow-[0_34px_110px_rgba(0,0,0,0.24)]">
@@ -212,7 +212,7 @@ export function PortfolioPageContent() {
                   </p>
                 </div>
 
-                <div className="mt-6 grid gap-3 sm:grid-cols-3">
+                <div className="adaptive-grid-compact mt-6">
                   {copy.showreelStats.map((item) => (
                     <div
                       key={item.label}
@@ -243,7 +243,7 @@ export function PortfolioPageContent() {
       </section>
 
       <section className="pb-1 pt-0 sm:pb-2">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div className="site-container">
           <Reveal>
             <div className="flex flex-col gap-3 sm:gap-4 lg:flex-row lg:items-end lg:justify-between">
               <div className="max-w-3xl space-y-3">
@@ -271,7 +271,7 @@ export function PortfolioPageContent() {
             ) : null}
 
             {visibleFeaturedProjects.length > 1 ? (
-              <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
+              <div className="adaptive-grid-cards">
                 {visibleFeaturedProjects.slice(1).map((project, index) => (
                   <Reveal key={project.slug} delay={0.05 * (index + 1)}>
                     <PortfolioProjectCard
@@ -290,7 +290,7 @@ export function PortfolioPageContent() {
       </section>
 
       <section id="portfolio-grid" className="section-space pt-0">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div className="site-container">
           <Reveal>
             <div className="glass-panel relative overflow-hidden rounded-[2rem] p-5 shadow-[0_28px_90px_rgba(0,0,0,0.18)] sm:p-6 lg:p-7">
               <div className="glass-sheen absolute inset-0 opacity-45" />
@@ -343,7 +343,7 @@ export function PortfolioPageContent() {
             </div>
           </Reveal>
 
-          <div className="mt-6 grid gap-4 md:grid-cols-2 xl:grid-cols-3">
+          <div className="adaptive-grid-cards mt-6">
             {filteredProjects.map((project, index) => (
               <Reveal key={project.slug} delay={0.03 * index}>
                 <PortfolioProjectCard
@@ -438,7 +438,7 @@ function PortfolioProjectCard({
           />
           <PortfolioMedia
             project={project}
-            playMode={isWide ? "always" : "hover"}
+            playMode="hover"
             sizes={
               isWide
                 ? "(min-width: 1280px) 40vw, (min-width: 768px) 50vw, 100vw"
@@ -540,53 +540,35 @@ function PortfolioMedia({
     : resolveLocalizedValue(project.title, language);
   const imageClassName = cn(
     "object-cover",
-    playMode === "hover" && "transition duration-700 md:group-hover:scale-[1.03] md:group-hover:opacity-0",
-    playMode === "always" && "transition duration-700 group-hover:scale-[1.03]",
+    "transition duration-700",
+    playMode === "hover" && "group-hover:scale-[1.03]",
+    playMode === "always" && "group-hover:scale-[1.03]",
     project.mediaFit === "contain" && "object-contain p-5 sm:p-6",
     className,
   );
 
-  if (project.video?.videoType === "direct" && playMode !== "static") {
-    return (
-      <>
-        {project.image || project.video.poster ? (
-          <Image
-            src={project.image ?? project.video.poster!}
-            alt={altText}
-            fill
-            priority={priority}
-            sizes={sizes}
-            className={imageClassName}
-          />
-        ) : null}
+  const previewBehavior =
+    playMode === "always"
+      ? "viewport"
+      : playMode === "hover"
+        ? "hover-or-viewport"
+        : "static";
 
-        <video
-          className={cn(
-            "absolute inset-0 h-full w-full object-cover",
-            playMode === "hover" ? "hidden opacity-0 transition duration-500 md:block md:group-hover:opacity-100" : "block",
-          )}
-          autoPlay
-          muted
-          loop
-          playsInline
-          preload="metadata"
-          poster={project.video.poster}
-        >
-          <source src={project.video.src} type="video/mp4" />
-        </video>
-      </>
-    );
-  }
-
-  if (project.externalVideo && playMode === "always") {
+  if ((project.video && project.video.videoType === "direct" && playMode !== "static") || (project.externalVideo && playMode !== "static")) {
     return (
-      <EmbeddedVideoPlayer
+      <PreviewMedia
         title={project.title}
+        video={project.video}
         externalVideo={project.externalVideo}
-        autoplay
-        previewMode
-        className="absolute inset-0 h-full w-full"
+        image={project.image}
+        imageAlt={project.imageAlt}
+        mediaFit={project.mediaFit}
+        previewBehavior={previewBehavior}
+        className="absolute inset-0"
         sizes={sizes}
+        priority={priority}
+        posterClassName={imageClassName}
+        previewClassName={cn("scale-[1.02]", project.mediaFit === "contain" && "object-contain p-5 sm:p-6")}
       />
     );
   }

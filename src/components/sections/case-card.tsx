@@ -1,12 +1,10 @@
 "use client";
 
-import Image from "next/image";
-
-import { EmbeddedVideoPlayer } from "@/components/media/embedded-video-player";
+import { PreviewMedia } from "@/components/media/preview-media";
 import { useSitePreferences } from "@/components/providers/site-preferences";
 import { ButtonLink } from "@/components/ui/button-link";
 import type { CaseStudy } from "@/data/site-content";
-import { siteVisuals } from "@/data/visual-assets";
+import { getPortfolioFallbackVisual, siteVisuals } from "@/data/visual-assets";
 import { uiCopy } from "@/data/ui-copy";
 import { resolveLocalizedValue } from "@/lib/i18n";
 
@@ -29,6 +27,12 @@ export function CaseCard({
   const isFeature = layout === "feature";
   const { language } = useSitePreferences();
   const copy = uiCopy.siteSections[language];
+  const fallbackVisual =
+    caseStudy.slug === "ville-gleder"
+      ? getPortfolioFallbackVisual("commercial")
+      : caseStudy.slug === "foreningen-norden"
+        ? getPortfolioFallbackVisual("campaign")
+        : getPortfolioFallbackVisual("documentary");
 
   return (
     <article
@@ -41,52 +45,18 @@ export function CaseCard({
           isFeature ? "min-h-[14.5rem] sm:min-h-[16rem] lg:min-h-[19rem]" : "aspect-[1.25/0.82] min-h-[13rem] md:min-h-[14.5rem]"
         }`}
       >
-        {video?.videoType === "direct" ? (
-          <video
-            className="h-full w-full object-cover transition duration-700 group-hover:scale-[1.03]"
-            autoPlay
-            muted
-            loop
-            playsInline
-            preload={isFeature ? "metadata" : "none"}
-            poster={video.poster}
-          >
-            <source src={video.src} type="video/mp4" />
-          </video>
-        ) : isFeature && externalVideo ? (
-          <EmbeddedVideoPlayer
-            title={caseStudy.title}
-            externalVideo={externalVideo}
-            autoplay
-            previewMode
-            className="absolute inset-0 h-full w-full"
-            sizes="(min-width: 1024px) 50vw, 100vw"
-          />
-        ) : externalVideo ? (
-          <Image
-            src={externalVideo.thumbnailSrc}
-            alt={resolveLocalizedValue(externalVideo.label, language)}
-            fill
-            sizes={isFeature ? "(min-width: 1024px) 50vw, 100vw" : "(min-width: 1280px) 33vw, 100vw"}
-            className="object-cover transition duration-500 group-hover:scale-[1.03]"
-          />
-        ) : image ? (
-          <Image
-            src={image}
-            alt={caseStudy.imageAlt ? resolveLocalizedValue(caseStudy.imageAlt, language) : caseStudy.client}
-            fill
-            sizes={isFeature ? "(min-width: 1024px) 50vw, 100vw" : "(min-width: 1280px) 33vw, 100vw"}
-            className="object-cover transition duration-500 group-hover:scale-[1.03]"
-          />
-        ) : (
-          <Image
-            src={siteVisuals.folkPoster.src}
-            alt={resolveLocalizedValue(siteVisuals.folkPoster.alt, language)}
-            fill
-            sizes={isFeature ? "(min-width: 1024px) 50vw, 100vw" : "(min-width: 1280px) 33vw, 100vw"}
-            className="object-cover transition duration-500 group-hover:scale-[1.03]"
-          />
-        )}
+        <PreviewMedia
+          title={caseStudy.title}
+          video={video}
+          externalVideo={externalVideo}
+          image={image ?? fallbackVisual.src ?? siteVisuals.folkPoster.src}
+          imageAlt={caseStudy.imageAlt ?? fallbackVisual.alt ?? siteVisuals.folkPoster.alt}
+          previewBehavior={video || externalVideo ? "hover-or-viewport" : "static"}
+          className="absolute inset-0"
+          sizes={isFeature ? "(min-width: 1024px) 50vw, 100vw" : "(min-width: 1280px) 33vw, 100vw"}
+          posterClassName="group-hover:scale-[1.035]"
+          previewClassName="scale-[1.02]"
+        />
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(255,255,255,0.08),transparent_32%),linear-gradient(180deg,rgba(17,17,17,0.05),rgba(17,17,17,0.22)_34%,rgba(17,17,17,0.82)_100%)]" />
         <div className="grain-overlay absolute inset-0 opacity-45" />
         {video || externalVideo ? (

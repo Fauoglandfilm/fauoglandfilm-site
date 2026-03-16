@@ -53,7 +53,7 @@ export function ServicesSection({
       description={description ? resolveLocalizedValue(description, language) : copy.servicesDescription}
       id="tjenester"
     >
-      <div className="grid gap-4 md:grid-cols-2">
+      <div className="adaptive-grid-cards">
         {services.map((service, index) => (
           <Reveal key={service.slug} delay={0.06 * index}>
             <ServiceCard service={service} />
@@ -74,7 +74,7 @@ export function PriceGuideSection({ items }: { items: PriceGuide[] }) {
       title={copy.priceGuideTitle}
       description={copy.priceGuideDescription}
     >
-      <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
+      <div className="adaptive-grid-compact">
         {items.map((item, index) => (
           <Reveal key={`price-guide-${index}`} delay={0.05 * index}>
             <article className="card-surface rounded-[1.7rem] p-5">
@@ -142,7 +142,7 @@ export function ProcessSection({ steps }: { steps: ProcessStep[] }) {
       description={copy.processDescription}
       align="center"
     >
-      <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
+      <div className="adaptive-grid-compact">
         {steps.map((step, index) => (
           <Reveal key={step.step} delay={0.05 * index}>
             <article className="card-surface rounded-[1.7rem] p-5">
@@ -226,7 +226,7 @@ export function AboutPreviewSection({
           </ul>
         </article>
 
-        <div className="grid gap-4 lg:grid-cols-2">
+        <div className="adaptive-grid-compact">
           {team.map((member) => (
             <article key={member.name} className="card-surface rounded-[1.8rem] p-5">
               <p className="text-[0.68rem] font-semibold uppercase tracking-[0.22em] text-[var(--muted)]">
@@ -306,7 +306,7 @@ export function TeamSection({
           </article>
         </FloatingLayer>
 
-        <div className="grid gap-4 lg:grid-cols-2 lg:items-start">
+        <div className="adaptive-grid-compact lg:items-start">
           {team.map((member, index) => (
             <Reveal key={member.name} delay={0.05 * index} className={index === 1 ? "lg:translate-y-8" : undefined}>
               <article className="founder-card-shell group relative overflow-hidden rounded-[2rem] p-4 sm:p-5">
@@ -432,7 +432,7 @@ export function ContactLeadSection({
           </article>
 
           {visibleFaqs.length ? (
-            <div className="grid gap-3 md:grid-cols-2">
+            <div className="adaptive-grid-compact">
               {visibleFaqs.map((faq, index) => (
                 <details
                   key={`contact-faq-${index}`}
@@ -561,7 +561,7 @@ export function CtaBanner({
 
   return (
     <section className="section-space">
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div className="site-container">
         <div className="overflow-hidden rounded-[1.8rem] border border-[color:var(--line)] bg-[#111111] px-4 py-5 text-white shadow-[0_32px_100px_rgba(15,15,15,0.14)] sm:rounded-[2rem] sm:px-6 sm:py-7 lg:px-8 lg:py-8">
           <div
             className={
@@ -695,7 +695,7 @@ export function PageHero({
         )}
       </div>
 
-      <div className="relative mx-auto flex min-h-[40svh] max-w-7xl items-end px-4 pb-6 sm:min-h-[44svh] sm:px-6 sm:pb-8 lg:min-h-[48svh] lg:px-8 lg:pb-10">
+      <div className="site-container relative flex min-h-[clamp(22rem,42svh,33rem)] items-end pb-[clamp(1.5rem,4vw,2.5rem)]">
         <Reveal className="w-full max-w-[46rem]" delay={0.04} y={18}>
           <div
             className={`subpage-hero-panel relative overflow-hidden px-5 py-5 sm:px-7 sm:py-6 lg:px-8 lg:py-7 ${
