@@ -3,16 +3,16 @@
 :root {
   --background: #06070a;
   --foreground: #f5efe7;
-  --surface: rgba(18, 21, 28, 0.5);
-  --surface-strong: rgba(10, 12, 17, 0.76);
-  --surface-muted: rgba(255, 255, 255, 0.04);
-  --line: rgba(255, 255, 255, 0.12);
-  --line-strong: rgba(255, 255, 255, 0.22);
-  --muted: #b0a598;
-  --muted-2: #dfd4c6;
+  --surface: rgba(24, 31, 45, 0.36);
+  --surface-strong: rgba(12, 18, 30, 0.72);
+  --surface-muted: rgba(255, 255, 255, 0.06);
+  --line: rgba(255, 255, 255, 0.16);
+  --line-strong: rgba(255, 255, 255, 0.3);
+  --muted: #b6becc;
+  --muted-2: #e3e9f2;
   --accent: #d2ad74;
   --accent-2: #f0d9ac;
-  --shadow: 0 40px 140px rgba(0, 0, 0, 0.44);
+  --shadow: 0 44px 140px rgba(0, 0, 0, 0.42);
   --logo-strip-bg: rgba(224, 215, 201, 0.92);
   --logo-strip-border: rgba(255, 255, 255, 0.12);
   --btn-border: rgba(255, 255, 255, 0.16);
@@ -23,61 +23,61 @@
   --btn-primary-hover-text: #0f1013;
   --btn-primary-active-bg: #e6dccb;
   --btn-primary-active-text: #0f1013;
-  --btn-secondary-bg: rgba(255, 255, 255, 0.06);
+  --btn-secondary-bg: rgba(255, 255, 255, 0.08);
   --btn-secondary-text: #f4eee5;
-  --btn-secondary-border: rgba(255, 255, 255, 0.14);
-  --btn-secondary-hover-bg: rgba(255, 255, 255, 0.1);
+  --btn-secondary-border: rgba(255, 255, 255, 0.18);
+  --btn-secondary-hover-bg: rgba(255, 255, 255, 0.14);
   --btn-secondary-hover-text: #ffffff;
-  --btn-secondary-active-bg: rgba(255, 255, 255, 0.14);
+  --btn-secondary-active-bg: rgba(255, 255, 255, 0.18);
   --btn-secondary-active-text: #ffffff;
   --btn-ghost-bg: transparent;
   --btn-ghost-text: #f4eee5;
-  --btn-ghost-border: rgba(244, 238, 229, 0.26);
-  --btn-ghost-hover-bg: rgba(255, 255, 255, 0.08);
+  --btn-ghost-border: rgba(244, 238, 229, 0.34);
+  --btn-ghost-hover-bg: rgba(255, 255, 255, 0.1);
   --btn-ghost-hover-text: #ffffff;
-  --btn-ghost-active-bg: rgba(255, 255, 255, 0.12);
+  --btn-ghost-active-bg: rgba(255, 255, 255, 0.16);
   --btn-ghost-active-text: #ffffff;
-  --btn-icon-bg: rgba(18, 20, 25, 0.92);
+  --btn-icon-bg: rgba(20, 25, 36, 0.72);
   --btn-icon-text: #f4eee5;
-  --btn-icon-border: rgba(255, 255, 255, 0.12);
-  --btn-icon-hover-bg: rgba(26, 29, 36, 0.98);
+  --btn-icon-border: rgba(255, 255, 255, 0.18);
+  --btn-icon-hover-bg: rgba(28, 34, 48, 0.92);
   --btn-icon-hover-text: #ffffff;
-  --btn-icon-active-bg: rgba(38, 42, 50, 0.98);
+  --btn-icon-active-bg: rgba(38, 45, 60, 0.98);
   --btn-icon-active-text: #ffffff;
   --btn-disabled-opacity: 0.52;
-  --control-shell-bg: rgba(19, 22, 30, 0.6);
-  --control-shell-border: rgba(255, 255, 255, 0.12);
+  --control-shell-bg: rgba(22, 29, 42, 0.52);
+  --control-shell-border: rgba(255, 255, 255, 0.16);
   --control-option-bg: transparent;
-  --control-option-text: #d8cec1;
+  --control-option-text: #dde5f0;
   --control-option-border: transparent;
-  --control-option-hover-bg: rgba(255, 255, 255, 0.08);
+  --control-option-hover-bg: rgba(255, 255, 255, 0.12);
   --control-option-hover-text: #ffffff;
   --control-option-hover-border: transparent;
   --control-option-active-bg: #f4eee5;
   --control-option-active-text: #0f1013;
   --control-option-active-border: rgba(255, 255, 255, 0.18);
-  --header-surface: rgba(13, 15, 20, 0.42);
-  --header-overlay-surface: rgba(11, 13, 18, 0.18);
+  --header-surface: rgba(16, 22, 35, 0.34);
+  --header-overlay-surface: rgba(18, 24, 39, 0.18);
   --header-overlay-border: rgba(255, 255, 255, 0.14);
   color-scheme: dark;
 }
 
 html[data-theme="light"] {
-  --background: #dcd6ce;
-  --foreground: #151515;
-  --surface: rgba(255, 251, 246, 0.46);
-  --surface-strong: rgba(255, 250, 244, 0.72);
-  --surface-muted: rgba(255, 255, 255, 0.4);
-  --line: rgba(17, 17, 17, 0.1);
-  --line-strong: rgba(17, 17, 17, 0.18);
-  --muted: #6c645c;
-  --muted-2: #524c45;
+  --background: #e4ebf7;
+  --foreground: #101826;
+  --surface: rgba(255, 255, 255, 0.28);
+  --surface-strong: rgba(247, 250, 255, 0.54);
+  --surface-muted: rgba(255, 255, 255, 0.52);
+  --line: rgba(255, 255, 255, 0.52);
+  --line-strong: rgba(255, 255, 255, 0.78);
+  --muted: #667181;
+  --muted-2: #3c4658;
   --accent: #b8935e;
   --accent-2: #8d7349;
-  --shadow: 0 28px 90px rgba(25, 21, 17, 0.12);
+  --shadow: 0 32px 100px rgba(38, 54, 82, 0.12);
   --logo-strip-bg: rgba(244, 237, 228, 0.92);
   --logo-strip-border: rgba(17, 17, 17, 0.06);
-  --btn-border: rgba(17, 17, 17, 0.12);
+  --btn-border: rgba(255, 255, 255, 0.58);
   --btn-primary-bg: #151515;
   --btn-primary-text: #ffffff;
   --btn-primary-border: #151515;
@@ -85,37 +85,37 @@ html[data-theme="light"] {
   --btn-primary-hover-text: #ffffff;
   --btn-primary-active-bg: #090909;
   --btn-primary-active-text: #ffffff;
-  --btn-secondary-bg: rgba(21, 21, 21, 0.06);
-  --btn-secondary-text: #151515;
-  --btn-secondary-border: rgba(17, 17, 17, 0.14);
-  --btn-secondary-hover-bg: rgba(21, 21, 21, 0.1);
-  --btn-secondary-hover-text: #151515;
-  --btn-secondary-active-bg: rgba(21, 21, 21, 0.14);
-  --btn-secondary-active-text: #151515;
+  --btn-secondary-bg: rgba(255, 255, 255, 0.42);
+  --btn-secondary-text: #101826;
+  --btn-secondary-border: rgba(255, 255, 255, 0.68);
+  --btn-secondary-hover-bg: rgba(255, 255, 255, 0.6);
+  --btn-secondary-hover-text: #101826;
+  --btn-secondary-active-bg: rgba(255, 255, 255, 0.72);
+  --btn-secondary-active-text: #101826;
   --btn-ghost-bg: transparent;
-  --btn-ghost-text: #151515;
-  --btn-ghost-border: rgba(17, 17, 17, 0.28);
-  --btn-ghost-hover-bg: rgba(17, 17, 17, 0.06);
-  --btn-ghost-hover-text: #151515;
-  --btn-ghost-active-bg: rgba(17, 17, 17, 0.1);
-  --btn-ghost-active-text: #151515;
-  --btn-icon-bg: rgba(255, 255, 255, 0.88);
-  --btn-icon-text: #151515;
-  --btn-icon-border: rgba(17, 17, 17, 0.12);
-  --btn-icon-hover-bg: rgba(255, 255, 255, 0.98);
-  --btn-icon-hover-text: #151515;
-  --btn-icon-active-bg: #efe7db;
-  --btn-icon-active-text: #151515;
-  --control-shell-bg: rgba(255, 255, 255, 0.54);
-  --control-shell-border: rgba(17, 17, 17, 0.1);
-  --control-option-text: #5d554d;
-  --control-option-hover-bg: rgba(17, 17, 17, 0.06);
-  --control-option-hover-text: #151515;
+  --btn-ghost-text: #101826;
+  --btn-ghost-border: rgba(255, 255, 255, 0.74);
+  --btn-ghost-hover-bg: rgba(255, 255, 255, 0.42);
+  --btn-ghost-hover-text: #101826;
+  --btn-ghost-active-bg: rgba(255, 255, 255, 0.56);
+  --btn-ghost-active-text: #101826;
+  --btn-icon-bg: rgba(255, 255, 255, 0.52);
+  --btn-icon-text: #101826;
+  --btn-icon-border: rgba(255, 255, 255, 0.72);
+  --btn-icon-hover-bg: rgba(255, 255, 255, 0.68);
+  --btn-icon-hover-text: #101826;
+  --btn-icon-active-bg: rgba(255, 255, 255, 0.8);
+  --btn-icon-active-text: #101826;
+  --control-shell-bg: rgba(255, 255, 255, 0.42);
+  --control-shell-border: rgba(255, 255, 255, 0.72);
+  --control-option-text: #536071;
+  --control-option-hover-bg: rgba(255, 255, 255, 0.5);
+  --control-option-hover-text: #101826;
   --control-option-active-bg: #151515;
   --control-option-active-text: #ffffff;
   --control-option-active-border: rgba(17, 17, 17, 0.12);
-  --header-surface: rgba(255, 250, 245, 0.54);
-  --header-overlay-surface: rgba(255, 252, 248, 0.22);
+  --header-surface: rgba(250, 252, 255, 0.34);
+  --header-overlay-surface: rgba(250, 252, 255, 0.22);
   --header-overlay-border: rgba(255, 255, 255, 0.14);
   color-scheme: light;
 }
@@ -144,16 +144,16 @@ html {
 body {
   min-height: 100vh;
   background:
-    radial-gradient(circle at 12% 0%, rgba(210, 173, 116, 0.14), transparent 22%),
-    radial-gradient(circle at 86% 8%, rgba(74, 98, 135, 0.18), transparent 24%),
-    radial-gradient(circle at 50% 26%, rgba(255, 255, 255, 0.05), transparent 30%),
-    radial-gradient(circle at 50% 100%, rgba(8, 8, 8, 0.14), transparent 32%),
+    radial-gradient(circle at 8% 0%, rgba(122, 168, 255, 0.24), transparent 22%),
+    radial-gradient(circle at 84% 4%, rgba(255, 255, 255, 0.09), transparent 18%),
+    radial-gradient(circle at 76% 18%, rgba(87, 133, 255, 0.15), transparent 24%),
+    radial-gradient(circle at 18% 72%, rgba(210, 173, 116, 0.1), transparent 26%),
     linear-gradient(
       180deg,
-      color-mix(in srgb, var(--background) 94%, #0d1118) 0%,
-      color-mix(in srgb, var(--background) 96%, #07080c) 22%,
-      color-mix(in srgb, var(--background) 92%, #07080a) 58%,
-      color-mix(in srgb, var(--background) 78%, #040506) 100%
+      color-mix(in srgb, var(--background) 92%, #0f1728) 0%,
+      color-mix(in srgb, var(--background) 96%, #09101a) 22%,
+      color-mix(in srgb, var(--background) 92%, #06090f) 58%,
+      color-mix(in srgb, var(--background) 84%, #030509) 100%
     );
   color: var(--foreground);
   font-family: var(--font-manrope), sans-serif;
@@ -167,10 +167,10 @@ body::before {
   inset: 0;
   pointer-events: none;
   background:
-    radial-gradient(circle at 18% 4%, rgba(255, 255, 255, 0.14), transparent 16%),
-    radial-gradient(circle at 78% 0%, rgba(210, 173, 116, 0.1), transparent 22%),
-    linear-gradient(180deg, rgba(0, 0, 0, 0.24), transparent 24%, transparent 66%, rgba(0, 0, 0, 0.34));
-  opacity: 0.78;
+    radial-gradient(circle at 16% 4%, rgba(255, 255, 255, 0.2), transparent 18%),
+    radial-gradient(circle at 84% 8%, rgba(147, 188, 255, 0.12), transparent 20%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.05), transparent 22%, transparent 72%, rgba(0, 0, 0, 0.18));
+  opacity: 0.86;
 }
 
 body::after {
@@ -186,23 +186,24 @@ body::after {
 
 html[data-theme="light"] body {
   background:
-    radial-gradient(circle at 12% 0%, rgba(184, 147, 94, 0.16), transparent 24%),
-    radial-gradient(circle at 88% 8%, rgba(126, 149, 185, 0.18), transparent 24%),
-    radial-gradient(circle at 50% 22%, rgba(255, 255, 255, 0.42), transparent 32%),
+    radial-gradient(circle at 10% 0%, rgba(255, 255, 255, 0.88), transparent 26%),
+    radial-gradient(circle at 86% 6%, rgba(121, 162, 246, 0.24), transparent 22%),
+    radial-gradient(circle at 22% 36%, rgba(255, 255, 255, 0.46), transparent 24%),
+    radial-gradient(circle at 72% 72%, rgba(196, 155, 87, 0.12), transparent 24%),
     linear-gradient(
       180deg,
-      color-mix(in srgb, var(--background) 90%, #f7f1e8) 0%,
-      color-mix(in srgb, var(--background) 96%, #ede4d6) 48%,
-      color-mix(in srgb, var(--background) 90%, #d4c8b8) 100%
+      color-mix(in srgb, var(--background) 94%, #f8fbff) 0%,
+      color-mix(in srgb, var(--background) 98%, #edf3fc) 44%,
+      color-mix(in srgb, var(--background) 92%, #dbe5f3) 100%
     );
 }
 
 html[data-theme="light"] body::before {
   background:
-    radial-gradient(circle at 14% 6%, rgba(255, 255, 255, 0.48), transparent 20%),
-    radial-gradient(circle at 82% 4%, rgba(184, 147, 94, 0.16), transparent 24%),
-    linear-gradient(180deg, rgba(255, 255, 255, 0.18), transparent 28%, transparent 68%, rgba(110, 90, 66, 0.12));
-  opacity: 0.86;
+    radial-gradient(circle at 14% 6%, rgba(255, 255, 255, 0.78), transparent 22%),
+    radial-gradient(circle at 82% 6%, rgba(125, 165, 248, 0.18), transparent 22%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.26), transparent 26%, transparent 72%, rgba(77, 100, 136, 0.08));
+  opacity: 0.92;
 }
 
 a {
@@ -299,17 +300,19 @@ summary::-webkit-details-marker {
   .card-surface {
     position: relative;
     isolation: isolate;
-    border: 1px solid color-mix(in srgb, var(--line) 88%, rgba(255, 255, 255, 0.08));
-    background: linear-gradient(
-      180deg,
-      color-mix(in srgb, var(--surface-strong) 86%, rgba(255, 255, 255, 0.08)),
-      color-mix(in srgb, var(--surface-strong) 78%, rgba(7, 7, 8, 0.28))
-    );
+    border: 1px solid color-mix(in srgb, var(--line) 94%, rgba(255, 255, 255, 0.12));
+    background:
+      linear-gradient(180deg, rgba(255, 255, 255, 0.16), rgba(255, 255, 255, 0.04)),
+      radial-gradient(circle at top left, rgba(255, 255, 255, 0.14), transparent 36%),
+      radial-gradient(circle at bottom right, rgba(118, 159, 248, 0.08), transparent 28%),
+      color-mix(in srgb, var(--surface-strong) 84%, transparent);
     box-shadow:
-      0 36px 120px rgba(2, 2, 2, 0.3),
-      inset 0 1px 0 rgba(255, 255, 255, 0.14),
-      inset 0 -1px 0 rgba(255, 255, 255, 0.02);
-    backdrop-filter: blur(28px) saturate(140%);
+      0 40px 120px rgba(6, 12, 24, 0.26),
+      0 8px 34px rgba(6, 10, 20, 0.16),
+      inset 0 1px 0 rgba(255, 255, 255, 0.26),
+      inset 0 -1px 0 rgba(255, 255, 255, 0.04),
+      inset 0 18px 40px rgba(255, 255, 255, 0.06);
+    backdrop-filter: blur(34px) saturate(175%);
     transition:
       transform 280ms ease,
       box-shadow 280ms ease,
@@ -318,47 +321,97 @@ summary::-webkit-details-marker {
   }
 
   .glass-panel {
-    border: 1px solid color-mix(in srgb, var(--line) 66%, transparent);
+    position: relative;
+    isolation: isolate;
+    border: 1px solid color-mix(in srgb, var(--line) 88%, rgba(255, 255, 255, 0.18));
     background:
-      linear-gradient(180deg, rgba(255, 255, 255, 0.12), rgba(255, 255, 255, 0.03)),
-      color-mix(in srgb, var(--surface) 72%, transparent);
+      linear-gradient(180deg, rgba(255, 255, 255, 0.18), rgba(255, 255, 255, 0.04)),
+      radial-gradient(circle at top left, rgba(255, 255, 255, 0.18), transparent 30%),
+      radial-gradient(circle at bottom right, rgba(133, 171, 255, 0.1), transparent 30%),
+      color-mix(in srgb, var(--surface) 74%, transparent);
     box-shadow:
-      0 28px 90px rgba(6, 6, 6, 0.18),
-      inset 0 1px 0 rgba(255, 255, 255, 0.18);
-    backdrop-filter: blur(28px) saturate(160%);
+      0 34px 110px rgba(6, 12, 24, 0.22),
+      0 10px 30px rgba(8, 12, 22, 0.12),
+      inset 0 1px 0 rgba(255, 255, 255, 0.3),
+      inset 0 -1px 0 rgba(255, 255, 255, 0.06),
+      inset 0 22px 44px rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(34px) saturate(185%);
   }
 
   .cinematic-panel {
-    border: 1px solid color-mix(in srgb, var(--line) 82%, rgba(255, 255, 255, 0.08));
+    position: relative;
+    isolation: isolate;
+    border: 1px solid color-mix(in srgb, var(--line) 90%, rgba(255, 255, 255, 0.12));
     background:
-      linear-gradient(180deg, rgba(255, 255, 255, 0.12), transparent 18%),
-      linear-gradient(180deg, color-mix(in srgb, var(--surface-strong) 82%, rgba(255, 255, 255, 0.06)), color-mix(in srgb, var(--surface-strong) 96%, rgba(6, 6, 7, 0.24)));
+      linear-gradient(180deg, rgba(255, 255, 255, 0.14), transparent 22%),
+      radial-gradient(circle at top right, rgba(126, 170, 255, 0.12), transparent 28%),
+      linear-gradient(180deg, color-mix(in srgb, var(--surface-strong) 84%, rgba(255, 255, 255, 0.08)), color-mix(in srgb, var(--surface-strong) 96%, rgba(6, 8, 14, 0.26)));
     box-shadow:
-      0 34px 110px rgba(0, 0, 0, 0.34),
-      inset 0 1px 0 rgba(255, 255, 255, 0.14);
-    backdrop-filter: blur(28px) saturate(150%);
+      0 38px 120px rgba(4, 10, 20, 0.34),
+      inset 0 1px 0 rgba(255, 255, 255, 0.2),
+      inset 0 18px 40px rgba(255, 255, 255, 0.04);
+    backdrop-filter: blur(32px) saturate(175%);
   }
 
   .glass-sheen {
-    background: linear-gradient(118deg, transparent 10%, rgba(255, 255, 255, 0.14) 30%, transparent 52%);
-    opacity: 0.55;
+    background: linear-gradient(118deg, transparent 8%, rgba(255, 255, 255, 0.18) 28%, rgba(255, 255, 255, 0.04) 44%, transparent 58%);
+    opacity: 0.68;
+    mix-blend-mode: screen;
     pointer-events: none;
-    animation: glass-sheen 13s linear infinite;
+    animation: glass-sheen 16s linear infinite;
     will-change: transform;
   }
 
   .media-frame {
-    border: 1px solid color-mix(in srgb, var(--line) 88%, rgba(255, 255, 255, 0.08));
+    border: 1px solid color-mix(in srgb, var(--line) 90%, rgba(255, 255, 255, 0.12));
     background:
-      radial-gradient(circle at top, rgba(210, 173, 116, 0.18), transparent 36%),
-      linear-gradient(180deg, rgba(8, 10, 14, 0.92), rgba(4, 5, 8, 0.96));
+      radial-gradient(circle at top, rgba(255, 255, 255, 0.16), transparent 30%),
+      radial-gradient(circle at bottom right, rgba(122, 168, 255, 0.14), transparent 28%),
+      linear-gradient(180deg, rgba(9, 12, 18, 0.92), rgba(4, 5, 8, 0.98));
     box-shadow:
-      0 28px 90px rgba(0, 0, 0, 0.3),
-      inset 0 1px 0 rgba(255, 255, 255, 0.08);
+      0 30px 100px rgba(6, 10, 20, 0.3),
+      inset 0 1px 0 rgba(255, 255, 255, 0.12),
+      inset 0 20px 36px rgba(255, 255, 255, 0.04);
     transition:
       transform 320ms ease,
       box-shadow 320ms ease,
       border-color 320ms ease;
+  }
+
+  .card-surface::before,
+  .glass-panel::before,
+  .cinematic-panel::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    background:
+      linear-gradient(140deg, rgba(255, 255, 255, 0.24), transparent 20%, transparent 58%, rgba(255, 255, 255, 0.06)),
+      radial-gradient(circle at top left, rgba(255, 255, 255, 0.12), transparent 32%);
+    pointer-events: none;
+    opacity: 0.82;
+  }
+
+  .card-surface::after,
+  .glass-panel::after,
+  .cinematic-panel::after {
+    content: "";
+    position: absolute;
+    inset: auto 12% 10% auto;
+    width: 34%;
+    height: 26%;
+    border-radius: 999px;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.12), transparent 70%);
+    pointer-events: none;
+    filter: blur(22px);
+    opacity: 0.7;
+  }
+
+  .card-surface > *,
+  .glass-panel > *,
+  .cinematic-panel > * {
+    position: relative;
+    z-index: 1;
   }
 
   .section-vignette {
@@ -391,6 +444,78 @@ summary::-webkit-details-marker {
     z-index: 2;
   }
 
+  .hero-glass-panel {
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+    border-radius: 2.5rem 3rem 2.7rem 3.2rem / 2.5rem 2.7rem 3rem 3rem;
+    border: 1px solid rgba(255, 255, 255, 0.26);
+    background:
+      linear-gradient(180deg, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.05)),
+      radial-gradient(circle at top left, rgba(255, 255, 255, 0.24), transparent 30%),
+      radial-gradient(circle at bottom right, rgba(98, 143, 255, 0.14), transparent 28%),
+      linear-gradient(135deg, rgba(132, 168, 255, 0.1), rgba(255, 255, 255, 0.03) 30%, rgba(255, 255, 255, 0.02) 100%);
+    box-shadow:
+      0 38px 120px rgba(0, 0, 0, 0.34),
+      0 16px 44px rgba(5, 12, 24, 0.18),
+      inset 0 1px 0 rgba(255, 255, 255, 0.34),
+      inset 0 -1px 0 rgba(255, 255, 255, 0.08),
+      inset 0 22px 48px rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(32px) saturate(190%);
+  }
+
+  .hero-glass-panel::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    background:
+      linear-gradient(128deg, rgba(255, 255, 255, 0.28), transparent 24%, transparent 62%, rgba(255, 255, 255, 0.08)),
+      radial-gradient(circle at 18% 10%, rgba(255, 255, 255, 0.18), transparent 24%);
+    opacity: 0.9;
+    pointer-events: none;
+  }
+
+  .hero-glass-panel::after {
+    content: "";
+    position: absolute;
+    right: -6%;
+    top: 10%;
+    width: 44%;
+    height: 62%;
+    border-radius: 999px;
+    background: linear-gradient(120deg, rgba(255, 255, 255, 0.22), rgba(255, 255, 255, 0.02));
+    filter: blur(18px);
+    opacity: 0.58;
+    pointer-events: none;
+    transform: rotate(-18deg);
+  }
+
+  .hero-panel-content {
+    position: relative;
+    z-index: 2;
+  }
+
+  .hero-panel-orb {
+    position: absolute;
+    inset: auto auto -3.5rem -2.4rem;
+    height: 9rem;
+    width: 9rem;
+    border-radius: 999px;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.22), rgba(255, 255, 255, 0.04) 52%, transparent 74%);
+    filter: blur(8px);
+    opacity: 0.78;
+    pointer-events: none;
+  }
+
+  .hero-panel-orb-secondary {
+    inset: -2.8rem -2rem auto auto;
+    height: 8rem;
+    width: 8rem;
+    background: radial-gradient(circle, rgba(120, 164, 255, 0.26), rgba(255, 255, 255, 0.06) 46%, transparent 76%);
+    opacity: 0.62;
+  }
+
   .hero-badge {
     display: inline-flex;
     max-width: 100%;
@@ -398,21 +523,21 @@ summary::-webkit-details-marker {
     font-weight: 700;
     letter-spacing: 0.24em;
     text-transform: uppercase;
-    color: rgba(255, 255, 255, 0.9);
-    text-shadow: 0 8px 24px rgba(0, 0, 0, 0.48);
+    color: rgba(255, 255, 255, 0.92);
+    text-shadow: 0 10px 26px rgba(0, 0, 0, 0.32);
   }
 
   .hero-copy .hero-title {
-    max-width: 12ch;
+    max-width: 11ch;
     line-height: 0.9;
     text-shadow:
-      0 10px 34px rgba(0, 0, 0, 0.56),
-      0 1px 0 rgba(255, 255, 255, 0.08);
+      0 14px 34px rgba(0, 0, 0, 0.32),
+      0 1px 0 rgba(255, 255, 255, 0.1);
   }
 
   .hero-body {
-    color: rgba(255, 255, 255, 0.92);
-    text-shadow: 0 10px 30px rgba(0, 0, 0, 0.44);
+    color: rgba(255, 255, 255, 0.9);
+    text-shadow: 0 10px 24px rgba(0, 0, 0, 0.28);
   }
 
   .hero-cta-row {
@@ -421,52 +546,53 @@ summary::-webkit-details-marker {
   }
 
   .hero-cta-primary {
-    --button-bg-current: rgba(247, 242, 234, 0.98);
-    --button-border-current: rgba(255, 255, 255, 0.28);
-    --button-text-current: #0d1014;
+    --button-bg-current: rgba(249, 247, 243, 0.92);
+    --button-border-current: rgba(255, 255, 255, 0.36);
+    --button-text-current: #0d1320;
+    backdrop-filter: blur(18px) saturate(180%);
     box-shadow:
-      0 22px 54px rgba(0, 0, 0, 0.34),
+      0 24px 58px rgba(0, 0, 0, 0.22),
       inset 0 1px 0 rgba(255, 255, 255, 0.5);
   }
 
   .hero-cta-primary:hover,
   .hero-cta-primary:focus-visible {
-    --button-bg-current: #ffffff;
-    --button-border-current: rgba(255, 255, 255, 0.42);
-    --button-text-current: #090b10;
+    --button-bg-current: rgba(255, 255, 255, 0.98);
+    --button-border-current: rgba(255, 255, 255, 0.44);
+    --button-text-current: #09101b;
     box-shadow:
-      0 24px 62px rgba(0, 0, 0, 0.38),
+      0 28px 64px rgba(0, 0, 0, 0.26),
       0 0 0 1px rgba(255, 255, 255, 0.12);
   }
 
   .hero-cta-primary:active {
-    --button-bg-current: #e8ded0;
-    --button-border-current: rgba(255, 255, 255, 0.28);
-    --button-text-current: #090b10;
+    --button-bg-current: rgba(233, 227, 218, 0.96);
+    --button-border-current: rgba(255, 255, 255, 0.34);
+    --button-text-current: #09101b;
   }
 
   .hero-cta-secondary {
-    --button-bg-current: rgba(10, 13, 18, 0.36);
+    --button-bg-current: rgba(255, 255, 255, 0.08);
     --button-border-current: rgba(255, 255, 255, 0.22);
     --button-text-current: rgba(255, 255, 255, 0.98);
-    backdrop-filter: blur(16px) saturate(150%);
+    backdrop-filter: blur(20px) saturate(165%);
     box-shadow:
-      0 22px 52px rgba(0, 0, 0, 0.26),
-      inset 0 1px 0 rgba(255, 255, 255, 0.12);
+      0 20px 48px rgba(0, 0, 0, 0.16),
+      inset 0 1px 0 rgba(255, 255, 255, 0.14);
   }
 
   .hero-cta-secondary:hover,
   .hero-cta-secondary:focus-visible {
-    --button-bg-current: rgba(16, 20, 28, 0.56);
-    --button-border-current: rgba(255, 255, 255, 0.28);
+    --button-bg-current: rgba(255, 255, 255, 0.14);
+    --button-border-current: rgba(255, 255, 255, 0.3);
     --button-text-current: #ffffff;
     box-shadow:
-      0 24px 56px rgba(0, 0, 0, 0.3),
+      0 24px 56px rgba(0, 0, 0, 0.2),
       0 0 0 1px rgba(255, 255, 255, 0.08);
   }
 
   .hero-cta-secondary:active {
-    --button-bg-current: rgba(18, 22, 30, 0.68);
+    --button-bg-current: rgba(255, 255, 255, 0.18);
     --button-border-current: rgba(255, 255, 255, 0.3);
     --button-text-current: #ffffff;
   }
@@ -512,7 +638,8 @@ summary::-webkit-details-marker {
       background-color 200ms ease,
       border-color 200ms ease,
       color 200ms ease,
-      box-shadow 200ms ease;
+      box-shadow 200ms ease,
+      backdrop-filter 200ms ease;
   }
 
   .button-base > span,
@@ -570,9 +697,10 @@ summary::-webkit-details-marker {
     --button-bg-current: var(--btn-primary-bg);
     --button-border-current: var(--btn-primary-border);
     --button-text-current: var(--btn-primary-text);
+    backdrop-filter: blur(20px) saturate(165%);
     box-shadow:
-      0 16px 34px rgba(0, 0, 0, 0.16),
-      inset 0 1px 0 rgba(255, 255, 255, 0.08);
+      0 18px 38px rgba(0, 0, 0, 0.18),
+      inset 0 1px 0 rgba(255, 255, 255, 0.1);
   }
 
   .button-primary:hover,
@@ -606,7 +734,10 @@ summary::-webkit-details-marker {
     --button-bg-current: var(--btn-secondary-bg);
     --button-border-current: var(--btn-secondary-border);
     --button-text-current: var(--btn-secondary-text);
-    box-shadow: 0 14px 28px rgba(17, 17, 17, 0.08);
+    backdrop-filter: blur(18px) saturate(165%);
+    box-shadow:
+      0 18px 38px rgba(17, 17, 17, 0.1),
+      inset 0 1px 0 rgba(255, 255, 255, 0.14);
   }
 
   .button-secondary:hover,
@@ -640,6 +771,7 @@ summary::-webkit-details-marker {
     --button-bg-current: var(--btn-ghost-bg);
     --button-border-current: var(--btn-ghost-border);
     --button-text-current: var(--btn-ghost-text);
+    backdrop-filter: blur(16px) saturate(150%);
   }
 
   .button-ghost:hover,
@@ -670,7 +802,10 @@ summary::-webkit-details-marker {
     --button-bg-current: var(--btn-icon-bg);
     --button-border-current: var(--btn-icon-border);
     --button-text-current: var(--btn-icon-text);
-    box-shadow: 0 10px 24px rgba(17, 17, 17, 0.12);
+    backdrop-filter: blur(18px) saturate(175%);
+    box-shadow:
+      0 16px 34px rgba(17, 17, 17, 0.14),
+      inset 0 1px 0 rgba(255, 255, 255, 0.16);
   }
 
   .button-icon:hover,
@@ -704,13 +839,14 @@ summary::-webkit-details-marker {
     border: 1px solid var(--control-shell-border);
     border-radius: 999px;
     background:
-      linear-gradient(180deg, rgba(255, 255, 255, 0.12), transparent 70%),
+      linear-gradient(180deg, rgba(255, 255, 255, 0.18), transparent 70%),
       var(--control-shell-bg);
     padding: 0.16rem;
     box-shadow:
-      0 16px 40px rgba(0, 0, 0, 0.16),
-      inset 0 1px 0 rgba(255, 255, 255, 0.16);
-    backdrop-filter: blur(22px) saturate(145%);
+      0 18px 44px rgba(0, 0, 0, 0.16),
+      inset 0 1px 0 rgba(255, 255, 255, 0.2),
+      inset 0 12px 24px rgba(255, 255, 255, 0.04);
+    backdrop-filter: blur(28px) saturate(165%);
   }
 
   .control-option {
@@ -1030,6 +1166,10 @@ summary::-webkit-details-marker {
   }
 
   @media (max-width: 767px) {
+    .hero-glass-panel {
+      border-radius: 2rem 2.4rem 2.1rem 2.5rem / 2rem 2.2rem 2.4rem 2.3rem;
+    }
+
     .hero-copy .hero-title {
       max-width: 9ch;
       line-height: 0.94;
@@ -1039,6 +1179,10 @@ summary::-webkit-details-marker {
       max-width: 32rem;
       font-size: 1rem;
       line-height: 1.64;
+    }
+
+    .hero-panel-content {
+      padding: 1.35rem;
     }
   }
 }

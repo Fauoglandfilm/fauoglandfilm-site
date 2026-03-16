@@ -114,13 +114,14 @@ export function Header() {
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div
           className={cn(
-            "relative mt-2 flex items-center gap-2.5 overflow-hidden rounded-[1.35rem] px-3 py-2 transition duration-300 sm:mt-2.5 sm:gap-3 sm:px-3.5 sm:py-2.5",
+            "relative mt-2 flex items-center gap-2.5 overflow-hidden rounded-[1.55rem] px-3 py-2.5 transition duration-300 sm:mt-2.5 sm:gap-3 sm:px-4 sm:py-3",
             overlayMode
-              ? "border border-white/12 bg-[color:var(--header-overlay-surface)] text-white shadow-[0_24px_70px_rgba(0,0,0,0.2)] backdrop-blur-[28px]"
-              : "border border-[color:var(--line)] bg-[color:var(--header-surface)] text-[color:var(--foreground)] shadow-[0_26px_80px_rgba(0,0,0,0.16)] backdrop-blur-[28px]",
+              ? "border border-white/18 bg-[color:var(--header-overlay-surface)] text-white shadow-[0_30px_92px_rgba(0,0,0,0.24)] backdrop-blur-[32px]"
+              : "border border-[color:var(--line)] bg-[color:var(--header-surface)] text-[color:var(--foreground)] shadow-[0_32px_96px_rgba(7,10,18,0.16)] backdrop-blur-[32px]",
           )}
         >
           <div className="glass-sheen absolute inset-0" />
+          <div className="pointer-events-none absolute inset-y-0 right-[12%] w-[26%] rounded-full bg-[radial-gradient(circle,rgba(255,255,255,0.14),transparent_72%)] blur-2xl opacity-80" />
           <div className="pointer-events-none absolute inset-x-8 top-0 h-px bg-[linear-gradient(90deg,transparent,rgba(255,255,255,0.78),transparent)] opacity-60" />
 
           <Link
@@ -129,7 +130,7 @@ export function Header() {
             aria-label="Fau&Land Film"
             onClick={() => setOpen(false)}
           >
-            <div className="flex h-8 w-8 items-center justify-center rounded-full border border-white/12 bg-white/[0.1] p-2 shadow-[0_18px_30px_rgba(0,0,0,0.18)] backdrop-blur-xl sm:h-9 sm:w-9">
+            <div className="flex h-8 w-8 items-center justify-center rounded-full border border-white/18 bg-white/[0.14] p-2 shadow-[0_18px_34px_rgba(0,0,0,0.16)] backdrop-blur-2xl sm:h-9 sm:w-9">
               <BrandLogo variant="mark" className="opacity-100" priority />
             </div>
             <p
@@ -151,14 +152,14 @@ export function Header() {
                   key={item.href}
                   href={item.href}
                   className={cn(
-                    "rounded-full px-3 py-2 text-[0.82rem] font-semibold tracking-[0.01em] transition",
+                    "rounded-full px-3 py-2 text-[0.82rem] font-semibold tracking-[0.01em] transition backdrop-blur-xl",
                     overlayMode
                       ? active
-                        ? "bg-white/[0.14] text-white"
-                        : "text-white/70 hover:bg-white/[0.08] hover:text-white"
+                        ? "border border-white/16 bg-white/[0.16] text-white shadow-[inset_0_1px_0_rgba(255,255,255,0.18)]"
+                        : "border border-transparent text-white/76 hover:border-white/10 hover:bg-white/[0.08] hover:text-white"
                       : active
-                        ? "bg-white/[0.08] text-[color:var(--foreground)]"
-                        : "text-[var(--muted)] hover:bg-white/[0.06] hover:text-[color:var(--foreground)]",
+                        ? "border border-[color:var(--line)] bg-white/[0.18] text-[color:var(--foreground)] shadow-[inset_0_1px_0_rgba(255,255,255,0.24)]"
+                        : "border border-transparent text-[var(--muted)] hover:border-[color:var(--line)] hover:bg-white/[0.12] hover:text-[color:var(--foreground)]",
                   )}
                 >
                   {resolveLocalizedValue(item.label, language)}
@@ -204,7 +205,7 @@ export function Header() {
 
       {open ? (
         <div className="mx-auto max-w-7xl px-4 pb-4 sm:px-6 lg:hidden">
-          <div className="glass-panel relative mt-2 overflow-hidden rounded-[1.45rem] p-3 shadow-[0_28px_90px_rgba(0,0,0,0.22)]">
+          <div className="glass-panel relative mt-2 overflow-hidden rounded-[1.7rem] p-3 shadow-[0_34px_100px_rgba(0,0,0,0.24)]">
             <div className="glass-sheen absolute inset-0" />
             <div className="flex items-center justify-between gap-2">
               <SegmentedToggle
