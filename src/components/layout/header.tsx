@@ -118,10 +118,6 @@ export function Header() {
   }, [open]);
 
   useEffect(() => {
-    setOpen(false);
-  }, [pathname]);
-
-  useEffect(() => {
     if (!open) {
       return;
     }
