@@ -66,17 +66,10 @@ export function HeroSection() {
             </Reveal>
 
             <Reveal delay={0.1} className="mt-7 flex flex-col gap-3 sm:flex-row">
-              <ButtonLink
-                href={homeHeroContent.ctaHref}
-                className="bg-white text-[#111111] hover:bg-white/92"
-              >
+              <ButtonLink href={homeHeroContent.ctaHref}>
                 {resolveLocalizedValue(homeHeroContent.ctaLabel, language)}
               </ButtonLink>
-              <ButtonLink
-                href="/kontakt"
-                variant="secondary"
-                className="border-white/16 bg-white/8 text-white hover:border-white/28 hover:bg-white/14"
-              >
+              <ButtonLink href="/kontakt" variant="secondary">
                 {copy.heroSecondaryCta}
               </ButtonLink>
             </Reveal>
@@ -287,7 +280,6 @@ export function FeaturedCase() {
 
                   <ButtonLink
                     href={`/case/${featuredCase.slug}`}
-                    className="bg-white text-[#111111] hover:bg-white/92"
                     icon={<ArrowUpRightIcon className="h-4 w-4" />}
                   >
                     {copy.featuredCaseCta}

@@ -131,7 +131,7 @@ export function ContactForm() {
         <p className="text-sm leading-6 text-[var(--muted)]">
           {resolveLocalizedValue(siteConfig.responseTime, language)}
         </p>
-        <button type="submit" className="button-primary w-full sm:w-auto">
+        <button type="submit" className="button-base button-primary w-full sm:w-auto">
           {copy.submit}
         </button>
       </div>

@@ -5,6 +5,7 @@ import Link from "next/link";
 
 import { useSitePreferences } from "@/components/providers/site-preferences";
 import { CtaBanner, PageHero } from "@/components/sections/site-sections";
+import { ButtonLink } from "@/components/ui/button-link";
 import type { CaseStudy } from "@/data/site-content";
 import { uiCopy } from "@/data/ui-copy";
 import { resolveLocalizedValue } from "@/lib/i18n";
@@ -202,12 +203,9 @@ export function CaseDetailContent({
                 {copy.caseMoreProjectsTitle}
               </h2>
             </div>
-            <Link
-              href="/case"
-              className="rounded-full border border-[color:var(--line)] bg-[color:var(--surface)] px-4 py-2 text-sm font-semibold text-[var(--muted)] transition hover:text-[color:var(--foreground)]"
-            >
+            <ButtonLink href="/case" variant="ghost">
               {copy.caseBackToOverview}
-            </Link>
+            </ButtonLink>
           </div>
 
           <div className="mt-8 grid gap-4 xl:grid-cols-3">

@@ -13,14 +13,22 @@
   --accent: #b59a67;
   --accent-2: #8a7347;
   --shadow: 0 24px 80px rgba(25, 21, 17, 0.08);
-  --button-primary-bg: #111111;
-  --button-primary-fg: #ffffff;
-  --button-primary-border: rgba(17, 17, 17, 0.08);
-  --button-primary-hover: #242424;
-  --button-secondary-bg: rgba(255, 255, 255, 0.8);
-  --button-secondary-fg: #111111;
-  --button-secondary-border: rgba(17, 17, 17, 0.12);
-  --button-secondary-hover: #ffffff;
+  --btn-border: rgba(17, 17, 17, 0.12);
+  --btn-primary-bg: #111111;
+  --btn-primary-text: #ffffff;
+  --btn-primary-border: rgba(17, 17, 17, 0.08);
+  --btn-primary-hover-bg: #242424;
+  --btn-primary-hover-text: #ffffff;
+  --btn-secondary-bg: #e8e2d8;
+  --btn-secondary-text: #111111;
+  --btn-secondary-border: rgba(17, 17, 17, 0.08);
+  --btn-secondary-hover-bg: #ddd5c8;
+  --btn-secondary-hover-text: #111111;
+  --btn-ghost-bg: transparent;
+  --btn-ghost-text: #111111;
+  --btn-ghost-border: rgba(17, 17, 17, 0.14);
+  --btn-ghost-hover-bg: rgba(17, 17, 17, 0.05);
+  --btn-ghost-hover-text: #111111;
   --header-surface: rgba(255, 255, 255, 0.78);
   --header-overlay-surface: rgba(12, 12, 12, 0.18);
   --header-overlay-border: rgba(255, 255, 255, 0.14);
@@ -40,14 +48,22 @@ html[data-theme="dark"] {
   --accent: #c5a56a;
   --accent-2: #ecd0a1;
   --shadow: 0 30px 90px rgba(0, 0, 0, 0.26);
-  --button-primary-bg: #f2ece3;
-  --button-primary-fg: #111111;
-  --button-primary-border: rgba(255, 255, 255, 0.12);
-  --button-primary-hover: #ffffff;
-  --button-secondary-bg: rgba(255, 255, 255, 0.06);
-  --button-secondary-fg: #f2ece3;
-  --button-secondary-border: rgba(255, 255, 255, 0.14);
-  --button-secondary-hover: rgba(255, 255, 255, 0.1);
+  --btn-border: rgba(255, 255, 255, 0.16);
+  --btn-primary-bg: #f2ece3;
+  --btn-primary-text: #111111;
+  --btn-primary-border: rgba(255, 255, 255, 0.12);
+  --btn-primary-hover-bg: #ffffff;
+  --btn-primary-hover-text: #111111;
+  --btn-secondary-bg: #23262d;
+  --btn-secondary-text: #f2ece3;
+  --btn-secondary-border: rgba(255, 255, 255, 0.14);
+  --btn-secondary-hover-bg: #2c3038;
+  --btn-secondary-hover-text: #ffffff;
+  --btn-ghost-bg: transparent;
+  --btn-ghost-text: #f2ece3;
+  --btn-ghost-border: rgba(255, 255, 255, 0.18);
+  --btn-ghost-hover-bg: rgba(255, 255, 255, 0.06);
+  --btn-ghost-hover-text: #ffffff;
   --header-surface: rgba(17, 18, 22, 0.86);
   --header-overlay-surface: rgba(12, 12, 12, 0.24);
   --header-overlay-border: rgba(255, 255, 255, 0.12);
@@ -160,27 +176,66 @@ summary::-webkit-details-marker {
     backdrop-filter: blur(24px);
   }
 
-  .button-primary {
+  .button-base {
     display: inline-flex;
     align-items: center;
     justify-content: center;
     min-height: 3.1rem;
     border-radius: 999px;
-    border: 1px solid var(--button-primary-border);
-    background: var(--button-primary-bg);
+    border: 1px solid transparent;
     padding: 0.9rem 1.3rem;
     font-size: 0.94rem;
     font-weight: 700;
-    color: var(--button-primary-fg);
+    color: var(--foreground);
+    outline: none;
+    text-decoration: none;
     transition:
       transform 200ms ease,
       background-color 200ms ease,
-      border-color 200ms ease;
+      border-color 200ms ease,
+      color 200ms ease;
+  }
+
+  .button-base:hover {
+    transform: translateY(-1px);
+  }
+
+  .button-base:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+  }
+
+  .button-primary {
+    border-color: var(--btn-primary-border);
+    background: var(--btn-primary-bg);
+    color: var(--btn-primary-text);
   }
 
   .button-primary:hover {
-    transform: translateY(-1px);
-    background: var(--button-primary-hover);
+    background: var(--btn-primary-hover-bg);
+    color: var(--btn-primary-hover-text);
+  }
+
+  .button-secondary {
+    border-color: var(--btn-secondary-border);
+    background: var(--btn-secondary-bg);
+    color: var(--btn-secondary-text);
+  }
+
+  .button-secondary:hover {
+    background: var(--btn-secondary-hover-bg);
+    color: var(--btn-secondary-hover-text);
+  }
+
+  .button-ghost {
+    border-color: var(--btn-ghost-border);
+    background: var(--btn-ghost-bg);
+    color: var(--btn-ghost-text);
+  }
+
+  .button-ghost:hover {
+    background: var(--btn-ghost-hover-bg);
+    color: var(--btn-ghost-hover-text);
   }
 
   .form-input {

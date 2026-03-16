@@ -533,15 +533,11 @@ export function CtaBanner({
                 align === "center" ? "justify-center pt-3" : "xl:justify-end"
               }`}
             >
-              <ButtonLink href={primaryHref} className="bg-white text-[#111111] hover:bg-white/92">
+              <ButtonLink href={primaryHref}>
                 {resolveLocalizedValue(primaryLabel, language)}
               </ButtonLink>
               {secondaryLabel ? (
-                <ButtonLink
-                  href={secondaryHref}
-                  variant="secondary"
-                  className="border-white/16 bg-white/8 text-white hover:border-white/28 hover:bg-white/14"
-                >
+                <ButtonLink href={secondaryHref} variant="secondary">
                   {resolveLocalizedValue(secondaryLabel, language)}
                 </ButtonLink>
               ) : null}
@@ -638,19 +634,12 @@ export function PageHero({
           {primaryCta || secondaryCta ? (
             <div className="mt-8 flex flex-col gap-3 sm:flex-row">
               {primaryCta ? (
-                <ButtonLink
-                  href={primaryCta.href}
-                  className={video ? "bg-white text-[#111111] hover:bg-white/92" : undefined}
-                >
+                <ButtonLink href={primaryCta.href}>
                   {resolveLocalizedValue(primaryCta.label, language)}
                 </ButtonLink>
               ) : null}
               {secondaryCta ? (
-                <ButtonLink
-                  href={secondaryCta.href}
-                  variant="secondary"
-                  className={video ? "border-white/16 bg-white/8 text-white hover:border-white/28 hover:bg-white/14" : undefined}
-                >
+                <ButtonLink href={secondaryCta.href} variant="secondary">
                   {resolveLocalizedValue(secondaryCta.label, language)}
                 </ButtonLink>
               ) : null}
