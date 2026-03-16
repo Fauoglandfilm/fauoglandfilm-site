@@ -40,7 +40,7 @@ export function HeroSection() {
         <div className="ambient-drift pointer-events-none absolute -left-24 top-0 h-64 w-64 rounded-full bg-[radial-gradient(circle,rgba(210,173,116,0.28),transparent_72%)] blur-3xl" />
         <div className="ambient-drift pointer-events-none absolute right-[-5rem] top-12 h-72 w-72 rounded-full bg-[radial-gradient(circle,rgba(93,126,175,0.22),transparent_72%)] blur-3xl" />
         <video
-          className="relative z-[1] h-full w-full scale-[1.03] object-cover opacity-[0.92] brightness-[0.72] saturate-[0.94] contrast-[1.12]"
+          className="relative z-[1] h-full w-full scale-[1.03] object-cover opacity-[0.96] brightness-[0.78] saturate-[0.98] contrast-[1.08]"
           autoPlay
           muted
           loop
@@ -53,37 +53,45 @@ export function HeroSection() {
           ) : null}
           <source src={heroVideo.src} type="video/mp4" />
         </video>
-        <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(5,6,10,0.64)_0%,rgba(5,6,10,0.42)_22%,rgba(5,6,10,0.5)_56%,rgba(5,6,10,0.9)_100%)]" />
-        <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(5,6,10,0.84)_0%,rgba(5,6,10,0.72)_26%,rgba(5,6,10,0.38)_54%,rgba(5,6,10,0.24)_74%,rgba(5,6,10,0.34)_100%)]" />
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(214,179,114,0.16),transparent_24%),radial-gradient(circle_at_84%_14%,rgba(94,122,168,0.14),transparent_20%),radial-gradient(circle_at_center,transparent_32%,rgba(3,4,6,0.2)_100%)]" />
-        <div className="grain-overlay absolute inset-0 opacity-62" />
+        <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(5,7,12,0.5)_0%,rgba(5,7,12,0.34)_22%,rgba(5,7,12,0.46)_56%,rgba(5,7,12,0.82)_100%)]" />
+        <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(5,7,12,0.8)_0%,rgba(5,7,12,0.64)_18%,rgba(5,7,12,0.28)_46%,rgba(5,7,12,0.12)_70%,rgba(5,7,12,0.22)_100%)]" />
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(210,177,117,0.16),transparent_24%),radial-gradient(circle_at_86%_14%,rgba(98,141,255,0.16),transparent_22%),radial-gradient(circle_at_center,transparent_28%,rgba(3,4,6,0.22)_100%)]" />
+        <div className="grain-overlay absolute inset-0 opacity-54" />
       </div>
 
       <div className="relative mx-auto flex min-h-[80svh] max-w-7xl items-center px-4 pb-10 pt-[6.5rem] sm:min-h-[85svh] sm:px-6 sm:pb-12 sm:pt-[7.5rem] lg:min-h-[86vh] lg:px-8 lg:pb-14 lg:pt-32">
         <div className="hero-copy w-full max-w-[46rem]">
-          <Reveal y={18} className="space-y-4 sm:space-y-5">
-            <p className="hero-badge max-w-full">
-              {copy.heroBadge}
-            </p>
-            <h1 className="hero-title max-w-[12ch] text-white">
-              {resolveLocalizedValue(homeHeroContent.title, language)}
-            </h1>
-            <p className="hero-body body-lead max-w-[38rem] sm:max-w-[34rem]">
-              {resolveLocalizedValue(homeHeroContent.description, language)}
-            </p>
-          </Reveal>
+          <Reveal y={18}>
+            <div className="hero-glass-panel max-w-[42rem]">
+              <div className="glass-sheen absolute inset-0 opacity-75" />
+              <div className="hero-panel-orb" />
+              <div className="hero-panel-orb hero-panel-orb-secondary" />
 
-          <Reveal delay={0.06} y={14} className="hero-cta-row mt-6 flex flex-col gap-2.5 sm:mt-7 sm:flex-row sm:gap-3">
-            <ButtonLink href={homeHeroContent.ctaHref} className="hero-cta-primary w-full sm:w-auto">
-              {resolveLocalizedValue(homeHeroContent.ctaLabel, language)}
-            </ButtonLink>
-            <ButtonLink
-              href="#selected-work"
-              variant="secondary"
-              className="hero-cta-secondary w-full sm:w-auto"
-            >
-              {copy.heroSecondaryCta}
-            </ButtonLink>
+              <div className="hero-panel-content space-y-4 p-5 sm:space-y-5 sm:p-7 lg:p-8">
+                <p className="hero-badge max-w-full">
+                  {copy.heroBadge}
+                </p>
+                <h1 className="hero-title max-w-[11ch] text-white">
+                  {resolveLocalizedValue(homeHeroContent.title, language)}
+                </h1>
+                <p className="hero-body body-lead max-w-[38rem] sm:max-w-[34rem]">
+                  {resolveLocalizedValue(homeHeroContent.description, language)}
+                </p>
+
+                <div className="hero-cta-row mt-6 flex flex-col gap-2.5 sm:mt-7 sm:flex-row sm:gap-3">
+                  <ButtonLink href={homeHeroContent.ctaHref} className="hero-cta-primary w-full sm:w-auto">
+                    {resolveLocalizedValue(homeHeroContent.ctaLabel, language)}
+                  </ButtonLink>
+                  <ButtonLink
+                    href="#selected-work"
+                    variant="secondary"
+                    className="hero-cta-secondary w-full sm:w-auto"
+                  >
+                    {copy.heroSecondaryCta}
+                  </ButtonLink>
+                </div>
+              </div>
+            </div>
           </Reveal>
         </div>
       </div>
