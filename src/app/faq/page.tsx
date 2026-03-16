@@ -26,6 +26,7 @@ export default function FaqPage() {
         eyebrow={{ no: copy.no.faqHeroEyebrow, en: copy.en.faqHeroEyebrow }}
         title={{ no: copy.no.faqHeroTitle, en: copy.en.faqHeroTitle }}
         description={{ no: copy.no.faqHeroDescription, en: copy.en.faqHeroDescription }}
+        visualKey="faq"
       />
       <FaqList
         title={{ no: copy.no.faqHeroTitle, en: copy.en.faqHeroTitle }}

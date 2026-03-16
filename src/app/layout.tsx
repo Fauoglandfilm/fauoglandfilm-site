@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { Manrope, Sora } from "next/font/google";
 import Script from "next/script";
 import { Analytics } from "@vercel/analytics/next";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 
 import { SitePreferencesProvider } from "@/components/providers/site-preferences";
 import { Footer } from "@/components/layout/footer";
@@ -77,6 +78,7 @@ export default function RootLayout({
           </div>
         </SitePreferencesProvider>
         <Analytics />
+        <SpeedInsights />
       </body>
     </html>
   );
