@@ -345,6 +345,11 @@ export const pageHeroVisuals: Record<string, VisualSet> = {
     secondary: siteVisuals.narrativePoster,
     tertiary: siteVisuals.filmStudioCyclorama,
   },
+  faq: {
+    primary: siteVisuals.cameraDarkroom,
+    secondary: siteVisuals.cameraCloseup,
+    tertiary: siteVisuals.filmStudioCyclorama,
+  },
 };
 
 export const servicePillarVisuals: Record<string, VisualAsset> = {

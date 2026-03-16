@@ -608,6 +608,8 @@ export function PageHero({
 }) {
   const { language, theme } = useSitePreferences();
   const visuals = visualKey ? pageHeroVisuals[visualKey] : null;
+  const backgroundVisual = visuals?.primary;
+  const hasMediaBackground = Boolean(video?.videoType === "direct" || backgroundVisual);
 
   return (
     <section className="relative isolate overflow-hidden pt-22 sm:pt-28">
@@ -628,8 +630,21 @@ export function PageHero({
               ) : null}
               <source src={video.src} type="video/mp4" />
             </video>
-            <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(7,7,7,0.28),rgba(7,7,7,0.12)_34%,rgba(7,7,7,0.58)_100%)]" />
-            <div className="grain-overlay absolute inset-0 opacity-40" />
+            <div className="absolute inset-0 bg-[radial-gradient(circle_at_18%_24%,rgba(255,255,255,0.06),transparent_24%),linear-gradient(90deg,rgba(5,6,10,0.84),rgba(5,6,10,0.48)_34%,rgba(5,6,10,0.56)_58%,rgba(5,6,10,0.82)_100%),linear-gradient(180deg,rgba(6,6,9,0.14),rgba(6,6,9,0.28)_28%,rgba(6,6,9,0.72)_100%)]" />
+            <div className="grain-overlay absolute inset-0 opacity-34" />
+          </>
+        ) : backgroundVisual ? (
+          <>
+            <Image
+              src={backgroundVisual.src}
+              alt={resolveLocalizedValue(backgroundVisual.alt, language)}
+              fill
+              priority
+              sizes="100vw"
+              className="object-cover image-slow-zoom"
+            />
+            <div className="absolute inset-0 bg-[radial-gradient(circle_at_18%_24%,rgba(255,255,255,0.07),transparent_24%),linear-gradient(90deg,rgba(6,7,11,0.82),rgba(6,7,11,0.44)_34%,rgba(6,7,11,0.5)_58%,rgba(6,7,11,0.84)_100%),linear-gradient(180deg,rgba(6,6,9,0.1),rgba(6,6,9,0.24)_28%,rgba(6,6,9,0.74)_100%)]" />
+            <div className="grain-overlay absolute inset-0 opacity-34" />
           </>
         ) : (
           <>
@@ -645,84 +660,48 @@ export function PageHero({
         )}
       </div>
 
-      <div className="relative mx-auto flex min-h-[25rem] max-w-7xl items-end px-4 pb-7 sm:min-h-[28rem] sm:px-6 sm:pb-9 lg:min-h-[31rem] lg:px-8 lg:pb-10">
-        <div className="grid w-full gap-6 lg:grid-cols-[1.04fr_0.96fr] lg:items-end">
-          <div className={`max-w-4xl ${video ? "text-white" : "text-[color:var(--foreground)]"}`}>
-            <span className={video ? "text-[0.72rem] font-semibold uppercase tracking-[0.24em] text-white/58" : "eyebrow"}>
-              {resolveLocalizedValue(eyebrow, language)}
-            </span>
-            <h1 className="page-title mt-4 max-w-4xl">
-              {resolveLocalizedValue(title, language)}
-            </h1>
-            <p className={`body-lead mt-4 max-w-2xl ${video ? "text-white/74" : "text-[var(--muted-2)]"}`}>
-              {resolveLocalizedValue(description, language)}
-            </p>
-            {primaryCta || secondaryCta ? (
-              <div className="mt-6 flex flex-col gap-2.5 sm:mt-8 sm:flex-row sm:gap-3">
-                {primaryCta ? (
-                  <ButtonLink href={primaryCta.href} className="w-full sm:w-auto">
-                    {resolveLocalizedValue(primaryCta.label, language)}
-                  </ButtonLink>
-                ) : null}
-                {secondaryCta ? (
-                  <ButtonLink href={secondaryCta.href} variant="secondary" className="w-full sm:w-auto">
-                    {resolveLocalizedValue(secondaryCta.label, language)}
-                  </ButtonLink>
-                ) : null}
-              </div>
-            ) : null}
+      <div className="relative mx-auto flex min-h-[40svh] max-w-7xl items-end px-4 pb-6 sm:min-h-[44svh] sm:px-6 sm:pb-8 lg:min-h-[48svh] lg:px-8 lg:pb-10">
+        <Reveal className="w-full max-w-[46rem]" delay={0.04} y={18}>
+          <div
+            className={`subpage-hero-panel relative overflow-hidden px-5 py-5 sm:px-7 sm:py-6 lg:px-8 lg:py-7 ${
+              hasMediaBackground ? "text-white" : "text-[color:var(--foreground)]"
+            }`}
+          >
+            <div className="glass-sheen absolute inset-0" />
+            <div className="pointer-events-none absolute -left-8 bottom-[-3rem] h-28 w-28 rounded-full bg-[radial-gradient(circle,rgba(255,255,255,0.2),transparent_72%)] blur-2xl opacity-70" />
+            <div className="pointer-events-none absolute right-[-2.5rem] top-[-2.5rem] h-28 w-28 rounded-full bg-[radial-gradient(circle,rgba(122,168,255,0.28),transparent_70%)] blur-2xl opacity-78" />
+
+            <div className="relative z-[1]">
+              <span className={hasMediaBackground ? "hero-badge text-white/74" : "eyebrow"}>
+                {resolveLocalizedValue(eyebrow, language)}
+              </span>
+              <h1 className={`page-title mt-4 max-w-[13ch] ${hasMediaBackground ? "text-white" : ""}`}>
+                {resolveLocalizedValue(title, language)}
+              </h1>
+              <p
+                className={`body-lead mt-4 max-w-2xl text-[0.98rem] leading-7 sm:text-[1.03rem] sm:leading-8 ${
+                  hasMediaBackground ? "text-white/82" : "text-[var(--muted-2)]"
+                }`}
+              >
+                {resolveLocalizedValue(description, language)}
+              </p>
+              {primaryCta || secondaryCta ? (
+                <div className="mt-6 flex flex-col gap-2.5 sm:mt-7 sm:flex-row sm:flex-wrap sm:gap-3">
+                  {primaryCta ? (
+                    <ButtonLink href={primaryCta.href} className="w-full sm:w-auto">
+                      {resolveLocalizedValue(primaryCta.label, language)}
+                    </ButtonLink>
+                  ) : null}
+                  {secondaryCta ? (
+                    <ButtonLink href={secondaryCta.href} variant="secondary" className="w-full sm:w-auto">
+                      {resolveLocalizedValue(secondaryCta.label, language)}
+                    </ButtonLink>
+                  ) : null}
+                </div>
+              ) : null}
+            </div>
           </div>
-
-          {visuals ? (
-            <Reveal delay={0.12} className="lg:justify-self-end">
-              <div className="grid gap-3 sm:grid-cols-[1.16fr_0.84fr] lg:max-w-[34rem]">
-                <div className="card-surface relative overflow-hidden rounded-[1.7rem]">
-                  <div className="relative aspect-[1.02/0.94] overflow-hidden bg-[#111111]">
-                    <Image
-                      src={visuals.primary.src}
-                      alt={resolveLocalizedValue(visuals.primary.alt, language)}
-                      fill
-                      sizes="(min-width: 1024px) 28vw, 100vw"
-                      className="object-cover"
-                    />
-                    <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(10,10,10,0.08),rgba(10,10,10,0.62)_100%)]" />
-                    <div className="grain-overlay absolute inset-0 opacity-35" />
-                  </div>
-                </div>
-
-                <div className="grid gap-3">
-                  {[visuals.secondary, visuals.tertiary]
-                    .filter(Boolean)
-                    .map((visual, index) => (
-                      <div key={visual!.src} className="card-surface relative overflow-hidden rounded-[1.45rem]">
-                        <div className="relative aspect-[1.08/0.74] overflow-hidden bg-[#111111]">
-                          <Image
-                            src={visual!.src}
-                            alt={resolveLocalizedValue(visual!.alt, language)}
-                            fill
-                            sizes="(min-width: 1024px) 16vw, 50vw"
-                            className="object-cover"
-                          />
-                          <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(10,10,10,0.06),rgba(10,10,10,0.44)_100%)]" />
-                          <div className="absolute inset-x-0 bottom-0 p-4">
-                            <p className="text-[0.62rem] font-semibold uppercase tracking-[0.22em] text-white/54">
-                              {index === 0
-                                ? language === "no"
-                                  ? "Utvalgt frame"
-                                  : "Selected frame"
-                                : language === "no"
-                                  ? "Arbeid i fokus"
-                                  : "Work in focus"}
-                            </p>
-                          </div>
-                        </div>
-                      </div>
-                    ))}
-                </div>
-              </div>
-            </Reveal>
-          ) : null}
-        </div>
+        </Reveal>
       </div>
     </section>
   );
