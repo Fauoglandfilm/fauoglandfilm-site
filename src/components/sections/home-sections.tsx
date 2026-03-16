@@ -35,10 +35,12 @@ export function HeroSection() {
   const copy = uiCopy.home[language];
 
   return (
-    <section className="relative isolate overflow-hidden">
+    <section className="section-vignette relative isolate overflow-hidden">
       <div className="absolute inset-0">
+        <div className="pointer-events-none absolute -left-24 top-0 h-64 w-64 rounded-full bg-[radial-gradient(circle,rgba(210,173,116,0.28),transparent_72%)] blur-3xl" />
+        <div className="pointer-events-none absolute right-[-5rem] top-12 h-72 w-72 rounded-full bg-[radial-gradient(circle,rgba(93,126,175,0.22),transparent_72%)] blur-3xl" />
         <video
-          className="relative z-[1] h-full w-full object-cover opacity-[0.86] saturate-[0.92]"
+          className="relative z-[1] h-full w-full scale-[1.03] object-cover opacity-[0.74] brightness-[0.8] saturate-[0.84] contrast-[1.06]"
           autoPlay
           muted
           loop
@@ -51,81 +53,86 @@ export function HeroSection() {
           ) : null}
           <source src={heroVideo.src} type="video/mp4" />
         </video>
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(210,173,116,0.24),transparent_28%),radial-gradient(circle_at_82%_12%,rgba(54,74,104,0.24),transparent_24%),linear-gradient(180deg,rgba(5,6,8,0.18),rgba(5,6,8,0.26)_24%,rgba(5,6,8,0.58)_56%,rgba(5,6,8,0.92)_100%)]" />
-        <div className="grain-overlay absolute inset-0" />
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(210,173,116,0.18),transparent_26%),radial-gradient(circle_at_82%_12%,rgba(67,87,123,0.22),transparent_22%),linear-gradient(180deg,rgba(4,5,8,0.52),rgba(4,5,8,0.62)_22%,rgba(4,5,8,0.76)_56%,rgba(4,5,8,0.96)_100%)]" />
+        <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(6,7,10,0.3),transparent_30%,transparent_74%,rgba(6,7,10,0.2))]" />
+        <div className="grain-overlay absolute inset-0 opacity-80" />
       </div>
 
       <div className="relative mx-auto flex min-h-[80svh] max-w-7xl items-end px-4 pb-7 pt-24 sm:min-h-[85svh] sm:px-6 sm:pb-10 sm:pt-28 lg:min-h-[84vh] lg:px-8 lg:pb-12 lg:pt-32">
-        <div className="grid w-full gap-6 sm:gap-8 lg:grid-cols-[1.04fr_0.96fr] lg:items-end">
+        <div className="grid w-full gap-6 sm:gap-8 lg:grid-cols-[1.16fr_0.84fr] lg:items-end">
           <div className="max-w-4xl">
-            <Reveal className="space-y-4 sm:space-y-5" y={36}>
-              <div className="inline-flex max-w-full flex-wrap justify-center rounded-full border border-white/18 bg-white/10 px-3.5 py-1.5 text-center text-[0.64rem] font-semibold uppercase tracking-[0.22em] text-white/82 backdrop-blur sm:px-4 sm:py-2 sm:text-[0.7rem]">
-                {copy.heroBadge}
-              </div>
-              <h1 className="hero-title max-w-4xl text-white">
-                {resolveLocalizedValue(homeHeroContent.title, language)}
-              </h1>
-              <p className="body-lead max-w-xl text-white/78 sm:max-w-lg">
-                {resolveLocalizedValue(homeHeroContent.description, language)}
-              </p>
-            </Reveal>
+            <Reveal y={36}>
+              <div className="glass-panel relative max-w-[46rem] overflow-hidden rounded-[2rem] p-5 text-white shadow-[0_34px_120px_rgba(0,0,0,0.24)] sm:p-6 lg:p-8">
+                <div className="glass-sheen absolute inset-0" />
+                <div className="relative">
+                  <div className="inline-flex max-w-full flex-wrap justify-center rounded-full border border-white/18 bg-white/10 px-3.5 py-1.5 text-center text-[0.64rem] font-semibold uppercase tracking-[0.22em] text-white/84 backdrop-blur sm:px-4 sm:py-2 sm:text-[0.7rem]">
+                    {copy.heroBadge}
+                  </div>
+                  <h1 className="hero-title mt-4 max-w-4xl text-white sm:mt-5">
+                    {resolveLocalizedValue(homeHeroContent.title, language)}
+                  </h1>
+                  <p className="body-lead mt-4 max-w-xl text-white/82 sm:mt-5 sm:max-w-lg">
+                    {resolveLocalizedValue(homeHeroContent.description, language)}
+                  </p>
 
-            <Reveal delay={0.1} className="mt-6 flex flex-col gap-2.5 sm:mt-7 sm:flex-row sm:gap-3">
-              <ButtonLink href={homeHeroContent.ctaHref} className="w-full sm:w-auto">
-                {resolveLocalizedValue(homeHeroContent.ctaLabel, language)}
-              </ButtonLink>
-              <ButtonLink href="#selected-work" variant="secondary" className="w-full sm:w-auto">
-                {copy.heroSecondaryCta}
-              </ButtonLink>
+                  <div className="mt-6 flex flex-col gap-2.5 sm:mt-7 sm:flex-row sm:gap-3">
+                    <ButtonLink href={homeHeroContent.ctaHref} className="w-full sm:w-auto">
+                      {resolveLocalizedValue(homeHeroContent.ctaLabel, language)}
+                    </ButtonLink>
+                    <ButtonLink href="#selected-work" variant="secondary" className="w-full sm:w-auto">
+                      {copy.heroSecondaryCta}
+                    </ButtonLink>
+                  </div>
+                </div>
+              </div>
             </Reveal>
           </div>
 
           <FloatingLayer className="hidden lg:block">
             <Reveal delay={0.16}>
-              <div className="card-surface overflow-hidden rounded-[2rem] p-4 text-white">
-                <div className="grid gap-3">
-                  <div className="grid gap-3 sm:grid-cols-[1.12fr_0.88fr]">
-                    <div className="relative overflow-hidden rounded-[1.5rem] bg-[#111111]">
-                      <div className="relative aspect-[1.06/0.94]">
-                        <Image
-                          src={homeShowcaseVisuals.primary.src}
-                          alt={resolveLocalizedValue(homeShowcaseVisuals.primary.alt, language)}
-                          fill
-                          sizes="(min-width: 1024px) 22vw, 100vw"
-                          className="object-cover"
-                        />
-                        <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(10,10,10,0.08),rgba(10,10,10,0.58)_100%)]" />
-                      </div>
-                    </div>
-
-                    <div className="grid gap-3">
-                      {[homeShowcaseVisuals.secondary, homeShowcaseVisuals.tertiary]
-                        .filter(Boolean)
-                        .map((visual) => (
-                          <div key={visual!.src} className="relative overflow-hidden rounded-[1.25rem] bg-[#111111]">
-                            <div className="relative aspect-[1.08/0.72]">
-                              <Image
-                                src={visual!.src}
-                                alt={resolveLocalizedValue(visual!.alt, language)}
-                                fill
-                                sizes="(min-width: 1024px) 13vw, 50vw"
-                                className="object-cover"
-                              />
-                              <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(10,10,10,0.04),rgba(10,10,10,0.5)_100%)]" />
-                            </div>
-                          </div>
-                        ))}
+              <div className="glass-panel relative ml-auto max-w-[28rem] overflow-hidden rounded-[2rem] p-4 text-white shadow-[0_36px_120px_rgba(0,0,0,0.28)]">
+                <div className="glass-sheen absolute inset-0 opacity-70" />
+                <div className="relative grid gap-3">
+                  <div className="media-frame relative overflow-hidden rounded-[1.65rem]">
+                    <div className="relative aspect-[1.08/0.8]">
+                      <Image
+                        src={homeShowcaseVisuals.primary.src}
+                        alt={resolveLocalizedValue(homeShowcaseVisuals.primary.alt, language)}
+                        fill
+                        sizes="(min-width: 1024px) 24vw, 100vw"
+                        className="object-cover transition duration-700 group-hover:scale-[1.03]"
+                      />
+                      <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(10,10,10,0.04),rgba(10,10,10,0.2)_36%,rgba(10,10,10,0.74)_100%)]" />
                     </div>
                   </div>
 
-                  <div className="rounded-[1.45rem] border border-white/10 bg-white/6 p-4">
-                    <p className="text-[0.72rem] font-semibold uppercase tracking-[0.24em] text-white/58">
+                  <div className="grid gap-3 sm:grid-cols-2">
+                    {[homeShowcaseVisuals.secondary, homeShowcaseVisuals.tertiary]
+                      .filter(Boolean)
+                      .map((visual) => (
+                        <div key={visual!.src} className="media-frame relative overflow-hidden rounded-[1.35rem]">
+                          <div className="relative aspect-[1.04/0.8]">
+                            <Image
+                              src={visual!.src}
+                              alt={resolveLocalizedValue(visual!.alt, language)}
+                              fill
+                              sizes="(min-width: 1024px) 12vw, 50vw"
+                              className="object-cover transition duration-700 group-hover:scale-[1.03]"
+                            />
+                            <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(10,10,10,0.02),rgba(10,10,10,0.58)_100%)]" />
+                          </div>
+                        </div>
+                      ))}
+                  </div>
+
+                  <div className="rounded-[1.45rem] border border-white/12 bg-black/24 p-4 backdrop-blur-xl">
+                    <p className="text-[0.72rem] font-semibold uppercase tracking-[0.24em] text-white/54">
                       {copy.heroPanelEyebrow}
                     </p>
-                    <p className="feature-title mt-3">
+                    <p className="feature-title mt-3 max-w-sm text-[2rem]">
                       {copy.heroPanelTitle}
                     </p>
-                    <p className="body-copy mt-3 text-white/68">
+                    <p className="body-copy mt-3 max-w-md text-white/70">
                       {copy.heroPanelDescription}
                     </p>
                   </div>
@@ -185,7 +192,7 @@ export function IntroSection() {
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="grid gap-4 lg:grid-cols-[0.92fr_1.08fr]">
           <Reveal>
-            <div className="card-surface rounded-[1.8rem] px-5 py-5 sm:rounded-[1.95rem] sm:px-6 sm:py-6">
+            <div className="glass-panel rounded-[1.8rem] px-5 py-5 shadow-[0_28px_90px_rgba(0,0,0,0.18)] sm:rounded-[1.95rem] sm:px-6 sm:py-6">
               <div className="max-w-4xl space-y-3">
                 <span className="eyebrow">{resolveLocalizedValue(homeIntroContent.eyebrow, language)}</span>
                 <h2 className="section-title text-[color:var(--foreground)]">
@@ -197,7 +204,7 @@ export function IntroSection() {
               </div>
 
               <div className="mt-6 grid gap-3 sm:grid-cols-2">
-                <div className="rounded-[1.4rem] border border-[color:var(--line)] bg-[color:var(--surface)] p-4">
+                <div className="rounded-[1.4rem] border border-[color:var(--line)] bg-white/[0.04] p-4 backdrop-blur-xl">
                   <p className="text-[0.66rem] font-semibold uppercase tracking-[0.22em] text-[var(--muted)]">
                     {language === "no" ? "Arbeidsform" : "Working model"}
                   </p>
@@ -207,7 +214,7 @@ export function IntroSection() {
                       : "Small teams, fast decisions and clear direction throughout production."}
                   </p>
                 </div>
-                <div className="rounded-[1.4rem] border border-[color:var(--line)] bg-[color:var(--surface)] p-4">
+                <div className="rounded-[1.4rem] border border-[color:var(--line)] bg-white/[0.04] p-4 backdrop-blur-xl">
                   <p className="text-[0.66rem] font-semibold uppercase tracking-[0.22em] text-[var(--muted)]">
                     {language === "no" ? "Leveranser" : "Deliverables"}
                   </p>
@@ -223,7 +230,7 @@ export function IntroSection() {
 
           <Reveal delay={0.08}>
             <div className="grid gap-3 sm:grid-cols-[1.16fr_0.84fr]">
-              <div className="relative overflow-hidden rounded-[1.8rem] border border-[color:var(--line)] bg-[#111111]">
+              <div className="media-frame relative overflow-hidden rounded-[1.8rem]">
                 <div className="relative aspect-[1.18/0.92] min-h-[16rem]">
                   {servicePreview.video?.videoType === "direct" ? (
                     <video
@@ -246,13 +253,13 @@ export function IntroSection() {
                       className="object-cover"
                     />
                   )}
-                  <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(7,7,7,0.08),rgba(7,7,7,0.52)_68%,rgba(7,7,7,0.84))]" />
+                  <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(7,7,7,0.06),rgba(7,7,7,0.46)_68%,rgba(7,7,7,0.9))]" />
                   <div className="grain-overlay absolute inset-0 opacity-45" />
                   <div className="absolute inset-x-0 bottom-0 p-5 text-white sm:p-6">
                     <p className="text-[0.68rem] font-semibold uppercase tracking-[0.24em] text-white/58">
                       {language === "no" ? "Utvalgt prosjekt" : "Selected project"}
                     </p>
-                    <p className="mt-2 max-w-sm text-sm leading-6 text-white/74 sm:text-base">
+                    <p className="mt-2 max-w-sm text-sm leading-6 text-white/78 sm:text-base">
                       {resolveLocalizedValue(servicePreview.summary, language)}
                     </p>
                   </div>
@@ -263,7 +270,7 @@ export function IntroSection() {
                 {[homeShowcaseVisuals.secondary, homeShowcaseVisuals.tertiary]
                   .filter(Boolean)
                   .map((visual, index) => (
-                    <div key={visual!.src} className="relative overflow-hidden rounded-[1.45rem] border border-[color:var(--line)] bg-[#111111]">
+                    <div key={visual!.src} className="media-frame relative overflow-hidden rounded-[1.45rem]">
                       <div className="relative aspect-[1.08/0.74]">
                         <Image
                           src={visual!.src}
@@ -307,11 +314,15 @@ export function ClientSlider() {
           <p className="eyebrow">{copy.clientsEyebrow}</p>
           <p className="body-copy text-[var(--muted)]">{copy.clientsDescription}</p>
         </div>
-        <div className="relative mt-4 overflow-hidden rounded-[1.8rem] border border-[color:var(--logo-strip-border)] bg-[color:var(--logo-strip-bg)] px-1.5 py-3.5 shadow-[0_22px_58px_rgba(0,0,0,0.16)] sm:mt-5 sm:px-2.5 sm:py-4.5">
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_left,rgba(210,173,116,0.08),transparent_24%),linear-gradient(180deg,rgba(255,255,255,0.92),rgba(250,244,236,0.98))]" />
-          <div className="grain-overlay absolute inset-0 opacity-18" />
-          <div className="relative">
-            <ClientLogoMarquee logos={clientLogos} durationSeconds={34} />
+        <div className="cinematic-panel relative mt-4 overflow-hidden rounded-[1.95rem] p-4 shadow-[0_28px_90px_rgba(0,0,0,0.22)] sm:mt-5 sm:p-5">
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_left,rgba(210,173,116,0.12),transparent_24%),radial-gradient(circle_at_right,rgba(77,101,142,0.14),transparent_28%),linear-gradient(180deg,rgba(255,255,255,0.05),rgba(255,255,255,0)_22%,rgba(0,0,0,0.12)_100%)]" />
+          <div className="glass-sheen absolute inset-0 opacity-60" />
+          <div className="relative overflow-hidden rounded-[1.7rem] border border-[color:var(--logo-strip-border)] bg-[color:var(--logo-strip-bg)] px-1.5 py-3.5 shadow-[0_18px_48px_rgba(0,0,0,0.16)] sm:px-2.5 sm:py-4.5">
+            <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(255,255,255,0.42),transparent_44%),linear-gradient(180deg,rgba(255,255,255,0.22),rgba(255,255,255,0.02)_55%,rgba(0,0,0,0.06)_100%)]" />
+            <div className="grain-overlay absolute inset-0 opacity-20" />
+            <div className="relative">
+              <ClientLogoMarquee logos={clientLogos} durationSeconds={34} />
+            </div>
           </div>
         </div>
       </div>
@@ -488,9 +499,10 @@ export function AboutSection() {
     <section className="section-space">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="grid gap-5 sm:gap-6 lg:grid-cols-[1.02fr_0.98fr] lg:items-center">
-          <FloatingLayer className="relative overflow-hidden rounded-[1.8rem] border border-[color:var(--line)] bg-[color:var(--surface)] shadow-[0_32px_100px_rgba(18,18,18,0.12)] sm:rounded-[2rem]">
+          <FloatingLayer className="glass-panel relative overflow-hidden rounded-[1.9rem] shadow-[0_34px_110px_rgba(0,0,0,0.2)] sm:rounded-[2rem]">
+            <div className="glass-sheen absolute inset-0 opacity-50" />
             <div className="grid gap-px bg-[color:var(--line)] lg:grid-cols-[1.1fr_0.9fr]">
-              <div className="relative min-h-[18rem] overflow-hidden bg-[#111111] sm:min-h-[21rem] lg:min-h-[27rem]">
+              <div className="media-frame relative min-h-[18rem] overflow-hidden sm:min-h-[21rem] lg:min-h-[27rem]">
                 <Image
                   src={siteVisuals.narrativePoster.src}
                   alt={resolveLocalizedValue(siteVisuals.narrativePoster.alt, language)}
@@ -517,10 +529,7 @@ export function AboutSection() {
                   { name: teamMembers[0]?.name, role: teamMembers[0]?.role, image: siteVisuals.teamTommy },
                   { name: teamMembers[1]?.name, role: teamMembers[1]?.role, image: siteVisuals.teamGard },
                 ].map((member) => (
-                  <div
-                    key={member.name}
-                    className="group relative aspect-[0.9/1.05] overflow-hidden bg-[color:var(--surface-strong)]"
-                  >
+                  <div key={member.name} className="group relative aspect-[0.9/1.05] overflow-hidden bg-[color:var(--surface-strong)]">
                     <Image
                       src={member.image.src}
                       alt={resolveLocalizedValue(member.image.alt, language)}
@@ -583,7 +592,8 @@ export function ContactSection() {
     <section className="section-space pt-0" id="kontakt">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="grid gap-3.5 sm:gap-4 lg:grid-cols-[0.9fr_1.1fr]">
-          <article className="card-surface rounded-[1.8rem] p-4.5 sm:rounded-[2rem] sm:p-6 lg:p-7">
+          <article className="glass-panel relative overflow-hidden rounded-[1.8rem] p-4.5 shadow-[0_28px_90px_rgba(0,0,0,0.18)] sm:rounded-[2rem] sm:p-6 lg:p-7">
+            <div className="glass-sheen absolute inset-0 opacity-50" />
             <span className="eyebrow">{copy.contactEyebrow}</span>
             <h2 className="section-title mt-3 text-[color:var(--foreground)] sm:mt-4">
               {copy.contactTitle}
@@ -621,9 +631,9 @@ export function ContactSection() {
             </div>
           </article>
 
-          <article className="card-surface overflow-hidden rounded-[1.8rem] sm:rounded-[2rem]">
+          <article className="glass-panel overflow-hidden rounded-[1.8rem] shadow-[0_28px_90px_rgba(0,0,0,0.18)] sm:rounded-[2rem]">
             <div className="grid gap-px bg-[color:var(--line)] lg:grid-cols-[0.96fr_1.04fr]">
-              <div className="relative min-h-[15rem] overflow-hidden bg-[#111111]">
+              <div className="media-frame relative min-h-[15rem] overflow-hidden">
                 <Image
                   src={siteVisuals.eventCoverage.src}
                   alt={resolveLocalizedValue(siteVisuals.eventCoverage.alt, language)}
@@ -678,7 +688,7 @@ function InfoRow({
   href?: string;
 }) {
   const content = (
-    <div className="flex items-start gap-3.5 rounded-[1.25rem] border border-[color:var(--line)] bg-[color:var(--surface)] px-4 py-3.5 transition duration-300 hover:-translate-y-0.5 sm:gap-4 sm:rounded-[1.4rem] sm:py-4">
+    <div className="flex items-start gap-3.5 rounded-[1.25rem] border border-[color:var(--line)] bg-white/[0.04] px-4 py-3.5 shadow-[0_18px_48px_rgba(0,0,0,0.12)] backdrop-blur-xl transition duration-300 hover:-translate-y-0.5 sm:gap-4 sm:rounded-[1.4rem] sm:py-4">
       <div className="mt-0.5 flex h-10 w-10 items-center justify-center rounded-full bg-[color:var(--foreground)] text-[color:var(--background)]">
         {icon}
       </div>

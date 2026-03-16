@@ -17,10 +17,10 @@ export function ServiceCard({ service }: ServiceCardProps) {
   const visual = serviceAreaVisuals[service.slug];
 
   return (
-    <article className="card-surface group overflow-hidden rounded-[1.7rem] sm:rounded-[1.9rem]">
+    <article className="card-surface group overflow-hidden rounded-[1.75rem] shadow-[0_26px_80px_rgba(0,0,0,0.16)] sm:rounded-[1.9rem]">
       {visual ? (
         <div className="grid gap-px bg-[color:var(--line)] lg:grid-cols-[0.94fr_1.06fr]">
-          <div className="relative aspect-[1.08/0.86] overflow-hidden bg-[#111111] lg:min-h-[19rem] lg:aspect-auto">
+          <div className="media-frame relative aspect-[1.08/0.86] overflow-hidden lg:min-h-[19rem] lg:aspect-auto">
             <Image
               src={visual.src}
               alt={resolveLocalizedValue(visual.alt, language)}
@@ -28,7 +28,7 @@ export function ServiceCard({ service }: ServiceCardProps) {
               sizes="(min-width: 1024px) 24vw, (min-width: 768px) 50vw, 100vw"
               className="object-cover transition duration-700 group-hover:scale-[1.04]"
             />
-            <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(9,9,9,0.02),rgba(9,9,9,0.22)_36%,rgba(9,9,9,0.66)_100%)]" />
+            <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(255,255,255,0.08),transparent_36%),linear-gradient(180deg,rgba(9,9,9,0.02),rgba(9,9,9,0.2)_36%,rgba(9,9,9,0.74)_100%)]" />
             <div className="grain-overlay absolute inset-0 opacity-40" />
             <div className="absolute inset-x-0 bottom-0 p-4 text-white sm:p-5">
               <p className="text-[0.64rem] font-semibold uppercase tracking-[0.22em] text-white/52">
@@ -40,7 +40,7 @@ export function ServiceCard({ service }: ServiceCardProps) {
             </div>
           </div>
 
-          <div className="p-4.5 sm:p-6">
+          <div className="relative flex flex-col bg-[linear-gradient(180deg,rgba(255,255,255,0.05),rgba(255,255,255,0.01))] p-4.5 sm:p-6">
             <div className="flex flex-col gap-3">
               <div className="space-y-1.5">
                 <p className="text-[0.66rem] font-semibold uppercase tracking-[0.22em] text-[var(--muted)]">

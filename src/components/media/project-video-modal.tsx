@@ -79,7 +79,7 @@ export function ProjectVideoModal({
       : null;
 
   return (
-    <div className="fixed inset-0 z-[90] flex items-center justify-center bg-black/72 px-4 py-5 backdrop-blur-md sm:px-6">
+    <div className="fixed inset-0 z-[90] flex items-center justify-center bg-black/78 px-4 py-5 backdrop-blur-xl sm:px-6">
       <button
         type="button"
         aria-label={language === "no" ? "Lukk forhåndsvisning" : "Close preview"}
@@ -87,7 +87,8 @@ export function ProjectVideoModal({
         onClick={onClose}
       />
 
-      <div className="relative z-[1] flex max-h-[92vh] w-full max-w-6xl flex-col overflow-hidden rounded-[1.9rem] border border-white/10 bg-[#101114] text-white shadow-[0_34px_120px_rgba(0,0,0,0.42)]">
+      <div className="glass-panel relative z-[1] flex max-h-[92vh] w-full max-w-6xl flex-col overflow-hidden rounded-[2rem] text-white shadow-[0_34px_120px_rgba(0,0,0,0.42)]">
+        <div className="glass-sheen absolute inset-0 opacity-55" />
         <div className="flex items-start justify-between gap-4 border-b border-white/10 px-4 py-4 sm:px-6 sm:py-5">
           <div className="min-w-0 space-y-2">
             {client ? (
@@ -117,7 +118,7 @@ export function ProjectVideoModal({
         </div>
 
         <div className="overflow-y-auto p-4 sm:p-6">
-          <div className="overflow-hidden rounded-[1.5rem] border border-white/10 bg-black">
+          <div className="media-frame overflow-hidden rounded-[1.6rem]">
             <EmbeddedVideoPlayer
               title={title}
               video={video}

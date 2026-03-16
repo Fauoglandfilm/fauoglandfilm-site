@@ -5,10 +5,11 @@ import Image from "next/image";
 import { useSitePreferences } from "@/components/providers/site-preferences";
 import { ButtonLink } from "@/components/ui/button-link";
 import type { CaseStudy } from "@/data/site-content";
+import { siteVisuals } from "@/data/visual-assets";
 import { uiCopy } from "@/data/ui-copy";
 import { resolveLocalizedValue } from "@/lib/i18n";
 
-import { ArrowUpRightIcon } from "../ui/icons";
+import { ArrowUpRightIcon, PlayIcon } from "../ui/icons";
 
 type CaseCardProps = {
   caseStudy: CaseStudy;
@@ -30,7 +31,7 @@ export function CaseCard({
 
   return (
     <article
-      className={`group overflow-hidden rounded-[1.75rem] border border-[color:var(--line)] bg-[color:var(--surface)] shadow-[0_24px_70px_rgba(18,18,18,0.06)] sm:rounded-[1.9rem] ${
+      className={`card-surface group overflow-hidden rounded-[1.8rem] shadow-[0_28px_90px_rgba(0,0,0,0.18)] sm:rounded-[1.95rem] ${
         isFeature ? "lg:grid lg:grid-cols-[1.02fr_0.98fr]" : "md:grid md:grid-cols-[0.95fr_1.05fr]"
       }`}
     >
@@ -68,16 +69,24 @@ export function CaseCard({
             className="object-cover transition duration-500 group-hover:scale-[1.03]"
           />
         ) : (
-          <div
-            className={`absolute inset-0 bg-gradient-to-br ${
-              caseStudy.palette ?? "from-[#e6dfd4] via-[#cbbda8] to-[#b9a182]"
-            }`}
+          <Image
+            src={siteVisuals.folkPoster.src}
+            alt={resolveLocalizedValue(siteVisuals.folkPoster.alt, language)}
+            fill
+            sizes={isFeature ? "(min-width: 1024px) 50vw, 100vw" : "(min-width: 1280px) 33vw, 100vw"}
+            className="object-cover transition duration-500 group-hover:scale-[1.03]"
           />
         )}
-        <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(17,17,17,0.02),rgba(17,17,17,0.06)_36%,rgba(17,17,17,0.24))]" />
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(255,255,255,0.08),transparent_32%),linear-gradient(180deg,rgba(17,17,17,0.05),rgba(17,17,17,0.22)_34%,rgba(17,17,17,0.82)_100%)]" />
+        <div className="grain-overlay absolute inset-0 opacity-45" />
+        {video || externalVideo ? (
+          <span className="absolute right-4 top-4 z-[2] inline-flex h-11 w-11 items-center justify-center rounded-full border border-white/16 bg-white/90 text-[#111111] shadow-[0_16px_36px_rgba(0,0,0,0.22)] backdrop-blur-sm">
+            <PlayIcon className="h-4 w-4 translate-x-[1px]" />
+          </span>
+        ) : null}
       </div>
 
-      <div className="flex flex-1 flex-col gap-4 p-4 sm:p-5 lg:p-6">
+      <div className="relative flex flex-1 flex-col gap-4 bg-[linear-gradient(180deg,rgba(255,255,255,0.04),rgba(255,255,255,0.01))] p-4 sm:p-5 lg:p-6">
         <div className="space-y-2">
           <p className="text-[0.68rem] font-semibold uppercase tracking-[0.22em] text-[var(--muted)]">
             {caseStudy.client}
