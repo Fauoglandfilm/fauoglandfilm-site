@@ -411,40 +411,23 @@ export function ContactLeadSection({
 
         <div className="grid gap-4">
           <article className="card-surface overflow-hidden rounded-[1.9rem]">
-            <div className="grid gap-px bg-[color:var(--line)] lg:grid-cols-[1.02fr_0.98fr]">
-              <div className="relative min-h-[16rem] overflow-hidden bg-[#111111]">
-                <Image
-                  src={siteVisuals.cameraDarkroom.src}
-                  alt={resolveLocalizedValue(siteVisuals.cameraDarkroom.alt, language)}
-                  fill
-                  sizes="(min-width: 1280px) 28vw, 100vw"
-                  className="object-cover"
-                />
-                <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(7,7,7,0.12),rgba(7,7,7,0.52)_72%,rgba(7,7,7,0.86))]" />
-                <div className="grain-overlay absolute inset-0 opacity-45" />
-                <div className="absolute inset-x-0 bottom-0 p-5 text-white sm:p-6">
-                  <p className="text-[0.68rem] font-semibold uppercase tracking-[0.22em] text-white/52">
-                    {language === "no" ? "Neste steg" : "Next step"}
-                  </p>
-                  <p className="mt-2 max-w-md text-sm leading-6 text-white/72 sm:text-base">
-                    {language === "no"
-                      ? "Send mål, kanal, tidslinje og gjerne budsjett, så svarer vi med anbefalt oppsett og neste steg."
-                      : "Send the goal, channel, timeline and ideally a budget, and we will reply with the right setup and next steps."}
-                  </p>
-                </div>
-              </div>
-
-              <div className="p-5 sm:p-6">
+            <div className="p-5 sm:p-6">
+              <div className="max-w-2xl">
                 <h3 className="feature-title text-[color:var(--foreground)]">
                   {copy.contactBriefTitle}
                 </h3>
                 <p className="body-copy mt-3 text-[var(--muted-2)]">
                   {copy.contactBriefDescription}
                 </p>
+                <p className="mt-4 text-sm leading-6 text-[var(--muted)] sm:text-base sm:leading-7">
+                  {language === "no"
+                    ? "Send mål, kanal, tidslinje og gjerne budsjett, så svarer vi med anbefalt oppsett og neste steg."
+                    : "Send the goal, channel, timeline and ideally a budget, and we will reply with the right setup and next steps."}
+                </p>
+              </div>
                 <div className="mt-6">
                   <ContactForm />
                 </div>
-              </div>
             </div>
           </article>
 
