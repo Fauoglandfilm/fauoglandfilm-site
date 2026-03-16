@@ -19,13 +19,13 @@ export function Footer() {
   return (
     <footer className="relative overflow-hidden border-t border-[color:var(--line)] bg-[color:color-mix(in_srgb,var(--background)_76%,#090909)]">
       <Image
-        src={siteVisuals.footerProjector.src}
-        alt={resolveLocalizedValue(siteVisuals.footerProjector.alt, language)}
+        src={siteVisuals.folkPoster.src}
+        alt={resolveLocalizedValue(siteVisuals.folkPoster.alt, language)}
         fill
         sizes="100vw"
-        className="object-cover opacity-[0.16]"
+        className="object-cover opacity-[0.14]"
       />
-      <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(12,12,12,0.38),rgba(12,12,12,0.14)_18%,rgba(12,12,12,0.46)_100%)]" />
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(210,173,116,0.12),transparent_24%),linear-gradient(180deg,rgba(8,8,9,0.52),rgba(8,8,9,0.26)_18%,rgba(8,8,9,0.72)_100%)]" />
       <div className="grain-overlay absolute inset-0 opacity-45" />
       <div className="relative mx-auto max-w-7xl px-4 py-9 sm:px-6 lg:px-8 lg:py-12">
         <div className="grid gap-8 lg:grid-cols-[1.15fr_0.85fr] lg:gap-10">

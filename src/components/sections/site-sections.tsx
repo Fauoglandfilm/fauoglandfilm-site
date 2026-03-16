@@ -18,7 +18,7 @@ import type {
   Testimonial,
 } from "@/data/site-content";
 import { siteConfig } from "@/data/site-content";
-import { siteVisuals } from "@/data/visual-assets";
+import { pageHeroVisuals, siteVisuals } from "@/data/visual-assets";
 import { uiCopy } from "@/data/ui-copy";
 import type { LocalizedText } from "@/lib/i18n";
 import { resolveLocalizedValue } from "@/lib/i18n";
@@ -331,7 +331,7 @@ export function ContactLeadSection({
       title={copy.contactTitle}
       description={copy.contactDescription}
     >
-      <div className="grid gap-4 xl:grid-cols-[0.82fr_1.18fr]">
+      <div className="grid gap-4 xl:grid-cols-[0.9fr_1.1fr]">
         <article className="card-surface rounded-[1.9rem] p-5 sm:p-6">
           <div className="space-y-3">
             <h3 className="feature-title text-[color:var(--foreground)]">
@@ -357,23 +357,51 @@ export function ContactLeadSection({
           </div>
         </article>
 
-        <article className="card-surface rounded-[1.9rem] p-5 sm:p-6">
-          <h3 className="feature-title text-[color:var(--foreground)]">
-            {copy.contactBriefTitle}
-          </h3>
-          <p className="body-copy mt-3 text-[var(--muted-2)]">
-            {copy.contactBriefDescription}
-          </p>
-          <div className="mt-6">
-            <ContactForm />
-          </div>
+        <div className="grid gap-4">
+          <article className="card-surface overflow-hidden rounded-[1.9rem]">
+            <div className="grid gap-px bg-[color:var(--line)] lg:grid-cols-[1.02fr_0.98fr]">
+              <div className="relative min-h-[16rem] overflow-hidden bg-[#111111]">
+                <Image
+                  src={siteVisuals.eventCoverage.src}
+                  alt={resolveLocalizedValue(siteVisuals.eventCoverage.alt, language)}
+                  fill
+                  sizes="(min-width: 1280px) 28vw, 100vw"
+                  className="object-cover"
+                />
+                <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(7,7,7,0.12),rgba(7,7,7,0.52)_72%,rgba(7,7,7,0.86))]" />
+                <div className="grain-overlay absolute inset-0 opacity-45" />
+                <div className="absolute inset-x-0 bottom-0 p-5 text-white sm:p-6">
+                  <p className="text-[0.68rem] font-semibold uppercase tracking-[0.22em] text-white/52">
+                    {language === "no" ? "Prosjektbrief" : "Project brief"}
+                  </p>
+                  <p className="mt-2 max-w-md text-sm leading-6 text-white/72 sm:text-base">
+                    {language === "no"
+                      ? "Send en kort brief, så svarer vi med format, nivå og neste steg."
+                      : "Send a short brief and we will respond with format, scope and next steps."}
+                  </p>
+                </div>
+              </div>
+
+              <div className="p-5 sm:p-6">
+                <h3 className="feature-title text-[color:var(--foreground)]">
+                  {copy.contactBriefTitle}
+                </h3>
+                <p className="body-copy mt-3 text-[var(--muted-2)]">
+                  {copy.contactBriefDescription}
+                </p>
+                <div className="mt-6">
+                  <ContactForm />
+                </div>
+              </div>
+            </div>
+          </article>
 
           {visibleFaqs.length ? (
-            <div className="mt-6 grid gap-3 border-t border-[color:var(--line)] pt-6">
+            <div className="grid gap-3 md:grid-cols-2">
               {visibleFaqs.map((faq, index) => (
                 <details
                   key={`contact-faq-${index}`}
-                  className="rounded-[1.3rem] border border-[color:var(--line)] bg-[color:var(--surface)] px-4 py-4"
+                  className="card-surface rounded-[1.3rem] px-4 py-4"
                 >
                   <summary className="cursor-pointer list-none text-sm font-semibold text-[color:var(--foreground)] sm:text-base">
                     {resolveLocalizedValue(faq.question, language)}
@@ -385,7 +413,7 @@ export function ContactLeadSection({
               ))}
             </div>
           ) : null}
-        </article>
+        </div>
       </div>
     </SectionShell>
   );
@@ -555,6 +583,7 @@ export function PageHero({
   primaryCta,
   secondaryCta,
   video,
+  visualKey,
 }: {
   eyebrow: MaybeLocalizedText;
   title: MaybeLocalizedText;
@@ -562,8 +591,10 @@ export function PageHero({
   primaryCta?: { label: MaybeLocalizedText; href: string };
   secondaryCta?: { label: MaybeLocalizedText; href: string };
   video?: CaseStudy["video"];
+  visualKey?: keyof typeof pageHeroVisuals;
 }) {
   const { language, theme } = useSitePreferences();
+  const visuals = visualKey ? pageHeroVisuals[visualKey] : null;
 
   return (
     <section className="relative isolate overflow-hidden pt-22 sm:pt-28">
@@ -589,53 +620,94 @@ export function PageHero({
           </>
         ) : (
           <>
-            <Image
-              src={theme === "dark" ? siteVisuals.footerProjector.src : siteVisuals.cinematicLens.src}
-              alt={
-                theme === "dark"
-                  ? resolveLocalizedValue(siteVisuals.footerProjector.alt, language)
-                  : resolveLocalizedValue(siteVisuals.cinematicLens.alt, language)
-              }
-              fill
-              sizes="100vw"
-              className="object-cover opacity-[0.18] sm:opacity-[0.24]"
-            />
             <div
               className={
                 theme === "dark"
-                  ? "absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(197,165,106,0.18),transparent_36%),linear-gradient(180deg,rgba(10,12,15,0.86),rgba(10,12,15,0.96))]"
-                  : "absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(210,192,154,0.24),transparent_36%),linear-gradient(180deg,rgba(244,239,232,0.94),rgba(239,232,223,0.98))]"
+                  ? "absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(210,173,116,0.18),transparent_34%),radial-gradient(circle_at_82%_18%,rgba(57,78,108,0.18),transparent_28%),linear-gradient(180deg,rgba(8,9,12,0.9),rgba(8,9,12,0.97))]"
+                  : "absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(210,173,116,0.18),transparent_34%),linear-gradient(180deg,rgba(236,228,216,0.96),rgba(228,218,206,0.98))]"
               }
             />
-            <div className="grain-overlay absolute inset-0 opacity-38" />
+            <div className="grain-overlay absolute inset-0 opacity-34" />
           </>
         )}
       </div>
 
-      <div className="relative mx-auto flex min-h-[28rem] max-w-7xl items-end px-4 pb-8 sm:min-h-[34rem] sm:px-6 sm:pb-12 lg:min-h-[38rem] lg:px-8 lg:pb-14">
-        <div className={`max-w-4xl ${video ? "text-white" : "text-[color:var(--foreground)]"}`}>
-          <span className={video ? "text-[0.72rem] font-semibold uppercase tracking-[0.24em] text-white/58" : "eyebrow"}>
-            {resolveLocalizedValue(eyebrow, language)}
-          </span>
-          <h1 className="page-title mt-4 max-w-4xl">
-            {resolveLocalizedValue(title, language)}
-          </h1>
-          <p className={`body-lead mt-4 max-w-2xl ${video ? "text-white/74" : "text-[var(--muted-2)]"}`}>
-            {resolveLocalizedValue(description, language)}
-          </p>
-          {primaryCta || secondaryCta ? (
-            <div className="mt-6 flex flex-col gap-2.5 sm:mt-8 sm:flex-row sm:gap-3">
-              {primaryCta ? (
-                <ButtonLink href={primaryCta.href} className="w-full sm:w-auto">
-                  {resolveLocalizedValue(primaryCta.label, language)}
-                </ButtonLink>
-              ) : null}
-              {secondaryCta ? (
-                <ButtonLink href={secondaryCta.href} variant="secondary" className="w-full sm:w-auto">
-                  {resolveLocalizedValue(secondaryCta.label, language)}
-                </ButtonLink>
-              ) : null}
-            </div>
+      <div className="relative mx-auto flex min-h-[25rem] max-w-7xl items-end px-4 pb-7 sm:min-h-[28rem] sm:px-6 sm:pb-9 lg:min-h-[31rem] lg:px-8 lg:pb-10">
+        <div className="grid w-full gap-6 lg:grid-cols-[1.04fr_0.96fr] lg:items-end">
+          <div className={`max-w-4xl ${video ? "text-white" : "text-[color:var(--foreground)]"}`}>
+            <span className={video ? "text-[0.72rem] font-semibold uppercase tracking-[0.24em] text-white/58" : "eyebrow"}>
+              {resolveLocalizedValue(eyebrow, language)}
+            </span>
+            <h1 className="page-title mt-4 max-w-4xl">
+              {resolveLocalizedValue(title, language)}
+            </h1>
+            <p className={`body-lead mt-4 max-w-2xl ${video ? "text-white/74" : "text-[var(--muted-2)]"}`}>
+              {resolveLocalizedValue(description, language)}
+            </p>
+            {primaryCta || secondaryCta ? (
+              <div className="mt-6 flex flex-col gap-2.5 sm:mt-8 sm:flex-row sm:gap-3">
+                {primaryCta ? (
+                  <ButtonLink href={primaryCta.href} className="w-full sm:w-auto">
+                    {resolveLocalizedValue(primaryCta.label, language)}
+                  </ButtonLink>
+                ) : null}
+                {secondaryCta ? (
+                  <ButtonLink href={secondaryCta.href} variant="secondary" className="w-full sm:w-auto">
+                    {resolveLocalizedValue(secondaryCta.label, language)}
+                  </ButtonLink>
+                ) : null}
+              </div>
+            ) : null}
+          </div>
+
+          {visuals ? (
+            <Reveal delay={0.12} className="lg:justify-self-end">
+              <div className="grid gap-3 sm:grid-cols-[1.16fr_0.84fr] lg:max-w-[34rem]">
+                <div className="card-surface relative overflow-hidden rounded-[1.7rem]">
+                  <div className="relative aspect-[1.02/0.94] overflow-hidden bg-[#111111]">
+                    <Image
+                      src={visuals.primary.src}
+                      alt={resolveLocalizedValue(visuals.primary.alt, language)}
+                      fill
+                      sizes="(min-width: 1024px) 28vw, 100vw"
+                      className="object-cover"
+                    />
+                    <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(10,10,10,0.08),rgba(10,10,10,0.62)_100%)]" />
+                    <div className="grain-overlay absolute inset-0 opacity-35" />
+                  </div>
+                </div>
+
+                <div className="grid gap-3">
+                  {[visuals.secondary, visuals.tertiary]
+                    .filter(Boolean)
+                    .map((visual, index) => (
+                      <div key={visual!.src} className="card-surface relative overflow-hidden rounded-[1.45rem]">
+                        <div className="relative aspect-[1.08/0.74] overflow-hidden bg-[#111111]">
+                          <Image
+                            src={visual!.src}
+                            alt={resolveLocalizedValue(visual!.alt, language)}
+                            fill
+                            sizes="(min-width: 1024px) 16vw, 50vw"
+                            className="object-cover"
+                          />
+                          <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(10,10,10,0.06),rgba(10,10,10,0.44)_100%)]" />
+                          <div className="absolute inset-x-0 bottom-0 p-4">
+                            <p className="text-[0.62rem] font-semibold uppercase tracking-[0.22em] text-white/54">
+                              {index === 0
+                                ? language === "no"
+                                  ? "Utvalgt frame"
+                                  : "Selected frame"
+                                : language === "no"
+                                  ? "Arbeid i fokus"
+                                  : "Work in focus"}
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+                    ))}
+                </div>
+              </div>
+            </Reveal>
           ) : null}
         </div>
       </div>

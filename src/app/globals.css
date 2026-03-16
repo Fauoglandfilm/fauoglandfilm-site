@@ -1,126 +1,126 @@
 @import "tailwindcss";
 
 :root {
-  --background: #f3efe8;
-  --foreground: #131313;
-  --surface: rgba(255, 255, 255, 0.72);
-  --surface-strong: rgba(255, 255, 255, 0.92);
-  --surface-muted: rgba(255, 255, 255, 0.5);
+  --background: #0b0d11;
+  --foreground: #f4eee5;
+  --surface: rgba(16, 18, 24, 0.76);
+  --surface-strong: rgba(13, 15, 20, 0.94);
+  --surface-muted: rgba(255, 255, 255, 0.05);
+  --line: rgba(255, 255, 255, 0.1);
+  --line-strong: rgba(255, 255, 255, 0.18);
+  --muted: #a89e92;
+  --muted-2: #d8cec1;
+  --accent: #d2ad74;
+  --accent-2: #f0d9ac;
+  --shadow: 0 34px 110px rgba(0, 0, 0, 0.34);
+  --logo-strip-bg: rgba(247, 240, 232, 0.96);
+  --logo-strip-border: rgba(255, 255, 255, 0.08);
+  --btn-border: rgba(255, 255, 255, 0.16);
+  --btn-primary-bg: #f4eee5;
+  --btn-primary-text: #0f1013;
+  --btn-primary-border: rgba(255, 255, 255, 0.18);
+  --btn-primary-hover-bg: #ffffff;
+  --btn-primary-hover-text: #0f1013;
+  --btn-primary-active-bg: #e6dccb;
+  --btn-primary-active-text: #0f1013;
+  --btn-secondary-bg: rgba(255, 255, 255, 0.06);
+  --btn-secondary-text: #f4eee5;
+  --btn-secondary-border: rgba(255, 255, 255, 0.14);
+  --btn-secondary-hover-bg: rgba(255, 255, 255, 0.1);
+  --btn-secondary-hover-text: #ffffff;
+  --btn-secondary-active-bg: rgba(255, 255, 255, 0.14);
+  --btn-secondary-active-text: #ffffff;
+  --btn-ghost-bg: transparent;
+  --btn-ghost-text: #f4eee5;
+  --btn-ghost-border: rgba(244, 238, 229, 0.26);
+  --btn-ghost-hover-bg: rgba(255, 255, 255, 0.08);
+  --btn-ghost-hover-text: #ffffff;
+  --btn-ghost-active-bg: rgba(255, 255, 255, 0.12);
+  --btn-ghost-active-text: #ffffff;
+  --btn-icon-bg: rgba(18, 20, 25, 0.92);
+  --btn-icon-text: #f4eee5;
+  --btn-icon-border: rgba(255, 255, 255, 0.12);
+  --btn-icon-hover-bg: rgba(26, 29, 36, 0.98);
+  --btn-icon-hover-text: #ffffff;
+  --btn-icon-active-bg: rgba(38, 42, 50, 0.98);
+  --btn-icon-active-text: #ffffff;
+  --btn-disabled-opacity: 0.52;
+  --control-shell-bg: rgba(18, 20, 25, 0.88);
+  --control-shell-border: rgba(255, 255, 255, 0.12);
+  --control-option-bg: transparent;
+  --control-option-text: #d8cec1;
+  --control-option-border: transparent;
+  --control-option-hover-bg: rgba(255, 255, 255, 0.08);
+  --control-option-hover-text: #ffffff;
+  --control-option-hover-border: transparent;
+  --control-option-active-bg: #f4eee5;
+  --control-option-active-text: #0f1013;
+  --control-option-active-border: rgba(255, 255, 255, 0.18);
+  --header-surface: rgba(12, 14, 18, 0.86);
+  --header-overlay-surface: rgba(8, 9, 12, 0.28);
+  --header-overlay-border: rgba(255, 255, 255, 0.14);
+  color-scheme: dark;
+}
+
+html[data-theme="light"] {
+  --background: #e7dfd3;
+  --foreground: #151515;
+  --surface: rgba(255, 252, 247, 0.74);
+  --surface-strong: rgba(255, 252, 247, 0.92);
+  --surface-muted: rgba(255, 255, 255, 0.56);
   --line: rgba(17, 17, 17, 0.1);
   --line-strong: rgba(17, 17, 17, 0.18);
-  --muted: #746b62;
-  --muted-2: #5d554e;
-  --accent: #b59a67;
-  --accent-2: #8a7347;
-  --shadow: 0 24px 80px rgba(25, 21, 17, 0.08);
-  --logo-strip-bg: rgba(255, 255, 255, 0.96);
+  --muted: #786f63;
+  --muted-2: #5d554d;
+  --accent: #b8935e;
+  --accent-2: #8d7349;
+  --shadow: 0 28px 90px rgba(25, 21, 17, 0.12);
+  --logo-strip-bg: rgba(255, 251, 245, 0.98);
   --logo-strip-border: rgba(17, 17, 17, 0.06);
   --btn-border: rgba(17, 17, 17, 0.12);
-  --btn-primary-bg: #111111;
+  --btn-primary-bg: #151515;
   --btn-primary-text: #ffffff;
-  --btn-primary-border: #111111;
-  --btn-primary-hover-bg: #242424;
+  --btn-primary-border: #151515;
+  --btn-primary-hover-bg: #252525;
   --btn-primary-hover-text: #ffffff;
-  --btn-primary-active-bg: #080808;
+  --btn-primary-active-bg: #090909;
   --btn-primary-active-text: #ffffff;
-  --btn-secondary-bg: #e8e2d8;
-  --btn-secondary-text: #111111;
-  --btn-secondary-border: #d6cec2;
-  --btn-secondary-hover-bg: #dfd6ca;
-  --btn-secondary-hover-text: #111111;
-  --btn-secondary-active-bg: #d5cbbe;
-  --btn-secondary-active-text: #111111;
+  --btn-secondary-bg: rgba(21, 21, 21, 0.06);
+  --btn-secondary-text: #151515;
+  --btn-secondary-border: rgba(17, 17, 17, 0.14);
+  --btn-secondary-hover-bg: rgba(21, 21, 21, 0.1);
+  --btn-secondary-hover-text: #151515;
+  --btn-secondary-active-bg: rgba(21, 21, 21, 0.14);
+  --btn-secondary-active-text: #151515;
   --btn-ghost-bg: transparent;
-  --btn-ghost-text: #111111;
-  --btn-ghost-border: rgba(17, 17, 17, 0.26);
+  --btn-ghost-text: #151515;
+  --btn-ghost-border: rgba(17, 17, 17, 0.28);
   --btn-ghost-hover-bg: rgba(17, 17, 17, 0.06);
-  --btn-ghost-hover-text: #111111;
+  --btn-ghost-hover-text: #151515;
   --btn-ghost-active-bg: rgba(17, 17, 17, 0.1);
-  --btn-ghost-active-text: #111111;
-  --btn-icon-bg: rgba(255, 255, 255, 0.84);
-  --btn-icon-text: #111111;
-  --btn-icon-border: #d6cec2;
-  --btn-icon-hover-bg: rgba(255, 255, 255, 0.94);
-  --btn-icon-hover-text: #111111;
-  --btn-icon-active-bg: #efe9df;
-  --btn-icon-active-text: #111111;
-  --btn-disabled-opacity: 0.52;
-  --control-shell-bg: rgba(255, 255, 255, 0.82);
+  --btn-ghost-active-text: #151515;
+  --btn-icon-bg: rgba(255, 255, 255, 0.88);
+  --btn-icon-text: #151515;
+  --btn-icon-border: rgba(17, 17, 17, 0.12);
+  --btn-icon-hover-bg: rgba(255, 255, 255, 0.98);
+  --btn-icon-hover-text: #151515;
+  --btn-icon-active-bg: #efe7db;
+  --btn-icon-active-text: #151515;
+  --control-shell-bg: rgba(255, 255, 255, 0.86);
   --control-shell-border: rgba(17, 17, 17, 0.1);
-  --control-option-bg: transparent;
-  --control-option-text: #5d554e;
-  --control-option-border: transparent;
+  --control-option-text: #5d554d;
   --control-option-hover-bg: rgba(17, 17, 17, 0.06);
-  --control-option-hover-text: #111111;
-  --control-option-hover-border: transparent;
-  --control-option-active-bg: #111111;
+  --control-option-hover-text: #151515;
+  --control-option-active-bg: #151515;
   --control-option-active-text: #ffffff;
   --control-option-active-border: rgba(17, 17, 17, 0.12);
-  --header-surface: rgba(255, 255, 255, 0.78);
+  --header-surface: rgba(255, 252, 247, 0.82);
   --header-overlay-surface: rgba(12, 12, 12, 0.18);
   --header-overlay-border: rgba(255, 255, 255, 0.14);
   color-scheme: light;
 }
 
 html[data-theme="dark"] {
-  --background: #0d0f12;
-  --foreground: #f2ece3;
-  --surface: rgba(17, 18, 22, 0.74);
-  --surface-strong: rgba(17, 18, 22, 0.92);
-  --surface-muted: rgba(255, 255, 255, 0.06);
-  --line: rgba(255, 255, 255, 0.1);
-  --line-strong: rgba(255, 255, 255, 0.18);
-  --muted: #ada295;
-  --muted-2: #d8cec2;
-  --accent: #c5a56a;
-  --accent-2: #ecd0a1;
-  --shadow: 0 30px 90px rgba(0, 0, 0, 0.26);
-  --logo-strip-bg: rgba(250, 246, 240, 0.98);
-  --logo-strip-border: rgba(255, 255, 255, 0.06);
-  --btn-border: rgba(255, 255, 255, 0.16);
-  --btn-primary-bg: #f2ece3;
-  --btn-primary-text: #111111;
-  --btn-primary-border: #f2ece3;
-  --btn-primary-hover-bg: #ffffff;
-  --btn-primary-hover-text: #111111;
-  --btn-primary-active-bg: #e5ddcf;
-  --btn-primary-active-text: #111111;
-  --btn-secondary-bg: #23262d;
-  --btn-secondary-text: #f2ece3;
-  --btn-secondary-border: #2f343d;
-  --btn-secondary-hover-bg: #2b3039;
-  --btn-secondary-hover-text: #ffffff;
-  --btn-secondary-active-bg: #363b45;
-  --btn-secondary-active-text: #ffffff;
-  --btn-ghost-bg: transparent;
-  --btn-ghost-text: #f2ece3;
-  --btn-ghost-border: rgba(242, 236, 227, 0.3);
-  --btn-ghost-hover-bg: rgba(255, 255, 255, 0.08);
-  --btn-ghost-hover-text: #ffffff;
-  --btn-ghost-active-bg: rgba(255, 255, 255, 0.12);
-  --btn-ghost-active-text: #ffffff;
-  --btn-icon-bg: rgba(25, 28, 34, 0.9);
-  --btn-icon-text: #f2ece3;
-  --btn-icon-border: #2f343d;
-  --btn-icon-hover-bg: rgba(35, 38, 45, 0.98);
-  --btn-icon-hover-text: #ffffff;
-  --btn-icon-active-bg: #3a3f49;
-  --btn-icon-active-text: #ffffff;
-  --btn-disabled-opacity: 0.52;
-  --control-shell-bg: rgba(24, 27, 32, 0.88);
-  --control-shell-border: rgba(255, 255, 255, 0.12);
-  --control-option-bg: transparent;
-  --control-option-text: #d8cec2;
-  --control-option-border: transparent;
-  --control-option-hover-bg: rgba(255, 255, 255, 0.08);
-  --control-option-hover-text: #ffffff;
-  --control-option-hover-border: transparent;
-  --control-option-active-bg: #f2ece3;
-  --control-option-active-text: #111111;
-  --control-option-active-border: rgba(255, 255, 255, 0.18);
-  --header-surface: rgba(17, 18, 22, 0.86);
-  --header-overlay-surface: rgba(12, 12, 12, 0.24);
-  --header-overlay-border: rgba(255, 255, 255, 0.12);
   color-scheme: dark;
 }
 
@@ -144,14 +144,14 @@ html {
 body {
   min-height: 100vh;
   background:
-    radial-gradient(circle at top left, rgba(212, 197, 164, 0.18), transparent 24%),
-    radial-gradient(circle at 82% 12%, rgba(22, 28, 36, 0.14), transparent 24%),
-    radial-gradient(circle at 50% 100%, rgba(8, 8, 8, 0.08), transparent 26%),
+    radial-gradient(circle at top left, rgba(210, 173, 116, 0.16), transparent 24%),
+    radial-gradient(circle at 82% 12%, rgba(66, 79, 109, 0.14), transparent 24%),
+    radial-gradient(circle at 50% 100%, rgba(8, 8, 8, 0.1), transparent 28%),
     linear-gradient(
       180deg,
-      color-mix(in srgb, var(--background) 96%, white) 0%,
-      color-mix(in srgb, var(--background) 92%, #0a0a0a) 58%,
-      color-mix(in srgb, var(--background) 82%, #080808) 100%
+      color-mix(in srgb, var(--background) 96%, #12151c) 0%,
+      color-mix(in srgb, var(--background) 92%, #070809) 58%,
+      color-mix(in srgb, var(--background) 78%, #050505) 100%
     );
   color: var(--foreground);
   font-family: var(--font-manrope), sans-serif;
@@ -165,10 +165,10 @@ body::before {
   inset: 0;
   pointer-events: none;
   background:
-    radial-gradient(circle at 20% 0%, rgba(255, 255, 255, 0.2), transparent 18%),
-    radial-gradient(circle at 80% 0%, rgba(181, 154, 103, 0.12), transparent 22%),
-    linear-gradient(180deg, rgba(0, 0, 0, 0.08), transparent 30%, transparent 70%, rgba(0, 0, 0, 0.18));
-  opacity: 0.55;
+    radial-gradient(circle at 20% 0%, rgba(255, 255, 255, 0.14), transparent 18%),
+    radial-gradient(circle at 80% 0%, rgba(210, 173, 116, 0.12), transparent 24%),
+    linear-gradient(180deg, rgba(0, 0, 0, 0.12), transparent 28%, transparent 68%, rgba(0, 0, 0, 0.26));
+  opacity: 0.68;
 }
 
 body::after {
@@ -179,7 +179,7 @@ body::after {
   background-image: url("/assets/visuals/textures/film-grain.png");
   background-repeat: repeat;
   mix-blend-mode: soft-light;
-  opacity: 0.16;
+  opacity: 0.14;
 }
 
 a {
@@ -219,8 +219,8 @@ summary::-webkit-details-marker {
   }
 
   .section-space {
-    padding-top: 3.6rem;
-    padding-bottom: 3.6rem;
+    padding-top: 3rem;
+    padding-bottom: 3rem;
   }
 
   .hero-title {
@@ -277,12 +277,12 @@ summary::-webkit-details-marker {
     border: 1px solid color-mix(in srgb, var(--line) 88%, rgba(255, 255, 255, 0.08));
     background: linear-gradient(
       180deg,
-      color-mix(in srgb, var(--surface-strong) 96%, rgba(255, 255, 255, 0.04)),
-      color-mix(in srgb, var(--surface-strong) 82%, rgba(12, 12, 12, 0.08))
+      color-mix(in srgb, var(--surface-strong) 96%, rgba(255, 255, 255, 0.02)),
+      color-mix(in srgb, var(--surface-strong) 88%, rgba(8, 8, 8, 0.16))
     );
     box-shadow:
-      0 28px 90px rgba(10, 10, 10, 0.1),
-      inset 0 1px 0 rgba(255, 255, 255, 0.12);
+      0 34px 110px rgba(5, 5, 5, 0.22),
+      inset 0 1px 0 rgba(255, 255, 255, 0.1);
     backdrop-filter: blur(22px);
   }
 
@@ -764,8 +764,8 @@ summary::-webkit-details-marker {
 
   @media (min-width: 640px) {
     .section-space {
-      padding-top: 4.9rem;
-      padding-bottom: 4.9rem;
+      padding-top: 3.9rem;
+      padding-bottom: 3.9rem;
     }
 
     .body-lead {
@@ -806,8 +806,8 @@ summary::-webkit-details-marker {
 
   @media (min-width: 1024px) {
     .section-space {
-      padding-top: 6rem;
-      padding-bottom: 6rem;
+      padding-top: 4.9rem;
+      padding-bottom: 4.9rem;
     }
 
     .logo-marquee-group {

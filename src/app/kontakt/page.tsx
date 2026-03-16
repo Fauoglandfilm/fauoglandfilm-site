@@ -21,6 +21,7 @@ export default function ContactPage() {
         eyebrow={{ no: copy.no.contactHeroEyebrow, en: copy.en.contactHeroEyebrow }}
         title={{ no: copy.no.contactHeroTitle, en: copy.en.contactHeroTitle }}
         description={{ no: copy.no.contactHeroDescription, en: copy.en.contactHeroDescription }}
+        visualKey="contact"
       />
       <ContactLeadSection />
     </main>
