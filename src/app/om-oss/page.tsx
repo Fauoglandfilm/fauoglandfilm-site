@@ -27,6 +27,7 @@ export default function AboutPage() {
         title={{ no: copy.no.aboutHeroTitle, en: copy.en.aboutHeroTitle }}
         description={{ no: copy.no.aboutHeroDescription, en: copy.en.aboutHeroDescription }}
         primaryCta={{ label: { no: copy.no.aboutPrimaryCta, en: copy.en.aboutPrimaryCta }, href: "/kontakt" }}
+        visualKey="about"
       />
       <TeamSection team={teamMembers} bullets={aboutBullets} />
       <CtaBanner

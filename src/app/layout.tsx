@@ -32,7 +32,7 @@ export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
   viewportFit: "cover",
-  themeColor: "#f3efe8",
+  themeColor: "#0b0d11",
 };
 
 const preferenceBootScript = `
@@ -57,7 +57,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="nb" data-theme="light" data-language="no" suppressHydrationWarning>
+    <html lang="nb" data-theme="dark" data-language="no" suppressHydrationWarning>
       <body
         className={`${manrope.variable} ${sora.variable} antialiased`}
       >

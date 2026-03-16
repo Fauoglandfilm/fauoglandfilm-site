@@ -50,7 +50,7 @@ function getInitialTheme(): ThemeMode {
     }
   }
 
-  return "light";
+  return "dark";
 }
 
 export function SitePreferencesProvider({ children }: { children: ReactNode }) {

@@ -17,7 +17,7 @@ import {
   type ServicePillar,
   videoLibrary,
 } from "@/data/site-content";
-import { servicePillarVisuals, siteVisuals } from "@/data/visual-assets";
+import { homeShowcaseVisuals, servicePillarVisuals, siteVisuals } from "@/data/visual-assets";
 import { uiCopy } from "@/data/ui-copy";
 import { resolveLocalizedValue } from "@/lib/i18n";
 
@@ -37,16 +37,8 @@ export function HeroSection() {
   return (
     <section className="relative isolate overflow-hidden">
       <div className="absolute inset-0">
-        <Image
-          src={siteVisuals.heroNature.src}
-          alt={resolveLocalizedValue(siteVisuals.heroNature.alt, language)}
-          fill
-          priority
-          sizes="100vw"
-          className="image-slow-zoom object-cover opacity-48"
-        />
         <video
-          className="relative z-[1] h-full w-full object-cover opacity-[0.72] saturate-[0.88] lg:opacity-[0.8]"
+          className="relative z-[1] h-full w-full object-cover opacity-[0.86] saturate-[0.92]"
           autoPlay
           muted
           loop
@@ -59,19 +51,12 @@ export function HeroSection() {
           ) : null}
           <source src={heroVideo.src} type="video/mp4" />
         </video>
-        <Image
-          src={siteVisuals.cinematicProjector.src}
-          alt={resolveLocalizedValue(siteVisuals.cinematicProjector.alt, language)}
-          fill
-          sizes="100vw"
-          className="object-cover opacity-14 mix-blend-screen"
-        />
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(244,217,158,0.22),transparent_28%),radial-gradient(circle_at_top_right,rgba(255,255,255,0.12),transparent_24%),linear-gradient(180deg,rgba(6,6,6,0.12),rgba(6,6,6,0.18)_30%,rgba(6,6,6,0.52)_64%,rgba(6,6,6,0.86)_100%)]" />
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(210,173,116,0.24),transparent_28%),radial-gradient(circle_at_82%_12%,rgba(54,74,104,0.24),transparent_24%),linear-gradient(180deg,rgba(5,6,8,0.18),rgba(5,6,8,0.26)_24%,rgba(5,6,8,0.58)_56%,rgba(5,6,8,0.92)_100%)]" />
         <div className="grain-overlay absolute inset-0" />
       </div>
 
-      <div className="relative mx-auto flex min-h-[80svh] max-w-7xl items-end px-4 pb-8 pt-24 sm:min-h-[86svh] sm:px-6 sm:pb-12 sm:pt-28 lg:min-h-[84vh] lg:px-8 lg:pb-14 lg:pt-32">
-        <div className="grid w-full gap-7 sm:gap-9 lg:grid-cols-[1.15fr_0.85fr] lg:items-end">
+      <div className="relative mx-auto flex min-h-[80svh] max-w-7xl items-end px-4 pb-7 pt-24 sm:min-h-[85svh] sm:px-6 sm:pb-10 sm:pt-28 lg:min-h-[84vh] lg:px-8 lg:pb-12 lg:pt-32">
+        <div className="grid w-full gap-6 sm:gap-8 lg:grid-cols-[1.04fr_0.96fr] lg:items-end">
           <div className="max-w-4xl">
             <Reveal className="space-y-4 sm:space-y-5" y={36}>
               <div className="inline-flex max-w-full flex-wrap justify-center rounded-full border border-white/18 bg-white/10 px-3.5 py-1.5 text-center text-[0.64rem] font-semibold uppercase tracking-[0.22em] text-white/82 backdrop-blur sm:px-4 sm:py-2 sm:text-[0.7rem]">
@@ -97,25 +82,53 @@ export function HeroSection() {
 
           <FloatingLayer className="hidden lg:block">
             <Reveal delay={0.16}>
-              <div className="relative overflow-hidden rounded-[2rem] border border-white/12 bg-[rgba(255,255,255,0.08)] p-6 text-white backdrop-blur-xl">
-                <Image
-                  src={siteVisuals.cinematicLens.src}
-                  alt={resolveLocalizedValue(siteVisuals.cinematicLens.alt, language)}
-                  fill
-                  sizes="28vw"
-                  className="object-cover opacity-28"
-                />
-                <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(11,11,11,0.24),rgba(11,11,11,0.68))]" />
-                <div className="relative space-y-3">
-                  <p className="text-[0.72rem] font-semibold uppercase tracking-[0.24em] text-white/58">
-                    {copy.heroPanelEyebrow}
-                  </p>
-                  <p className="feature-title">
-                    {copy.heroPanelTitle}
-                  </p>
-                  <p className="body-copy text-white/68">
-                    {copy.heroPanelDescription}
-                  </p>
+              <div className="card-surface overflow-hidden rounded-[2rem] p-4 text-white">
+                <div className="grid gap-3">
+                  <div className="grid gap-3 sm:grid-cols-[1.12fr_0.88fr]">
+                    <div className="relative overflow-hidden rounded-[1.5rem] bg-[#111111]">
+                      <div className="relative aspect-[1.06/0.94]">
+                        <Image
+                          src={homeShowcaseVisuals.primary.src}
+                          alt={resolveLocalizedValue(homeShowcaseVisuals.primary.alt, language)}
+                          fill
+                          sizes="(min-width: 1024px) 22vw, 100vw"
+                          className="object-cover"
+                        />
+                        <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(10,10,10,0.08),rgba(10,10,10,0.58)_100%)]" />
+                      </div>
+                    </div>
+
+                    <div className="grid gap-3">
+                      {[homeShowcaseVisuals.secondary, homeShowcaseVisuals.tertiary]
+                        .filter(Boolean)
+                        .map((visual) => (
+                          <div key={visual!.src} className="relative overflow-hidden rounded-[1.25rem] bg-[#111111]">
+                            <div className="relative aspect-[1.08/0.72]">
+                              <Image
+                                src={visual!.src}
+                                alt={resolveLocalizedValue(visual!.alt, language)}
+                                fill
+                                sizes="(min-width: 1024px) 13vw, 50vw"
+                                className="object-cover"
+                              />
+                              <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(10,10,10,0.04),rgba(10,10,10,0.5)_100%)]" />
+                            </div>
+                          </div>
+                        ))}
+                    </div>
+                  </div>
+
+                  <div className="rounded-[1.45rem] border border-white/10 bg-white/6 p-4">
+                    <p className="text-[0.72rem] font-semibold uppercase tracking-[0.24em] text-white/58">
+                      {copy.heroPanelEyebrow}
+                    </p>
+                    <p className="feature-title mt-3">
+                      {copy.heroPanelTitle}
+                    </p>
+                    <p className="body-copy mt-3 text-white/68">
+                      {copy.heroPanelDescription}
+                    </p>
+                  </div>
                 </div>
               </div>
             </Reveal>
@@ -164,13 +177,15 @@ export function SelectedWorkSection({ items }: { items: CaseStudy[] }) {
 
 export function IntroSection() {
   const { language } = useSitePreferences();
+  const servicePreview =
+    caseStudies.find((entry) => entry.slug === "ville-gleder") ?? caseStudies[0];
 
   return (
-    <section className="py-5 sm:py-6">
+    <section className="py-4 sm:py-5">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="grid gap-4 lg:grid-cols-[1.05fr_0.95fr]">
+        <div className="grid gap-4 lg:grid-cols-[0.92fr_1.08fr]">
           <Reveal>
-            <div className="card-surface rounded-[1.7rem] px-5 py-5 sm:rounded-[1.9rem] sm:px-6 sm:py-6">
+            <div className="card-surface rounded-[1.8rem] px-5 py-5 sm:rounded-[1.95rem] sm:px-6 sm:py-6">
               <div className="max-w-4xl space-y-3">
                 <span className="eyebrow">{resolveLocalizedValue(homeIntroContent.eyebrow, language)}</span>
                 <h2 className="section-title text-[color:var(--foreground)]">
@@ -180,31 +195,98 @@ export function IntroSection() {
                   {resolveLocalizedValue(homeIntroContent.description, language)}
                 </p>
               </div>
+
+              <div className="mt-6 grid gap-3 sm:grid-cols-2">
+                <div className="rounded-[1.4rem] border border-[color:var(--line)] bg-[color:var(--surface)] p-4">
+                  <p className="text-[0.66rem] font-semibold uppercase tracking-[0.22em] text-[var(--muted)]">
+                    {language === "no" ? "Arbeidsform" : "Working model"}
+                  </p>
+                  <p className="mt-3 text-sm leading-6 text-[var(--muted-2)]">
+                    {language === "no"
+                      ? "Små team, raske beslutninger og tydelig regi gjennom hele produksjonen."
+                      : "Small teams, fast decisions and clear direction throughout production."}
+                  </p>
+                </div>
+                <div className="rounded-[1.4rem] border border-[color:var(--line)] bg-[color:var(--surface)] p-4">
+                  <p className="text-[0.66rem] font-semibold uppercase tracking-[0.22em] text-[var(--muted)]">
+                    {language === "no" ? "Leveranser" : "Deliverables"}
+                  </p>
+                  <p className="mt-3 text-sm leading-6 text-[var(--muted-2)]">
+                    {language === "no"
+                      ? "Showreel, kampanje, nettsidefilm, sosialt innhold og etterbruk fra samme opptak."
+                      : "Showreels, campaigns, website films, social content and cutdowns from the same production."}
+                  </p>
+                </div>
+              </div>
             </div>
           </Reveal>
 
           <Reveal delay={0.08}>
-            <div className="relative overflow-hidden rounded-[1.7rem] border border-[color:var(--line)] bg-[#111111] sm:rounded-[1.9rem]">
-              <div className="relative aspect-[1.18/0.92] min-h-[15rem]">
-                <Image
-                  src={siteVisuals.introDrone.src}
-                  alt={resolveLocalizedValue(siteVisuals.introDrone.alt, language)}
-                  fill
-                  sizes="(min-width: 1024px) 42vw, 100vw"
-                  className="object-cover"
-                />
-                <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(7,7,7,0.1),rgba(7,7,7,0.56)_72%,rgba(7,7,7,0.84))]" />
-                <div className="grain-overlay absolute inset-0 opacity-45" />
-                <div className="absolute inset-x-0 bottom-0 p-5 text-white sm:p-6">
-                  <p className="text-[0.68rem] font-semibold uppercase tracking-[0.24em] text-white/58">
-                    Aerial / Motion
-                  </p>
-                  <p className="mt-2 max-w-sm text-sm leading-6 text-white/74 sm:text-base">
-                    {language === "no"
-                      ? "Fra luftfoto til dokumentariske detaljer bygger vi filmer som gir arbeidet større rekkevidde."
-                      : "From aerials to documentary detail, we build films that give the work greater reach."}
-                  </p>
+            <div className="grid gap-3 sm:grid-cols-[1.16fr_0.84fr]">
+              <div className="relative overflow-hidden rounded-[1.8rem] border border-[color:var(--line)] bg-[#111111]">
+                <div className="relative aspect-[1.18/0.92] min-h-[16rem]">
+                  {servicePreview.video?.videoType === "direct" ? (
+                    <video
+                      className="h-full w-full object-cover"
+                      autoPlay
+                      muted
+                      loop
+                      playsInline
+                      preload="metadata"
+                      poster={servicePreview.video.poster}
+                    >
+                      <source src={servicePreview.video.src} type="video/mp4" />
+                    </video>
+                  ) : (
+                    <Image
+                      src={siteVisuals.introShowcase.src}
+                      alt={resolveLocalizedValue(siteVisuals.introShowcase.alt, language)}
+                      fill
+                      sizes="(min-width: 1024px) 36vw, 100vw"
+                      className="object-cover"
+                    />
+                  )}
+                  <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(7,7,7,0.08),rgba(7,7,7,0.52)_68%,rgba(7,7,7,0.84))]" />
+                  <div className="grain-overlay absolute inset-0 opacity-45" />
+                  <div className="absolute inset-x-0 bottom-0 p-5 text-white sm:p-6">
+                    <p className="text-[0.68rem] font-semibold uppercase tracking-[0.24em] text-white/58">
+                      {language === "no" ? "Utvalgt prosjekt" : "Selected project"}
+                    </p>
+                    <p className="mt-2 max-w-sm text-sm leading-6 text-white/74 sm:text-base">
+                      {resolveLocalizedValue(servicePreview.summary, language)}
+                    </p>
+                  </div>
                 </div>
+              </div>
+
+              <div className="grid gap-3">
+                {[homeShowcaseVisuals.secondary, homeShowcaseVisuals.tertiary]
+                  .filter(Boolean)
+                  .map((visual, index) => (
+                    <div key={visual!.src} className="relative overflow-hidden rounded-[1.45rem] border border-[color:var(--line)] bg-[#111111]">
+                      <div className="relative aspect-[1.08/0.74]">
+                        <Image
+                          src={visual!.src}
+                          alt={resolveLocalizedValue(visual!.alt, language)}
+                          fill
+                          sizes="(min-width: 1024px) 15vw, 50vw"
+                          className="object-cover"
+                        />
+                        <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(7,7,7,0.04),rgba(7,7,7,0.62)_100%)]" />
+                        <div className="absolute inset-x-0 bottom-0 p-4 text-white">
+                          <p className="text-[0.62rem] font-semibold uppercase tracking-[0.2em] text-white/54">
+                            {index === 0
+                              ? language === "no"
+                                ? "Kampanje"
+                                : "Campaign"
+                              : language === "no"
+                                ? "Narrativt"
+                                : "Narrative"}
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
               </div>
             </div>
           </Reveal>
@@ -219,22 +301,15 @@ export function ClientSlider() {
   const copy = uiCopy.home[language];
 
   return (
-    <section className="py-5 sm:py-6">
+    <section className="py-4 sm:py-5">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="flex flex-col gap-2.5 sm:flex-row sm:items-center sm:justify-between">
           <p className="eyebrow">{copy.clientsEyebrow}</p>
           <p className="body-copy text-[var(--muted)]">{copy.clientsDescription}</p>
         </div>
-        <div className="relative mt-4 overflow-hidden rounded-[1.8rem] border border-[color:var(--logo-strip-border)] bg-[color:var(--logo-strip-bg)] px-1.5 py-3.5 shadow-[0_22px_58px_rgba(17,17,17,0.06)] sm:mt-5 sm:px-2.5 sm:py-4.5">
-          <Image
-            src={siteVisuals.footerProjector.src}
-            alt={resolveLocalizedValue(siteVisuals.footerProjector.alt, language)}
-            fill
-            sizes="100vw"
-            className="object-cover opacity-[0.08]"
-          />
-          <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(255,255,255,0.84),rgba(255,255,255,0.92))]" />
-          <div className="grain-overlay absolute inset-0 opacity-20" />
+        <div className="relative mt-4 overflow-hidden rounded-[1.8rem] border border-[color:var(--logo-strip-border)] bg-[color:var(--logo-strip-bg)] px-1.5 py-3.5 shadow-[0_22px_58px_rgba(0,0,0,0.16)] sm:mt-5 sm:px-2.5 sm:py-4.5">
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_left,rgba(210,173,116,0.08),transparent_24%),linear-gradient(180deg,rgba(255,255,255,0.92),rgba(250,244,236,0.98))]" />
+          <div className="grain-overlay absolute inset-0 opacity-18" />
           <div className="relative">
             <ClientLogoMarquee logos={clientLogos} durationSeconds={34} />
           </div>
@@ -408,49 +483,47 @@ export function FeaturedCase() {
 export function AboutSection() {
   const { language } = useSitePreferences();
   const copy = uiCopy.home[language];
-  const studioPortraits = teamMembers.filter((member) => member.image).slice(0, 2);
 
   return (
     <section className="section-space">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="grid gap-5 sm:gap-6 lg:grid-cols-[1.02fr_0.98fr] lg:items-center">
-          <FloatingLayer className="relative overflow-hidden rounded-[1.8rem] border border-[color:var(--line)] bg-[color:var(--surface)] shadow-[0_32px_100px_rgba(18,18,18,0.08)] sm:rounded-[2rem]">
+          <FloatingLayer className="relative overflow-hidden rounded-[1.8rem] border border-[color:var(--line)] bg-[color:var(--surface)] shadow-[0_32px_100px_rgba(18,18,18,0.12)] sm:rounded-[2rem]">
             <div className="grid gap-px bg-[color:var(--line)] lg:grid-cols-[1.1fr_0.9fr]">
               <div className="relative min-h-[18rem] overflow-hidden bg-[#111111] sm:min-h-[21rem] lg:min-h-[27rem]">
                 <Image
-                  src={siteVisuals.aboutCrew.src}
-                  alt={resolveLocalizedValue(siteVisuals.aboutCrew.alt, language)}
+                  src={siteVisuals.narrativePoster.src}
+                  alt={resolveLocalizedValue(siteVisuals.narrativePoster.alt, language)}
                   fill
                   sizes="(min-width: 1024px) 34vw, 100vw"
                   className="object-cover"
                 />
-                <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(7,7,7,0.1),rgba(7,7,7,0.52)_68%,rgba(7,7,7,0.82)_100%)]" />
+                <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(7,7,7,0.08),rgba(7,7,7,0.52)_68%,rgba(7,7,7,0.84)_100%)]" />
                 <div className="grain-overlay absolute inset-0 opacity-40" />
                 <div className="absolute inset-x-0 bottom-0 p-5 text-white sm:p-6">
                   <p className="text-[0.66rem] font-semibold uppercase tracking-[0.22em] text-white/56">
-                    On set
+                    {language === "no" ? "Produksjonsselskap" : "Production company"}
                   </p>
                   <p className="mt-2 max-w-sm text-sm leading-6 text-white/74 sm:text-base">
                     {language === "no"
-                      ? "Seniorledet produksjon med kort vei fra planlegging til opptak og ferdig film."
-                      : "Senior-led production with a short path from planning to shoot and final delivery."}
+                      ? "Seniorledet produksjon med tett oppfølging, filmatisk presisjon og korte beslutningslinjer."
+                      : "Senior-led production with close follow-up, cinematic precision and a short path to decision-making."}
                   </p>
                 </div>
               </div>
 
               <div className="grid gap-px bg-[color:var(--line)] sm:grid-cols-2 lg:grid-cols-1">
-                {studioPortraits.map((member) => (
+                {[
+                  { name: teamMembers[0]?.name, role: teamMembers[0]?.role, image: siteVisuals.teamTommy },
+                  { name: teamMembers[1]?.name, role: teamMembers[1]?.role, image: siteVisuals.teamGard },
+                ].map((member) => (
                   <div
                     key={member.name}
                     className="group relative aspect-[0.9/1.05] overflow-hidden bg-[color:var(--surface-strong)]"
                   >
                     <Image
-                      src={member.image!}
-                      alt={
-                        member.imageAlt
-                          ? resolveLocalizedValue(member.imageAlt, language)
-                          : member.name
-                      }
+                      src={member.image.src}
+                      alt={resolveLocalizedValue(member.image.alt, language)}
                       fill
                       sizes="(min-width: 1024px) 18vw, 50vw"
                       className="object-cover transition duration-700 group-hover:scale-[1.02]"
@@ -458,7 +531,7 @@ export function AboutSection() {
                     <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(17,17,17,0.02),rgba(17,17,17,0.18)_48%,rgba(17,17,17,0.7)_100%)]" />
                     <div className="absolute inset-x-0 bottom-0 p-4 sm:p-5">
                       <p className="text-[0.64rem] font-semibold uppercase tracking-[0.2em] text-white/62">
-                        {resolveLocalizedValue(member.role, language)}
+                        {resolveLocalizedValue(member.role!, language)}
                       </p>
                       <p className="mt-2 text-lg font-semibold tracking-[-0.03em] text-white">
                         {member.name}
@@ -509,7 +582,7 @@ export function ContactSection() {
   return (
     <section className="section-space pt-0" id="kontakt">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="grid gap-3.5 sm:gap-4 lg:grid-cols-[0.86fr_1.14fr]">
+        <div className="grid gap-3.5 sm:gap-4 lg:grid-cols-[0.9fr_1.1fr]">
           <article className="card-surface rounded-[1.8rem] p-4.5 sm:rounded-[2rem] sm:p-6 lg:p-7">
             <span className="eyebrow">{copy.contactEyebrow}</span>
             <h2 className="section-title mt-3 text-[color:var(--foreground)] sm:mt-4">
@@ -548,17 +621,43 @@ export function ContactSection() {
             </div>
           </article>
 
-          <article className="card-surface rounded-[1.8rem] p-4.5 sm:rounded-[2rem] sm:p-6 lg:p-7">
-            <div className="max-w-2xl">
-              <p className="text-[0.72rem] font-semibold uppercase tracking-[0.24em] text-[var(--muted)]">
-                {copy.contactProjectBrief}
-              </p>
-              <h3 className="feature-title mt-3 text-[color:var(--foreground)]">
-                {copy.contactProjectTitle}
-              </h3>
-            </div>
-            <div className="mt-5 sm:mt-6">
-              <ContactForm />
+          <article className="card-surface overflow-hidden rounded-[1.8rem] sm:rounded-[2rem]">
+            <div className="grid gap-px bg-[color:var(--line)] lg:grid-cols-[0.96fr_1.04fr]">
+              <div className="relative min-h-[15rem] overflow-hidden bg-[#111111]">
+                <Image
+                  src={siteVisuals.eventCoverage.src}
+                  alt={resolveLocalizedValue(siteVisuals.eventCoverage.alt, language)}
+                  fill
+                  sizes="(min-width: 1024px) 24vw, 100vw"
+                  className="object-cover"
+                />
+                <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(7,7,7,0.08),rgba(7,7,7,0.56)_72%,rgba(7,7,7,0.88))]" />
+                <div className="grain-overlay absolute inset-0 opacity-40" />
+                <div className="absolute inset-x-0 bottom-0 p-5 text-white sm:p-6">
+                  <p className="text-[0.66rem] font-semibold uppercase tracking-[0.22em] text-white/54">
+                    {language === "no" ? "Klar for opptak" : "Ready to shoot"}
+                  </p>
+                  <p className="mt-2 max-w-sm text-sm leading-6 text-white/74">
+                    {language === "no"
+                      ? "Vi svarer raskt med forslag til format, crew og neste steg."
+                      : "We reply quickly with the right format, crew and next steps."}
+                  </p>
+                </div>
+              </div>
+
+              <div className="p-4.5 sm:p-6 lg:p-7">
+                <div className="max-w-2xl">
+                  <p className="text-[0.72rem] font-semibold uppercase tracking-[0.24em] text-[var(--muted)]">
+                    {copy.contactProjectBrief}
+                  </p>
+                  <h3 className="feature-title mt-3 text-[color:var(--foreground)]">
+                    {copy.contactProjectTitle}
+                  </h3>
+                </div>
+                <div className="mt-5 sm:mt-6">
+                  <ContactForm />
+                </div>
+              </div>
             </div>
           </article>
         </div>

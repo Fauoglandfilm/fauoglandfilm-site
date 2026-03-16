@@ -31,6 +31,7 @@ export default function ServicesPage() {
           label: { no: copy.no.servicesPrimaryCta, en: copy.en.servicesPrimaryCta },
           href: "/kontakt",
         }}
+        visualKey="services"
       />
       <ServicesSection
         services={serviceAreas}
