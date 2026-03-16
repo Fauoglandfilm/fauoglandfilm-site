@@ -4,6 +4,7 @@ import Image from "next/image";
 
 import { useSitePreferences } from "@/components/providers/site-preferences";
 import { ButtonLink } from "@/components/ui/button-link";
+import { ArrowUpRightIcon } from "@/components/ui/icons";
 import type { ServiceArea } from "@/data/site-content";
 import { serviceAreaVisuals } from "@/data/visual-assets";
 import { resolveLocalizedValue } from "@/lib/i18n";
@@ -57,9 +58,22 @@ export function ServiceCard({ service }: ServiceCardProps) {
             </div>
 
             <div className="mt-5 border-t border-[color:var(--line)] pt-5">
-              <ButtonLink href={service.href} variant="ghost" fullWidth className="sm:w-auto">
-                {resolveLocalizedValue(service.ctaLabel, language)}
-              </ButtonLink>
+              <div className="flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center sm:justify-between">
+                {service.exampleHref && service.exampleLabel ? (
+                  <ButtonLink
+                    href={service.exampleHref}
+                    variant="ghost"
+                    size="compact"
+                    className="w-full justify-start sm:w-auto"
+                  >
+                    {resolveLocalizedValue(service.exampleLabel, language)}
+                    <ArrowUpRightIcon className="h-4 w-4" />
+                  </ButtonLink>
+                ) : null}
+                <ButtonLink href={service.href} variant="ghost" fullWidth className="sm:w-auto">
+                  {resolveLocalizedValue(service.ctaLabel, language)}
+                </ButtonLink>
+              </div>
             </div>
           </div>
         </div>

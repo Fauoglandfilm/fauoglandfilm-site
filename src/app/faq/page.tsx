@@ -11,7 +11,7 @@ import { uiCopy } from "@/data/ui-copy";
 import { buildMetadata } from "@/lib/seo";
 
 export const metadata = buildMetadata({
-  title: "FAQ | Fau&Land Film",
+  title: "Vanlige spørsmål | Fau&Land Film",
   description:
     "Vanlige spørsmål om pris, tidslinje, leveranse og hvordan Fau&Land Film jobber med reklamefilm, bedriftsfilm, SoMe-innhold og eventfilm.",
   path: "/faq",

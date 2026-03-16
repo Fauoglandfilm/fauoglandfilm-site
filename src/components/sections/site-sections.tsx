@@ -362,8 +362,8 @@ export function ContactLeadSection({
             <div className="grid gap-px bg-[color:var(--line)] lg:grid-cols-[1.02fr_0.98fr]">
               <div className="relative min-h-[16rem] overflow-hidden bg-[#111111]">
                 <Image
-                  src={siteVisuals.eventCoverage.src}
-                  alt={resolveLocalizedValue(siteVisuals.eventCoverage.alt, language)}
+                  src={siteVisuals.cameraDarkroom.src}
+                  alt={resolveLocalizedValue(siteVisuals.cameraDarkroom.alt, language)}
                   fill
                   sizes="(min-width: 1280px) 28vw, 100vw"
                   className="object-cover"
@@ -372,12 +372,12 @@ export function ContactLeadSection({
                 <div className="grain-overlay absolute inset-0 opacity-45" />
                 <div className="absolute inset-x-0 bottom-0 p-5 text-white sm:p-6">
                   <p className="text-[0.68rem] font-semibold uppercase tracking-[0.22em] text-white/52">
-                    {language === "no" ? "Prosjektbrief" : "Project brief"}
+                    {language === "no" ? "Neste steg" : "Next step"}
                   </p>
                   <p className="mt-2 max-w-md text-sm leading-6 text-white/72 sm:text-base">
                     {language === "no"
-                      ? "Send en kort brief, så svarer vi med format, nivå og neste steg."
-                      : "Send a short brief and we will respond with format, scope and next steps."}
+                      ? "Send mål, kanal, tidslinje og gjerne budsjett, så svarer vi med anbefalt oppsett og neste steg."
+                      : "Send the goal, channel, timeline and ideally a budget, and we will reply with the right setup and next steps."}
                   </p>
                 </div>
               </div>
@@ -486,6 +486,19 @@ export function FaqList({
             </p>
           </details>
         ))}
+
+        <div className="glass-panel mt-5 rounded-[1.55rem] px-5 py-5 text-center shadow-[0_24px_80px_rgba(0,0,0,0.16)]">
+          <p className="text-sm leading-6 text-[var(--muted-2)] sm:text-base">
+            {language === "no"
+              ? "Fant dere ikke helt det dere lurte på? Send en kort brief, så svarer vi raskt på format, prisnivå og neste steg."
+              : "Did not find exactly what you were looking for? Send a short brief and we will quickly answer on format, budget level and next steps."}
+          </p>
+          <div className="mt-4 flex justify-center">
+            <ButtonLink href="/kontakt" variant="ghost" className="w-full sm:w-auto">
+              {language === "no" ? "Send en kort brief" : "Send a short brief"}
+            </ButtonLink>
+          </div>
+        </div>
       </div>
     </SectionShell>
   );

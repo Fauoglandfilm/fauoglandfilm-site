@@ -32,7 +32,7 @@ export function Footer() {
           <div className="glass-sheen absolute inset-0 opacity-55" />
           <div className="grid gap-8 lg:grid-cols-[1.15fr_0.85fr] lg:gap-10">
             <div className="space-y-4 sm:space-y-5">
-              <div className="flex items-center gap-3">
+              <Link href="/" className="flex w-fit items-center gap-3 transition hover:opacity-100">
                 <div className="flex h-12 w-12 items-center justify-center rounded-full border border-white/12 bg-white/[0.1] p-3 backdrop-blur-xl">
                   <BrandLogo variant="mark" className="opacity-100" />
                 </div>
@@ -44,7 +44,7 @@ export function Footer() {
                     {copy.productionCompany}
                   </p>
                 </div>
-              </div>
+              </Link>
 
               <div className="max-w-2xl space-y-2.5 sm:space-y-3">
                 <p className="feature-title text-white">
@@ -57,7 +57,7 @@ export function Footer() {
 
               <div className="flex flex-wrap gap-3">
                 <ButtonLink href={siteConfig.bookingHref} variant="secondary" className="w-full sm:w-auto">
-                  {resolveLocalizedValue(siteConfig.bookingLabel, language)}
+                  {language === "no" ? "Send en kort brief" : "Send a short brief"}
                 </ButtonLink>
               </div>
 
@@ -74,7 +74,7 @@ export function Footer() {
                 <p className="text-[0.68rem] font-semibold uppercase tracking-[0.24em] text-white/52">{copy.contact}</p>
                 <div className="mt-3 space-y-2 text-sm text-white/72 sm:text-base">
                   <p>{siteConfig.locationLabel}</p>
-                  <p>Org id: {siteConfig.orgId}</p>
+                  <p>Org.nr. {siteConfig.orgId}</p>
                   <a className="block transition hover:text-white" href={`mailto:${siteConfig.email}`}>
                     {siteConfig.email}
                   </a>
@@ -87,15 +87,12 @@ export function Footer() {
 
               <div className="rounded-[1.45rem] border border-white/10 bg-white/[0.04] p-4 backdrop-blur-xl sm:p-5">
                 <p className="text-[0.68rem] font-semibold uppercase tracking-[0.24em] text-white/52">{copy.navigation}</p>
-                <div className="mt-3 flex flex-col items-start gap-2 text-sm text-white/72 sm:text-base">
+                <div className="mt-3 flex flex-col items-start gap-2 text-sm text-white/82 sm:text-base">
                   {navItems.map((item) => (
                     <Link key={item.href} href={item.href} className="transition hover:text-white">
                       {resolveLocalizedValue(item.label, language)}
                     </Link>
                   ))}
-                  <Link href="/faq" className="transition hover:text-white">
-                    FAQ
-                  </Link>
                 </div>
               </div>
             </div>
