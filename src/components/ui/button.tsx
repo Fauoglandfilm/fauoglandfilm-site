@@ -1,33 +1,34 @@
-import Link from "next/link";
-import type { ComponentPropsWithoutRef, ReactNode } from "react";
+import type { ButtonHTMLAttributes, ReactNode } from "react";
 
 import { buttonClassName, type ButtonSize, type ButtonVariant } from "@/components/ui/button-styles";
 
-type ButtonLinkProps = ComponentPropsWithoutRef<typeof Link> & {
+type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & {
   variant?: ButtonVariant;
   size?: ButtonSize;
   fullWidth?: boolean;
   icon?: ReactNode;
 };
 
-export function ButtonLink({
+export function Button({
   children,
   className,
   variant = "primary",
   size,
   fullWidth = false,
   icon,
+  type = "button",
   ...props
-}: ButtonLinkProps) {
+}: ButtonProps) {
   const content = variant === "icon" ? children : children ? <span>{children}</span> : null;
 
   return (
-    <Link
+    <button
+      type={type}
       className={buttonClassName({ variant, size, fullWidth, className })}
       {...props}
     >
       {content}
       {icon}
-    </Link>
+    </button>
   );
 }

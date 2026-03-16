@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 
 import { useSitePreferences } from "@/components/providers/site-preferences";
+import { Button } from "@/components/ui/button";
 import type { WorkSample } from "@/data/site-content";
 import { uiCopy } from "@/data/ui-copy";
 import { resolveLocalizedValue } from "@/lib/i18n";
@@ -65,7 +66,7 @@ export function WorkGrid({ items }: WorkGridProps) {
           <button
             key={item.slug}
             type="button"
-            className="group text-left"
+            className="card-trigger group"
             onClick={() => setActiveSlug(item.slug)}
             onMouseEnter={() => playPreview(item.slug)}
             onMouseLeave={() => pausePreview(item.slug)}
@@ -133,14 +134,14 @@ export function WorkGrid({ items }: WorkGridProps) {
                   {resolveLocalizedValue(activeItem.title, language)}
                 </h3>
               </div>
-              <button
-                type="button"
-                className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-white/12 bg-white/6 text-white"
+              <Button
+                variant="icon"
+                size="icon"
                 onClick={() => setActiveSlug(null)}
                 aria-label={copy.workCloseVideo}
               >
                 <CloseIcon className="h-4 w-4" />
-              </button>
+              </Button>
             </div>
 
             <div className="bg-black">

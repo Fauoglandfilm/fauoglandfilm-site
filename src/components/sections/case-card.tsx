@@ -1,9 +1,9 @@
 "use client";
 
 import Image from "next/image";
-import Link from "next/link";
 
 import { useSitePreferences } from "@/components/providers/site-preferences";
+import { ButtonLink } from "@/components/ui/button-link";
 import type { CaseStudy } from "@/data/site-content";
 import { uiCopy } from "@/data/ui-copy";
 import { resolveLocalizedValue } from "@/lib/i18n";
@@ -115,13 +115,14 @@ export function CaseCard({
         ) : null}
 
         <div className="mt-auto pt-1">
-          <Link
+          <ButtonLink
             href={`/case/${caseStudy.slug}`}
-            className="inline-flex min-h-11 items-center gap-2 text-sm font-semibold text-[color:var(--foreground)] transition hover:text-[var(--accent-2)]"
+            variant="ghost"
+            size="compact"
           >
             {copy.viewCase}
             <ArrowUpRightIcon className="h-4 w-4" />
-          </Link>
+          </ButtonLink>
         </div>
       </div>
     </article>

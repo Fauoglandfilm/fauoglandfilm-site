@@ -6,6 +6,11 @@ import { useEffect, useState, type ReactNode } from "react";
 
 import { useSitePreferences } from "@/components/providers/site-preferences";
 import { BrandLogo } from "@/components/ui/brand-logo";
+import { Button } from "@/components/ui/button";
+import {
+  segmentedControlOptionClassName,
+  segmentedControlShellClassName,
+} from "@/components/ui/button-styles";
 import { CloseIcon, MenuIcon, MoonIcon, SunIcon } from "@/components/ui/icons";
 import { navItems } from "@/data/site-content";
 import { uiCopy } from "@/data/ui-copy";
@@ -23,7 +28,6 @@ type SegmentedToggleProps<T extends string> = {
   value: T;
   options: SegmentedToggleOption<T>[];
   onChange: (value: T) => void;
-  overlayMode: boolean;
   compact?: boolean;
   iconOnly?: boolean;
 };
@@ -33,22 +37,11 @@ function SegmentedToggle<T extends string>({
   value,
   options,
   onChange,
-  overlayMode,
   compact = false,
   iconOnly = false,
 }: SegmentedToggleProps<T>) {
   return (
-    <div
-      className={cn(
-        "inline-flex items-center rounded-full border backdrop-blur-xl",
-        overlayMode
-          ? "border-white/10 bg-white/[0.06]"
-          : "border-black/[0.06] bg-black/[0.03]",
-        compact ? "p-0.5" : "p-0.5",
-      )}
-      role="group"
-      aria-label={ariaLabel}
-    >
+    <div className={segmentedControlShellClassName({ className: compact ? "text-[0.76rem]" : undefined })} role="group" aria-label={ariaLabel}>
       {options.map((option) => {
         const active = option.value === value;
 
@@ -56,18 +49,7 @@ function SegmentedToggle<T extends string>({
           <button
             key={option.value}
             type="button"
-            className={cn(
-              "inline-flex items-center justify-center rounded-full transition",
-              compact ? "min-h-7 min-w-7 px-2" : "min-h-8 min-w-8 px-2.5",
-              iconOnly ? "gap-0" : "gap-1",
-              active
-                ? overlayMode
-                  ? "bg-white/14 text-white"
-                  : "bg-black/[0.08] text-[color:var(--foreground)]"
-                : overlayMode
-                  ? "text-white/58 hover:text-white/84"
-                  : "text-[var(--muted)] hover:text-[color:var(--foreground)]",
-            )}
+            className={segmentedControlOptionClassName({ active, compact, iconOnly })}
             onClick={() => onChange(option.value)}
             aria-pressed={active}
             aria-label={option.label ?? option.value}
@@ -191,7 +173,6 @@ export function Header() {
                 { label: "EN", value: "en" },
               ]}
               onChange={setLanguage}
-              overlayMode={overlayMode}
             />
             <SegmentedToggle
               ariaLabel={copy.themeLabel}
@@ -201,25 +182,20 @@ export function Header() {
                 { value: "dark", icon: <MoonIcon className="h-3.5 w-3.5" />, label: "Dark" },
               ]}
               onChange={setTheme}
-              overlayMode={overlayMode}
               iconOnly
             />
           </div>
 
-          <button
-            type="button"
-            className={cn(
-              "ml-auto inline-flex h-9 w-9 items-center justify-center rounded-full transition lg:hidden",
-              overlayMode
-                ? "border border-white/10 bg-white/[0.08] text-white"
-                : "border border-black/[0.06] bg-black/[0.03] text-[color:var(--foreground)]",
-            )}
+          <Button
+            variant="icon"
+            size="icon"
+            className="ml-auto lg:hidden"
             aria-label={open ? copy.menuClose : copy.menuOpen}
             aria-expanded={open}
             onClick={() => setOpen((value) => !value)}
           >
             {open ? <CloseIcon className="h-4 w-4" /> : <MenuIcon className="h-4 w-4" />}
-          </button>
+          </Button>
         </div>
       </div>
 
@@ -230,26 +206,24 @@ export function Header() {
               <SegmentedToggle
                 ariaLabel={copy.languageLabel}
                 value={language}
+              options={[
+                { label: "NO", value: "no" },
+                { label: "EN", value: "en" },
+              ]}
+              onChange={setLanguage}
+              compact
+            />
+            <SegmentedToggle
+              ariaLabel={copy.themeLabel}
+              value={theme}
                 options={[
-                  { label: "NO", value: "no" },
-                  { label: "EN", value: "en" },
-                ]}
-                onChange={setLanguage}
-                overlayMode={false}
-                compact
-              />
-              <SegmentedToggle
-                ariaLabel={copy.themeLabel}
-                value={theme}
-                options={[
-                  { value: "light", icon: <SunIcon className="h-3.5 w-3.5" />, label: "Light" },
-                  { value: "dark", icon: <MoonIcon className="h-3.5 w-3.5" />, label: "Dark" },
-                ]}
-                onChange={setTheme}
-                overlayMode={false}
-                compact
-                iconOnly
-              />
+                { value: "light", icon: <SunIcon className="h-3.5 w-3.5" />, label: "Light" },
+                { value: "dark", icon: <MoonIcon className="h-3.5 w-3.5" />, label: "Dark" },
+              ]}
+              onChange={setTheme}
+              compact
+              iconOnly
+            />
             </div>
 
             <nav

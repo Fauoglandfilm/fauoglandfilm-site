@@ -3,6 +3,7 @@
 import { useState } from "react";
 
 import { useSitePreferences } from "@/components/providers/site-preferences";
+import { Button } from "@/components/ui/button";
 import { siteConfig } from "@/data/site-content";
 import { uiCopy } from "@/data/ui-copy";
 import { resolveLocalizedValue } from "@/lib/i18n";
@@ -131,9 +132,9 @@ export function ContactForm() {
         <p className="text-sm leading-6 text-[var(--muted)]">
           {resolveLocalizedValue(siteConfig.responseTime, language)}
         </p>
-        <button type="submit" className="button-base button-primary w-full sm:w-auto">
+        <Button type="submit" fullWidth className="sm:w-auto">
           {copy.submit}
-        </button>
+        </Button>
       </div>
     </form>
   );
