@@ -2,8 +2,8 @@
 
 import {
   CtaBanner,
+  ContactLeadSection,
   FeaturedCasesSection,
-  PackagesSection,
   PageHero,
   RelatedLinks,
 } from "@/components/sections/site-sections";
@@ -11,7 +11,6 @@ import { useSitePreferences } from "@/components/providers/site-preferences";
 import {
   caseStudies,
   landingTemplateBullets,
-  offerPackages,
 } from "@/data/site-content";
 import { uiCopy } from "@/data/ui-copy";
 import { resolveLocalizedValue } from "@/lib/i18n";
@@ -51,7 +50,7 @@ export function LandingTemplateContent() {
       </section>
 
       <FeaturedCasesSection cases={featuredCases} showVerificationNote={false} />
-      <PackagesSection packages={offerPackages} />
+      <ContactLeadSection compact />
 
       <section className="section-space pt-0">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">

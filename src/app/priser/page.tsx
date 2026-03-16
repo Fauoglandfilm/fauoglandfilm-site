@@ -2,13 +2,11 @@ import {
   ContactLeadSection,
   CtaBanner,
   FaqList,
-  PackagesSection,
   PageHero,
   PriceGuideSection,
 } from "@/components/sections/site-sections";
 import {
   contactFaq,
-  offerPackages,
   priceGuides,
   pricingFaq,
 } from "@/data/site-content";
@@ -16,9 +14,9 @@ import { uiCopy } from "@/data/ui-copy";
 import { buildMetadata } from "@/lib/seo";
 
 export const metadata = buildMetadata({
-  title: "Priser | Pakker for videoproduksjon og innhold i Oslo",
+  title: "Priser | Veiledende prisnivåer for videoproduksjon i Oslo",
   description:
-    "Se Fau&Land Films pakkestruktur og veiledende prisnivåer for reklamefilm, bedriftsfilm, SoMe-innhold, eventfilm og løpende innholdsavtaler.",
+    "Se Fau&Land Films veiledende prisnivåer for reklamefilm, bedriftsfilm, SoMe-innhold, eventfilm og vanlige spørsmål om omfang og levering.",
   path: "/priser",
 });
 
@@ -36,7 +34,6 @@ export default function PricingPage() {
           href: "/kontakt",
         }}
       />
-      <PackagesSection packages={offerPackages} />
       <PriceGuideSection items={priceGuides} />
       <FaqList
         title={{ no: copy.no.pricingFaqTitle, en: copy.en.pricingFaqTitle }}

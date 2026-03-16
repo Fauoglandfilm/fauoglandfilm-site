@@ -13,7 +13,7 @@ import { buildMetadata } from "@/lib/seo";
 export const metadata = buildMetadata({
   title: "Om oss | Fau&Land Film i Oslo",
   description:
-    "Møt Tommy og Gard i Fau&Land Film. Et seniorledet produksjonsteam i Oslo med tydelig budskap, høy produksjonsverdi og fleksibel gjennomføring.",
+    "Møt Tommy og Gard i Fau&Land Film. Et seniorledet produksjonsselskap i Oslo for reklamefilm og visuelt innhold til bedrifter og organisasjoner.",
   path: "/om-oss",
 });
 

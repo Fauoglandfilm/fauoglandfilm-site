@@ -9,10 +9,11 @@ import {
   caseStudies,
   clientLogos,
   homeHeroContent,
+  homeIntroContent,
   servicePillars,
   siteConfig,
+  type CaseStudy,
   type ServicePillar,
-  type WorkSample,
   videoLibrary,
 } from "@/data/site-content";
 import { uiCopy } from "@/data/ui-copy";
@@ -22,9 +23,9 @@ import { FloatingLayer, Reveal } from "../motion/reveal";
 import { ButtonLink } from "../ui/button-link";
 import { ArrowUpRightIcon, MailIcon, PhoneIcon, PinIcon } from "../ui/icons";
 import { SocialLinksRow } from "../ui/social-links";
+import { CaseCard } from "./case-card";
 import { ClientLogoMarquee } from "./client-logo-marquee";
 import { ContactForm } from "./contact-form";
-import { WorkGrid } from "./home-work-grid";
 
 export function HeroSection() {
   const heroVideo = videoLibrary.hero;
@@ -99,7 +100,7 @@ export function HeroSection() {
   );
 }
 
-export function SelectedWorkSection({ items }: { items: WorkSample[] }) {
+export function SelectedWorkSection({ items }: { items: CaseStudy[] }) {
   const { language } = useSitePreferences();
   const copy = uiCopy.home[language];
 
@@ -119,9 +120,41 @@ export function SelectedWorkSection({ items }: { items: WorkSample[] }) {
           <div className="body-copy text-[var(--muted)] lg:max-w-xs lg:text-right">{copy.selectedWorkHint}</div>
         </div>
 
-        <div className="mt-6 sm:mt-8">
-          <WorkGrid items={items} />
+        <div className="mt-6 grid gap-4 sm:mt-8">
+          {items.map((caseStudy, index) => (
+            <Reveal key={caseStudy.slug} delay={0.05 * index}>
+              <CaseCard
+                caseStudy={caseStudy}
+                layout={index === 0 ? "feature" : "stack"}
+                showVerificationNote={false}
+              />
+            </Reveal>
+          ))}
         </div>
+      </div>
+    </section>
+  );
+}
+
+export function IntroSection() {
+  const { language } = useSitePreferences();
+
+  return (
+    <section className="py-5 sm:py-6">
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <Reveal>
+          <div className="rounded-[1.7rem] border border-[color:var(--line)] bg-[color:var(--surface)] px-5 py-5 shadow-[0_18px_44px_rgba(18,18,18,0.05)] sm:rounded-[1.9rem] sm:px-6 sm:py-6">
+            <div className="max-w-4xl space-y-3">
+              <span className="eyebrow">{resolveLocalizedValue(homeIntroContent.eyebrow, language)}</span>
+              <h2 className="section-title text-[color:var(--foreground)]">
+                {resolveLocalizedValue(homeIntroContent.title, language)}
+              </h2>
+              <p className="body-copy max-w-3xl text-[var(--muted-2)] sm:text-base sm:leading-7">
+                {resolveLocalizedValue(homeIntroContent.description, language)}
+              </p>
+            </div>
+          </div>
+        </Reveal>
       </div>
     </section>
   );

@@ -60,6 +60,7 @@ export function Footer() {
               <p className="eyebrow">{copy.contact}</p>
               <div className="space-y-2 text-sm text-[var(--muted-2)] sm:text-base">
                 <p>{siteConfig.locationLabel}</p>
+                <p>Org id: {siteConfig.orgId}</p>
                 <a className="block transition hover:text-[color:var(--foreground)]" href={`mailto:${siteConfig.email}`}>
                   {siteConfig.email}
                 </a>
@@ -78,6 +79,9 @@ export function Footer() {
                     {resolveLocalizedValue(item.label, language)}
                   </Link>
                 ))}
+                <Link href="/faq" className="transition hover:text-[color:var(--foreground)]">
+                  FAQ
+                </Link>
               </div>
             </div>
           </div>

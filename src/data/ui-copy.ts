@@ -20,9 +20,9 @@ export const uiCopy = {
   footer: {
     no: {
       productionCompany: "Reklamefilm og innhold",
-      title: "Film som gjør det lettere å bli valgt.",
+      title: "Historier som kjennes. Resultater som merkes.",
       description:
-        "Fau&Land Film lager reklamefilm og visuelt innhold for bedrifter og organisasjoner som vil skape mer tillit, mer synlighet og flere henvendelser.",
+        "Reklamefilm og visuelt innhold for bedrifter og organisasjoner som trenger tydeligere budskap, sterkere tillit og flere henvendelser.",
       contact: "Kontakt",
       navigation: "Navigasjon",
       social: "Følg Fau&Land Film",
@@ -30,9 +30,9 @@ export const uiCopy = {
     },
     en: {
       productionCompany: "Commercial film and content",
-      title: "Film that makes your brand easier to choose.",
+      title: "Stories you feel. Results you notice.",
       description:
-        "Fau&Land Film creates commercial films and visual content for companies and organisations that want more trust, more visibility and more inquiries.",
+        "Commercial film and visual content for companies and organisations that need a clearer message, stronger trust and more inquiries.",
       contact: "Contact",
       navigation: "Navigation",
       social: "Follow Fau&Land Film",
@@ -41,24 +41,21 @@ export const uiCopy = {
   },
   home: {
     no: {
-      heroBadge: "OSLO / REKLAMEFILM / BRAND STORYTELLING / SENIOR LED PRODUKSJON",
+      heroBadge: "OSLO / REKLAMEFILM / BRAND STORYTELLING",
       heroSecondaryCta: "Se arbeidet vårt",
       heroPanelEyebrow: "Hvorfor Fau&Land",
-      heroPanelTitle: "To seniorer følger prosjektet fra første møte til ferdig leveranse.",
+      heroPanelTitle: "Historier som kjennes. Resultater som merkes.",
       heroPanelDescription:
-        "Det gir kortere vei til beslutninger, bedre kvalitetssikring og et tydeligere sluttprodukt.",
-      selectedWorkEyebrow: "Arbeid",
-      selectedWorkTitle: "Et utvalg filmer vi har laget.",
+        "Reklamefilm, bedriftsfilm, innhold for sosiale medier og eventfilm med kort vei fra idé til ferdig leveranse.",
+      selectedWorkEyebrow: "Utvalgte case",
+      selectedWorkTitle: "Utvalgte produksjoner",
       selectedWorkDescription:
-        "Reklamefilm, profilfilm og innhold produsert for nettside, annonser og sosiale medier.",
-      selectedWorkHint: "Åpne et prosjekt for å se mer.",
-      workWatch: "Se film",
-      workCloseVideo: "Lukk video",
-      workSelectedWork: "Utvalgt arbeid",
+        "Ekte case fra organisasjoner og virksomheter vi har jobbet tett med.",
+      selectedWorkHint: "Se behov, leveranse og effekt i hvert case.",
       clientsEyebrow: "Noen vi har jobbet med",
       clientsDescription: "Et utvalg kunder og samarbeidspartnere.",
       servicesEyebrow: "Tjenester",
-      servicesTitle: "Tre måter vi hjelper dere med film.",
+      servicesTitle: "Fire tjenester som gjør video enklere å kjøpe.",
       featuredCaseEyebrow: "Fremhevet case",
       featuredCaseWhy: "Hva vi leverte",
       featuredCaseGoal: "Behov",
@@ -79,24 +76,21 @@ export const uiCopy = {
       contactSocialDescription: "Se mer arbeid og oppdateringer.",
     },
     en: {
-      heroBadge: "OSLO / COMMERCIAL FILM / BRAND STORYTELLING / SENIOR LED PRODUCTION",
+      heroBadge: "OSLO / COMMERCIAL FILM / BRAND STORYTELLING",
       heroSecondaryCta: "View our work",
       heroPanelEyebrow: "Why Fau&Land",
-      heroPanelTitle: "Two senior creatives stay close to the project from first conversation to final delivery.",
+      heroPanelTitle: "Stories you feel. Results you notice.",
       heroPanelDescription:
-        "That means faster decisions, tighter quality control and a stronger final result.",
-      selectedWorkEyebrow: "Work",
-      selectedWorkTitle: "A selection of films we have made.",
+        "Commercials, company films, social content and event films with a short path from idea to delivery.",
+      selectedWorkEyebrow: "Selected work",
+      selectedWorkTitle: "Selected productions",
       selectedWorkDescription:
-        "Commercial films, brand films and content produced for websites, campaigns and social media.",
-      selectedWorkHint: "Open a project to see more.",
-      workWatch: "Watch film",
-      workCloseVideo: "Close video",
-      workSelectedWork: "Selected work",
+        "Real projects from organisations and teams we have worked closely with.",
+      selectedWorkHint: "See the need, the delivery and the outcome in each case.",
       clientsEyebrow: "Some of the teams we have worked with",
       clientsDescription: "A selection of clients and collaborators.",
       servicesEyebrow: "Services",
-      servicesTitle: "Three ways we help with film.",
+      servicesTitle: "Four services that make video easier to buy.",
       featuredCaseEyebrow: "Featured case",
       featuredCaseWhy: "What we delivered",
       featuredCaseGoal: "Need",
@@ -122,7 +116,7 @@ export const uiCopy = {
       servicesEyebrow: "Tjenester",
       servicesTitle: "Video for synlighet, tillit og flere henvendelser",
       servicesDescription:
-        "Reklamefilm, profilfilm, innhold til sosiale medier og eventproduksjon gjort enklere å forstå og enklere å bestille.",
+        "Reklamefilm, bedriftsfilm, innhold til sosiale medier og eventproduksjon gjort enklere å forstå og enklere å bestille.",
       packagesEyebrow: "Samarbeid",
       packagesTitle: "Faste opplegg for dere som trenger jevnlig innhold",
       packagesDescription:
@@ -132,9 +126,9 @@ export const uiCopy = {
       priceGuideDescription:
         "Bruk prisrammene som et startpunkt. Endelig pris avhenger av format, opptak og antall leveranser.",
       casesEyebrow: "Case",
-      casesTitle: "Case som viser behov, leveranse og effekt",
+      casesTitle: "Ekte case med tydelig behov og tydelig leveranse",
       casesDescription:
-        "Et utvalg prosjekter som viser hva kunden trengte, hva vi leverte og hvilken effekt innholdet fikk.",
+        "Et utvalg produksjoner hentet fra Fau&Land Films faktiske arbeid for kunder og organisasjoner.",
       casesAction: "Se alle case",
       processEyebrow: "Prosess",
       processTitle: "Slik jobber vi",
@@ -159,10 +153,10 @@ export const uiCopy = {
         "Fortell oss kort hva dere trenger, så følger vi opp innen 24 timer.",
       contactHeading: "Kontakt Fau&Land Film",
       contactLead:
-        "Oslo-basert produksjonspartner for reklamefilm, profilfilm og innholdsproduksjon.",
+        "Oslo-basert produksjonspartner for reklamefilm, bedriftsfilm, SoMe-innhold og eventfilm.",
       contactBriefTitle: "Send en kort beskrivelse",
       contactBriefDescription:
-        "Vi kommer tilbake med anbefalt format, prisnivå og neste steg.",
+        "Fortell oss kort hva dere trenger, så følger vi opp innen 24 timer med anbefalt format og neste steg.",
       contactMail: "E-post",
       contactPhone: "Telefon",
       contactBase: "Base",
@@ -179,7 +173,7 @@ export const uiCopy = {
       servicesEyebrow: "Services",
       servicesTitle: "Video for visibility, trust and more inquiries",
       servicesDescription:
-        "Commercial film, brand film, social content and event production made easier to understand and easier to buy.",
+        "Commercial film, company film, social content and event production made easier to understand and easier to buy.",
       packagesEyebrow: "Ongoing support",
       packagesTitle: "Retainers for teams that need content on a regular basis",
       packagesDescription:
@@ -189,9 +183,9 @@ export const uiCopy = {
       priceGuideDescription:
         "Use these ranges as a starting point. Final pricing depends on format, shoot scope and number of deliverables.",
       casesEyebrow: "Work",
-      casesTitle: "Case studies that show need, delivery and impact",
+      casesTitle: "Real case studies with clear need and delivery",
       casesDescription:
-        "A selection of projects that shows what the client needed, what we delivered and what the work achieved.",
+        "A selection of productions taken from Fau&Land Film's actual client work.",
       casesAction: "View all work",
       processEyebrow: "Process",
       processTitle: "How we work",
@@ -216,10 +210,10 @@ export const uiCopy = {
         "Tell us briefly what you need and we will follow up within 24 hours.",
       contactHeading: "Contact Fau&Land Film",
       contactLead:
-        "Oslo-based production partner for commercial film, brand film and content production.",
+        "Oslo-based production partner for commercials, company films, social content and event films.",
       contactBriefTitle: "Send a short description",
       contactBriefDescription:
-        "We will come back with a recommended format, price level and next step.",
+        "Tell us briefly what you need and we will follow up within 24 hours with a recommended format and next step.",
       contactMail: "Email",
       contactPhone: "Phone",
       contactBase: "Base",
@@ -236,20 +230,20 @@ export const uiCopy = {
   pages: {
     no: {
       servicesHeroEyebrow: "Tjenester",
-      servicesHeroTitle: "Video som gjør det lettere å bli valgt",
+      servicesHeroTitle: "Film som gir flere kunder, økt salg og sterkere relasjoner",
       servicesHeroDescription:
-        "Vi lager reklamefilm, profilfilm, innhold til sosiale medier og eventproduksjon for bedrifter og organisasjoner.",
+        "Reklamefilm, bedriftsfilm, innhold for sosiale medier og eventproduksjon for bedrifter og organisasjoner.",
       servicesPrimaryCta: "Book et uforpliktende møte",
-      servicesSectionTitle: "Det vi kan hjelpe dere med",
+      servicesSectionTitle: "Tjenester bygget rundt tydelig effekt",
       servicesSectionDescription:
-        "Hver tjeneste er bygget rundt et tydelig mål: mer synlighet, mer tillit eller flere henvendelser.",
+        "Alt vi lager starter med målet deres: flere kunder, sterkere relasjoner eller tydeligere kommunikasjon.",
       servicesCtaTitle: "Usikre på hva dere trenger?",
       servicesCtaDescription:
         "Vi hjelper dere å velge riktig format, omfang og budsjett for det dere skal få ut av videoen.",
       caseHeroEyebrow: "Case",
-      caseHeroTitle: "Arbeid som viser hva videoen skulle gjøre",
+      caseHeroTitle: "Case som viser behov, leveranse og effekt",
       caseHeroDescription:
-        "Et utvalg case med kort behov, leveranse og effekt.",
+        "Et mindre utvalg ekte produksjoner hentet fra Fau&Land Films faktiske arbeid.",
       casePrimaryCta: "Book et uforpliktende møte",
       caseCtaTitle: "Vil dere lage noe lignende?",
       caseCtaDescription:
@@ -265,7 +259,7 @@ export const uiCopy = {
       pricingHeroEyebrow: "Priser",
       pricingHeroTitle: "Priser som gjør det lettere å planlegge",
       pricingHeroDescription:
-        "Veiledende nivåer for prosjekter, innholdspakker og løpende samarbeid.",
+        "Veiledende nivåer og korte svar på det kundene oftest vil vite før et møte.",
       pricingPrimaryCta: "Få et prisestimat",
       pricingFaqTitle: "Vanlige spørsmål om pris og omfang",
       pricingFaqDescription:
@@ -277,10 +271,14 @@ export const uiCopy = {
       contactHeroTitle: "Book et uforpliktende møte",
       contactHeroDescription:
         "Fortell oss kort hva dere trenger, så følger vi opp innen 24 timer.",
+      faqHeroEyebrow: "Vanlige spørsmål",
+      faqHeroTitle: "Svar på det kundene oftest lurer på",
+      faqHeroDescription:
+        "Korte svar om pris, tidslinje, leveranse og hvordan det er å jobbe med Fau&Land Film.",
       landingHeroEyebrow: "Landingsside",
       landingHeroTitle: "Landingssider som gjør det lettere å konvertere trafikk",
       landingHeroDescription:
-        "For kampanjer og tilbud som trenger en tydelig side med ett klart neste steg.",
+        "For kampanjer og tilbud som trenger ett tydelig budskap og ett klart neste steg.",
       landingPrimaryCta: "Book et uforpliktende møte",
       landingPrinciple: "Det som virker",
       landingHome: "Forside",
@@ -318,20 +316,20 @@ export const uiCopy = {
     },
     en: {
       servicesHeroEyebrow: "Services",
-      servicesHeroTitle: "Video that makes your brand easier to choose",
+      servicesHeroTitle: "Film that drives stronger sales, trust and relationships",
       servicesHeroDescription:
-        "We create commercial film, brand film, social content and event production for companies and organisations.",
+        "Commercial film, company film, social content and event production for companies and organisations.",
       servicesPrimaryCta: "Book an introductory call",
-      servicesSectionTitle: "How we can help",
+      servicesSectionTitle: "Services built around clear business value",
       servicesSectionDescription:
-        "Each service is built around a clear goal: more visibility, more trust or more inquiries.",
+        "Everything starts with the goal: more customers, stronger relationships or clearer communication.",
       servicesCtaTitle: "Not sure what you need?",
       servicesCtaDescription:
         "We help you choose the right format, scope and budget for the result you need from the work.",
       caseHeroEyebrow: "Work",
-      caseHeroTitle: "Work that shows what the film needed to do",
+      caseHeroTitle: "Case studies that show need, delivery and impact",
       caseHeroDescription:
-        "A selection of case studies with the need, the delivery and the outcome.",
+        "A smaller set of real productions taken from Fau&Land Film's actual work.",
       casePrimaryCta: "Book an introductory call",
       caseCtaTitle: "Want to create something similar?",
       caseCtaDescription:
@@ -347,7 +345,7 @@ export const uiCopy = {
       pricingHeroEyebrow: "Pricing",
       pricingHeroTitle: "Pricing that makes planning easier",
       pricingHeroDescription:
-        "Indicative levels for projects, content retainers and ongoing support.",
+        "Indicative pricing and short answers to the questions clients usually ask before a call.",
       pricingPrimaryCta: "Get a price estimate",
       pricingFaqTitle: "Common questions about pricing and scope",
       pricingFaqDescription:
@@ -359,10 +357,14 @@ export const uiCopy = {
       contactHeroTitle: "Book an introductory call",
       contactHeroDescription:
         "Tell us briefly what you need and we will follow up within 24 hours.",
+      faqHeroEyebrow: "FAQs",
+      faqHeroTitle: "Answers to the questions clients ask most often",
+      faqHeroDescription:
+        "Short answers about pricing, timelines, delivery and what it is like to work with Fau&Land Film.",
       landingHeroEyebrow: "Landing pages",
       landingHeroTitle: "Landing pages that make traffic easier to convert",
       landingHeroDescription:
-        "For campaigns and offers that need a clear page with one obvious next step.",
+        "For campaigns and offers that need one clear message and one obvious next step.",
       landingPrimaryCta: "Book an introductory call",
       landingPrinciple: "What works",
       landingHome: "Home",

@@ -8,9 +8,9 @@ import { uiCopy } from "@/data/ui-copy";
 import { buildMetadata } from "@/lib/seo";
 
 export const metadata = buildMetadata({
-  title: "Case | Reklamefilm og videoproduksjon som skaper effekt",
+  title: "Case | Reklamefilm og innholdsproduksjon",
   description:
-    "Utforsk Fau&Land Films case innen kampanjevideo, medlemsvekst, bedriftsfilm og innholdsproduksjon med tydelig mål, leveranse og effekt.",
+    "Utforsk Fau&Land Films utvalgte case med tydelig behov, leveranse og effekt for bedrifter og organisasjoner.",
   path: "/case",
 });
 

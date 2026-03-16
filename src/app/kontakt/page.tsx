@@ -8,7 +8,7 @@ import { buildMetadata } from "@/lib/seo";
 export const metadata = buildMetadata({
   title: "Kontakt | Book møte med Fau&Land Film i Oslo",
   description:
-    "Kontakt Fau&Land Film i Oslo for møtebooking, prisestimat eller spørsmål om reklamefilm, innholdsproduksjon, eventfilm og videodrevet markedsføring.",
+    "Kontakt Fau&Land Film for møtebooking, prisestimat eller spørsmål om reklamefilm, bedriftsfilm, innhold til sosiale medier og eventfilm.",
   path: "/kontakt",
 });
 
