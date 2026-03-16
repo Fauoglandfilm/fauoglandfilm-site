@@ -21,6 +21,7 @@ import { resolveLocalizedValue } from "@/lib/i18n";
 import { FloatingLayer, Reveal } from "../motion/reveal";
 import { ButtonLink } from "../ui/button-link";
 import { ArrowUpRightIcon, MailIcon, PhoneIcon, PinIcon } from "../ui/icons";
+import { SocialLinksRow } from "../ui/social-links";
 import { ClientLogoMarquee } from "./client-logo-marquee";
 import { ContactForm } from "./contact-form";
 import { WorkGrid } from "./home-work-grid";
@@ -377,6 +378,14 @@ export function ContactSection() {
                 icon={<PinIcon className="h-5 w-5" />}
                 label={copy.contactLocation}
                 value={siteConfig.locationLabel}
+              />
+            </div>
+
+            <div className="mt-6 border-t border-[color:var(--line)] pt-6">
+              <SocialLinksRow
+                title={copy.contactSocialTitle}
+                description={copy.contactSocialDescription}
+                compact
               />
             </div>
           </article>

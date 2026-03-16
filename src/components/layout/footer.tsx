@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useSitePreferences } from "@/components/providers/site-preferences";
 import { BrandLogo } from "@/components/ui/brand-logo";
 import { ButtonLink } from "@/components/ui/button-link";
+import { SocialLinksRow } from "@/components/ui/social-links";
 import { navItems, siteConfig } from "@/data/site-content";
 import { uiCopy } from "@/data/ui-copy";
 import { resolveLocalizedValue } from "@/lib/i18n";
@@ -46,6 +47,12 @@ export function Footer() {
                 {resolveLocalizedValue(siteConfig.bookingLabel, language)}
               </ButtonLink>
             </div>
+
+            <SocialLinksRow
+              title={copy.social}
+              description={copy.socialDescription}
+              compact
+            />
           </div>
 
           <div className="grid gap-8 sm:grid-cols-2">

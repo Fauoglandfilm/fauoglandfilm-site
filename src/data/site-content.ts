@@ -26,6 +26,11 @@ export type ClientLogo = {
   scale?: number;
 };
 
+export type SocialLink = {
+  name: "Facebook" | "LinkedIn" | "Instagram";
+  href: string;
+};
+
 export type WorkSample = {
   slug: string;
   client: string;
@@ -133,6 +138,20 @@ export const siteConfig = {
     no: "Book et uforpliktende møte",
     en: "Book an introductory call",
   },
+  socialLinks: [
+    {
+      name: "Facebook",
+      href: "https://www.facebook.com/Fauoglandfilm",
+    },
+    {
+      name: "LinkedIn",
+      href: "https://www.linkedin.com/company/fauoglandfilm/",
+    },
+    {
+      name: "Instagram",
+      href: "https://www.instagram.com/fauoglandfilm/",
+    },
+  ] satisfies SocialLink[],
   coverageArea: "Oslo og hele Norge",
   description:
     "Fau&Land Film hjelper bedrifter med reklamefilm, innholdsproduksjon, bedriftsfilm, eventfilm og video som bygger synlighet, tillit og flere henvendelser.",

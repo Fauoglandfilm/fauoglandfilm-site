@@ -25,6 +25,7 @@ import { resolveLocalizedValue } from "@/lib/i18n";
 import { ButtonLink } from "../ui/button-link";
 import { MailIcon, PhoneIcon, PinIcon } from "../ui/icons";
 import { SectionShell } from "../ui/section-shell";
+import { SocialLinksRow } from "../ui/social-links";
 import { CaseCard } from "./case-card";
 import { ContactForm } from "./contact-form";
 import { ServiceCard } from "./service-card";
@@ -377,6 +378,14 @@ export function ContactLeadSection({
             <ContactRow icon={<MailIcon className="h-5 w-5" />} label={copy.contactMail} value={siteConfig.email} href={`mailto:${siteConfig.email}`} />
             <ContactRow icon={<PhoneIcon className="h-5 w-5" />} label={copy.contactPhone} value={siteConfig.phonePrimary} href={siteConfig.phonePrimaryHref} />
             <ContactRow icon={<PinIcon className="h-5 w-5" />} label={copy.contactBase} value={siteConfig.locationLabel} />
+          </div>
+
+          <div className="mt-6 border-t border-[color:var(--line)] pt-6">
+            <SocialLinksRow
+              title={copy.contactSocialTitle}
+              description={copy.contactSocialDescription}
+              compact
+            />
           </div>
         </article>
 

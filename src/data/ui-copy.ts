@@ -25,6 +25,8 @@ export const uiCopy = {
         "Oslo-basert, senior-led og bygget for reklamefilm, brand storytelling og premium innholdsproduksjon.",
       contact: "Kontakt",
       navigation: "Navigasjon",
+      social: "Følg Fau&Land Film",
+      socialDescription: "Se mer arbeid og oppdateringer uten å miste nettsiden.",
     },
     en: {
       productionCompany: "Production company",
@@ -33,6 +35,8 @@ export const uiCopy = {
         "Oslo-based, senior-led and built for commercial film, branded storytelling and premium content production.",
       contact: "Contact",
       navigation: "Navigation",
+      social: "Follow Fau&Land Film",
+      socialDescription: "See more work and updates without leaving the site behind.",
     },
   },
   home: {
@@ -72,6 +76,8 @@ export const uiCopy = {
       contactLocation: "Lokasjon",
       contactProjectBrief: "Prosjektbrief",
       contactProjectTitle: "Fortell oss hva som skal produseres.",
+      contactSocialTitle: "Følg Fau&Land Film",
+      contactSocialDescription: "Se mer arbeid og oppdateringer i kanalene våre.",
     },
     en: {
       heroBadge: "Oslo / International clients / High-end production",
@@ -109,6 +115,8 @@ export const uiCopy = {
       contactLocation: "Location",
       contactProjectBrief: "Project brief",
       contactProjectTitle: "Tell us what needs to be produced.",
+      contactSocialTitle: "Follow Fau&Land Film",
+      contactSocialDescription: "See more work and updates across our channels.",
     },
   },
   siteSections: {
@@ -159,6 +167,8 @@ export const uiCopy = {
       contactMail: "E-post",
       contactPhone: "Telefon",
       contactBase: "Base",
+      contactSocialTitle: "Følg Fau&Land Film",
+      contactSocialDescription: "Se mer arbeid og løpende oppdateringer i de sosiale kanalene våre.",
       faqEyebrow: "FAQ",
       ctaEyebrow: "Klar for neste steg",
       relatedCaseGoal: "Behov",
@@ -213,6 +223,8 @@ export const uiCopy = {
       contactMail: "Email",
       contactPhone: "Phone",
       contactBase: "Base",
+      contactSocialTitle: "Follow Fau&Land Film",
+      contactSocialDescription: "See more work and ongoing updates across our social channels.",
       faqEyebrow: "FAQ",
       ctaEyebrow: "Ready for the next step",
       relatedCaseGoal: "Need",

@@ -85,3 +85,33 @@ export function MoonIcon(props: SVGProps<SVGSVGElement>) {
     </svg>
   );
 }
+
+export function FacebookIcon(props: SVGProps<SVGSVGElement>) {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" {...props}>
+      <path d="M14 8h2.5V4.8c-.44-.06-1.42-.13-2.56-.13-2.54 0-4.28 1.55-4.28 4.42V11H7v3.58h2.66V20h3.28v-5.42H15.6L16 11h-3.06V9.42c0-.84.24-1.42 1.06-1.42Z" />
+    </svg>
+  );
+}
+
+export function LinkedInIcon(props: SVGProps<SVGSVGElement>) {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" {...props}>
+      <rect x="4" y="4" width="16" height="16" rx="2.5" />
+      <path d="M8 10.5V16" />
+      <path d="M8 8.2h.01" />
+      <path d="M11.5 16v-3.1c0-1.35.85-2.1 1.9-2.1 1.02 0 1.6.67 1.6 2.1V16" />
+      <path d="M11.5 10.5V16" />
+    </svg>
+  );
+}
+
+export function InstagramIcon(props: SVGProps<SVGSVGElement>) {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" {...props}>
+      <rect x="4" y="4" width="16" height="16" rx="4" />
+      <circle cx="12" cy="12" r="3.4" />
+      <circle cx="16.4" cy="7.6" r="0.8" fill="currentColor" stroke="none" />
+    </svg>
+  );
+}
