@@ -129,7 +129,7 @@ export const uiCopy = {
       casesTitle: "Ekte case med tydelig behov og tydelig leveranse",
       casesDescription:
         "Et utvalg produksjoner hentet fra Fau&Land Films faktiske arbeid for kunder og organisasjoner.",
-      casesAction: "Se alle case",
+      casesAction: "Se hele porteføljen",
       processEyebrow: "Prosess",
       processTitle: "Slik jobber vi",
       processDescription:
@@ -186,7 +186,7 @@ export const uiCopy = {
       casesTitle: "Real case studies with clear need and delivery",
       casesDescription:
         "A selection of productions taken from Fau&Land Film's actual client work.",
-      casesAction: "View all work",
+      casesAction: "View full portfolio",
       processEyebrow: "Process",
       processTitle: "How we work",
       processDescription:
@@ -240,14 +240,14 @@ export const uiCopy = {
       servicesCtaTitle: "Usikre på hva dere trenger?",
       servicesCtaDescription:
         "Vi hjelper dere å velge riktig format, omfang og budsjett for det dere skal få ut av videoen.",
-      caseHeroEyebrow: "Case",
-      caseHeroTitle: "Case som viser behov, leveranse og effekt",
+      caseHeroEyebrow: "Portefølje",
+      caseHeroTitle: "Arbeid hentet fra Fau&Land Films live-portefølje",
       caseHeroDescription:
-        "Et mindre utvalg ekte produksjoner hentet fra Fau&Land Films faktiske arbeid.",
+        "En ryddigere oversikt over faktiske produksjoner innen kampanje, organisasjon, foredrag, musikkvideo og event.",
       casePrimaryCta: "Book et uforpliktende møte",
-      caseCtaTitle: "Vil dere lage noe lignende?",
+      caseCtaTitle: "Vil dere sette opp noe lignende?",
       caseCtaDescription:
-        "Fortell oss kort hva dere vil oppnå, så foreslår vi riktig oppsett for marked, kanal og budsjett.",
+        "Fortell oss kort hva dere vil oppnå, så foreslår vi riktig format, omfang og budsjett.",
       aboutHeroEyebrow: "Om oss",
       aboutHeroTitle: "To seniorer. Hvert prosjekt. Alltid.",
       aboutHeroDescription:
@@ -288,7 +288,7 @@ export const uiCopy = {
       landingCtaDescription:
         "Vi kan lage en side som samler budskap, tillit og handling rundt ett tydelig tilbud.",
       caseDetailPrimary: "Book et uforpliktende møte",
-      caseDetailSecondary: "Se flere case",
+      caseDetailSecondary: "Se porteføljen",
       caseMissingTitle: "Case finnes ikke",
       caseMissingDescription:
         "Denne siden ble ikke funnet. Gå gjerne videre til case eller kontakt.",
@@ -302,9 +302,9 @@ export const uiCopy = {
       caseSolutionEyebrow: "Løsning",
       caseDelivered: "Det vi leverte",
       caseImpactEyebrow: "Effekt",
-      caseMoreProjectsEyebrow: "Flere case",
-      caseMoreProjectsTitle: "Se flere relevante prosjekter",
-      caseBackToOverview: "Tilbake til case",
+      caseMoreProjectsEyebrow: "Flere prosjekter",
+      caseMoreProjectsTitle: "Se flere relevante produksjoner",
+      caseBackToOverview: "Tilbake til porteføljen",
       caseRelatedCtaTitle: "Har dere et lignende prosjekt på gang?",
       caseRelatedCtaDescription:
         "Fortell oss kort hva dere vil oppnå, så foreslår vi riktig format, omfang og neste steg.",
@@ -326,14 +326,14 @@ export const uiCopy = {
       servicesCtaTitle: "Not sure what you need?",
       servicesCtaDescription:
         "We help you choose the right format, scope and budget for the result you need from the work.",
-      caseHeroEyebrow: "Work",
-      caseHeroTitle: "Case studies that show need, delivery and impact",
+      caseHeroEyebrow: "Portfolio",
+      caseHeroTitle: "Work pulled from Fau&Land Film's live portfolio",
       caseHeroDescription:
-        "A smaller set of real productions taken from Fau&Land Film's actual work.",
+        "A cleaner overview of real productions across campaigns, organisations, talks, music video and events.",
       casePrimaryCta: "Book an introductory call",
-      caseCtaTitle: "Want to create something similar?",
+      caseCtaTitle: "Want to set up something similar?",
       caseCtaDescription:
-        "Tell us what you want to achieve and we will recommend the right setup for your market, channel and budget.",
+        "Tell us what you want to achieve and we will recommend the right format, scope and budget.",
       aboutHeroEyebrow: "About",
       aboutHeroTitle: "Two senior creatives. Every project. Always.",
       aboutHeroDescription:
@@ -374,7 +374,7 @@ export const uiCopy = {
       landingCtaDescription:
         "We can create a page that brings message, trust and action together around one clear offer.",
       caseDetailPrimary: "Book an introductory call",
-      caseDetailSecondary: "View more work",
+      caseDetailSecondary: "View portfolio",
       caseMissingTitle: "Case not found",
       caseMissingDescription:
         "This page could not be found. You can continue to our work or get in touch.",
@@ -388,9 +388,9 @@ export const uiCopy = {
       caseSolutionEyebrow: "Solution",
       caseDelivered: "What we delivered",
       caseImpactEyebrow: "Impact",
-      caseMoreProjectsEyebrow: "More work",
-      caseMoreProjectsTitle: "See more relevant projects",
-      caseBackToOverview: "Back to work",
+      caseMoreProjectsEyebrow: "More projects",
+      caseMoreProjectsTitle: "See more relevant productions",
+      caseBackToOverview: "Back to portfolio",
       caseRelatedCtaTitle: "Do you have a similar project coming up?",
       caseRelatedCtaDescription:
         "Tell us what you want to achieve and we will recommend the right format, scope and next step.",

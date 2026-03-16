@@ -165,13 +165,13 @@ export function ClientSlider() {
   const copy = uiCopy.home[language];
 
   return (
-    <section className="bg-[color:var(--background)] py-5 sm:py-6">
+    <section className="py-5 sm:py-6">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="flex flex-col gap-2.5 sm:flex-row sm:items-center sm:justify-between">
           <p className="eyebrow">{copy.clientsEyebrow}</p>
           <p className="body-copy text-[var(--muted)]">{copy.clientsDescription}</p>
         </div>
-        <div className="mt-4 sm:mt-5">
+        <div className="mt-4 rounded-[1.8rem] border border-[color:var(--logo-strip-border)] bg-[color:var(--logo-strip-bg)] px-2 py-3 shadow-[0_26px_70px_rgba(17,17,17,0.08)] sm:mt-5 sm:px-3 sm:py-4">
           <ClientLogoMarquee logos={clientLogos} durationSeconds={34} />
         </div>
       </div>
