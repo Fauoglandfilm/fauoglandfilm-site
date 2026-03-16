@@ -1,6 +1,9 @@
 node_modules
 .next
-.next 2
-FILER TIL NETTSIDE*
-*.log
 .DS_Store
+*.log
+*.tmp
+*.bak
+*.orig
+FILER TIL NETTSIDE*
+ARKIV*

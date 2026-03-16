@@ -2,79 +2,85 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect, useState, type ReactNode } from "react";
 
-import {
-  useSitePreferences,
-} from "@/components/providers/site-preferences";
+import { useSitePreferences } from "@/components/providers/site-preferences";
 import { BrandLogo } from "@/components/ui/brand-logo";
-import { ButtonLink } from "@/components/ui/button-link";
-import { CloseIcon, MenuIcon } from "@/components/ui/icons";
-import { navItems, siteConfig } from "@/data/site-content";
+import { CloseIcon, MenuIcon, MoonIcon, SunIcon } from "@/components/ui/icons";
+import { navItems } from "@/data/site-content";
 import { uiCopy } from "@/data/ui-copy";
 import { resolveLocalizedValue } from "@/lib/i18n";
 import { cn } from "@/lib/utils";
 
-type SegmentedToggleProps<T extends string> = {
-  label: string;
+type SegmentedToggleOption<T extends string> = {
+  label?: string;
   value: T;
-  options: Array<{ label: string; value: T }>;
+  icon?: ReactNode;
+};
+
+type SegmentedToggleProps<T extends string> = {
+  ariaLabel: string;
+  value: T;
+  options: SegmentedToggleOption<T>[];
   onChange: (value: T) => void;
   overlayMode: boolean;
+  compact?: boolean;
+  iconOnly?: boolean;
 };
 
 function SegmentedToggle<T extends string>({
-  label,
+  ariaLabel,
   value,
   options,
   onChange,
   overlayMode,
+  compact = false,
+  iconOnly = false,
 }: SegmentedToggleProps<T>) {
   return (
-    <div className="flex items-center gap-2">
-      <span
-        className={cn(
-          "hidden text-[0.62rem] font-semibold uppercase tracking-[0.2em] xl:inline",
-          overlayMode ? "text-white/58" : "text-[var(--muted)]",
-        )}
-      >
-        {label}
-      </span>
-      <div
-        className={cn(
-          "inline-flex rounded-full border p-1 backdrop-blur-xl",
-          overlayMode
-            ? "border-white/14 bg-white/8"
-            : "border-[color:var(--line)] bg-[color:var(--surface)]",
-        )}
-        role="group"
-        aria-label={label}
-      >
-        {options.map((option) => {
-          const active = option.value === value;
+    <div
+      className={cn(
+        "inline-flex items-center rounded-full border backdrop-blur-xl",
+        overlayMode
+          ? "border-white/10 bg-white/[0.06]"
+          : "border-black/[0.06] bg-black/[0.03]",
+        compact ? "p-0.5" : "p-0.5",
+      )}
+      role="group"
+      aria-label={ariaLabel}
+    >
+      {options.map((option) => {
+        const active = option.value === value;
 
-          return (
-            <button
-              key={option.value}
-              type="button"
-              className={cn(
-                "min-h-9 rounded-full px-3 text-[0.74rem] font-semibold uppercase tracking-[0.16em] transition sm:px-3.5",
-                active
-                  ? overlayMode
-                    ? "bg-white text-[#111111]"
-                    : "bg-[color:var(--foreground)] text-[color:var(--background)]"
-                  : overlayMode
-                    ? "text-white/68 hover:text-white"
-                    : "text-[var(--muted)] hover:text-[var(--foreground)]",
-              )}
-              onClick={() => onChange(option.value)}
-              aria-pressed={active}
-            >
-              {option.label}
-            </button>
-          );
-        })}
-      </div>
+        return (
+          <button
+            key={option.value}
+            type="button"
+            className={cn(
+              "inline-flex items-center justify-center rounded-full transition",
+              compact ? "min-h-7 min-w-7 px-2" : "min-h-8 min-w-8 px-2.5",
+              iconOnly ? "gap-0" : "gap-1",
+              active
+                ? overlayMode
+                  ? "bg-white/14 text-white"
+                  : "bg-black/[0.08] text-[color:var(--foreground)]"
+                : overlayMode
+                  ? "text-white/58 hover:text-white/84"
+                  : "text-[var(--muted)] hover:text-[color:var(--foreground)]",
+            )}
+            onClick={() => onChange(option.value)}
+            aria-pressed={active}
+            aria-label={option.label ?? option.value}
+          >
+            {option.icon ? <span className="flex h-3.5 w-3.5 items-center justify-center">{option.icon}</span> : null}
+            {!iconOnly && option.label ? (
+              <span className="text-[0.62rem] font-semibold uppercase tracking-[0.16em]">
+                {option.label}
+              </span>
+            ) : null}
+          </button>
+        );
+      })}
     </div>
   );
 }
@@ -86,11 +92,10 @@ export function Header() {
   const { language, setLanguage, theme, setTheme } = useSitePreferences();
   const copy = uiCopy.header[language];
   const overlayMode = pathname === "/" && !scrolled && !open;
-  const bookingLabel = resolveLocalizedValue(siteConfig.bookingLabel, language);
 
   useEffect(() => {
     const onScroll = () => {
-      setScrolled(window.scrollY > 28);
+      setScrolled(window.scrollY > 24);
     };
 
     onScroll();
@@ -127,42 +132,32 @@ export function Header() {
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div
           className={cn(
-            "mt-3 flex items-center justify-between gap-3 rounded-full px-3.5 py-3 transition duration-300 sm:px-4",
+            "mt-2.5 flex items-center gap-3 rounded-[1.25rem] px-3 py-2 transition duration-300 sm:px-3.5",
             overlayMode
-              ? "border border-[color:var(--header-overlay-border)] bg-[color:var(--header-overlay-surface)] text-white backdrop-blur-xl"
-              : "border border-[color:var(--line)] bg-[color:var(--header-surface)] text-[color:var(--foreground)] shadow-[0_12px_40px_rgba(14,14,14,0.08)] backdrop-blur-xl",
+              ? "border border-white/8 bg-[color:var(--header-overlay-surface)] text-white backdrop-blur-xl"
+              : "border border-black/[0.05] bg-[color:var(--header-surface)] text-[color:var(--foreground)] shadow-[0_10px_28px_rgba(14,14,14,0.06)] backdrop-blur-xl",
           )}
         >
           <Link
             href="/"
-            className="flex items-center gap-3"
+            className="flex shrink-0 items-center gap-2.5"
             aria-label="Fau&Land Film"
             onClick={() => setOpen(false)}
           >
-            <div className="flex h-10 w-10 items-center justify-center rounded-full bg-[#111111] p-2.5 shadow-[0_12px_28px_rgba(0,0,0,0.2)]">
+            <div className="flex h-9 w-9 items-center justify-center rounded-full bg-[#111111] p-2 shadow-[0_10px_20px_rgba(0,0,0,0.16)]">
               <BrandLogo variant="mark" className="opacity-100" priority />
             </div>
-            <div className="hidden sm:block">
-              <p
-                className={cn(
-                  "font-display text-[1rem] tracking-[-0.05em]",
-                  overlayMode ? "text-white" : "text-[color:var(--foreground)]",
-                )}
-              >
-                Fau&amp;Land Film
-              </p>
-              <p
-                className={cn(
-                  "text-[0.72rem] uppercase tracking-[0.22em]",
-                  overlayMode ? "text-white/62" : "text-[var(--muted)]",
-                )}
-              >
-                {copy.productionCompany}
-              </p>
-            </div>
+            <p
+              className={cn(
+                "font-display text-[0.96rem] tracking-[-0.05em] sm:text-[1rem]",
+                overlayMode ? "text-white" : "text-[color:var(--foreground)]",
+              )}
+            >
+              Fau&amp;Land Film
+            </p>
           </Link>
 
-          <nav className="hidden items-center gap-5 lg:flex">
+          <nav className="hidden flex-1 items-center justify-center gap-6 lg:flex xl:gap-7">
             {navItems.map((item) => {
               const active = item.href === "/" ? pathname === "/" : pathname.startsWith(item.href);
 
@@ -171,11 +166,11 @@ export function Header() {
                   key={item.href}
                   href={item.href}
                   className={cn(
-                    "text-[0.82rem] font-semibold transition",
+                    "text-[0.82rem] font-semibold tracking-[0.01em] transition",
                     overlayMode
                       ? active
                         ? "text-white"
-                        : "text-white/70 hover:text-white"
+                        : "text-white/68 hover:text-white"
                       : active
                         ? "text-[color:var(--foreground)]"
                         : "text-[var(--muted)] hover:text-[color:var(--foreground)]",
@@ -187,9 +182,9 @@ export function Header() {
             })}
           </nav>
 
-          <div className="hidden items-center gap-2 lg:flex">
+          <div className="ml-auto hidden items-center gap-1.5 lg:flex">
             <SegmentedToggle
-              label={copy.languageLabel}
+              ariaLabel={copy.languageLabel}
               value={language}
               options={[
                 { label: "NO", value: "no" },
@@ -199,100 +194,88 @@ export function Header() {
               overlayMode={overlayMode}
             />
             <SegmentedToggle
-              label={copy.themeLabel}
+              ariaLabel={copy.themeLabel}
               value={theme}
               options={[
-                { label: "Light", value: "light" },
-                { label: "Dark", value: "dark" },
+                { value: "light", icon: <SunIcon className="h-3.5 w-3.5" />, label: "Light" },
+                { value: "dark", icon: <MoonIcon className="h-3.5 w-3.5" />, label: "Dark" },
               ]}
               onChange={setTheme}
               overlayMode={overlayMode}
+              iconOnly
             />
-            <ButtonLink
-              href={siteConfig.bookingHref}
-              className={cn(
-                overlayMode && "border-white/20 bg-white text-[#111111] hover:bg-white/92",
-              )}
-            >
-              {bookingLabel}
-            </ButtonLink>
           </div>
 
           <button
             type="button"
             className={cn(
-              "inline-flex h-11 w-11 items-center justify-center rounded-full transition lg:hidden",
+              "ml-auto inline-flex h-9 w-9 items-center justify-center rounded-full transition lg:hidden",
               overlayMode
-                ? "border border-white/16 bg-white/8 text-white"
-                : "border border-[color:var(--line)] bg-[color:var(--surface)] text-[color:var(--foreground)]",
+                ? "border border-white/10 bg-white/[0.08] text-white"
+                : "border border-black/[0.06] bg-black/[0.03] text-[color:var(--foreground)]",
             )}
             aria-label={open ? copy.menuClose : copy.menuOpen}
             aria-expanded={open}
             onClick={() => setOpen((value) => !value)}
           >
-            {open ? <CloseIcon className="h-5 w-5" /> : <MenuIcon className="h-5 w-5" />}
+            {open ? <CloseIcon className="h-4 w-4" /> : <MenuIcon className="h-4 w-4" />}
           </button>
         </div>
       </div>
 
       {open ? (
         <div className="mx-auto max-w-7xl px-4 pb-4 sm:px-6 lg:hidden">
-          <div className="mt-3 rounded-[2rem] border border-[color:var(--line)] bg-[color:var(--surface-strong)] p-4 shadow-[0_24px_70px_rgba(14,14,14,0.12)] backdrop-blur-xl">
-            <div className="flex flex-col gap-4">
-              <div className="grid gap-3 sm:grid-cols-2">
-                <SegmentedToggle
-                  label={copy.languageLabel}
-                  value={language}
-                  options={[
-                    { label: "NO", value: "no" },
-                    { label: "EN", value: "en" },
-                  ]}
-                  onChange={setLanguage}
-                  overlayMode={false}
-                />
-                <SegmentedToggle
-                  label={copy.themeLabel}
-                  value={theme}
-                  options={[
-                    { label: "Light", value: "light" },
-                    { label: "Dark", value: "dark" },
-                  ]}
-                  onChange={setTheme}
-                  overlayMode={false}
-                />
-              </div>
-
-              <nav
-                className="flex max-h-[calc(100svh-13rem)] flex-col gap-1 overflow-y-auto"
-                style={{ paddingBottom: "calc(0.75rem + env(safe-area-inset-bottom, 0px))" }}
-              >
-                {navItems.map((item) => {
-                  const active = item.href === "/" ? pathname === "/" : pathname.startsWith(item.href);
-
-                  return (
-                    <Link
-                      key={item.href}
-                      href={item.href}
-                      className={cn(
-                        "rounded-[1.1rem] px-4 py-3.5 text-base font-medium transition",
-                        active
-                          ? "bg-[color:var(--foreground)] text-[color:var(--background)]"
-                          : "text-[color:var(--foreground)]/72 hover:bg-black/[0.04] hover:text-[color:var(--foreground)]",
-                      )}
-                      onClick={() => setOpen(false)}
-                    >
-                      {resolveLocalizedValue(item.label, language)}
-                    </Link>
-                  );
-                })}
-              </nav>
+          <div className="mt-2.5 rounded-[1.6rem] border border-black/[0.06] bg-[color:var(--surface-strong)] p-3.5 shadow-[0_20px_60px_rgba(14,14,14,0.1)] backdrop-blur-xl">
+            <div className="flex items-center justify-between gap-2">
+              <SegmentedToggle
+                ariaLabel={copy.languageLabel}
+                value={language}
+                options={[
+                  { label: "NO", value: "no" },
+                  { label: "EN", value: "en" },
+                ]}
+                onChange={setLanguage}
+                overlayMode={false}
+                compact
+              />
+              <SegmentedToggle
+                ariaLabel={copy.themeLabel}
+                value={theme}
+                options={[
+                  { value: "light", icon: <SunIcon className="h-3.5 w-3.5" />, label: "Light" },
+                  { value: "dark", icon: <MoonIcon className="h-3.5 w-3.5" />, label: "Dark" },
+                ]}
+                onChange={setTheme}
+                overlayMode={false}
+                compact
+                iconOnly
+              />
             </div>
 
-            <div className="mt-4 border-t border-[color:var(--line)] pt-4">
-              <ButtonLink href={siteConfig.bookingHref} fullWidth onClick={() => setOpen(false)}>
-                {bookingLabel}
-              </ButtonLink>
-            </div>
+            <nav
+              className="mt-3 flex max-h-[calc(100svh-11rem)] flex-col gap-1 overflow-y-auto"
+              style={{ paddingBottom: "calc(0.5rem + env(safe-area-inset-bottom, 0px))" }}
+            >
+              {navItems.map((item) => {
+                const active = item.href === "/" ? pathname === "/" : pathname.startsWith(item.href);
+
+                return (
+                  <Link
+                    key={item.href}
+                    href={item.href}
+                    className={cn(
+                      "rounded-[0.95rem] px-3.5 py-3 text-[0.98rem] font-medium transition",
+                      active
+                        ? "bg-[color:var(--foreground)] text-[color:var(--background)]"
+                        : "text-[color:var(--foreground)]/76 hover:bg-black/[0.035] hover:text-[color:var(--foreground)]",
+                    )}
+                    onClick={() => setOpen(false)}
+                  >
+                    {resolveLocalizedValue(item.label, language)}
+                  </Link>
+                );
+              })}
+            </nav>
           </div>
         </div>
       ) : null}

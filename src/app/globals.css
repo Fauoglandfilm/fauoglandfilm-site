@@ -222,8 +222,9 @@ summary::-webkit-details-marker {
     display: flex;
     flex-shrink: 0;
     align-items: center;
-    gap: 0.8rem;
-    padding-right: 0.8rem;
+    gap: 1.25rem;
+    padding-right: 1.25rem;
+    list-style: none;
   }
 
   .eyebrow {
@@ -259,8 +260,8 @@ summary::-webkit-details-marker {
     }
 
     .logo-marquee-group {
-      gap: 1rem;
-      padding-right: 1rem;
+      gap: 1.75rem;
+      padding-right: 1.75rem;
     }
   }
 }
