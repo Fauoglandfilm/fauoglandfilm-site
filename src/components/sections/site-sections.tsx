@@ -83,10 +83,10 @@ export function PackagesSection({ packages }: { packages: OfferPackage[] }) {
               <p className="text-[0.68rem] font-semibold uppercase tracking-[0.22em] text-[var(--muted)]">
                 {resolveLocalizedValue(pkg.name, language)}
               </p>
-              <h3 className="mt-4 font-display text-[2.2rem] leading-[0.95] text-[color:var(--foreground)]">
+              <h3 className="feature-title mt-4 text-[color:var(--foreground)]">
                 {resolveLocalizedValue(pkg.price, language)}
               </h3>
-              <p className="mt-3 text-sm leading-6 text-[var(--muted-2)] sm:text-base">
+              <p className="body-copy mt-3 text-[var(--muted-2)]">
                 {resolveLocalizedValue(pkg.summary, language)}
               </p>
               <p className="mt-4 border-t border-[color:var(--line)] pt-4 text-sm leading-6 text-[var(--muted)]">
@@ -130,10 +130,10 @@ export function PriceGuideSection({ items }: { items: PriceGuide[] }) {
               <p className="text-[0.68rem] font-semibold uppercase tracking-[0.2em] text-[var(--muted)]">
                 {resolveLocalizedValue(item.range, language)}
               </p>
-              <h3 className="mt-3 font-display text-[1.55rem] leading-[1] text-[color:var(--foreground)]">
+              <h3 className="card-title mt-3 text-[color:var(--foreground)]">
                 {resolveLocalizedValue(item.title, language)}
               </h3>
-              <p className="mt-3 text-sm leading-6 text-[var(--muted-2)]">
+              <p className="body-copy mt-3 text-[var(--muted-2)]">
                 {resolveLocalizedValue(item.detail, language)}
               </p>
             </article>
@@ -160,7 +160,7 @@ export function FeaturedCasesSection({
       title={copy.casesTitle}
       description={copy.casesDescription}
       action={
-        <ButtonLink href="/case" variant="ghost">
+        <ButtonLink href="/case" variant="ghost" className="w-full sm:w-auto">
           {copy.casesAction}
         </ButtonLink>
       }
@@ -195,11 +195,11 @@ export function ProcessSection({ steps }: { steps: ProcessStep[] }) {
         {steps.map((step, index) => (
           <Reveal key={step.step} delay={0.05 * index}>
             <article className="card-surface rounded-[1.7rem] p-5">
-              <p className="font-display text-[2.2rem] leading-none text-[color:var(--foreground)]">{step.step}</p>
-              <h3 className="mt-4 font-display text-[1.45rem] leading-[0.98] text-[color:var(--foreground)]">
+              <p className="font-display text-[2rem] leading-none text-[color:var(--foreground)] sm:text-[2.2rem]">{step.step}</p>
+              <h3 className="card-title mt-4 text-[color:var(--foreground)]">
                 {resolveLocalizedValue(step.title, language)}
               </h3>
-              <p className="mt-3 text-sm leading-6 text-[var(--muted-2)]">
+              <p className="body-copy mt-3 text-[var(--muted-2)]">
                 {resolveLocalizedValue(step.description, language)}
               </p>
             </article>
@@ -255,7 +255,7 @@ export function AboutPreviewSection({
       title={copy.aboutTitle}
       description={copy.aboutDescription}
       action={
-        <ButtonLink href="/om-oss" variant="ghost">
+        <ButtonLink href="/om-oss" variant="ghost" className="w-full sm:w-auto">
           {copy.aboutAction}
         </ButtonLink>
       }
@@ -281,10 +281,10 @@ export function AboutPreviewSection({
               <p className="text-[0.68rem] font-semibold uppercase tracking-[0.22em] text-[var(--muted)]">
                 {resolveLocalizedValue(member.role, language)}
               </p>
-              <h3 className="mt-3 font-display text-[1.55rem] leading-[0.98] text-[color:var(--foreground)]">
+              <h3 className="card-title mt-3 text-[color:var(--foreground)]">
                 {member.name}
               </h3>
-              <p className="mt-3 text-sm leading-6 text-[var(--muted-2)]">
+              <p className="body-copy mt-3 text-[var(--muted-2)]">
                 {resolveLocalizedValue(member.summary, language)}
               </p>
             </article>
@@ -330,10 +330,10 @@ export function TeamSection({
                 <p className="text-[0.68rem] font-semibold uppercase tracking-[0.22em] text-[var(--muted)]">
                   {resolveLocalizedValue(member.role, language)}
                 </p>
-                <h3 className="mt-3 font-display text-[1.55rem] leading-[0.98] text-[color:var(--foreground)]">
+                <h3 className="card-title mt-3 text-[color:var(--foreground)]">
                   {member.name}
                 </h3>
-                <p className="mt-3 text-sm leading-6 text-[var(--muted-2)]">
+                <p className="body-copy mt-3 text-[var(--muted-2)]">
                   {resolveLocalizedValue(member.summary, language)}
                 </p>
               </article>
@@ -365,10 +365,10 @@ export function ContactLeadSection({
       <div className="grid gap-4 xl:grid-cols-[0.82fr_1.18fr]">
         <article className="card-surface rounded-[1.9rem] p-5 sm:p-6">
           <div className="space-y-3">
-            <h3 className="font-display text-[2rem] leading-[0.96] text-[color:var(--foreground)]">
+            <h3 className="feature-title text-[color:var(--foreground)]">
               {copy.contactHeading}
             </h3>
-            <p className="text-sm leading-6 text-[var(--muted-2)] sm:text-base">
+            <p className="body-copy text-[var(--muted-2)]">
               {copy.contactLead}
             </p>
           </div>
@@ -381,10 +381,10 @@ export function ContactLeadSection({
         </article>
 
         <article className="card-surface rounded-[1.9rem] p-5 sm:p-6">
-          <h3 className="font-display text-[2rem] leading-[0.96] text-[color:var(--foreground)] sm:text-[2.5rem]">
+          <h3 className="feature-title text-[color:var(--foreground)]">
             {copy.contactBriefTitle}
           </h3>
-          <p className="mt-3 text-sm leading-6 text-[var(--muted-2)] sm:text-base">
+          <p className="body-copy mt-3 text-[var(--muted-2)]">
             {copy.contactBriefDescription}
           </p>
           <div className="mt-6">
@@ -508,8 +508,8 @@ export function CtaBanner({
 
   return (
     <section className="section-space">
-      <div className="mx-auto max-w-7xl px-5 sm:px-6 lg:px-8">
-        <div className="overflow-hidden rounded-[2rem] border border-[color:var(--line)] bg-[#111111] px-5 py-6 text-white shadow-[0_32px_100px_rgba(15,15,15,0.14)] sm:px-6 sm:py-7 lg:px-8 lg:py-8">
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div className="overflow-hidden rounded-[1.8rem] border border-[color:var(--line)] bg-[#111111] px-4 py-5 text-white shadow-[0_32px_100px_rgba(15,15,15,0.14)] sm:rounded-[2rem] sm:px-6 sm:py-7 lg:px-8 lg:py-8">
           <div
             className={
               align === "center"
@@ -521,23 +521,23 @@ export function CtaBanner({
               <p className="text-[0.72rem] font-semibold uppercase tracking-[0.24em] text-white/44">
                 {copy.ctaEyebrow}
               </p>
-              <h2 className="font-display text-[2rem] leading-[0.94] text-white sm:text-[2.8rem]">
+              <h2 className="section-title text-white">
                 {resolveLocalizedValue(title, language)}
               </h2>
-              <p className="max-w-2xl text-[0.96rem] leading-7 text-white/68">
+              <p className="body-lead max-w-2xl text-white/68">
                 {resolveLocalizedValue(description, language)}
               </p>
             </div>
             <div
-              className={`flex flex-col gap-3 sm:flex-row sm:flex-wrap ${
+              className={`flex flex-col gap-2.5 sm:flex-row sm:flex-wrap sm:gap-3 ${
                 align === "center" ? "justify-center pt-3" : "xl:justify-end"
               }`}
             >
-              <ButtonLink href={primaryHref}>
+              <ButtonLink href={primaryHref} className="w-full sm:w-auto">
                 {resolveLocalizedValue(primaryLabel, language)}
               </ButtonLink>
               {secondaryLabel ? (
-                <ButtonLink href={secondaryHref} variant="secondary">
+                <ButtonLink href={secondaryHref} variant="secondary" className="w-full sm:w-auto">
                   {resolveLocalizedValue(secondaryLabel, language)}
                 </ButtonLink>
               ) : null}
@@ -589,7 +589,7 @@ export function PageHero({
   const { language, theme } = useSitePreferences();
 
   return (
-    <section className="relative isolate overflow-hidden pt-24 sm:pt-28">
+    <section className="relative isolate overflow-hidden pt-22 sm:pt-28">
       <div className="absolute inset-0">
         {video ? (
           <>
@@ -620,26 +620,26 @@ export function PageHero({
         )}
       </div>
 
-      <div className="relative mx-auto flex min-h-[34rem] max-w-7xl items-end px-5 pb-10 sm:px-6 sm:pb-12 lg:min-h-[38rem] lg:px-8 lg:pb-14">
+      <div className="relative mx-auto flex min-h-[28rem] max-w-7xl items-end px-4 pb-8 sm:min-h-[34rem] sm:px-6 sm:pb-12 lg:min-h-[38rem] lg:px-8 lg:pb-14">
         <div className={`max-w-4xl ${video ? "text-white" : "text-[color:var(--foreground)]"}`}>
           <span className={video ? "text-[0.72rem] font-semibold uppercase tracking-[0.24em] text-white/58" : "eyebrow"}>
             {resolveLocalizedValue(eyebrow, language)}
           </span>
-          <h1 className="mt-4 max-w-4xl text-balance font-display text-[2.7rem] leading-[0.9] sm:text-[4rem] lg:text-[5rem]">
+          <h1 className="page-title mt-4 max-w-4xl">
             {resolveLocalizedValue(title, language)}
           </h1>
-          <p className={`mt-4 max-w-2xl text-[0.98rem] leading-7 sm:text-base sm:leading-8 ${video ? "text-white/74" : "text-[var(--muted-2)]"}`}>
+          <p className={`body-lead mt-4 max-w-2xl ${video ? "text-white/74" : "text-[var(--muted-2)]"}`}>
             {resolveLocalizedValue(description, language)}
           </p>
           {primaryCta || secondaryCta ? (
-            <div className="mt-8 flex flex-col gap-3 sm:flex-row">
+            <div className="mt-6 flex flex-col gap-2.5 sm:mt-8 sm:flex-row sm:gap-3">
               {primaryCta ? (
-                <ButtonLink href={primaryCta.href}>
+                <ButtonLink href={primaryCta.href} className="w-full sm:w-auto">
                   {resolveLocalizedValue(primaryCta.label, language)}
                 </ButtonLink>
               ) : null}
               {secondaryCta ? (
-                <ButtonLink href={secondaryCta.href} variant="secondary">
+                <ButtonLink href={secondaryCta.href} variant="secondary" className="w-full sm:w-auto">
                   {resolveLocalizedValue(secondaryCta.label, language)}
                 </ButtonLink>
               ) : null}

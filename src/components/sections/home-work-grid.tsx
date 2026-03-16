@@ -73,7 +73,7 @@ export function WorkGrid({ items }: WorkGridProps) {
             onFocus={() => playPreview(item.slug)}
             onBlur={() => pausePreview(item.slug)}
           >
-            <article className="overflow-hidden rounded-[1.6rem] border border-black/8 bg-white/70 shadow-[0_24px_60px_rgba(18,18,18,0.06)] transition duration-300 group-hover:-translate-y-1 group-hover:shadow-[0_28px_70px_rgba(18,18,18,0.08)]">
+            <article className="card-surface overflow-hidden rounded-[1.45rem] transition duration-300 group-hover:-translate-y-1 group-hover:shadow-[0_28px_70px_rgba(18,18,18,0.08)] sm:rounded-[1.6rem]">
               <div className="relative aspect-[16/10] overflow-hidden">
                 <div
                   className={cn(
@@ -94,7 +94,7 @@ export function WorkGrid({ items }: WorkGridProps) {
                   <source src={item.video.src} type="video/mp4" />
                 </video>
                 <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(19,19,19,0.02),rgba(19,19,19,0.08)_45%,rgba(19,19,19,0.44)_100%)]" />
-                <div className="absolute bottom-3 left-3 flex items-center gap-2 rounded-full border border-white/24 bg-white/12 px-3 py-1.5 text-[0.7rem] font-semibold uppercase tracking-[0.18em] text-white backdrop-blur sm:bottom-4 sm:left-4">
+                <div className="absolute bottom-3 left-3 flex items-center gap-2 rounded-full border border-white/24 bg-white/12 px-2.5 py-1.5 text-[0.64rem] font-semibold uppercase tracking-[0.18em] text-white backdrop-blur sm:bottom-4 sm:left-4 sm:px-3 sm:text-[0.7rem]">
                   <PlayIcon className="h-3.5 w-3.5" />
                   {copy.workWatch}
                 </div>
@@ -105,7 +105,7 @@ export function WorkGrid({ items }: WorkGridProps) {
                   {resolveLocalizedValue(item.category, language)}
                 </p>
                 <div className="space-y-1">
-                  <h3 className="font-display text-[1.05rem] leading-[1.02] text-[color:var(--foreground)] sm:text-[1.35rem]">
+                  <h3 className="card-title text-[color:var(--foreground)] sm:text-[1.35rem]">
                     {resolveLocalizedValue(item.title, language)}
                   </h3>
                   <p className="text-sm text-[var(--muted-2)]">{item.client}</p>
@@ -118,11 +118,11 @@ export function WorkGrid({ items }: WorkGridProps) {
 
       {activeItem ? (
         <div
-          className="fixed inset-0 z-[70] flex items-end bg-[rgba(10,10,10,0.82)] p-3 backdrop-blur md:items-center md:justify-center md:p-6"
+          className="fixed inset-0 z-[70] flex items-end bg-[rgba(10,10,10,0.82)] p-2.5 backdrop-blur md:items-center md:justify-center md:p-6"
           onClick={() => setActiveSlug(null)}
         >
           <div
-            className="w-full max-w-5xl overflow-hidden rounded-[2rem] border border-white/10 bg-[#0b0b0b] text-white shadow-[0_32px_120px_rgba(0,0,0,0.4)]"
+            className="w-full max-w-5xl overflow-hidden rounded-[1.6rem] border border-white/10 bg-[#0b0b0b] text-white shadow-[0_32px_120px_rgba(0,0,0,0.4)] sm:rounded-[2rem]"
             onClick={(event) => event.stopPropagation()}
           >
             <div className="flex items-center justify-between border-b border-white/10 px-4 py-3 sm:px-5">
@@ -130,7 +130,7 @@ export function WorkGrid({ items }: WorkGridProps) {
                 <p className="text-[0.66rem] font-semibold uppercase tracking-[0.24em] text-white/44">
                   {resolveLocalizedValue(activeItem.category, language)}
                 </p>
-                <h3 className="mt-1 font-display text-[1.2rem] text-white sm:text-[1.5rem]">
+                <h3 className="card-title mt-1 text-white sm:text-[1.5rem]">
                   {resolveLocalizedValue(activeItem.title, language)}
                 </h3>
               </div>
@@ -159,7 +159,7 @@ export function WorkGrid({ items }: WorkGridProps) {
             <div className="flex flex-col gap-4 px-4 py-4 sm:px-5 sm:py-5 md:flex-row md:items-end md:justify-between">
               <div className="max-w-2xl">
                 <p className="text-sm text-white/58">{activeItem.client}</p>
-                <p className="mt-2 text-sm leading-6 text-white/74 sm:text-base sm:leading-7">
+                <p className="body-copy mt-2 text-white/74 sm:text-base sm:leading-7">
                   {resolveLocalizedValue(activeItem.summary, language)}
                 </p>
               </div>

@@ -13,13 +13,13 @@ export function ServiceCard({ service }: ServiceCardProps) {
   const { language } = useSitePreferences();
 
   return (
-    <article className="card-surface group rounded-[1.8rem] p-5 sm:p-6">
+    <article className="card-surface group rounded-[1.65rem] p-4.5 sm:rounded-[1.8rem] sm:p-6">
       <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between sm:gap-5">
         <div className="space-y-1.5">
           <p className="text-[0.66rem] font-semibold uppercase tracking-[0.22em] text-[var(--muted)]">
             {resolveLocalizedValue(service.eyebrow, language)}
           </p>
-          <h3 className="font-display text-[1.55rem] leading-[0.98] text-[color:var(--foreground)] sm:text-[1.85rem]">
+          <h3 className="card-title text-[color:var(--foreground)]">
             {resolveLocalizedValue(service.title, language)}
           </h3>
         </div>
@@ -32,10 +32,10 @@ export function ServiceCard({ service }: ServiceCardProps) {
       </div>
 
       <div className="mt-4 border-t border-[color:var(--line)] pt-4">
-        <p className="max-w-2xl text-[0.95rem] leading-6 text-[var(--muted-2)] sm:text-[0.95rem]">
+        <p className="body-copy max-w-2xl text-[var(--muted-2)]">
           {resolveLocalizedValue(service.summary, language)}
         </p>
-        <p className="mt-3 text-sm leading-6 text-[var(--muted)]">
+        <p className="body-copy mt-3 text-[var(--muted)]">
           {resolveLocalizedValue(service.value, language)}
         </p>
       </div>
