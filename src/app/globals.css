@@ -16,28 +16,28 @@
   --btn-border: rgba(17, 17, 17, 0.12);
   --btn-primary-bg: #111111;
   --btn-primary-text: #ffffff;
-  --btn-primary-border: rgba(255, 255, 255, 0.12);
+  --btn-primary-border: #111111;
   --btn-primary-hover-bg: #242424;
   --btn-primary-hover-text: #ffffff;
   --btn-primary-active-bg: #080808;
   --btn-primary-active-text: #ffffff;
   --btn-secondary-bg: #e8e2d8;
   --btn-secondary-text: #111111;
-  --btn-secondary-border: rgba(17, 17, 17, 0.12);
+  --btn-secondary-border: #d6cec2;
   --btn-secondary-hover-bg: #dfd6ca;
   --btn-secondary-hover-text: #111111;
   --btn-secondary-active-bg: #d5cbbe;
   --btn-secondary-active-text: #111111;
   --btn-ghost-bg: transparent;
   --btn-ghost-text: #111111;
-  --btn-ghost-border: rgba(17, 17, 17, 0.18);
+  --btn-ghost-border: rgba(17, 17, 17, 0.26);
   --btn-ghost-hover-bg: rgba(17, 17, 17, 0.06);
   --btn-ghost-hover-text: #111111;
   --btn-ghost-active-bg: rgba(17, 17, 17, 0.1);
   --btn-ghost-active-text: #111111;
   --btn-icon-bg: rgba(255, 255, 255, 0.84);
   --btn-icon-text: #111111;
-  --btn-icon-border: rgba(17, 17, 17, 0.12);
+  --btn-icon-border: #d6cec2;
   --btn-icon-hover-bg: rgba(255, 255, 255, 0.94);
   --btn-icon-hover-text: #111111;
   --btn-icon-active-bg: #efe9df;
@@ -76,28 +76,28 @@ html[data-theme="dark"] {
   --btn-border: rgba(255, 255, 255, 0.16);
   --btn-primary-bg: #f2ece3;
   --btn-primary-text: #111111;
-  --btn-primary-border: rgba(17, 17, 17, 0.1);
+  --btn-primary-border: #f2ece3;
   --btn-primary-hover-bg: #ffffff;
   --btn-primary-hover-text: #111111;
   --btn-primary-active-bg: #e5ddcf;
   --btn-primary-active-text: #111111;
   --btn-secondary-bg: #23262d;
   --btn-secondary-text: #f2ece3;
-  --btn-secondary-border: rgba(255, 255, 255, 0.16);
+  --btn-secondary-border: #2f343d;
   --btn-secondary-hover-bg: #2b3039;
   --btn-secondary-hover-text: #ffffff;
   --btn-secondary-active-bg: #363b45;
   --btn-secondary-active-text: #ffffff;
   --btn-ghost-bg: transparent;
   --btn-ghost-text: #f2ece3;
-  --btn-ghost-border: rgba(255, 255, 255, 0.22);
+  --btn-ghost-border: rgba(242, 236, 227, 0.3);
   --btn-ghost-hover-bg: rgba(255, 255, 255, 0.08);
   --btn-ghost-hover-text: #ffffff;
   --btn-ghost-active-bg: rgba(255, 255, 255, 0.12);
   --btn-ghost-active-text: #ffffff;
   --btn-icon-bg: rgba(25, 28, 34, 0.9);
   --btn-icon-text: #f2ece3;
-  --btn-icon-border: rgba(255, 255, 255, 0.16);
+  --btn-icon-border: #2f343d;
   --btn-icon-hover-bg: rgba(35, 38, 45, 0.98);
   --btn-icon-hover-text: #ffffff;
   --btn-icon-active-bg: #3a3f49;
@@ -277,14 +277,20 @@ summary::-webkit-details-marker {
   }
 
   .button-base {
+    --button-bg-current: transparent;
+    --button-border-current: transparent;
+    --button-text-current: var(--foreground);
     display: inline-flex;
     align-items: center;
     justify-content: center;
     border-radius: 999px;
     border: 1px solid transparent;
+    background-color: var(--button-bg-current) !important;
+    border-color: var(--button-border-current) !important;
     font-weight: 700;
     line-height: 1;
-    color: var(--foreground);
+    color: var(--button-text-current) !important;
+    -webkit-text-fill-color: var(--button-text-current) !important;
     cursor: pointer;
     outline: none;
     text-decoration: none;
@@ -297,6 +303,12 @@ summary::-webkit-details-marker {
       border-color 200ms ease,
       color 200ms ease,
       box-shadow 200ms ease;
+  }
+
+  .button-base > span,
+  .button-base svg {
+    color: var(--button-text-current) !important;
+    -webkit-text-fill-color: var(--button-text-current) !important;
   }
 
   .button-base:hover {
@@ -342,9 +354,9 @@ summary::-webkit-details-marker {
   }
 
   .button-primary {
-    border-color: var(--btn-primary-border);
-    background: var(--btn-primary-bg);
-    color: var(--btn-primary-text);
+    --button-bg-current: var(--btn-primary-bg);
+    --button-border-current: var(--btn-primary-border);
+    --button-text-current: var(--btn-primary-text);
     box-shadow:
       0 16px 34px rgba(0, 0, 0, 0.16),
       inset 0 1px 0 rgba(255, 255, 255, 0.08);
@@ -352,133 +364,118 @@ summary::-webkit-details-marker {
 
   .button-primary:hover,
   .button-primary:focus-visible {
-    background: var(--btn-primary-hover-bg);
-    color: var(--btn-primary-hover-text);
+    --button-bg-current: var(--btn-primary-hover-bg);
+    --button-border-current: var(--btn-primary-border);
+    --button-text-current: var(--btn-primary-hover-text);
   }
 
   .button-primary:active {
-    background: var(--btn-primary-active-bg);
-    color: var(--btn-primary-active-text);
-    border-color: var(--btn-primary-border);
+    --button-bg-current: var(--btn-primary-active-bg);
+    --button-border-current: var(--btn-primary-border);
+    --button-text-current: var(--btn-primary-active-text);
   }
 
   .button-primary:disabled,
   .button-primary[aria-disabled="true"] {
-    background: var(--btn-primary-bg);
-    color: var(--btn-primary-text);
-    border-color: var(--btn-primary-border);
+    --button-bg-current: var(--btn-primary-bg);
+    --button-border-current: var(--btn-primary-border);
+    --button-text-current: var(--btn-primary-text);
   }
 
   .button-primary:visited {
-    color: var(--btn-primary-text);
-  }
-
-  .button-primary > span,
-  .button-primary svg {
-    color: inherit;
+    color: var(--btn-primary-text) !important;
   }
 
   .button-secondary {
-    border-color: var(--btn-secondary-border);
-    background: var(--btn-secondary-bg);
-    color: var(--btn-secondary-text);
+    --button-bg-current: var(--btn-secondary-bg);
+    --button-border-current: var(--btn-secondary-border);
+    --button-text-current: var(--btn-secondary-text);
     box-shadow: 0 14px 28px rgba(17, 17, 17, 0.08);
   }
 
   .button-secondary:hover,
   .button-secondary:focus-visible {
-    background: var(--btn-secondary-hover-bg);
-    color: var(--btn-secondary-hover-text);
+    --button-bg-current: var(--btn-secondary-hover-bg);
+    --button-border-current: var(--btn-secondary-border);
+    --button-text-current: var(--btn-secondary-hover-text);
   }
 
   .button-secondary:active {
-    background: var(--btn-secondary-active-bg);
-    color: var(--btn-secondary-active-text);
-    border-color: var(--btn-secondary-border);
+    --button-bg-current: var(--btn-secondary-active-bg);
+    --button-border-current: var(--btn-secondary-border);
+    --button-text-current: var(--btn-secondary-active-text);
   }
 
   .button-secondary:disabled,
   .button-secondary[aria-disabled="true"] {
-    background: var(--btn-secondary-bg);
-    color: var(--btn-secondary-text);
-    border-color: var(--btn-secondary-border);
+    --button-bg-current: var(--btn-secondary-bg);
+    --button-border-current: var(--btn-secondary-border);
+    --button-text-current: var(--btn-secondary-text);
   }
 
   .button-secondary:visited {
-    color: var(--btn-secondary-text);
-  }
-
-  .button-secondary > span,
-  .button-secondary svg {
-    color: inherit;
+    color: var(--btn-secondary-text) !important;
   }
 
   .button-ghost {
-    border-color: var(--btn-ghost-border);
-    background: var(--btn-ghost-bg);
-    color: var(--btn-ghost-text);
+    --button-bg-current: var(--btn-ghost-bg);
+    --button-border-current: var(--btn-ghost-border);
+    --button-text-current: var(--btn-ghost-text);
   }
 
   .button-ghost:hover,
   .button-ghost:focus-visible {
-    background: var(--btn-ghost-hover-bg);
-    color: var(--btn-ghost-hover-text);
+    --button-bg-current: var(--btn-ghost-hover-bg);
+    --button-border-current: var(--btn-ghost-border);
+    --button-text-current: var(--btn-ghost-hover-text);
   }
 
   .button-ghost:active {
-    background: var(--btn-ghost-active-bg);
-    color: var(--btn-ghost-active-text);
-    border-color: var(--btn-ghost-border);
+    --button-bg-current: var(--btn-ghost-active-bg);
+    --button-border-current: var(--btn-ghost-border);
+    --button-text-current: var(--btn-ghost-active-text);
   }
 
   .button-ghost:disabled,
   .button-ghost[aria-disabled="true"] {
-    background: var(--btn-ghost-bg);
-    color: var(--btn-ghost-text);
-    border-color: var(--btn-ghost-border);
+    --button-bg-current: var(--btn-ghost-bg);
+    --button-border-current: var(--btn-ghost-border);
+    --button-text-current: var(--btn-ghost-text);
   }
 
   .button-ghost:visited {
-    color: var(--btn-ghost-text);
-  }
-
-  .button-ghost > span,
-  .button-ghost svg {
-    color: inherit;
+    color: var(--btn-ghost-text) !important;
   }
 
   .button-icon {
-    border-color: var(--btn-icon-border);
-    background: var(--btn-icon-bg);
-    color: var(--btn-icon-text);
+    --button-bg-current: var(--btn-icon-bg);
+    --button-border-current: var(--btn-icon-border);
+    --button-text-current: var(--btn-icon-text);
     box-shadow: 0 10px 24px rgba(17, 17, 17, 0.12);
   }
 
   .button-icon:hover,
   .button-icon:focus-visible {
-    background: var(--btn-icon-hover-bg);
-    color: var(--btn-icon-hover-text);
+    --button-bg-current: var(--btn-icon-hover-bg);
+    --button-border-current: var(--btn-icon-border);
+    --button-text-current: var(--btn-icon-hover-text);
   }
 
   .button-icon:active {
-    background: var(--btn-icon-active-bg);
-    color: var(--btn-icon-active-text);
-    border-color: var(--btn-icon-border);
+    --button-bg-current: var(--btn-icon-active-bg);
+    --button-border-current: var(--btn-icon-border);
+    --button-text-current: var(--btn-icon-active-text);
   }
 
   .button-icon:disabled,
   .button-icon[aria-disabled="true"] {
-    background: var(--btn-icon-bg);
-    color: var(--btn-icon-text);
-    border-color: var(--btn-icon-border);
+    --button-bg-current: var(--btn-icon-bg);
+    --button-border-current: var(--btn-icon-border);
+    --button-text-current: var(--btn-icon-text);
   }
 
   .button-icon:visited {
-    color: var(--btn-icon-text);
-  }
-
-  .button-icon svg {
-    color: inherit;
+    color: var(--btn-icon-text) !important;
   }
 
   .control-shell {
@@ -493,14 +490,19 @@ summary::-webkit-details-marker {
   }
 
   .control-option {
+    --control-bg-current: var(--control-option-bg);
+    --control-border-current: var(--control-option-border);
+    --control-text-current: var(--control-option-text);
     display: inline-flex;
     align-items: center;
     justify-content: center;
     gap: 0.3rem;
     border: 1px solid var(--control-option-border);
     border-radius: 999px;
-    background: var(--control-option-bg);
-    color: var(--control-option-text);
+    background-color: var(--control-bg-current) !important;
+    border-color: var(--control-border-current) !important;
+    color: var(--control-text-current) !important;
+    -webkit-text-fill-color: var(--control-text-current) !important;
     cursor: pointer;
     font-weight: 700;
     line-height: 1;
@@ -512,11 +514,17 @@ summary::-webkit-details-marker {
       transform 180ms ease;
   }
 
+  .control-option > span,
+  .control-option svg {
+    color: var(--control-text-current) !important;
+    -webkit-text-fill-color: var(--control-text-current) !important;
+  }
+
   .control-option:hover,
   .control-option:focus-visible {
-    background: var(--control-option-hover-bg);
-    border-color: var(--control-option-hover-border);
-    color: var(--control-option-hover-text);
+    --control-bg-current: var(--control-option-hover-bg);
+    --control-border-current: var(--control-option-hover-border);
+    --control-text-current: var(--control-option-hover-text);
   }
 
   .control-option:active {
@@ -552,23 +560,23 @@ summary::-webkit-details-marker {
   }
 
   .control-option-idle {
-    background: var(--control-option-bg);
-    border-color: var(--control-option-border);
-    color: var(--control-option-text);
+    --control-bg-current: var(--control-option-bg);
+    --control-border-current: var(--control-option-border);
+    --control-text-current: var(--control-option-text);
   }
 
   .control-option-active {
-    background: var(--control-option-active-bg);
-    border-color: var(--control-option-active-border);
-    color: var(--control-option-active-text);
+    --control-bg-current: var(--control-option-active-bg);
+    --control-border-current: var(--control-option-active-border);
+    --control-text-current: var(--control-option-active-text);
   }
 
   .control-option-active:hover,
   .control-option-active:focus-visible,
   .control-option-active:active {
-    background: var(--control-option-active-bg);
-    border-color: var(--control-option-active-border);
-    color: var(--control-option-active-text);
+    --control-bg-current: var(--control-option-active-bg);
+    --control-border-current: var(--control-option-active-border);
+    --control-text-current: var(--control-option-active-text);
   }
 
   .card-trigger {
