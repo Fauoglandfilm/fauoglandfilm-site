@@ -241,9 +241,9 @@ export const uiCopy = {
       servicesCtaDescription:
         "Vi hjelper dere å velge riktig format, omfang og budsjett for det dere skal få ut av videoen.",
       caseHeroEyebrow: "Portefølje",
-      caseHeroTitle: "Arbeid hentet fra Fau&Land Films live-portefølje",
+      caseHeroTitle: "Portefølje",
       caseHeroDescription:
-        "En ryddigere oversikt over faktiske produksjoner innen kampanje, organisasjon, foredrag, musikkvideo og event.",
+        "Et utvalg av arbeid innen reklamefilm, dokumentar, event, musikkvideo og innhold for organisasjoner og merkevarer.",
       casePrimaryCta: "Book et uforpliktende møte",
       caseCtaTitle: "Vil dere sette opp noe lignende?",
       caseCtaDescription:
@@ -327,9 +327,9 @@ export const uiCopy = {
       servicesCtaDescription:
         "We help you choose the right format, scope and budget for the result you need from the work.",
       caseHeroEyebrow: "Portfolio",
-      caseHeroTitle: "Work pulled from Fau&Land Film's live portfolio",
+      caseHeroTitle: "Portfolio",
       caseHeroDescription:
-        "A cleaner overview of real productions across campaigns, organisations, talks, music video and events.",
+        "A curated selection of work across commercial film, documentary, events, music video and content for organisations and brands.",
       casePrimaryCta: "Book an introductory call",
       caseCtaTitle: "Want to set up something similar?",
       caseCtaDescription:

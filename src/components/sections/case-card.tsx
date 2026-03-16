@@ -39,7 +39,7 @@ export function CaseCard({
           isFeature ? "min-h-[14.5rem] sm:min-h-[16rem] lg:min-h-[19rem]" : "aspect-[1.25/0.82] min-h-[13rem] md:min-h-[14.5rem]"
         }`}
       >
-        {video ? (
+        {video?.videoType === "direct" ? (
           <video
             className="h-full w-full object-cover transition duration-700 group-hover:scale-[1.03]"
             autoPlay

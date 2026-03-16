@@ -12,10 +12,12 @@ import {
   homeIntroContent,
   servicePillars,
   siteConfig,
+  teamMembers,
   type CaseStudy,
   type ServicePillar,
   videoLibrary,
 } from "@/data/site-content";
+import { servicePillarVisuals, siteVisuals } from "@/data/visual-assets";
 import { uiCopy } from "@/data/ui-copy";
 import { resolveLocalizedValue } from "@/lib/i18n";
 
@@ -35,8 +37,16 @@ export function HeroSection() {
   return (
     <section className="relative isolate overflow-hidden">
       <div className="absolute inset-0">
+        <Image
+          src={siteVisuals.heroNature.src}
+          alt={resolveLocalizedValue(siteVisuals.heroNature.alt, language)}
+          fill
+          priority
+          sizes="100vw"
+          className="image-slow-zoom object-cover opacity-48"
+        />
         <video
-          className="h-full w-full object-cover"
+          className="relative z-[1] h-full w-full object-cover opacity-[0.72] saturate-[0.88] lg:opacity-[0.8]"
           autoPlay
           muted
           loop
@@ -49,7 +59,15 @@ export function HeroSection() {
           ) : null}
           <source src={heroVideo.src} type="video/mp4" />
         </video>
-        <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(7,7,7,0.18),rgba(7,7,7,0.1)_28%,rgba(7,7,7,0.42)_65%,rgba(7,7,7,0.72)_100%)]" />
+        <Image
+          src={siteVisuals.cinematicProjector.src}
+          alt={resolveLocalizedValue(siteVisuals.cinematicProjector.alt, language)}
+          fill
+          sizes="100vw"
+          className="object-cover opacity-14 mix-blend-screen"
+        />
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(244,217,158,0.22),transparent_28%),radial-gradient(circle_at_top_right,rgba(255,255,255,0.12),transparent_24%),linear-gradient(180deg,rgba(6,6,6,0.12),rgba(6,6,6,0.18)_30%,rgba(6,6,6,0.52)_64%,rgba(6,6,6,0.86)_100%)]" />
+        <div className="grain-overlay absolute inset-0" />
       </div>
 
       <div className="relative mx-auto flex min-h-[80svh] max-w-7xl items-end px-4 pb-8 pt-24 sm:min-h-[86svh] sm:px-6 sm:pb-12 sm:pt-28 lg:min-h-[84vh] lg:px-8 lg:pb-14 lg:pt-32">
@@ -79,8 +97,16 @@ export function HeroSection() {
 
           <FloatingLayer className="hidden lg:block">
             <Reveal delay={0.16}>
-              <div className="rounded-[2rem] border border-white/12 bg-[rgba(255,255,255,0.08)] p-6 text-white backdrop-blur-xl">
-                <div className="space-y-3">
+              <div className="relative overflow-hidden rounded-[2rem] border border-white/12 bg-[rgba(255,255,255,0.08)] p-6 text-white backdrop-blur-xl">
+                <Image
+                  src={siteVisuals.cinematicLens.src}
+                  alt={resolveLocalizedValue(siteVisuals.cinematicLens.alt, language)}
+                  fill
+                  sizes="28vw"
+                  className="object-cover opacity-28"
+                />
+                <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(11,11,11,0.24),rgba(11,11,11,0.68))]" />
+                <div className="relative space-y-3">
                   <p className="text-[0.72rem] font-semibold uppercase tracking-[0.24em] text-white/58">
                     {copy.heroPanelEyebrow}
                   </p>
@@ -142,19 +168,47 @@ export function IntroSection() {
   return (
     <section className="py-5 sm:py-6">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <Reveal>
-          <div className="rounded-[1.7rem] border border-[color:var(--line)] bg-[color:var(--surface)] px-5 py-5 shadow-[0_18px_44px_rgba(18,18,18,0.05)] sm:rounded-[1.9rem] sm:px-6 sm:py-6">
-            <div className="max-w-4xl space-y-3">
-              <span className="eyebrow">{resolveLocalizedValue(homeIntroContent.eyebrow, language)}</span>
-              <h2 className="section-title text-[color:var(--foreground)]">
-                {resolveLocalizedValue(homeIntroContent.title, language)}
-              </h2>
-              <p className="body-copy max-w-3xl text-[var(--muted-2)] sm:text-base sm:leading-7">
-                {resolveLocalizedValue(homeIntroContent.description, language)}
-              </p>
+        <div className="grid gap-4 lg:grid-cols-[1.05fr_0.95fr]">
+          <Reveal>
+            <div className="card-surface rounded-[1.7rem] px-5 py-5 sm:rounded-[1.9rem] sm:px-6 sm:py-6">
+              <div className="max-w-4xl space-y-3">
+                <span className="eyebrow">{resolveLocalizedValue(homeIntroContent.eyebrow, language)}</span>
+                <h2 className="section-title text-[color:var(--foreground)]">
+                  {resolveLocalizedValue(homeIntroContent.title, language)}
+                </h2>
+                <p className="body-copy max-w-3xl text-[var(--muted-2)] sm:text-base sm:leading-7">
+                  {resolveLocalizedValue(homeIntroContent.description, language)}
+                </p>
+              </div>
             </div>
-          </div>
-        </Reveal>
+          </Reveal>
+
+          <Reveal delay={0.08}>
+            <div className="relative overflow-hidden rounded-[1.7rem] border border-[color:var(--line)] bg-[#111111] sm:rounded-[1.9rem]">
+              <div className="relative aspect-[1.18/0.92] min-h-[15rem]">
+                <Image
+                  src={siteVisuals.introDrone.src}
+                  alt={resolveLocalizedValue(siteVisuals.introDrone.alt, language)}
+                  fill
+                  sizes="(min-width: 1024px) 42vw, 100vw"
+                  className="object-cover"
+                />
+                <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(7,7,7,0.1),rgba(7,7,7,0.56)_72%,rgba(7,7,7,0.84))]" />
+                <div className="grain-overlay absolute inset-0 opacity-45" />
+                <div className="absolute inset-x-0 bottom-0 p-5 text-white sm:p-6">
+                  <p className="text-[0.68rem] font-semibold uppercase tracking-[0.24em] text-white/58">
+                    Aerial / Motion
+                  </p>
+                  <p className="mt-2 max-w-sm text-sm leading-6 text-white/74 sm:text-base">
+                    {language === "no"
+                      ? "Fra luftfoto til dokumentariske detaljer bygger vi filmer som gir arbeidet større rekkevidde."
+                      : "From aerials to documentary detail, we build films that give the work greater reach."}
+                  </p>
+                </div>
+              </div>
+            </div>
+          </Reveal>
+        </div>
       </div>
     </section>
   );
@@ -171,8 +225,19 @@ export function ClientSlider() {
           <p className="eyebrow">{copy.clientsEyebrow}</p>
           <p className="body-copy text-[var(--muted)]">{copy.clientsDescription}</p>
         </div>
-        <div className="mt-4 rounded-[1.8rem] border border-[color:var(--logo-strip-border)] bg-[color:var(--logo-strip-bg)] px-2 py-3 shadow-[0_26px_70px_rgba(17,17,17,0.08)] sm:mt-5 sm:px-3 sm:py-4">
-          <ClientLogoMarquee logos={clientLogos} durationSeconds={34} />
+        <div className="relative mt-4 overflow-hidden rounded-[1.8rem] border border-[color:var(--logo-strip-border)] bg-[color:var(--logo-strip-bg)] px-1.5 py-3.5 shadow-[0_22px_58px_rgba(17,17,17,0.06)] sm:mt-5 sm:px-2.5 sm:py-4.5">
+          <Image
+            src={siteVisuals.footerProjector.src}
+            alt={resolveLocalizedValue(siteVisuals.footerProjector.alt, language)}
+            fill
+            sizes="100vw"
+            className="object-cover opacity-[0.08]"
+          />
+          <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(255,255,255,0.84),rgba(255,255,255,0.92))]" />
+          <div className="grain-overlay absolute inset-0 opacity-20" />
+          <div className="relative">
+            <ClientLogoMarquee logos={clientLogos} durationSeconds={34} />
+          </div>
         </div>
       </div>
     </section>
@@ -193,7 +258,7 @@ export function ServicesSection() {
           </h2>
         </div>
 
-        <div className="mt-6 grid gap-3.5 sm:mt-8 sm:gap-4 lg:grid-cols-3">
+        <div className="mt-6 grid gap-3.5 sm:mt-8 sm:gap-4 md:grid-cols-2">
           {servicePillars.map((pillar, index) => (
             <ServicePillarCard key={pillar.eyebrow} pillar={pillar} delay={0.05 * index} />
           ))}
@@ -211,19 +276,34 @@ function ServicePillarCard({
   delay: number;
 }) {
   const { language } = useSitePreferences();
+  const visual = servicePillarVisuals[pillar.eyebrow];
 
   return (
     <Reveal delay={delay}>
-      <article className="card-surface rounded-[1.6rem] p-4.5 sm:rounded-[1.8rem] sm:p-6">
-        <div className="flex h-10 w-10 items-center justify-center rounded-[1.05rem] bg-[color:var(--foreground)] text-sm font-semibold text-[color:var(--background)] sm:h-11 sm:w-11 sm:rounded-2xl">
-          {pillar.eyebrow}
+      <article className="card-surface group overflow-hidden rounded-[1.6rem] sm:rounded-[1.8rem]">
+        <div className="relative aspect-[1.08/0.82] overflow-hidden">
+          <Image
+            src={visual.src}
+            alt={resolveLocalizedValue(visual.alt, language)}
+            fill
+            sizes="(min-width: 768px) 50vw, 100vw"
+            className="object-cover transition duration-700 group-hover:scale-[1.04]"
+          />
+          <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(8,8,8,0.04),rgba(8,8,8,0.52)_100%)]" />
+          <div className="grain-overlay absolute inset-0 opacity-35" />
+          <div className="absolute left-4 top-4 inline-flex h-10 w-10 items-center justify-center rounded-[1.05rem] border border-white/12 bg-black/28 text-sm font-semibold text-white backdrop-blur sm:h-11 sm:w-11 sm:rounded-2xl">
+            {pillar.eyebrow}
+          </div>
         </div>
-        <h3 className="card-title mt-4 text-[color:var(--foreground)] sm:mt-5">
-          {resolveLocalizedValue(pillar.title, language)}
-        </h3>
-        <p className="body-copy mt-2.5 text-[var(--muted-2)] sm:mt-3">
-          {resolveLocalizedValue(pillar.summary, language)}
-        </p>
+
+        <div className="p-4.5 sm:p-6">
+          <h3 className="card-title text-[color:var(--foreground)]">
+            {resolveLocalizedValue(pillar.title, language)}
+          </h3>
+          <p className="body-copy mt-2.5 text-[var(--muted-2)] sm:mt-3">
+            {resolveLocalizedValue(pillar.summary, language)}
+          </p>
+        </div>
       </article>
     </Reveal>
   );
@@ -328,21 +408,66 @@ export function FeaturedCase() {
 export function AboutSection() {
   const { language } = useSitePreferences();
   const copy = uiCopy.home[language];
+  const studioPortraits = teamMembers.filter((member) => member.image).slice(0, 2);
 
   return (
     <section className="section-space">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="grid gap-5 sm:gap-6 lg:grid-cols-[1.02fr_0.98fr] lg:items-center">
           <FloatingLayer className="relative overflow-hidden rounded-[1.8rem] border border-[color:var(--line)] bg-[color:var(--surface)] shadow-[0_32px_100px_rgba(18,18,18,0.08)] sm:rounded-[2rem]">
-            <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(255,255,255,0)_34%,rgba(17,17,17,0.36)_100%)]" />
-            <Image
-              src={aboutStudioContent.image}
-              alt={resolveLocalizedValue(aboutStudioContent.imageAlt, language)}
-              width={6000}
-              height={3375}
-              sizes="(min-width: 1024px) 48vw, 100vw"
-              className="aspect-[4/3] w-full object-cover"
-            />
+            <div className="grid gap-px bg-[color:var(--line)] lg:grid-cols-[1.1fr_0.9fr]">
+              <div className="relative min-h-[18rem] overflow-hidden bg-[#111111] sm:min-h-[21rem] lg:min-h-[27rem]">
+                <Image
+                  src={siteVisuals.aboutCrew.src}
+                  alt={resolveLocalizedValue(siteVisuals.aboutCrew.alt, language)}
+                  fill
+                  sizes="(min-width: 1024px) 34vw, 100vw"
+                  className="object-cover"
+                />
+                <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(7,7,7,0.1),rgba(7,7,7,0.52)_68%,rgba(7,7,7,0.82)_100%)]" />
+                <div className="grain-overlay absolute inset-0 opacity-40" />
+                <div className="absolute inset-x-0 bottom-0 p-5 text-white sm:p-6">
+                  <p className="text-[0.66rem] font-semibold uppercase tracking-[0.22em] text-white/56">
+                    On set
+                  </p>
+                  <p className="mt-2 max-w-sm text-sm leading-6 text-white/74 sm:text-base">
+                    {language === "no"
+                      ? "Seniorledet produksjon med kort vei fra planlegging til opptak og ferdig film."
+                      : "Senior-led production with a short path from planning to shoot and final delivery."}
+                  </p>
+                </div>
+              </div>
+
+              <div className="grid gap-px bg-[color:var(--line)] sm:grid-cols-2 lg:grid-cols-1">
+                {studioPortraits.map((member) => (
+                  <div
+                    key={member.name}
+                    className="group relative aspect-[0.9/1.05] overflow-hidden bg-[color:var(--surface-strong)]"
+                  >
+                    <Image
+                      src={member.image!}
+                      alt={
+                        member.imageAlt
+                          ? resolveLocalizedValue(member.imageAlt, language)
+                          : member.name
+                      }
+                      fill
+                      sizes="(min-width: 1024px) 18vw, 50vw"
+                      className="object-cover transition duration-700 group-hover:scale-[1.02]"
+                    />
+                    <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(17,17,17,0.02),rgba(17,17,17,0.18)_48%,rgba(17,17,17,0.7)_100%)]" />
+                    <div className="absolute inset-x-0 bottom-0 p-4 sm:p-5">
+                      <p className="text-[0.64rem] font-semibold uppercase tracking-[0.2em] text-white/62">
+                        {resolveLocalizedValue(member.role, language)}
+                      </p>
+                      <p className="mt-2 text-lg font-semibold tracking-[-0.03em] text-white">
+                        {member.name}
+                      </p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
           </FloatingLayer>
 
           <div className="max-w-2xl space-y-4 sm:space-y-5">

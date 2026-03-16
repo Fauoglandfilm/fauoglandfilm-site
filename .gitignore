@@ -5,5 +5,13 @@ node_modules
 *.tmp
 *.bak
 *.orig
+*.crdownload
 FILER TIL NETTSIDE*
 ARKIV*
+public/assets/**/*.mp4
+public/assets/**/*.mov
+public/assets/**/*.mkv
+public/assets/**/*.webm
+public/assets/_legacy-import/
+public/assets/unmatched/
+public/assets/unverified-downloads/

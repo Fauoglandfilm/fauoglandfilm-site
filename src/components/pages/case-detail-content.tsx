@@ -3,6 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 
+import { EmbeddedVideoPlayer } from "@/components/media/embedded-video-player";
 import { useSitePreferences } from "@/components/providers/site-preferences";
 import { CtaBanner, PageHero } from "@/components/sections/site-sections";
 import { ButtonLink } from "@/components/ui/button-link";
@@ -42,31 +43,18 @@ export function CaseDetailContent({
         <div className="mx-auto grid max-w-7xl gap-4 px-4 sm:gap-5 sm:px-6 lg:grid-cols-[0.94fr_1.06fr] lg:px-8">
           <div className="space-y-5">
             <article className="card-surface overflow-hidden rounded-[2rem]">
-              {caseStudy.video ? (
-                <div className="relative aspect-video w-full">
-                  <video
-                    className="h-full w-full object-cover"
-                    autoPlay
-                    muted
-                    loop
-                    playsInline
-                    preload="metadata"
-                    poster={caseStudy.video.poster}
-                  >
-                    <source src={caseStudy.video.src} type="video/mp4" />
-                  </video>
-                  <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(17,17,17,0.04),rgba(17,17,17,0.24))]" />
-                </div>
-              ) : caseStudy.externalVideo ? (
+              {caseStudy.video || caseStudy.externalVideo ? (
                 <div className="relative aspect-video w-full bg-[#111111]">
-                  <iframe
-                    className="h-full w-full"
-                    src={caseStudy.externalVideo.embedUrl}
-                    title={resolveLocalizedValue(caseStudy.externalVideo.label, language)}
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                    referrerPolicy="strict-origin-when-cross-origin"
-                    allowFullScreen
+                  <EmbeddedVideoPlayer
+                    title={caseStudy.title}
+                    video={caseStudy.video}
+                    externalVideo={caseStudy.externalVideo}
+                    image={caseStudy.image}
+                    imageAlt={caseStudy.imageAlt}
+                    className="relative h-full w-full"
+                    sizes="(min-width: 1024px) 48vw, 100vw"
                   />
+                  <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(17,17,17,0.04),rgba(17,17,17,0.24))]" />
                 </div>
               ) : caseStudy.image ? (
                 <div className="relative aspect-video w-full">

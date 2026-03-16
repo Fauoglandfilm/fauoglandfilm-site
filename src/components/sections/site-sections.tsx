@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import type { ReactNode } from "react";
 
@@ -17,6 +18,7 @@ import type {
   Testimonial,
 } from "@/data/site-content";
 import { siteConfig } from "@/data/site-content";
+import { siteVisuals } from "@/data/visual-assets";
 import { uiCopy } from "@/data/ui-copy";
 import type { LocalizedText } from "@/lib/i18n";
 import { resolveLocalizedValue } from "@/lib/i18n";
@@ -275,16 +277,34 @@ export function TeamSection({
         <div className="grid gap-4 lg:grid-cols-2">
           {team.map((member, index) => (
             <Reveal key={member.name} delay={0.05 * index}>
-              <article className="card-surface rounded-[1.8rem] p-5">
-                <p className="text-[0.68rem] font-semibold uppercase tracking-[0.22em] text-[var(--muted)]">
-                  {resolveLocalizedValue(member.role, language)}
-                </p>
-                <h3 className="card-title mt-3 text-[color:var(--foreground)]">
-                  {member.name}
-                </h3>
-                <p className="body-copy mt-3 text-[var(--muted-2)]">
-                  {resolveLocalizedValue(member.summary, language)}
-                </p>
+              <article className="card-surface overflow-hidden rounded-[1.8rem]">
+                {member.image ? (
+                  <div className="relative aspect-[0.92/1] overflow-hidden border-b border-[color:var(--line)] bg-[color:var(--surface)]">
+                    <Image
+                      src={member.image}
+                      alt={
+                        member.imageAlt
+                          ? resolveLocalizedValue(member.imageAlt, language)
+                          : member.name
+                      }
+                      fill
+                      sizes="(min-width: 1280px) 24vw, (min-width: 768px) 42vw, 100vw"
+                      className="object-cover"
+                    />
+                  </div>
+                ) : null}
+
+                <div className="p-5">
+                  <p className="text-[0.68rem] font-semibold uppercase tracking-[0.22em] text-[var(--muted)]">
+                    {resolveLocalizedValue(member.role, language)}
+                  </p>
+                  <h3 className="card-title mt-3 text-[color:var(--foreground)]">
+                    {member.name}
+                  </h3>
+                  <p className="body-copy mt-3 text-[var(--muted-2)]">
+                    {resolveLocalizedValue(member.summary, language)}
+                  </p>
+                </div>
               </article>
             </Reveal>
           ))}
@@ -548,7 +568,7 @@ export function PageHero({
   return (
     <section className="relative isolate overflow-hidden pt-22 sm:pt-28">
       <div className="absolute inset-0">
-        {video ? (
+        {video?.videoType === "direct" ? (
           <>
             <video
               className="h-full w-full object-cover"
@@ -565,15 +585,30 @@ export function PageHero({
               <source src={video.src} type="video/mp4" />
             </video>
             <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(7,7,7,0.28),rgba(7,7,7,0.12)_34%,rgba(7,7,7,0.58)_100%)]" />
+            <div className="grain-overlay absolute inset-0 opacity-40" />
           </>
         ) : (
-          <div
-            className={
-              theme === "dark"
-                ? "absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(197,165,106,0.18),transparent_36%),linear-gradient(180deg,#11141a,#0d0f12)]"
-                : "absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(210,192,154,0.4),transparent_36%),linear-gradient(180deg,#f5f1eb,#efe8df)]"
-            }
-          />
+          <>
+            <Image
+              src={theme === "dark" ? siteVisuals.footerProjector.src : siteVisuals.cinematicLens.src}
+              alt={
+                theme === "dark"
+                  ? resolveLocalizedValue(siteVisuals.footerProjector.alt, language)
+                  : resolveLocalizedValue(siteVisuals.cinematicLens.alt, language)
+              }
+              fill
+              sizes="100vw"
+              className="object-cover opacity-[0.18] sm:opacity-[0.24]"
+            />
+            <div
+              className={
+                theme === "dark"
+                  ? "absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(197,165,106,0.18),transparent_36%),linear-gradient(180deg,rgba(10,12,15,0.86),rgba(10,12,15,0.96))]"
+                  : "absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(210,192,154,0.24),transparent_36%),linear-gradient(180deg,rgba(244,239,232,0.94),rgba(239,232,223,0.98))]"
+              }
+            />
+            <div className="grain-overlay absolute inset-0 opacity-38" />
+          </>
         )}
       </div>
 
