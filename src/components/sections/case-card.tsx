@@ -23,6 +23,7 @@ export function CaseCard({
 }: CaseCardProps) {
   const image = caseStudy.image;
   const video = caseStudy.video;
+  const externalVideo = caseStudy.externalVideo;
   const isFeature = layout === "feature";
   const { language } = useSitePreferences();
   const copy = uiCopy.siteSections[language];
@@ -50,6 +51,14 @@ export function CaseCard({
           >
             <source src={video.src} type="video/mp4" />
           </video>
+        ) : externalVideo ? (
+          <Image
+            src={externalVideo.thumbnailSrc}
+            alt={resolveLocalizedValue(externalVideo.label, language)}
+            fill
+            sizes={isFeature ? "(min-width: 1024px) 50vw, 100vw" : "(min-width: 1280px) 33vw, 100vw"}
+            className="object-cover transition duration-500 group-hover:scale-[1.03]"
+          />
         ) : image ? (
           <Image
             src={image}

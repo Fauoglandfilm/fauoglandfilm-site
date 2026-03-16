@@ -61,6 +61,7 @@ export const organizationSchema = {
   name: siteConfig.legalName,
   url: siteConfig.domain,
   description: siteConfig.description,
+  vatID: siteConfig.orgId,
   telephone: siteConfig.phonePrimary,
   email: siteConfig.email,
   priceRange: "$$",

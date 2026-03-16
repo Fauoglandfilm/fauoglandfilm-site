@@ -23,7 +23,7 @@ const sora = Sora({
 });
 
 export const metadata: Metadata = buildMetadata({
-  title: "Videodrevet markedsføring og reklamefilm i Oslo",
+  title: "Reklamefilm og innholdsproduksjon i Oslo",
   description: siteConfig.description,
   path: "/",
 });

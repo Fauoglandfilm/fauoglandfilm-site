@@ -36,7 +36,6 @@ export function CaseDetailContent({
           label: { no: uiCopy.pages.no.caseDetailSecondary, en: uiCopy.pages.en.caseDetailSecondary },
           href: "/case",
         }}
-        video={caseStudy.video}
       />
 
       <section className="section-space">
@@ -44,7 +43,7 @@ export function CaseDetailContent({
           <div className="space-y-5">
             <article className="card-surface overflow-hidden rounded-[2rem]">
               {caseStudy.video ? (
-                <div className="relative aspect-[4/5] w-full">
+                <div className="relative aspect-video w-full">
                   <video
                     className="h-full w-full object-cover"
                     autoPlay
@@ -58,8 +57,19 @@ export function CaseDetailContent({
                   </video>
                   <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(17,17,17,0.04),rgba(17,17,17,0.24))]" />
                 </div>
+              ) : caseStudy.externalVideo ? (
+                <div className="relative aspect-video w-full bg-[#111111]">
+                  <iframe
+                    className="h-full w-full"
+                    src={caseStudy.externalVideo.embedUrl}
+                    title={resolveLocalizedValue(caseStudy.externalVideo.label, language)}
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                    referrerPolicy="strict-origin-when-cross-origin"
+                    allowFullScreen
+                  />
+                </div>
               ) : caseStudy.image ? (
-                <div className="relative aspect-[4/5] w-full">
+                <div className="relative aspect-video w-full">
                   <Image
                     src={caseStudy.image}
                     alt={caseStudy.imageAlt ? resolveLocalizedValue(caseStudy.imageAlt, language) : `${caseStudy.client} case`}

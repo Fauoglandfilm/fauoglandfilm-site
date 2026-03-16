@@ -10,7 +10,6 @@ import { Reveal } from "@/components/motion/reveal";
 import type {
   CaseStudy,
   FaqItem,
-  OfferPackage,
   PriceGuide,
   ProcessStep,
   ServiceArea,
@@ -56,57 +55,6 @@ export function ServicesSection({
         {services.map((service, index) => (
           <Reveal key={service.slug} delay={0.06 * index}>
             <ServiceCard service={service} />
-          </Reveal>
-        ))}
-      </div>
-    </SectionShell>
-  );
-}
-
-export function PackagesSection({ packages }: { packages: OfferPackage[] }) {
-  const { language } = useSitePreferences();
-  const copy = uiCopy.siteSections[language];
-
-  return (
-    <SectionShell
-      eyebrow={copy.packagesEyebrow}
-      title={copy.packagesTitle}
-      description={copy.packagesDescription}
-    >
-      <div className="grid gap-4 xl:grid-cols-3">
-        {packages.map((pkg, index) => (
-          <Reveal key={`${resolveLocalizedValue(pkg.name, language)}-${index}`} delay={0.05 * index}>
-            <article
-              className={`card-surface rounded-[1.9rem] p-5 sm:p-6 ${
-                pkg.featured ? "ring-1 ring-[var(--accent)]/35" : ""
-              }`}
-            >
-              <p className="text-[0.68rem] font-semibold uppercase tracking-[0.22em] text-[var(--muted)]">
-                {resolveLocalizedValue(pkg.name, language)}
-              </p>
-              <h3 className="feature-title mt-4 text-[color:var(--foreground)]">
-                {resolveLocalizedValue(pkg.price, language)}
-              </h3>
-              <p className="body-copy mt-3 text-[var(--muted-2)]">
-                {resolveLocalizedValue(pkg.summary, language)}
-              </p>
-              <p className="mt-4 border-t border-[color:var(--line)] pt-4 text-sm leading-6 text-[var(--muted)]">
-                {resolveLocalizedValue(pkg.idealFor, language)}
-              </p>
-              <ul className="mt-5 space-y-2.5 text-sm leading-6 text-[var(--muted-2)]">
-                {pkg.includes.map((item, index) => (
-                  <li key={`package-item-${index}`} className="flex gap-3">
-                    <span className="mt-2 h-1.5 w-1.5 rounded-full bg-[var(--accent)]" />
-                    <span>{resolveLocalizedValue(item, language)}</span>
-                  </li>
-                ))}
-              </ul>
-              <div className="mt-6">
-                <ButtonLink href={pkg.ctaHref} variant={pkg.featured ? "primary" : "secondary"} fullWidth>
-                  {resolveLocalizedValue(pkg.ctaLabel, language)}
-                </ButtonLink>
-              </div>
-            </article>
           </Reveal>
         ))}
       </div>
