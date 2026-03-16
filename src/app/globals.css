@@ -13,6 +13,8 @@
   --accent: #b59a67;
   --accent-2: #8a7347;
   --shadow: 0 24px 80px rgba(25, 21, 17, 0.08);
+  --logo-strip-bg: rgba(255, 252, 247, 0.94);
+  --logo-strip-border: rgba(17, 17, 17, 0.08);
   --btn-border: rgba(17, 17, 17, 0.12);
   --btn-primary-bg: #111111;
   --btn-primary-text: #ffffff;
@@ -73,6 +75,8 @@ html[data-theme="dark"] {
   --accent: #c5a56a;
   --accent-2: #ecd0a1;
   --shadow: 0 30px 90px rgba(0, 0, 0, 0.26);
+  --logo-strip-bg: rgba(244, 238, 228, 0.96);
+  --logo-strip-border: rgba(255, 255, 255, 0.08);
   --btn-border: rgba(255, 255, 255, 0.16);
   --btn-primary-bg: #f2ece3;
   --btn-primary-text: #111111;
