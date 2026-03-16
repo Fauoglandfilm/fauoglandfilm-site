@@ -19,8 +19,8 @@ export function Footer() {
   return (
     <footer className="relative overflow-hidden border-t border-[color:var(--line)] bg-[color:color-mix(in_srgb,var(--background)_82%,#050608)]">
       <Image
-        src={siteVisuals.folkPoster.src}
-        alt={resolveLocalizedValue(siteVisuals.folkPoster.alt, language)}
+        src={siteVisuals.studioLightBackdrop.src}
+        alt={resolveLocalizedValue(siteVisuals.studioLightBackdrop.alt, language)}
         fill
         sizes="100vw"
         className="object-cover opacity-[0.22]"

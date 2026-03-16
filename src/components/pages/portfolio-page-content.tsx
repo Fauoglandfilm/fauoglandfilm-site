@@ -4,6 +4,7 @@ import Image from "next/image";
 import { useState } from "react";
 
 import { ProjectVideoModal } from "@/components/media/project-video-modal";
+import { EmbeddedVideoPlayer } from "@/components/media/embedded-video-player";
 import { Reveal } from "@/components/motion/reveal";
 import { useSitePreferences } from "@/components/providers/site-preferences";
 import { CtaBanner, PageHero } from "@/components/sections/site-sections";
@@ -161,7 +162,7 @@ export function PortfolioPageContent() {
                   <PortfolioMedia
                     project={showreelProject}
                     priority
-                    playMode="static"
+                    playMode="always"
                     sizes="(min-width: 1280px) 48vw, (min-width: 1024px) 60vw, 100vw"
                     className="object-cover transition duration-700 group-hover:scale-[1.04]"
                   />
@@ -560,6 +561,19 @@ function PortfolioMedia({
           <source src={project.video.src} type="video/mp4" />
         </video>
       </>
+    );
+  }
+
+  if (project.externalVideo && playMode === "always") {
+    return (
+      <EmbeddedVideoPlayer
+        title={project.title}
+        externalVideo={project.externalVideo}
+        autoplay
+        previewMode
+        className="absolute inset-0 h-full w-full"
+        sizes={sizes}
+      />
     );
   }
 

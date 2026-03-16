@@ -184,6 +184,27 @@ body::after {
   opacity: 0.14;
 }
 
+html[data-theme="light"] body {
+  background:
+    radial-gradient(circle at 12% 0%, rgba(184, 147, 94, 0.16), transparent 24%),
+    radial-gradient(circle at 88% 8%, rgba(126, 149, 185, 0.18), transparent 24%),
+    radial-gradient(circle at 50% 22%, rgba(255, 255, 255, 0.42), transparent 32%),
+    linear-gradient(
+      180deg,
+      color-mix(in srgb, var(--background) 90%, #f7f1e8) 0%,
+      color-mix(in srgb, var(--background) 96%, #ede4d6) 48%,
+      color-mix(in srgb, var(--background) 90%, #d4c8b8) 100%
+    );
+}
+
+html[data-theme="light"] body::before {
+  background:
+    radial-gradient(circle at 14% 6%, rgba(255, 255, 255, 0.48), transparent 20%),
+    radial-gradient(circle at 82% 4%, rgba(184, 147, 94, 0.16), transparent 24%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.18), transparent 28%, transparent 68%, rgba(110, 90, 66, 0.12));
+  opacity: 0.86;
+}
+
 a {
   color: inherit;
   text-decoration: none;
@@ -289,6 +310,11 @@ summary::-webkit-details-marker {
       inset 0 1px 0 rgba(255, 255, 255, 0.14),
       inset 0 -1px 0 rgba(255, 255, 255, 0.02);
     backdrop-filter: blur(28px) saturate(140%);
+    transition:
+      transform 280ms ease,
+      box-shadow 280ms ease,
+      border-color 280ms ease,
+      background-color 280ms ease;
   }
 
   .glass-panel {
@@ -329,6 +355,10 @@ summary::-webkit-details-marker {
     box-shadow:
       0 28px 90px rgba(0, 0, 0, 0.3),
       inset 0 1px 0 rgba(255, 255, 255, 0.08);
+    transition:
+      transform 320ms ease,
+      box-shadow 320ms ease,
+      border-color 320ms ease;
   }
 
   .section-vignette {
@@ -344,6 +374,21 @@ summary::-webkit-details-marker {
     opacity: 0.6;
     pointer-events: none;
     filter: blur(28px);
+  }
+
+  .card-surface:hover {
+    transform: translateY(-4px);
+    box-shadow:
+      0 44px 130px rgba(0, 0, 0, 0.34),
+      inset 0 1px 0 rgba(255, 255, 255, 0.14),
+      inset 0 -1px 0 rgba(255, 255, 255, 0.02);
+  }
+
+  .media-frame:hover {
+    transform: translateY(-2px) scale(1.003);
+    box-shadow:
+      0 34px 110px rgba(0, 0, 0, 0.34),
+      inset 0 1px 0 rgba(255, 255, 255, 0.1);
   }
 
   .button-base {
@@ -741,6 +786,11 @@ summary::-webkit-details-marker {
     will-change: transform;
   }
 
+  .ambient-drift {
+    animation: ambient-drift 18s ease-in-out infinite alternate;
+    will-change: transform;
+  }
+
   .social-link:active {
     color: var(--foreground);
     transform: translateY(0);
@@ -911,6 +961,16 @@ summary::-webkit-details-marker {
   }
 }
 
+@keyframes ambient-drift {
+  from {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+
+  to {
+    transform: translate3d(0, -1.2rem, 0) scale(1.04);
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
@@ -927,5 +987,14 @@ summary::-webkit-details-marker {
 
   .glass-sheen {
     animation: none;
+  }
+
+  .ambient-drift {
+    animation: none;
+  }
+
+  .card-surface:hover,
+  .media-frame:hover {
+    transform: none;
   }
 }

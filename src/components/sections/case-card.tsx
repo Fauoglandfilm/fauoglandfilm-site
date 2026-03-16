@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 
+import { EmbeddedVideoPlayer } from "@/components/media/embedded-video-player";
 import { useSitePreferences } from "@/components/providers/site-preferences";
 import { ButtonLink } from "@/components/ui/button-link";
 import type { CaseStudy } from "@/data/site-content";
@@ -52,6 +53,15 @@ export function CaseCard({
           >
             <source src={video.src} type="video/mp4" />
           </video>
+        ) : isFeature && externalVideo ? (
+          <EmbeddedVideoPlayer
+            title={caseStudy.title}
+            externalVideo={externalVideo}
+            autoplay
+            previewMode
+            className="absolute inset-0 h-full w-full"
+            sizes="(min-width: 1024px) 50vw, 100vw"
+          />
         ) : externalVideo ? (
           <Image
             src={externalVideo.thumbnailSrc}
