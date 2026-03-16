@@ -114,19 +114,22 @@ export function Header() {
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div
           className={cn(
-            "mt-2 flex items-center gap-2.5 rounded-[1.1rem] px-2.5 py-1.5 transition duration-300 sm:mt-2.5 sm:gap-3 sm:px-3 sm:py-2",
+            "relative mt-2 flex items-center gap-2.5 overflow-hidden rounded-[1.35rem] px-3 py-2 transition duration-300 sm:mt-2.5 sm:gap-3 sm:px-3.5 sm:py-2.5",
             overlayMode
-              ? "border border-white/8 bg-[color:var(--header-overlay-surface)] text-white backdrop-blur-xl"
-              : "border border-black/[0.05] bg-[color:var(--header-surface)] text-[color:var(--foreground)] shadow-[0_10px_28px_rgba(14,14,14,0.06)] backdrop-blur-xl",
+              ? "border border-white/12 bg-[color:var(--header-overlay-surface)] text-white shadow-[0_24px_70px_rgba(0,0,0,0.2)] backdrop-blur-[28px]"
+              : "border border-[color:var(--line)] bg-[color:var(--header-surface)] text-[color:var(--foreground)] shadow-[0_26px_80px_rgba(0,0,0,0.16)] backdrop-blur-[28px]",
           )}
         >
+          <div className="glass-sheen absolute inset-0" />
+          <div className="pointer-events-none absolute inset-x-8 top-0 h-px bg-[linear-gradient(90deg,transparent,rgba(255,255,255,0.78),transparent)] opacity-60" />
+
           <Link
             href="/"
-            className="flex shrink-0 items-center gap-2"
+            className="relative z-[1] flex shrink-0 items-center gap-2.5"
             aria-label="Fau&Land Film"
             onClick={() => setOpen(false)}
           >
-            <div className="flex h-8 w-8 items-center justify-center rounded-full bg-[#111111] p-2 shadow-[0_10px_20px_rgba(0,0,0,0.16)] sm:h-9 sm:w-9">
+            <div className="flex h-8 w-8 items-center justify-center rounded-full border border-white/12 bg-white/[0.1] p-2 shadow-[0_18px_30px_rgba(0,0,0,0.18)] backdrop-blur-xl sm:h-9 sm:w-9">
               <BrandLogo variant="mark" className="opacity-100" priority />
             </div>
             <p
@@ -139,7 +142,7 @@ export function Header() {
             </p>
           </Link>
 
-          <nav className="hidden flex-1 items-center justify-center gap-6 lg:flex xl:gap-7">
+          <nav className="relative z-[1] hidden flex-1 items-center justify-center gap-1.5 lg:flex xl:gap-2">
             {navItems.map((item) => {
               const active = item.href === "/" ? pathname === "/" : pathname.startsWith(item.href);
 
@@ -148,14 +151,14 @@ export function Header() {
                   key={item.href}
                   href={item.href}
                   className={cn(
-                    "text-[0.82rem] font-semibold tracking-[0.01em] transition",
+                    "rounded-full px-3 py-2 text-[0.82rem] font-semibold tracking-[0.01em] transition",
                     overlayMode
                       ? active
-                        ? "text-white"
-                        : "text-white/68 hover:text-white"
+                        ? "bg-white/[0.14] text-white"
+                        : "text-white/70 hover:bg-white/[0.08] hover:text-white"
                       : active
-                        ? "text-[color:var(--foreground)]"
-                        : "text-[var(--muted)] hover:text-[color:var(--foreground)]",
+                        ? "bg-white/[0.08] text-[color:var(--foreground)]"
+                        : "text-[var(--muted)] hover:bg-white/[0.06] hover:text-[color:var(--foreground)]",
                   )}
                 >
                   {resolveLocalizedValue(item.label, language)}
@@ -164,7 +167,7 @@ export function Header() {
             })}
           </nav>
 
-          <div className="ml-auto hidden items-center gap-1 lg:flex">
+          <div className="relative z-[1] ml-auto hidden items-center gap-1.5 lg:flex">
             <SegmentedToggle
               ariaLabel={copy.languageLabel}
               value={language}
@@ -189,7 +192,7 @@ export function Header() {
           <Button
             variant="icon"
             size="icon"
-            className="ml-auto lg:hidden"
+            className="relative z-[1] ml-auto lg:hidden"
             aria-label={open ? copy.menuClose : copy.menuOpen}
             aria-expanded={open}
             onClick={() => setOpen((value) => !value)}
@@ -201,7 +204,8 @@ export function Header() {
 
       {open ? (
         <div className="mx-auto max-w-7xl px-4 pb-4 sm:px-6 lg:hidden">
-          <div className="mt-2 rounded-[1.35rem] border border-black/[0.06] bg-[color:var(--surface-strong)] p-3 shadow-[0_20px_60px_rgba(14,14,14,0.1)] backdrop-blur-xl">
+          <div className="glass-panel relative mt-2 overflow-hidden rounded-[1.45rem] p-3 shadow-[0_28px_90px_rgba(0,0,0,0.22)]">
+            <div className="glass-sheen absolute inset-0" />
             <div className="flex items-center justify-between gap-2">
               <SegmentedToggle
                 ariaLabel={copy.languageLabel}
@@ -227,7 +231,7 @@ export function Header() {
             </div>
 
             <nav
-              className="mt-3 flex max-h-[calc(100svh-10rem)] flex-col gap-1.5 overflow-y-auto"
+              className="relative z-[1] mt-3 flex max-h-[calc(100svh-10rem)] flex-col gap-1.5 overflow-y-auto"
               style={{ paddingBottom: "calc(0.5rem + env(safe-area-inset-bottom, 0px))" }}
             >
               {navItems.map((item) => {
@@ -240,8 +244,8 @@ export function Header() {
                     className={cn(
                       "rounded-[1rem] border px-3.5 py-3 text-[0.96rem] font-medium transition focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--accent)]",
                       active
-                        ? "border-[var(--btn-primary-border)] bg-[var(--btn-primary-bg)] text-[var(--btn-primary-text)] shadow-[0_14px_28px_rgba(0,0,0,0.12)]"
-                        : "border-transparent bg-transparent text-[color:var(--foreground)] hover:border-[color:var(--line)] hover:bg-[color:var(--surface)] hover:text-[color:var(--foreground)]",
+                        ? "border-white/12 bg-white/[0.14] text-[color:var(--foreground)] shadow-[0_14px_28px_rgba(0,0,0,0.16)]"
+                        : "border-transparent bg-transparent text-[color:var(--foreground)] hover:border-[color:var(--line)] hover:bg-white/[0.06] hover:text-[color:var(--foreground)]",
                     )}
                     onClick={() => setOpen(false)}
                   >

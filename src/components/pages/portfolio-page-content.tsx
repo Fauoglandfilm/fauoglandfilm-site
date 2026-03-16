@@ -150,8 +150,8 @@ export function PortfolioPageContent() {
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="grid gap-4 lg:grid-cols-[1.16fr_0.84fr]">
             <Reveal>
-              <article className="card-surface group overflow-hidden rounded-[2rem]">
-                <div className="relative aspect-[1.16/0.96] min-h-[18rem] overflow-hidden bg-[#090909] sm:aspect-[1.3/0.94] lg:min-h-[28rem]">
+              <article className="cinematic-panel group overflow-hidden rounded-[2rem] shadow-[0_34px_110px_rgba(0,0,0,0.24)]">
+                <div className="media-frame relative aspect-[1.16/0.96] min-h-[18rem] overflow-hidden sm:aspect-[1.3/0.94] lg:min-h-[28rem]">
                   <button
                     type="button"
                     onClick={() => setActiveProject(showreelProject)}
@@ -163,9 +163,9 @@ export function PortfolioPageContent() {
                     priority
                     playMode="static"
                     sizes="(min-width: 1280px) 48vw, (min-width: 1024px) 60vw, 100vw"
-                    className="object-cover transition duration-700 group-hover:scale-[1.03]"
+                    className="object-cover transition duration-700 group-hover:scale-[1.04]"
                   />
-                  <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(8,8,8,0.06),rgba(8,8,8,0.32)_46%,rgba(8,8,8,0.88)_100%)]" />
+                  <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(255,255,255,0.08),transparent_34%),linear-gradient(180deg,rgba(8,8,8,0.04),rgba(8,8,8,0.26)_42%,rgba(8,8,8,0.9)_100%)]" />
                   <div className="grain-overlay absolute inset-0 opacity-45" />
                   <div className="absolute inset-x-0 bottom-0 z-[2] p-5 text-white sm:p-7 lg:p-8">
                     <div className="flex flex-wrap items-center gap-2 text-[0.68rem] font-semibold uppercase tracking-[0.22em] text-white/54">
@@ -188,7 +188,8 @@ export function PortfolioPageContent() {
             </Reveal>
 
             <Reveal delay={0.06}>
-              <article className="card-surface flex h-full flex-col rounded-[2rem] p-5 sm:p-6 lg:p-7">
+              <article className="glass-panel relative flex h-full flex-col overflow-hidden rounded-[2rem] p-5 shadow-[0_30px_100px_rgba(0,0,0,0.2)] sm:p-6 lg:p-7">
+                <div className="glass-sheen absolute inset-0 opacity-50" />
                 <div className="space-y-3">
                   <span className="eyebrow">
                     {resolveLocalizedValue(portfolioPageContent.showreelEyebrow, language)}
@@ -284,7 +285,8 @@ export function PortfolioPageContent() {
       <section id="portfolio-grid" className="section-space pt-0">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <Reveal>
-            <div className="card-surface rounded-[2rem] p-5 sm:p-6 lg:p-7">
+            <div className="glass-panel relative overflow-hidden rounded-[2rem] p-5 shadow-[0_28px_90px_rgba(0,0,0,0.18)] sm:p-6 lg:p-7">
+              <div className="glass-sheen absolute inset-0 opacity-45" />
               <div className="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
                 <div className="max-w-3xl space-y-3">
                   <span className="eyebrow">{copy.catalogEyebrow}</span>
@@ -401,11 +403,11 @@ function PortfolioProjectCard({
   const isWide = layout === "wide";
 
   return (
-    <article className={cn("card-surface group overflow-hidden rounded-[1.9rem]", isWide && "md:col-span-2")}>
+    <article className={cn("card-surface group overflow-hidden rounded-[1.95rem] shadow-[0_28px_90px_rgba(0,0,0,0.18)]", isWide && "md:col-span-2")}>
       <div className={cn("grid gap-px bg-[color:var(--line)]", isWide && "xl:grid-cols-[1.08fr_0.92fr]")}>
         <div
           className={cn(
-            "relative overflow-hidden bg-[#090909]",
+            "media-frame relative overflow-hidden",
             isWide
               ? "min-h-[18rem] sm:min-h-[20rem] xl:min-h-[24rem]"
               : project.mediaFit === "contain"
@@ -428,11 +430,15 @@ function PortfolioProjectCard({
                 : "(min-width: 1280px) 26vw, (min-width: 768px) 44vw, 100vw"
             }
           />
-          <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(8,8,8,0.03),rgba(8,8,8,0.22)_44%,rgba(8,8,8,0.84)_100%)]" />
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(255,255,255,0.08),transparent_34%),linear-gradient(180deg,rgba(8,8,8,0.04),rgba(8,8,8,0.24)_44%,rgba(8,8,8,0.88)_100%)]" />
           <div className="grain-overlay absolute inset-0 opacity-45" />
+          {group ? (
+            <span className="absolute left-4 top-4 z-[3] rounded-full border border-white/14 bg-black/26 px-3 py-1.5 text-[0.62rem] font-semibold uppercase tracking-[0.2em] text-white/78 backdrop-blur-xl">
+              {resolveLocalizedValue(group.title, language)}
+            </span>
+          ) : null}
           <div className="absolute inset-x-0 bottom-0 z-[2] p-4 text-white sm:p-5">
             <div className="flex flex-wrap items-center gap-2 text-[0.64rem] font-semibold uppercase tracking-[0.2em] text-white/56">
-              {group ? <span>{resolveLocalizedValue(group.title, language)}</span> : null}
               <span>{project.client}</span>
               {project.year ? (
                 <>
@@ -452,17 +458,17 @@ function PortfolioProjectCard({
           ) : null}
         </div>
 
-        <div className="relative flex h-full flex-col bg-[linear-gradient(180deg,rgba(255,255,255,0.02),rgba(255,255,255,0))] p-5 sm:p-6 lg:p-6">
+        <div className="relative flex h-full flex-col bg-[linear-gradient(180deg,rgba(255,255,255,0.05),rgba(255,255,255,0.01))] p-5 sm:p-6 lg:p-6">
           <div className="space-y-3">
             <div className="flex flex-wrap items-center gap-2">
-              <span className="rounded-full border border-[color:var(--line)] bg-[color:var(--surface)] px-3 py-1.5 text-[0.68rem] font-semibold uppercase tracking-[0.18em] text-[color:var(--foreground)]">
+              <span className="rounded-full border border-[color:var(--line)] bg-white/[0.04] px-3 py-1.5 text-[0.68rem] font-semibold uppercase tracking-[0.18em] text-[color:var(--foreground)] backdrop-blur-xl">
                 {resolveLocalizedValue(project.format, language)}
               </span>
               {project.video?.videoType === "direct" ? (
-              <span className="rounded-full border border-white/8 bg-white/6 px-3 py-1.5 text-[0.66rem] font-semibold uppercase tracking-[0.18em] text-[var(--muted)]">
+                <span className="rounded-full border border-white/8 bg-white/6 px-3 py-1.5 text-[0.66rem] font-semibold uppercase tracking-[0.18em] text-[var(--muted)]">
                   {language === "no" ? "Levende preview" : "Motion preview"}
-              </span>
-            ) : null}
+                </span>
+              ) : null}
             </div>
             <p className={cn("body-copy text-[var(--muted-2)]", !isWide && "line-clamp-4 sm:line-clamp-3")}>
               {resolveLocalizedValue(project.summary, language)}
