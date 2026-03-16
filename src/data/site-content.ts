@@ -1590,7 +1590,7 @@ export const teamMembers: TeamMember[] = [
       no: "Tommy holder produsentsporet samlet gjennom brief, budsjett, kundedialog og leveranse, med erfaring fra reklame, TV, event og kortfilm.",
       en: "Tommy keeps producing, budget, client dialogue and delivery aligned, with experience across advertising, TV, events and short film.",
     },
-    image: "/assets/team/tommy/images/tommy-garland-profile.jpeg",
+    image: "/assets/team/tommy/images/tommy-garland-profile.png",
     imageAlt: {
       no: "Portrett av Tommy R.A. Garland",
       en: "Portrait of Tommy R.A. Garland",

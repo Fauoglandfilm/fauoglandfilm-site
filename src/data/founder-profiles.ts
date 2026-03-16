@@ -65,7 +65,7 @@ export const founderProfiles: FounderProfile[] = [
       no: "Tommy kombinerer produsentansvar, kundedialog og prosjektledelse med erfaring fra reklame, event, TV og festivalnære kortfilmer.",
       en: "Tommy combines producing, client dialogue and project leadership with experience across advertising, events, TV and festival-bound short films.",
     },
-    portrait: "/assets/team/tommy/images/tommy-garland-profile.jpeg",
+    portrait: "/assets/team/tommy/images/tommy-garland-profile.png",
     portraitAlt: {
       no: "Portrett av Tommy R.A. Garland",
       en: "Portrait of Tommy R.A. Garland",

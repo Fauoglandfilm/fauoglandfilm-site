@@ -263,8 +263,8 @@ export const siteVisuals = {
     ...internalAssetMeta,
   },
   teamTommy: {
-    filename: "team-tommy-garland-profile.jpeg",
-    src: "/assets/team/tommy/images/tommy-garland-profile.jpeg",
+    filename: "team-tommy-garland-profile.png",
+    src: "/assets/team/tommy/images/tommy-garland-profile.png",
     alt: {
       no: "Portrett av Tommy R.A. Garland",
       en: "Portrait of Tommy R.A. Garland",
