@@ -26,6 +26,106 @@ const internalAssetMeta = {
 } as const;
 
 export const siteVisuals = {
+  filmCrewOutdoors: {
+    filename: "section-film-crew-outdoors.jpg",
+    src: "/assets/visuals/section-images/section-film-crew-outdoors.jpg",
+    alt: {
+      no: "Filmcrew på opptak utendørs",
+      en: "Film crew shooting outdoors",
+    },
+    usage: {
+      no: "Om oss, intro og redaksjonelle støtteflater",
+      en: "About, intro and editorial support surfaces",
+    },
+    subject: {
+      no: "Et mer eksklusivt opptaksbilde med faktisk crew-følelse og mer premium energi.",
+      en: "A more elevated production still with a real crew feel and more premium energy.",
+    },
+    creator: "Kyle Loftus",
+    license: "Unsplash License",
+    sourceName: "Unsplash",
+    sourceUrl: "https://unsplash.com/photos/Dw681UwPYOY",
+  },
+  filmStudioCyclorama: {
+    filename: "section-film-studio-cyclorama.jpg",
+    src: "/assets/visuals/section-images/section-film-studio-cyclorama.jpg",
+    alt: {
+      no: "Stort studioppsett med lys og crew",
+      en: "Large studio setup with lights and crew",
+    },
+    usage: {
+      no: "Tjenester, kontakt og luksuriøse bakflater",
+      en: "Services, contact and luxe background surfaces",
+    },
+    subject: {
+      no: "Et high-end studiobilde som løfter byrå- og produksjonsfølelsen.",
+      en: "A high-end studio image that lifts the agency and production-company feel.",
+    },
+    creator: "Jakob Owens",
+    license: "Unsplash License",
+    sourceName: "Unsplash",
+    sourceUrl: "https://unsplash.com/photos/XvDPxyBIN78",
+  },
+  cameraDarkroom: {
+    filename: "cinematic-camera-darkroom.jpg",
+    src: "/assets/visuals/cinematic/cinematic-camera-darkroom.jpg",
+    alt: {
+      no: "Mørk kamerarigg i et kontrollert produksjonsmiljø",
+      en: "Dark camera rig in a controlled production environment",
+    },
+    usage: {
+      no: "Tjenester, work-intro og cinematisk støtte",
+      en: "Services, work intros and cinematic support",
+    },
+    subject: {
+      no: "Teknologisk, raffinert kameramiljø som gir mer premium produksjonsfølelse.",
+      en: "A refined technical camera environment that adds premium production value.",
+    },
+    creator: "ShareGrid",
+    license: "Unsplash License",
+    sourceName: "Unsplash",
+    sourceUrl: "https://unsplash.com/photos/VZvzaDsrpWI",
+  },
+  studioLightBackdrop: {
+    filename: "bg-studio-light.jpg",
+    src: "/assets/visuals/backgrounds/bg-studio-light.jpg",
+    alt: {
+      no: "Studiolys og produksjonsutstyr i mørk scene",
+      en: "Studio lighting and production equipment in a dark scene",
+    },
+    usage: {
+      no: "Footer, mørke bakgrunner og visuell dybde",
+      en: "Footer, dark backgrounds and visual depth",
+    },
+    subject: {
+      no: "Et filmatisk bakteppe som gir mer dybde enn flate fargeflater.",
+      en: "A cinematic backdrop that gives more depth than flat color surfaces.",
+    },
+    creator: "KAL VISUALS",
+    license: "Unsplash License",
+    sourceName: "Unsplash",
+    sourceUrl: "https://unsplash.com/photos/J4hxSsDZ8Lc",
+  },
+  cameraCloseup: {
+    filename: "cinematic-video-camera-closeup.jpg",
+    src: "/assets/visuals/cinematic/cinematic-video-camera-closeup.jpg",
+    alt: {
+      no: "Nærbilde av profesjonelt videokamera",
+      en: "Close-up of a professional video camera",
+    },
+    usage: {
+      no: "Portefølje, work-kort og teknologisk støtte",
+      en: "Portfolio, work cards and technical support",
+    },
+    subject: {
+      no: "Et rent og teknologisk stillbilde som passer Apple-inspirert filmestetikk.",
+      en: "A clean technical still that suits an Apple-inspired film aesthetic.",
+    },
+    creator: "Luke Thornton",
+    license: "Unsplash License",
+    sourceName: "Unsplash",
+    sourceUrl: "https://unsplash.com/photos/p4484NzaEII",
+  },
   introShowcase: {
     filename: "portfolio-ville-gleder-wilderness-poster.jpg",
     src: "/assets/portfolio/ville-gleder/posters/villmarksforedrag-poster.jpg",
@@ -219,46 +319,46 @@ export const siteVisuals = {
 } satisfies Record<string, VisualAsset>;
 
 export const homeShowcaseVisuals: VisualSet = {
-  primary: siteVisuals.introShowcase,
-  secondary: siteVisuals.commercialCampaign,
-  tertiary: siteVisuals.narrativePoster,
+  primary: siteVisuals.filmCrewOutdoors,
+  secondary: siteVisuals.cameraDarkroom,
+  tertiary: siteVisuals.cameraCloseup,
 };
 
 export const pageHeroVisuals: Record<string, VisualSet> = {
   about: {
-    primary: siteVisuals.teamTommy,
-    secondary: siteVisuals.teamGard,
-    tertiary: siteVisuals.narrativePoster,
+    primary: siteVisuals.filmCrewOutdoors,
+    secondary: siteVisuals.teamTommy,
+    tertiary: siteVisuals.teamGard,
   },
   services: {
-    primary: siteVisuals.companyStory,
-    secondary: siteVisuals.eventCoverage,
-    tertiary: siteVisuals.socialCutdown,
+    primary: siteVisuals.filmStudioCyclorama,
+    secondary: siteVisuals.cameraDarkroom,
+    tertiary: siteVisuals.cameraCloseup,
   },
   contact: {
-    primary: siteVisuals.eventCoverage,
-    secondary: siteVisuals.teamTommy,
-    tertiary: siteVisuals.companyStory,
+    primary: siteVisuals.filmStudioCyclorama,
+    secondary: siteVisuals.filmCrewOutdoors,
+    tertiary: siteVisuals.teamTommy,
   },
   portfolio: {
-    primary: siteVisuals.narrativePoster,
-    secondary: siteVisuals.documentaryPoster,
-    tertiary: siteVisuals.commercialCampaign,
+    primary: siteVisuals.cameraCloseup,
+    secondary: siteVisuals.narrativePoster,
+    tertiary: siteVisuals.filmStudioCyclorama,
   },
 };
 
 export const servicePillarVisuals: Record<string, VisualAsset> = {
-  "01": siteVisuals.commercialCampaign,
-  "02": siteVisuals.companyStory,
-  "03": siteVisuals.socialCutdown,
-  "04": siteVisuals.eventCoverage,
+  "01": siteVisuals.cameraDarkroom,
+  "02": siteVisuals.filmStudioCyclorama,
+  "03": siteVisuals.cameraCloseup,
+  "04": siteVisuals.filmCrewOutdoors,
 };
 
 export const serviceAreaVisuals: Record<string, VisualAsset> = {
-  reklamefilm: siteVisuals.commercialCampaign,
-  "bedriftsfilm-intervjuer": siteVisuals.companyStory,
-  "some-innhold": siteVisuals.socialCutdown,
-  "event-live": siteVisuals.eventCoverage,
+  reklamefilm: siteVisuals.cameraDarkroom,
+  "bedriftsfilm-intervjuer": siteVisuals.filmStudioCyclorama,
+  "some-innhold": siteVisuals.cameraCloseup,
+  "event-live": siteVisuals.filmCrewOutdoors,
 };
 
 export function getPortfolioFallbackVisual(group: string): VisualAsset {

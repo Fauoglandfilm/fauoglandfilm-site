@@ -18,16 +18,32 @@ type EmbeddedVideoPlayerProps = {
   className?: string;
   sizes?: string;
   priority?: boolean;
+  previewMode?: boolean;
 };
 
-function withPlayerParams(video: ExternalVideoAsset, autoplay: boolean) {
+function withPlayerParams(video: ExternalVideoAsset, autoplay: boolean, previewMode: boolean) {
   const url = new URL(video.embedUrl);
 
   if (video.provider === "youtube") {
+    url.hostname = "www.youtube-nocookie.com";
     url.searchParams.set("rel", "0");
     url.searchParams.set("modestbranding", "1");
     url.searchParams.set("playsinline", "1");
     url.searchParams.set("autoplay", autoplay ? "1" : "0");
+
+    if (previewMode) {
+      const videoId = url.pathname.split("/").pop();
+      url.searchParams.set("mute", "1");
+      url.searchParams.set("controls", "0");
+      url.searchParams.set("fs", "0");
+      url.searchParams.set("loop", "1");
+      url.searchParams.set("disablekb", "1");
+      url.searchParams.set("iv_load_policy", "3");
+
+      if (videoId) {
+        url.searchParams.set("playlist", videoId);
+      }
+    }
   }
 
   if (video.provider === "vimeo") {
@@ -36,6 +52,13 @@ function withPlayerParams(video: ExternalVideoAsset, autoplay: boolean) {
     url.searchParams.set("byline", "0");
     url.searchParams.set("portrait", "0");
     url.searchParams.set("dnt", "1");
+
+    if (previewMode) {
+      url.searchParams.set("background", "1");
+      url.searchParams.set("muted", "1");
+      url.searchParams.set("loop", "1");
+      url.searchParams.set("autopause", "0");
+    }
   }
 
   return url.toString();
@@ -52,6 +75,7 @@ export function EmbeddedVideoPlayer({
   className,
   sizes = "(min-width: 1024px) 72vw, 100vw",
   priority = false,
+  previewMode = false,
 }: EmbeddedVideoPlayerProps) {
   const { language } = useSitePreferences();
   const resolvedTitle = resolveLocalizedValue(title, language);
@@ -63,12 +87,14 @@ export function EmbeddedVideoPlayer({
     return (
       <div className={className}>
         <iframe
-          src={withPlayerParams(externalVideo, autoplay)}
+          src={withPlayerParams(externalVideo, autoplay, previewMode)}
           title={resolveLocalizedValue(externalVideo.label, language)}
           className="h-full w-full"
           allow="autoplay; fullscreen; picture-in-picture; encrypted-media"
           referrerPolicy="strict-origin-when-cross-origin"
           allowFullScreen
+          loading={previewMode ? "lazy" : undefined}
+          tabIndex={previewMode ? -1 : undefined}
         />
       </div>
     );
@@ -79,11 +105,12 @@ export function EmbeddedVideoPlayer({
       <div className={className}>
         <video
           className="h-full w-full"
-          controls
+          controls={!previewMode}
           playsInline
           preload="metadata"
-          autoPlay={autoplay}
-          muted={autoplay}
+          autoPlay={autoplay || previewMode}
+          muted={autoplay || previewMode}
+          loop={previewMode}
           poster={video.poster ?? image}
         >
           {video.mobileSrc ? (
