@@ -5,19 +5,30 @@ export type MetricItem = {
   label: LocalizedText;
 };
 
-export type VideoAsset = {
-  src: string;
-  poster?: string;
-  label: LocalizedText;
-  mobileSrc?: string;
-  hasEmbeddedText?: boolean;
-};
+export type VideoAsset =
+  | {
+      videoType: "direct";
+      src: string;
+      poster?: string;
+      label: LocalizedText;
+      mobileSrc?: string;
+      hasEmbeddedText?: boolean;
+    }
+  | {
+      videoType: "request";
+      poster?: string;
+      label: LocalizedText;
+      availabilityNote: LocalizedText;
+    };
 
 export type ExternalVideoAsset = {
   provider: "youtube" | "vimeo";
+  videoType: "youtube" | "vimeo";
+  videoId: string;
   embedUrl: string;
   thumbnailSrc: string;
   label: LocalizedText;
+  sourceUrl: string;
 };
 
 export type NavItem = {
@@ -97,8 +108,8 @@ export type PortfolioProject = {
   summary: LocalizedText;
   result?: LocalizedText;
   year?: string;
-  href: string;
-  hrefExternal?: boolean;
+  detailHref?: string;
+  sourceUrl?: string;
   ctaLabel: LocalizedText;
   mediaFit?: "cover" | "contain";
   image?: string;
@@ -119,6 +130,8 @@ export type TeamMember = {
   name: string;
   role: LocalizedText;
   summary: LocalizedText;
+  image?: string;
+  imageAlt?: LocalizedText;
 };
 
 export type FaqItem = {
@@ -219,24 +232,24 @@ export const portfolioPageContent = {
     en: "Portfolio",
   },
   title: {
-    no: "Arbeid hentet fra dagens live-portefølje, ryddet til en klarere oversikt.",
-    en: "Work pulled from the current live portfolio, rebuilt into a cleaner overview.",
+    no: "Et samlet utvalg av Fau&Land Film sitt arbeid.",
+    en: "A curated view of Fau&Land Film's work.",
   },
   description: {
-    no: "Her finner dere reelle produksjoner fra Fau&Land Film, gruppert slik at det er lettere å se hva vi faktisk lager for kunder, organisasjoner og samarbeidspartnere.",
-    en: "This page brings together verified Fau&Land Film productions in a clearer structure, so it is easier to see the kind of work we actually produce for clients, organisations and collaborators.",
+    no: "Et utvalg av arbeid innen reklamefilm, dokumentar, event, musikkvideo og innhold for organisasjoner og merkevarer.",
+    en: "Work across commercial film, documentary, events, music video and content for organisations and brands.",
   },
   showreelEyebrow: {
     no: "Showreel",
     en: "Showreel",
   },
   showreelTitle: {
-    no: "En rask inngang til nyere arbeid.",
-    en: "A fast way into recent work.",
+    no: "Start med showreelen.",
+    en: "Start with the showreel.",
   },
   showreelDescription: {
-    no: "Showreelen samler nyere produksjoner fra kampanje, organisasjon, foredrag, musikkvideo og event i én kort introduksjon.",
-    en: "The showreel brings together recent work across campaigns, organisations, talks, music video and events in one short introduction.",
+    no: "Showreel 2025 samler nyere arbeid fra kampanje, organisasjon, event, musikkvideo og kortfilm i en kort introduksjon.",
+    en: "Showreel 2025 brings together recent work across campaigns, organisations, events, music video and short film in one concise introduction.",
   },
   showreelPrimaryCta: {
     no: "Åpne showreel",
@@ -263,6 +276,7 @@ export const portfolioPageContent = {
 // Hero-media styres her. Resten av siten bruker nå primært tekst, gradienter og placeholders.
 export const videoLibrary = {
   hero: {
+    videoType: "direct",
     src: "/media/hero/hero-nature-desktop.mp4",
     mobileSrc: "/media/hero/hero-nature-mobile.mp4",
     poster: "/media/placeholders/hero-poster.svg",
@@ -277,6 +291,42 @@ export const videoLibrary = {
 const squarespaceVideoUrl = (systemDataId: string, variant: string) =>
   `https://video.squarespace-cdn.com/content/v1/5f44d95d64e4796dddb229d6/${systemDataId}/${variant}`;
 
+const youtubeWatchUrl = (videoId: string) => `https://www.youtube.com/watch?v=${videoId}`;
+
+const youtubeAsset = (
+  videoId: string,
+  label: LocalizedText,
+  suffix = "",
+): ExternalVideoAsset => ({
+  provider: "youtube",
+  videoType: "youtube",
+  videoId,
+  embedUrl: `https://www.youtube.com/embed/${videoId}?rel=0&modestbranding=1&playsinline=1${suffix}`,
+  thumbnailSrc: `https://i.ytimg.com/vi/${videoId}/hqdefault.jpg`,
+  label,
+  sourceUrl: youtubeWatchUrl(videoId),
+});
+
+const vimeoAsset = (
+  videoId: string,
+  label: LocalizedText,
+  thumbnailSrc: string,
+  hash?: string,
+): ExternalVideoAsset => ({
+  provider: "vimeo",
+  videoType: "vimeo",
+  videoId,
+  embedUrl: `https://player.vimeo.com/video/${videoId}${hash ? `?h=${hash}` : ""}`,
+  thumbnailSrc,
+  label,
+  sourceUrl: `https://vimeo.com/${videoId}${hash ? `/${hash}` : ""}`,
+});
+
+const viewCaseCta = { no: "Se case", en: "View case" } satisfies LocalizedText;
+const openFilmCta = { no: "Åpne film", en: "Open film" } satisfies LocalizedText;
+const openShowreelCta = { no: "Åpne showreel", en: "Open showreel" } satisfies LocalizedText;
+const viewReferenceCta = { no: "Se referanse", en: "View reference" } satisfies LocalizedText;
+
 export const navItems: NavItem[] = [
   { href: "/", label: { no: "Forside", en: "Home" } },
   { href: "/tjenester", label: { no: "Tjenester", en: "Services" } },
@@ -285,14 +335,14 @@ export const navItems: NavItem[] = [
   { href: "/kontakt", label: { no: "Kontakt", en: "Contact" } },
 ];
 
-// Curated active set from clients/COLOR. Placeholder/uncertain files are excluded from the marquee.
+// Curated active set from clients/COLOR. The marquee only uses verified brand files.
 export const clientLogos: ClientLogo[] = [
   {
-    name: "Nei til Atomvåpen",
-    src: "/media/logos/clients/COLOR/nei-til-atomvapen.png",
-    width: 1154,
-    height: 844,
-    scale: 0.9,
+    name: "Actors Hub",
+    src: "/media/logos/clients/COLOR/actors-hub-black.png",
+    width: 780,
+    height: 459,
+    scale: 0.93,
   },
   {
     name: "Foreningen Norden",
@@ -302,10 +352,38 @@ export const clientLogos: ClientLogo[] = [
     scale: 0.96,
   },
   {
+    name: "The International Stunt Academy",
+    src: "/media/logos/clients/COLOR/isa-brand.svg",
+    width: 1200,
+    height: 440,
+    scale: 0.94,
+  },
+  {
+    name: "Norske Bunader",
+    src: "/media/logos/clients/COLOR/norske-bunader-brand.webp",
+    width: 500,
+    height: 200,
+    scale: 0.96,
+  },
+  {
+    name: "STUA",
+    src: "/media/logos/clients/COLOR/stua-brand.svg",
+    width: 320,
+    height: 120,
+    scale: 0.98,
+  },
+  {
+    name: "Treningshuset",
+    src: "/media/logos/clients/COLOR/treningshuset-brand.svg",
+    width: 339,
+    height: 57,
+    scale: 1.06,
+  },
+  {
     name: "Ville Gleder",
-    src: "/media/logos/clients/COLOR/ville-gleder.png",
-    width: 1490,
-    height: 500,
+    src: "/media/logos/clients/COLOR/ville-gleder-brand.png",
+    width: 650,
+    height: 194,
     scale: 1,
   },
 ];
@@ -370,11 +448,6 @@ export const aboutStudioContent = {
     no: "Fau&Land Film er et Oslo-basert produksjonsselskap ledet av Gard Ruben Fauske og Tommy R.A. Garland. Vi lager reklamefilm, bedriftsfilm, innhold for sosiale medier og eventfilm for bedrifter og organisasjoner som vil være tydeligere i markedet.",
     en: "Fau&Land Film is an Oslo-based production company led by Gard Ruben Fauske and Tommy R.A. Garland. We create commercials, company films, social content and event films for companies and organisations that want to show up more clearly in the market.",
   },
-  image: "/media/team/tommy-gard.png",
-  imageAlt: {
-    no: "Tommy Garland og Gard Ruben Fauske",
-    en: "Tommy Garland and Gard Ruben Fauske",
-  },
   stats: [
     { value: "2", label: { no: "seniorer", en: "seniors" } },
     { value: "Oslo", label: { no: "base", en: "base" } },
@@ -384,8 +457,6 @@ export const aboutStudioContent = {
   eyebrow: LocalizedText;
   title: LocalizedText;
   description: LocalizedText;
-  image: string;
-  imageAlt: LocalizedText;
   stats: MetricItem[];
 };
 
@@ -558,15 +629,10 @@ export const caseStudies: CaseStudy[] = [
       { no: "Organisasjon", en: "Organisation" },
       { no: "Vervekampanje", en: "Membership campaign" },
     ],
-    externalVideo: {
-      provider: "youtube",
-      embedUrl: "https://www.youtube.com/embed/R-hb11Atssc?feature=oembed",
-      thumbnailSrc: "https://i.ytimg.com/vi/R-hb11Atssc/hqdefault.jpg",
-      label: {
-        no: "Bli med i kampen mot atomvåpen",
-        en: "Join the fight against nuclear weapons",
-      },
-    },
+    externalVideo: youtubeAsset("R-hb11Atssc", {
+      no: "Bli med i kampen mot atomvåpen",
+      en: "Join the fight against nuclear weapons",
+    }),
     palette: "from-[#f1e6db] via-[#d7c5b2] to-[#bb9e84]",
     featured: true,
   },
@@ -611,6 +677,7 @@ export const caseStudies: CaseStudy[] = [
       { no: "Sosiale medier", en: "Social media" },
     ],
     video: {
+      videoType: "direct",
       src: squarespaceVideoUrl("1d79dac6-f46b-48c8-a623-73420ab8b49b", "1920:1080"),
       label: {
         no: "Ville Gleder - Villmarkspromo",
@@ -661,6 +728,7 @@ export const caseStudies: CaseStudy[] = [
       { no: "Animasjon", en: "Animation" },
     ],
     video: {
+      videoType: "direct",
       src: squarespaceVideoUrl("cf67837a-3fba-462c-9c71-99bb2842bb94", "1920:1080"),
       label: {
         no: "Foreningen Norden - nettsideinnhold",
@@ -709,15 +777,10 @@ export const caseStudies: CaseStudy[] = [
       { no: "Organisasjon", en: "Organisation" },
       { no: "Medlemsarbeid", en: "Membership outreach" },
     ],
-    externalVideo: {
-      provider: "youtube",
-      embedUrl: "https://www.youtube.com/embed/N4b3Co-hgLE?feature=oembed",
-      thumbnailSrc: "https://i.ytimg.com/vi/N4b3Co-hgLE/hqdefault.jpg",
-      label: {
-        no: "Nei til Atomvåpens medlemskonferanse 2025",
-        en: "Nei til Atomvåpen membership conference 2025",
-      },
-    },
+    externalVideo: youtubeAsset("N4b3Co-hgLE", {
+      no: "Nei til Atomvåpens medlemskonferanse 2025",
+      en: "Nei til Atomvåpen membership conference 2025",
+    }),
     palette: "from-[#f0e7dc] via-[#d7c9b7] to-[#bea58c]",
   },
   {
@@ -760,20 +823,26 @@ export const caseStudies: CaseStudy[] = [
       { no: "Sosiale medier", en: "Social media" },
       { no: "Stillbilder", en: "Stills" },
     ],
-    externalVideo: {
-      provider: "youtube",
-      embedUrl: "https://www.youtube.com/embed/STycvvvjsWY?feature=oembed",
-      thumbnailSrc: "https://i.ytimg.com/vi/STycvvvjsWY/hqdefault.jpg",
-      label: {
-        no: "Stemningsfilm fra 1. mai 2025",
-        en: "Mood film from 1 May 2025",
-      },
-    },
+    externalVideo: youtubeAsset("STycvvvjsWY", {
+      no: "Stemningsfilm fra 1. mai 2025",
+      en: "Mood film from 1 May 2025",
+    }),
     palette: "from-[#f0e7dc] via-[#d7c9b7] to-[#bea58c]",
   },
 ];
 
 export const portfolioGroups: PortfolioGroup[] = [
+  {
+    slug: "showreel",
+    title: {
+      no: "Showreel",
+      en: "Showreel",
+    },
+    description: {
+      no: "En rask inngang til bredden i porteføljen.",
+      en: "A quick way into the breadth of the portfolio.",
+    },
+  },
   {
     slug: "campaign",
     title: {
@@ -786,25 +855,14 @@ export const portfolioGroups: PortfolioGroup[] = [
     },
   },
   {
-    slug: "talks",
-    title: {
-      no: "Opplevelser og foredrag",
-      en: "Talks and experiences",
-    },
-    description: {
-      no: "Promofilmer som gjør det enklere å selge inn foredrag, opplevelser og konsepter.",
-      en: "Promo films that make talks, experiences and concepts easier to sell in.",
-    },
-  },
-  {
-    slug: "storytelling",
+    slug: "narrative",
     title: {
       no: "Musikkvideo og narrativt arbeid",
       en: "Music video and narrative work",
     },
     description: {
-      no: "Prosjekter der stemning, karakter og fortelling får mer plass.",
-      en: "Projects where mood, character and story get more room.",
+      no: "Prosjekter der karakter, stemning og fortelling får mer plass.",
+      en: "Projects where character, mood and story get more room.",
     },
   },
   {
@@ -814,8 +872,30 @@ export const portfolioGroups: PortfolioGroup[] = [
       en: "Events and documentation",
     },
     description: {
-      no: "Produksjoner som dokumenterer arrangementer og gir innhold som kan leve videre etterpå.",
-      en: "Productions that document events and create content that keeps working afterwards.",
+      no: "Produksjoner som dokumenterer arrangementer og skaper innhold som kan leve videre etterpå.",
+      en: "Productions that document events and create content that keeps working after the day itself.",
+    },
+  },
+  {
+    slug: "documentary",
+    title: {
+      no: "Dokumentar og kortfilm",
+      en: "Documentary and short film",
+    },
+    description: {
+      no: "Prosjekter med tyngre fortelling, lengre format og tydelig filmatisk signatur.",
+      en: "Projects with heavier storytelling, longer-form thinking and a more distinct cinematic signature.",
+    },
+  },
+  {
+    slug: "commercial",
+    title: {
+      no: "Eiendom, kurs og kommersielt innhold",
+      en: "Property, workshops and commercial content",
+    },
+    description: {
+      no: "Arbeid som hjelper konsepter, tilbud og opplevelser å fremstå tydeligere og mer profesjonelt.",
+      en: "Work that helps offers, experiences and concepts appear clearer and more professional.",
     },
   },
 ];
@@ -834,25 +914,22 @@ export const portfolioProjects: PortfolioProject[] = [
       en: "Showreel",
     },
     summary: {
-      no: "Et raskt innblikk i nyere arbeid innen kampanje, organisasjon, foredrag, musikkvideo og event.",
-      en: "A quick look at recent work across campaigns, organisations, talks, music video and events.",
+      no: "Et raskt innblikk i arbeid på tvers av reklamefilm, organisasjon, event, musikkvideo og kortfilm.",
+      en: "A quick look at work across commercial film, organisations, events, music video and short film.",
     },
-    href: "https://vimeo.com/1049265590",
-    hrefExternal: true,
-    ctaLabel: {
-      no: "Åpne showreel",
-      en: "Open showreel",
+    result: {
+      no: "Samler bredden i porteføljen i en kort introduksjon.",
+      en: "Brings the breadth of the portfolio together in one short introduction.",
     },
-    externalVideo: {
-      provider: "vimeo",
-      embedUrl: "https://player.vimeo.com/video/1049265590?app_id=122963",
-      thumbnailSrc:
-        "https://i.vimeocdn.com/video/1973576802-81881026755638ae5a47531ced8b76034558c75e44220d4d1cb4876180ce8df2-d_295x166?region=us",
-      label: {
+    ctaLabel: openShowreelCta,
+    externalVideo: vimeoAsset(
+      "1049265590",
+      {
         no: "Showreel 2025",
         en: "Showreel 2025",
       },
-    },
+      "https://i.vimeocdn.com/video/1973576802-81881026755638ae5a47531ced8b76034558c75e44220d4d1cb4876180ce8df2-d_295x166?region=us",
+    ),
     palette: "from-[#efe6db] via-[#d8cab9] to-[#c0a98d]",
     featured: true,
   },
@@ -861,171 +938,65 @@ export const portfolioProjects: PortfolioProject[] = [
     group: "campaign",
     client: "Nei til Atomvåpen",
     title: {
-      no: "Bli med i kampen mot atomvåpen",
-      en: "Join the fight against nuclear weapons",
+      no: "Nei til atomvåpen - bli med i kampen mot atomvåpen",
+      en: "No to Nuclear Weapons - join the fight",
     },
     format: {
       no: "Kampanjefilm",
       en: "Campaign film",
     },
     summary: {
-      no: "Dokumentarisk hovedfilm laget for å gjøre saken tydelig og senke terskelen for å bli med.",
-      en: "A documentary-style hero film designed to clarify the cause and lower the barrier to getting involved.",
+      no: "Denne kampanjen skal inspirere flere til å slutte seg til Nei til atomvåpen, gjennom en sterk og dokumentarisk film som gjør alvoret tydelig.",
+      en: "A documentary-led campaign film designed to inspire more people to join No to Nuclear Weapons and understand why the issue matters now.",
     },
     result: {
       no: "Brukt som hovedfilm i vervekampanje og videre innhold.",
-      en: "Used as the hero film across the membership campaign and follow-up content.",
+      en: "Used as the hero film across the recruitment campaign and follow-up content.",
     },
-    href: "/case/nei-til-atomvapen",
-    ctaLabel: {
-      no: "Se case",
-      en: "View case",
-    },
-    externalVideo: {
-      provider: "youtube",
-      embedUrl: "https://www.youtube.com/embed/R-hb11Atssc?feature=oembed",
-      thumbnailSrc: "https://i.ytimg.com/vi/R-hb11Atssc/hqdefault.jpg",
-      label: {
-        no: "Bli med i kampen mot atomvåpen",
-        en: "Join the fight against nuclear weapons",
-      },
+    detailHref: "/case/nei-til-atomvapen",
+    ctaLabel: viewCaseCta,
+    externalVideo: youtubeAsset("R-hb11Atssc", {
+      no: "Bli med i kampen mot atomvåpen",
+      en: "Join the fight against nuclear weapons",
+    }),
+    image: "/assets/portfolio/nei-til-atomvapen/posters/bli-med-i-kampen-poster.png",
+    imageAlt: {
+      no: "Still fra kampanjefilm for Nei til Atomvåpen",
+      en: "Still from campaign film for No to Nuclear Weapons",
     },
     palette: "from-[#f1e6db] via-[#d7c5b2] to-[#bb9e84]",
-  },
-  {
-    slug: "ville-gleder-villmarksforedrag",
-    group: "talks",
-    client: "Ville Gleder",
-    title: {
-      no: "Villmarksforedrag",
-      en: "Wilderness talks",
-    },
-    format: {
-      no: "Promofilm",
-      en: "Promo film",
-    },
-    summary: {
-      no: "Promofilm for Ville Gleders villmarksforedrag med Mattis Thørud og Jan Monsen.",
-      en: "Promo film for Ville Gleders wilderness talks with Mattis Thørud and Jan Monsen.",
-    },
-    result: {
-      no: "60 000+ visninger og flere påmeldinger.",
-      en: "60,000+ views and more sign-ups.",
-    },
-    href: "/case/ville-gleder",
-    ctaLabel: {
-      no: "Se case",
-      en: "View case",
-    },
-    video: {
-      src: squarespaceVideoUrl("1d79dac6-f46b-48c8-a623-73420ab8b49b", "1920:1080"),
-      label: {
-        no: "Ville Gleder - Villmarksforedrag",
-        en: "Ville Gleder wilderness talks",
-      },
-    },
-    palette: "from-[#efe6da] via-[#d3c3ae] to-[#bda383]",
-  },
-  {
-    slug: "kommer-hjem-musikkvideo",
-    group: "storytelling",
-    client: "Klaus Perry",
-    title: {
-      no: "Kommer Hjem",
-      en: "Coming Home",
-    },
-    format: {
-      no: "Musikkvideo",
-      en: "Music video",
-    },
-    summary: {
-      no: "Fortellende musikkvideo om å finne veien hjem igjen, med en mer leken og filmatisk tone.",
-      en: "A narrative music video about finding the way home again, with a playful and cinematic tone.",
-    },
-    href: "https://www.youtube.com/watch?v=Y3eowK_YMes",
-    hrefExternal: true,
-    ctaLabel: {
-      no: "Åpne film",
-      en: "Open film",
-    },
-    externalVideo: {
-      provider: "youtube",
-      embedUrl: "https://www.youtube.com/embed/Y3eowK_YMes?feature=oembed",
-      thumbnailSrc: "https://i.ytimg.com/vi/Y3eowK_YMes/hqdefault.jpg",
-      label: {
-        no: "Kommer Hjem",
-        en: "Coming Home",
-      },
-    },
-    palette: "from-[#efe4d8] via-[#d5c5b1] to-[#b99e82]",
-  },
-  {
-    slug: "a-message-from-martha",
-    group: "storytelling",
-    client: "Fau&Land Film",
-    title: {
-      no: "A Message From Martha",
-      en: "A Message From Martha",
-    },
-    format: {
-      no: "Kortfilm",
-      en: "Short film",
-    },
-    summary: {
-      no: "Kortfilm med tydelig visuell identitet og en strammere fortellende form.",
-      en: "A short film with a distinct visual identity and a tighter narrative form.",
-    },
-    href: "https://www.youtube.com/watch?v=FiT05lgz00o",
-    hrefExternal: true,
-    ctaLabel: {
-      no: "Åpne film",
-      en: "Open film",
-    },
-    image:
-      "https://images.squarespace-cdn.com/content/v1/5f44d95d64e4796dddb229d6/f06bd374-263e-45b9-9417-35dd398ac22b/A+MESSAGE+FROM+MARTHA.jpg",
-    imageAlt: {
-      no: "Plakat for A Message From Martha",
-      en: "Poster for A Message From Martha",
-    },
-    mediaFit: "contain",
-    externalVideo: {
-      provider: "youtube",
-      embedUrl: "https://www.youtube.com/embed/FiT05lgz00o?feature=oembed",
-      thumbnailSrc: "https://i.ytimg.com/vi/FiT05lgz00o/hqdefault.jpg",
-      label: {
-        no: "A Message From Martha",
-        en: "A Message From Martha",
-      },
-    },
-    palette: "from-[#28171a] via-[#5a232d] to-[#b14f54]",
   },
   {
     slug: "foreningen-norden-nettsideinnhold",
     group: "campaign",
     client: "Foreningen Norden",
     title: {
-      no: "Nettsideinnhold",
-      en: "Website content",
+      no: "Foreningen Norden - nettsideinnhold",
+      en: "Foreningen Norden - website content",
     },
     format: {
       no: "Organisasjonsfilm",
       en: "Organisation film",
     },
     summary: {
-      no: "Film som raskt forklarer hvem Foreningen Norden er og hva de jobber for.",
-      en: "A short film that quickly explains who Foreningen Norden are and what they work for.",
+      no: "En film som viser Foreningen Norden og arbeidet de gjør, bygget av tidligere produksjoner, eget materiale og nye animasjoner.",
+      en: "A film that introduces Foreningen Norden and their work, built from earlier productions, client material and new animation.",
     },
     result: {
-      no: "Bygget av tidligere produksjoner, kundemateriale og nye animasjoner.",
-      en: "Built from earlier productions, client material and new animation.",
+      no: "Tidligere videoer, nytt materiale og animasjon samlet i ett tydelig nettsideformat.",
+      en: "Earlier productions, new client material and animation brought together in one clear website format.",
     },
-    href: "/case/foreningen-norden",
-    ctaLabel: {
-      no: "Se case",
-      en: "View case",
+    detailHref: "/case/foreningen-norden",
+    ctaLabel: viewCaseCta,
+    image: "/assets/portfolio/foreningen-norden/posters/foreningen-norden-nettsideinnhold-poster.png",
+    imageAlt: {
+      no: "Still fra Foreningen Norden - nettsideinnhold",
+      en: "Still from Foreningen Norden website content",
     },
     video: {
+      videoType: "direct",
       src: squarespaceVideoUrl("cf67837a-3fba-462c-9c71-99bb2842bb94", "1920:1080"),
+      poster: "/assets/portfolio/foreningen-norden/posters/foreningen-norden-nettsideinnhold-poster.png",
       label: {
         no: "Foreningen Norden - nettsideinnhold",
         en: "Foreningen Norden website content",
@@ -1034,39 +1005,157 @@ export const portfolioProjects: PortfolioProject[] = [
     palette: "from-[#efe9df] via-[#d6cabc] to-[#bfa98c]",
   },
   {
+    slug: "kommer-hjem-musikkvideo",
+    group: "narrative",
+    client: "Klaus Perry",
+    title: {
+      no: "Kommer Hjem",
+      en: "Kommer Hjem",
+    },
+    format: {
+      no: "Musikkvideo",
+      en: "Music video",
+    },
+    summary: {
+      no: "Musikkvideo for Klaus Perry om en hjemreise som enten gikk via månen eller bare via stranden og litt for mye whisky.",
+      en: "A music video for Klaus Perry about getting back to the one you love, whether the trip went through the moon or just the beach and too much whisky.",
+    },
+    result: {
+      no: "En fortellende video som skildrer en reise mange kan kjenne seg igjen i.",
+      en: "A narrative video that captures a journey many people can recognise.",
+    },
+    ctaLabel: openFilmCta,
+    image: "/assets/portfolio/kommer-hjem/posters/kommer-hjem-poster.png",
+    imageAlt: {
+      no: "Still fra Kommer Hjem",
+      en: "Still from Kommer Hjem",
+    },
+    externalVideo: youtubeAsset("Y3eowK_YMes", {
+      no: "Kommer Hjem",
+      en: "Kommer Hjem",
+    }),
+    palette: "from-[#efe4d8] via-[#d5c5b1] to-[#b99e82]",
+  },
+  {
+    slug: "a-message-from-martha",
+    group: "narrative",
+    client: "DeBlonde Production x Fau&Land Film",
+    year: "2025",
+    title: {
+      no: "A Message From Martha",
+      en: "A Message From Martha",
+    },
+    format: {
+      no: "Dramakortfilm",
+      en: "Drama short",
+    },
+    summary: {
+      no: "En drama-kortfilm laget i samarbeid mellom DeBlonde Production og Fau&Land Film.",
+      en: "A drama short film produced in collaboration between DeBlonde Production and Fau&Land Film.",
+    },
+    result: {
+      no: "Producer: Tommy Garland. Regi: Elia Biondi. Foto: Justin Bellucci.",
+      en: "Producer: Tommy Garland. Director: Elia Biondi. DOP: Justin Bellucci.",
+    },
+    ctaLabel: openFilmCta,
+    image: "/assets/portfolio/a-message-from-martha/posters/a-message-from-martha-poster.jpeg",
+    imageAlt: {
+      no: "Plakat for A Message From Martha",
+      en: "Poster for A Message From Martha",
+    },
+    mediaFit: "contain",
+    externalVideo: youtubeAsset("FiT05lgz00o", {
+      no: "A Message From Martha",
+      en: "A Message From Martha",
+    }),
+    palette: "from-[#28171a] via-[#5a232d] to-[#b14f54]",
+  },
+  {
+    slug: "takk-for-at-du-er-min-venn",
+    group: "narrative",
+    client: "Elleville Elfrid",
+    title: {
+      no: "Takk for at du er min venn",
+      en: "Thank You for Being My Friend",
+    },
+    format: {
+      no: "Musikkvideo",
+      en: "Music video",
+    },
+    summary: {
+      no: "En musikkvideo for den animerte filmen Elleville Elfrid, med Bjarte Hjelmeland og klipp fra selve filmen.",
+      en: "A music video for the animated film Elleville Elfrid, combining Bjarte Hjelmeland with footage from the feature itself.",
+    },
+    result: {
+      no: "Tilgjengelig via NRK og laget for å forsterke lanseringen av filmen.",
+      en: "Also available through NRK and built to support the film release.",
+    },
+    ctaLabel: openFilmCta,
+    externalVideo: youtubeAsset("uj-FGvsRVAU", {
+      no: "Takk for at du er min venn",
+      en: "Thank You for Being My Friend",
+    }),
+    palette: "from-[#efe4d8] via-[#d5c2af] to-[#b7947d]",
+  },
+  {
+    slug: "foreningen-norden-debatt",
+    group: "event",
+    client: "Foreningen Norden",
+    title: {
+      no: "Foreningen Norden - Debatt",
+      en: "Foreningen Norden - debate",
+    },
+    format: {
+      no: "Debattdekning",
+      en: "Debate coverage",
+    },
+    summary: {
+      no: "Flerkameraproduksjon med totalbilde, nærbilder, egen lydtekniker og lysrigg for en ryddig og publiseringsklar debattleveranse.",
+      en: "A multicam production with wide shot, close-ups, dedicated sound and lighting, delivered ready for publication.",
+    },
+    result: {
+      no: "Tre kameraer, egen lydtekniker og rask teaser til Facebook.",
+      en: "Three cameras, dedicated sound and a quick teaser edit for Facebook.",
+    },
+    ctaLabel: viewReferenceCta,
+    externalVideo: youtubeAsset("IDd2LByeYU0", {
+      no: "Foreningen Norden - Debatt",
+      en: "Foreningen Norden debate",
+    }),
+    palette: "from-[#ece3d8] via-[#d3c3b1] to-[#b89e83]",
+  },
+  {
     slug: "nei-til-atomvapen-arbeiderdagen",
     group: "event",
     client: "Nei til Atomvåpen",
+    year: "2025",
     title: {
-      no: "Internasjonal arbeiderdag",
-      en: "International Workers' Day",
+      no: "Nei til atomvåpen - Internasjonal arbeiderdag",
+      en: "No to Nuclear Weapons - International Workers' Day",
     },
     format: {
-      no: "Eventfilm og SoMe",
-      en: "Event film and social content",
+      no: "Eventfilm og reels",
+      en: "Event film and reels",
     },
     summary: {
-      no: "Film, foto og reels fra markeringen på Youngstorget, levert som både stemningsfilm og uttak til egne kanaler.",
-      en: "Film, stills and reels from the Youngstorget event, delivered as both a mood film and cutdowns for owned channels.",
+      no: "Vi filmet og fotograferte markeringen på Youngstorget og leverte stemningsfilm, fullt opptak av tale og flere reels til sosiale medier.",
+      en: "We filmed and photographed the event at Youngstorget and delivered a mood film, a full speech recording and multiple social cutdowns.",
     },
     result: {
-      no: "Stemningsfilm, fullt opptak av tale og vertikale uttak fra samme dag.",
-      en: "Mood film, full speech recording and vertical cutdowns from the same day.",
+      no: "Stemningsfilm, fullt taleopptak og vertikale uttak fra samme dag.",
+      en: "Mood film, full speech capture and vertical cutdowns from the same day.",
     },
-    href: "/case/nei-til-atomvapen-arbeiderdagen",
-    ctaLabel: {
-      no: "Se case",
-      en: "View case",
+    detailHref: "/case/nei-til-atomvapen-arbeiderdagen",
+    ctaLabel: viewCaseCta,
+    image: "/assets/portfolio/nei-til-atomvapen/posters/internasjonal-arbeiderdag-poster.png",
+    imageAlt: {
+      no: "Still fra Internasjonal arbeiderdag for Nei til Atomvåpen",
+      en: "Still from International Workers' Day for No to Nuclear Weapons",
     },
-    externalVideo: {
-      provider: "youtube",
-      embedUrl: "https://www.youtube.com/embed/STycvvvjsWY?feature=oembed",
-      thumbnailSrc: "https://i.ytimg.com/vi/STycvvvjsWY/hqdefault.jpg",
-      label: {
-        no: "Stemningsfilm fra 1. mai 2025",
-        en: "Mood film from 1 May 2025",
-      },
-    },
+    externalVideo: youtubeAsset("STycvvvjsWY", {
+      no: "Stemningsfilm fra 1. mai",
+      en: "Mood film from 1 May",
+    }),
     palette: "from-[#efe5d8] via-[#d6c5b3] to-[#bb9e82]",
   },
   {
@@ -1074,71 +1163,34 @@ export const portfolioProjects: PortfolioProject[] = [
     group: "event",
     client: "Nei til Atomvåpen",
     title: {
-      no: "Konferanse",
-      en: "Conference",
+      no: "Nei til atomvåpen - Konferanse",
+      en: "No to Nuclear Weapons - conference",
     },
     format: {
       no: "Eventfilm",
       en: "Event film",
     },
     summary: {
-      no: "Stemningsfilm produsert fra medlemskonferansen som del av organisasjonens pågående rekrutteringskampanje.",
-      en: "A mood film produced from the membership conference as part of the organisation's ongoing recruitment campaign.",
+      no: "Stemningsfilm produsert fra konferansen som en del av organisasjonens løpende rekrutteringskampanje.",
+      en: "A mood film produced from the conference as part of the organisation's ongoing recruitment campaign.",
     },
-    href: "/case/nei-til-atomvapen-konferanse",
-    ctaLabel: {
-      no: "Se case",
-      en: "View case",
+    result: {
+      no: "Brukt som en del av videre vervearbeid og synlighet.",
+      en: "Used as part of ongoing recruitment and awareness work.",
     },
-    externalVideo: {
-      provider: "youtube",
-      embedUrl: "https://www.youtube.com/embed/N4b3Co-hgLE?feature=oembed",
-      thumbnailSrc: "https://i.ytimg.com/vi/N4b3Co-hgLE/hqdefault.jpg",
-      label: {
-        no: "Nei til Atomvåpen - konferanse",
-        en: "Nei til Atomvåpen conference",
-      },
-    },
+    detailHref: "/case/nei-til-atomvapen-konferanse",
+    ctaLabel: viewCaseCta,
+    externalVideo: youtubeAsset("N4b3Co-hgLE", {
+      no: "Nei til atomvåpen - konferanse",
+      en: "No to Nuclear Weapons conference",
+    }),
     palette: "from-[#f0e7dc] via-[#d7c9b7] to-[#bea58c]",
-  },
-  {
-    slug: "ville-gleder-vat-kald-sulten",
-    group: "talks",
-    client: "Ville Gleder",
-    title: {
-      no: "Våt, kald og sulten",
-      en: "Wet, cold and hungry",
-    },
-    format: {
-      no: "Promofilm",
-      en: "Promo film",
-    },
-    summary: {
-      no: "Promovideo for foredraget «Våt, kald og sulten», bygget for å selge inn konseptet med en tydelig idé.",
-      en: "Promo video for the talk “Wet, cold and hungry”, built to sell the concept through a clear idea.",
-    },
-    href: "https://vimeo.com/1026680392/4efd6be7db",
-    hrefExternal: true,
-    ctaLabel: {
-      no: "Åpne film",
-      en: "Open film",
-    },
-    externalVideo: {
-      provider: "vimeo",
-      embedUrl: "https://player.vimeo.com/video/1026680392?h=4efd6be7db&app_id=122963",
-      thumbnailSrc:
-        "https://i.vimeocdn.com/video/1946636194-5efaf5b2f1225b48271ed21aaff6dc6af575a583f0e74386b550216b5defb4ff-d_295x166",
-      label: {
-        no: "Ville Gleder - Våt, kald og sulten",
-        en: "Ville Gleder - Wet, cold and hungry",
-      },
-    },
-    palette: "from-[#ede3d6] via-[#d4c3b0] to-[#baa184]",
   },
   {
     slug: "sprakprisen-2022-aftermovie",
     group: "event",
     client: "Foreningen Norden",
+    year: "2022",
     title: {
       no: "Språkprisen 2022 - Aftermovie",
       en: "Language Prize 2022 - Aftermovie",
@@ -1155,12 +1207,7 @@ export const portfolioProjects: PortfolioProject[] = [
       no: "Levert som 1,5 time lang aftermovie.",
       en: "Delivered as a 1.5-hour aftermovie.",
     },
-    href: "https://fauoglandfilm.com/portofolio",
-    hrefExternal: true,
-    ctaLabel: {
-      no: "Se referansen",
-      en: "View reference",
-    },
+    ctaLabel: viewReferenceCta,
     image:
       "https://images.squarespace-cdn.com/content/v1/5f44d95d64e4796dddb229d6/cfb30bea-aadb-4fb3-a3f7-b6fa41b60ac4/Skjermbilde+2024-12-17+kl.+14.22.29.png",
     imageAlt: {
@@ -1168,6 +1215,324 @@ export const portfolioProjects: PortfolioProject[] = [
       en: "Still from the 2022 Language Prize",
     },
     palette: "from-[#ebe4d8] via-[#d1c2af] to-[#b69d82]",
+  },
+  {
+    slug: "eventfotografering-kinesiske-ambassaden",
+    group: "event",
+    client: "Den kinesiske ambassaden",
+    title: {
+      no: "Eventfotografering - Kinesiske ambassaden",
+      en: "Event photography - Chinese Embassy",
+    },
+    format: {
+      no: "Eventfoto",
+      en: "Event photography",
+    },
+    summary: {
+      no: "Vi leverte eventfotografering for den kinesiske ambassaden i forbindelse med feiringen av kinesisk nyttår.",
+      en: "We delivered event photography for the Chinese Embassy during its Chinese New Year celebration.",
+    },
+    result: {
+      no: "Dokumentasjon laget for rask bruk etter arrangementet.",
+      en: "Event coverage delivered for immediate post-event use.",
+    },
+    ctaLabel: viewReferenceCta,
+    image:
+      "https://images.squarespace-cdn.com/content/v1/5f44d95d64e4796dddb229d6/f44b2423-9b05-4a7e-8754-7f67197d00cc/B0020011-2_enhanced+%281%29.jpg",
+    imageAlt: {
+      no: "Eventfoto fra kinesisk nyttår",
+      en: "Event still from Chinese New Year celebration",
+    },
+    palette: "from-[#1b1413] via-[#49312e] to-[#a05c47]",
+  },
+  {
+    slug: "en-midnatts-vuggesang",
+    group: "documentary",
+    client: "Snowfall Cinema x Fau&Land Film",
+    year: "2023",
+    title: {
+      no: "En Midnatts Vuggesang",
+      en: "En Midnatts Vuggesang",
+    },
+    format: {
+      no: "Dramakortfilm",
+      en: "Drama short",
+    },
+    summary: {
+      no: "Drama om Li-hua, en alenemor i Oslo som kjemper for å få endene til å møtes.",
+      en: "A drama about Li-hua, a single mother in Oslo fighting to make ends meet.",
+    },
+    result: {
+      no: "Samprodusert med Snowfall Cinema og nominert under Kortfilmfestivalen i Grimstad.",
+      en: "Co-produced with Snowfall Cinema and nominated at the Norwegian Short Film Festival in Grimstad.",
+    },
+    ctaLabel: viewReferenceCta,
+    image: "/assets/portfolio/midnatts-vuggesang/posters/en-midnatts-vuggesang-poster.jpg",
+    imageAlt: {
+      no: "Still fra En Midnatts Vuggesang",
+      en: "Still from En Midnatts Vuggesang",
+    },
+    palette: "from-[#181518] via-[#4a3644] to-[#8f6e88]",
+  },
+  {
+    slug: "the-voice-within",
+    group: "documentary",
+    client: "NTNU BA-film",
+    year: "2022",
+    title: {
+      no: "The Voice Within",
+      en: "The Voice Within",
+    },
+    format: {
+      no: "Kortfilm",
+      en: "Short film",
+    },
+    summary: {
+      no: "Daniel er hjemsøkt av stemmen i sitt eget hode, som står i veien for romansen med Mari.",
+      en: "Daniel is haunted by the voice in his own head, which stands in the way of his romance with Mari.",
+    },
+    result: {
+      no: "Den eneste ferdigstilte filmen i klassen under COVID og mottok Honourable Mention i 2022.",
+      en: "The only finished film in its class under COVID restrictions and it received an Honourable Mention in 2022.",
+    },
+    ctaLabel: openFilmCta,
+    externalVideo: youtubeAsset(
+      "F_ZGHBwp73o",
+      {
+        no: "The Voice Within",
+        en: "The Voice Within",
+      },
+      "&start=10",
+    ),
+    palette: "from-[#211a1f] via-[#4b3645] to-[#8a6478]",
+  },
+  {
+    slug: "huldredans",
+    group: "documentary",
+    client: "Huldredans",
+    year: "2023",
+    title: {
+      no: "Huldredans",
+      en: "Huldredans",
+    },
+    format: {
+      no: "Kortfilm",
+      en: "Short film",
+    },
+    summary: {
+      no: "En kortfilm som blander mystikk og drama gjennom historien om Magne og en huldra i et vinterlig norsk landskap.",
+      en: "A short film blending mystery and drama through the story of Magne and a huldra in the Norwegian winter landscape.",
+    },
+    result: {
+      no: "Har vunnet priser for blant annet film, regi, skuespiller, foto og originalmusikk.",
+      en: "Has won multiple awards for film, directing, acting, cinematography and original score.",
+    },
+    ctaLabel: viewReferenceCta,
+    image: "/assets/portfolio/huldredans/posters/huldredans-poster.jpg",
+    imageAlt: {
+      no: "Plakat for Huldredans",
+      en: "Poster for Huldredans",
+    },
+    mediaFit: "contain",
+    palette: "from-[#171516] via-[#31423a] to-[#6b8b78]",
+  },
+  {
+    slug: "the-giant-artist",
+    group: "documentary",
+    client: "The Giant Artist",
+    title: {
+      no: "The Giant Artist",
+      en: "The Giant Artist",
+    },
+    format: {
+      no: "Dokumentar",
+      en: "Documentary",
+    },
+    summary: {
+      no: "En dokumentar om Martin, en fremadstormende maler som prøver å finne sin plass i verden.",
+      en: "A documentary about Martin, an emerging painter trying to find his place in the world.",
+    },
+    result: {
+      no: "Vist på Minimalen, Nordic Docs og Den norske dokumentarfilmfestivalen.",
+      en: "Screened at Minimalen, Nordic Docs and the Norwegian Documentary Film Festival.",
+    },
+    ctaLabel: openFilmCta,
+    externalVideo: youtubeAsset("5S82ZGEBzgk", {
+      no: "The Giant Artist",
+      en: "The Giant Artist",
+    }),
+    palette: "from-[#19181a] via-[#44505a] to-[#8ca0af]",
+  },
+  {
+    slug: "ville-gleder-villmarksforedrag",
+    group: "commercial",
+    client: "Ville Gleder",
+    title: {
+      no: "Ville Gleder - Villmarksforedrag",
+      en: "Ville Gleder - wilderness talks",
+    },
+    format: {
+      no: "Promofilm",
+      en: "Promo film",
+    },
+    summary: {
+      no: "En promofilm for Ville Gleder og deres villmarksforedrag med Mattis Thørud og Jan Monsen, laget for å inspirere flere ut i naturen.",
+      en: "A promo film for Ville Gleder and their wilderness talks with Mattis Thørud and Jan Monsen, built to inspire more time outdoors.",
+    },
+    result: {
+      no: "Skal gjøre foredraget enklere å selge inn og lettere å huske.",
+      en: "Designed to make the talk easier to sell and easier to remember.",
+    },
+    detailHref: "/case/ville-gleder",
+    ctaLabel: viewCaseCta,
+    image: "/assets/portfolio/ville-gleder/posters/villmarksforedrag-poster.jpg",
+    imageAlt: {
+      no: "Poster fra Ville Gleder - Villmarksforedrag",
+      en: "Poster from Ville Gleder wilderness talks",
+    },
+    video: {
+      videoType: "direct",
+      src: squarespaceVideoUrl("1d79dac6-f46b-48c8-a623-73420ab8b49b", "1920:1080"),
+      poster: "/assets/portfolio/ville-gleder/posters/villmarksforedrag-poster.jpg",
+      label: {
+        no: "Ville Gleder - Villmarksforedrag",
+        en: "Ville Gleder wilderness talks",
+      },
+    },
+    palette: "from-[#efe6da] via-[#d3c3ae] to-[#bda383]",
+  },
+  {
+    slug: "ville-gleder-vat-kald-sulten",
+    group: "commercial",
+    client: "Ville Gleder",
+    title: {
+      no: "Ville Gleder - Våt, kald og sulten",
+      en: "Ville Gleder - wet, cold and hungry",
+    },
+    format: {
+      no: "Promofilm",
+      en: "Promo film",
+    },
+    summary: {
+      no: "En promovideo for Ville Gleders foredrag «Våt, kald og sulten», som sammenligner en vanlig arbeidshverdag med ekstreme forhold i villmarken.",
+      en: "A promo video for Ville Gleder's talk “Wet, cold and hungry”, comparing everyday working life with extreme conditions in the wilderness.",
+    },
+    result: {
+      no: "Bygget for å gjøre konseptet tydelig og enklere å booke.",
+      en: "Built to clarify the concept and make the talk easier to book.",
+    },
+    ctaLabel: openFilmCta,
+    image: "/assets/portfolio/ville-gleder/posters/vat-kald-sulten-poster.png",
+    imageAlt: {
+      no: "Still fra Ville Gleder - Våt, kald og sulten",
+      en: "Still from Ville Gleder - Wet, cold and hungry",
+    },
+    externalVideo: vimeoAsset(
+      "1026680392",
+      {
+        no: "Ville Gleder - Våt, kald og sulten",
+        en: "Ville Gleder - Wet, cold and hungry",
+      },
+      "https://i.vimeocdn.com/video/1946636194-5efaf5b2f1225b48271ed21aaff6dc6af575a583f0e74386b550216b5defb4ff-d_295x166",
+      "4efd6be7db",
+    ),
+    palette: "from-[#ede3d6] via-[#d4c3b0] to-[#baa184]",
+  },
+  {
+    slug: "liten-bedrift",
+    group: "commercial",
+    client: "Fau&Land Film",
+    title: {
+      no: "In-house promo: Liten bedrift",
+      en: "In-house promo: Small business",
+    },
+    format: {
+      no: "SoMe-reklame",
+      en: "Social ad",
+    },
+    summary: {
+      no: "En kort og leken reklamefilm fra Fau&Land, laget rett på sak for sosiale medier.",
+      en: "A short and playful ad from Fau&Land, built to get straight to the point on social media.",
+    },
+    result: {
+      no: "Et in-house eksempel på hvordan vi liker kommersielle budskap levert: tydelig, raskt og enkelt.",
+      en: "An in-house example of how we like commercial messages delivered: clear, quick and simple.",
+    },
+    ctaLabel: viewReferenceCta,
+    image: "/assets/portfolio/inhouse/posters/liten-bedrift-poster.png",
+    imageAlt: {
+      no: "Still fra in-house promoen Liten bedrift",
+      en: "Still from the in-house promo Small business",
+    },
+    video: {
+      videoType: "request",
+      poster: "/assets/portfolio/inhouse/posters/liten-bedrift-poster.png",
+      label: {
+        no: "In-house promo: Liten bedrift",
+        en: "In-house promo: Small business",
+      },
+      availabilityNote: {
+        no: "Video er tilgjengelig på forespørsel.",
+        en: "Video is available on request.",
+      },
+    },
+    palette: "from-[#1d181a] via-[#5a232d] to-[#b14f54]",
+  },
+  {
+    slug: "steins-hytte",
+    group: "commercial",
+    client: "Stein's hytte",
+    title: {
+      no: "Stein's hytte",
+      en: "Stein's cabin",
+    },
+    format: {
+      no: "Eiendomsfilm og foto",
+      en: "Property film and photography",
+    },
+    summary: {
+      no: "Film og foto til eiendomspresentasjon, laget for å gi boligen et tydeligere og mer profesjonelt uttrykk i salgsprosessen.",
+      en: "Film and photography for a property presentation, created to give the listing a clearer and more professional sales expression.",
+    },
+    result: {
+      no: "Bidro til et profesjonelt uttrykk som styrket presentasjonen av eiendommen.",
+      en: "Helped create a more professional expression for the sales presentation.",
+    },
+    ctaLabel: openFilmCta,
+    externalVideo: youtubeAsset("2nE9ut7eb1c", {
+      no: "Stein's hytte",
+      en: "Stein's cabin",
+    }),
+    palette: "from-[#e9e1d7] via-[#ccb79e] to-[#927153]",
+  },
+  {
+    slug: "the-actors-hub-dont-act",
+    group: "commercial",
+    client: "The Actors Hub",
+    title: {
+      no: "The Actors Hub: Don't Act",
+      en: "The Actors Hub: Don't Act",
+    },
+    format: {
+      no: "Workshop og showreels",
+      en: "Workshop and showreels",
+    },
+    summary: {
+      no: "En intensiv workshop med veiledning fra anerkjente lærere fra Los Angeles, der Fau&Land leverte showreels og produksjon.",
+      en: "An intensive acting workshop guided by renowned Los Angeles teachers, with Fau&Land delivering showreels and production.",
+    },
+    result: {
+      no: "Executive Producer: David Nutter. Instruktører: Natassia Malthe og David Nutter.",
+      en: "Executive Producer: David Nutter. Instructors: Natassia Malthe and David Nutter.",
+    },
+    ctaLabel: viewReferenceCta,
+    image:
+      "https://images.squarespace-cdn.com/content/v1/5f44d95d64e4796dddb229d6/9c30e685-6b5e-4b1d-8c7e-f8f4e68e2bb5/Skjermbilde+2024-12-16+kl.+14.25.30.png",
+    imageAlt: {
+      no: "Still fra The Actors Hub: Don't Act",
+      en: "Still from The Actors Hub: Don't Act",
+    },
+    palette: "from-[#151414] via-[#3e3e40] to-[#8b6d58]",
   },
 ];
 
@@ -1214,6 +1579,11 @@ export const teamMembers: TeamMember[] = [
       no: "Tommy holder oversikt over planlegging, gjennomføring og kundedialog, slik at prosjektet beveger seg ryddig fra første møte til ferdig leveranse.",
       en: "Tommy keeps planning, execution and client dialogue moving so the project stays clear from the first call to final delivery.",
     },
+    image: "/assets/team/tommy/images/tommy-garland-profile.jpeg",
+    imageAlt: {
+      no: "Portrett av Tommy R.A. Garland",
+      en: "Portrait of Tommy R.A. Garland",
+    },
   },
   {
     name: "Gard Ruben Fauske",
@@ -1221,6 +1591,11 @@ export const teamMembers: TeamMember[] = [
     summary: {
       no: "Gard har bakgrunn fra filmstudier i Norge og Los Angeles, freelancearbeid og prosjektledelse i reklamebyrå. Han skriver, regisserer og klipper prosjektene sine.",
       en: "Gard brings experience from film studies in Norway and Los Angeles, freelance work and project management in advertising. He writes, directs and edits his projects.",
+    },
+    image: "/assets/team/gard/images/gard-profile.png",
+    imageAlt: {
+      no: "Portrett av Gard Ruben Fauske",
+      en: "Portrait of Gard Ruben Fauske",
     },
   },
 ];

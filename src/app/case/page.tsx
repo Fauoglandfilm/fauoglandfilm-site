@@ -2,9 +2,9 @@ import { PortfolioPageContent } from "@/components/pages/portfolio-page-content"
 import { buildMetadata } from "@/lib/seo";
 
 export const metadata = buildMetadata({
-  title: "Portefølje | Reklamefilm, bedriftsfilm og eventfilm",
+  title: "Portefølje | Showreel, kampanje, kortfilm og event",
   description:
-    "Se Fau&Land Films portefølje med showreel, kampanjefilm, organisasjonsfilm, musikkvideo og eventarbeid hentet fra dagens live-portefølje.",
+    "Se Fau&Land Films portefølje med showreel, kampanjefilm, kortfilm, musikkvideo, event og kommersielt innhold bygget på dagens live-portefølje.",
   path: "/case",
 });
 

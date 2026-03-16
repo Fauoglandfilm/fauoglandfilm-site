@@ -13,6 +13,7 @@ type SocialLinksRowProps = {
   description?: string;
   compact?: boolean;
   className?: string;
+  tone?: "default" | "inverse";
 };
 
 function getSocialIcon(name: string) {
@@ -32,15 +33,24 @@ export function SocialLinksRow({
   description,
   compact = false,
   className,
+  tone = "default",
 }: SocialLinksRowProps) {
   const { language } = useSitePreferences();
+  const titleClassName =
+    tone === "inverse"
+      ? "text-[0.68rem] font-semibold uppercase tracking-[0.24em] text-white/52"
+      : "eyebrow";
+  const descriptionClassName =
+    tone === "inverse"
+      ? "body-copy max-w-lg text-white/72"
+      : "body-copy max-w-lg text-[var(--muted)]";
 
   return (
     <div className={className}>
       <div className={compact ? "space-y-2" : "space-y-2.5"}>
-        <p className="eyebrow">{title}</p>
+        <p className={titleClassName}>{title}</p>
         {description ? (
-          <p className="body-copy max-w-lg text-[var(--muted)]">
+          <p className={descriptionClassName}>
             {description}
           </p>
         ) : null}

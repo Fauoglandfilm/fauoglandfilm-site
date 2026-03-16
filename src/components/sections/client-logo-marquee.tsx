@@ -31,14 +31,14 @@ export function ClientLogoMarquee({
             {logos.map((logo) => (
               <li
                 key={`${copyIndex}-${logo.name}`}
-                className="group/logo flex h-16 shrink-0 items-center justify-center px-6 sm:h-[4.5rem] sm:px-8 lg:h-20 lg:px-10"
+                className="group/logo flex h-[4.25rem] shrink-0 items-center justify-center px-7 sm:h-[4.85rem] sm:px-10 lg:h-[5.4rem] lg:px-12"
               >
                 <Image
                   src={logo.src}
                   alt={logo.name}
                   width={logo.width}
                   height={logo.height}
-                  className="h-8 w-auto max-w-none object-contain opacity-95 brightness-[1.02] saturate-125 drop-shadow-[0_10px_22px_rgba(17,17,17,0.12)] transition duration-300 group-hover/logo:opacity-100 group-hover/logo:saturate-150 sm:h-9 lg:h-10"
+                  className="h-10 w-auto max-w-none object-contain opacity-100 brightness-100 saturate-[1.08] transition duration-300 group-hover/logo:saturate-[1.18] sm:h-11 lg:h-12"
                   style={{
                     transform: `scale(${logo.scale ?? 1})`,
                     transformOrigin: "center center",
