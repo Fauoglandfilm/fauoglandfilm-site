@@ -1,8 +1,7 @@
 "use client";
 
-import Link from "next/link";
-
 import { useSitePreferences } from "@/components/providers/site-preferences";
+import { ButtonLink } from "@/components/ui/button-link";
 import { uiCopy } from "@/data/ui-copy";
 
 export function NotFoundContent() {
@@ -19,19 +18,13 @@ export function NotFoundContent() {
         <p className="mt-4 text-lg leading-8 text-[var(--muted-2)]">
           {copy.notFoundDescription}
         </p>
-        <div className="mt-8 flex justify-center gap-4">
-          <Link
-            href="/"
-            className="rounded-full bg-[color:var(--foreground)] px-5 py-3 text-sm font-semibold text-[color:var(--background)]"
-          >
+        <div className="mt-8 flex flex-wrap justify-center gap-4">
+          <ButtonLink href="/">
             {copy.notFoundHome}
-          </Link>
-          <Link
-            href="/kontakt"
-            className="rounded-full border border-[color:var(--line)] bg-[color:var(--surface)] px-5 py-3 text-sm font-semibold text-[color:var(--foreground)]"
-          >
+          </ButtonLink>
+          <ButtonLink href="/kontakt" variant="secondary">
             {copy.notFoundContact}
-          </Link>
+          </ButtonLink>
         </div>
       </div>
     </main>
