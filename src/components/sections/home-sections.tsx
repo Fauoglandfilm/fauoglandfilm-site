@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 import type { ReactNode } from "react";
 
 import { useSitePreferences } from "@/components/providers/site-preferences";
@@ -473,16 +474,25 @@ export function AboutSection() {
 
               <div className="grid gap-px bg-[color:var(--line)] sm:grid-cols-2 lg:grid-cols-1">
                 {[
-                  { name: teamMembers[0]?.name, role: teamMembers[0]?.role, image: siteVisuals.teamTommy },
-                  { name: teamMembers[1]?.name, role: teamMembers[1]?.role, image: siteVisuals.teamGard },
+                  { name: teamMembers[0]?.name, role: teamMembers[0]?.role, image: siteVisuals.teamTommy, href: teamMembers[0]?.href },
+                  { name: teamMembers[1]?.name, role: teamMembers[1]?.role, image: siteVisuals.teamGard, href: teamMembers[1]?.href },
                 ].map((member) => (
-                  <div key={member.name} className="group relative aspect-[0.9/1.05] overflow-hidden bg-[color:var(--surface-strong)]">
+                  <Link
+                    key={member.name}
+                    href={member.href ?? "/om-oss"}
+                    className="group relative block aspect-[0.9/1.05] overflow-hidden bg-[color:var(--surface-strong)]"
+                    aria-label={
+                      language === "no"
+                        ? `Se mer om ${member.name}`
+                        : `View more about ${member.name}`
+                    }
+                  >
                     <Image
                       src={member.image.src}
                       alt={resolveLocalizedValue(member.image.alt, language)}
                       fill
                       sizes="(min-width: 1024px) 18vw, 50vw"
-                      className="object-cover transition duration-700 group-hover:scale-[1.02]"
+                      className="object-cover transition duration-700 group-hover:scale-[1.03]"
                     />
                     <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(17,17,17,0.02),rgba(17,17,17,0.18)_48%,rgba(17,17,17,0.7)_100%)]" />
                     <div className="absolute inset-x-0 bottom-0 p-4 sm:p-5">
@@ -492,8 +502,11 @@ export function AboutSection() {
                       <p className="mt-2 text-lg font-semibold tracking-[-0.03em] text-white">
                         {member.name}
                       </p>
+                      <p className="mt-2 text-[0.68rem] font-semibold uppercase tracking-[0.18em] text-white/56 transition duration-300 group-hover:text-white/76">
+                        {language === "no" ? "Se profil" : "Open profile"}
+                      </p>
                     </div>
-                  </div>
+                  </Link>
                 ))}
               </div>
             </div>
