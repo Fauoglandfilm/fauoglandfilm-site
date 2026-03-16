@@ -138,7 +138,7 @@ export function ClientSlider() {
   const copy = uiCopy.home[language];
 
   return (
-    <section className="border-y border-[color:var(--line)] bg-[color:color-mix(in_srgb,var(--background)_84%,var(--surface-strong))] py-5 sm:py-6">
+    <section className="bg-[color:var(--background)] py-5 sm:py-6">
       <div className="mx-auto max-w-7xl px-5 sm:px-6 lg:px-8">
         <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
           <p className="eyebrow">{copy.clientsEyebrow}</p>

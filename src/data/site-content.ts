@@ -201,6 +201,7 @@ export const navItems: NavItem[] = [
   { href: "/kontakt", label: { no: "Kontakt", en: "Contact" } },
 ];
 
+// Curated active set from clients/COLOR. Placeholder/uncertain files are excluded from the marquee.
 export const clientLogos: ClientLogo[] = [
   {
     name: "Front B Trading",
@@ -208,13 +209,6 @@ export const clientLogos: ClientLogo[] = [
     width: 1385,
     height: 958,
     scale: 0.9,
-  },
-  {
-    name: "Client Logo 01",
-    src: "/media/logos/clients/COLOR/client-logo-01.png",
-    width: 765,
-    height: 782,
-    scale: 0.84,
   },
   {
     name: "ISA",
@@ -259,13 +253,6 @@ export const clientLogos: ClientLogo[] = [
     scale: 0.98,
   },
   {
-    name: "Underoverskrift",
-    src: "/media/logos/clients/COLOR/underoverskrift.png",
-    width: 746,
-    height: 171,
-    scale: 1.06,
-  },
-  {
     name: "Ville Gleder",
     src: "/media/logos/clients/COLOR/ville-gleder.png",
     width: 1490,
@@ -278,13 +265,6 @@ export const clientLogos: ClientLogo[] = [
     width: 1500,
     height: 844,
     scale: 0.88,
-  },
-  {
-    name: "Logo LD",
-    src: "/media/logos/clients/COLOR/logo-ld.png",
-    width: 903,
-    height: 987,
-    scale: 0.8,
   },
 ];
 

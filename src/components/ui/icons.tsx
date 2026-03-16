@@ -61,3 +61,27 @@ export function PlayIcon(props: SVGProps<SVGSVGElement>) {
     </svg>
   );
 }
+
+export function SunIcon(props: SVGProps<SVGSVGElement>) {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" {...props}>
+      <circle cx="12" cy="12" r="3.5" />
+      <path d="M12 2.75v2.5" />
+      <path d="M12 18.75v2.5" />
+      <path d="m5.46 5.46 1.77 1.77" />
+      <path d="m16.77 16.77 1.77 1.77" />
+      <path d="M2.75 12h2.5" />
+      <path d="M18.75 12h2.5" />
+      <path d="m5.46 18.54 1.77-1.77" />
+      <path d="m16.77 7.23 1.77-1.77" />
+    </svg>
+  );
+}
+
+export function MoonIcon(props: SVGProps<SVGSVGElement>) {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" {...props}>
+      <path d="M19 14.5A7.5 7.5 0 0 1 9.5 5a7.5 7.5 0 1 0 9.5 9.5Z" />
+    </svg>
+  );
+}
