@@ -128,10 +128,10 @@ export const siteConfig = {
   phonePrimary: "+47 940 53 050",
   phonePrimaryHref: "tel:+4794053050",
   location: "Oslo",
-  locationLabel: "Oslo, Norway",
+  locationLabel: "Oslo",
   responseTime: {
-    no: "Vi svarer som regel innen 24 timer.",
-    en: "We usually respond within 24 hours.",
+    no: "Vi følger opp innen 24 timer.",
+    en: "We follow up within 24 hours.",
   },
   bookingHref: "/kontakt",
   bookingLabel: {
@@ -154,7 +154,7 @@ export const siteConfig = {
   ] satisfies SocialLink[],
   coverageArea: "Oslo og hele Norge",
   description:
-    "Fau&Land Film hjelper bedrifter med reklamefilm, innholdsproduksjon, bedriftsfilm, eventfilm og video som bygger synlighet, tillit og flere henvendelser.",
+    "Fau&Land Film lager reklamefilm, profilfilm og innholdsproduksjon for bedrifter og organisasjoner som vil skape mer synlighet, mer tillit og flere henvendelser.",
   keywords: [
     "videoproduksjon Oslo",
     "reklamefilm Oslo",
@@ -173,14 +173,14 @@ export const homeHeroContent = {
     en: "Film that moves brands.",
   },
   description: {
-    no: "Reklamefilm og visuell historiefortelling for ambisiøse merkevarer.",
-    en: "Commercial film production and visual storytelling for ambitious brands.",
+    no: "Vi lager reklamefilm og innholdsproduksjon som gjør det lettere for kunder å velge dere.",
+    en: "We create commercial films and content that make it easier for customers to choose your brand.",
   },
   ctaLabel: {
-    no: "Se utvalgt arbeid",
-    en: "View selected work",
+    no: "Book et uforpliktende møte",
+    en: "Book an introductory call",
   },
-  ctaHref: "#selected-work",
+  ctaHref: "/kontakt",
 };
 
 export const homeIntroContent = {
@@ -189,12 +189,12 @@ export const homeIntroContent = {
     en: "Oslo-based production company",
   },
   title: {
-    no: "Premium filmproduksjon for merkevarer, kampanjer og moderne innholdsflater.",
-    en: "Premium motion crafted for brands, campaigns and modern content ecosystems.",
+    no: "Reklamefilm og innhold som ser bedre ut og fungerer bedre.",
+    en: "Commercial film and content that looks better and performs better.",
   },
   description: {
-    no: "Et senior-led studio for reklamefilm, brand storytelling og innholdsproduksjon med høy kvalitet.",
-    en: "A senior-led studio for commercial film, brand storytelling and high-performance content production.",
+    no: "Seniorledet produksjon for bedrifter og organisasjoner som vil ha tydelig kvalitet og kort vei fra første møte til ferdig film.",
+    en: "Senior-led production for companies and organisations that want clear quality and a short path from first conversation to final film.",
   },
 };
 
@@ -292,16 +292,16 @@ export const selectedWork: WorkSample[] = [
     slug: "winter-signature",
     client: "Fau&Land Film",
     title: {
-      no: "Vintersignatur",
-      en: "Winter signature reel",
+      no: "Visuell signaturfilm",
+      en: "Signature brand film",
     },
     category: {
-      no: "Studio reel",
-      en: "Studio reel",
+      no: "Studiofilm",
+      en: "Studio film",
     },
     summary: {
-      no: "En filmatisk studiocut bygget for å ramme inn merkevaren med ro, stemning og skala.",
-      en: "A cinematic studio cut built to frame the brand with restraint, mood and scale.",
+      no: "Et visuelt uttrykk som viser hvordan vi bygger stemning, detaljer og kvalitet i film.",
+      en: "A visual signature piece that shows how we work with mood, detail and quality on screen.",
     },
     accent: "from-[#d8d0c3] via-[#c8bea8] to-[#efe9df]",
     video: {
@@ -316,16 +316,16 @@ export const selectedWork: WorkSample[] = [
     slug: "magic-bilpleie",
     client: "Magic Bilpleie",
     title: {
-      no: "Kommersiell detaljfilm",
-      en: "Commercial detail film",
+      no: "Produktfilm for bilpleie",
+      en: "Product film for car care",
     },
     category: {
       no: "Reklamefilm",
       en: "Commercial film",
     },
     summary: {
-      no: "Skarpe produktfokuserte bilder laget for premium presentasjon og sterk digital effekt.",
-      en: "Sharp product-focused visuals designed for premium presentation and digital performance.",
+      no: "Laget for nettside, annonser og sosiale medier der detaljer og finish skal selge.",
+      en: "Built for websites, ads and social media where detail and finish need to do the selling.",
     },
     accent: "from-[#f2ece2] via-[#d5cab8] to-[#b8a487]",
     video: {
@@ -340,16 +340,16 @@ export const selectedWork: WorkSample[] = [
     slug: "wood-hotel",
     client: "Wood Hotel",
     title: {
-      no: "Arkitekturfilm for hospitality",
-      en: "Hospitality architecture cut",
+      no: "Hotellfilm med ro og detaljer",
+      en: "Hotel film with detail and atmosphere",
     },
     category: {
-      no: "Brand storytelling",
-      en: "Brand storytelling",
+      no: "Profilfilm",
+      en: "Brand film",
     },
     summary: {
-      no: "Romlig historiefortelling for hospitality, arkitektur og destinasjonsdrevet posisjonering.",
-      en: "Spatial storytelling for hospitality, architecture and destination-led positioning.",
+      no: "Et visuelt portrett som løfter opplevelsen av sted, standard og atmosfære.",
+      en: "A visual portrait designed to elevate the sense of place, standard and atmosphere.",
     },
     accent: "from-[#ece8e1] via-[#d8d1c5] to-[#c1b29b]",
     video: {
@@ -364,16 +364,16 @@ export const selectedWork: WorkSample[] = [
     slug: "incasso-cruisers",
     client: "Incasso Cruisers",
     title: {
-      no: "Kinetisk kampanjevignett",
-      en: "Kinetic campaign vignette",
+      no: "Kampanjefilm for digitale flater",
+      en: "Campaign film for digital channels",
     },
     category: {
       no: "Kampanjeinnhold",
       en: "Campaign content",
     },
     summary: {
-      no: "Et kortformat bygget for oppmerksomhet, rytme og minneverdig visuell pacing.",
-      en: "A short-form cut built for attention, rhythm and memorable visual pacing.",
+      no: "Kortformat laget for å stoppe scrollen og forklare tilbudet raskt.",
+      en: "Short-form content built to stop the scroll and explain the offer quickly.",
     },
     accent: "from-[#efe7db] via-[#d3c7b8] to-[#b7a189]",
     video: {
@@ -388,16 +388,16 @@ export const selectedWork: WorkSample[] = [
     slug: "to-historier",
     client: "To historier",
     title: {
-      no: "Narrativt kortformat",
-      en: "Narrative short format",
+      no: "Historiedrevet kortfilm",
+      en: "Story-led short film",
     },
     category: {
-      no: "Historiedrevet produksjon",
-      en: "Story-led production",
+      no: "Brand storytelling",
+      en: "Brand storytelling",
     },
     summary: {
-      no: "Editorial motion med strammere emosjonell kurve og et mer filmatisk blikk.",
-      en: "Editorial motion with a tighter emotional arc and a more cinematic point of view.",
+      no: "Et kort format som bygger nærhet og gjør budskapet lettere å huske.",
+      en: "A short format that builds connection and makes the message easier to remember.",
     },
     accent: "from-[#f4efe6] via-[#e0d5c7] to-[#c6b39d]",
     video: {
@@ -412,16 +412,16 @@ export const selectedWork: WorkSample[] = [
     slug: "promofilm",
     client: "Fau&Land Film",
     title: {
-      no: "Studio promo 16:9",
-      en: "Studio promo 16:9",
+      no: "Studiofilm",
+      en: "Showreel",
     },
     category: {
-      no: "Promofilm",
-      en: "Promotional film",
+      no: "Studiofilm",
+      en: "Studio film",
     },
     summary: {
-      no: "En bredere studiopromo som balanserer polish, bevegelse og high-end visuell tekstur.",
-      en: "A broader studio-facing promo balancing polish, motion and high-end visual texture.",
+      no: "Et utvalg klipp som viser bredden i arbeidet vårt på tvers av uttrykk og formater.",
+      en: "A selection of clips that shows the range of our work across styles and formats.",
     },
     accent: "from-[#f0ece6] via-[#ddd4c7] to-[#bda88b]",
     video: {
@@ -442,8 +442,8 @@ export const servicePillars: ServicePillar[] = [
       en: "Commercial film",
     },
     summary: {
-      no: "Kampanjefilmer, lanseringer og hero assets som raskt løfter opplevd verdi.",
-      en: "Campaign films, launches and hero assets built to raise perceived value fast.",
+      no: "Film som gjør det enklere for kunder å velge dere.",
+      en: "Film that makes your brand easier to choose.",
     },
   },
   {
@@ -453,8 +453,8 @@ export const servicePillars: ServicePillar[] = [
       en: "Brand storytelling",
     },
     summary: {
-      no: "Editorial filmer og founder-led historier som gjør komplekse merkevarer lette å forstå.",
-      en: "Editorial films and founder-led narratives that make complex brands feel effortless.",
+      no: "Filmer som forklarer hvem dere er og hvorfor det betyr noe.",
+      en: "Films that explain who you are and why it matters.",
     },
   },
   {
@@ -464,8 +464,8 @@ export const servicePillars: ServicePillar[] = [
       en: "Content production",
     },
     summary: {
-      no: "Always-on cuts, vertikale versjoner og store leveransepakker med premium konsistens.",
-      en: "Always-on cuts, vertical edits and high-volume deliverables with premium consistency.",
+      no: "Video til sosiale medier som holder merkevaren synlig uten at dere trenger å produsere alt selv.",
+      en: "Video for social media that keeps your brand visible without forcing your team to produce everything in-house.",
     },
   },
 ];
@@ -476,12 +476,12 @@ export const aboutStudioContent = {
     en: "About Fau&Land Film",
   },
   title: {
-    no: "Senior-led produksjon fra Oslo med et high-end, internasjonalt blikk.",
-    en: "Senior-led production from Oslo with a high-end, international point of view.",
+    no: "To seniorer. Hvert prosjekt. Alltid.",
+    en: "Two senior creatives. Every project. Always.",
   },
   description: {
-    no: "Fau&Land Film kombinerer kommersiell strategi, filmatisk håndverk og lean gjennomføring for merkevarer, organisasjoner og ambisiøse team som trenger arbeid som ser world-class ut.",
-    en: "Fau&Land Film combines commercial strategy, cinematic craft and lean execution for brands, organizations and ambitious teams that need the work to look world-class.",
+    no: "Fau&Land Film er et Oslo-basert produksjonsselskap ledet av Gard Ruben Fauske og Tommy R.A. Garland. Vi lager reklamefilm og visuelt innhold for bedrifter og organisasjoner som vil ha arbeid som ser bedre ut og fungerer bedre.",
+    en: "Fau&Land Film is an Oslo-based production company led by Gard Ruben Fauske and Tommy R.A. Garland. We create commercial films and visual content for companies and organisations that need work that looks better and performs better.",
   },
   image: "/media/team/tommy-gard.png",
   imageAlt: {
@@ -489,9 +489,9 @@ export const aboutStudioContent = {
     en: "Tommy Garland and Gard Ruben Fauske",
   },
   stats: [
+    { value: "2", label: { no: "seniorer", en: "seniors" } },
     { value: "Oslo", label: { no: "base", en: "base" } },
     { value: "B2B", label: { no: "fokus", en: "focus" } },
-    { value: "High-end", label: { no: "produksjon", en: "production" } },
   ],
 } satisfies {
   eyebrow: LocalizedText;
@@ -508,62 +508,62 @@ export const serviceAreas: ServiceArea[] = [
     title: { no: "Reklamefilm", en: "Commercial film" },
     summary: {
       no: "Film som gjør det enklere å velge dere.",
-      en: "Films that make your brand easier to choose.",
+      en: "Film that makes your brand easier to choose.",
     },
-    eyebrow: { no: "Kampanje og lansering", en: "Campaigns and launches" },
+    eyebrow: { no: "Kampanjer og lanseringer", en: "Campaigns and launches" },
     value: {
-      no: "Konsept, produksjon og uttak til kampanjer, annonser og nettside.",
-      en: "Concept, production and campaign cutdowns for launches, ads and web.",
+      no: "Konsept, opptak og versjoner til nettside, annonser og sosiale medier.",
+      en: "Concept, production and cutdowns for websites, ads and social media.",
     },
-    ctaLabel: { no: "Snakk med oss om reklamefilm", en: "Talk to us about commercial film" },
+    ctaLabel: { no: "Snakk med oss om prosjektet", en: "Talk to us about your project" },
     href: "/kontakt",
   },
   {
     slug: "some-innhold",
-    title: { no: "Innhold for sosiale medier", en: "Social content" },
+    title: { no: "Innholdsproduksjon", en: "Content production" },
     summary: {
-      no: "Video og uttak som holder merkevaren synlig over tid.",
-      en: "Video and cutdowns that keep brands visible over time.",
+      no: "Video til sosiale medier som holder merkevaren synlig uten at dere trenger å produsere alt selv.",
+      en: "Video for social media that keeps your brand visible without forcing your team to produce everything in-house.",
     },
-    eyebrow: { no: "Synlighet over tid", en: "Always-on visibility" },
+    eyebrow: { no: "Sosiale medier", en: "Social media" },
     value: {
-      no: "Korte formater og visuelt innhold som er lett å publisere videre.",
-      en: "Short-form edits and visual content built for fast publishing.",
+      no: "Korte filmer og uttak til publisering gjennom måneden.",
+      en: "Short films and cutdowns your team can publish throughout the month.",
     },
-    ctaLabel: { no: "Få forslag til SoMe-innhold", en: "Get a social content direction" },
+    ctaLabel: { no: "Snakk med oss om prosjektet", en: "Talk to us about your project" },
     href: "/kontakt",
   },
   {
     slug: "bedriftsfilm-employer-branding",
     title: {
-      no: "Bedriftsfilm og employer branding",
-      en: "Brand film and employer branding",
+      no: "Brand storytelling",
+      en: "Brand storytelling",
     },
     summary: {
-      no: "Innhold som forklarer hvem dere er og hvorfor folk skal velge dere.",
-      en: "Films that explain who you are and why clients and talent should choose you.",
+      no: "Filmer som forklarer hvem dere er og hvorfor det betyr noe.",
+      en: "Films that explain who you are and why it matters.",
     },
-    eyebrow: { no: "Tillit og rekruttering", en: "Trust and recruitment" },
+    eyebrow: { no: "Profil, tillit og rekruttering", en: "Profile, trust and hiring" },
     value: {
-      no: "Profilfilm, intervjuer og innhold som bygger troverdighet hos kunder og kandidater.",
-      en: "Brand films, interviews and trust-building content for buyers and candidates.",
+      no: "Profilfilm, intervjuer og fortellinger som gjør det lettere å forstå hva dere står for.",
+      en: "Brand films, interviews and stories that make it easier to understand what your company stands for.",
     },
-    ctaLabel: { no: "Få forslag til bedriftsfilm", en: "Get a brand film direction" },
+    ctaLabel: { no: "Snakk med oss om prosjektet", en: "Talk to us about your project" },
     href: "/kontakt",
   },
   {
     slug: "event-live",
     title: { no: "Eventfilm og live produksjon", en: "Event film and live production" },
     summary: {
-      no: "Dekning og innhold som gjør arrangementet verdifullt lenge etterpå.",
-      en: "Coverage and film assets that keep the event valuable long after it ends.",
+      no: "Dekning og innhold som gjør arrangementet nyttig lenge etter at dagen er over.",
+      en: "Coverage and film assets that keep the event useful long after the day is over.",
     },
     eyebrow: { no: "Event og etterbruk", en: "Events and post-event value" },
     value: {
-      no: "Live, flerkamera og uttak som kan brukes videre i markedsføring og oppfølging.",
-      en: "Live, multicam and repurposed edits built for ongoing marketing and follow-up.",
+      no: "Opptak, flerkamera og uttak som kan brukes videre i markedsføring og oppfølging.",
+      en: "Live capture, multicam and cutdowns that can keep working in marketing and follow-up.",
     },
-    ctaLabel: { no: "Planlegg eventproduksjon", en: "Plan an event production" },
+    ctaLabel: { no: "Snakk med oss om prosjektet", en: "Talk to us about your project" },
     href: "/kontakt",
   },
 ];
@@ -571,24 +571,24 @@ export const serviceAreas: ServiceArea[] = [
 export const testimonials: Testimonial[] = [
   {
     quote: {
-      no: "De er trollmenn. Høy profesjonalitet og kvalitet gjennom hele prosessen.",
-      en: "They are magicians. High professionalism and quality throughout the entire process.",
+      no: "Høy profesjonalitet og kvalitet gjennom hele prosessen.",
+      en: "High professionalism and quality throughout the entire process.",
     },
     name: "Mattis Thørud",
     company: "Ville Gleder",
   },
   {
     quote: {
-      no: "Profesjonelle, kreative og engasjerte. De fanget essensen av budskapet vårt.",
-      en: "Professional, creative and engaged. They captured the essence of our message.",
+      no: "Profesjonelle, kreative og engasjerte. De forsto budskapet vårt raskt.",
+      en: "Professional, creative and engaged. They understood our message quickly.",
     },
     name: "Alexander Hellenes",
     company: "Vikingmaxtrading",
   },
   {
     quote: {
-      no: "Profesjonelle, dyktige og imøtekommende. Oppfølgingen føles nær og lavterskel.",
-      en: "Professional, skilled and approachable. The follow-up feels close and easy.",
+      no: "Profesjonelle, dyktige og imøtekommende. Oppfølgingen var tett og enkel hele veien.",
+      en: "Professional, skilled and approachable. The follow-up was close and easy all the way through.",
     },
     name: "Gunnar Johnsen",
     company: "Nei til Atomvåpen",
@@ -600,12 +600,12 @@ export const offerPackages: OfferPackage[] = [
     name: { no: "Starter", en: "Starter" },
     price: { no: "Fra 15 000 kr / mnd", en: "From NOK 15,000 / month" },
     summary: {
-      no: "Et enkelt startpunkt for dere som trenger fast video uten å gjøre avtalen tung.",
-      en: "A simple entry point for teams that need recurring video without unnecessary complexity.",
+      no: "For dere som trenger jevnlig video uten å bygge opp et stort apparat internt.",
+      en: "For teams that need recurring video without building a large setup in-house.",
     },
     idealFor: {
-      no: "Mindre selskaper og organisasjoner som vil være synlige jevnlig.",
-      en: "Smaller companies and organizations that want to stay visible consistently.",
+      no: "Passer for mindre team som vil holde nettside og sosiale medier oppdatert.",
+      en: "A good fit for smaller teams that want to keep their website and social channels active.",
     },
     includes: [
       { no: "2 korte videoer per måned", en: "2 short videos per month" },
@@ -613,28 +613,28 @@ export const offerPackages: OfferPackage[] = [
       { no: "Redigering i avtalte formater", en: "Editing in agreed formats" },
       { no: "Månedlig statusmøte", en: "Monthly status meeting" },
     ],
-    ctaLabel: { no: "Be om Starter-forslag", en: "Request a Starter proposal" },
+    ctaLabel: { no: "Få et prisestimat", en: "Get a price estimate" },
     ctaHref: "/kontakt",
   },
   {
     name: { no: "Vekst", en: "Growth" },
     price: { no: "Fra 35 000 kr / mnd", en: "From NOK 35,000 / month" },
     summary: {
-      no: "For dere som vil bruke video aktivt i markedsføring, salg og sosiale medier.",
-      en: "For teams that want to use video actively across marketing, sales and social channels.",
+      no: "For dere som vil bruke video fast i markedsføring, salg og sosiale medier.",
+      en: "For teams that want to use video consistently across marketing, sales and social channels.",
     },
     idealFor: {
-      no: "SMB-er og organisasjoner med tydelige mål og behov for mer kontinuitet.",
-      en: "SMBs and organizations with clearer goals and a need for more continuity.",
+      no: "Passer for bedrifter og organisasjoner med tydelige mål og behov for mer kontinuitet.",
+      en: "A good fit for companies and organisations with clear goals and a need for more continuity.",
     },
     includes: [
       { no: "4 videoer per måned", en: "4 videos per month" },
-      { no: "Innholdsstrategi og publiseringsprioritering", en: "Content strategy and publishing priorities" },
-      { no: "Enkel fotopakke eller ekstra uttak", en: "A light photo package or extra cutdowns" },
+      { no: "Innholdsplan og publiseringsprioritering", en: "Content plan and publishing priorities" },
+      { no: "Ekstra uttak eller enkel fotopakke", en: "Extra cutdowns or a light photo package" },
       { no: "Prioriterte leveranser", en: "Priority delivery" },
     ],
     featured: true,
-    ctaLabel: { no: "Book møte om Vekst", en: "Book a Growth call" },
+    ctaLabel: { no: "Få et prisestimat", en: "Get a price estimate" },
     ctaHref: "/kontakt",
   },
   {
@@ -642,7 +642,7 @@ export const offerPackages: OfferPackage[] = [
     price: { no: "Fra 65 000 kr / mnd", en: "From NOK 65,000 / month" },
     summary: {
       no: "For team som trenger løpende produksjon, rask sparring og kort vei fra idé til publisering.",
-      en: "For teams that need ongoing production, faster sparring and a shorter path from idea to delivery.",
+      en: "For teams that need ongoing production, rapid sparring and a shorter path from idea to delivery.",
     },
     idealFor: {
       no: "Selskaper med høyt aktivitetsnivå, kampanjer og flere flater i drift samtidig.",
@@ -654,7 +654,7 @@ export const offerPackages: OfferPackage[] = [
       { no: "Prioritert produksjonstid", en: "Priority production time" },
       { no: "Fast kontaktperson og raskere oppfølging", en: "Dedicated lead producer and faster follow-up" },
     ],
-    ctaLabel: { no: "Snakk med oss om Partner", en: "Talk to us about Partner" },
+    ctaLabel: { no: "Få et prisestimat", en: "Get a price estimate" },
     ctaHref: "/kontakt",
   },
 ];
@@ -662,34 +662,34 @@ export const offerPackages: OfferPackage[] = [
 export const priceGuides: PriceGuide[] = [
   {
     title: { no: "SoMe-klipp og kortformat", en: "Short-form social edits" },
-    range: { no: "Fra 5 000-20 000 kr+", en: "From NOK 5,000-20,000+" },
+    range: { no: "Fra 5 000-20 000 kr", en: "From NOK 5,000-20,000" },
     detail: {
-      no: "Typisk for korte videoer, repurposing eller mindre opptak med raske uttak.",
-      en: "Typical for short edits, repurposing or smaller shoots with quick turnarounds.",
+      no: "Passer for korte filmer, repurposing og mindre opptak med raske uttak.",
+      en: "Typical for short edits, repurposing and smaller shoots with fast turnarounds.",
     },
   },
   {
     title: { no: "Bedriftsfilm / reklamefilm", en: "Brand film / commercial film" },
     range: { no: "Fra 20 000-100 000 kr+", en: "From NOK 20,000-100,000+" },
     detail: {
-      no: "Pris påvirkes av konsept, opptaksdager, crew, lokasjon og antall versjoner.",
-      en: "Pricing depends on concept, shoot days, crew, locations and the number of deliverables.",
+      no: "Pris avhenger av idé, opptaksdager, crew, lokasjon og hvor mange versjoner dere trenger.",
+      en: "Pricing depends on concept, shoot days, crew, locations and how many versions you need.",
     },
   },
   {
     title: { no: "Eventfilm og livestream", en: "Event film and livestream" },
     range: { no: "Fra 15 000-60 000 kr+", en: "From NOK 15,000-60,000+" },
     detail: {
-      no: "Typisk for konferanser, høydepunktfilmer, intervjuer og streaming-oppsett.",
-      en: "Typical for conferences, highlight films, interviews and streaming setups.",
+      no: "Typisk for konferanser, høydepunktfilmer, intervjuer og streaming.",
+      en: "Typical for conferences, highlight films, interviews and livestreams.",
     },
   },
   {
     title: { no: "Kampanje med flere uttak", en: "Campaign with multiple cutdowns" },
     range: { no: "Fra 100 000 kr+", en: "From NOK 100,000+" },
     detail: {
-      no: "Passer når video, foto og flere formatuttak skal bygges i samme produksjonsløp.",
-      en: "Best when video, photography and multiple deliverables are built from one production system.",
+      no: "Passer når video, foto og flere uttak skal bygges i samme produksjon.",
+      en: "Best when film, photography and multiple deliverables are built from one production.",
     },
   },
 ];
@@ -700,22 +700,22 @@ export const caseStudies: CaseStudy[] = [
     slug: "ville-gleder",
     client: "Ville Gleder",
     title: {
-      no: "Promofilm og innhold som skapte synlighet og respons",
-      en: "Promo film and content that created visibility and response",
+      no: "Promofilm som skapte mer interesse",
+      en: "Promo film that built more interest",
     },
     category: { no: "Kampanje", en: "Campaign" },
     industry: { no: "Opplevelser og foredrag", en: "Experiences and keynote speaking" },
     summary: {
-      no: "Promofilm og korte uttak som gjorde det enklere å bygge interesse rundt foredragene.",
-      en: "A promo film and shorter cutdowns that made it easier to build interest around the talks.",
+      no: "Promofilm og korte uttak brukt for å skape oppmerksomhet rundt foredragene.",
+      en: "A promo film and short cutdowns used to build attention around the talks.",
     },
     goal: {
-      no: "Trengte synlighet og innhold som kunne brukes på tvers av flere flater.",
-      en: "Needed visibility and a set of assets that could travel across multiple channels.",
+      no: "Trengte mer synlighet og innhold som kunne brukes i flere kanaler.",
+      en: "Needed more visibility and content that could work across several channels.",
     },
     solution: {
-      no: "Vi leverte promofilm og korte uttak til nettside og sosiale medier.",
-      en: "We delivered a promo film and short edits for web and social distribution.",
+      no: "Vi produserte en promofilm og korte versjoner for nettside og sosiale medier.",
+      en: "We produced a promo film and shorter versions for web and social media.",
     },
     deliverables: [
       { no: "Kampanjefilm", en: "Campaign film" },
@@ -743,27 +743,27 @@ export const caseStudies: CaseStudy[] = [
     slug: "nei-til-atomvapen",
     client: "Nei til Atomvåpen",
     title: {
-      no: "Videokampanje som bidro til medlemsvekst",
-      en: "Video campaign that drove membership growth",
+      no: "Kampanjefilm som bidro til medlemsvekst",
+      en: "Campaign film that drove membership growth",
     },
     category: { no: "Organisasjon", en: "Organization" },
     industry: { no: "Ideell organisasjon", en: "Non-profit organization" },
     summary: {
-      no: "En kampanje der video skulle gjøre budskapet tydelig og senke terskelen for å melde seg inn.",
-      en: "A campaign where video was used to clarify the message and lower the barrier to joining.",
+      no: "Video som gjorde budskapet tydeligere og senket terskelen for å melde seg inn.",
+      en: "Video that made the message clearer and lowered the barrier to joining.",
     },
     goal: {
-      no: "Skape flere nye medlemmer og mer gjennomslag for kampanjen.",
-      en: "Generate more new members and stronger momentum for the campaign.",
+      no: "Trengte flere nye medlemmer og en tydeligere digital kampanje.",
+      en: "Needed more new members and a clearer digital campaign.",
     },
     solution: {
-      no: "Vi utviklet videoinnhold med tydelig oppfordring til handling for digitale flater.",
-      en: "We developed video assets with a clear call to action for digital channels.",
+      no: "Vi utviklet kampanjevideo og korte versjoner med tydelig oppfordring til handling.",
+      en: "We developed a campaign film and shorter versions with a clear call to action.",
     },
     deliverables: [
       { no: "Kampanjevideo", en: "Campaign video" },
       { no: "Korte digitale uttak", en: "Short digital cutdowns" },
-      { no: "Tydelig CTA-struktur", en: "Clear CTA structure" },
+      { no: "Klare oppfordringer til handling", en: "Clear calls to action" },
     ],
     impact: {
       no: "300+ nye medlemmer i løpet av tre måneder.",
@@ -772,7 +772,7 @@ export const caseStudies: CaseStudy[] = [
     metrics: [
       { value: "300+", label: { no: "nye medlemmer", en: "new members" } },
       { value: "3 mnd", label: { no: "kampanjeperiode", en: "campaign period" } },
-      { value: "1", label: { no: "tydelig hovedhandling", en: "clear primary CTA" } },
+      { value: "Klar", label: { no: "handling", en: "action" } },
     ],
     tags: [
       { no: "Organisasjon", en: "Organization" },
@@ -786,22 +786,22 @@ export const caseStudies: CaseStudy[] = [
     slug: "foreningen-norden",
     client: "Foreningen Norden",
     title: {
-      no: "Eventinnhold som styrket synlighet og videre bruk",
-      en: "Event content that strengthened visibility and reuse",
+      no: "Eventinnhold som kunne brukes videre",
+      en: "Event content built for reuse",
     },
     category: { no: "Event", en: "Event" },
     industry: { no: "Medlemsorganisasjon", en: "Membership organization" },
     summary: {
-      no: "Dekning og uttak som gjorde arrangement og organisasjonsarbeid lettere å vise frem videre.",
-      en: "Coverage and cutdowns that made the event and the broader organization easier to showcase afterwards.",
+      no: "Dekning og korte uttak som gjorde arrangementet lettere å vise frem også etterpå.",
+      en: "Coverage and short cutdowns that made the event easier to showcase afterwards.",
     },
     goal: {
-      no: "Trengte innhold som både dokumenterte arrangementet og kunne brukes etterpå.",
-      en: "Needed content that both documented the event and could keep working afterwards.",
+      no: "Trengte innhold som både dokumenterte arrangementet og ga materiale til videre kommunikasjon.",
+      en: "Needed content that documented the event and created material for ongoing communication.",
     },
     solution: {
-      no: "Vi kombinerte eventdekning, korte uttak og innhold til videre publisering.",
-      en: "We combined event coverage, short edits and assets for continued publishing.",
+      no: "Vi leverte eventdekning, korte uttak og materiale til videre publisering.",
+      en: "We delivered event coverage, short cutdowns and material for continued publishing.",
     },
     deliverables: [
       { no: "Eventdekning", en: "Event coverage" },
@@ -809,12 +809,12 @@ export const caseStudies: CaseStudy[] = [
       { no: "Innhold til videre publisering", en: "Assets for ongoing publishing" },
     ],
     impact: {
-      no: "Sterkere synlighet og en tydeligere innholdsflate i videre kommunikasjon.",
-      en: "Stronger visibility and a clearer content system for ongoing communication.",
+      no: "Mer synlighet rundt arrangementet og mer innhold til videre kommunikasjon.",
+      en: "More visibility around the event and more content for ongoing communication.",
     },
     metrics: [
-      { value: "Event", label: { no: "dekning", en: "coverage" } },
-      { value: "Flere", label: { no: "uttak", en: "cutdowns" } },
+      { value: "Event", label: { no: "dokumentert", en: "captured" } },
+      { value: "Flere", label: { no: "uttak", en: "edits" } },
       { value: "Videre", label: { no: "bruk", en: "reuse" } },
     ],
     tags: [
@@ -824,23 +824,19 @@ export const caseStudies: CaseStudy[] = [
     ],
     palette: "from-[#efe9df] via-[#d6cabc] to-[#bfa98c]",
     featured: true,
-    verificationNote: {
-      no: "Bytt inn konkret effekt eller kundeuttalelse her når den er verifisert.",
-      en: "Replace this with a verified outcome or client quote when approved.",
-    },
   },
   {
     slug: "lykseth-gard",
     client: "Lykseth Gård",
     title: {
-      no: "Visuelt innhold som gjorde en lokal merkevare tydeligere",
-      en: "Visual content that made a local brand more distinctive",
+      no: "Innhold som gjorde tilbudet lettere å forstå",
+      en: "Content that made the offer easier to understand",
     },
     category: { no: "Promo", en: "Promo" },
     industry: { no: "Lokalt næringsliv", en: "Local business" },
     summary: {
-      no: "Foto og video som gjorde tilbudet lettere å forstå og lettere å vise frem digitalt.",
-      en: "Photo and video that made the offer easier to understand and stronger to present digitally.",
+      no: "Foto og video som gjorde tilbudet tydeligere og lettere å vise frem digitalt.",
+      en: "Photo and video that made the offer clearer and easier to present online.",
     },
     goal: {
       no: "Trengte et tydeligere visuelt uttrykk for markedsføring og digitale flater.",
@@ -876,34 +872,34 @@ export const caseStudies: CaseStudy[] = [
 export const processSteps: ProcessStep[] = [
   {
     step: "01",
-    title: { no: "Strategi", en: "Strategy" },
+    title: { no: "Avklaring", en: "Alignment" },
     description: {
-      no: "Vi avklarer mål, budskap og hvor innholdet skal brukes.",
-      en: "We align on goals, messaging and where the work will be used.",
+      no: "Vi avklarer mål, målgruppe og hva filmen skal brukes til.",
+      en: "We align on the goal, the audience and where the film will be used.",
     },
   },
   {
     step: "02",
     title: { no: "Produksjon", en: "Production" },
     description: {
-      no: "Vi planlegger, filmer og leder produksjonen med riktig nivå på crew.",
-      en: "We plan, shoot and lead production with the right crew for the brief.",
+      no: "Vi planlegger opptak, crew og gjennomføring ut fra budsjett og behov.",
+      en: "We plan the shoot, the crew and the production setup around the budget and the project.",
     },
   },
   {
     step: "03",
     title: { no: "Leveranse", en: "Delivery" },
     description: {
-      no: "Dere får ferdige filmer og uttak i riktige formater.",
-      en: "You receive finished films and the right cutdowns for each format.",
+      no: "Dere får ferdige filmer og versjoner til de flatene dere skal bruke.",
+      en: "You receive finished films and versions for the channels you need.",
     },
   },
   {
     step: "04",
-    title: { no: "Optimalisering", en: "Optimization" },
+    title: { no: "Videre bruk", en: "Next step" },
     description: {
-      no: "Vi vurderer neste steg, nye uttak og videre bruk når det er relevant.",
-      en: "We assess next steps, new edits and additional reuse where it matters.",
+      no: "Vi ser på videre bruk, nye uttak og hva som er smartest å gjøre videre.",
+      en: "We look at reuse, new cutdowns and what makes sense to do next.",
     },
   },
 ];
@@ -913,32 +909,32 @@ export const teamMembers: TeamMember[] = [
     name: "Tommy R.A. Garland",
     role: { no: "Partner, strategi og produksjon", en: "Partner, strategy and production" },
     summary: {
-      no: "Tommy leder strategi, produksjon og gjennomføring med fokus på tydelig kommersiell retning og presis leveranse.",
-      en: "Tommy leads strategy, production and execution with a focus on commercial clarity and precise delivery.",
+      no: "Tommy leder strategi, planlegging og produksjon med fokus på tydelig retning og trygg gjennomføring.",
+      en: "Tommy leads strategy, planning and production with a focus on clear direction and reliable delivery.",
     },
   },
   {
     name: "Gard Ruben Fauske",
     role: { no: "Partner, regi og visuell retning", en: "Partner, direction and visual craft" },
     summary: {
-      no: "Gard leder den kreative visjonen, regien og den visuelle kvaliteten gjennom hele prosjektet.",
-      en: "Gard leads the creative vision, direction and visual quality throughout each production.",
+      no: "Gard leder regi, visuelt uttrykk og kvaliteten i det som faktisk havner på skjermen.",
+      en: "Gard leads direction, visual expression and the quality of what finally ends up on screen.",
     },
   },
 ];
 
 export const aboutBullets = [
   {
-    no: "Oslo-basert produksjonsselskap med en internasjonal, editorial visuell standard.",
-    en: "Oslo-based production company with an international editorial visual standard.",
+    no: "Oslo-basert produksjonsselskap for bedrifter og organisasjoner.",
+    en: "Oslo-based production company for companies and organisations.",
   },
   {
-    no: "Senior-led prosjektflyt fra strategi og regi til produksjon, redigering og uttak.",
-    en: "Senior-led project flow from strategy and direction to production, edit and cutdowns.",
+    no: "To seniorer følger prosjektet tett fra første møte til ferdig leveranse.",
+    en: "Two senior creatives stay close to the project from first conversation to final delivery.",
   },
   {
-    no: "Skalerbart crew for foto, lyd, lys, motion design, drone og flerspors leveranser.",
-    en: "Scalable crew for camera, sound, lighting, motion design, drone and multi-output delivery.",
+    no: "Skalerbart crew når prosjektet trenger foto, lyd, lys, drone eller flere opptaksdager.",
+    en: "A scalable crew when the project needs photography, sound, lighting, drone or additional shoot days.",
   },
 ];
 
@@ -946,15 +942,15 @@ export const pricingFaq: FaqItem[] = [
   {
     question: { no: "Må vi velge en fast pakke?", en: "Do we need to choose a fixed package?" },
     answer: {
-      no: "Nei. Pakker brukes som et tydelig startpunkt. Mange kunder starter med ett prosjekt og går videre til en løpende avtale når de ser hva som fungerer.",
-      en: "No. Packages are a clear starting point. Many clients start with one project and move into an ongoing agreement when they see what works.",
+      no: "Nei. Pakkene er først og fremst et startpunkt. Mange begynner med ett prosjekt og utvider når de ser hva de trenger mer av.",
+      en: "No. The packages are mainly a starting point. Many clients begin with one project and expand when they see what they need more of.",
     },
   },
   {
     question: { no: "Er prisene faste?", en: "Are the prices fixed?" },
     answer: {
-      no: "Nei. Prisene er veiledende nivåer som gjør det enklere å forstå omfanget. Endelig pris avhenger av mål, antall opptaksdager, crew og hvor mange uttak dere trenger.",
-      en: "No. The prices are guiding levels that make the scope easier to understand. Final pricing depends on goals, shoot days, crew and the number of deliverables you need.",
+      no: "Nei. Prisene er veiledende nivåer. Endelig pris avhenger av mål, opptaksomfang, crew og hvor mange leveranser dere trenger.",
+      en: "No. The pricing is indicative. Final cost depends on the goal, shoot scope, crew and how many deliverables you need.",
     },
   },
   {
@@ -963,15 +959,15 @@ export const pricingFaq: FaqItem[] = [
       en: "Can you deliver video, photo, drone and livestream in one setup?",
     },
     answer: {
-      no: "Ja. Vi kombinerer kjerneteam og et utvidet nettverk slik at dere kan samle mer av leveransen ett sted.",
-      en: "Yes. We combine our core team with a wider network so more of the production can live under one roof.",
+      no: "Ja. Vi setter sammen riktig team rundt prosjektet, slik at dere kan samle mer av leveransen ett sted.",
+      en: "Yes. We build the right team around the project so more of the delivery can sit in one place.",
     },
   },
   {
     question: { no: "Hvor raskt kan dere starte?", en: "How quickly can you start?" },
     answer: {
-      no: "Vi svarer normalt innen 24 timer og kan ofte skissere et første oppsett i løpet av samme uke hvis briefen er tydelig.",
-      en: "We usually respond within 24 hours and can often outline a first setup within the same week if the brief is clear.",
+      no: "Vi følger opp innen 24 timer og kan ofte skissere et første oppsett i løpet av samme uke.",
+      en: "We follow up within 24 hours and can often outline a first setup within the same week.",
     },
   },
 ];
@@ -980,37 +976,37 @@ export const contactFaq: FaqItem[] = [
   {
     question: { no: "Hva skjer etter at vi tar kontakt?", en: "What happens after we get in touch?" },
     answer: {
-      no: "Vi tar en kort prat for å forstå mål, tidslinje og hva innholdet skal brukes til. Deretter foreslår vi riktig oppsett.",
-      en: "We have a short conversation to understand goals, timeline and how the content will be used. Then we recommend the right setup.",
+      no: "Vi tar en kort prat for å forstå mål, tidslinje og hvor filmen skal brukes. Deretter foreslår vi riktig oppsett.",
+      en: "We have a short conversation to understand the goal, the timeline and where the film will be used. Then we recommend the right setup.",
     },
   },
   {
     question: { no: "Tilbyr dere møte i Oslo?", en: "Do you offer meetings in Oslo?" },
     answer: {
-      no: "Ja. Vi holder til i Oslo og kan møtes fysisk eller digitalt etter avtale.",
+      no: "Ja. Vi holder til i Oslo og kan møtes fysisk eller digitalt.",
       en: "Yes. We are based in Oslo and can meet in person or remotely.",
     },
   },
   {
     question: { no: "Kan vi få et prisestimat raskt?", en: "Can we get a price estimate quickly?" },
     answer: {
-      no: "Ja. Hvis dere vet litt om omfang, tidslinje og hva dere trenger, kan vi raskt gi et første estimat eller anbefale riktig nivå.",
-      en: "Yes. If you know a bit about scope, timeline and what you need, we can quickly give a first estimate or recommend the right level.",
+      no: "Ja. Hvis dere vet litt om omfang, tidslinje og hva filmen skal brukes til, kan vi raskt gi et første estimat.",
+      en: "Yes. If you know a little about scope, timeline and where the film will be used, we can quickly provide a first estimate.",
     },
   },
 ];
 
 export const landingTemplateBullets = [
   {
-    no: "Tydelig budskap over folden",
-    en: "A clear message above the fold",
+    no: "Tydelig budskap på få sekunder",
+    en: "A clear message within seconds",
   },
   {
-    no: "Relevant sosial proof tidlig",
-    en: "Relevant social proof early on",
+    no: "Proof og tillit tidlig på siden",
+    en: "Proof and trust early on the page",
   },
   {
-    no: "Kun én hovedhandling per side",
-    en: "Only one primary action per page",
+    no: "En tydelig handling per side",
+    en: "One clear action per page",
   },
 ];
