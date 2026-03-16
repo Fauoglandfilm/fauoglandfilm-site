@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import type { ReactNode } from "react";
 
+import { PreviewMedia } from "@/components/media/preview-media";
 import { useSitePreferences } from "@/components/providers/site-preferences";
 import {
   aboutStudioContent,
@@ -20,6 +21,7 @@ import {
 } from "@/data/site-content";
 import { homeShowcaseVisuals, servicePillarVisuals, siteVisuals } from "@/data/visual-assets";
 import { uiCopy } from "@/data/ui-copy";
+import type { LocalizedText } from "@/lib/i18n";
 import { resolveLocalizedValue } from "@/lib/i18n";
 
 import { FloatingLayer, Reveal } from "../motion/reveal";
@@ -60,7 +62,7 @@ export function HeroSection() {
         <div className="grain-overlay absolute inset-0 opacity-54" />
       </div>
 
-      <div className="relative mx-auto flex min-h-[80svh] max-w-7xl items-center px-4 pb-10 pt-[6.5rem] sm:min-h-[85svh] sm:px-6 sm:pb-12 sm:pt-[7.5rem] lg:min-h-[86vh] lg:px-8 lg:pb-14 lg:pt-32">
+      <div className="site-container relative flex min-h-[80svh] items-center pb-10 pt-[6.5rem] sm:min-h-[85svh] sm:pb-12 sm:pt-[7.5rem] lg:min-h-[86vh] lg:pb-14 lg:pt-32">
         <div className="hero-copy w-full max-w-[46rem]">
           <Reveal y={18}>
             <div className="hero-glass-panel max-w-[42rem]">
@@ -106,7 +108,7 @@ export function SelectedWorkSection({ items }: { items: CaseStudy[] }) {
 
   return (
     <section id="selected-work" className="section-space">
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div className="site-container">
         <div className="flex flex-col gap-3 sm:gap-4 lg:flex-row lg:items-end lg:justify-between">
           <div className="max-w-3xl space-y-2.5 sm:space-y-3">
             <span className="eyebrow">{copy.selectedWorkEyebrow}</span>
@@ -143,7 +145,7 @@ export function IntroSection() {
 
   return (
     <section className="py-4 sm:py-5">
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div className="site-container">
         <div className="grid gap-4 lg:grid-cols-[0.92fr_1.08fr]">
           <Reveal>
             <div className="glass-panel rounded-[1.8rem] px-5 py-5 shadow-[0_28px_90px_rgba(0,0,0,0.18)] sm:rounded-[1.95rem] sm:px-6 sm:py-6">
@@ -186,27 +188,18 @@ export function IntroSection() {
             <div className="grid gap-3 sm:grid-cols-[1.16fr_0.84fr]">
               <div className="media-frame relative overflow-hidden rounded-[1.8rem]">
                 <div className="relative aspect-[1.18/0.92] min-h-[16rem]">
-                  {servicePreview.video?.videoType === "direct" ? (
-                    <video
-                      className="h-full w-full object-cover"
-                      autoPlay
-                      muted
-                      loop
-                      playsInline
-                      preload="metadata"
-                      poster={servicePreview.video.poster}
-                    >
-                      <source src={servicePreview.video.src} type="video/mp4" />
-                    </video>
-                  ) : (
-                    <Image
-                      src={siteVisuals.introShowcase.src}
-                      alt={resolveLocalizedValue(siteVisuals.introShowcase.alt, language)}
-                      fill
-                      sizes="(min-width: 1024px) 36vw, 100vw"
-                      className="object-cover"
-                    />
-                  )}
+                  <PreviewMedia
+                    title={servicePreview.title}
+                    video={servicePreview.video}
+                    externalVideo={servicePreview.externalVideo}
+                    image={servicePreview.image ?? siteVisuals.introShowcase.src}
+                    imageAlt={servicePreview.imageAlt ?? siteVisuals.introShowcase.alt}
+                    previewBehavior={servicePreview.video || servicePreview.externalVideo ? "viewport" : "static"}
+                    className="absolute inset-0"
+                    sizes="(min-width: 1024px) 36vw, 100vw"
+                    posterClassName="image-slow-zoom"
+                    previewClassName="scale-[1.02]"
+                  />
                   <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(7,7,7,0.06),rgba(7,7,7,0.46)_68%,rgba(7,7,7,0.9))]" />
                   <div className="grain-overlay absolute inset-0 opacity-45" />
                   <div className="absolute inset-x-0 bottom-0 p-5 text-white sm:p-6">
@@ -257,13 +250,84 @@ export function IntroSection() {
   );
 }
 
+export function MediaInterludeSection({
+  eyebrow,
+  title,
+  description,
+  ctaHref,
+  ctaLabel,
+  video,
+  externalVideo,
+  image,
+  imageAlt,
+  align = "left",
+}: {
+  eyebrow: LocalizedText;
+  title: LocalizedText;
+  description: LocalizedText;
+  ctaHref: string;
+  ctaLabel: LocalizedText;
+  video?: CaseStudy["video"];
+  externalVideo?: CaseStudy["externalVideo"];
+  image: string;
+  imageAlt: LocalizedText;
+  align?: "left" | "right";
+}) {
+  const { language } = useSitePreferences();
+
+  return (
+    <section className="py-[clamp(0.8rem,2vw,1.4rem)]">
+      <Reveal>
+        <div className="full-bleed-media">
+          <PreviewMedia
+            title={title}
+            video={video}
+            externalVideo={externalVideo}
+            image={image}
+            imageAlt={imageAlt}
+            previewBehavior={video || externalVideo ? "viewport" : "static"}
+            className="absolute inset-0"
+            sizes="100vw"
+            posterClassName="image-slow-zoom"
+            previewClassName="scale-[1.03]"
+          />
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(255,255,255,0.1),transparent_28%),radial-gradient(circle_at_82%_18%,rgba(96,138,255,0.14),transparent_24%),linear-gradient(90deg,rgba(7,9,13,0.84),rgba(7,9,13,0.5)_34%,rgba(7,9,13,0.28)_58%,rgba(7,9,13,0.62)_100%),linear-gradient(180deg,rgba(7,9,13,0.08),rgba(7,9,13,0.26)_36%,rgba(7,9,13,0.86)_100%)]" />
+          <div className="grain-overlay absolute inset-0 opacity-42" />
+
+          <div className="site-container relative z-[2] flex min-h-[clamp(22rem,58vw,38rem)] items-end py-[clamp(2rem,6vw,4rem)]">
+            <div className={`media-interlude-panel p-5 sm:p-6 lg:p-7 ${align === "right" ? "ml-auto" : ""}`}>
+              <div className="glass-sheen absolute inset-0 opacity-55" />
+              <div className="relative z-[1] max-w-[33rem]">
+                <span className="hero-badge text-white/72">
+                  {resolveLocalizedValue(eyebrow, language)}
+                </span>
+                <h2 className="feature-title mt-4 text-white">
+                  {resolveLocalizedValue(title, language)}
+                </h2>
+                <p className="body-copy mt-4 text-white/76 sm:text-base sm:leading-7">
+                  {resolveLocalizedValue(description, language)}
+                </p>
+                <div className="mt-5">
+                  <ButtonLink href={ctaHref} variant="secondary" className="w-full sm:w-auto">
+                    {resolveLocalizedValue(ctaLabel, language)}
+                  </ButtonLink>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </Reveal>
+    </section>
+  );
+}
+
 export function ClientSlider() {
   const { language } = useSitePreferences();
   const copy = uiCopy.home[language];
 
   return (
     <section className="py-4 sm:py-5">
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div className="site-container">
         <div className="flex flex-col gap-2.5 sm:flex-row sm:items-center sm:justify-between">
           <p className="eyebrow">{copy.clientsEyebrow}</p>
           <p className="body-copy text-[var(--muted)]">{copy.clientsDescription}</p>
@@ -284,7 +348,7 @@ export function ServicesSection() {
 
   return (
     <section className="section-space">
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div className="site-container">
         <div className="max-w-3xl space-y-2.5 sm:space-y-3">
           <span className="eyebrow">{copy.servicesEyebrow}</span>
           <h2 className="section-title text-[color:var(--foreground)]">
@@ -292,7 +356,7 @@ export function ServicesSection() {
           </h2>
         </div>
 
-        <div className="mt-6 grid gap-3.5 sm:mt-8 sm:gap-4 md:grid-cols-2">
+        <div className="adaptive-grid-cards mt-6 sm:mt-8">
           {servicePillars.map((pillar, index) => (
             <ServicePillarCard key={pillar.eyebrow} pillar={pillar} delay={0.05 * index} />
           ))}
@@ -351,20 +415,32 @@ export function FeaturedCase() {
 
   return (
     <section className="section-space pt-0">
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div className="site-container">
         <FloatingLayer>
           <div className="overflow-hidden rounded-[1.8rem] border border-[color:var(--line)] bg-[#111111] text-white shadow-[0_40px_120px_rgba(15,15,15,0.14)] sm:rounded-[2rem]">
             <div className="grid gap-0 lg:grid-cols-[0.95fr_1.05fr]">
-              <div
-                className="relative min-h-[18rem] overflow-hidden p-5 sm:min-h-[21rem] sm:p-8 lg:min-h-[30rem] lg:p-10"
-                style={{
-                  background:
-                    "linear-gradient(135deg, rgba(214,193,154,0.3), rgba(97,84,64,0.08) 42%, rgba(8,8,8,0.82) 100%)",
-                }}
-              >
-                <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(255,255,255,0.24),transparent_34%),radial-gradient(circle_at_bottom_right,rgba(181,154,103,0.24),transparent_28%)] transition duration-700 motion-safe:group-hover:scale-[1.02]" />
+              <div className="media-frame relative min-h-[18rem] overflow-hidden sm:min-h-[21rem] lg:min-h-[30rem]">
+                <PreviewMedia
+                  title={featuredCase.title}
+                  video={featuredCase.video}
+                  externalVideo={featuredCase.externalVideo}
+                  image={featuredCase.image ?? siteVisuals.commercialCampaign.src}
+                  imageAlt={featuredCase.imageAlt ?? siteVisuals.commercialCampaign.alt}
+                  previewBehavior={featuredCase.video || featuredCase.externalVideo ? "viewport" : "static"}
+                  className="absolute inset-0"
+                  sizes="(min-width: 1024px) 48vw, 100vw"
+                  posterClassName="image-slow-zoom"
+                  previewClassName="scale-[1.02]"
+                />
+                <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(255,255,255,0.18),transparent_32%),linear-gradient(180deg,rgba(8,8,8,0.12),rgba(8,8,8,0.36)_42%,rgba(8,8,8,0.88)_100%)]" />
+                <div className="grain-overlay absolute inset-0 opacity-42" />
+                {featuredCase.video || featuredCase.externalVideo ? (
+                  <span className="absolute right-5 top-5 z-[2] inline-flex h-11 w-11 items-center justify-center rounded-full border border-white/14 bg-white/90 text-[#111111] shadow-[0_16px_36px_rgba(0,0,0,0.22)] backdrop-blur-sm">
+                    <ArrowUpRightIcon className="h-4 w-4" />
+                  </span>
+                ) : null}
                 <div className="relative flex h-full flex-col justify-between">
-                  <div className="space-y-2.5 sm:space-y-3">
+                  <div className="space-y-2.5 p-5 sm:space-y-3 sm:p-8 lg:p-10">
                     <span className="text-[0.72rem] font-semibold uppercase tracking-[0.24em] text-white/58">
                       {copy.featuredCaseEyebrow}
                     </span>
@@ -376,7 +452,7 @@ export function FeaturedCase() {
                     </p>
                   </div>
 
-                  <div className="mt-7 grid gap-3 sm:mt-10 sm:grid-cols-3">
+                  <div className="mt-7 grid gap-3 p-5 sm:mt-10 sm:grid-cols-3 sm:p-8 lg:p-10">
                     {featuredCase.metrics.slice(0, 3).map((metric, index) => (
                       <div key={`${metric.value}-${index}`} className="rounded-[1.2rem] border border-white/10 bg-white/8 p-4 backdrop-blur">
                         <p className="text-[0.7rem] uppercase tracking-[0.18em] text-white/48">
@@ -445,7 +521,7 @@ export function AboutSection() {
 
   return (
     <section className="section-space">
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div className="site-container">
         <div className="grid gap-5 sm:gap-6 lg:grid-cols-[1.02fr_0.98fr] lg:items-center">
           <FloatingLayer className="glass-panel relative overflow-hidden rounded-[1.9rem] shadow-[0_34px_110px_rgba(0,0,0,0.2)] sm:rounded-[2rem]">
             <div className="glass-sheen absolute inset-0 opacity-50" />
@@ -550,7 +626,7 @@ export function ContactSection() {
 
   return (
     <section className="section-space pt-0" id="kontakt">
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div className="site-container">
         <div className="grid gap-3.5 sm:gap-4 lg:grid-cols-[0.9fr_1.1fr]">
           <article className="glass-panel relative overflow-hidden rounded-[1.8rem] p-4.5 shadow-[0_28px_90px_rgba(0,0,0,0.18)] sm:rounded-[2rem] sm:p-6 lg:p-7">
             <div className="glass-sheen absolute inset-0 opacity-50" />

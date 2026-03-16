@@ -118,6 +118,19 @@ export function Header() {
   }, [open]);
 
   useEffect(() => {
+    const onResize = () => {
+      if (window.innerWidth >= 1024) {
+        setOpen(false);
+      }
+    };
+
+    onResize();
+    window.addEventListener("resize", onResize);
+
+    return () => window.removeEventListener("resize", onResize);
+  }, []);
+
+  useEffect(() => {
     if (!open) {
       return;
     }
@@ -166,15 +179,74 @@ export function Header() {
                   "font-display text-[0.92rem] tracking-[-0.05em] sm:text-[0.98rem]",
                   overlayMode ? "text-white" : "text-[color:var(--foreground)]",
                 )}
-              >
-                Fau&amp;Land Film
+            >
+              Fau&amp;Land Film
               </p>
             </Link>
+
+            <nav className="relative z-[1] hidden flex-1 justify-center lg:flex">
+              <div
+                className={cn(
+                  "inline-flex items-center gap-1 rounded-full border px-1.5 py-1.5 backdrop-blur-[28px] transition duration-300",
+                  overlayMode
+                    ? "border-white/14 bg-white/[0.08] text-white shadow-[0_18px_40px_rgba(0,0,0,0.18)]"
+                    : "border-[color:var(--line)] bg-white/[0.04] text-[color:var(--foreground)] shadow-[0_16px_36px_rgba(7,10,18,0.08)]",
+                )}
+                aria-label={menuLabel}
+              >
+                {navItems.map((item) => {
+                  const active = item.href === "/" ? pathname === "/" : pathname.startsWith(item.href);
+
+                  return (
+                    <Link
+                      key={item.href}
+                      href={item.href}
+                      className={cn(
+                        "inline-flex items-center rounded-full border border-transparent px-3.5 py-2 text-[0.8rem] font-semibold tracking-[-0.02em] transition duration-300",
+                        overlayMode
+                          ? "text-white/80 hover:border-white/12 hover:bg-white/[0.1] hover:text-white"
+                          : "text-[color:var(--foreground)]/78 hover:border-white/18 hover:bg-white/[0.08] hover:text-[color:var(--foreground)]",
+                        active &&
+                          (overlayMode
+                            ? "border-white/16 bg-white/[0.14] text-white shadow-[0_10px_28px_rgba(0,0,0,0.18)]"
+                            : "border-white/20 bg-white/[0.12] text-[color:var(--foreground)] shadow-[0_10px_28px_rgba(7,10,18,0.12)]"),
+                      )}
+                    >
+                      {resolveLocalizedValue(item.label, language)}
+                    </Link>
+                  );
+                })}
+              </div>
+            </nav>
+
+            <div className="relative z-[1] ml-auto hidden items-center gap-3 lg:flex">
+              <SegmentedToggle
+                ariaLabel={copy.languageLabel}
+                value={language}
+                options={[
+                  { label: "NO", value: "no" },
+                  { label: "EN", value: "en" },
+                ]}
+                onChange={setLanguage}
+                compact
+              />
+              <SegmentedToggle
+                ariaLabel={copy.themeLabel}
+                value={theme}
+                options={[
+                  { value: "light", icon: <SunIcon className="h-3.5 w-3.5" />, label: "Light" },
+                  { value: "dark", icon: <MoonIcon className="h-3.5 w-3.5" />, label: "Dark" },
+                ]}
+                onChange={setTheme}
+                compact
+                iconOnly
+              />
+            </div>
 
             <Button
               variant="icon"
               size="icon"
-              className="relative z-[1] ml-auto shrink-0"
+              className="relative z-[1] ml-auto shrink-0 lg:hidden"
               aria-label={open ? copy.menuClose : copy.menuOpen}
               aria-controls="site-menu"
               aria-expanded={open}
@@ -214,7 +286,7 @@ export function Header() {
       <AnimatePresence>
         {open ? (
           <motion.div
-            className="fixed inset-0 z-40"
+            className="fixed inset-0 z-40 lg:hidden"
             initial={shouldReduceMotion ? { opacity: 1 } : { opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
