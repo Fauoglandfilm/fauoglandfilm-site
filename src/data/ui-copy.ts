@@ -144,9 +144,9 @@ export const uiCopy = {
       aboutAction: "Møt teamet",
       aboutSummary: "Kort om oss",
       teamEyebrow: "Team",
-      teamTitle: "Gard og Tommy leder hvert prosjekt",
+      teamTitle: "To profiler med ulike styrker. Ett samlet produksjonsspor.",
       teamDescription:
-        "Dere jobber tett med de samme folkene gjennom hele produksjonen.",
+        "Trykk på portrettene for å se hvordan Tommy og Gard leder ulike deler av arbeidet.",
       contactEyebrow: "Kontakt",
       contactTitle: "Klar for å snakke om prosjektet?",
       contactDescription:
@@ -201,9 +201,9 @@ export const uiCopy = {
       aboutAction: "Meet the team",
       aboutSummary: "About us",
       teamEyebrow: "Team",
-      teamTitle: "Gard and Tommy lead every project",
+      teamTitle: "Two distinct profiles. One shared production track.",
       teamDescription:
-        "You work closely with the same people throughout the production.",
+        "Tap the portraits to see how Tommy and Gard lead different parts of the work.",
       contactEyebrow: "Contact",
       contactTitle: "Ready to talk about the project?",
       contactDescription:

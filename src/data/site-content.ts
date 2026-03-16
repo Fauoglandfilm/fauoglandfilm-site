@@ -134,6 +134,7 @@ export type TeamMember = {
   summary: LocalizedText;
   image?: string;
   imageAlt?: LocalizedText;
+  href?: string;
 };
 
 export type FaqItem = {
@@ -1584,29 +1585,31 @@ export const processSteps: ProcessStep[] = [
 export const teamMembers: TeamMember[] = [
   {
     name: "Tommy R.A. Garland",
-    role: { no: "Produsent og prosjektleder", en: "Producer and project lead" },
+    role: { no: "Producer og partner", en: "Producer and partner" },
     summary: {
-      no: "Tommy leder planlegging, kundedialog og gjennomføring, og sørger for at budsjett, fremdrift og leveranse henger sammen fra første brief til ferdig film.",
-      en: "Tommy leads planning, client dialogue and execution, keeping budget, schedule and delivery aligned from the first brief to the finished film.",
+      no: "Tommy holder produsentsporet samlet gjennom brief, budsjett, kundedialog og leveranse, med erfaring fra reklame, TV, event og kortfilm.",
+      en: "Tommy keeps producing, budget, client dialogue and delivery aligned, with experience across advertising, TV, events and short film.",
     },
     image: "/assets/team/tommy/images/tommy-garland-profile.jpeg",
     imageAlt: {
       no: "Portrett av Tommy R.A. Garland",
       en: "Portrait of Tommy R.A. Garland",
     },
+    href: "/team/tommy-garland",
   },
   {
     name: "Gard Ruben Fauske",
-    role: { no: "Produsent, regissør og klipper", en: "Producer, director and editor" },
+    role: { no: "Daglig leder, prosjektleder og regissør", en: "Managing director, project lead and director" },
     summary: {
-      no: "Gard har bakgrunn fra filmstudier i Norge og Los Angeles, freelancearbeid og prosjektledelse i reklamebyrå. Han leder regi, fortelling og klipp med erfaring fra både reklame, kortfilm og mer fortellende arbeid.",
-      en: "Gard brings experience from film studies in Norway and Los Angeles, freelance work and agency-side project management. He leads direction, story and edit across both commercial work and more narrative film projects.",
+      no: "Gard leder regi, fortelling og klipp med erfaring fra reklameproduksjon, kortfilm og produksjonsledelse i både byrå og filmselskap.",
+      en: "Gard leads direction, story and edit with experience from commercial production, short film and production leadership across both agency and film-company work.",
     },
     image: "/assets/team/gard/images/gard-profile.png",
     imageAlt: {
       no: "Portrett av Gard Ruben Fauske",
       en: "Portrait of Gard Ruben Fauske",
     },
+    href: "/team/gard-ruben-fauske",
   },
 ];
 
@@ -1620,8 +1623,8 @@ export const aboutBullets = [
     en: "Tommy keeps the production and client track tight, while Gard leads direction, story and edit.",
   },
   {
-    no: "Sammen holder de prosjektene tett, med kort vei mellom planlegging, opptak, versjonering og ferdig leveranse.",
-    en: "Together they keep projects close, with a short path between planning, production, versioning and final delivery.",
+    no: "Trykk på portrettene for å se hvordan de to kompletterer hverandre med ulike styrker i samme produksjonspartner.",
+    en: "Tap the portraits to see how the two complement each other with different strengths inside the same production partner.",
   },
 ];
 
