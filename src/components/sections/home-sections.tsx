@@ -55,7 +55,7 @@ export function HeroSection() {
         <div className="grid w-full gap-7 sm:gap-9 lg:grid-cols-[1.15fr_0.85fr] lg:items-end">
           <div className="max-w-4xl">
             <Reveal className="space-y-4 sm:space-y-5" y={36}>
-              <div className="inline-flex rounded-full border border-white/18 bg-white/10 px-3.5 py-1.5 text-[0.64rem] font-semibold uppercase tracking-[0.22em] text-white/82 backdrop-blur sm:px-4 sm:py-2 sm:text-[0.7rem]">
+              <div className="inline-flex max-w-full flex-wrap justify-center rounded-full border border-white/18 bg-white/10 px-3.5 py-1.5 text-center text-[0.64rem] font-semibold uppercase tracking-[0.22em] text-white/82 backdrop-blur sm:px-4 sm:py-2 sm:text-[0.7rem]">
                 {copy.heroBadge}
               </div>
               <h1 className="hero-title max-w-4xl text-white">
@@ -70,7 +70,7 @@ export function HeroSection() {
               <ButtonLink href={homeHeroContent.ctaHref} className="w-full sm:w-auto">
                 {resolveLocalizedValue(homeHeroContent.ctaLabel, language)}
               </ButtonLink>
-              <ButtonLink href="/kontakt" variant="secondary" className="w-full sm:w-auto">
+              <ButtonLink href="#selected-work" variant="secondary" className="w-full sm:w-auto">
                 {copy.heroSecondaryCta}
               </ButtonLink>
             </Reveal>
