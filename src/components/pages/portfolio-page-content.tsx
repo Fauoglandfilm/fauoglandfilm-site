@@ -19,7 +19,6 @@ import {
   portfolioGroups,
   portfolioPageContent,
   portfolioProjects,
-  siteConfig,
   type PortfolioGroup,
   type PortfolioProject,
 } from "@/data/site-content";
@@ -49,9 +48,10 @@ export function PortfolioPageContent() {
     portfolioProjects.find((project) => project.slug === slug),
   ).filter((project): project is PortfolioProject => Boolean(project));
   const visibleFeaturedProjects = featuredProjects.length ? featuredProjects : allProjects.slice(0, 4);
+  const featuredProjectSlugs = new Set(visibleFeaturedProjects.map((project) => project.slug));
   const filteredProjects =
     activeFilter === ALL_FILTER
-      ? allProjects
+      ? allProjects.filter((project) => !featuredProjectSlugs.has(project.slug))
       : allProjects.filter((project) => project.group === activeFilter);
   const activeGroup = portfolioSections.find((group) => group.slug === activeFilter);
   const projectCountLabel =
@@ -66,12 +66,18 @@ export function PortfolioPageContent() {
       }
     : {
         href: "/kontakt",
-        label: siteConfig.bookingLabel,
+        label: {
+          no: "Snakk med oss om prosjektet",
+          en: "Talk to us about the project",
+        },
       };
   const modalSecondaryAction = activeProject?.detailHref
     ? {
         href: "/kontakt",
-        label: siteConfig.bookingLabel,
+        label: {
+          no: "Snakk med oss om prosjektet",
+          en: "Talk to us about the project",
+        },
       }
     : {
         href: "/case",
@@ -246,7 +252,7 @@ export function PortfolioPageContent() {
                 <p className="body-lead max-w-2xl text-[var(--muted-2)]">{copy.featuredDescription}</p>
               </div>
               <ButtonLink href="/kontakt" variant="ghost" className="w-full sm:w-auto">
-                {resolveLocalizedValue(siteConfig.bookingLabel, language)}
+                {language === "no" ? "Snakk med oss om prosjektet" : "Talk to us about the project"}
               </ButtonLink>
             </div>
           </Reveal>
@@ -356,7 +362,15 @@ export function PortfolioPageContent() {
       <CtaBanner
         title={portfolioPageContent.footerTitle}
         description={portfolioPageContent.footerDescription}
-        secondaryLabel={null}
+        primaryLabel={{
+          no: "Send en kort brief",
+          en: "Send a short brief",
+        }}
+        secondaryLabel={{
+          no: "Se tjenestene",
+          en: "See services",
+        }}
+        secondaryHref="/tjenester"
         align="center"
       />
 
@@ -495,7 +509,7 @@ function PortfolioProjectCard({
               </ButtonLink>
             ) : (
               <ButtonLink href="/kontakt" variant="ghost" className="w-full sm:w-auto">
-                {resolveLocalizedValue(siteConfig.bookingLabel, language)}
+                {language === "no" ? "Snakk med oss om prosjektet" : "Talk to us about the project"}
                 <ArrowUpRightIcon className="h-4 w-4" />
               </ButtonLink>
             )}

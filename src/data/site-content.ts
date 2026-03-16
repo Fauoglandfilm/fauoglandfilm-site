@@ -57,6 +57,8 @@ export type ServiceArea = {
   value: LocalizedText;
   ctaLabel: LocalizedText;
   href: string;
+  exampleHref?: string;
+  exampleLabel?: LocalizedText;
 };
 
 export type ServicePillar = {
@@ -201,8 +203,8 @@ export const homeHeroContent = {
     en: "Film that moves brands.",
   },
   description: {
-    no: "Vi lager reklamefilm og innholdsproduksjon som gjør det lettere for kunder å velge dere.",
-    en: "We create commercial films and content that make it easier for customers to choose your brand.",
+    no: "Vi lager reklamefilm og innholdsproduksjon som gjør oppmerksomhet om til tillit, henvendelser og nye kunder.",
+    en: "We create commercials and content that turn attention into trust, inquiries and new customers.",
   },
   ctaLabel: {
     no: "Book et uforpliktende møte",
@@ -256,8 +258,8 @@ export const portfolioPageContent = {
     en: "Open showreel",
   },
   showreelSecondaryCta: {
-    no: "Book et møte",
-    en: "Book a meeting",
+    no: "Send en kort brief",
+    en: "Send a short brief",
   },
   browseCta: {
     no: "Se porteføljen",
@@ -328,10 +330,10 @@ const openShowreelCta = { no: "Åpne showreel", en: "Open showreel" } satisfies 
 const viewReferenceCta = { no: "Se referanse", en: "View reference" } satisfies LocalizedText;
 
 export const navItems: NavItem[] = [
-  { href: "/", label: { no: "Forside", en: "Home" } },
   { href: "/tjenester", label: { no: "Tjenester", en: "Services" } },
   { href: "/case", label: { no: "Portefølje", en: "Portfolio" } },
   { href: "/om-oss", label: { no: "Om oss", en: "About" } },
+  { href: "/faq", label: { no: "FAQ", en: "FAQ" } },
   { href: "/kontakt", label: { no: "Kontakt", en: "Contact" } },
 ];
 
@@ -473,8 +475,10 @@ export const serviceAreas: ServiceArea[] = [
       no: "Konsept, opptak og versjoner til nettside, annonser og sosiale medier.",
       en: "Concept, production and cutdowns for websites, ads and social media.",
     },
-    ctaLabel: { no: "Snakk med oss om prosjektet", en: "Talk to us about your project" },
+    ctaLabel: { no: "Få et estimat", en: "Get an estimate" },
     href: "/kontakt",
+    exampleHref: "/case/nei-til-atomvapen",
+    exampleLabel: { no: "Se eksempel", en: "See example" },
   },
   {
     slug: "bedriftsfilm-intervjuer",
@@ -490,6 +494,8 @@ export const serviceAreas: ServiceArea[] = [
     },
     ctaLabel: { no: "Snakk med oss om prosjektet", en: "Talk to us about your project" },
     href: "/kontakt",
+    exampleHref: "/case/foreningen-norden",
+    exampleLabel: { no: "Se eksempel", en: "See example" },
   },
   {
     slug: "some-innhold",
@@ -506,8 +512,10 @@ export const serviceAreas: ServiceArea[] = [
       no: "Korte videoer, reels og uttak til Facebook, Instagram, LinkedIn og andre flater dere faktisk bruker.",
       en: "Short videos, reels and cutdowns for Facebook, Instagram, LinkedIn and the channels you actually publish on.",
     },
-    ctaLabel: { no: "Snakk med oss om prosjektet", en: "Talk to us about your project" },
+    ctaLabel: { no: "Send en kort brief", en: "Send a short brief" },
     href: "/kontakt",
+    exampleHref: "/case/ville-gleder",
+    exampleLabel: { no: "Se eksempel", en: "See example" },
   },
   {
     slug: "event-live",
@@ -521,8 +529,10 @@ export const serviceAreas: ServiceArea[] = [
       no: "Stemningsfilmer, aftermovies, intervjuer, flerkamera, streaming og klipp til videre publisering.",
       en: "Mood films, aftermovies, interviews, multicam setups, livestreaming and cutdowns for continued publishing.",
     },
-    ctaLabel: { no: "Snakk med oss om prosjektet", en: "Talk to us about your project" },
+    ctaLabel: { no: "Planlegg dekningen", en: "Plan the coverage" },
     href: "/kontakt",
+    exampleHref: "/case/nei-til-atomvapen-arbeiderdagen",
+    exampleLabel: { no: "Se eksempel", en: "See example" },
   },
 ];
 
@@ -857,12 +867,12 @@ export const portfolioGroups: PortfolioGroup[] = [
   {
     slug: "narrative",
     title: {
-      no: "Musikkvideo og narrativt arbeid",
-      en: "Music video and narrative work",
+      no: "Musikkvideo og fortellende film",
+      en: "Music video and narrative film",
     },
     description: {
-      no: "Prosjekter der karakter, stemning og fortelling får mer plass.",
-      en: "Projects where character, mood and story get more room.",
+      no: "Prosjekter der karakter, stemning og fortelling får mer plass enn i ren kampanjeproduksjon.",
+      en: "Projects where character, mood and story take more space than in a straight campaign brief.",
     },
   },
   {
@@ -1565,8 +1575,8 @@ export const processSteps: ProcessStep[] = [
     step: "04",
     title: { no: "Videre bruk", en: "Next step" },
     description: {
-      no: "Vi ser på videre bruk, nye uttak og hva som er smartest å gjøre videre.",
-      en: "We look at reuse, new cutdowns and what makes sense to do next.",
+      no: "Vi gir råd om videre bruk, nye uttak og smart distribusjon.",
+      en: "We advise on reuse, new cutdowns and smarter distribution.",
     },
   },
 ];
@@ -1576,8 +1586,8 @@ export const teamMembers: TeamMember[] = [
     name: "Tommy R.A. Garland",
     role: { no: "Produsent og prosjektleder", en: "Producer and project lead" },
     summary: {
-      no: "Tommy holder oversikt over planlegging, gjennomføring og kundedialog, slik at prosjektet beveger seg ryddig fra første møte til ferdig leveranse.",
-      en: "Tommy keeps planning, execution and client dialogue moving so the project stays clear from the first call to final delivery.",
+      no: "Tommy leder planlegging, kundedialog og gjennomføring, og sørger for at budsjett, fremdrift og leveranse henger sammen fra første brief til ferdig film.",
+      en: "Tommy leads planning, client dialogue and execution, keeping budget, schedule and delivery aligned from the first brief to the finished film.",
     },
     image: "/assets/team/tommy/images/tommy-garland-profile.jpeg",
     imageAlt: {
@@ -1589,8 +1599,8 @@ export const teamMembers: TeamMember[] = [
     name: "Gard Ruben Fauske",
     role: { no: "Produsent, regissør og klipper", en: "Producer, director and editor" },
     summary: {
-      no: "Gard har bakgrunn fra filmstudier i Norge og Los Angeles, freelancearbeid og prosjektledelse i reklamebyrå. Han skriver, regisserer og klipper prosjektene sine.",
-      en: "Gard brings experience from film studies in Norway and Los Angeles, freelance work and project management in advertising. He writes, directs and edits his projects.",
+      no: "Gard har bakgrunn fra filmstudier i Norge og Los Angeles, freelancearbeid og prosjektledelse i reklamebyrå. Han leder regi, fortelling og klipp med erfaring fra både reklame, kortfilm og mer fortellende arbeid.",
+      en: "Gard brings experience from film studies in Norway and Los Angeles, freelance work and agency-side project management. He leads direction, story and edit across both commercial work and more narrative film projects.",
     },
     image: "/assets/team/gard/images/gard-profile.png",
     imageAlt: {
@@ -1606,12 +1616,12 @@ export const aboutBullets = [
     en: "Fau&Land Film is an Oslo-based production company led by Gard Ruben Fauske and Tommy R.A. Garland.",
   },
   {
-    no: "Gard har bakgrunn fra filmstudier i Norge og Los Angeles, freelancearbeid og prosjektledelse i reklamebyrå.",
-    en: "Gard brings experience from film studies in Norway and Los Angeles, freelance work and project management in advertising.",
+    no: "Tommy holder produsent- og kundesporet tett, mens Gard leder regi, fortelling og klipp.",
+    en: "Tommy keeps the production and client track tight, while Gard leads direction, story and edit.",
   },
   {
-    no: "Vi holder prosjektene tett, med kort vei mellom planlegging, opptak og ferdig leveranse.",
-    en: "We keep projects close, with a short path between planning, production and delivery.",
+    no: "Sammen holder de prosjektene tett, med kort vei mellom planlegging, opptak, versjonering og ferdig leveranse.",
+    en: "Together they keep projects close, with a short path between planning, production, versioning and final delivery.",
   },
 ];
 
@@ -1619,8 +1629,8 @@ export const pricingFaq: FaqItem[] = [
   {
     question: { no: "Hva koster et videoprosjekt?", en: "What does a video project cost?" },
     answer: {
-      no: "Pris avhenger av omfang, men typiske nivåer er 5 000-20 000 kr for kort SoMe-innhold, 20 000-100 000 kr+ for promofilm eller reklamefilm og 15 000-60 000 kr+ for eventfilm.",
-      en: "Pricing depends on scope, but typical levels are NOK 5,000-20,000 for short-form social content, NOK 20,000-100,000+ for promo films or commercials, and NOK 15,000-60,000+ for event films.",
+      no: "Pris avhenger av omfang, men typiske nivåer er 5 000-20 000 kr for kort SoMe-innhold, 20 000-100 000 kr+ for promofilm eller reklamefilm og 15 000-60 000 kr+ for eventfilm. Send gjerne mål, kanal og omtrent budsjett, så peker vi dere raskt i riktig retning.",
+      en: "Pricing depends on scope, but typical levels are NOK 5,000-20,000 for short-form social content, NOK 20,000-100,000+ for promo films or commercials, and NOK 15,000-60,000+ for event films. Share the goal, channel and an approximate budget and we can point you in the right direction quickly.",
     },
   },
   {
@@ -1677,8 +1687,8 @@ export const contactFaq: FaqItem[] = [
   {
     question: { no: "Hva skjer etter at vi tar kontakt?", en: "What happens after we get in touch?" },
     answer: {
-      no: "Vi følger opp innen 24 timer, tar en kort prat om mål og tidslinje, og foreslår riktig format, omfang og neste steg.",
-      en: "We follow up within 24 hours, have a short call about goals and timeline, and recommend the right format, scope and next step.",
+      no: "Vi følger opp innen 24 timer, avklarer mål, kanal, tidslinje og budsjett, og foreslår riktig format, omfang og neste steg. Hvis det passer, setter vi også opp et kort møte.",
+      en: "We follow up within 24 hours, align on goal, channel, timing and budget, and recommend the right format, scope and next step. When helpful, we also set up a short call.",
     },
   },
 ];
