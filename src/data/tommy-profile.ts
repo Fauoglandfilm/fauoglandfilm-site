@@ -51,6 +51,28 @@ export type TommyLink = {
   href: string;
 };
 
+export type TommyFeaturedProject = {
+  slug: string;
+  title: LocalizedText;
+  year?: string;
+  role: LocalizedText;
+  image: string;
+  imageAlt: LocalizedText;
+  mediaFit?: "cover" | "contain";
+  credibility: [LocalizedText, LocalizedText];
+};
+
+export type TommySecondaryProjectItem = {
+  title: LocalizedText;
+  description: LocalizedText;
+};
+
+export type TommySecondaryProjectGroup = {
+  slug: string;
+  title: LocalizedText;
+  items: TommySecondaryProjectItem[];
+};
+
 const tommyBaseProfile =
   getFounderProfile("tommy-garland") ??
   (() => {
@@ -67,372 +89,357 @@ function getPortfolioProject(slug: string) {
   return project;
 }
 
-const projectGroups: TommyProjectGroup[] = [
-  {
-    slug: "producer-leadership",
-    title: {
-      no: "Produsentledelse og kommersiell gjennomføring",
-      en: "Producer leadership and commercial execution",
-    },
-    description: {
-      no: "Arbeid der Tommy holder brief, budsjett, logistikk og kundedialog samlet fra første plan til ferdig leveranse.",
-      en: "Work where Tommy keeps the brief, budget, logistics and client communication aligned from the first plan through final delivery.",
-    },
-    projects: [
-      {
-        slug: "fau-land-kulturarena",
-        client: "Fau&Land Film / Kulturarena",
-        year: "2021-",
-        title: {
-          no: "Prosjekter som krever ro, kontroll og tydelig leveranse",
-          en: "Projects that require calm, control and a clear delivery path",
-        },
-        format: {
-          no: "Producer og prosjektledelse",
-          en: "Producing and project leadership",
-        },
-        role: {
-          no: "Producer, prosjektleder og linjeprodusent",
-          en: "Producer, project lead and line producer",
-        },
-        summary: {
-          no: "Fra Fau&Land og Kulturarena til reklameproduksjoner for Både Og, HeiSjef, Ruter og Jac Skilt: Tommy går tett på brief, budsjett, logistikk og kundedialog for å holde produksjonen ryddig hele veien.",
-          en: "From Fau&Land and Kulturarena to commercial work for Både Og, HeiSjef, Ruter and Jac Skilt, Tommy stays close to the brief, budget, logistics and client dialogue to keep production steady all the way through.",
-        },
-        image: siteVisuals.filmCrewOutdoors.src,
-        imageAlt: siteVisuals.filmCrewOutdoors.alt,
-        companions: [
-          {
-            slug: "bade-og",
-            title: {
-              no: "Både Og",
-              en: "Både Og",
-            },
-          },
-          {
-            slug: "heisjef-ruter-jac",
-            title: {
-              no: "HeiSjef, Ruter og Jac Skilt",
-              en: "HeiSjef, Ruter and Jac Skilt",
-            },
-          },
-          {
-            slug: "norgesexpo-filmskolen",
-            title: {
-              no: "Norgesexpo og Filmskolen på Innlandet",
-              en: "Norgesexpo and the Norwegian Film School",
-            },
-          },
-        ],
-      },
-      {
-        slug: "platform-productions",
-        client: "Netflix / NRK / TV 2",
-        year: "2020-2024",
-        title: {
-          no: "Streaming, TV og større sett med høyt tempo",
-          en: "Streaming, TV and larger productions at a high tempo",
-        },
-        format: {
-          no: "Koordinering og on-set roller",
-          en: "Coordination and on-set roles",
-        },
-        role: {
-          no: "Statist wrangler, koordinator og featured extras",
-          en: "Background wrangler, coordinator and featured extras",
-        },
-        summary: {
-          no: "Erfaring fra produksjoner som Christmas Tomorrow, Royal Teen 2, EXIT 3, Maskorama, Hodejegerne og Ølhunden Berit - arbeid som krever presisjon, trygg koordinering og høy leveringstakt under press.",
-          en: "Experience from productions such as Christmas Tomorrow, Royal Teen 2, EXIT 3, Maskorama, Headhunters and Ølhunden Berit - work that demands precision, confident coordination and a high delivery tempo under pressure.",
-        },
-        image: siteVisuals.filmStudioCyclorama.src,
-        imageAlt: siteVisuals.filmStudioCyclorama.alt,
-        companions: [
-          {
-            slug: "christmas-tomorrow",
-            title: {
-              no: "Christmas Tomorrow",
-              en: "Christmas Tomorrow",
-            },
-          },
-          {
-            slug: "royal-teen-2-exit",
-            title: {
-              no: "Royal Teen 2 / EXIT 3",
-              en: "Royal Teen 2 / EXIT 3",
-            },
-          },
-          {
-            slug: "maskorama-hodejegerne",
-            title: {
-              no: "Maskorama / Hodejegerne",
-              en: "Maskorama / Headhunters",
-            },
-          },
-        ],
-      },
-    ],
-  },
-  {
-    slug: "workshops-festival",
-    title: {
-      no: "Workshops og festivalnære kortfilmer",
-      en: "Workshops and festival-facing short films",
-    },
-    description: {
-      no: "Et kuratert spor som viser Tommy sitt arbeid på tvers av internasjonale workshops, produsentansvar og mer fortellende kortfilmproduksjoner.",
-      en: "A curated track showing Tommy's work across international workshops, producing and more narrative short-film productions.",
-    },
-    projects: [
-      {
-        slug: "north-stars-acting-hub",
-        client: "Sentinel Film / North Stars Acting Hub",
-        year: "2023-2024",
-        title: {
-          no: "North Stars Acting Hub og The Actors Hub",
-          en: "North Stars Acting Hub and The Actors Hub",
-        },
-        format: {
-          no: "Workshop og showreel-produksjon",
-          en: "Workshop and showreel production",
-        },
-        role: {
-          no: "Producer og prosjektkoordinering",
-          en: "Producer and project coordination",
-        },
-        summary: {
-          no: "Tommy har produsert prosjekter og workshops med internasjonale profiler som David Nutter, Paul Johansson og Albert Hughes, med ansvar for både produksjonsflyt og trygg gjennomføring rundt deltakerne.",
-          en: "Tommy has produced projects and workshops involving international names such as David Nutter, Paul Johansson and Albert Hughes, carrying both production flow and the practical execution around participants and delivery.",
-        },
-        image: getPortfolioProject("the-actors-hub-dont-act").image,
-        imageAlt: getPortfolioProject("the-actors-hub-dont-act").imageAlt,
-        companions: [
-          {
-            slug: "david-nutter",
-            title: {
-              no: "David Nutter",
-              en: "David Nutter",
-            },
-          },
-          {
-            slug: "paul-johansson",
-            title: {
-              no: "Paul Johansson",
-              en: "Paul Johansson",
-            },
-          },
-          {
-            slug: "albert-hughes",
-            title: {
-              no: "Albert Hughes",
-              en: "Albert Hughes",
-            },
-          },
-        ],
-      },
-      {
-        slug: "festival-shorts",
-        client: "Independent / Fau&Land Film",
-        year: "2023-2025",
-        title: {
-          no: "A Message From Martha og utvalgte kortfilmer",
-          en: "A Message From Martha and selected short films",
-        },
-        format: {
-          no: "Kortfilm og festivalspor",
-          en: "Short film and festival work",
-        },
-        role: {
-          no: "Produsent og linjeprodusent",
-          en: "Producer and line producer",
-        },
-        summary: {
-          no: "Et tydelig produsentspor fra A Message From Martha videre til Huldredans, En Midnatts Vuggesang og annet arbeid i kortfilmfeltet, der Tommy holder struktur, økonomi og gjennomføring samlet rundt mer ambisiøse produksjoner.",
-          en: "A clear producer-led track from A Message From Martha through to Huldredans, En Midnatts Vuggesang and other short-film work, where Tommy holds structure, budget and execution together around more ambitious productions.",
-        },
-        image: getPortfolioProject("a-message-from-martha").image,
-        imageAlt: getPortfolioProject("a-message-from-martha").imageAlt,
-        externalVideo: getPortfolioProject("a-message-from-martha").externalVideo,
-        mediaFit: "contain",
-        preview: true,
-        companions: [
-          {
-            slug: "huldredans",
-            title: {
-              no: "Huldredans",
-              en: "Huldredans",
-            },
-            year: "2023",
-            format: {
-              no: "Kortfilm",
-              en: "Short film",
-            },
-            image: getPortfolioProject("huldredans").image,
-            imageAlt: getPortfolioProject("huldredans").imageAlt,
-            mediaFit: "contain",
-          },
-          {
-            slug: "en-midnatts-vuggesang",
-            title: {
-              no: "En Midnatts Vuggesang",
-              en: "A Midnight Lullaby",
-            },
-            year: "2023",
-            format: {
-              no: "Dramakortfilm",
-              en: "Drama short",
-            },
-            image: getPortfolioProject("en-midnatts-vuggesang").image,
-            imageAlt: getPortfolioProject("en-midnatts-vuggesang").imageAlt,
-          },
-          {
-            slug: "maura-mirror-effect",
-            title: {
-              no: "Maura og Mirror Effect",
-              en: "Maura and Mirror Effect",
-            },
-          },
-        ],
-      },
-    ],
-  },
-];
-
-const internalLinks: TommyLink[] = [
-  {
-    label: {
-      no: "Se Fau&Land sitt arbeid",
-      en: "See Fau&Land's work",
-    },
-    href: "/case",
-  },
-  {
-    label: {
-      no: "Se tjenester",
-      en: "See services",
-    },
-    href: "/tjenester",
-  },
-  {
-    label: {
-      no: "Kontakt oss",
-      en: "Contact us",
-    },
-    href: "/kontakt",
-  },
-];
-
 export const tommyProfilePage = {
   baseProfile: tommyBaseProfile,
   heroTitle: {
-    no: "Producer og partner",
-    en: "Producer and partner",
+    no: "Produsent & partner i Fau&Land Film",
+    en: "Producer & partner at Fau&Land Film",
   },
   heroIntro: {
-    no: "Tommy holder brief, budsjett, gjennomføring og kundedialog samlet fra første møte til ferdig leveranse, med erfaring fra reklame, TV, event og festivalnære kortfilmer.",
-    en: "Tommy keeps brief, budget, execution and client dialogue aligned from the first conversation through final delivery, with experience across advertising, TV, events and festival-facing short films.",
+    no: "Erfaring fra prisvinnende kortfilm, reklame og større produksjoner. Fokus på struktur, budsjett og gjennomføring som sikrer at prosjekter leveres riktig - hver gang.",
+    en: "Experience from award-winning short film, advertising and larger productions. Focused on structure, budget and execution that keeps projects delivered right - every time.",
   },
   heroCtaPrimary: {
-    no: "Snakk med Tommy om prosjektet",
-    en: "Talk to Tommy about the project",
+    no: "Book møte",
+    en: "Book a meeting",
   },
   heroCtaSecondary: {
     no: "Se arbeid fra Fau&Land",
     en: "See work from Fau&Land",
   },
-  introEyebrow: {
-    no: "Kort bio",
-    en: "Short bio",
+  keyRolesEyebrow: {
+    no: "Kjerneansvar",
+    en: "Core roles",
   },
-  introTitle: {
-    no: "En produsentprofil bygget på kontroll, ro og tydelig fremdrift.",
-    en: "A producer profile built around control, calm and clear momentum.",
+  keyRolesTitle: {
+    no: "Det Tommy typisk tar ansvar for.",
+    en: "What Tommy typically takes ownership of.",
   },
-  introBody: {
-    no: "Med bachelor fra Westerdals i Film og TV og produksjonsledelse fra Kristiania kombinerer Tommy kommersiell forståelse med praktisk prosjektstyring. Han trives best når mange detaljer må holdes samlet uten at tempoet eller kvaliteten faller.",
-    en: "With a Film and TV bachelor's degree from Westerdals and production management studies from Kristiania, Tommy combines commercial understanding with practical project leadership. He does his best work when many details need to stay aligned without losing pace or quality.",
-  },
-  introFacts: [
-    "Westerdals",
-    "Kristiania",
-    "Kulturarena",
-    "Sentinel Film",
-  ],
-  focusEyebrow: {
-    no: "Styrker",
-    en: "Strengths",
-  },
-  focusAreas: [
+  keyRoles: [
     {
-      title: {
-        no: "Produsentansvar fra start til slutt",
-        en: "Producer ownership from start to finish",
-      },
-      description: {
-        no: "Holder brief, budsjett og leveranse samlet i ett tydelig produksjonsspor.",
-        en: "Keeps brief, budget and delivery aligned in one clear production track.",
-      },
+      no: "Produsent og linjeprodusent for film, reklame og branded content",
+      en: "Producer and line producer across film, advertising and branded content",
     },
     {
-      title: {
-        no: "Prosjektflyt og kundedialog",
-        en: "Project flow and client dialogue",
-      },
-      description: {
-        no: "Skaper ro i prosessen og gjør det enklere å ta gode beslutninger underveis.",
-        en: "Creates calm in the process and makes strong decisions easier along the way.",
-      },
+      no: "Prosjektledelse med ansvar for budsjett, plan og leveranse",
+      en: "Project leadership covering budget, plan and delivery",
     },
     {
-      title: {
-        no: "Reklame, TV, event og kortfilm",
-        en: "Advertising, TV, events and short film",
-      },
-      description: {
-        no: "Bred erfaring på tvers av formater som krever presisjon og høy leveringstakt.",
-        en: "Broad experience across formats that demand precision and a high delivery tempo.",
-      },
+      no: "Erfaring fra festivalvinnende produksjoner og internasjonale prosjekter",
+      en: "Experience from award-winning productions and international projects",
     },
     {
-      title: {
-        no: "Gjennomføring under press",
-        en: "Execution under pressure",
-      },
-      description: {
-        no: "Trygg på logistikk, koordinering og teamledelse når produksjonen strammer seg til.",
-        en: "Confident with logistics, coordination and team leadership when productions tighten up.",
-      },
+      no: "Sterk bakgrunn i salg, drift og struktur",
+      en: "Strong background in sales, operations and structure",
     },
-  ] satisfies TommyFocusArea[],
-  projectEyebrow: {
-    no: "Utvalgte prosjekter",
-    en: "Selected projects",
+  ] satisfies LocalizedText[],
+  featuredEyebrow: {
+    no: "Utvalgte filmprosjekter",
+    en: "Featured film projects",
   },
-  projectTitle: {
-    no: "Et kuratert produsentspor med mer media og mindre CV-følelse.",
-    en: "A curated producer-led body of work with more media and less CV energy.",
+  featuredTitle: {
+    no: "Fem produksjoner som raskt viser Tommy sitt produsentspor.",
+    en: "Five productions that quickly show Tommy's producer track.",
   },
-  projectDescription: {
-    no: "Kortfilm, workshop-produksjon og kommersielle leveranser presentert som case med større flater, tydeligere roller og mer visuell tyngde.",
-    en: "Short film, workshop productions and commercial delivery work presented as cases with bigger surfaces, clearer roles and stronger visual weight.",
+  featuredProjects: [
+    {
+      slug: "mirror-effect",
+      title: {
+        no: "Mirror Effect",
+        en: "Mirror Effect",
+      },
+      year: "2021",
+      role: {
+        no: "Produsent",
+        en: "Producer",
+      },
+      image: siteVisuals.cameraDarkroom.src,
+      imageAlt: {
+        no: "Visual for Mirror Effect",
+        en: "Visual for Mirror Effect",
+      },
+      credibility: [
+        {
+          no: "Del av Tommy sitt festivalnære kortfilmspor.",
+          en: "Part of Tommy's festival-facing short-film track.",
+        },
+        {
+          no: "Produsentarbeid med fokus på struktur og gjennomføring.",
+          en: "Producer work focused on structure and delivery.",
+        },
+      ],
+    },
+    {
+      slug: "huldredans",
+      title: {
+        no: "Huldredans",
+        en: "Huldredans",
+      },
+      year: "2023",
+      role: {
+        no: "Produsent / linjeprodusent",
+        en: "Producer / line producer",
+      },
+      image: getPortfolioProject("huldredans").image ?? siteVisuals.folkPoster.src,
+      imageAlt: getPortfolioProject("huldredans").imageAlt ?? siteVisuals.folkPoster.alt,
+      mediaFit: "contain",
+      credibility: [
+        {
+          no: "Prisvinnende kortfilm.",
+          en: "Award-winning short film.",
+        },
+        {
+          no: "Priser for film, regi, skuespiller, foto og originalmusikk.",
+          en: "Awards for film, directing, acting, cinematography and original score.",
+        },
+      ],
+    },
+    {
+      slug: "maura",
+      title: {
+        no: "Maura",
+        en: "Maura",
+      },
+      role: {
+        no: "Produsent",
+        en: "Producer",
+      },
+      image: siteVisuals.studioLightBackdrop.src,
+      imageAlt: {
+        no: "Visual for Maura",
+        en: "Visual for Maura",
+      },
+      credibility: [
+        {
+          no: "Del av Tommy sitt fortellende kortfilmspor.",
+          en: "Part of Tommy's narrative short-film track.",
+        },
+        {
+          no: "Produsentarbeid med fokus på plan, struktur og leveranse.",
+          en: "Producer work centred on planning, structure and delivery.",
+        },
+      ],
+    },
+    {
+      slug: "en-midnatts-vuggesang",
+      title: {
+        no: "En Midnatts Vuggesang",
+        en: "A Midnight's Lullaby",
+      },
+      year: "2023",
+      role: {
+        no: "Produsent",
+        en: "Producer",
+      },
+      image: getPortfolioProject("en-midnatts-vuggesang").image ?? siteVisuals.documentaryPoster.src,
+      imageAlt:
+        getPortfolioProject("en-midnatts-vuggesang").imageAlt ?? siteVisuals.documentaryPoster.alt,
+      credibility: [
+        {
+          no: "Samprodusert med Snowfall Cinema.",
+          en: "Co-produced with Snowfall Cinema.",
+        },
+        {
+          no: "Nominert under Kortfilmfestivalen i Grimstad.",
+          en: "Nominated at the Norwegian Short Film Festival in Grimstad.",
+        },
+      ],
+    },
+    {
+      slug: "a-message-from-martha",
+      title: {
+        no: "A Message From Martha",
+        en: "A Message From Martha",
+      },
+      year: "2025",
+      role: {
+        no: "Produsent",
+        en: "Producer",
+      },
+      image: getPortfolioProject("a-message-from-martha").image ?? siteVisuals.narrativePoster.src,
+      imageAlt:
+        getPortfolioProject("a-message-from-martha").imageAlt ?? siteVisuals.narrativePoster.alt,
+      mediaFit: "contain",
+      credibility: [
+        {
+          no: "DeBlonde Production x Fau&Land Film.",
+          en: "DeBlonde Production x Fau&Land Film.",
+        },
+        {
+          no: "Regi: Elia Biondi. Foto: Justin Bellucci.",
+          en: "Director: Elia Biondi. DOP: Justin Bellucci.",
+        },
+      ],
+    },
+  ] satisfies TommyFeaturedProject[],
+  secondaryEyebrow: {
+    no: "Andre prosjekter",
+    en: "Other projects",
   },
-  projectGroups,
-  internalLinks,
+  secondaryTitle: {
+    no: "Erfaring fra større produksjoner, koordinering og kommersiell gjennomføring.",
+    en: "Experience from larger productions, coordination and commercial delivery.",
+  },
+  secondaryGroups: [
+    {
+      slug: "tv-streaming",
+      title: {
+        no: "TV / streaming",
+        en: "TV / streaming",
+      },
+      items: [
+        {
+          title: {
+            no: "Royal Teen 2 / EXIT 3",
+            en: "Royal Teen 2 / EXIT 3",
+          },
+          description: {
+            no: "Koordinering og produksjonsstøtte i større produksjoner med høyt tempo.",
+            en: "Coordination and production support on larger, fast-moving productions.",
+          },
+        },
+        {
+          title: {
+            no: "Christmas Tomorrow",
+            en: "Christmas Tomorrow",
+          },
+          description: {
+            no: "On-set logistikk og gjennomføring i streamingproduksjon.",
+            en: "On-set logistics and execution in a streaming production.",
+          },
+        },
+        {
+          title: {
+            no: "Maskorama / Hodejegerne",
+            en: "Maskorama / Headhunters",
+          },
+          description: {
+            no: "Produksjonsflyt og koordinering når mange detaljer må sitte samtidig.",
+            en: "Production flow and coordination when many details need to land at once.",
+          },
+        },
+      ],
+    },
+    {
+      slug: "wrangler-coordinator",
+      title: {
+        no: "Wrangler / coordinator",
+        en: "Wrangler / coordinator",
+      },
+      items: [
+        {
+          title: {
+            no: "Ølhunden Berit",
+            en: "Ølhunden Berit",
+          },
+          description: {
+            no: "Praktisk produksjonsstøtte og on-set flyt i et stramt opptaksløp.",
+            en: "Hands-on production support and on-set flow in a tight shooting schedule.",
+          },
+        },
+        {
+          title: {
+            no: "Featured extras og statistarbeid",
+            en: "Featured extras and background work",
+          },
+          description: {
+            no: "Ansvar for logistikk, tydelig kommunikasjon og trygg gjennomføring på sett.",
+            en: "Responsibility for logistics, clear communication and calm execution on set.",
+          },
+        },
+        {
+          title: {
+            no: "Større sett med høyt tempo",
+            en: "Larger productions at high tempo",
+          },
+          description: {
+            no: "Arbeid som krever presisjon, ro og rask problemløsning under press.",
+            en: "Work that demands precision, calm and quick problem-solving under pressure.",
+          },
+        },
+      ],
+    },
+    {
+      slug: "commercial-workshops",
+      title: {
+        no: "Event / management work",
+        en: "Event / management work",
+      },
+      items: [
+        {
+          title: {
+            no: "Kulturarena",
+            en: "Kulturarena",
+          },
+          description: {
+            no: "Prosjektledelse, logistikk og kundedialog i leveranser med høy finish.",
+            en: "Project leadership, logistics and client dialogue in high-finish deliveries.",
+          },
+        },
+        {
+          title: {
+            no: "North Stars Acting Hub",
+            en: "North Stars Acting Hub",
+          },
+          description: {
+            no: "Internasjonale workshops med ansvar for trygg produksjonsflyt og gjennomføring.",
+            en: "International workshops with responsibility for calm production flow and delivery.",
+          },
+        },
+        {
+          title: {
+            no: "Både Og / HeiSjef / Ruter / Jac Skilt",
+            en: "Både Og / HeiSjef / Ruter / Jac Skilt",
+          },
+          description: {
+            no: "Kommersielle produksjoner der brief, budsjett og leveranse må henge tett sammen.",
+            en: "Commercial productions where brief, budget and delivery need to stay tightly aligned.",
+          },
+        },
+      ],
+    },
+  ] satisfies TommySecondaryProjectGroup[],
+  managementEyebrow: {
+    no: "Ledelse og drift",
+    en: "Management and business",
+  },
+  managementTitle: {
+    no: "Prosjekter med ansvar for struktur, drift og tydelig gjennomføring.",
+    en: "Projects centred on structure, operations and clear execution.",
+  },
+  managementProjects: [
+    {
+      no: "North Stars Acting Hub",
+      en: "North Stars Acting Hub",
+    },
+    {
+      no: "Kulturarena",
+      en: "Kulturarena",
+    },
+    {
+      no: "The Key Collection",
+      en: "The Key Collection",
+    },
+    {
+      no: "Galleri TM51",
+      en: "Galleri TM51",
+    },
+  ] satisfies LocalizedText[],
   ctaTitle: {
-    no: "Trenger dere en produsent som holder prosjektet rolig, stramt og i bevegelse?",
-    en: "Need a producer who keeps the project calm, tight and moving?",
+    no: "Book Tommy som produsent til ditt neste prosjekt",
+    en: "Book Tommy as producer for your next project",
   },
   ctaDescription: {
-    no: "Send en kort brief, så følger Tommy og Fau&Land opp med riktig omfang, team og neste steg.",
-    en: "Send a short brief and Tommy together with Fau&Land will follow up with the right scope, team and next step.",
+    no: "Ta kontakt for omfang, budsjett og neste steg.",
+    en: "Get in touch to discuss scope, budget and next steps.",
   },
   ctaPrimaryLabel: {
-    no: "Send en kort brief",
-    en: "Send a short brief",
+    no: "Book møte",
+    en: "Book a meeting",
   },
   ctaSecondaryLabel: {
-    no: "Se porteføljen",
-    en: "See the portfolio",
+    no: "Kontakt",
+    en: "Contact",
   },
   contactEmail: "tommy@fauoglandfilm.com",
   contactPhone: siteConfig.phonePrimary,
