@@ -188,60 +188,28 @@ export function CaseDetailContent({
               ))}
             </div>
 
-            <div className="grid gap-4">
-              <article className="card-surface rounded-[2rem] p-5 sm:p-6">
-                <p className="text-[0.72rem] font-semibold uppercase tracking-[0.22em] text-[var(--muted)]">
-                  {copy.caseGoalEyebrow}
-                </p>
-                <h2 className="feature-title mt-3 text-[color:var(--foreground)]">
-                  {copy.caseGoalTitle}
-                </h2>
-                <p className="body-copy mt-4 text-[var(--muted-2)] sm:text-base sm:leading-7">
-                  {resolveLocalizedValue(caseStudy.goal, language)}
-                </p>
-              </article>
+            <article className="card-surface rounded-[2rem] p-5 sm:p-6">
+              <p className="text-[0.72rem] font-semibold uppercase tracking-[0.22em] text-[var(--muted)]">
+                {copy.caseSolutionEyebrow}
+              </p>
+              <h2 className="feature-title mt-3 text-[color:var(--foreground)]">
+                {language === "no" ? "Hvordan vi løste det" : "How we approached it"}
+              </h2>
+              <p className="mt-4 text-sm leading-6 text-[var(--muted-2)] sm:text-base sm:leading-7">
+                {resolveLocalizedValue(caseStudy.solution, language)}
+              </p>
 
-              <article className="card-surface rounded-[2rem] p-5 sm:p-6">
-                <p className="text-[0.72rem] font-semibold uppercase tracking-[0.22em] text-[var(--muted)]">
-                  {copy.caseSolutionEyebrow}
-                </p>
-                <p className="mt-4 text-sm leading-6 text-[var(--muted-2)] sm:text-base sm:leading-7">
-                  {resolveLocalizedValue(caseStudy.solution, language)}
-                </p>
-
-                <div className="mt-5 rounded-[1.3rem] border border-[color:var(--line)] bg-[color:var(--surface)] p-4">
-                  <p className="text-sm font-semibold text-[color:var(--foreground)]">{copy.caseDelivered}</p>
-                  <ul className="mt-3 space-y-2.5 text-sm leading-6 text-[var(--muted-2)]">
-                    {caseStudy.deliverables.map((item, index) => (
-                      <li key={`deliverable-${index}`} className="flex gap-3">
-                        <span className="mt-2 h-1.5 w-1.5 rounded-full bg-[var(--accent)]" />
-                        <span>{resolveLocalizedValue(item, language)}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              </article>
-
-              <article className="card-surface rounded-[2rem] p-5 sm:p-6">
-                <p className="text-[0.72rem] font-semibold uppercase tracking-[0.22em] text-[var(--muted)]">
-                  {copy.caseImpactEyebrow}
-                </p>
-                <p className="mt-4 text-sm leading-6 text-[var(--muted-2)] sm:text-base sm:leading-7">
-                  {resolveLocalizedValue(caseStudy.impact, language)}
-                </p>
-
-                <div className="mt-5 flex flex-wrap gap-2.5">
-                  {caseStudy.tags.map((tag, index) => (
-                    <span
-                      key={`tag-${index}`}
-                      className="rounded-full border border-[color:var(--line)] bg-[color:var(--surface)] px-3.5 py-1.5 text-sm text-[color:var(--foreground)]"
-                    >
-                      {resolveLocalizedValue(tag, language)}
-                    </span>
-                  ))}
-                </div>
-              </article>
-            </div>
+              <div className="mt-5 flex flex-wrap gap-2.5">
+                {caseStudy.tags.map((tag, index) => (
+                  <span
+                    key={`tag-${index}`}
+                    className="rounded-full border border-[color:var(--line)] bg-[color:var(--surface)] px-3.5 py-1.5 text-sm text-[color:var(--foreground)]"
+                  >
+                    {resolveLocalizedValue(tag, language)}
+                  </span>
+                ))}
+              </div>
+            </article>
           </div>
         </div>
       </section>

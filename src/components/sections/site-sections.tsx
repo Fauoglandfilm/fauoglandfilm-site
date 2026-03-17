@@ -22,6 +22,7 @@ import { pageHeroVisuals } from "@/data/visual-assets";
 import { uiCopy } from "@/data/ui-copy";
 import type { LocalizedText } from "@/lib/i18n";
 import { resolveLocalizedValue } from "@/lib/i18n";
+import { cn } from "@/lib/utils";
 
 import { ButtonLink } from "../ui/button-link";
 import { ArrowUpRightIcon, MailIcon, PhoneIcon, PinIcon } from "../ui/icons";
@@ -269,9 +270,9 @@ export function TeamSection({
       title={copy.teamTitle}
       description={copy.teamDescription}
     >
-      <div className="space-y-5">
-        <FloatingLayer>
-          <article className="glass-panel max-w-4xl rounded-[2rem] p-5 sm:p-6 lg:p-7">
+      <div className="team-editorial-grid">
+        <FloatingLayer className="team-editorial-rail">
+          <article className="glass-panel h-full rounded-[2rem] p-5 sm:p-6 lg:p-7">
             <p className="text-[0.68rem] font-semibold uppercase tracking-[0.22em] text-[var(--muted)]">
               {language === "no" ? "To ulike styrker" : "Two complementary strengths"}
             </p>
@@ -281,11 +282,11 @@ export function TeamSection({
                 : "Tommy keeps the producing track tight, while Gard leads direction, story and edit."}
             </h3>
 
-            <ul className="mt-6 grid gap-3 text-sm leading-6 text-[var(--muted-2)] sm:text-base lg:grid-cols-3">
+            <ul className="mt-6 grid gap-3 text-sm leading-6 text-[var(--muted-2)] sm:text-base">
               {bullets.map((bullet, index) => (
                 <li
                   key={`team-bullet-${index}`}
-                  className="rounded-[1.2rem] border border-[color:var(--line)] bg-white/[0.05] px-4 py-3 backdrop-blur-xl"
+                  className="team-editorial-bullet"
                 >
                   {resolveLocalizedValue(bullet, language)}
                 </li>
@@ -294,28 +295,29 @@ export function TeamSection({
           </article>
         </FloatingLayer>
 
-        <div className="grid gap-5 md:grid-cols-2">
+        <div className="team-portrait-stage">
           {team.map((member, index) => (
             <Reveal key={member.name} delay={0.05 * index}>
-              <article className="founder-card-shell group relative overflow-visible rounded-[2rem] px-5 pb-5 pt-4 sm:px-6 sm:pb-6 sm:pt-5">
-                <div className="glass-sheen absolute inset-0 opacity-60" />
-                <div className="pointer-events-none absolute right-[-10%] top-[-8%] h-36 w-36 rounded-full bg-[radial-gradient(circle,rgba(122,168,255,0.24),transparent_72%)] blur-3xl opacity-80" />
-                <div className="pointer-events-none absolute bottom-[-12%] left-[-6%] h-32 w-32 rounded-full bg-[radial-gradient(circle,rgba(255,255,255,0.16),transparent_74%)] blur-3xl opacity-72" />
-
-                {member.image ? (
-                  <Link
-                    href={member.href ?? "/om-oss"}
-                    className="founder-card-link relative z-[2] block"
-                    aria-label={
-                      language === "no"
-                        ? `Se mer om ${member.name}`
-                        : `View more about ${member.name}`
-                    }
-                  >
-                    <div className="founder-cutout-stage relative min-h-[24rem] sm:min-h-[27rem]">
-                      <div className="founder-cutout-aura pointer-events-none absolute inset-x-[10%] top-[5%] bottom-[12%]" />
-                      <div className="pointer-events-none absolute inset-x-[10%] bottom-[7%] h-10 rounded-full bg-[radial-gradient(circle,rgba(0,0,0,0.28),transparent_72%)] blur-xl opacity-60" />
-                      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_50%_10%,rgba(255,255,255,0.24),transparent_26%),radial-gradient(circle_at_16%_72%,rgba(122,168,255,0.12),transparent_26%),radial-gradient(circle_at_84%_70%,rgba(255,255,255,0.12),transparent_24%)]" />
+              <article
+                className={cn(
+                  "team-portrait-card group",
+                  index === 0 ? "team-portrait-card-primary" : "team-portrait-card-secondary",
+                )}
+              >
+                <Link
+                  href={member.href ?? "/om-oss"}
+                  className="team-portrait-link block"
+                  aria-label={
+                    language === "no"
+                      ? `Se mer om ${member.name}`
+                      : `View more about ${member.name}`
+                  }
+                >
+                  <div className="team-portrait-scene">
+                    <div className="team-portrait-surface" />
+                    <div className="team-portrait-glow" />
+                    <div className="team-portrait-shadow" />
+                    {member.image ? (
                       <Image
                         src={member.image}
                         alt={
@@ -323,29 +325,38 @@ export function TeamSection({
                             ? resolveLocalizedValue(member.imageAlt, language)
                             : member.name
                         }
-                        fill
-                        sizes="(min-width: 1280px) 24vw, (min-width: 768px) 42vw, 100vw"
-                        className="founder-cutout-image object-contain object-bottom px-1 pt-0 transition duration-700 group-hover:scale-[1.045] group-hover:-translate-y-1 sm:px-2"
+                        width={1200}
+                        height={1500}
+                        sizes="(min-width: 1280px) 26vw, (min-width: 768px) 42vw, 100vw"
+                        className={cn(
+                          "team-portrait-image",
+                          index === 0 ? "team-portrait-image-left" : "team-portrait-image-right",
+                        )}
                       />
-                    </div>
-                  </Link>
-                ) : null}
-
-                <div className="team-founder-copy relative z-[3] -mt-6 space-y-3 px-4 py-4 sm:-mt-7 sm:px-5 sm:py-5">
-                  <span className="founder-profile-chip">
-                    {resolveLocalizedValue(member.role, language)}
-                  </span>
-                  <div>
-                    <h3 className="card-title text-[color:var(--foreground)]">{member.name}</h3>
-                    <p className="body-copy mt-3 text-[var(--muted-2)]">
-                      {resolveLocalizedValue(member.summary, language)}
-                    </p>
+                    ) : null}
                   </div>
-                  <ButtonLink href={member.href ?? "/om-oss"} variant="ghost" size="compact" className="w-full sm:w-auto">
-                    {language === "no" ? "Se profil" : "View profile"}
-                    <ArrowUpRightIcon className="h-4 w-4 transition duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
-                  </ButtonLink>
-                </div>
+
+                  <div
+                    className={cn(
+                      "team-portrait-copy",
+                      index === 0 ? "team-portrait-copy-left" : "team-portrait-copy-right",
+                    )}
+                  >
+                    <span className="founder-profile-chip">
+                      {resolveLocalizedValue(member.role, language)}
+                    </span>
+                    <div>
+                      <h3 className="card-title text-[color:var(--foreground)]">{member.name}</h3>
+                      <p className="body-copy mt-3 text-[var(--muted-2)]">
+                        {resolveLocalizedValue(member.summary, language)}
+                      </p>
+                    </div>
+                    <ButtonLink href={member.href ?? "/om-oss"} variant="ghost" size="compact" className="w-full sm:w-auto">
+                      {language === "no" ? "Se profil" : "View profile"}
+                      <ArrowUpRightIcon className="h-4 w-4 transition duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+                    </ButtonLink>
+                  </div>
+                </Link>
               </article>
             </Reveal>
           ))}
@@ -378,14 +389,6 @@ export function ContactLeadSection({
             <p className="body-copy text-[var(--muted-2)]">
               {copy.contactLead}
             </p>
-            <div className="flex flex-wrap gap-2.5">
-              <span className="founder-profile-chip founder-profile-chip-muted">
-                {language === "no" ? "Svar innen 24 timer" : "Reply within 24 hours"}
-              </span>
-              <span className="founder-profile-chip founder-profile-chip-muted">
-                {language === "no" ? "Format, prisnivå og neste steg" : "Format, budget level and next step"}
-              </span>
-            </div>
           </div>
 
           <div className="mt-6 grid gap-4 border-t border-[color:var(--line)] pt-6">
@@ -409,11 +412,6 @@ export function ContactLeadSection({
               <div className="max-w-2xl">
                 <p className="body-copy text-[var(--muted-2)]">
                   {copy.contactBriefDescription}
-                </p>
-                <p className="mt-4 text-sm leading-6 text-[var(--muted)] sm:text-base sm:leading-7">
-                  {language === "no"
-                    ? "Send mål, kanal, tidslinje og gjerne budsjett, så svarer vi med anbefalt oppsett og neste steg."
-                    : "Send the goal, channel, timeline and ideally a budget, and we will reply with the right setup and next steps."}
                 </p>
               </div>
                 <div className="mt-6">
@@ -493,26 +491,9 @@ export function FaqList({
 }) {
   const { language } = useSitePreferences();
   const copy = uiCopy.siteSections[language];
-  const quickLinks = [
-    language === "no" ? "Pris" : "Pricing",
-    language === "no" ? "Tidslinje" : "Timeline",
-    language === "no" ? "Leveranse" : "Deliverables",
-    language === "no" ? "Prosess" : "Process",
-  ];
 
   const content = (
     <>
-      <div className="mx-auto mb-6 flex max-w-4xl flex-wrap justify-center gap-2.5">
-        {quickLinks.map((label) => (
-          <span
-            key={label}
-            className="rounded-full border border-[color:var(--line)] bg-[color:var(--surface)]/76 px-3.5 py-1.5 text-sm text-[color:var(--foreground)]/76"
-          >
-            {label}
-          </span>
-        ))}
-      </div>
-
       <div className="mx-auto max-w-4xl space-y-3">
         {items.map((item, index) => (
           <details

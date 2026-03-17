@@ -50,14 +50,14 @@ export const uiCopy = {
       selectedWorkEyebrow: "Utvalgte case",
       selectedWorkTitle: "Utvalgte produksjoner",
       selectedWorkDescription:
-        "Ekte case fra organisasjoner og virksomheter vi har jobbet tett med.",
+        "Tre case som viser behov, leveranse og effekt.",
       selectedWorkHint: "Se behov, leveranse og effekt i hvert case.",
       clientsEyebrow: "Noen vi har jobbet med",
       clientsDescription: "Et utvalg kunder og samarbeidspartnere.",
       servicesEyebrow: "Tjenester",
       servicesTitle: "Fire tjenester som gjør video enklere å kjøpe.",
       featuredCaseEyebrow: "Fremhevet case",
-      featuredCaseWhy: "Hva vi leverte",
+      featuredCaseWhy: "Hvorfor det fungerte",
       featuredCaseGoal: "Behov",
       featuredCaseSolution: "Leveranse",
       featuredCaseImpact: "Effekt",
@@ -66,7 +66,7 @@ export const uiCopy = {
       contactEyebrow: "Kontakt",
       contactTitle: "Fortell oss kort hva dere trenger.",
       contactDescription:
-        "Vi følger opp innen 24 timer med anbefalt format, prisnivå og neste steg.",
+        "Vi følger opp innen 24 timer med anbefalt oppsett og neste steg.",
       contactMail: "E-post",
       contactPhone: "Telefon",
       contactLocation: "Base",
@@ -85,14 +85,14 @@ export const uiCopy = {
       selectedWorkEyebrow: "Selected work",
       selectedWorkTitle: "Selected productions",
       selectedWorkDescription:
-        "Real projects from organisations and teams we have worked closely with.",
+        "Three case studies that show the need, the delivery and the outcome.",
       selectedWorkHint: "See the need, the delivery and the outcome in each case.",
       clientsEyebrow: "Some of the teams we have worked with",
       clientsDescription: "A selection of clients and collaborators.",
       servicesEyebrow: "Services",
       servicesTitle: "Four services that make video easier to buy.",
       featuredCaseEyebrow: "Featured case",
-      featuredCaseWhy: "What we delivered",
+      featuredCaseWhy: "Why it worked",
       featuredCaseGoal: "Need",
       featuredCaseSolution: "Delivery",
       featuredCaseImpact: "Impact",
@@ -101,7 +101,7 @@ export const uiCopy = {
       contactEyebrow: "Contact",
       contactTitle: "Tell us briefly what you need.",
       contactDescription:
-        "We follow up within 24 hours with a recommended format, price level and next step.",
+        "We follow up within 24 hours with the right setup and next step.",
       contactMail: "Email",
       contactPhone: "Phone",
       contactLocation: "Base",
@@ -116,7 +116,7 @@ export const uiCopy = {
       servicesEyebrow: "Tjenester",
       servicesTitle: "Video for synlighet, tillit og flere henvendelser",
       servicesDescription:
-        "Reklamefilm, bedriftsfilm, innhold til sosiale medier og eventproduksjon gjort enklere å forstå og enklere å bestille.",
+        "Fire tjenester med tydelig effekt, prisnivå og leveranse.",
       packagesEyebrow: "Samarbeid",
       packagesTitle: "Faste opplegg for dere som trenger jevnlig innhold",
       packagesDescription:
@@ -128,19 +128,19 @@ export const uiCopy = {
       casesEyebrow: "Case",
       casesTitle: "Ekte case med tydelig behov og tydelig leveranse",
       casesDescription:
-        "Et utvalg produksjoner hentet fra Fau&Land Films faktiske arbeid for kunder og organisasjoner.",
+        "Utvalgte produksjoner fra faktisk arbeid for kunder og organisasjoner.",
       casesAction: "Se hele porteføljen",
       processEyebrow: "Prosess",
       processTitle: "Slik jobber vi",
       processDescription:
-        "Kort vei fra første møte til ferdig leveranse, med senior oppfølging hele veien.",
+        "Fire steg fra første brief til ferdig leveranse.",
       testimonialsEyebrow: "Kunder",
       testimonialsTitle: "Hva kundene sier",
       testimonialsDescription: "Et utvalg tilbakemeldinger fra kunder vi har jobbet med.",
       aboutEyebrow: "Om Fau&Land",
       aboutTitle: "Et lite team med tydelig ansvar",
       aboutDescription:
-        "Gard og Tommy leder prosjektet tett fra planlegging til ferdig film.",
+        "Gard og Tommy følger prosjektet tett fra planlegging til ferdig film.",
       aboutAction: "Møt teamet",
       aboutSummary: "Kort om oss",
       teamEyebrow: "Team",
@@ -150,13 +150,13 @@ export const uiCopy = {
       contactEyebrow: "Kontakt",
       contactTitle: "Klar for å snakke om prosjektet?",
       contactDescription:
-        "Fortell oss kort hva dere trenger, så følger vi opp innen 24 timer med anbefalt oppsett.",
+        "Send en kort brief, så følger vi opp innen 24 timer.",
       contactHeading: "Kontakt Fau&Land Film",
       contactLead:
-        "Oslo-basert produksjonspartner for reklamefilm, bedriftsfilm, SoMe-innhold og eventfilm.",
+        "Oslo-basert produksjonspartner for reklamefilm, bedriftsfilm, SoMe og event.",
       contactBriefTitle: "Send en kort beskrivelse",
       contactBriefDescription:
-        "Del mål, kanal, tidslinje og gjerne budsjett, så følger vi opp innen 24 timer med anbefalt format og neste steg.",
+        "Del mål, kanal og tidslinje, så følger vi opp med anbefalt oppsett og neste steg.",
       contactMail: "E-post",
       contactPhone: "Telefon",
       contactBase: "Base",
@@ -173,7 +173,7 @@ export const uiCopy = {
       servicesEyebrow: "Services",
       servicesTitle: "Video for visibility, trust and more inquiries",
       servicesDescription:
-        "Commercial film, company film, social content and event production made easier to understand and easier to buy.",
+        "Four services with clear value, typical budget and delivery.",
       packagesEyebrow: "Ongoing support",
       packagesTitle: "Retainers for teams that need content on a regular basis",
       packagesDescription:
@@ -185,19 +185,19 @@ export const uiCopy = {
       casesEyebrow: "Work",
       casesTitle: "Real case studies with clear need and delivery",
       casesDescription:
-        "A selection of productions taken from Fau&Land Film's actual client work.",
+        "Selected productions drawn from Fau&Land Film's actual client work.",
       casesAction: "View full portfolio",
       processEyebrow: "Process",
       processTitle: "How we work",
       processDescription:
-        "A short path from first conversation to delivery, with senior guidance throughout.",
+        "Four steps from first brief to final delivery.",
       testimonialsEyebrow: "Clients",
       testimonialsTitle: "What clients say",
       testimonialsDescription: "A selection of feedback from clients we have worked with.",
       aboutEyebrow: "About Fau&Land",
       aboutTitle: "A small team with clear ownership",
       aboutDescription:
-        "Gard and Tommy stay close to the project from planning to final delivery.",
+        "Gard and Tommy stay close to the work from planning to final delivery.",
       aboutAction: "Meet the team",
       aboutSummary: "About us",
       teamEyebrow: "Team",
@@ -207,13 +207,13 @@ export const uiCopy = {
       contactEyebrow: "Contact",
       contactTitle: "Ready to talk about the project?",
       contactDescription:
-        "Tell us briefly what you need and we will follow up within 24 hours with a recommended setup.",
+        "Send a short brief and we will follow up within 24 hours.",
       contactHeading: "Contact Fau&Land Film",
       contactLead:
-        "Oslo-based production partner for commercials, company films, social content and event films.",
+        "Oslo-based production partner for commercials, company films, social content and event work.",
       contactBriefTitle: "Send a short description",
       contactBriefDescription:
-        "Share the goal, channel, timeline and ideally a budget, and we will follow up within 24 hours with a recommended format and next step.",
+        "Share the goal, channel and timeline and we will follow up with the right setup and next step.",
       contactMail: "Email",
       contactPhone: "Phone",
       contactBase: "Base",

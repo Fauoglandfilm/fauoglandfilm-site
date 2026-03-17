@@ -238,8 +238,8 @@ export const homeIntroContent = {
     en: "Film for websites, campaigns, social channels and events.",
   },
   description: {
-    no: "Vi jobber tett med bedrifter og organisasjoner som trenger tydelig budskap, høy kvalitet og korte beslutningslinjer.",
-    en: "We work closely with companies and organisations that need a clearer message, higher quality and a shorter path to delivery.",
+    no: "For bedrifter og organisasjoner som trenger tydelig budskap, høy kvalitet og raske beslutninger.",
+    en: "For companies and organisations that need a clearer message, stronger quality and faster decisions.",
   },
 };
 
