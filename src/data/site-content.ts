@@ -31,6 +31,15 @@ export type ExternalVideoAsset = {
   sourceUrl: string;
 };
 
+export type VideoVariant = {
+  slug: string;
+  label: LocalizedText;
+  video: VideoAsset;
+  image?: string;
+  imageAlt?: LocalizedText;
+  mediaFit?: "cover" | "contain";
+};
+
 export type NavItem = {
   href: string;
   label: LocalizedText;
@@ -91,7 +100,9 @@ export type CaseStudy = {
   tags: LocalizedText[];
   image?: string;
   imageAlt?: LocalizedText;
+  mediaFit?: "cover" | "contain";
   video?: VideoAsset;
+  videoVariants?: VideoVariant[];
   externalVideo?: ExternalVideoAsset;
   palette?: string;
   featured?: boolean;
@@ -804,6 +815,116 @@ export const caseStudies: CaseStudy[] = [
     palette: "from-[#efe9df] via-[#d6cabc] to-[#bfa98c]",
   },
   {
+    slug: "treningshuset",
+    client: "Treningshuset",
+    title: {
+      no: "Treningshuset",
+      en: "Treningshuset",
+    },
+    category: {
+      no: "Annonsefilm og sosiale medier",
+      en: "Ad films and social media",
+    },
+    industry: {
+      no: "Treningssenter",
+      en: "Fitness centre",
+    },
+    summary: {
+      no: "Filmproduksjon for annonser og sosiale medier, bygget for å få flere til å melde seg inn hos Treningshuset.",
+      en: "Film production for ads and social media, built to turn attention into more memberships for Treningshuset.",
+    },
+    goal: {
+      no: "Treningshuset trengte flere filmer i ulike formater, lengder og budskap som kunne brukes både i kampanjer og løpende annonsering.",
+      en: "Treningshuset needed multiple films across formats, lengths and messages that could work both in campaigns and ongoing paid distribution.",
+    },
+    solution: {
+      no: "Vi produserte ti filmer i flere formater, med både brede og mobile uttak, slik at materialet kunne tilpasses ulike flater og kampanjebehov uten å miste tempo eller tydelighet.",
+      en: "We produced ten films across multiple formats, including wider and mobile-first cutdowns, so the material could fit different placements and campaign needs without losing pace or clarity.",
+    },
+    deliverables: [
+      { no: "10 filmer i ulike lengder og formater", en: "10 films across multiple lengths and formats" },
+      { no: "Versjoner for annonser og sosiale medier", en: "Versions for ads and social media" },
+      { no: "Budskap tilpasset ulike kampanjer", en: "Messaging adapted to different campaigns" },
+    ],
+    impact: {
+      no: "Ga Treningshuset et fleksibelt videobibliotek som kan brukes på tvers av kampanjer, plasseringer og målgrupper for å drive flere innmeldinger.",
+      en: "Gave Treningshuset a flexible film library that can be used across campaigns, placements and audiences to drive more memberships.",
+    },
+    metrics: [
+      { value: "10", label: { no: "filmer", en: "films" } },
+      { value: "2", label: { no: "hovedformater", en: "core formats" } },
+      { value: "Annonser + SoMe", label: { no: "bruk", en: "use" } },
+    ],
+    tags: [
+      { no: "Annonsefilm", en: "Ad film" },
+      { no: "Sosiale medier", en: "Social media" },
+      { no: "Medlemsvekst", en: "Membership growth" },
+    ],
+    image: "/assets/portfolio/treningshuset/posters/treningshuset-bred-poster.png",
+    imageAlt: {
+      no: "Still fra Treningshuset-kampanje",
+      en: "Still from the Treningshuset campaign",
+    },
+    mediaFit: "contain",
+    video: {
+      videoType: "direct",
+      src: "/assets/portfolio/treningshuset/videos/treningshuset-bred.mp4",
+      mobileSrc: "/assets/portfolio/treningshuset/videos/treningshuset-mobil.mp4",
+      poster: "/assets/portfolio/treningshuset/posters/treningshuset-bred-poster.png",
+      label: {
+        no: "Treningshuset - annonser og sosiale medier",
+        en: "Treningshuset - ads and social media",
+      },
+    },
+    videoVariants: [
+      {
+        slug: "bred",
+        label: {
+          no: "Bred versjon",
+          en: "Wide version",
+        },
+        image: "/assets/portfolio/treningshuset/posters/treningshuset-bred-poster.png",
+        imageAlt: {
+          no: "Bred versjon av Treningshuset-filmen",
+          en: "Wide version of the Treningshuset film",
+        },
+        mediaFit: "contain",
+        video: {
+          videoType: "direct",
+          src: "/assets/portfolio/treningshuset/videos/treningshuset-bred.mp4",
+          poster: "/assets/portfolio/treningshuset/posters/treningshuset-bred-poster.png",
+          label: {
+            no: "Treningshuset - bred versjon",
+            en: "Treningshuset - wide version",
+          },
+        },
+      },
+      {
+        slug: "mobil",
+        label: {
+          no: "Mobil versjon",
+          en: "Mobile version",
+        },
+        image: "/assets/portfolio/treningshuset/posters/treningshuset-mobil-poster.png",
+        imageAlt: {
+          no: "Mobil versjon av Treningshuset-filmen",
+          en: "Mobile version of the Treningshuset film",
+        },
+        mediaFit: "contain",
+        video: {
+          videoType: "direct",
+          src: "/assets/portfolio/treningshuset/videos/treningshuset-mobil.mp4",
+          poster: "/assets/portfolio/treningshuset/posters/treningshuset-mobil-poster.png",
+          label: {
+            no: "Treningshuset - mobil versjon",
+            en: "Treningshuset - mobile version",
+          },
+        },
+      },
+    ],
+    palette: "from-[#15171c] via-[#2d3746] to-[#647c9b]",
+  },
+  {
     slug: "nei-til-atomvapen-konferanse",
     client: "Nei til Atomvåpen",
     title: {
@@ -1428,6 +1549,46 @@ export const portfolioProjects: PortfolioProject[] = [
       en: "The Giant Artist",
     }),
     palette: "from-[#19181a] via-[#44505a] to-[#8ca0af]",
+  },
+  {
+    slug: "treningshuset",
+    group: "commercial",
+    client: "Treningshuset",
+    title: {
+      no: "Treningshuset",
+      en: "Treningshuset",
+    },
+    format: {
+      no: "Filmer for annonser og sosiale medier",
+      en: "Films for ads and social media",
+    },
+    summary: {
+      no: "Vi har lagd 10 filmer for Treningshuset i forskjellige formater, med ulike budskap og kampanjetilpasninger for å få flere til å melde seg inn.",
+      en: "We created 10 films for Treningshuset across multiple formats, messages and campaign versions designed to drive more memberships.",
+    },
+    result: {
+      no: "Bred versjon prioriteres på desktop, mobilversjon prioriteres på mobil, og begge kan vises i caset.",
+      en: "The wider version is prioritised on desktop, the mobile version on mobile, and both are available inside the case.",
+    },
+    detailHref: "/case/treningshuset",
+    ctaLabel: viewCaseCta,
+    mediaFit: "contain",
+    image: "/assets/portfolio/treningshuset/posters/treningshuset-bred-poster.png",
+    imageAlt: {
+      no: "Still fra Treningshuset-filmen",
+      en: "Still from the Treningshuset film",
+    },
+    video: {
+      videoType: "direct",
+      src: "/assets/portfolio/treningshuset/videos/treningshuset-bred.mp4",
+      mobileSrc: "/assets/portfolio/treningshuset/videos/treningshuset-mobil.mp4",
+      poster: "/assets/portfolio/treningshuset/posters/treningshuset-bred-poster.png",
+      label: {
+        no: "Treningshuset - filmer for annonser og sosiale medier",
+        en: "Treningshuset - films for ads and social media",
+      },
+    },
+    palette: "from-[#15171c] via-[#2d3746] to-[#647c9b]",
   },
   {
     slug: "ville-gleder-villmarksforedrag",

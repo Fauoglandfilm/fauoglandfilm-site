@@ -50,10 +50,11 @@ export function CaseDetailContent({
                   externalVideo={caseStudy.externalVideo}
                   image={caseStudy.image}
                   imageAlt={caseStudy.imageAlt}
+                  mediaFit={caseStudy.mediaFit}
                   className="relative h-full w-full"
                   sizes="100vw"
                 />
-                <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(17,17,17,0.04),rgba(17,17,17,0.24))]" />
+                <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,rgba(17,17,17,0.04),rgba(17,17,17,0.24))]" />
               </div>
             ) : caseStudy.image ? (
               <div className="relative aspect-video w-full">
@@ -85,6 +86,30 @@ export function CaseDetailContent({
               </div>
             )}
           </article>
+
+          {caseStudy.videoVariants?.length ? (
+            <section className="grid gap-4 md:grid-cols-2">
+              {caseStudy.videoVariants.map((variant) => (
+                <article key={variant.slug} className="card-surface overflow-hidden rounded-[1.8rem]">
+                  <div className="relative min-h-[20rem] bg-[#0b0d12] sm:min-h-[24rem]">
+                    <EmbeddedVideoPlayer
+                      title={variant.label}
+                      video={variant.video}
+                      image={variant.image}
+                      imageAlt={variant.imageAlt}
+                      mediaFit={variant.mediaFit ?? caseStudy.mediaFit}
+                      className="relative h-full w-full"
+                      sizes="(min-width: 768px) 50vw, 100vw"
+                    />
+                    <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,rgba(17,17,17,0.03),rgba(17,17,17,0.18)_48%,rgba(17,17,17,0.54)_100%)]" />
+                    <div className="absolute left-4 top-4 z-[2] rounded-full border border-white/14 bg-white/88 px-3.5 py-1.5 text-[0.68rem] font-semibold uppercase tracking-[0.18em] text-[#111111] shadow-[0_12px_32px_rgba(0,0,0,0.18)] backdrop-blur-md">
+                      {resolveLocalizedValue(variant.label, language)}
+                    </div>
+                  </div>
+                </article>
+              ))}
+            </section>
+          ) : null}
 
           <div className="grid gap-4 xl:grid-cols-[1.18fr_0.82fr]">
             <article className="glass-panel rounded-[2rem] p-5 sm:p-6">

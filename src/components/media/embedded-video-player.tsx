@@ -169,6 +169,7 @@ function ManagedExternalFrame({
           alt={resolvedImageAlt}
           priority={priority}
           sizes={sizes}
+          fallbackContent={<FallbackSurface />}
           className={cn(mediaObjectClass, "transition duration-500", isReady ? "opacity-0" : "opacity-100")}
         />
       ) : (
@@ -218,6 +219,7 @@ function ManagedDirectVideo({
           alt={resolvedImageAlt}
           priority={priority}
           sizes={sizes}
+          fallbackContent={<FallbackSurface />}
           className={cn(
             mediaObjectClass,
             "transition duration-500",
@@ -318,6 +320,7 @@ export function EmbeddedVideoPlayer({
               alt={resolvedImageAlt}
               priority={priority}
               sizes={sizes}
+              fallbackContent={<FallbackSurface />}
               className={mediaObjectClass}
             />
           </div>
@@ -358,6 +361,7 @@ export function EmbeddedVideoPlayer({
           alt={resolvedImageAlt}
           priority={priority}
           sizes={sizes}
+          fallbackContent={<FallbackSurface />}
           className={mediaObjectClass}
         />
       </div>
