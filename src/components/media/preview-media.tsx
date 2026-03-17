@@ -120,8 +120,7 @@ export function PreviewMedia({
               ? isHovered
               : isInView
             : false;
-  const shouldFadePoster = shouldPlay && hasDirectPreview;
-
+  const shouldRenderPreview = shouldPlay && (hasDirectPreview || hasExternalPreview);
   const mediaObjectClass =
     mediaFit === "contain" ? "object-contain p-5 sm:p-6" : "object-cover";
 
@@ -143,7 +142,7 @@ export function PreviewMedia({
           className={cn(
             mediaObjectClass,
             "transition duration-700",
-            shouldFadePoster ? "scale-[1.015] opacity-0" : "scale-100 opacity-100",
+            shouldRenderPreview ? "scale-[1.015] opacity-100" : "scale-100 opacity-100",
             posterClassName,
           )}
         />
@@ -151,27 +150,14 @@ export function PreviewMedia({
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(255,255,255,0.14),transparent_24%),linear-gradient(135deg,rgba(120,164,255,0.18),rgba(10,12,18,0.94))]" />
       )}
 
-      {hasDirectPreview && shouldPlay ? (
-        <video
-          className={cn("absolute inset-0 h-full w-full", mediaObjectClass, previewClassName)}
-          autoPlay
-          muted
-          loop
-          playsInline
-          preload="metadata"
-          poster={video.poster ?? image}
-        >
-          {video.mobileSrc ? (
-            <source media="(max-width: 767px)" src={video.mobileSrc} type="video/mp4" />
-          ) : null}
-          <source src={video.src} type="video/mp4" />
-        </video>
-      ) : null}
-
-      {hasExternalPreview && shouldPlay ? (
+      {shouldRenderPreview ? (
         <EmbeddedVideoPlayer
           title={title}
+          video={video}
           externalVideo={externalVideo}
+          image={image}
+          imageAlt={imageAlt}
+          mediaFit={mediaFit}
           autoplay
           previewMode
           className={cn("absolute inset-0 h-full w-full", previewClassName)}
