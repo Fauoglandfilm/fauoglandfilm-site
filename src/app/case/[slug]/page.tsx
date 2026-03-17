@@ -68,7 +68,6 @@ export default async function CaseDetailPage({ params }: CaseDetailPageProps) {
       <VideoStructuredData
         title={`${caseStudy.client} - ${caseStudy.title.no}`}
         description={caseStudy.summary.no}
-        path={`/case/${caseStudy.slug}`}
         thumbnailUrl={caseStudy.externalVideo?.thumbnailSrc ?? caseStudy.video?.poster ?? caseStudy.image}
         embedUrl={caseStudy.externalVideo?.embedUrl}
         contentUrl={caseStudy.video?.videoType === "direct" ? caseStudy.video.src : undefined}

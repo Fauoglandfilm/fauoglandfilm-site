@@ -30,6 +30,7 @@ import {
 } from "@/lib/sanity/queries";
 import { parseExternalVideoUrl } from "@/lib/video";
 import { urlForSanityImage } from "@/lib/sanity/image";
+import type { PortableTextBlock } from "@portabletext/types";
 
 type SanityLocalized = Partial<Record<"no" | "en", string>> | string | null | undefined;
 
@@ -120,8 +121,8 @@ type SanityArticle = {
   title?: SanityLocalized;
   excerpt?: SanityLocalized;
   body?: {
-    no?: unknown[];
-    en?: unknown[];
+    no?: PortableTextBlock[];
+    en?: PortableTextBlock[];
   };
   authorName?: string;
   category?: SanityLocalized;
@@ -140,8 +141,8 @@ export type ArticleEntry = {
   title: LocalizedText;
   excerpt: LocalizedText;
   body: {
-    no: unknown[];
-    en: unknown[];
+    no: PortableTextBlock[];
+    en: PortableTextBlock[];
   };
   authorName: string;
   category: LocalizedText;
@@ -167,6 +168,14 @@ function toLocalizedText(value: SanityLocalized, fallback = ""): LocalizedText {
     no: value?.no ?? fallback,
     en: value?.en ?? fallback,
   };
+}
+
+function getLocalizedFallback(value: SanityLocalized, fallback = "") {
+  if (typeof value === "string") {
+    return value;
+  }
+
+  return value?.no ?? value?.en ?? fallback;
 }
 
 function toSlug(value: { current?: string } | string | undefined, fallback = "") {
@@ -206,7 +215,7 @@ function mapPortfolioProject(project: SanityPortfolioProject): PortfolioProject 
 
   const image = toImageUrl(project.image);
   const fallbackPoster = toImageUrl(project.video?.poster);
-  const label = toLocalizedText(project.video?.label, project.title.no ?? project.client);
+  const label = toLocalizedText(project.video?.label, getLocalizedFallback(project.title, project.client));
 
   return {
     slug,
@@ -253,7 +262,7 @@ function mapCaseStudy(caseStudy: SanityCaseStudy): CaseStudy | null {
 
   const image = toImageUrl(caseStudy.image);
   const fallbackPoster = toImageUrl(caseStudy.video?.poster);
-  const label = toLocalizedText(caseStudy.video?.label, caseStudy.title.no ?? caseStudy.client);
+  const label = toLocalizedText(caseStudy.video?.label, getLocalizedFallback(caseStudy.title, caseStudy.client));
 
   return {
     slug,
@@ -340,7 +349,7 @@ function mapArticle(article: SanityArticle): ArticleEntry | null {
     imageAlt: article.imageAlt ? toLocalizedText(article.imageAlt, "") : undefined,
     externalVideo: parseExternalVideoUrl({
       url: article.video?.url,
-      label: toLocalizedText(article.video?.label, article.title.no ?? slug),
+      label: toLocalizedText(article.video?.label, getLocalizedFallback(article.title, slug)),
       thumbnailSrc: fallbackPoster ?? image,
     }) ?? undefined,
     datePublished: article.datePublished,
@@ -385,7 +394,7 @@ export async function getCaseStudies() {
 }
 
 export async function getCaseStudyBySlug(slug: string) {
-  const cmsCase = await sanityFetch<SanityCaseStudy>({
+  const cmsCase = await sanityFetch<SanityCaseStudy, { slug: string }>({
     query: caseStudyBySlugQuery,
     params: { slug },
     tags: [`case-study-${slug}`],
@@ -430,7 +439,7 @@ export async function getArticles() {
 }
 
 export async function getArticleBySlug(slug: string) {
-  const cmsArticle = await sanityFetch<SanityArticle>({
+  const cmsArticle = await sanityFetch<SanityArticle, { slug: string }>({
     query: articleBySlugQuery,
     params: { slug },
     tags: [`article-${slug}`],

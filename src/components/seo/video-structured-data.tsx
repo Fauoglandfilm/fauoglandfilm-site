@@ -5,7 +5,6 @@ import { absoluteUrl } from "@/lib/seo";
 type VideoStructuredDataProps = {
   title: string;
   description: string;
-  path: string;
   thumbnailUrl?: string;
   contentUrl?: string;
   embedUrl?: string;
@@ -15,7 +14,6 @@ type VideoStructuredDataProps = {
 export function VideoStructuredData({
   title,
   description,
-  path,
   thumbnailUrl,
   contentUrl,
   embedUrl,
@@ -25,20 +23,17 @@ export function VideoStructuredData({
     return null;
   }
 
+  const resolvedThumbnail = thumbnailUrl ?? absoluteUrl("/opengraph-image");
+  const resolvedUploadDate = uploadDate ?? new Date().toISOString();
+
   return (
     <VideoJsonLd
       name={title}
       description={description}
-      uploadDate={uploadDate}
-      thumbnailUrl={thumbnailUrl ? [thumbnailUrl] : undefined}
-      contentUrl={contentUrl}
-      embedUrl={embedUrl}
-      potentialAction={[
-        {
-          "@type": "WatchAction",
-          target: absoluteUrl(path),
-        },
-      ]}
+      uploadDate={resolvedUploadDate}
+      thumbnailUrl={resolvedThumbnail}
+      {...(contentUrl ? { contentUrl } : {})}
+      {...(embedUrl ? { embedUrl } : {})}
     />
   );
 }

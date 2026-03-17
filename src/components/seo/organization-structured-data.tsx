@@ -6,7 +6,6 @@ export function OrganizationStructuredData() {
   return (
     <OrganizationJsonLd
       type="Organization"
-      id={`${siteConfig.domain}#organization`}
       name={siteConfig.legalName}
       url={siteConfig.domain}
       logo={`${siteConfig.domain}/opengraph-image`}
@@ -16,8 +15,6 @@ export function OrganizationStructuredData() {
           contactType: "sales",
           email: siteConfig.email,
           telephone: siteConfig.phonePrimary,
-          areaServed: "NO",
-          availableLanguage: ["nb", "en"],
         },
       ]}
     />
