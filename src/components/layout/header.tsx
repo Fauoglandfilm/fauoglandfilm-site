@@ -157,7 +157,7 @@ export function Header() {
             className={cn(
               "relative mt-2 flex items-center gap-2.5 overflow-hidden rounded-[1.5rem] px-3 py-2.5 transition duration-300 sm:mt-2.5 sm:gap-3 sm:px-4 sm:py-3 lg:grid lg:grid-cols-[auto_minmax(0,1fr)_auto] lg:items-center lg:gap-7 lg:px-5 lg:py-3",
               overlayMode
-                ? "border border-white/18 bg-[color:var(--header-overlay-surface)] text-white shadow-[0_28px_86px_rgba(0,0,0,0.22)] backdrop-blur-[30px]"
+                ? "border border-[color:var(--header-overlay-border)] bg-[color:var(--header-overlay-surface)] text-white shadow-[0_28px_86px_rgba(0,0,0,0.22)] backdrop-blur-[30px]"
                 : "border border-[color:var(--line)] bg-[color:var(--header-surface)] text-[color:var(--foreground)] shadow-[0_26px_82px_rgba(7,10,18,0.14)] backdrop-blur-[30px]",
             )}
           >
@@ -172,17 +172,17 @@ export function Header() {
             >
               <div
                 className={cn(
-                  "flex h-11 w-11 items-center justify-center rounded-full border p-[0.62rem] shadow-[0_20px_36px_rgba(0,0,0,0.18)] backdrop-blur-2xl lg:h-[3.25rem] lg:w-[3.25rem] lg:p-[0.74rem]",
+                  "flex h-11 w-11 items-center justify-center rounded-full border p-[0.62rem] shadow-[0_22px_42px_rgba(0,0,0,0.2)] backdrop-blur-2xl lg:h-[3.25rem] lg:w-[3.25rem] lg:p-[0.74rem]",
                   overlayMode
-                    ? "border-white/24 bg-white/[0.18]"
+                    ? "border-white/32 bg-white/[0.24]"
                     : "border-white/32 bg-white/[0.28]",
                 )}
               >
                 <BrandLogo
                   variant="mark"
                   className={cn(
-                    "opacity-100 saturate-[1.24] drop-shadow-[0_10px_20px_rgba(0,0,0,0.24)]",
-                    overlayMode ? "brightness-[1.34]" : "brightness-[1.24]",
+                    "opacity-100 saturate-[1.3] drop-shadow-[0_12px_24px_rgba(0,0,0,0.26)]",
+                    overlayMode ? "brightness-[1.48]" : "brightness-[1.24]",
                   )}
                   priority
                 />
@@ -190,8 +190,8 @@ export function Header() {
               <div className="min-w-0">
                 <p
                   className={cn(
-                    "font-display text-[1.05rem] font-semibold tracking-[-0.045em] sm:text-[1.08rem] lg:text-[1.24rem]",
-                    overlayMode ? "text-white drop-shadow-[0_8px_22px_rgba(0,0,0,0.22)]" : "text-[color:var(--foreground)]",
+                    "font-display text-[1.08rem] font-semibold tracking-[-0.045em] sm:text-[1.12rem] lg:text-[1.28rem]",
+                    overlayMode ? "text-white drop-shadow-[0_10px_24px_rgba(0,0,0,0.24)]" : "text-[color:var(--foreground)]",
                   )}
                 >
                   Fau&amp;Land Film
@@ -199,7 +199,7 @@ export function Header() {
                 <p
                   className={cn(
                     "mt-0.5 hidden text-[0.64rem] font-semibold uppercase tracking-[0.2em] lg:block",
-                    overlayMode ? "text-white/64" : "text-[color:var(--foreground)]/52",
+                    overlayMode ? "text-white/74" : "text-[color:var(--foreground)]/52",
                   )}
                 >
                   Oslo / Production
@@ -218,11 +218,11 @@ export function Header() {
                       className={cn(
                         "inline-flex items-center rounded-full border border-transparent px-3 py-[0.5rem] text-[0.95rem] font-medium tracking-[-0.02em] transition duration-300",
                         overlayMode
-                          ? "text-white/78 hover:bg-white/[0.08] hover:text-white"
+                          ? "text-white/84 hover:bg-white/[0.1] hover:text-white"
                           : "text-[color:var(--foreground)]/72 hover:bg-white/[0.08] hover:text-[color:var(--foreground)]",
                       active &&
                         (overlayMode
-                          ? "bg-white/[0.12] text-white shadow-[0_10px_24px_rgba(0,0,0,0.16)]"
+                          ? "bg-white/[0.14] text-white shadow-[0_10px_24px_rgba(0,0,0,0.18)]"
                           : "bg-white/[0.12] text-[color:var(--foreground)] shadow-[0_10px_24px_rgba(7,10,18,0.1)]"),
                     )}
                   >
