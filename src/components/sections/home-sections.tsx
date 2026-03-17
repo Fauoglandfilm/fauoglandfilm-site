@@ -44,7 +44,7 @@ export function HeroSection() {
         <div className="ambient-drift pointer-events-none absolute -left-24 top-0 h-64 w-64 rounded-full bg-[radial-gradient(circle,rgba(210,173,116,0.28),transparent_72%)] blur-3xl" />
         <div className="ambient-drift pointer-events-none absolute right-[-5rem] top-12 h-72 w-72 rounded-full bg-[radial-gradient(circle,rgba(93,126,175,0.22),transparent_72%)] blur-3xl" />
         <video
-          className="relative z-[1] h-full w-full scale-[1.03] object-cover opacity-[0.96] brightness-[0.78] saturate-[0.98] contrast-[1.08]"
+          className="relative z-[1] h-full w-full scale-[1.03] object-cover opacity-[0.97] brightness-[0.82] saturate-[1.01] contrast-[1.06]"
           autoPlay
           muted
           loop
@@ -57,10 +57,10 @@ export function HeroSection() {
           ) : null}
           <source src={heroVideo.src} type="video/mp4" />
         </video>
-        <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(5,7,12,0.5)_0%,rgba(5,7,12,0.34)_22%,rgba(5,7,12,0.46)_56%,rgba(5,7,12,0.82)_100%)]" />
-        <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(5,7,12,0.8)_0%,rgba(5,7,12,0.64)_18%,rgba(5,7,12,0.28)_46%,rgba(5,7,12,0.12)_70%,rgba(5,7,12,0.22)_100%)]" />
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(210,177,117,0.16),transparent_24%),radial-gradient(circle_at_86%_14%,rgba(98,141,255,0.16),transparent_22%),radial-gradient(circle_at_center,transparent_28%,rgba(3,4,6,0.22)_100%)]" />
-        <div className="grain-overlay absolute inset-0 opacity-54" />
+        <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(5,7,12,0.46)_0%,rgba(5,7,12,0.3)_22%,rgba(5,7,12,0.42)_56%,rgba(5,7,12,0.76)_100%)]" />
+        <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(5,7,12,0.74)_0%,rgba(5,7,12,0.58)_18%,rgba(5,7,12,0.24)_46%,rgba(5,7,12,0.1)_70%,rgba(5,7,12,0.18)_100%)]" />
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(210,177,117,0.14),transparent_24%),radial-gradient(circle_at_86%_14%,rgba(98,141,255,0.14),transparent_22%),radial-gradient(circle_at_center,transparent_30%,rgba(3,4,6,0.18)_100%)]" />
+        <div className="grain-overlay absolute inset-0 opacity-46" />
       </div>
 
       <div className="site-container relative flex min-h-[80svh] items-end pb-10 pt-[6.5rem] sm:min-h-[85svh] sm:pb-12 sm:pt-[7.5rem] lg:min-h-[86vh] lg:pb-14 lg:pt-32">
