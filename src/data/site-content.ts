@@ -413,8 +413,8 @@ export const servicePillars: ServicePillar[] = [
       en: "Commercial film",
     },
     summary: {
-      no: "Film som gjør det enklere for kunder å velge dere.",
-      en: "Film that makes your brand easier to choose.",
+      no: "Film som gjør det enklere å velge dere.",
+      en: "Film that makes you easier to choose.",
     },
   },
   {
@@ -424,8 +424,8 @@ export const servicePillars: ServicePillar[] = [
       en: "Company film",
     },
     summary: {
-      no: "Video som forklarer hvem dere er, hva dere tilbyr og hvorfor folk skal stole på dere.",
-      en: "Video that explains who you are, what you offer and why people should trust your company.",
+      no: "Video som bygger tillit og forklarer tilbudet.",
+      en: "Video that builds trust and explains the offer.",
     },
   },
   {
@@ -435,8 +435,8 @@ export const servicePillars: ServicePillar[] = [
       en: "Social media content",
     },
     summary: {
-      no: "Video til sosiale medier som holder merkevaren synlig uten at dere trenger å produsere alt selv.",
-      en: "Video for social media that keeps your brand visible without forcing your team to produce everything in-house.",
+      no: "Video som holder dere synlige mellom kampanjer og lanseringer.",
+      en: "Video that keeps you visible between campaigns and launches.",
     },
   },
   {
@@ -446,8 +446,8 @@ export const servicePillars: ServicePillar[] = [
       en: "Event film and live",
     },
     summary: {
-      no: "Dekning og uttak som gjør at arrangementet fortsetter å jobbe etter at dagen er over.",
-      en: "Coverage and cutdowns that keep the event working long after the day itself is over.",
+      no: "Dekning og uttak som gir arrangementet lengre levetid.",
+      en: "Coverage and cutdowns that extend the value of the event.",
     },
   },
 ];
@@ -462,8 +462,8 @@ export const aboutStudioContent = {
     en: "Two senior creatives. Every project. Always.",
   },
   description: {
-    no: "Fau&Land Film er et Oslo-basert produksjonsselskap ledet av Gard Ruben Fauske og Tommy R.A. Garland. Vi lager reklamefilm, bedriftsfilm, innhold for sosiale medier og eventfilm for bedrifter og organisasjoner som vil være tydeligere i markedet.",
-    en: "Fau&Land Film is an Oslo-based production company led by Gard Ruben Fauske and Tommy R.A. Garland. We create commercials, company films, social content and event films for companies and organisations that want to show up more clearly in the market.",
+    no: "Et Oslo-basert produksjonsselskap for reklamefilm, bedriftsfilm, SoMe og event.",
+    en: "An Oslo-based production company for commercials, company films, social content and events.",
   },
   stats: [
     { value: "2", label: { no: "seniorer", en: "seniors" } },
@@ -512,8 +512,8 @@ export const serviceAreas: ServiceArea[] = [
     slug: "bedriftsfilm-intervjuer",
     title: { no: "Bedriftsfilm og intervjuer", en: "Company film and interviews" },
     summary: {
-      no: "Bedriftsfilm og intervjuer som forklarer tilbudet, bygger tillit og støtter salg.",
-      en: "Company films and interviews that clarify the offer, build trust and support sales.",
+      no: "Bedriftsfilm og intervjuer som bygger tillit og støtter salg.",
+      en: "Company films and interviews that build trust and support sales.",
     },
     eyebrow: { no: "Tillit og tydelighet", en: "Trust and clarity" },
     value: {
@@ -545,8 +545,8 @@ export const serviceAreas: ServiceArea[] = [
       en: "Social media content",
     },
     summary: {
-      no: "Korte videoer og uttak laget for kanalene dere faktisk publiserer i.",
-      en: "Short videos and cutdowns built for the channels you actually publish in.",
+      no: "Korte videoer og uttak for kanalene dere faktisk bruker.",
+      en: "Short videos and cutdowns for the channels you actually use.",
     },
     eyebrow: { no: "Publisering over tid", en: "Ongoing publishing" },
     value: {
@@ -575,8 +575,8 @@ export const serviceAreas: ServiceArea[] = [
     slug: "event-live",
     title: { no: "Eventfilm og live", en: "Event film and live" },
     summary: {
-      no: "Aftermovies, reels, intervjuer og livesendinger som gir mer å publisere etter arrangementet.",
-      en: "Aftermovies, reels, interviews and livestreams that keep giving you material after the event.",
+      no: "Aftermovies, reels, intervjuer og livesendinger med gjenbruk i fokus.",
+      en: "Aftermovies, reels, interviews and livestreams built for reuse.",
     },
     eyebrow: { no: "Arrangement og etterbruk", en: "Events and reuse" },
     value: {
@@ -1831,16 +1831,12 @@ export const teamMembers: TeamMember[] = [
 
 export const aboutBullets = [
   {
-    no: "Fau&Land Film er et Oslo-basert produksjonsselskap ledet av Gard Ruben Fauske og Tommy R.A. Garland.",
-    en: "Fau&Land Film is an Oslo-based production company led by Gard Ruben Fauske and Tommy R.A. Garland.",
-  },
-  {
     no: "Tommy holder produsent- og kundesporet tett, mens Gard leder regi, fortelling og klipp.",
     en: "Tommy keeps the production and client track tight, while Gard leads direction, story and edit.",
   },
   {
-    no: "Trykk på portrettene for å se hvordan de to kompletterer hverandre med ulike styrker i samme produksjonspartner.",
-    en: "Tap the portraits to see how the two complement each other with different strengths inside the same production partner.",
+    no: "To seniorer betyr korte beslutningslinjer, tydelig ansvar og tett oppfølging.",
+    en: "Two senior leads means short decision paths, clear ownership and close follow-up.",
   },
 ];
 
@@ -1848,8 +1844,8 @@ export const pricingFaq: FaqItem[] = [
   {
     question: { no: "Hva koster et videoprosjekt?", en: "What does a video project cost?" },
     answer: {
-      no: "Pris avhenger av omfang, men typiske nivåer er 5 000-20 000 kr for kort SoMe-innhold, 20 000-100 000 kr+ for promofilm eller reklamefilm og 15 000-60 000 kr+ for eventfilm. Send gjerne mål, kanal og omtrent budsjett, så peker vi dere raskt i riktig retning.",
-      en: "Pricing depends on scope, but typical levels are NOK 5,000-20,000 for short-form social content, NOK 20,000-100,000+ for promo films or commercials, and NOK 15,000-60,000+ for event films. Share the goal, channel and an approximate budget and we can point you in the right direction quickly.",
+      no: "Pris avhenger av omfang. Typiske nivåer er 5 000-20 000 kr for kort SoMe-innhold, 20 000-100 000 kr+ for reklamefilm og 15 000-60 000 kr+ for eventfilm.",
+      en: "Pricing depends on scope. Typical levels are NOK 5,000-20,000 for short-form social content, NOK 20,000-100,000+ for commercials and NOK 15,000-60,000+ for event films.",
     },
   },
   {
@@ -1870,20 +1866,10 @@ export const pricingFaq: FaqItem[] = [
     },
   },
   {
-    question: {
-      no: "Kan dere levere drone og livestream?",
-      en: "Can you deliver drone and livestreaming?",
-    },
-    answer: {
-      no: "Ja. Vi setter sammen riktig team rundt prosjektet og kan levere både droneopptak, flerkamera og livestream når det trengs.",
-      en: "Yes. We build the right team around the project and can deliver drone footage, multicam production and livestreaming when needed.",
-    },
-  },
-  {
     question: { no: "Hva trenger dere for å gi et estimat?", en: "What do you need to give an estimate?" },
     answer: {
       no: "Send oss kort hva dere vil oppnå, hvor filmen skal brukes og når dere trenger den. Da kan vi raskt foreslå riktig oppsett og prisnivå.",
-      en: "Send us a short brief with what you want to achieve, where the film will be used and when you need it. That lets us recommend the right setup and price level quickly.",
+      en: "Send us a short brief with the goal, where the film will be used and when you need it. That lets us recommend the right setup quickly.",
     },
   },
 ];
@@ -1897,17 +1883,10 @@ export const contactFaq: FaqItem[] = [
     },
   },
   {
-    question: { no: "Hvem jobber dere med?", en: "Who do you work with?" },
-    answer: {
-      no: "Vi jobber med bedrifter, organisasjoner og team som trenger film til nettside, kampanjer, sosiale medier eller arrangementer.",
-      en: "We work with companies, organisations and teams that need film for websites, campaigns, social channels or events.",
-    },
-  },
-  {
     question: { no: "Hva skjer etter at vi tar kontakt?", en: "What happens after we get in touch?" },
     answer: {
-      no: "Vi følger opp innen 24 timer, avklarer mål, kanal, tidslinje og budsjett, og foreslår riktig format, omfang og neste steg. Hvis det passer, setter vi også opp et kort møte.",
-      en: "We follow up within 24 hours, align on goal, channel, timing and budget, and recommend the right format, scope and next step. When helpful, we also set up a short call.",
+      no: "Vi følger opp innen 24 timer, avklarer mål, kanal og tidslinje, og foreslår riktig oppsett og neste steg.",
+      en: "We follow up within 24 hours, align on goal, channel and timing, and recommend the right setup and next step.",
     },
   },
 ];

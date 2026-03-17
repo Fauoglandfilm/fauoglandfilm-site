@@ -1,12 +1,10 @@
 import {
-  ContactLeadSection,
   CtaBanner,
   FaqList,
   PageHero,
   PriceGuideSection,
 } from "@/components/sections/site-sections";
 import {
-  contactFaq,
   priceGuides,
   pricingFaq,
 } from "@/data/site-content";
@@ -46,7 +44,6 @@ export default function PricingPage() {
         secondaryLabel={null}
         align="center"
       />
-      <ContactLeadSection faqs={contactFaq} compact />
     </main>
   );
 }

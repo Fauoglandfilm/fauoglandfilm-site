@@ -1,5 +1,4 @@
 import {
-  ContactLeadSection,
   FaqList,
   PageHero,
 } from "@/components/sections/site-sections";
@@ -34,7 +33,6 @@ export default function FaqPage() {
         items={[...pricingFaq, ...contactFaq]}
         hideHeader
       />
-      <ContactLeadSection compact />
     </main>
   );
 }

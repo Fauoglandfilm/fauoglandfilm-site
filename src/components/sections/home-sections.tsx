@@ -28,7 +28,6 @@ import { cn } from "@/lib/utils";
 import { FloatingLayer, Reveal } from "../motion/reveal";
 import { ButtonLink } from "../ui/button-link";
 import { ArrowUpRightIcon, MailIcon, PhoneIcon, PinIcon } from "../ui/icons";
-import { SocialLinksRow } from "../ui/social-links";
 import { CaseCard } from "./case-card";
 import { ClientLogoMarquee } from "./client-logo-marquee";
 import { ContactForm } from "./contact-form";
@@ -278,9 +277,8 @@ export function ClientSlider() {
   return (
     <section className="py-4 sm:py-5">
       <div className="site-container">
-        <div className="flex flex-col gap-2.5 sm:flex-row sm:items-center sm:justify-between">
+        <div className="flex flex-col gap-2.5">
           <p className="eyebrow">{copy.clientsEyebrow}</p>
-          <p className="body-copy text-[var(--muted)]">{copy.clientsDescription}</p>
         </div>
         <div className="relative mt-5">
           <div className="pointer-events-none absolute inset-x-0 top-1/2 h-24 -translate-y-1/2 bg-[radial-gradient(circle,rgba(255,255,255,0.14),transparent_62%)] opacity-70 blur-2xl" />
@@ -397,20 +395,15 @@ export function FeaturedCase() {
                     <h2 className="feature-title max-w-md">
                       {featuredCase.client}
                     </h2>
-                    <p className="body-copy max-w-md text-white/74">
-                      {resolveLocalizedValue(featuredCase.summary, language)}
-                    </p>
                   </div>
 
-                  <div className="mt-7 grid gap-3 p-5 sm:mt-10 sm:grid-cols-3 sm:p-8 lg:p-10">
-                    {featuredCase.metrics.slice(0, 3).map((metric, index) => (
-                      <div key={`${metric.value}-${index}`} className="rounded-[1.2rem] border border-white/10 bg-white/8 p-4 backdrop-blur">
-                        <p className="text-[0.7rem] uppercase tracking-[0.18em] text-white/48">
-                          {resolveLocalizedValue(metric.label, language)}
-                        </p>
-                        <p className="mt-2 font-display text-[1.35rem]">{metric.value}</p>
-                      </div>
-                    ))}
+                  <div className="p-5 sm:p-8 lg:p-10">
+                    <p className="max-w-2xl text-sm font-medium text-white/70 sm:text-base">
+                      {featuredCase.metrics
+                        .slice(0, 3)
+                        .map((metric) => `${metric.value} ${resolveLocalizedValue(metric.label, language)}`)
+                        .join(" · ")}
+                    </p>
                   </div>
                 </div>
               </div>
@@ -551,17 +544,11 @@ export function AboutSection() {
             <p className="body-lead text-[var(--muted-2)]">
               {resolveLocalizedValue(aboutStudioContent.description, language)}
             </p>
-
-            <div className="grid gap-3 sm:grid-cols-3 sm:gap-4">
-              {aboutStudioContent.stats.map((stat, index) => (
-                <div key={`${stat.value}-${index}`} className="rounded-[1.35rem] border border-[color:var(--line)] bg-[color:var(--surface)] p-4 shadow-[0_18px_44px_rgba(18,18,18,0.05)] sm:rounded-[1.5rem]">
-                  <p className="text-[0.7rem] uppercase tracking-[0.18em] text-[var(--muted)]">
-                    {resolveLocalizedValue(stat.label, language)}
-                  </p>
-                  <p className="card-title mt-2 text-[color:var(--foreground)]">{stat.value}</p>
-                </div>
-              ))}
-            </div>
+            <p className="text-sm font-medium text-[color:var(--foreground)]/76 sm:text-base">
+              {aboutStudioContent.stats
+                .map((stat) => `${stat.value} ${resolveLocalizedValue(stat.label, language)}`)
+                .join(" · ")}
+            </p>
 
             <div className="flex flex-wrap gap-3">
               <ButtonLink href="/om-oss" icon={<ArrowUpRightIcon className="h-4 w-4" />} className="w-full sm:w-auto">
@@ -610,14 +597,6 @@ export function ContactSection() {
                 icon={<PinIcon className="h-5 w-5" />}
                 label={copy.contactLocation}
                 value={siteConfig.locationLabel}
-              />
-            </div>
-
-            <div className="mt-6 border-t border-[color:var(--line)] pt-6">
-              <SocialLinksRow
-                title={copy.contactSocialTitle}
-                description={copy.contactSocialDescription}
-                compact
               />
             </div>
           </article>

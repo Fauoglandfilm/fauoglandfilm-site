@@ -4,7 +4,6 @@ import Image from "next/image";
 
 import { useSitePreferences } from "@/components/providers/site-preferences";
 import { ButtonLink } from "@/components/ui/button-link";
-import { ArrowUpRightIcon } from "@/components/ui/icons";
 import type { ServiceArea } from "@/data/site-content";
 import { serviceAreaVisuals } from "@/data/visual-assets";
 import { resolveLocalizedValue } from "@/lib/i18n";
@@ -56,9 +55,13 @@ export function ServiceCard({ service }: ServiceCardProps) {
               </p>
             </div>
 
-            <div className="mt-4 grid gap-3 sm:grid-cols-2">
+            <p className="body-copy mt-3 text-[var(--muted-2)]">
+              {resolveLocalizedValue(service.summary, language)}
+            </p>
+
+            <div className="mt-4 grid gap-3 border-t border-[color:var(--line)] pt-4 sm:grid-cols-2">
               {metaItems.map((item) => (
-                <div key={item.label} className="rounded-[1.2rem] border border-[color:var(--line)] bg-white/[0.04] px-3.5 py-3 backdrop-blur-xl">
+                <div key={item.label}>
                   <p className="text-[0.62rem] font-semibold uppercase tracking-[0.18em] text-[var(--muted)]">
                     {item.label}
                   </p>
@@ -67,39 +70,19 @@ export function ServiceCard({ service }: ServiceCardProps) {
               ))}
             </div>
 
-            <p className="body-copy mt-4 text-[var(--muted-2)]">
-              {resolveLocalizedValue(service.summary, language)}
-            </p>
-
             <div className="mt-4 border-t border-[color:var(--line)] pt-4">
               <p className="text-[0.62rem] font-semibold uppercase tracking-[0.18em] text-[var(--muted)]">
                 {language === "no" ? "Typiske leveranser" : "Typical deliverables"}
               </p>
-              <div className="mt-3 flex flex-wrap gap-2">
-                {service.deliverables.map((item, index) => (
-                  <span
-                    key={`${service.slug}-deliverable-${index}`}
-                    className="rounded-full border border-[color:var(--line)] bg-[color:var(--surface)]/72 px-3 py-1.5 text-sm text-[color:var(--foreground)]/78"
-                  >
-                    {resolveLocalizedValue(item, language)}
-                  </span>
-                ))}
-              </div>
+              <p className="mt-3 text-sm leading-6 text-[var(--muted-2)]">
+                {service.deliverables
+                  .map((item) => resolveLocalizedValue(item, language))
+                  .join(", ")}
+              </p>
             </div>
 
             <div className="mt-auto border-t border-[color:var(--line)] pt-5">
-              <div className="flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center sm:justify-between">
-                {service.exampleHref && service.exampleLabel ? (
-                  <ButtonLink
-                    href={service.exampleHref}
-                    variant="ghost"
-                    size="compact"
-                    className="w-full justify-start sm:w-auto"
-                  >
-                    {resolveLocalizedValue(service.exampleLabel, language)}
-                    <ArrowUpRightIcon className="h-4 w-4" />
-                  </ButtonLink>
-                ) : null}
+              <div className="flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center">
                 <ButtonLink href={service.href} variant="ghost" fullWidth className="sm:w-auto">
                   {resolveLocalizedValue(service.ctaLabel, language)}
                 </ButtonLink>

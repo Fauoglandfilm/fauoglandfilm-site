@@ -10,6 +10,7 @@ import { ButtonLink } from "@/components/ui/button-link";
 import type { CaseStudy } from "@/data/site-content";
 import { uiCopy } from "@/data/ui-copy";
 import { resolveLocalizedValue } from "@/lib/i18n";
+import { cn } from "@/lib/utils";
 
 type CaseDetailContentProps = {
   caseStudy: CaseStudy;
@@ -22,6 +23,10 @@ export function CaseDetailContent({
 }: CaseDetailContentProps) {
   const { language } = useSitePreferences();
   const copy = uiCopy.pages[language];
+  const localizedDeliverables = caseStudy.deliverables.map((item) =>
+    resolveLocalizedValue(item, language),
+  );
+  const localizedTags = caseStudy.tags.map((tag) => resolveLocalizedValue(tag, language));
 
   return (
     <main>
@@ -111,52 +116,109 @@ export function CaseDetailContent({
             </section>
           ) : null}
 
-          <div className="grid gap-4 xl:grid-cols-[1.18fr_0.82fr]">
-            <article className="glass-panel rounded-[2rem] p-5 sm:p-6">
-              <p className="text-[0.72rem] font-semibold uppercase tracking-[0.22em] text-[var(--muted)]">
-                {copy.caseFacts}
-              </p>
-              <div className="mt-5 grid gap-3 sm:grid-cols-3">
-                {[
-                  { label: copy.caseImpact, value: resolveLocalizedValue(caseStudy.impact, language) },
-                  { label: copy.caseGoalEyebrow, value: resolveLocalizedValue(caseStudy.goal, language) },
-                  {
-                    label: copy.caseDeliverables,
-                    value: caseStudy.deliverables.map((item) => resolveLocalizedValue(item, language)).join(", "),
-                  },
-                ].map((item) => (
-                  <div
-                    key={item.label}
-                    className="rounded-[1.2rem] border border-[color:var(--line)] bg-[color:var(--surface)] px-4 py-3.5"
-                  >
-                    <p className="text-[0.7rem] font-semibold uppercase tracking-[0.18em] text-[var(--muted)]">
-                      {item.label}
-                    </p>
-                    <p className="mt-1.5 text-sm leading-6 text-[var(--muted-2)] sm:text-base sm:leading-7">
-                      {item.value}
-                    </p>
-                  </div>
-                ))}
-              </div>
-            </article>
+          <article className="glass-panel rounded-[2rem] p-5 sm:p-6 lg:p-7">
+            <div className="space-y-6 sm:space-y-7">
+              <div className="flex flex-col gap-5 xl:flex-row xl:items-start xl:justify-between">
+                <div className="max-w-3xl space-y-2.5">
+                  <p className="text-[0.72rem] font-semibold uppercase tracking-[0.22em] text-[var(--muted)]">
+                    {copy.caseFacts}
+                  </p>
+                  <h2 className="feature-title text-[color:var(--foreground)]">
+                    {language === "no" ? "Behov, leveranse og effekt" : "Need, delivery and effect"}
+                  </h2>
+                </div>
 
-            <article className="card-surface rounded-[2rem] p-5 sm:p-6">
-              <div className="space-y-4">
-                <div className="space-y-2">
+                <div className="max-w-md space-y-2 xl:pt-1 xl:text-right">
                   <p className="text-[0.72rem] font-semibold uppercase tracking-[0.22em] text-[var(--muted)]">
                     {language === "no" ? "Neste steg" : "Next step"}
                   </p>
-                  <h2 className="feature-title text-[color:var(--foreground)]">
-                    {language === "no" ? "Vil dere få til noe lignende?" : "Looking to create something similar?"}
-                  </h2>
                   <p className="body-copy text-[var(--muted-2)] sm:text-base sm:leading-7">
                     {language === "no"
                       ? "Fortell oss kort om mål, kanal og tidslinje, så foreslår vi riktig oppsett og estimat."
                       : "Share the goal, channel and timeline and we will recommend the right setup and estimate."}
                   </p>
                 </div>
+              </div>
 
-                <div className="flex flex-col gap-2.5 sm:flex-row sm:flex-wrap">
+              <div className="grid gap-5 border-t border-[color:var(--line)]/80 pt-6 sm:grid-cols-3">
+                <div className="space-y-2">
+                  <p className="text-[0.7rem] font-semibold uppercase tracking-[0.18em] text-[var(--muted)]">
+                    {copy.caseGoalEyebrow}
+                  </p>
+                  <p className="text-sm leading-6 text-[var(--muted-2)] sm:text-base sm:leading-7">
+                    {resolveLocalizedValue(caseStudy.goal, language)}
+                  </p>
+                </div>
+
+                <div className="space-y-2">
+                  <p className="text-[0.7rem] font-semibold uppercase tracking-[0.18em] text-[var(--muted)]">
+                    {copy.caseDeliverables}
+                  </p>
+                  <p className="text-sm leading-6 text-[var(--muted-2)] sm:text-base sm:leading-7">
+                    {localizedDeliverables.join(", ")}
+                  </p>
+                </div>
+
+                <div className="space-y-2">
+                  <p className="text-[0.7rem] font-semibold uppercase tracking-[0.18em] text-[var(--muted)]">
+                    {copy.caseImpact}
+                  </p>
+                  <p className="text-sm leading-6 text-[var(--muted-2)] sm:text-base sm:leading-7">
+                    {resolveLocalizedValue(caseStudy.impact, language)}
+                  </p>
+                </div>
+              </div>
+
+              <div className="grid gap-6 border-t border-[color:var(--line)]/80 pt-6 lg:grid-cols-[minmax(0,1.08fr)_minmax(17rem,0.92fr)]">
+                <div className="space-y-3">
+                  <p className="text-[0.72rem] font-semibold uppercase tracking-[0.22em] text-[var(--muted)]">
+                    {copy.caseSolutionEyebrow}
+                  </p>
+                  <p className="text-sm leading-6 text-[var(--muted-2)] sm:text-base sm:leading-7">
+                    {resolveLocalizedValue(caseStudy.solution, language)}
+                  </p>
+
+                  {localizedTags.length ? (
+                    <p className="text-sm leading-6 text-[var(--muted)] sm:text-[0.97rem] sm:leading-7">
+                      {localizedTags.join(" • ")}
+                    </p>
+                  ) : null}
+                </div>
+
+                {caseStudy.metrics.length ? (
+                  <div className="rounded-[1.5rem] border border-[color:var(--line)] bg-[color:var(--surface)]/78 px-4 py-4 sm:px-5 sm:py-5">
+                    <p className="text-[0.72rem] font-semibold uppercase tracking-[0.22em] text-[var(--muted)]">
+                      {language === "no" ? "Nøkkeltall" : "Key figures"}
+                    </p>
+                    <div className="mt-4 grid gap-4 sm:grid-cols-3 lg:grid-cols-1">
+                      {caseStudy.metrics.map((metric, index) => (
+                        <div key={`${metric.value}-${index}`} className="space-y-2">
+                          <p className="text-[0.7rem] font-semibold uppercase tracking-[0.18em] text-[var(--muted)]">
+                            {resolveLocalizedValue(metric.label, language)}
+                          </p>
+                          <p className="font-display text-[1.7rem] leading-none text-[color:var(--foreground)] sm:text-[2rem]">
+                            {metric.value}
+                          </p>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                ) : null}
+              </div>
+
+              <div
+                className={cn(
+                  "flex flex-col gap-4 border-t border-[color:var(--line)]/80 pt-6 xl:flex-row xl:items-end",
+                  caseStudy.verificationNote ? "xl:justify-between" : "xl:justify-end",
+                )}
+              >
+                {caseStudy.verificationNote ? (
+                  <p className="max-w-3xl text-sm leading-6 text-[var(--accent-2)]">
+                    {resolveLocalizedValue(caseStudy.verificationNote, language)}
+                  </p>
+                ) : null}
+
+                <div className="flex flex-col gap-2.5 sm:flex-row sm:flex-wrap xl:justify-end">
                   <ButtonLink href="/kontakt">
                     {language === "no" ? "Book møte" : "Book a meeting"}
                   </ButtonLink>
@@ -165,52 +227,8 @@ export function CaseDetailContent({
                   </ButtonLink>
                 </div>
               </div>
-            </article>
-          </div>
-
-          {caseStudy.verificationNote ? (
-            <div className="rounded-[1.4rem] border border-dashed border-[var(--accent)]/35 bg-[var(--accent)]/10 p-4 text-sm leading-6 text-[var(--accent-2)]">
-              {resolveLocalizedValue(caseStudy.verificationNote, language)}
             </div>
-          ) : null}
-
-          <div className="grid gap-4 lg:grid-cols-[0.92fr_1.08fr]">
-            <div className="grid gap-4 sm:grid-cols-3">
-              {caseStudy.metrics.map((metric, index) => (
-                <div key={`${metric.value}-${index}`} className="card-surface rounded-[1.6rem] p-4 sm:p-5">
-                  <p className="text-[0.7rem] font-semibold uppercase tracking-[0.18em] text-[var(--muted)]">
-                    {resolveLocalizedValue(metric.label, language)}
-                  </p>
-                  <p className="mt-3 font-display text-[1.7rem] leading-none text-[color:var(--foreground)] sm:text-[2rem]">
-                    {metric.value}
-                  </p>
-                </div>
-              ))}
-            </div>
-
-            <article className="card-surface rounded-[2rem] p-5 sm:p-6">
-              <p className="text-[0.72rem] font-semibold uppercase tracking-[0.22em] text-[var(--muted)]">
-                {copy.caseSolutionEyebrow}
-              </p>
-              <h2 className="feature-title mt-3 text-[color:var(--foreground)]">
-                {language === "no" ? "Hvordan vi løste det" : "How we approached it"}
-              </h2>
-              <p className="mt-4 text-sm leading-6 text-[var(--muted-2)] sm:text-base sm:leading-7">
-                {resolveLocalizedValue(caseStudy.solution, language)}
-              </p>
-
-              <div className="mt-5 flex flex-wrap gap-2.5">
-                {caseStudy.tags.map((tag, index) => (
-                  <span
-                    key={`tag-${index}`}
-                    className="rounded-full border border-[color:var(--line)] bg-[color:var(--surface)] px-3.5 py-1.5 text-sm text-[color:var(--foreground)]"
-                  >
-                    {resolveLocalizedValue(tag, language)}
-                  </span>
-                ))}
-              </div>
-            </article>
-          </div>
+          </article>
         </div>
       </section>
 
