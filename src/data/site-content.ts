@@ -305,9 +305,6 @@ export const videoLibrary = {
   },
 } satisfies Record<string, VideoAsset>;
 
-const squarespaceVideoUrl = (systemDataId: string, variant: string) =>
-  `https://video.squarespace-cdn.com/content/v1/5f44d95d64e4796dddb229d6/${systemDataId}/${variant}`;
-
 const youtubeWatchUrl = (videoId: string) => `https://www.youtube.com/watch?v=${videoId}`;
 
 const youtubeAsset = (
@@ -753,14 +750,64 @@ export const caseStudies: CaseStudy[] = [
       { no: "Foredrag", en: "Talks" },
       { no: "Sosiale medier", en: "Social media" },
     ],
+    image: "/assets/portfolio/ville-gleder/stills/villmarksforedrag-photo.jpg",
+    imageAlt: {
+      no: "Mattis Thørud og Jan Monsen ved vannet under opptak for Ville Gleder",
+      en: "Mattis Thorud and Jan Monsen by the lake during the Ville Gleder production",
+    },
     video: {
       videoType: "direct",
-      src: squarespaceVideoUrl("1d79dac6-f46b-48c8-a623-73420ab8b49b", "1920:1080"),
+      src: "/assets/portfolio/ville-gleder/videos/ville-gleder-villmarksforedrag.mp4",
+      poster: "/assets/portfolio/ville-gleder/stills/villmarksforedrag-photo.jpg",
       label: {
         no: "Ville Gleder - Villmarkspromo",
         en: "Ville Gleder wilderness promo",
       },
     },
+    videoVariants: [
+      {
+        slug: "villmarksforedrag",
+        label: {
+          no: "Villmarksforedrag",
+          en: "Wilderness talks",
+        },
+        image: "/assets/portfolio/ville-gleder/stills/villmarksforedrag-photo.jpg",
+        imageAlt: {
+          no: "Mattis Thørud og Jan Monsen ved vannet under opptak for Ville Gleder",
+          en: "Mattis Thorud and Jan Monsen by the lake during the Ville Gleder production",
+        },
+        video: {
+          videoType: "direct",
+          src: "/assets/portfolio/ville-gleder/videos/ville-gleder-villmarksforedrag.mp4",
+          poster: "/assets/portfolio/ville-gleder/stills/villmarksforedrag-photo.jpg",
+          label: {
+            no: "Ville Gleder - Villmarksforedrag",
+            en: "Ville Gleder - wilderness talks",
+          },
+        },
+      },
+      {
+        slug: "vat-kald-sulten",
+        label: {
+          no: "Våt, kald & sulten",
+          en: "Wet, cold and hungry",
+        },
+        image: "/assets/portfolio/ville-gleder/stills/vat-kald-sulten-still010.jpg",
+        imageAlt: {
+          no: "Jan Monsen og Mattis Thørud i promofilm for Våt, kald & sulten",
+          en: "Jan Monsen and Mattis Thorud in the Wet, cold and hungry promo film",
+        },
+        video: {
+          videoType: "direct",
+          src: "/assets/portfolio/ville-gleder/videos/ville-gleder-vat-kald-sulten.mp4",
+          poster: "/assets/portfolio/ville-gleder/stills/vat-kald-sulten-still010.jpg",
+          label: {
+            no: "Ville Gleder - Våt, kald og sulten",
+            en: "Ville Gleder - wet, cold and hungry",
+          },
+        },
+      },
+    ],
     palette: "from-[#efe6da] via-[#d3c3ae] to-[#bda383]",
   },
   {
@@ -1657,15 +1704,15 @@ export const portfolioProjects: PortfolioProject[] = [
     },
     detailHref: "/case/ville-gleder",
     ctaLabel: viewCaseCta,
-    image: "/assets/portfolio/ville-gleder/posters/villmarksforedrag-poster.jpg",
+    image: "/assets/portfolio/ville-gleder/stills/villmarksforedrag-photo.jpg",
     imageAlt: {
-      no: "Poster fra Ville Gleder - Villmarksforedrag",
-      en: "Poster from Ville Gleder wilderness talks",
+      no: "Mattis Thørud og Jan Monsen ved vannet under opptak for Ville Gleder",
+      en: "Mattis Thorud and Jan Monsen by the lake during the Ville Gleder production",
     },
     video: {
       videoType: "direct",
-      src: squarespaceVideoUrl("1d79dac6-f46b-48c8-a623-73420ab8b49b", "1920:1080"),
-      poster: "/assets/portfolio/ville-gleder/posters/villmarksforedrag-poster.jpg",
+      src: "/assets/portfolio/ville-gleder/videos/ville-gleder-villmarksforedrag.mp4",
+      poster: "/assets/portfolio/ville-gleder/stills/villmarksforedrag-photo.jpg",
       label: {
         no: "Ville Gleder - Villmarksforedrag",
         en: "Ville Gleder wilderness talks",
@@ -1693,21 +1740,22 @@ export const portfolioProjects: PortfolioProject[] = [
       no: "Bygget for å gjøre konseptet tydelig og enklere å booke.",
       en: "Built to clarify the concept and make the talk easier to book.",
     },
-    ctaLabel: openFilmCta,
-    image: "/assets/portfolio/ville-gleder/posters/vat-kald-sulten-poster.png",
+    detailHref: "/case/ville-gleder",
+    ctaLabel: viewCaseCta,
+    image: "/assets/portfolio/ville-gleder/stills/vat-kald-sulten-still010.jpg",
     imageAlt: {
-      no: "Still fra Ville Gleder - Våt, kald og sulten",
-      en: "Still from Ville Gleder - Wet, cold and hungry",
+      no: "Jan Monsen og Mattis Thørud i promofilm for Våt, kald & sulten",
+      en: "Jan Monsen and Mattis Thorud in the Wet, cold and hungry promo film",
     },
-    externalVideo: vimeoAsset(
-      "1026680392",
-      {
+    video: {
+      videoType: "direct",
+      src: "/assets/portfolio/ville-gleder/videos/ville-gleder-vat-kald-sulten.mp4",
+      poster: "/assets/portfolio/ville-gleder/stills/vat-kald-sulten-still010.jpg",
+      label: {
         no: "Ville Gleder - Våt, kald og sulten",
         en: "Ville Gleder - Wet, cold and hungry",
       },
-      "https://i.vimeocdn.com/video/1946636194-5efaf5b2f1225b48271ed21aaff6dc6af575a583f0e74386b550216b5defb4ff-d_295x166",
-      "4efd6be7db",
-    ),
+    },
     palette: "from-[#ede3d6] via-[#d4c3b0] to-[#baa184]",
   },
   {
