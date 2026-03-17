@@ -155,7 +155,7 @@ export function Header() {
         <div className="mx-auto max-w-[1380px] px-4 sm:px-6 lg:px-8">
           <div
             className={cn(
-              "relative mt-2 flex items-center gap-2.5 overflow-hidden rounded-[1.6rem] px-3 py-2.5 transition duration-300 sm:mt-2.5 sm:gap-3 sm:px-4 sm:py-3 lg:grid lg:grid-cols-[auto_minmax(0,1fr)_auto] lg:items-center lg:gap-6 lg:px-5 lg:py-3.5",
+              "relative mt-2 flex items-center gap-2.5 overflow-hidden rounded-[1.6rem] px-3 py-2.5 transition duration-300 sm:mt-2.5 sm:gap-3 sm:px-4 sm:py-3 lg:grid lg:grid-cols-[auto_minmax(0,1fr)_auto] lg:items-center lg:gap-5 lg:px-5 lg:py-3",
               overlayMode
                 ? "border border-white/18 bg-[color:var(--header-overlay-surface)] text-white shadow-[0_30px_92px_rgba(0,0,0,0.24)] backdrop-blur-[32px]"
                 : "border border-[color:var(--line)] bg-[color:var(--header-surface)] text-[color:var(--foreground)] shadow-[0_32px_96px_rgba(7,10,18,0.16)] backdrop-blur-[32px]",
@@ -167,40 +167,40 @@ export function Header() {
 
             <Link
               href="/"
-              className="relative z-[1] flex shrink-0 items-center gap-3 lg:gap-3.5"
+              className="relative z-[1] flex shrink-0 items-center gap-3.5 lg:gap-4"
               aria-label="Fau&Land Film"
               onClick={() => setOpen(false)}
             >
               <div
                 className={cn(
-                  "flex h-10 w-10 items-center justify-center rounded-full border p-2 shadow-[0_18px_34px_rgba(0,0,0,0.16)] backdrop-blur-2xl lg:h-11 lg:w-11 lg:p-[0.62rem]",
+                  "flex h-11 w-11 items-center justify-center rounded-full border p-[0.62rem] shadow-[0_20px_36px_rgba(0,0,0,0.18)] backdrop-blur-2xl lg:h-12 lg:w-12 lg:p-[0.68rem]",
                   overlayMode
-                    ? "border-white/22 bg-white/[0.18]"
-                    : "border-white/26 bg-white/[0.22]",
+                    ? "border-white/24 bg-white/[0.18]"
+                    : "border-white/28 bg-white/[0.24]",
                 )}
               >
                 <BrandLogo
                   variant="mark"
                   className={cn(
-                    "opacity-100 saturate-[1.1] drop-shadow-[0_6px_16px_rgba(0,0,0,0.2)]",
-                    overlayMode ? "brightness-[1.22]" : "brightness-[1.08]",
+                    "opacity-100 saturate-[1.16] drop-shadow-[0_8px_18px_rgba(0,0,0,0.22)]",
+                    overlayMode ? "brightness-[1.26]" : "brightness-[1.14]",
                   )}
                   priority
                 />
               </div>
               <div className="min-w-0">
                 <p
-                className={cn(
-                  "font-display text-[1rem] font-semibold tracking-[-0.045em] sm:text-[1.03rem] lg:text-[1.08rem]",
-                  overlayMode ? "text-white drop-shadow-[0_8px_22px_rgba(0,0,0,0.22)]" : "text-[color:var(--foreground)]",
-                )}
+                  className={cn(
+                    "font-display text-[1.02rem] font-semibold tracking-[-0.045em] sm:text-[1.06rem] lg:text-[1.14rem]",
+                    overlayMode ? "text-white drop-shadow-[0_8px_22px_rgba(0,0,0,0.22)]" : "text-[color:var(--foreground)]",
+                  )}
                 >
                   Fau&amp;Land Film
                 </p>
                 <p
                   className={cn(
-                    "mt-0.5 hidden text-[0.63rem] font-semibold uppercase tracking-[0.2em] lg:block",
-                    overlayMode ? "text-white/58" : "text-[color:var(--foreground)]/46",
+                    "mt-0.5 hidden text-[0.64rem] font-semibold uppercase tracking-[0.2em] lg:block",
+                    overlayMode ? "text-white/64" : "text-[color:var(--foreground)]/52",
                   )}
                 >
                   Oslo / Production
@@ -208,39 +208,29 @@ export function Header() {
               </div>
             </Link>
 
-            <nav className="relative z-[1] hidden lg:flex lg:justify-center">
-              <div
-                className={cn(
-                  "inline-flex items-center gap-1.5 rounded-full border px-2 py-1.5 backdrop-blur-[28px] transition duration-300",
-                  overlayMode
-                    ? "border-white/14 bg-white/[0.08] text-white shadow-[0_18px_40px_rgba(0,0,0,0.18)]"
-                    : "border-[color:var(--line)] bg-white/[0.05] text-[color:var(--foreground)] shadow-[0_16px_36px_rgba(7,10,18,0.08)]",
-                )}
-                aria-label={menuLabel}
-              >
-                {navItems.map((item) => {
-                  const active = item.href === "/" ? pathname === "/" : pathname.startsWith(item.href);
+            <nav className="relative z-[1] hidden lg:flex lg:min-w-0 lg:items-center lg:justify-center lg:gap-1.5" aria-label={menuLabel}>
+              {navItems.map((item) => {
+                const active = item.href === "/" ? pathname === "/" : pathname.startsWith(item.href);
 
-                  return (
+                return (
                     <Link
                       key={item.href}
                       href={item.href}
                       className={cn(
-                        "inline-flex items-center rounded-full border border-transparent px-4 py-2.5 text-[0.84rem] font-medium tracking-[-0.015em] transition duration-300",
+                        "inline-flex items-center rounded-full border border-transparent px-4 py-[0.62rem] text-[0.87rem] font-medium tracking-[-0.016em] transition duration-300",
                         overlayMode
-                          ? "text-white/80 hover:border-white/12 hover:bg-white/[0.1] hover:text-white"
-                          : "text-[color:var(--foreground)]/72 hover:border-white/16 hover:bg-white/[0.08] hover:text-[color:var(--foreground)]",
-                        active &&
-                          (overlayMode
-                            ? "border-white/16 bg-white/[0.14] text-white shadow-[0_10px_28px_rgba(0,0,0,0.18)]"
-                            : "border-white/20 bg-white/[0.12] text-[color:var(--foreground)] shadow-[0_10px_28px_rgba(7,10,18,0.12)]"),
-                      )}
-                    >
-                      {resolveLocalizedValue(item.label, language)}
-                    </Link>
-                  );
-                })}
-              </div>
+                          ? "text-white/80 hover:border-white/10 hover:bg-white/[0.08] hover:text-white"
+                          : "text-[color:var(--foreground)]/74 hover:border-white/14 hover:bg-white/[0.06] hover:text-[color:var(--foreground)]",
+                      active &&
+                        (overlayMode
+                          ? "border-white/16 bg-white/[0.12] text-white shadow-[0_10px_24px_rgba(0,0,0,0.16)]"
+                          : "border-white/18 bg-white/[0.1] text-[color:var(--foreground)] shadow-[0_10px_24px_rgba(7,10,18,0.1)]"),
+                    )}
+                  >
+                    {resolveLocalizedValue(item.label, language)}
+                  </Link>
+                );
+              })}
             </nav>
 
             <div className="relative z-[1] ml-auto flex items-center gap-2.5 lg:ml-0">

@@ -885,4 +885,6 @@ export const gardProfilePage = {
     no: "Se porteføljen",
     en: "See the portfolio",
   },
+  contactEmail: "gard@fauoglandfilm.com",
+  contactPhone: "+47 940 53 050",
 };

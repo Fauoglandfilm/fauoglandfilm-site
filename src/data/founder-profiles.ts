@@ -70,15 +70,16 @@ export const founderProfiles: FounderProfile[] = [
       no: "Portrett av Tommy R.A. Garland",
       en: "Portrait of Tommy R.A. Garland",
     },
-    heroBackground: "/assets/visuals/section-images/section-film-studio-cyclorama.jpg",
+    heroBackground: "/assets/team/tommy/images/tommy-garland-profile.png",
     heroBackgroundAlt: {
-      no: "Filmstudio med lys, crew og produksjonsrigg",
-      en: "Film studio with lights, crew and production rigging",
+      no: "Portrett av Tommy R.A. Garland brukt som bakgrunnsflate",
+      en: "Portrait of Tommy R.A. Garland used as the background layer",
     },
-    supportingVisual: "/assets/visuals/section-images/section-film-crew-outdoors.jpg",
+    supportingVisual:
+      "https://images.squarespace-cdn.com/content/v1/5f44d95d64e4796dddb229d6/9c30e685-6b5e-4b1d-8c7e-f8f4e68e2bb5/Skjermbilde+2024-12-16+kl.+14.25.30.png",
     supportingVisualAlt: {
-      no: "Filmcrew i arbeid utendørs",
-      en: "Film crew working outdoors",
+      no: "Still fra The Actors Hub-produksjon",
+      en: "Still from The Actors Hub production",
     },
     introEyebrow: {
       no: "Produsentprofil",
@@ -266,15 +267,16 @@ export const founderProfiles: FounderProfile[] = [
       no: "Portrett av Gard Ruben Fauske",
       en: "Portrait of Gard Ruben Fauske",
     },
-    heroBackground: "/assets/visuals/cinematic/cinematic-camera-darkroom.jpg",
+    heroBackground: "/assets/team/gard/images/gard-profile.png",
     heroBackgroundAlt: {
-      no: "Kamerarigg i mørkt produksjonsmiljø",
-      en: "Camera rig in a dark production environment",
+      no: "Portrett av Gard Ruben Fauske brukt som bakgrunnsflate",
+      en: "Portrait of Gard Ruben Fauske used as the background layer",
     },
-    supportingVisual: "/assets/visuals/section-images/section-film-crew-outdoors.jpg",
+    supportingVisual:
+      "https://images.squarespace-cdn.com/content/v1/5f44d95d64e4796dddb229d6/49de9a5d-1686-4ce9-bd95-fba5a7815ab5/Continental+BTS-293+%281%29.jpg",
     supportingVisualAlt: {
-      no: "Crew og opptaksrigg i arbeid",
-      en: "Crew and production rig working on set",
+      no: "Behind the scenes fra Continental-produksjon",
+      en: "Behind the scenes from a Continental production",
     },
     introEyebrow: {
       no: "Regi og prosjektledelse",
