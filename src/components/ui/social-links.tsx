@@ -7,6 +7,7 @@ import {
   InstagramIcon,
   LinkedInIcon,
 } from "@/components/ui/icons";
+import { cn } from "@/lib/utils";
 
 type SocialLinksRowProps = {
   title: string;
@@ -42,12 +43,22 @@ export function SocialLinksRow({
       : "eyebrow";
   const descriptionClassName =
     tone === "inverse"
-      ? "body-copy max-w-lg text-white/72"
+      ? compact
+        ? "text-[0.88rem] leading-6 text-white/66"
+        : "body-copy max-w-lg text-white/72"
       : "body-copy max-w-lg text-[var(--muted)]";
+  const linkClassName = cn(
+    "social-link",
+    compact && "min-h-[2.2rem] gap-2 px-3 py-2 text-[0.78rem] sm:text-[0.8rem]",
+  );
+  const iconClassName = compact ? "h-[0.95rem] w-[0.95rem]" : "h-4 w-4";
+  const linkRowClassName = compact
+    ? "mt-2.5 flex flex-wrap gap-2.5 sm:gap-2"
+    : "mt-3 flex flex-wrap gap-2.5 sm:gap-3";
 
   return (
     <div className={className}>
-      <div className={compact ? "space-y-2" : "space-y-2.5"}>
+      <div className={compact ? "space-y-1.5" : "space-y-2.5"}>
         <p className={titleClassName}>{title}</p>
         {description ? (
           <p className={descriptionClassName}>
@@ -56,7 +67,7 @@ export function SocialLinksRow({
         ) : null}
       </div>
 
-      <div className={`mt-3 flex flex-wrap gap-2.5 ${compact ? "sm:gap-2.5" : "sm:gap-3"}`}>
+      <div className={linkRowClassName}>
         {siteConfig.socialLinks.map((item) => {
           const Icon = getSocialIcon(item.name);
 
@@ -67,10 +78,10 @@ export function SocialLinksRow({
               target="_blank"
               rel="noreferrer noopener"
               aria-label={`${item.name} ${language === "no" ? "åpnes i ny fane" : "opens in new tab"}`}
-              className="social-link"
+              className={linkClassName}
             >
               <span className="social-link__icon" aria-hidden="true">
-                <Icon className="h-4 w-4" />
+                <Icon className={iconClassName} />
               </span>
               <span>{item.name}</span>
             </a>
