@@ -56,6 +56,7 @@ export function CaseDetailContent({
                   image={caseStudy.image}
                   imageAlt={caseStudy.imageAlt}
                   mediaFit={caseStudy.mediaFit}
+                  autoplay
                   className="relative h-full w-full"
                   sizes="100vw"
                 />
@@ -103,6 +104,7 @@ export function CaseDetailContent({
                       image={variant.image}
                       imageAlt={variant.imageAlt}
                       mediaFit={variant.mediaFit ?? caseStudy.mediaFit}
+                      autoplay
                       className="absolute inset-0 h-full w-full"
                       sizes="(min-width: 768px) 50vw, 100vw"
                     />

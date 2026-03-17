@@ -187,7 +187,7 @@ export function PreviewMedia({
               ? isHovered
               : isInView
             : false;
-  const shouldRenderPreview = shouldPlay && hasDirectPreview;
+  const shouldRenderPreview = shouldPlay && hasPlayableMedia;
   const mediaObjectClass =
     mediaFit === "contain" ? "object-contain p-5 sm:p-6" : "object-cover";
 
