@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 import { useSitePreferences } from "@/components/providers/site-preferences";
 import type { ExternalVideoAsset, VideoAsset } from "@/data/site-content";
@@ -27,6 +27,7 @@ type EmbeddedVideoPlayerProps = {
   sizes?: string;
   priority?: boolean;
   previewMode?: boolean;
+  showControls?: boolean;
 };
 
 type ManagedFrameProps = {
@@ -34,12 +35,11 @@ type ManagedFrameProps = {
   fallbackSrcs: string[];
   resolvedImageAlt: string;
   mediaObjectClass: string;
-  className?: string;
   priority: boolean;
   sizes: string;
   iframeTitle: string;
   iframeSrc: string;
-  previewMode: boolean;
+  shouldRenderFrame: boolean;
 };
 
 type ManagedDirectVideoProps = {
@@ -47,13 +47,15 @@ type ManagedDirectVideoProps = {
   fallbackSrcs: string[];
   resolvedImageAlt: string;
   mediaObjectClass: string;
-  className?: string;
   priority: boolean;
   sizes: string;
   video: Extract<VideoAsset, { videoType: "direct" }>;
   image?: string;
   autoplay: boolean;
   previewMode: boolean;
+  shouldLoadMedia: boolean;
+  shouldActivatePlayback: boolean;
+  showControls: boolean;
 };
 
 function hasExplicitPositionClass(value?: string) {
@@ -150,28 +152,92 @@ function isPlayableDirectVideo(video: Extract<VideoAsset, { videoType: "direct" 
   });
 }
 
+function useSmartMediaState({
+  autoplay,
+  previewMode,
+  priority,
+}: {
+  autoplay: boolean;
+  previewMode: boolean;
+  priority: boolean;
+}) {
+  const containerRef = useRef<HTMLDivElement | null>(null);
+  const [isNearViewport, setIsNearViewport] = useState(previewMode || priority);
+  const [isInViewport, setIsInViewport] = useState(previewMode || priority);
+
+  useEffect(() => {
+    if (previewMode || priority) {
+      return;
+    }
+
+    const node = containerRef.current;
+
+    if (!node || typeof IntersectionObserver === "undefined") {
+      const frame = window.requestAnimationFrame(() => {
+        setIsNearViewport(true);
+        setIsInViewport(true);
+      });
+
+      return () => {
+        window.cancelAnimationFrame(frame);
+      };
+    }
+
+    const nearObserver = new IntersectionObserver(
+      ([entry]) => {
+        setIsNearViewport(entry.isIntersecting);
+      },
+      {
+        threshold: 0.01,
+        rootMargin: "320px 0px",
+      },
+    );
+
+    nearObserver.observe(node);
+
+    let playObserver: IntersectionObserver | null = null;
+
+    if (autoplay) {
+      playObserver = new IntersectionObserver(
+        ([entry]) => {
+          setIsInViewport(entry.isIntersecting && entry.intersectionRatio >= 0.35);
+        },
+        {
+          threshold: [0, 0.35, 0.6],
+        },
+      );
+
+      playObserver.observe(node);
+    }
+
+    return () => {
+      nearObserver.disconnect();
+      playObserver?.disconnect();
+    };
+  }, [autoplay, previewMode, priority]);
+
+  return {
+    containerRef,
+    shouldLoadMedia: previewMode || priority || isNearViewport,
+    shouldActivatePlayback: previewMode || (autoplay && isInViewport),
+  };
+}
+
 function ManagedExternalFrame({
   fallbackSrc,
   fallbackSrcs,
   resolvedImageAlt,
   mediaObjectClass,
-  className,
   priority,
   sizes,
   iframeTitle,
   iframeSrc,
-  previewMode,
+  shouldRenderFrame,
 }: ManagedFrameProps) {
   const [isReady, setIsReady] = useState(false);
 
   return (
-    <div
-      className={cn(
-        "overflow-hidden bg-[#05070b]",
-        !hasExplicitPositionClass(className) && "relative",
-        className,
-      )}
-    >
+    <div className="relative h-full w-full overflow-hidden bg-[#05070b]">
       {fallbackSrc || fallbackSrcs.length ? (
         <MediaImage
           src={fallbackSrc}
@@ -180,26 +246,30 @@ function ManagedExternalFrame({
           priority={priority}
           sizes={sizes}
           fallbackContent={<FallbackSurface />}
-          className={cn(mediaObjectClass, "transition duration-500", isReady ? "opacity-0" : "opacity-100")}
+          className={cn(
+            mediaObjectClass,
+            "transition duration-500",
+            isReady && shouldRenderFrame ? "opacity-0" : "opacity-100",
+          )}
         />
       ) : (
         <FallbackSurface />
       )}
 
-      <iframe
-        src={iframeSrc}
-        title={iframeTitle}
-        className={cn(
-          "absolute inset-0 h-full w-full transition duration-500",
-          isReady ? "pointer-events-auto opacity-100" : "pointer-events-none opacity-0",
-        )}
-        allow="autoplay; encrypted-media; picture-in-picture; fullscreen"
-        referrerPolicy="strict-origin-when-cross-origin"
-        allowFullScreen
-        loading={previewMode ? "lazy" : undefined}
-        tabIndex={previewMode ? -1 : undefined}
-        onLoad={() => setIsReady(true)}
-      />
+      {shouldRenderFrame ? (
+        <iframe
+          src={iframeSrc}
+          title={iframeTitle}
+          className={cn(
+            "absolute inset-0 h-full w-full transition duration-500",
+            isReady ? "pointer-events-auto opacity-100" : "pointer-events-none opacity-0",
+          )}
+          allow="autoplay; encrypted-media; picture-in-picture; fullscreen"
+          referrerPolicy="strict-origin-when-cross-origin"
+          allowFullScreen
+          onLoad={() => setIsReady(true)}
+        />
+      ) : null}
     </div>
   );
 }
@@ -209,32 +279,51 @@ function ManagedDirectVideo({
   fallbackSrcs,
   resolvedImageAlt,
   mediaObjectClass,
-  className,
   priority,
   sizes,
   video,
   image,
   autoplay,
   previewMode,
+  shouldLoadMedia,
+  shouldActivatePlayback,
+  showControls,
 }: ManagedDirectVideoProps) {
   const [isReady, setIsReady] = useState(false);
   const [hasFailed, setHasFailed] = useState(false);
   const [hasStartedPlayback, setHasStartedPlayback] = useState(false);
-  const shouldHoldPosterUntilPlay = !previewMode && !autoplay;
+  const videoRef = useRef<HTMLVideoElement | null>(null);
+  const shouldHoldPosterUntilPlay = autoplay || previewMode || showControls;
   const posterVisible = hasFailed
     ? true
     : shouldHoldPosterUntilPlay
       ? !hasStartedPlayback
       : !isReady;
 
+  useEffect(() => {
+    if (!shouldLoadMedia || hasFailed) {
+      return;
+    }
+
+    const node = videoRef.current;
+
+    if (!node || (!autoplay && !previewMode)) {
+      return;
+    }
+
+    if (shouldActivatePlayback) {
+      const playPromise = node.play();
+      if (playPromise && typeof playPromise.catch === "function") {
+        playPromise.catch(() => undefined);
+      }
+      return;
+    }
+
+    node.pause();
+  }, [autoplay, hasFailed, previewMode, shouldActivatePlayback, shouldLoadMedia]);
+
   return (
-    <div
-      className={cn(
-        "overflow-hidden bg-[#05070b]",
-        !hasExplicitPositionClass(className) && "relative",
-        className,
-      )}
-    >
+    <div className="relative h-full w-full overflow-hidden bg-[#05070b]">
       {fallbackSrc || fallbackSrcs.length ? (
         <MediaImage
           src={fallbackSrc}
@@ -253,19 +342,20 @@ function ManagedDirectVideo({
         <FallbackSurface />
       )}
 
-      {!hasFailed ? (
+      {!hasFailed && shouldLoadMedia ? (
         <video
+          ref={videoRef}
           className={cn(
             "absolute inset-0 h-full w-full transition duration-500",
             mediaObjectClass,
             isReady ? "opacity-100" : "opacity-0",
           )}
-          controls={!previewMode}
+          controls={showControls}
           playsInline
           preload="metadata"
           autoPlay={autoplay || previewMode}
           muted={autoplay || previewMode}
-          loop={previewMode}
+          loop={previewMode || autoplay}
           poster={video.poster ?? image}
           onLoadedData={() => setIsReady(true)}
           onCanPlay={() => setIsReady(true)}
@@ -294,6 +384,7 @@ export function EmbeddedVideoPlayer({
   sizes = "(min-width: 1024px) 72vw, 100vw",
   priority = false,
   previewMode = false,
+  showControls,
 }: EmbeddedVideoPlayerProps) {
   const { language } = useSitePreferences();
   const resolvedTitle = resolveLocalizedValue(title, language);
@@ -303,6 +394,12 @@ export function EmbeddedVideoPlayer({
   const fallbackSrc = image ?? video?.poster ?? externalVideo?.thumbnailSrc;
   const fallbackSrcs = buildFallbackSources(video, externalVideo, image);
   const mediaObjectClass = mediaFit === "contain" ? "object-contain p-6" : "object-cover";
+  const { containerRef, shouldLoadMedia, shouldActivatePlayback } = useSmartMediaState({
+    autoplay,
+    previewMode,
+    priority,
+  });
+  const resolvedShowControls = showControls ?? (!previewMode && !autoplay);
   const mediaKey = [
     video?.videoType,
     video?.videoType === "direct" ? video.src : "",
@@ -314,22 +411,34 @@ export function EmbeddedVideoPlayer({
     previewMode ? "preview" : "full",
     autoplay ? "autoplay" : "manual",
   ].join("::");
+  const wrapperClassName = cn(
+    "overflow-hidden",
+    !hasExplicitPositionClass(className) && "relative",
+    className,
+  );
 
   if (externalVideo) {
+    const shouldRenderFrame = previewMode ? true : autoplay ? shouldActivatePlayback : shouldLoadMedia;
+
     return (
-      <ManagedExternalFrame
-        key={mediaKey}
-        fallbackSrc={fallbackSrc}
-        fallbackSrcs={fallbackSrcs}
-        resolvedImageAlt={resolvedImageAlt}
-        mediaObjectClass={mediaObjectClass}
-        className={className}
-        priority={priority}
-        sizes={sizes}
-        iframeTitle={resolveLocalizedValue(externalVideo.label, language)}
-        iframeSrc={withPlayerParams(externalVideo, autoplay, previewMode)}
-        previewMode={previewMode}
-      />
+      <div ref={containerRef} className={wrapperClassName} aria-label={resolvedTitle}>
+        <ManagedExternalFrame
+          key={`${mediaKey}::${shouldRenderFrame ? "active" : "idle"}`}
+          fallbackSrc={fallbackSrc}
+          fallbackSrcs={fallbackSrcs}
+          resolvedImageAlt={resolvedImageAlt}
+          mediaObjectClass={mediaObjectClass}
+          priority={priority}
+          sizes={sizes}
+          iframeTitle={resolveLocalizedValue(externalVideo.label, language)}
+          iframeSrc={withPlayerParams(
+            externalVideo,
+            shouldRenderFrame && (autoplay || previewMode),
+            previewMode,
+          )}
+          shouldRenderFrame={shouldRenderFrame}
+        />
+      </div>
     );
   }
 
@@ -337,7 +446,7 @@ export function EmbeddedVideoPlayer({
     if (!isPlayableDirectVideo(video)) {
       if (fallbackSrc || fallbackSrcs.length) {
         return (
-          <div className={cn("overflow-hidden", !hasExplicitPositionClass(className) && "relative", className)}>
+          <div className={wrapperClassName} aria-label={resolvedTitle}>
             <MediaImage
               src={fallbackSrc}
               fallbackSrcs={fallbackSrcs}
@@ -352,36 +461,37 @@ export function EmbeddedVideoPlayer({
       }
 
       return (
-        <div
-          className={cn("overflow-hidden", !hasExplicitPositionClass(className) && "relative", className)}
-          aria-label={resolvedTitle}
-        >
+        <div className={wrapperClassName} aria-label={resolvedTitle}>
           <FallbackSurface />
         </div>
       );
     }
 
     return (
-      <ManagedDirectVideo
-        key={mediaKey}
-        fallbackSrc={fallbackSrc}
-        fallbackSrcs={fallbackSrcs}
-        resolvedImageAlt={resolvedImageAlt}
-        mediaObjectClass={mediaObjectClass}
-        className={className}
-        priority={priority}
-        sizes={sizes}
-        video={video}
-        image={image}
-        autoplay={autoplay}
-        previewMode={previewMode}
-      />
+      <div ref={containerRef} className={wrapperClassName} aria-label={resolvedTitle}>
+        <ManagedDirectVideo
+          key={mediaKey}
+          fallbackSrc={fallbackSrc}
+          fallbackSrcs={fallbackSrcs}
+          resolvedImageAlt={resolvedImageAlt}
+          mediaObjectClass={mediaObjectClass}
+          priority={priority}
+          sizes={sizes}
+          video={video}
+          image={image}
+          autoplay={autoplay}
+          previewMode={previewMode}
+          shouldLoadMedia={shouldLoadMedia}
+          shouldActivatePlayback={shouldActivatePlayback}
+          showControls={resolvedShowControls}
+        />
+      </div>
     );
   }
 
   if (fallbackSrc || fallbackSrcs.length) {
     return (
-      <div className={cn("overflow-hidden", !hasExplicitPositionClass(className) && "relative", className)}>
+      <div className={wrapperClassName} aria-label={resolvedTitle}>
         <MediaImage
           src={fallbackSrc}
           fallbackSrcs={fallbackSrcs}
@@ -396,7 +506,7 @@ export function EmbeddedVideoPlayer({
   }
 
   return (
-    <div className={cn(className, "relative overflow-hidden")} aria-label={resolvedTitle}>
+    <div className={wrapperClassName} aria-label={resolvedTitle}>
       <FallbackSurface />
     </div>
   );
