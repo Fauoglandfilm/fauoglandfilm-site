@@ -44,16 +44,16 @@ export function SocialLinksRow({
   const descriptionClassName =
     tone === "inverse"
       ? compact
-        ? "text-[0.88rem] leading-6 text-white/66"
+        ? "text-[0.84rem] leading-[1.35rem] text-white/64"
         : "body-copy max-w-lg text-white/72"
       : "body-copy max-w-lg text-[var(--muted)]";
   const linkClassName = cn(
     "social-link",
-    compact && "min-h-[2.2rem] gap-2 px-3 py-2 text-[0.78rem] sm:text-[0.8rem]",
+    compact && "min-h-[2.05rem] gap-1.5 px-2.5 py-1.5 text-[0.74rem] sm:text-[0.78rem]",
   );
-  const iconClassName = compact ? "h-[0.95rem] w-[0.95rem]" : "h-4 w-4";
+  const iconClassName = compact ? "h-[0.9rem] w-[0.9rem]" : "h-4 w-4";
   const linkRowClassName = compact
-    ? "mt-2.5 flex flex-wrap gap-2.5 sm:gap-2"
+    ? "mt-2 flex flex-wrap gap-2 sm:gap-2"
     : "mt-3 flex flex-wrap gap-2.5 sm:gap-3";
 
   return (
