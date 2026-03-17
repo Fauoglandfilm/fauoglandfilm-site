@@ -44,21 +44,21 @@ export function SocialLinksRow({
   const descriptionClassName =
     tone === "inverse"
       ? compact
-        ? "text-[0.84rem] leading-[1.35rem] text-white/64"
+        ? "text-[0.8rem] leading-[1.25rem] text-white/60"
         : "body-copy max-w-lg text-white/72"
       : "body-copy max-w-lg text-[var(--muted)]";
   const linkClassName = cn(
     "social-link",
-    compact && "min-h-[2.05rem] gap-1.5 px-2.5 py-1.5 text-[0.74rem] sm:text-[0.78rem]",
+    compact && "min-h-[1.95rem] gap-1 px-2 py-1 text-[0.72rem] sm:text-[0.76rem]",
   );
-  const iconClassName = compact ? "h-[0.9rem] w-[0.9rem]" : "h-4 w-4";
+  const iconClassName = compact ? "h-[0.82rem] w-[0.82rem]" : "h-4 w-4";
   const linkRowClassName = compact
-    ? "mt-2 flex flex-wrap gap-2 sm:gap-2"
+    ? "mt-1.5 flex flex-wrap gap-1.5 sm:gap-1.5"
     : "mt-3 flex flex-wrap gap-2.5 sm:gap-3";
 
   return (
     <div className={className}>
-      <div className={compact ? "space-y-1.5" : "space-y-2.5"}>
+      <div className={compact ? "space-y-1" : "space-y-2.5"}>
         <p className={titleClassName}>{title}</p>
         {description ? (
           <p className={descriptionClassName}>
