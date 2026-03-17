@@ -56,6 +56,10 @@ type ManagedDirectVideoProps = {
   previewMode: boolean;
 };
 
+function hasExplicitPositionClass(value?: string) {
+  return Boolean(value && /\b(relative|absolute|fixed|sticky)\b/.test(value));
+}
+
 function withPlayerParams(video: ExternalVideoAsset, autoplay: boolean, previewMode: boolean) {
   const url = new URL(video.embedUrl);
 
@@ -161,7 +165,13 @@ function ManagedExternalFrame({
   const [isReady, setIsReady] = useState(false);
 
   return (
-    <div className={cn("relative overflow-hidden bg-[#05070b]", className)}>
+    <div
+      className={cn(
+        "overflow-hidden bg-[#05070b]",
+        !hasExplicitPositionClass(className) && "relative",
+        className,
+      )}
+    >
       {fallbackSrc || fallbackSrcs.length ? (
         <MediaImage
           src={fallbackSrc}
@@ -211,7 +221,13 @@ function ManagedDirectVideo({
   const [hasFailed, setHasFailed] = useState(false);
 
   return (
-    <div className={cn("relative overflow-hidden bg-[#05070b]", className)}>
+    <div
+      className={cn(
+        "overflow-hidden bg-[#05070b]",
+        !hasExplicitPositionClass(className) && "relative",
+        className,
+      )}
+    >
       {fallbackSrc || fallbackSrcs.length ? (
         <MediaImage
           src={fallbackSrc}
@@ -313,7 +329,7 @@ export function EmbeddedVideoPlayer({
     if (!isPlayableDirectVideo(video)) {
       if (fallbackSrc || fallbackSrcs.length) {
         return (
-          <div className={cn("relative overflow-hidden", className)}>
+          <div className={cn("overflow-hidden", !hasExplicitPositionClass(className) && "relative", className)}>
             <MediaImage
               src={fallbackSrc}
               fallbackSrcs={fallbackSrcs}
@@ -328,7 +344,10 @@ export function EmbeddedVideoPlayer({
       }
 
       return (
-        <div className={cn(className, "relative overflow-hidden")} aria-label={resolvedTitle}>
+        <div
+          className={cn("overflow-hidden", !hasExplicitPositionClass(className) && "relative", className)}
+          aria-label={resolvedTitle}
+        >
           <FallbackSurface />
         </div>
       );
@@ -354,7 +373,7 @@ export function EmbeddedVideoPlayer({
 
   if (fallbackSrc || fallbackSrcs.length) {
     return (
-      <div className={cn("relative overflow-hidden", className)}>
+      <div className={cn("overflow-hidden", !hasExplicitPositionClass(className) && "relative", className)}>
         <MediaImage
           src={fallbackSrc}
           fallbackSrcs={fallbackSrcs}
