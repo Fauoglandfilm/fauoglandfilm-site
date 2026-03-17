@@ -77,14 +77,10 @@ export function HeroSection() {
               </div>
 
               <div className="hero-heading-strip">
-                <div className="glass-sheen absolute inset-0 opacity-58" />
                 <div className="hero-heading-strip__content">
                   <h1 className="hero-title max-w-[12ch] text-white">
                     {resolveLocalizedValue(homeHeroContent.title, language)}
                   </h1>
-                  <span className="hero-heading-icon" aria-hidden="true">
-                    <ArrowUpRightIcon className="h-4 w-4" />
-                  </span>
                 </div>
               </div>
 
