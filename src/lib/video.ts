@@ -11,7 +11,7 @@ export function buildYoutubeEmbedUrl(videoId: string) {
 }
 
 export function buildYoutubeThumbnail(videoId: string) {
-  return `https://i.ytimg.com/vi/${sanitizeVideoId(videoId)}/hqdefault.jpg`;
+  return `https://i.ytimg.com/vi/${sanitizeVideoId(videoId)}/maxresdefault.jpg`;
 }
 
 export function buildYoutubeWatchUrl(videoId: string) {
