@@ -103,7 +103,7 @@ export function CaseDetailContent({
                       image={variant.image}
                       imageAlt={variant.imageAlt}
                       mediaFit={variant.mediaFit ?? caseStudy.mediaFit}
-                      className="relative h-full w-full"
+                      className="absolute inset-0 h-full w-full"
                       sizes="(min-width: 768px) 50vw, 100vw"
                     />
                     <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,rgba(17,17,17,0.03),rgba(17,17,17,0.18)_48%,rgba(17,17,17,0.54)_100%)]" />
