@@ -773,8 +773,8 @@ export const caseStudies: CaseStudy[] = [
     category: { no: "Nettsideinnhold", en: "Website content" },
     industry: { no: "Organisasjon", en: "Organisation" },
     summary: {
-      no: "En kort film som viser Foreningen Norden og arbeidet de gjør, bygget på tidligere opptak, eget materiale og animasjon.",
-      en: "A short film that presents Foreningen Norden and the work they do, built from earlier footage, self-shot material and animation.",
+      no: "En film som viser Foreningen Norden og arbeidet de gjør. Klippene består av tidligere videoer vi har produsert for dem, samt ekstra materiale de har laget selv. Vi har også stått for animasjonene.",
+      en: "A film that presents Foreningen Norden and the work they do. The edit combines earlier videos we produced for them with additional material they created themselves, and we also delivered the animations.",
     },
     goal: {
       no: "De trengte et tydelig introduksjonsinnhold som raskt forklarte hvem de er og hva de jobber for.",
@@ -806,7 +806,8 @@ export const caseStudies: CaseStudy[] = [
     ],
     video: {
       videoType: "direct",
-      src: squarespaceVideoUrl("cf67837a-3fba-462c-9c71-99bb2842bb94", "1920:1080"),
+      src: "/assets/portfolio/foreningen-norden/videos/foreningen-norden-nettsideinnhold.mp4",
+      poster: "/assets/portfolio/foreningen-norden/posters/foreningen-norden-nettsideinnhold-poster.png",
       label: {
         no: "Foreningen Norden - nettsideinnhold",
         en: "Foreningen Norden website content",
@@ -1210,8 +1211,8 @@ export const portfolioProjects: PortfolioProject[] = [
       en: "Organisation film",
     },
     summary: {
-      no: "En film som viser Foreningen Norden og arbeidet de gjør, bygget av tidligere produksjoner, eget materiale og nye animasjoner.",
-      en: "A film that introduces Foreningen Norden and their work, built from earlier productions, client material and new animation.",
+      no: "En film som viser Foreningen Norden og arbeidet de gjør. Klippene består av tidligere videoer vi har produsert for dem, samt ekstra materiale de har laget selv. Vi har også stått for animasjonene.",
+      en: "A film that introduces Foreningen Norden and the work they do. It combines earlier productions we made for them with extra material they created themselves, and we also handled the animations.",
     },
     result: {
       no: "Tidligere videoer, nytt materiale og animasjon samlet i ett tydelig nettsideformat.",
@@ -1226,7 +1227,7 @@ export const portfolioProjects: PortfolioProject[] = [
     },
     video: {
       videoType: "direct",
-      src: squarespaceVideoUrl("cf67837a-3fba-462c-9c71-99bb2842bb94", "1920:1080"),
+      src: "/assets/portfolio/foreningen-norden/videos/foreningen-norden-nettsideinnhold.mp4",
       poster: "/assets/portfolio/foreningen-norden/posters/foreningen-norden-nettsideinnhold-poster.png",
       label: {
         no: "Foreningen Norden - nettsideinnhold",
