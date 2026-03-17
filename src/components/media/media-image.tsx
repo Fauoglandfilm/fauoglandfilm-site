@@ -2,6 +2,7 @@
 
 /* eslint-disable @next/next/no-img-element */
 
+import type { ReactNode } from "react";
 import { useMemo, useState } from "react";
 
 import { cn } from "@/lib/utils";
@@ -14,6 +15,7 @@ type MediaImageProps = {
   priority?: boolean;
   sizes?: string;
   onLoad?: () => void;
+  fallbackContent?: ReactNode;
 };
 
 function uniqueSources(values: Array<string | null | undefined>) {
@@ -41,13 +43,14 @@ export function MediaImage({
   priority = false,
   sizes,
   onLoad,
+  fallbackContent,
 }: MediaImageProps) {
   const sources = useMemo(() => uniqueSources([src, ...fallbackSrcs]), [fallbackSrcs, src]);
   const [failedSources, setFailedSources] = useState<string[]>([]);
   const activeSrc = sources.find((candidate) => !failedSources.includes(candidate));
 
   if (!activeSrc) {
-    return null;
+    return fallbackContent ?? null;
   }
 
   return (

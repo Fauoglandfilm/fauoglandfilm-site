@@ -12,6 +12,8 @@ public/assets/**/*.mp4
 public/assets/**/*.mov
 public/assets/**/*.mkv
 public/assets/**/*.webm
+!public/assets/portfolio/treningshuset/videos/treningshuset-bred.mp4
+!public/assets/portfolio/treningshuset/videos/treningshuset-mobil.mp4
 public/assets/_legacy-import/
 public/assets/unmatched/
 public/assets/unverified-downloads/

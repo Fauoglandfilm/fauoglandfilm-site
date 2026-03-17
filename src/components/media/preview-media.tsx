@@ -86,6 +86,17 @@ function isPlayableDirectPreview(video: VideoAsset | undefined) {
   });
 }
 
+function PreviewFallbackState({ title }: { title: string }) {
+  return (
+    <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(255,255,255,0.14),transparent_24%),linear-gradient(135deg,rgba(120,164,255,0.18),rgba(10,12,18,0.94))]">
+      <div className="absolute inset-x-4 bottom-4 rounded-[1rem] border border-white/12 bg-black/36 px-4 py-3 text-sm text-white/78 backdrop-blur-md">
+        <p className="font-semibold">{title}</p>
+        <p className="mt-1 text-white/62">Mangler preview-bilde for prosjekt under utvikling</p>
+      </div>
+    </div>
+  );
+}
+
 export function PreviewMedia({
   title,
   video,
@@ -158,6 +169,7 @@ export function PreviewMedia({
   const hasDirectPreview = isPlayableDirectPreview(video);
   const hasExternalPreview = Boolean(externalVideo);
   const hasPlayableMedia = hasDirectPreview || hasExternalPreview;
+  const fallbackContent = <PreviewFallbackState title={resolvedTitle} />;
 
   const shouldPlay =
     previewBehavior === "always"
@@ -171,9 +183,7 @@ export function PreviewMedia({
               ? isHovered
               : isInView
             : false;
-  const shouldRenderPreview =
-    shouldPlay &&
-    (hasDirectPreview || (hasExternalPreview && canHover));
+  const shouldRenderPreview = shouldPlay && hasDirectPreview;
   const mediaObjectClass =
     mediaFit === "contain" ? "object-contain p-5 sm:p-6" : "object-cover";
 
@@ -192,6 +202,7 @@ export function PreviewMedia({
           alt={resolvedAlt}
           priority={priority}
           sizes={sizes}
+          fallbackContent={fallbackContent}
           className={cn(
             mediaObjectClass,
             "transition duration-700",
@@ -204,7 +215,7 @@ export function PreviewMedia({
           )}
         />
       ) : (
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(255,255,255,0.14),transparent_24%),linear-gradient(135deg,rgba(120,164,255,0.18),rgba(10,12,18,0.94))]" />
+        fallbackContent
       )}
 
       {shouldRenderPreview ? (

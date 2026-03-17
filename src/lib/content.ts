@@ -367,6 +367,16 @@ function mapArticle(article: SanityArticle): ArticleEntry | null {
   };
 }
 
+function mergeBySlug<T extends { slug: string }>(cmsItems: T[] | null | undefined, fallbackItems: T[]) {
+  if (!cmsItems?.length) {
+    return fallbackItems;
+  }
+
+  const seen = new Set(cmsItems.map((item) => item.slug));
+
+  return [...cmsItems, ...fallbackItems.filter((item) => !seen.has(item.slug))];
+}
+
 export async function getPortfolioGroups() {
   const cmsGroups = await sanityFetch<SanityPortfolioGroup[]>({
     query: portfolioGroupsQuery,
@@ -386,7 +396,7 @@ export async function getPortfolioProjects() {
 
   const mapped = cmsProjects?.map(mapPortfolioProject).filter((item): item is PortfolioProject => Boolean(item));
 
-  return mapped?.length ? mapped : portfolioProjects;
+  return mergeBySlug(mapped, portfolioProjects);
 }
 
 export async function getCaseStudies() {
@@ -397,7 +407,7 @@ export async function getCaseStudies() {
 
   const mapped = cmsCases?.map(mapCaseStudy).filter((item): item is CaseStudy => Boolean(item));
 
-  return mapped?.length ? mapped : caseStudies;
+  return mergeBySlug(mapped, caseStudies);
 }
 
 export async function getCaseStudyBySlug(slug: string) {
