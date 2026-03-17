@@ -297,7 +297,7 @@ export function TeamSection({
         <div className="grid gap-5 md:grid-cols-2">
           {team.map((member, index) => (
             <Reveal key={member.name} delay={0.05 * index}>
-              <article className="founder-card-shell group relative overflow-hidden rounded-[2rem] px-5 pb-6 pt-5 sm:px-6 sm:pb-7 sm:pt-6">
+              <article className="founder-card-shell group relative overflow-visible rounded-[2rem] px-5 pb-5 pt-4 sm:px-6 sm:pb-6 sm:pt-5">
                 <div className="glass-sheen absolute inset-0 opacity-60" />
                 <div className="pointer-events-none absolute right-[-10%] top-[-8%] h-36 w-36 rounded-full bg-[radial-gradient(circle,rgba(122,168,255,0.24),transparent_72%)] blur-3xl opacity-80" />
                 <div className="pointer-events-none absolute bottom-[-12%] left-[-6%] h-32 w-32 rounded-full bg-[radial-gradient(circle,rgba(255,255,255,0.16),transparent_74%)] blur-3xl opacity-72" />
@@ -305,16 +305,17 @@ export function TeamSection({
                 {member.image ? (
                   <Link
                     href={member.href ?? "/om-oss"}
-                    className="founder-card-link block"
+                    className="founder-card-link relative z-[2] block"
                     aria-label={
                       language === "no"
                         ? `Se mer om ${member.name}`
                         : `View more about ${member.name}`
                     }
                   >
-                    <div className="founder-cutout-stage relative min-h-[22rem] overflow-hidden sm:min-h-[25rem]">
-                      <div className="pointer-events-none absolute inset-x-[8%] bottom-[8%] h-10 rounded-full bg-[radial-gradient(circle,rgba(0,0,0,0.32),transparent_72%)] blur-xl opacity-60" />
-                      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_50%_12%,rgba(255,255,255,0.18),transparent_24%),radial-gradient(circle_at_18%_78%,rgba(122,168,255,0.14),transparent_26%),radial-gradient(circle_at_82%_76%,rgba(255,255,255,0.1),transparent_24%)]" />
+                    <div className="founder-cutout-stage relative min-h-[24rem] sm:min-h-[27rem]">
+                      <div className="founder-cutout-aura pointer-events-none absolute inset-x-[10%] top-[5%] bottom-[12%]" />
+                      <div className="pointer-events-none absolute inset-x-[10%] bottom-[7%] h-10 rounded-full bg-[radial-gradient(circle,rgba(0,0,0,0.28),transparent_72%)] blur-xl opacity-60" />
+                      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_50%_10%,rgba(255,255,255,0.24),transparent_26%),radial-gradient(circle_at_16%_72%,rgba(122,168,255,0.12),transparent_26%),radial-gradient(circle_at_84%_70%,rgba(255,255,255,0.12),transparent_24%)]" />
                       <Image
                         src={member.image}
                         alt={
@@ -324,13 +325,13 @@ export function TeamSection({
                         }
                         fill
                         sizes="(min-width: 1280px) 24vw, (min-width: 768px) 42vw, 100vw"
-                        className="founder-cutout-image object-contain object-bottom px-3 pt-3 transition duration-700 group-hover:scale-[1.035] sm:px-4 sm:pt-4"
+                        className="founder-cutout-image object-contain object-bottom px-1 pt-0 transition duration-700 group-hover:scale-[1.045] group-hover:-translate-y-1 sm:px-2"
                       />
                     </div>
                   </Link>
                 ) : null}
 
-                <div className="relative mt-4 space-y-3">
+                <div className="team-founder-copy relative z-[3] -mt-6 space-y-3 px-4 py-4 sm:-mt-7 sm:px-5 sm:py-5">
                   <span className="founder-profile-chip">
                     {resolveLocalizedValue(member.role, language)}
                   </span>
