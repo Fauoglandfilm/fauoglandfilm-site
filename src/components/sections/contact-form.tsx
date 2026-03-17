@@ -11,9 +11,6 @@ const initialState: ContactFormPayload = {
   name: "",
   company: "",
   email: "",
-  phone: "",
-  projectType: "",
-  budget: "",
   message: "",
 };
 
@@ -106,59 +103,7 @@ export function ContactForm() {
             required
           />
         </label>
-        <label className="space-y-2">
-          <span className="text-sm font-medium text-[color:var(--foreground)]">{copy.phone}</span>
-          <input
-            className="form-input"
-            name="phone"
-            type="tel"
-            autoComplete="tel"
-            inputMode="tel"
-            value={formState.phone}
-            onChange={(event) =>
-              setFormState((current) => ({ ...current, phone: event.target.value }))
-            }
-          />
-        </label>
-      </div>
-
-      <div className="grid gap-3.5 sm:grid-cols-2">
-        <label className="space-y-2">
-          <span className="text-sm font-medium text-[color:var(--foreground)]">{copy.projectType}</span>
-          <select
-            className="form-input"
-            name="projectType"
-            value={formState.projectType}
-            onChange={(event) =>
-              setFormState((current) => ({ ...current, projectType: event.target.value }))
-            }
-          >
-            <option value="">{copy.projectType}</option>
-            {copy.projectTypes.map((option) => (
-              <option key={option} value={option}>
-                {option}
-              </option>
-            ))}
-          </select>
-        </label>
-        <label className="space-y-2">
-          <span className="text-sm font-medium text-[color:var(--foreground)]">{copy.budget}</span>
-          <select
-            className="form-input"
-            name="budget"
-            value={formState.budget}
-            onChange={(event) =>
-              setFormState((current) => ({ ...current, budget: event.target.value }))
-            }
-          >
-            <option value="">{copy.budget}</option>
-            {copy.budgets.map((option) => (
-              <option key={option} value={option}>
-                {option}
-              </option>
-            ))}
-          </select>
-        </label>
+        <div />
       </div>
 
       <label className="space-y-2">

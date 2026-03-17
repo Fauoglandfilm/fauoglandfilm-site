@@ -15,12 +15,17 @@ export const appEnv = {
   sentryProject: process.env.SENTRY_PROJECT,
 } as const;
 
+export const resendDefaults = {
+  fromEmail: "Fau&Land Film <post@fauoglandfilm.com>",
+  toEmail: "post@fauoglandfilm.com",
+} as const;
+
 export function hasSanityConfig() {
   return isNonEmpty(appEnv.sanityProjectId) && isNonEmpty(appEnv.sanityDataset);
 }
 
 export function hasResendConfig() {
-  return isNonEmpty(appEnv.resendApiKey) && isNonEmpty(appEnv.resendFromEmail);
+  return isNonEmpty(appEnv.resendApiKey);
 }
 
 export function hasSentryConfig() {

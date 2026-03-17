@@ -4,7 +4,7 @@ import { ContactConfirmationEmail } from "@/components/emails/contact-confirmati
 import { ContactNotificationEmail } from "@/components/emails/contact-notification-email";
 import { siteConfig } from "@/data/site-content";
 import { contactFormSchema } from "@/lib/contact-form";
-import { appEnv, hasResendConfig, readRequiredEnv } from "@/lib/env";
+import { appEnv, hasResendConfig, resendDefaults } from "@/lib/env";
 import { getResend } from "@/lib/resend";
 
 export async function POST(request: Request) {
@@ -16,21 +16,21 @@ export async function POST(request: Request) {
       return NextResponse.json(
         {
           ok: false,
-          message: "RESEND_API_KEY and RESEND_FROM_EMAIL must be configured on the server.",
+          message: "RESEND_API_KEY must be configured on the server.",
         },
         { status: 503 },
       );
     }
 
     const resend = getResend();
-    const from = readRequiredEnv(appEnv.resendFromEmail, "RESEND_FROM_EMAIL");
-    const to = appEnv.contactToEmail ?? siteConfig.email;
+    const from = appEnv.resendFromEmail ?? resendDefaults.fromEmail;
+    const to = appEnv.contactToEmail ?? resendDefaults.toEmail ?? siteConfig.email;
 
     await resend.emails.send({
       from,
       to: [to],
       replyTo: payload.email,
-      subject: `Ny nettsidehenvendelse fra ${payload.company || payload.name}`,
+      subject: "Ny forespørsel fra nettsiden",
       react: ContactNotificationEmail({ payload }),
     });
 
