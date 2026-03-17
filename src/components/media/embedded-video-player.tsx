@@ -40,6 +40,7 @@ type ManagedFrameProps = {
   iframeTitle: string;
   iframeSrc: string;
   shouldRenderFrame: boolean;
+  previewMode: boolean;
 };
 
 type ManagedDirectVideoProps = {
@@ -233,8 +234,34 @@ function ManagedExternalFrame({
   iframeTitle,
   iframeSrc,
   shouldRenderFrame,
+  previewMode,
 }: ManagedFrameProps) {
   const [isReady, setIsReady] = useState(false);
+  const readyTimerRef = useRef<number | null>(null);
+
+  useEffect(() => {
+    return () => {
+      if (readyTimerRef.current) {
+        window.clearTimeout(readyTimerRef.current);
+      }
+    };
+  }, []);
+
+  const handleLoad = () => {
+    if (!previewMode) {
+      setIsReady(true);
+      return;
+    }
+
+    if (readyTimerRef.current) {
+      window.clearTimeout(readyTimerRef.current);
+    }
+
+    readyTimerRef.current = window.setTimeout(() => {
+      setIsReady(true);
+      readyTimerRef.current = null;
+    }, 900);
+  };
 
   return (
     <div className="relative h-full w-full overflow-hidden bg-[#05070b]">
@@ -267,7 +294,7 @@ function ManagedExternalFrame({
           allow="autoplay; encrypted-media; picture-in-picture; fullscreen"
           referrerPolicy="strict-origin-when-cross-origin"
           allowFullScreen
-          onLoad={() => setIsReady(true)}
+          onLoad={handleLoad}
         />
       ) : null}
     </div>
@@ -437,6 +464,7 @@ export function EmbeddedVideoPlayer({
             previewMode,
           )}
           shouldRenderFrame={shouldRenderFrame}
+          previewMode={previewMode}
         />
       </div>
     );

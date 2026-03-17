@@ -1,20 +1,17 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 import { useState } from "react";
 
-import { ProjectVideoModal } from "@/components/media/project-video-modal";
 import { PreviewMedia } from "@/components/media/preview-media";
 import { Reveal } from "@/components/motion/reveal";
 import { useSitePreferences } from "@/components/providers/site-preferences";
 import { CtaBanner, PageHero } from "@/components/sections/site-sections";
-import { Button } from "@/components/ui/button";
-import { ButtonLink } from "@/components/ui/button-link";
 import {
   segmentedControlOptionClassName,
   segmentedControlShellClassName,
 } from "@/components/ui/button-styles";
-import { ArrowUpRightIcon, PlayIcon } from "@/components/ui/icons";
 import {
   portfolioGroups,
   portfolioPageContent,
@@ -43,7 +40,6 @@ export function PortfolioPageContent({
   groups?: PortfolioGroup[];
 }) {
   const { language } = useSitePreferences();
-  const [activeProject, setActiveProject] = useState<PortfolioProject | null>(null);
   const [activeFilter, setActiveFilter] = useState<string>(ALL_FILTER);
 
   const showreelProject =
@@ -64,61 +60,26 @@ export function PortfolioPageContent({
     language === "no"
       ? `${filteredProjects.length} prosjekter`
       : `${filteredProjects.length} projects`;
-  const modalPrimaryAction = activeProject?.detailHref
-    ? {
-        href: activeProject.detailHref,
-        label: { no: "Se case", en: "View case" },
-      }
-    : {
-        href: "/kontakt",
-        label: {
-          no: "Snakk med oss om prosjektet",
-          en: "Talk to us about the project",
-        },
-      };
-  const modalSecondaryAction = activeProject?.detailHref
-    ? {
-        href: "/kontakt",
-        label: {
-          no: "Snakk med oss om prosjektet",
-          en: "Talk to us about the project",
-        },
-      }
-    : {
-        href: "/case",
-        label: { no: "Se flere prosjekter", en: "See more projects" },
-      };
+
   const copy =
     language === "no"
       ? {
           filterAll: "Alle prosjekter",
           featuredEyebrow: "Featured work",
           featuredTitle: "Utvalgte produksjoner",
-          featuredDescription:
-            "Et håndplukket utvalg fra kampanje, organisasjon og fortellende arbeid.",
           catalogEyebrow: "Full portefølje",
           catalogTitle: "Hele porteføljen",
           catalogDescription:
-            "Filtrer på kategori og åpne prosjektene direkte.",
-          catalogHint: "",
-          openProject: "Åpne prosjekt",
-          openPreview: "Se preview",
-          showreelStats: [],
+            "Filtrer på kategori og scroll gjennom arbeidet direkte i siden.",
         }
       : {
           filterAll: "All work",
           featuredEyebrow: "Featured work",
           featuredTitle: "Selected productions",
-          featuredDescription:
-            "A hand-picked selection across campaigns, organisation work and narrative projects.",
           catalogEyebrow: "Full portfolio",
           catalogTitle: "The full portfolio",
           catalogDescription:
-            "Filter by category and open the projects directly.",
-          catalogHint: "",
-          openProject: "Open project",
-          openPreview: "Open preview",
-          showreelStats: [],
+            "Filter by category and scroll through the work directly on the page.",
         };
 
   return (
@@ -156,23 +117,25 @@ export function PortfolioPageContent({
             <Reveal>
               <article className="cinematic-panel group overflow-hidden rounded-[2rem] shadow-[0_34px_110px_rgba(0,0,0,0.24)]">
                 <div className="media-frame relative aspect-[1.16/0.96] min-h-[18rem] overflow-hidden sm:aspect-[1.3/0.94] lg:min-h-[28rem]">
-                  <button
-                    type="button"
-                    onClick={() => setActiveProject(showreelProject)}
-                    className="card-trigger absolute inset-0 z-[3]"
-                    aria-label={resolveLocalizedValue(showreelProject.title, language)}
-                  />
+                  {getPortfolioCardHref(showreelProject) ? (
+                    <Link
+                      href={getPortfolioCardHref(showreelProject)!}
+                      target={opensExternally(showreelProject) ? "_blank" : undefined}
+                      rel={opensExternally(showreelProject) ? "noreferrer" : undefined}
+                      className="card-trigger absolute inset-0 z-[3]"
+                      aria-label={resolveLocalizedValue(showreelProject.title, language)}
+                    />
+                  ) : null}
                   <PortfolioMedia
                     project={showreelProject}
                     priority
                     playMode="featured"
-                    inViewThreshold={0.18}
-                    rootMargin="260px 0px -6% 0px"
+                    inViewThreshold={0.14}
+                    rootMargin="300px 0px -4% 0px"
                     sizes="(min-width: 1280px) 48vw, (min-width: 1024px) 60vw, 100vw"
-                    className="object-cover transition duration-700 group-hover:scale-[1.04]"
+                    className="object-cover transition duration-700 group-hover:scale-[1.03]"
                   />
-                  <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(255,255,255,0.08),transparent_34%),linear-gradient(180deg,rgba(8,8,8,0.04),rgba(8,8,8,0.26)_42%,rgba(8,8,8,0.9)_100%)]" />
-                  <div className="grain-overlay absolute inset-0 opacity-45" />
+                  <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(255,255,255,0.06),transparent_30%),linear-gradient(180deg,rgba(8,8,8,0.02),rgba(8,8,8,0.12)_44%,rgba(8,8,8,0.56)_100%)]" />
                   <div className="absolute inset-x-0 bottom-0 z-[2] p-5 text-white sm:p-7 lg:p-8">
                     <div className="flex flex-wrap items-center gap-2 text-[0.68rem] font-semibold uppercase tracking-[0.22em] text-white/54">
                       <span>{showreelProject.client}</span>
@@ -182,13 +145,7 @@ export function PortfolioPageContent({
                     <h2 className="feature-title mt-3 max-w-2xl">
                       {resolveLocalizedValue(showreelProject.title, language)}
                     </h2>
-                    <p className="mt-3 max-w-xl text-sm leading-6 text-white/72 sm:text-base sm:leading-7">
-                      {resolveLocalizedValue(showreelProject.summary, language)}
-                    </p>
                   </div>
-                  <span className="absolute right-4 top-4 z-[3] inline-flex h-12 w-12 items-center justify-center rounded-full border border-white/14 bg-white/90 text-[#111111] shadow-[0_16px_40px_rgba(0,0,0,0.24)] backdrop-blur-sm">
-                    <PlayIcon className="h-4 w-4 translate-x-[1px]" />
-                  </span>
                 </div>
               </article>
             </Reveal>
@@ -207,15 +164,6 @@ export function PortfolioPageContent({
                     {resolveLocalizedValue(portfolioPageContent.showreelDescription, language)}
                   </p>
                 </div>
-
-                <div className="mt-auto flex flex-col gap-2.5 pt-6 sm:flex-row sm:flex-wrap">
-                  <Button className="w-full sm:w-auto" onClick={() => setActiveProject(showreelProject)}>
-                    {resolveLocalizedValue(portfolioPageContent.showreelPrimaryCta, language)}
-                  </Button>
-                  <ButtonLink href="#portfolio-grid" variant="secondary" className="w-full sm:w-auto">
-                    {resolveLocalizedValue(portfolioPageContent.browseCta, language)}
-                  </ButtonLink>
-                </div>
               </article>
             </Reveal>
           </div>
@@ -225,14 +173,9 @@ export function PortfolioPageContent({
       <section className="pb-1 pt-0 sm:pb-2">
         <div className="site-container">
           <Reveal>
-            <div className="flex flex-col gap-3 sm:gap-4 lg:flex-row lg:items-end lg:justify-between">
-              <div className="max-w-3xl space-y-3">
-                <span className="eyebrow">{copy.featuredEyebrow}</span>
-                <h2 className="section-title text-[color:var(--foreground)]">{copy.featuredTitle}</h2>
-              </div>
-              <ButtonLink href="#portfolio-grid" variant="ghost" className="w-full sm:w-auto">
-                {language === "no" ? "Se hele porteføljen" : "View full portfolio"}
-              </ButtonLink>
+            <div className="max-w-3xl space-y-3">
+              <span className="eyebrow">{copy.featuredEyebrow}</span>
+              <h2 className="section-title text-[color:var(--foreground)]">{copy.featuredTitle}</h2>
             </div>
           </Reveal>
 
@@ -242,9 +185,7 @@ export function PortfolioPageContent({
                 <PortfolioProjectCard
                   project={visibleFeaturedProjects[0]}
                   group={getPortfolioGroup(visibleFeaturedProjects[0].group)}
-                  onPreview={() => setActiveProject(visibleFeaturedProjects[0])}
                   layout="wide"
-                  previewLabel={copy.openPreview}
                 />
               </Reveal>
             ) : null}
@@ -256,9 +197,7 @@ export function PortfolioPageContent({
                     <PortfolioProjectCard
                       project={project}
                       group={getPortfolioGroup(project.group)}
-                      onPreview={() => setActiveProject(project)}
                       layout="default"
-                      previewLabel={copy.openPreview}
                     />
                   </Reveal>
                 ))}
@@ -327,9 +266,7 @@ export function PortfolioPageContent({
                 <PortfolioProjectCard
                   project={project}
                   group={getPortfolioGroup(project.group)}
-                  onPreview={() => setActiveProject(project)}
-                  layout={index % 5 === 0 ? "wide" : "default"}
-                  previewLabel={copy.openPreview}
+                  layout={index % 6 === 0 ? "wide" : "default"}
                 />
               </Reveal>
             ))}
@@ -347,23 +284,6 @@ export function PortfolioPageContent({
         secondaryLabel={null}
         align="center"
       />
-
-      <ProjectVideoModal
-        open={Boolean(activeProject)}
-        onClose={() => setActiveProject(null)}
-        client={activeProject?.client}
-        title={activeProject?.title ?? { no: "", en: "" }}
-        summary={activeProject?.summary}
-        format={activeProject?.format}
-        year={activeProject?.year}
-        video={activeProject?.video}
-        externalVideo={activeProject?.externalVideo}
-        image={activeProject?.image}
-        imageAlt={activeProject?.imageAlt}
-        mediaFit={activeProject?.mediaFit}
-        primaryAction={modalPrimaryAction}
-        secondaryAction={modalSecondaryAction}
-      />
     </main>
   );
 }
@@ -371,99 +291,77 @@ export function PortfolioPageContent({
 function PortfolioProjectCard({
   project,
   group,
-  onPreview,
   layout,
-  previewLabel,
 }: {
   project: PortfolioProject;
   group?: PortfolioGroup;
-  onPreview: () => void;
   layout: "default" | "wide";
-  previewLabel: string;
 }) {
   const { language } = useSitePreferences();
-  const hasPlayableVideo = Boolean(
-    project.externalVideo || (project.video && project.video.videoType === "direct"),
-  );
   const isWide = layout === "wide";
+  const href = getPortfolioCardHref(project);
+  const external = opensExternally(project);
 
   return (
-    <article className={cn("card-surface group overflow-hidden rounded-[1.95rem] shadow-[0_28px_90px_rgba(0,0,0,0.18)]", isWide && "md:col-span-2")}>
-      <div className={cn("grid gap-px bg-[color:var(--line)]", isWide && "xl:grid-cols-[1.08fr_0.92fr]")}>
-        <div
-          className={cn(
-            "media-frame relative overflow-hidden",
-            isWide
-              ? "min-h-[18rem] sm:min-h-[20rem] xl:min-h-[24rem]"
-              : project.mediaFit === "contain"
-                ? "aspect-[1.06/1] sm:aspect-[1.08/0.94]"
-                : "aspect-[1.06/0.92] sm:aspect-[1.12/0.94]",
-          )}
-        >
-          <button
-            type="button"
-            onClick={onPreview}
+    <article
+      className={cn(
+        "card-surface group overflow-hidden rounded-[1.95rem] shadow-[0_28px_90px_rgba(0,0,0,0.18)]",
+        isWide && "md:col-span-2",
+      )}
+    >
+      <div
+        className={cn(
+          "media-frame relative overflow-hidden",
+          isWide
+            ? "min-h-[20rem] sm:min-h-[23rem] xl:min-h-[27rem]"
+            : project.mediaFit === "contain"
+              ? "aspect-[1.08/1.02] sm:aspect-[1.1/0.96]"
+              : "aspect-[1.08/0.94] sm:aspect-[1.14/0.98]",
+        )}
+      >
+        {href ? (
+          <Link
+            href={href}
+            target={external ? "_blank" : undefined}
+            rel={external ? "noreferrer" : undefined}
             className="card-trigger absolute inset-0 z-[3]"
             aria-label={resolveLocalizedValue(project.title, language)}
           />
-          <PortfolioMedia
-            project={project}
-            playMode="viewport"
-            inViewThreshold={isWide ? 0.28 : 0.4}
-            rootMargin={isWide ? "180px 0px -8% 0px" : "140px 0px -12% 0px"}
-            sizes={
-              isWide
-                ? "(min-width: 1280px) 40vw, (min-width: 768px) 50vw, 100vw"
-                : "(min-width: 1280px) 26vw, (min-width: 768px) 44vw, 100vw"
-            }
-          />
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(255,255,255,0.08),transparent_34%),linear-gradient(180deg,rgba(8,8,8,0.04),rgba(8,8,8,0.24)_44%,rgba(8,8,8,0.88)_100%)]" />
-          <div className="grain-overlay absolute inset-0 opacity-45" />
-          {group ? (
-            <span className="absolute left-4 top-4 z-[3] rounded-full border border-white/14 bg-black/26 px-3 py-1.5 text-[0.62rem] font-semibold uppercase tracking-[0.2em] text-white/78 backdrop-blur-xl">
-              {resolveLocalizedValue(group.title, language)}
-            </span>
-          ) : null}
-          <div className="absolute inset-x-0 bottom-0 z-[2] p-4 text-white sm:p-5">
-            <div className="flex flex-wrap items-center gap-2 text-[0.64rem] font-semibold uppercase tracking-[0.2em] text-white/56">
-              <span>{project.client}</span>
-              {project.year ? (
-                <>
-                  <span className="h-1 w-1 rounded-full bg-white/24" />
-                  <span>{project.year}</span>
-                </>
-              ) : null}
-            </div>
-            <h3 className="mt-3 text-[1.3rem] font-semibold tracking-[-0.04em] text-white sm:text-[1.5rem]">
-              {resolveLocalizedValue(project.title, language)}
-            </h3>
-          </div>
-          {hasPlayableVideo ? (
-            <span className="absolute right-4 top-4 z-[3] inline-flex h-11 w-11 items-center justify-center rounded-full border border-white/14 bg-white/90 text-[#111111] shadow-[0_16px_36px_rgba(0,0,0,0.22)] backdrop-blur-sm">
-              <PlayIcon className="h-4 w-4 translate-x-[1px]" />
-            </span>
-          ) : null}
-        </div>
+        ) : null}
 
-          <div className="relative flex h-full flex-col bg-[linear-gradient(180deg,rgba(255,255,255,0.05),rgba(255,255,255,0.01))] p-5 sm:p-6 lg:p-6">
-            <div className="space-y-3">
-              <p className={cn("body-copy text-[var(--muted-2)]", !isWide && "line-clamp-4 sm:line-clamp-3")}>
-                {resolveLocalizedValue(project.summary, language)}
-              </p>
-          </div>
+        <PortfolioMedia
+          project={project}
+          playMode="viewport"
+          inViewThreshold={isWide ? 0.26 : 0.38}
+          rootMargin={isWide ? "220px 0px -10% 0px" : "160px 0px -14% 0px"}
+          sizes={
+            isWide
+              ? "(min-width: 1280px) 64vw, (min-width: 768px) 72vw, 100vw"
+              : "(min-width: 1280px) 31vw, (min-width: 768px) 46vw, 100vw"
+          }
+        />
 
-          <div className="mt-auto flex flex-col gap-2.5 pt-5 sm:flex-row sm:flex-wrap">
-            {project.detailHref ? (
-              <ButtonLink href={project.detailHref} variant="ghost" className="w-full sm:w-auto">
-                {language === "no" ? "Se case" : "View case"}
-                <ArrowUpRightIcon className="h-4 w-4" />
-              </ButtonLink>
-            ) : (
-              <Button className="w-full sm:w-auto" onClick={onPreview}>
-                {previewLabel}
-              </Button>
-            )}
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(255,255,255,0.06),transparent_32%),linear-gradient(180deg,rgba(8,8,8,0.01),rgba(8,8,8,0.08)_46%,rgba(8,8,8,0.52)_100%)]" />
+
+        {group ? (
+          <span className="absolute left-4 top-4 z-[2] rounded-full border border-white/12 bg-black/18 px-3 py-1.5 text-[0.62rem] font-semibold uppercase tracking-[0.2em] text-white/78 backdrop-blur-xl">
+            {resolveLocalizedValue(group.title, language)}
+          </span>
+        ) : null}
+
+        <div className="absolute inset-x-0 bottom-0 z-[2] p-4 text-white sm:p-5">
+          <div className="flex flex-wrap items-center gap-2 text-[0.64rem] font-semibold uppercase tracking-[0.2em] text-white/60">
+            <span>{project.client}</span>
+            {project.year ? (
+              <>
+                <span className="h-1 w-1 rounded-full bg-white/24" />
+                <span>{project.year}</span>
+              </>
+            ) : null}
           </div>
+          <h3 className="mt-3 max-w-[18ch] text-[1.34rem] font-semibold tracking-[-0.04em] text-white sm:text-[1.56rem]">
+            {resolveLocalizedValue(project.title, language)}
+          </h3>
         </div>
       </div>
     </article>
@@ -500,16 +398,17 @@ function PortfolioMedia({
     className,
   );
 
-  const previewBehavior =
-    playMode === "static"
-      ? "static"
-      : "viewport";
+  const previewBehavior = playMode === "static" ? "static" : "viewport";
 
-  if (project.video && project.video.videoType === "direct" && playMode !== "static") {
+  if (
+    ((project.video && project.video.videoType === "direct") || project.externalVideo) &&
+    playMode !== "static"
+  ) {
     return (
       <PreviewMedia
         title={project.title}
         video={project.video}
+        externalVideo={project.externalVideo}
         image={project.image}
         imageAlt={project.imageAlt}
         mediaFit={project.mediaFit}
@@ -520,7 +419,7 @@ function PortfolioMedia({
         rootMargin={rootMargin}
         inViewThreshold={inViewThreshold}
         posterClassName={imageClassName}
-        previewClassName={cn("scale-[1.02]", project.mediaFit === "contain" && "object-contain p-5 sm:p-6")}
+        previewClassName={cn("scale-[1.01]", project.mediaFit === "contain" && "object-contain p-5 sm:p-6")}
       />
     );
   }
@@ -574,6 +473,14 @@ function PortfolioMedia({
       className={cn("object-cover transition duration-700 group-hover:scale-[1.03]", className)}
     />
   );
+}
+
+function getPortfolioCardHref(project: PortfolioProject) {
+  return project.detailHref ?? project.externalVideo?.sourceUrl ?? null;
+}
+
+function opensExternally(project: PortfolioProject) {
+  return !project.detailHref && Boolean(project.externalVideo?.sourceUrl);
 }
 
 function getPortfolioGroup(slug: string) {
