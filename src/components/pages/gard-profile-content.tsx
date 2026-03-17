@@ -1,10 +1,9 @@
 "use client";
 
 import Image from "next/image";
-import { useState } from "react";
+import { useRef, useState } from "react";
 
 import { PreviewMedia } from "@/components/media/preview-media";
-import { ProjectVideoModal } from "@/components/media/project-video-modal";
 import { Reveal } from "@/components/motion/reveal";
 import { useSitePreferences } from "@/components/providers/site-preferences";
 import { Button } from "@/components/ui/button";
@@ -47,39 +46,49 @@ function toPreviewProject(project: GardProject, companion?: GardProjectCompanion
 function GardEditorialCase({
   project,
   index,
-  onPreview,
 }: {
   project: GardProject;
   index: number;
-  onPreview: (project: GardProject) => void;
 }) {
   const { language } = useSitePreferences();
-  const title = resolveLocalizedValue(project.title, language);
+  const mediaRef = useRef<HTMLDivElement | null>(null);
+  const [activeProject, setActiveProject] = useState<GardProject>(project);
+  const title = resolveLocalizedValue(activeProject.title, language);
   const mediaFirst = index % 2 === 0;
   const availabilityNote =
-    project.video?.videoType === "request"
-      ? resolveLocalizedValue(project.video.availabilityNote, language)
+    activeProject.video?.videoType === "request"
+      ? resolveLocalizedValue(activeProject.video.availabilityNote, language)
       : null;
+
+  const focusInlineProject = (nextProject: GardProject) => {
+    setActiveProject(nextProject);
+    mediaRef.current?.scrollIntoView({ behavior: "smooth", block: "nearest" });
+  };
 
   return (
     <article className="grid gap-5 lg:grid-cols-[minmax(0,1.14fr)_minmax(20rem,0.86fr)] lg:gap-7 lg:items-stretch">
       <div className={cn("order-1", !mediaFirst && "lg:order-2")}>
-        <div className="media-frame group relative min-h-[18rem] overflow-hidden rounded-[2rem] bg-[#07090d] sm:min-h-[24rem] lg:min-h-[32rem]">
-          <button
-            type="button"
-            onClick={() => onPreview(project)}
-            aria-label={language === "no" ? `Åpne ${title}` : `Open ${title}`}
-            className="absolute inset-0 z-[3]"
-          />
+        <div
+          ref={mediaRef}
+          className="media-frame group relative min-h-[18rem] overflow-hidden rounded-[2rem] bg-[#07090d] sm:min-h-[24rem] lg:min-h-[32rem]"
+        >
+          {hasPlayableMedia(activeProject) ? (
+            <button
+              type="button"
+              onClick={() => focusInlineProject(activeProject)}
+              aria-label={language === "no" ? `Fokuser ${title}` : `Focus ${title}`}
+              className="absolute inset-0 z-[3]"
+            />
+          ) : null}
 
           <PreviewMedia
-            title={project.title}
-            video={project.video}
-            externalVideo={project.externalVideo}
-            image={project.image}
-            imageAlt={project.imageAlt}
-            mediaFit={project.mediaFit}
-            previewBehavior={project.preview ? "hover-or-viewport" : "static"}
+            title={activeProject.title}
+            video={activeProject.video}
+            externalVideo={activeProject.externalVideo}
+            image={activeProject.image}
+            imageAlt={activeProject.imageAlt}
+            mediaFit={activeProject.mediaFit}
+            previewBehavior={hasPlayableMedia(activeProject) ? "viewport" : "static"}
             className="absolute inset-0"
             sizes="(min-width: 1280px) 58vw, (min-width: 1024px) 54vw, 100vw"
             posterClassName="transition duration-700 group-hover:scale-[1.02]"
@@ -90,16 +99,16 @@ function GardEditorialCase({
           <div className="grain-overlay absolute inset-0 opacity-28" />
 
           <div className="absolute left-4 top-4 z-[4] flex flex-wrap items-center gap-2 text-[0.64rem] font-semibold uppercase tracking-[0.22em] text-white/74 sm:left-5 sm:top-5">
-            <span>{project.client}</span>
-            {project.year ? (
+            <span>{activeProject.client}</span>
+            {activeProject.year ? (
               <>
                 <span className="h-1 w-1 rounded-full bg-white/32" />
-                <span>{project.year}</span>
+                <span>{activeProject.year}</span>
               </>
             ) : null}
           </div>
 
-          {hasPlayableMedia(project) ? (
+          {hasPlayableMedia(activeProject) ? (
             <span className="absolute right-4 top-4 z-[4] inline-flex h-11 w-11 items-center justify-center rounded-full border border-white/16 bg-white/90 text-[#111111] shadow-[0_16px_40px_rgba(0,0,0,0.22)] backdrop-blur-md transition duration-300 group-hover:scale-[1.03] sm:right-5 sm:top-5">
               <PlayIcon className="h-4 w-4 translate-x-[1px]" />
             </span>
@@ -111,9 +120,9 @@ function GardEditorialCase({
         <div className="glass-panel flex w-full flex-col rounded-[2rem] px-5 py-5 sm:px-6 sm:py-6 lg:px-7 lg:py-7">
           <div className="space-y-4">
             <div className="flex flex-wrap items-center gap-2">
-              <span className="founder-profile-chip">{resolveLocalizedValue(project.format, language)}</span>
+              <span className="founder-profile-chip">{resolveLocalizedValue(activeProject.format, language)}</span>
               <span className="founder-profile-chip founder-profile-chip-muted">
-                {resolveLocalizedValue(project.role, language)}
+                {resolveLocalizedValue(activeProject.role, language)}
               </span>
             </div>
 
@@ -121,7 +130,7 @@ function GardEditorialCase({
               {title}
             </h3>
             <p className="body-lead max-w-[34rem] text-[var(--muted-2)]">
-              {resolveLocalizedValue(project.summary, language)}
+              {resolveLocalizedValue(activeProject.summary, language)}
             </p>
             {availabilityNote ? <p className="body-copy text-[var(--muted)]">{availabilityNote}</p> : null}
           </div>
@@ -136,7 +145,7 @@ function GardEditorialCase({
                   <button
                     key={companion.slug}
                     type="button"
-                    onClick={() => onPreview(toPreviewProject(project, companion))}
+                    onClick={() => focusInlineProject(toPreviewProject(project, companion))}
                     className="inline-flex items-center gap-2 rounded-full border border-[color:var(--line-strong)] bg-[color:var(--surface)]/78 px-3.5 py-2 text-left text-sm font-medium text-[color:var(--foreground)] transition duration-300 hover:border-[color:var(--accent)]/38 hover:bg-[color:var(--surface-2)]"
                   >
                     <span>{resolveLocalizedValue(companion.title, language)}</span>
@@ -148,8 +157,8 @@ function GardEditorialCase({
           ) : null}
 
           <div className="mt-auto flex flex-col gap-2.5 pt-6 sm:flex-row sm:flex-wrap">
-            {hasPlayableMedia(project) ? (
-              <Button className="w-full sm:w-auto" onClick={() => onPreview(project)}>
+            {(hasPlayableMedia(activeProject) || activeProject.image) ? (
+              <Button className="w-full sm:w-auto" onClick={() => focusInlineProject(activeProject)}>
                 {language === "no" ? "Se prosjekt" : "View project"}
               </Button>
             ) : null}
@@ -166,10 +175,8 @@ function GardEditorialCase({
 
 function ProjectGroupSection({
   group,
-  onPreview,
 }: {
   group: GardProjectGroup;
-  onPreview: (project: GardProject) => void;
 }) {
   const { language } = useSitePreferences();
 
@@ -188,7 +195,7 @@ function ProjectGroupSection({
         <div className="mt-7 space-y-8 sm:space-y-10 lg:space-y-12">
           {group.projects.map((project, index) => (
             <Reveal key={project.slug} delay={0.04 * index}>
-              <GardEditorialCase project={project} index={index} onPreview={onPreview} />
+              <GardEditorialCase project={project} index={index} />
             </Reveal>
           ))}
         </div>
@@ -199,7 +206,6 @@ function ProjectGroupSection({
 
 export function GardProfileContent() {
   const { language } = useSitePreferences();
-  const [activeProject, setActiveProject] = useState<GardProject | null>(null);
   const profile = gardProfilePage.baseProfile;
   const backgroundUsesPortrait = profile.heroBackground === profile.portrait;
 
@@ -376,7 +382,7 @@ export function GardProfileContent() {
       </section>
 
       {gardProfilePage.projectGroups.map((group) => (
-        <ProjectGroupSection key={group.slug} group={group} onPreview={setActiveProject} />
+        <ProjectGroupSection key={group.slug} group={group} />
       ))}
 
       <section className="section-space pt-0">
@@ -426,43 +432,6 @@ export function GardProfileContent() {
           </Reveal>
         </div>
       </section>
-
-      <ProjectVideoModal
-        open={Boolean(activeProject)}
-        onClose={() => setActiveProject(null)}
-        client={activeProject?.client}
-        title={activeProject?.title ?? { no: "", en: "" }}
-        summary={activeProject?.summary}
-        format={activeProject?.format}
-        year={activeProject?.year}
-        video={activeProject?.video}
-        externalVideo={activeProject?.externalVideo}
-        image={activeProject?.image}
-        imageAlt={activeProject?.imageAlt}
-        mediaFit={activeProject?.mediaFit}
-        primaryAction={
-          activeProject
-            ? {
-                href: "/kontakt",
-                label: {
-                  no: "Snakk med oss om lignende arbeid",
-                  en: "Talk to us about similar work",
-                },
-              }
-            : undefined
-        }
-        secondaryAction={
-          activeProject
-            ? {
-                href: "/case",
-                label: {
-                  no: "Se Fau&Land sitt arbeid",
-                  en: "See Fau&Land's work",
-                },
-              }
-            : undefined
-        }
-      />
     </main>
   );
 }
