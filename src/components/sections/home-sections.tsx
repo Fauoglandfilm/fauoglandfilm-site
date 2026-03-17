@@ -472,9 +472,9 @@ export function AboutSection() {
     <section className="section-space">
       <div className="site-container">
         <div className="grid gap-5 sm:gap-6 lg:grid-cols-[1.02fr_0.98fr] lg:items-center">
-          <FloatingLayer className="glass-panel relative overflow-hidden rounded-[1.9rem] p-5 shadow-[0_34px_110px_rgba(0,0,0,0.2)] sm:rounded-[2rem] sm:p-6 lg:p-7">
+          <FloatingLayer className="glass-panel home-team-panel relative overflow-hidden rounded-[1.9rem] p-5 shadow-[0_34px_110px_rgba(0,0,0,0.2)] sm:rounded-[2rem] sm:p-6 lg:p-7">
             <div className="glass-sheen absolute inset-0 opacity-50" />
-            <div className="relative space-y-5 sm:space-y-6">
+            <div className="relative space-y-4 sm:space-y-4.5">
               <div>
                 <p className="text-[0.66rem] font-semibold uppercase tracking-[0.22em] text-[var(--muted)]">
                   {language === "no" ? "Produksjonsselskap" : "Production company"}
@@ -486,28 +486,25 @@ export function AboutSection() {
                 </p>
               </div>
 
-              <div className="team-portrait-stage">
+              <div className="home-team-grid">
                 {featuredTeam.map((member, index) => (
                   <article
                     key={member.name}
                     className={cn(
-                      "team-portrait-card group",
-                      index === 0 ? "team-portrait-card-primary" : "team-portrait-card-secondary",
+                      "home-team-card group",
+                      index === 0 ? "home-team-card-primary" : "home-team-card-secondary",
                     )}
                   >
                     <Link
                       href={member.href ?? "/om-oss"}
-                      className="team-portrait-link block"
+                      className="home-team-link block"
                       aria-label={
                         language === "no"
                           ? `Se mer om ${member.name}`
                           : `View more about ${member.name}`
                       }
                     >
-                      <div className="team-portrait-scene">
-                        <div className="team-portrait-surface" />
-                        <div className="team-portrait-glow" />
-                        <div className="team-portrait-shadow" />
+                      <div className="home-team-scene">
                         {member.image ? (
                           <Image
                             src={member.image}
@@ -516,8 +513,8 @@ export function AboutSection() {
                             height={1500}
                             sizes="(min-width: 1280px) 26vw, (min-width: 768px) 42vw, 100vw"
                             className={cn(
-                              "team-portrait-image",
-                              index === 0 ? "team-portrait-image-left" : "team-portrait-image-right",
+                              "home-team-image",
+                              index === 0 ? "home-team-image-left" : "home-team-image-right",
                             )}
                           />
                         ) : null}
@@ -525,8 +522,8 @@ export function AboutSection() {
 
                       <div
                         className={cn(
-                          "team-portrait-copy",
-                          index === 0 ? "team-portrait-copy-left" : "team-portrait-copy-right",
+                          "home-team-copy",
+                          index === 0 ? "home-team-copy-left" : "home-team-copy-right",
                         )}
                       >
                         <span className="founder-profile-chip">
@@ -534,14 +531,14 @@ export function AboutSection() {
                         </span>
                         <div>
                           <h3 className="card-title text-[color:var(--foreground)]">{member.name}</h3>
-                          <p className="body-copy mt-3 text-[var(--muted-2)]">
+                          <p className="body-copy mt-2.5 text-[var(--muted-2)]">
                             {resolveLocalizedValue(member.summary, language)}
                           </p>
                         </div>
-                        <ButtonLink href={member.href ?? "/om-oss"} variant="ghost" size="compact" className="w-full sm:w-auto">
-                          {language === "no" ? "Se profil" : "View profile"}
+                        <span className="home-team-link-row">
+                          <span>{language === "no" ? "Se profil" : "View profile"}</span>
                           <ArrowUpRightIcon className="h-4 w-4 transition duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
-                        </ButtonLink>
+                        </span>
                       </div>
                     </Link>
                   </article>
