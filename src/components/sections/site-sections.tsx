@@ -262,19 +262,19 @@ export function TeamSection({
       title={copy.teamTitle}
       description={copy.teamDescription}
     >
-      <div className="grid gap-4 xl:grid-cols-[0.78fr_1.22fr]">
+      <div className="space-y-5">
         <FloatingLayer>
-          <article className="glass-panel rounded-[2rem] p-5 sm:p-6 lg:p-7">
+          <article className="glass-panel max-w-4xl rounded-[2rem] p-5 sm:p-6 lg:p-7">
             <p className="text-[0.68rem] font-semibold uppercase tracking-[0.22em] text-[var(--muted)]">
               {language === "no" ? "To ulike styrker" : "Two complementary strengths"}
             </p>
-            <h3 className="feature-title mt-3 max-w-md text-[color:var(--foreground)]">
+            <h3 className="feature-title mt-3 max-w-2xl text-[color:var(--foreground)]">
               {language === "no"
-                ? "En produsentprofil og en regiprofil, tett koblet i samme produksjon."
-                : "A producer profile and a directing profile, tightly connected inside the same production company."}
+                ? "Tommy holder produsentsporet tett, mens Gard leder regi, fortelling og klipp."
+                : "Tommy keeps the producing track tight, while Gard leads direction, story and edit."}
             </h3>
 
-            <ul className="mt-6 space-y-3 text-sm leading-6 text-[var(--muted-2)] sm:text-base">
+            <ul className="mt-6 grid gap-3 text-sm leading-6 text-[var(--muted-2)] sm:text-base lg:grid-cols-3">
               {bullets.map((bullet, index) => (
                 <li key={`team-bullet-${index}`} className="flex gap-3">
                   <span className="mt-2 h-1.5 w-1.5 rounded-full bg-[var(--accent)]" />
@@ -291,13 +291,13 @@ export function TeamSection({
           </article>
         </FloatingLayer>
 
-        <div className="grid gap-4 md:grid-cols-2 lg:items-start">
+        <div className="grid gap-5 md:grid-cols-2">
           {team.map((member, index) => (
             <Reveal key={member.name} delay={0.05 * index}>
-              <article className="founder-card-shell group relative overflow-hidden rounded-[2rem] p-4 sm:p-5">
+              <article className="founder-card-shell group relative overflow-hidden rounded-[2rem] px-5 pb-6 pt-5 sm:px-6 sm:pb-7 sm:pt-6">
                 <div className="glass-sheen absolute inset-0 opacity-60" />
-                <div className="pointer-events-none absolute right-[-10%] top-[-6%] h-32 w-32 rounded-full bg-[radial-gradient(circle,rgba(122,168,255,0.22),transparent_72%)] blur-3xl opacity-75" />
-                <div className="pointer-events-none absolute bottom-[-14%] left-[-8%] h-28 w-28 rounded-full bg-[radial-gradient(circle,rgba(255,255,255,0.18),transparent_72%)] blur-3xl opacity-70" />
+                <div className="pointer-events-none absolute right-[-10%] top-[-8%] h-36 w-36 rounded-full bg-[radial-gradient(circle,rgba(122,168,255,0.24),transparent_72%)] blur-3xl opacity-80" />
+                <div className="pointer-events-none absolute bottom-[-12%] left-[-6%] h-32 w-32 rounded-full bg-[radial-gradient(circle,rgba(255,255,255,0.16),transparent_74%)] blur-3xl opacity-72" />
 
                 {member.image ? (
                   <Link
@@ -309,8 +309,9 @@ export function TeamSection({
                         : `View more about ${member.name}`
                     }
                   >
-                    <div className="founder-portrait-shell relative aspect-[4/5] overflow-hidden">
-                      <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_20%,rgba(255,255,255,0.18),transparent_34%),linear-gradient(180deg,rgba(19,24,36,0.68),rgba(19,24,36,0.26)_36%,rgba(19,24,36,0.58)_100%)]" />
+                    <div className="founder-cutout-stage relative min-h-[22rem] overflow-hidden sm:min-h-[25rem]">
+                      <div className="pointer-events-none absolute inset-x-[8%] bottom-[8%] h-10 rounded-full bg-[radial-gradient(circle,rgba(0,0,0,0.32),transparent_72%)] blur-xl opacity-60" />
+                      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_50%_12%,rgba(255,255,255,0.18),transparent_24%),radial-gradient(circle_at_18%_78%,rgba(122,168,255,0.14),transparent_26%),radial-gradient(circle_at_82%_76%,rgba(255,255,255,0.1),transparent_24%)]" />
                       <Image
                         src={member.image}
                         alt={
@@ -320,7 +321,7 @@ export function TeamSection({
                         }
                         fill
                         sizes="(min-width: 1280px) 24vw, (min-width: 768px) 42vw, 100vw"
-                        className="object-contain object-bottom p-4 transition duration-700 group-hover:scale-[1.03] sm:p-5"
+                        className="founder-cutout-image object-contain object-bottom px-3 pt-3 transition duration-700 group-hover:scale-[1.035] sm:px-4 sm:pt-4"
                       />
                     </div>
                   </Link>

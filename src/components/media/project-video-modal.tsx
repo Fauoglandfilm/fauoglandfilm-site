@@ -126,7 +126,7 @@ export function ProjectVideoModal({
               image={image}
               imageAlt={imageAlt}
               mediaFit={mediaFit}
-              autoplay={Boolean(externalVideo)}
+              autoplay={video?.videoType === "direct"}
               className="relative aspect-[1/1.08] sm:aspect-video"
               sizes="(min-width: 1024px) 72vw, 100vw"
             />

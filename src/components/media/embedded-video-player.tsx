@@ -237,6 +237,29 @@ export function EmbeddedVideoPlayer({
     autoplay ? "autoplay" : "manual",
   ].join("::");
 
+  if (externalVideo && previewMode) {
+    if (fallbackSrc) {
+      return (
+        <div className={cn("relative overflow-hidden", className)}>
+          <Image
+            src={fallbackSrc}
+            alt={resolvedImageAlt}
+            fill
+            priority={priority}
+            sizes={sizes}
+            className={mediaObjectClass}
+          />
+        </div>
+      );
+    }
+
+    return (
+      <div className={cn(className, "relative overflow-hidden")} aria-label={resolvedTitle}>
+        <FallbackSurface />
+      </div>
+    );
+  }
+
   if (externalVideo) {
     return (
       <ManagedExternalFrame

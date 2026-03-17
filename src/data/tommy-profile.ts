@@ -434,6 +434,6 @@ export const tommyProfilePage = {
     no: "Se porteføljen",
     en: "See the portfolio",
   },
-  contactEmail: siteConfig.email,
+  contactEmail: "tommy@fauoglandfilm.com",
   contactPhone: siteConfig.phonePrimary,
 };

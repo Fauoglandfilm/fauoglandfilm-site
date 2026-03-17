@@ -211,6 +211,7 @@ export function TommyProfileContent() {
   const { language } = useSitePreferences();
   const [activeProject, setActiveProject] = useState<TommyProject | null>(null);
   const profile = tommyProfilePage.baseProfile;
+  const backgroundUsesPortrait = profile.heroBackground === profile.portrait;
 
   return (
     <main>
@@ -222,14 +223,26 @@ export function TommyProfileContent() {
             fill
             priority
             sizes="100vw"
-            className="object-cover image-slow-zoom"
+            className={cn(
+              "image-slow-zoom",
+              backgroundUsesPortrait
+                ? "object-cover object-[center_16%] scale-[1.06] opacity-48 blur-[2px]"
+                : "object-cover",
+            )}
           />
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_18%_18%,rgba(255,255,255,0.08),transparent_22%),linear-gradient(96deg,rgba(5,7,11,0.9),rgba(5,7,11,0.62)_34%,rgba(5,7,11,0.34)_62%,rgba(5,7,11,0.84)_100%),linear-gradient(180deg,rgba(6,6,9,0.12),rgba(6,6,9,0.18)_28%,rgba(6,6,9,0.84)_100%)]" />
+          <div
+            className={cn(
+              "absolute inset-0",
+              backgroundUsesPortrait
+                ? "bg-[radial-gradient(circle_at_18%_18%,rgba(255,255,255,0.1),transparent_22%),linear-gradient(94deg,rgba(5,7,11,0.94),rgba(5,7,11,0.7)_34%,rgba(5,7,11,0.48)_60%,rgba(5,7,11,0.92)_100%),linear-gradient(180deg,rgba(6,6,9,0.12),rgba(6,6,9,0.18)_28%,rgba(6,6,9,0.9)_100%)]"
+                : "bg-[radial-gradient(circle_at_18%_18%,rgba(255,255,255,0.08),transparent_22%),linear-gradient(96deg,rgba(5,7,11,0.9),rgba(5,7,11,0.62)_34%,rgba(5,7,11,0.34)_62%,rgba(5,7,11,0.84)_100%),linear-gradient(180deg,rgba(6,6,9,0.12),rgba(6,6,9,0.18)_28%,rgba(6,6,9,0.84)_100%)]",
+            )}
+          />
           <div className="grain-overlay absolute inset-0 opacity-38" />
         </div>
 
-        <div className="site-container relative flex min-h-[68svh] items-end pb-8 sm:min-h-[72svh] sm:pb-10 lg:min-h-[78svh] lg:pb-12">
-          <div className="grid w-full gap-6 lg:grid-cols-[minmax(0,0.86fr)_minmax(18rem,0.72fr)] lg:items-end">
+        <div className="site-container relative flex min-h-[66svh] items-center py-8 sm:min-h-[70svh] sm:py-10 lg:min-h-[74svh] lg:py-12">
+          <div className="grid w-full gap-6 lg:grid-cols-[minmax(0,0.72fr)_minmax(21rem,0.88fr)] lg:items-center lg:gap-8">
             <Reveal className="max-w-3xl" delay={0.04} y={18}>
               <div className="subpage-hero-panel relative overflow-hidden px-5 py-5 text-white sm:px-7 sm:py-6 lg:px-8 lg:py-7">
                 <div className="glass-sheen absolute inset-0 opacity-75" />
@@ -267,15 +280,16 @@ export function TommyProfileContent() {
             </Reveal>
 
             <FloatingLayer className="lg:justify-self-end">
-              <div className="founder-portrait-panel">
-                <div className="founder-portrait-shell relative aspect-[4/5] overflow-hidden">
-                  <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_18%,rgba(255,255,255,0.18),transparent_34%),linear-gradient(180deg,rgba(19,24,36,0.62),rgba(19,24,36,0.2)_38%,rgba(19,24,36,0.52)_100%)]" />
+              <div className="founder-portrait-panel w-full max-w-[33rem]">
+                <div className="founder-cutout-stage relative min-h-[22rem] overflow-hidden sm:min-h-[26rem] lg:min-h-[29rem]">
+                  <div className="pointer-events-none absolute inset-x-[12%] bottom-[7%] h-12 rounded-full bg-[radial-gradient(circle,rgba(0,0,0,0.34),transparent_72%)] blur-xl opacity-62" />
+                  <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_50%_12%,rgba(255,255,255,0.22),transparent_26%),radial-gradient(circle_at_18%_78%,rgba(122,168,255,0.16),transparent_26%),radial-gradient(circle_at_84%_76%,rgba(255,255,255,0.1),transparent_24%)]" />
                   <Image
                     src={profile.portrait}
                     alt={resolveLocalizedValue(profile.portraitAlt, language)}
                     fill
                     sizes="(min-width: 1280px) 28vw, (min-width: 1024px) 34vw, 100vw"
-                    className="object-contain object-bottom p-4 sm:p-5"
+                    className="founder-cutout-image object-contain object-top px-4 pt-2 sm:px-5 sm:pt-3"
                   />
                 </div>
               </div>

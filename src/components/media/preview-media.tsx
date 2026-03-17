@@ -107,6 +107,7 @@ export function PreviewMedia({
   const posterSrc = resolvePosterSrc(video, externalVideo, image);
   const hasDirectPreview = video?.videoType === "direct";
   const hasExternalPreview = Boolean(externalVideo);
+  const hasPlayableMedia = hasDirectPreview || hasExternalPreview;
 
   const shouldPlay =
     previewBehavior === "always"
@@ -120,7 +121,7 @@ export function PreviewMedia({
               ? isHovered
               : isInView
             : false;
-  const shouldRenderPreview = shouldPlay && (hasDirectPreview || hasExternalPreview);
+  const shouldRenderPreview = shouldPlay && hasDirectPreview;
   const mediaObjectClass =
     mediaFit === "contain" ? "object-contain p-5 sm:p-6" : "object-cover";
 
@@ -142,7 +143,11 @@ export function PreviewMedia({
           className={cn(
             mediaObjectClass,
             "transition duration-700",
-            shouldRenderPreview ? "scale-[1.015] opacity-100" : "scale-100 opacity-100",
+            shouldRenderPreview
+              ? "scale-[1.015] opacity-100"
+              : hasPlayableMedia && shouldPlay
+                ? "scale-[1.02] opacity-100"
+                : "scale-100 opacity-100",
             posterClassName,
           )}
         />
