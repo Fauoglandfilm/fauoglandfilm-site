@@ -128,7 +128,7 @@ export const siteVisuals = {
   },
   introShowcase: {
     filename: "portfolio-ville-gleder-wilderness-poster.jpg",
-    src: "/assets/portfolio/ville-gleder/posters/villmarksforedrag-poster.jpg",
+    src: "/assets/portfolio/ville-gleder/stills/villmarksforedrag-photo.jpg",
     alt: {
       no: "Cinematic still fra Ville Gleder-produksjon",
       en: "Cinematic still from the Ville Gleder production",
