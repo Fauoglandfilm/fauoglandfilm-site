@@ -219,6 +219,13 @@ function ManagedDirectVideo({
 }: ManagedDirectVideoProps) {
   const [isReady, setIsReady] = useState(false);
   const [hasFailed, setHasFailed] = useState(false);
+  const [hasStartedPlayback, setHasStartedPlayback] = useState(false);
+  const shouldHoldPosterUntilPlay = !previewMode && !autoplay;
+  const posterVisible = hasFailed
+    ? true
+    : shouldHoldPosterUntilPlay
+      ? !hasStartedPlayback
+      : !isReady;
 
   return (
     <div
@@ -238,8 +245,8 @@ function ManagedDirectVideo({
           fallbackContent={<FallbackSurface />}
           className={cn(
             mediaObjectClass,
-            "transition duration-500",
-            isReady && !hasFailed ? "opacity-0" : "opacity-100",
+            "pointer-events-none transition duration-500",
+            posterVisible ? "opacity-100" : "opacity-0",
           )}
         />
       ) : (
@@ -262,6 +269,7 @@ function ManagedDirectVideo({
           poster={video.poster ?? image}
           onLoadedData={() => setIsReady(true)}
           onCanPlay={() => setIsReady(true)}
+          onPlay={() => setHasStartedPlayback(true)}
           onError={() => setHasFailed(true)}
         >
           {video.mobileSrc ? (
