@@ -64,7 +64,6 @@ export function PortfolioPageContent({
     language === "no"
       ? `${filteredProjects.length} prosjekter`
       : `${filteredProjects.length} projects`;
-  const directPreviewCount = allProjects.filter((project) => project.video?.videoType === "direct").length;
   const modalPrimaryAction = activeProject?.detailHref
     ? {
         href: activeProject.detailHref,
@@ -101,14 +100,10 @@ export function PortfolioPageContent({
           catalogTitle: "Hele porteføljen",
           catalogDescription:
             "Filtrer på kategori og åpne prosjektene direkte.",
-          catalogHint: "Direkte videoprosjekter får levende preview på desktop.",
+          catalogHint: "",
           openProject: "Åpne prosjekt",
           openPreview: "Se preview",
-          showreelStats: [
-            { label: "Kategorier", value: String(portfolioSections.length) },
-            { label: "Utvalgte filmer", value: String(allProjects.length) },
-            { label: "Levende previews", value: String(directPreviewCount) },
-          ],
+          showreelStats: [],
         }
       : {
           filterAll: "All work",
@@ -120,14 +115,10 @@ export function PortfolioPageContent({
           catalogTitle: "The full portfolio",
           catalogDescription:
             "Filter by category and open the projects directly.",
-          catalogHint: "Direct video projects reveal motion previews on desktop.",
+          catalogHint: "",
           openProject: "Open project",
           openPreview: "Open preview",
-          showreelStats: [
-            { label: "Categories", value: String(portfolioSections.length) },
-            { label: "Selected films", value: String(allProjects.length) },
-            { label: "Motion previews", value: String(directPreviewCount) },
-          ],
+          showreelStats: [],
         };
 
   return (
@@ -215,22 +206,6 @@ export function PortfolioPageContent({
                   </p>
                 </div>
 
-                <div className="adaptive-grid-compact mt-6">
-                  {copy.showreelStats.map((item) => (
-                    <div
-                      key={item.label}
-                      className="rounded-[1.3rem] border border-[color:var(--line)] bg-[color:var(--surface)] px-4 py-4"
-                    >
-                      <p className="text-[0.64rem] font-semibold uppercase tracking-[0.2em] text-[var(--muted)]">
-                        {item.label}
-                      </p>
-                      <p className="mt-2 font-display text-[1.45rem] text-[color:var(--foreground)]">
-                        {item.value}
-                      </p>
-                    </div>
-                  ))}
-                </div>
-
                 <div className="mt-auto flex flex-col gap-2.5 pt-6 sm:flex-row sm:flex-wrap">
                   <Button className="w-full sm:w-auto" onClick={() => setActiveProject(showreelProject)}>
                     {resolveLocalizedValue(portfolioPageContent.showreelPrimaryCta, language)}
@@ -252,7 +227,6 @@ export function PortfolioPageContent({
               <div className="max-w-3xl space-y-3">
                 <span className="eyebrow">{copy.featuredEyebrow}</span>
                 <h2 className="section-title text-[color:var(--foreground)]">{copy.featuredTitle}</h2>
-                <p className="body-lead max-w-2xl text-[var(--muted-2)]">{copy.featuredDescription}</p>
               </div>
               <ButtonLink href="#portfolio-grid" variant="ghost" className="w-full sm:w-auto">
                 {language === "no" ? "Se hele porteføljen" : "View full portfolio"}
@@ -368,11 +342,7 @@ export function PortfolioPageContent({
           no: "Send en kort brief",
           en: "Send a short brief",
         }}
-        secondaryLabel={{
-          no: "Se tjenestene",
-          en: "See services",
-        }}
-        secondaryHref="/tjenester"
+        secondaryLabel={null}
         align="center"
       />
 
@@ -413,10 +383,6 @@ function PortfolioProjectCard({
   const hasPlayableVideo = Boolean(
     project.externalVideo || (project.video && project.video.videoType === "direct"),
   );
-  const availabilityNote =
-    project.video?.videoType === "request"
-      ? resolveLocalizedValue(project.video.availabilityNote, language)
-      : null;
   const isWide = layout === "wide";
 
   return (
@@ -477,29 +443,22 @@ function PortfolioProjectCard({
 
           <div className="relative flex h-full flex-col bg-[linear-gradient(180deg,rgba(255,255,255,0.05),rgba(255,255,255,0.01))] p-5 sm:p-6 lg:p-6">
             <div className="space-y-3">
-              <div className="flex flex-wrap items-center gap-2">
-                <span className="rounded-full border border-[color:var(--line)] bg-white/[0.04] px-3 py-1.5 text-[0.68rem] font-semibold uppercase tracking-[0.18em] text-[color:var(--foreground)] backdrop-blur-xl">
-                  {resolveLocalizedValue(project.format, language)}
-                </span>
-              </div>
               <p className={cn("body-copy text-[var(--muted-2)]", !isWide && "line-clamp-4 sm:line-clamp-3")}>
                 {resolveLocalizedValue(project.summary, language)}
               </p>
-            {availabilityNote ? (
-              <p className="text-sm leading-6 text-[var(--muted)]">{availabilityNote}</p>
-            ) : null}
           </div>
 
           <div className="mt-auto flex flex-col gap-2.5 pt-5 sm:flex-row sm:flex-wrap">
-            <Button className="w-full sm:w-auto" onClick={onPreview}>
-              {previewLabel}
-            </Button>
             {project.detailHref ? (
               <ButtonLink href={project.detailHref} variant="ghost" className="w-full sm:w-auto">
                 {language === "no" ? "Se case" : "View case"}
                 <ArrowUpRightIcon className="h-4 w-4" />
               </ButtonLink>
-            ) : null}
+            ) : (
+              <Button className="w-full sm:w-auto" onClick={onPreview}>
+                {previewLabel}
+              </Button>
+            )}
           </div>
         </div>
       </div>

@@ -27,7 +27,6 @@ import { cn } from "@/lib/utils";
 import { ButtonLink } from "../ui/button-link";
 import { ArrowUpRightIcon, MailIcon, PhoneIcon, PinIcon } from "../ui/icons";
 import { SectionShell } from "../ui/section-shell";
-import { SocialLinksRow } from "../ui/social-links";
 import { CaseCard } from "./case-card";
 import { ContactForm } from "./contact-form";
 import { ServiceCard } from "./service-card";
@@ -75,23 +74,30 @@ export function PriceGuideSection({ items }: { items: PriceGuide[] }) {
       title={copy.priceGuideTitle}
       description={copy.priceGuideDescription}
     >
-      <div className="adaptive-grid-compact">
-        {items.map((item, index) => (
-          <Reveal key={`price-guide-${index}`} delay={0.05 * index}>
-            <article className="card-surface rounded-[1.7rem] p-5">
-              <p className="text-[0.68rem] font-semibold uppercase tracking-[0.2em] text-[var(--muted)]">
-                {resolveLocalizedValue(item.range, language)}
-              </p>
-              <h3 className="card-title mt-3 text-[color:var(--foreground)]">
-                {resolveLocalizedValue(item.title, language)}
-              </h3>
-              <p className="body-copy mt-3 text-[var(--muted-2)]">
-                {resolveLocalizedValue(item.detail, language)}
-              </p>
-            </article>
-          </Reveal>
-        ))}
-      </div>
+      <Reveal>
+        <article className="glass-panel overflow-hidden rounded-[1.9rem]">
+          <div className="divide-y divide-[color:var(--line)]/80">
+            {items.map((item, index) => (
+              <div
+                key={`price-guide-${index}`}
+                className="grid gap-3 px-5 py-5 sm:px-6 sm:py-6 lg:grid-cols-[minmax(13rem,0.42fr)_minmax(0,1fr)] lg:items-start"
+              >
+                <div className="space-y-2">
+                  <p className="text-[0.68rem] font-semibold uppercase tracking-[0.2em] text-[var(--muted)]">
+                    {resolveLocalizedValue(item.range, language)}
+                  </p>
+                  <h3 className="card-title text-[color:var(--foreground)]">
+                    {resolveLocalizedValue(item.title, language)}
+                  </h3>
+                </div>
+                <p className="body-copy text-[var(--muted-2)]">
+                  {resolveLocalizedValue(item.detail, language)}
+                </p>
+              </div>
+            ))}
+          </div>
+        </article>
+      </Reveal>
     </SectionShell>
   );
 }
@@ -143,28 +149,33 @@ export function ProcessSection({ steps }: { steps: ProcessStep[] }) {
       description={copy.processDescription}
       align="center"
     >
-      <div className="adaptive-grid-compact">
-        {steps.map((step, index) => (
-          <Reveal key={step.step} delay={0.05 * index}>
-            <article className="card-surface rounded-[1.7rem] p-5">
-              <div className="flex items-center gap-3">
+      <Reveal>
+        <article className="glass-panel overflow-hidden rounded-[1.9rem]">
+          <div className="divide-y divide-[color:var(--line)]/80">
+            {steps.map((step) => (
+              <div
+                key={step.step}
+                className="grid gap-4 px-5 py-5 sm:px-6 sm:py-6 lg:grid-cols-[auto_minmax(11rem,0.42fr)_minmax(0,1fr)] lg:items-start lg:gap-5"
+              >
                 <span className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-[color:var(--line)] bg-[color:var(--surface)] font-display text-[1.15rem] text-[color:var(--foreground)]">
                   {step.step}
                 </span>
-                <p className="text-[0.66rem] font-semibold uppercase tracking-[0.18em] text-[var(--muted)]">
-                  {language === "no" ? "Steg" : "Step"}
+                <div className="space-y-1.5">
+                  <p className="text-[0.66rem] font-semibold uppercase tracking-[0.18em] text-[var(--muted)]">
+                    {language === "no" ? "Steg" : "Step"}
+                  </p>
+                  <h3 className="card-title text-[color:var(--foreground)]">
+                    {resolveLocalizedValue(step.title, language)}
+                  </h3>
+                </div>
+                <p className="body-copy text-[var(--muted-2)]">
+                  {resolveLocalizedValue(step.description, language)}
                 </p>
               </div>
-              <h3 className="card-title mt-4 text-[color:var(--foreground)]">
-                {resolveLocalizedValue(step.title, language)}
-              </h3>
-              <p className="body-copy mt-3 text-[var(--muted-2)]">
-                {resolveLocalizedValue(step.description, language)}
-              </p>
-            </article>
-          </Reveal>
-        ))}
-      </div>
+            ))}
+          </div>
+        </article>
+      </Reveal>
     </SectionShell>
   );
 }
@@ -367,15 +378,12 @@ export function TeamSection({
 }
 
 export function ContactLeadSection({
-  faqs = [],
-  compact = false,
 }: {
   faqs?: FaqItem[];
   compact?: boolean;
 }) {
   const { language } = useSitePreferences();
   const copy = uiCopy.siteSections[language];
-  const visibleFaqs = faqs.slice(0, compact ? 2 : faqs.length);
 
   return (
     <SectionShell
@@ -396,14 +404,6 @@ export function ContactLeadSection({
             <ContactRow icon={<PhoneIcon className="h-5 w-5" />} label={copy.contactPhone} value={siteConfig.phonePrimary} href={siteConfig.phonePrimaryHref} />
             <ContactRow icon={<PinIcon className="h-5 w-5" />} label={copy.contactBase} value={siteConfig.locationLabel} />
           </div>
-
-          <div className="mt-6 border-t border-[color:var(--line)] pt-6">
-            <SocialLinksRow
-              title={copy.contactSocialTitle}
-              description={copy.contactSocialDescription}
-              compact
-            />
-          </div>
         </article>
 
         <div className="grid gap-4">
@@ -414,30 +414,11 @@ export function ContactLeadSection({
                   {copy.contactBriefDescription}
                 </p>
               </div>
-                <div className="mt-6">
-                  <ContactForm />
-                </div>
+              <div className="mt-6">
+                <ContactForm />
+              </div>
             </div>
           </article>
-
-          {visibleFaqs.length ? (
-            <div className="adaptive-grid-compact">
-              {visibleFaqs.map((faq, index) => (
-                <details
-                  key={`contact-faq-${index}`}
-                  className="card-surface rounded-[1.3rem] px-4 py-4"
-                  open={index === 0}
-                >
-                  <summary className="cursor-pointer list-none text-sm font-semibold text-[color:var(--foreground)] sm:text-base">
-                    {resolveLocalizedValue(faq.question, language)}
-                  </summary>
-                  <p className="mt-3 text-sm leading-6 text-[var(--muted-2)]">
-                    {resolveLocalizedValue(faq.answer, language)}
-                  </p>
-                </details>
-              ))}
-            </div>
-          ) : null}
         </div>
       </div>
     </SectionShell>
@@ -493,37 +474,38 @@ export function FaqList({
   const copy = uiCopy.siteSections[language];
 
   const content = (
-    <>
-      <div className="mx-auto max-w-4xl space-y-3">
-        {items.map((item, index) => (
-          <details
-            key={`faq-item-${index}`}
-            className="card-surface rounded-[1.5rem] px-5 py-4"
-            open={index === 0}
-          >
-            <summary className="cursor-pointer list-none text-base font-semibold text-[color:var(--foreground)] sm:text-lg">
-              {resolveLocalizedValue(item.question, language)}
-            </summary>
-            <p className="mt-3 text-sm leading-6 text-[var(--muted-2)] sm:text-base sm:leading-7">
-              {resolveLocalizedValue(item.answer, language)}
+    <div className="mx-auto max-w-4xl">
+      <article className="glass-panel overflow-hidden rounded-[1.8rem] shadow-[0_24px_80px_rgba(0,0,0,0.16)]">
+        <div className="divide-y divide-[color:var(--line)]/80">
+          {items.map((item, index) => (
+            <details
+              key={`faq-item-${index}`}
+              className="px-5 py-4 sm:px-6 sm:py-5"
+              open={index === 0}
+            >
+              <summary className="cursor-pointer list-none text-base font-semibold text-[color:var(--foreground)] sm:text-lg">
+                {resolveLocalizedValue(item.question, language)}
+              </summary>
+              <p className="mt-3 text-sm leading-6 text-[var(--muted-2)] sm:text-base sm:leading-7">
+                {resolveLocalizedValue(item.answer, language)}
+              </p>
+            </details>
+          ))}
+        </div>
+        <div className="border-t border-[color:var(--line)]/80 px-5 py-5 sm:px-6 sm:py-6">
+          <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+            <p className="text-sm leading-6 text-[var(--muted-2)] sm:text-base">
+              {language === "no"
+                ? "Finner dere ikke svaret her, sender dere bare en kort brief."
+                : "If you do not find the answer here, just send a short brief."}
             </p>
-          </details>
-        ))}
-
-        <div className="glass-panel mt-5 rounded-[1.55rem] px-5 py-5 text-center shadow-[0_24px_80px_rgba(0,0,0,0.16)]">
-          <p className="text-sm leading-6 text-[var(--muted-2)] sm:text-base">
-            {language === "no"
-              ? "Fant dere ikke helt det dere lurte på? Send en kort brief, så svarer vi raskt på format, prisnivå og neste steg."
-              : "Did not find exactly what you were looking for? Send a short brief and we will quickly answer on format, budget level and next steps."}
-          </p>
-          <div className="mt-4 flex justify-center">
             <ButtonLink href="/kontakt" variant="ghost" className="w-full sm:w-auto">
               {language === "no" ? "Send en kort brief" : "Send a short brief"}
             </ButtonLink>
           </div>
         </div>
-      </div>
-    </>
+      </article>
+    </div>
   );
 
   if (hideHeader) {
