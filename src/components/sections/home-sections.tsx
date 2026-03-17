@@ -86,7 +86,7 @@ export function HeroSection() {
                     {resolveLocalizedValue(homeHeroContent.ctaLabel, language)}
                   </ButtonLink>
                   <ButtonLink
-                    href="#selected-work"
+                    href="/priser"
                     variant="secondary"
                     className="hero-cta-secondary w-full sm:w-auto"
                   >
@@ -119,7 +119,12 @@ export function SelectedWorkSection({ items }: { items: CaseStudy[] }) {
               {copy.selectedWorkDescription}
             </p>
           </div>
-          <div className="body-copy text-[var(--muted)] lg:max-w-xs lg:text-right">{copy.selectedWorkHint}</div>
+          <div className="flex flex-col gap-2 lg:items-end">
+            <p className="body-copy text-[var(--muted)] lg:max-w-xs lg:text-right">{copy.selectedWorkHint}</p>
+            <ButtonLink href="/case" variant="ghost" className="w-full sm:w-auto">
+              {language === "no" ? "Se porteføljen" : "View portfolio"}
+            </ButtonLink>
+          </div>
         </div>
 
         <div className="mt-6 grid gap-4 sm:mt-8">
@@ -478,9 +483,9 @@ export function FeaturedCase() {
 
                   <div className="grid gap-3 sm:gap-4 sm:grid-cols-3">
                     {[
+                      { label: copy.featuredCaseImpact, value: resolveLocalizedValue(featuredCase.impact, language) },
                       { label: copy.featuredCaseGoal, value: resolveLocalizedValue(featuredCase.goal, language) },
                       { label: copy.featuredCaseSolution, value: resolveLocalizedValue(featuredCase.solution, language) },
-                      { label: copy.featuredCaseImpact, value: resolveLocalizedValue(featuredCase.impact, language) },
                     ].map((item) => (
                       <div key={item.label} className="border-t border-white/10 pt-4">
                         <p className="text-[0.7rem] uppercase tracking-[0.18em] text-white/42">

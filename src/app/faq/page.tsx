@@ -32,6 +32,7 @@ export default function FaqPage() {
         title={{ no: copy.no.faqHeroTitle, en: copy.en.faqHeroTitle }}
         description={{ no: copy.no.faqHeroDescription, en: copy.en.faqHeroDescription }}
         items={[...pricingFaq, ...contactFaq]}
+        hideHeader
       />
       <ContactLeadSection compact />
     </main>

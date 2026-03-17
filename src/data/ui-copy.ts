@@ -42,7 +42,7 @@ export const uiCopy = {
   home: {
     no: {
       heroBadge: "OSLO / REKLAMEFILM / BRAND STORYTELLING",
-      heroSecondaryCta: "Se hva vi har laget",
+      heroSecondaryCta: "Se priser",
       heroPanelEyebrow: "Hvorfor Fau&Land",
       heroPanelTitle: "Historier som kjennes. Resultater som merkes.",
       heroPanelDescription:
@@ -77,7 +77,7 @@ export const uiCopy = {
     },
     en: {
       heroBadge: "OSLO / COMMERCIAL FILM / BRAND STORYTELLING",
-      heroSecondaryCta: "See what we've made",
+      heroSecondaryCta: "See pricing",
       heroPanelEyebrow: "Why Fau&Land",
       heroPanelTitle: "Stories you feel. Results you notice.",
       heroPanelDescription:

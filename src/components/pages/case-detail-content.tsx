@@ -40,87 +40,116 @@ export function CaseDetailContent({
       />
 
       <section className="section-space">
-        <div className="mx-auto grid max-w-7xl gap-4 px-4 sm:gap-5 sm:px-6 lg:grid-cols-[0.94fr_1.06fr] lg:px-8">
-          <div className="space-y-5">
-            <article className="card-surface overflow-hidden rounded-[2rem]">
-              {caseStudy.video || caseStudy.externalVideo ? (
-                <div className="relative aspect-video w-full bg-[#111111]">
-                  <EmbeddedVideoPlayer
-                    title={caseStudy.title}
-                    video={caseStudy.video}
-                    externalVideo={caseStudy.externalVideo}
-                    image={caseStudy.image}
-                    imageAlt={caseStudy.imageAlt}
-                    className="relative h-full w-full"
-                    sizes="(min-width: 1024px) 48vw, 100vw"
-                  />
-                  <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(17,17,17,0.04),rgba(17,17,17,0.24))]" />
+        <div className="site-container space-y-5">
+          <article className="card-surface overflow-hidden rounded-[2rem]">
+            {caseStudy.video || caseStudy.externalVideo ? (
+              <div className="relative aspect-video w-full bg-[#111111]">
+                <EmbeddedVideoPlayer
+                  title={caseStudy.title}
+                  video={caseStudy.video}
+                  externalVideo={caseStudy.externalVideo}
+                  image={caseStudy.image}
+                  imageAlt={caseStudy.imageAlt}
+                  className="relative h-full w-full"
+                  sizes="100vw"
+                />
+                <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(17,17,17,0.04),rgba(17,17,17,0.24))]" />
+              </div>
+            ) : caseStudy.image ? (
+              <div className="relative aspect-video w-full">
+                <Image
+                  src={caseStudy.image}
+                  alt={caseStudy.imageAlt ? resolveLocalizedValue(caseStudy.imageAlt, language) : `${caseStudy.client} case`}
+                  fill
+                  className="object-cover"
+                  priority
+                />
+              </div>
+            ) : (
+              <div
+                className={`flex aspect-[4/5] items-end bg-gradient-to-br ${
+                  caseStudy.palette ?? "from-[#efe9df] via-[#d4c8b5] to-[#bba68a]"
+                } p-6 sm:p-8`}
+              >
+                <div className="max-w-sm rounded-[1.6rem] border border-white/28 bg-white/62 p-5 backdrop-blur">
+                  <p className="text-[0.72rem] font-semibold uppercase tracking-[0.22em] text-[var(--muted)]">
+                    {resolveLocalizedValue(caseStudy.category, language)}
+                  </p>
+                  <h2 className="feature-title mt-3 text-[#111111]">
+                    {caseStudy.client}
+                  </h2>
+                  <p className="body-copy mt-3 text-[var(--muted-2)] sm:text-base sm:leading-7">
+                    {resolveLocalizedValue(caseStudy.summary, language)}
+                  </p>
                 </div>
-              ) : caseStudy.image ? (
-                <div className="relative aspect-video w-full">
-                  <Image
-                    src={caseStudy.image}
-                    alt={caseStudy.imageAlt ? resolveLocalizedValue(caseStudy.imageAlt, language) : `${caseStudy.client} case`}
-                    fill
-                    className="object-cover"
-                    priority
-                  />
-                </div>
-              ) : (
-                <div
-                  className={`flex aspect-[4/5] items-end bg-gradient-to-br ${
-                    caseStudy.palette ?? "from-[#efe9df] via-[#d4c8b5] to-[#bba68a]"
-                  } p-6 sm:p-8`}
-                >
-                  <div className="max-w-sm rounded-[1.6rem] border border-white/28 bg-white/62 p-5 backdrop-blur">
-                    <p className="text-[0.72rem] font-semibold uppercase tracking-[0.22em] text-[var(--muted)]">
-                      {resolveLocalizedValue(caseStudy.category, language)}
-                    </p>
-                    <h2 className="feature-title mt-3 text-[#111111]">
-                      {caseStudy.client}
-                    </h2>
-                    <p className="body-copy mt-3 text-[var(--muted-2)] sm:text-base sm:leading-7">
-                      {resolveLocalizedValue(caseStudy.summary, language)}
-                    </p>
-                  </div>
-                </div>
-              )}
-            </article>
+              </div>
+            )}
+          </article>
 
-            <article className="card-surface rounded-[2rem] p-5 sm:p-6">
+          <div className="grid gap-4 xl:grid-cols-[1.18fr_0.82fr]">
+            <article className="glass-panel rounded-[2rem] p-5 sm:p-6">
               <p className="text-[0.72rem] font-semibold uppercase tracking-[0.22em] text-[var(--muted)]">
                 {copy.caseFacts}
               </p>
-              <dl className="mt-5 grid gap-3">
+              <div className="mt-5 grid gap-3 sm:grid-cols-3">
                 {[
-                  [copy.caseCategory, resolveLocalizedValue(caseStudy.category, language)],
-                  [copy.caseIndustry, resolveLocalizedValue(caseStudy.industry, language)],
-                  [copy.caseDeliverables, caseStudy.deliverables.map((item) => resolveLocalizedValue(item, language)).join(", ")],
-                  [copy.caseImpact, resolveLocalizedValue(caseStudy.impact, language)],
-                ].map(([label, value]) => (
+                  { label: copy.caseImpact, value: resolveLocalizedValue(caseStudy.impact, language) },
+                  { label: copy.caseGoalEyebrow, value: resolveLocalizedValue(caseStudy.goal, language) },
+                  {
+                    label: copy.caseDeliverables,
+                    value: caseStudy.deliverables.map((item) => resolveLocalizedValue(item, language)).join(", "),
+                  },
+                ].map((item) => (
                   <div
-                    key={label}
+                    key={item.label}
                     className="rounded-[1.2rem] border border-[color:var(--line)] bg-[color:var(--surface)] px-4 py-3.5"
                   >
-                    <dt className="text-[0.7rem] font-semibold uppercase tracking-[0.18em] text-[var(--muted)]">
-                      {label}
-                    </dt>
-                    <dd className="mt-1.5 text-sm leading-6 text-[var(--muted-2)] sm:text-base sm:leading-7">
-                      {value}
-                    </dd>
+                    <p className="text-[0.7rem] font-semibold uppercase tracking-[0.18em] text-[var(--muted)]">
+                      {item.label}
+                    </p>
+                    <p className="mt-1.5 text-sm leading-6 text-[var(--muted-2)] sm:text-base sm:leading-7">
+                      {item.value}
+                    </p>
                   </div>
                 ))}
-              </dl>
+              </div>
             </article>
 
-            {caseStudy.verificationNote ? (
-              <div className="rounded-[1.4rem] border border-dashed border-[var(--accent)]/35 bg-[var(--accent)]/10 p-4 text-sm leading-6 text-[var(--accent-2)]">
-                {resolveLocalizedValue(caseStudy.verificationNote, language)}
+            <article className="card-surface rounded-[2rem] p-5 sm:p-6">
+              <div className="space-y-4">
+                <div className="space-y-2">
+                  <p className="text-[0.72rem] font-semibold uppercase tracking-[0.22em] text-[var(--muted)]">
+                    {language === "no" ? "Neste steg" : "Next step"}
+                  </p>
+                  <h2 className="feature-title text-[color:var(--foreground)]">
+                    {language === "no" ? "Vil dere få til noe lignende?" : "Looking to create something similar?"}
+                  </h2>
+                  <p className="body-copy text-[var(--muted-2)] sm:text-base sm:leading-7">
+                    {language === "no"
+                      ? "Fortell oss kort om mål, kanal og tidslinje, så foreslår vi riktig oppsett og estimat."
+                      : "Share the goal, channel and timeline and we will recommend the right setup and estimate."}
+                  </p>
+                </div>
+
+                <div className="flex flex-col gap-2.5 sm:flex-row sm:flex-wrap">
+                  <ButtonLink href="/kontakt">
+                    {language === "no" ? "Book møte" : "Book a meeting"}
+                  </ButtonLink>
+                  <ButtonLink href="/priser" variant="secondary">
+                    {language === "no" ? "Be om estimat" : "Request an estimate"}
+                  </ButtonLink>
+                </div>
               </div>
-            ) : null}
+            </article>
           </div>
 
-          <div className="space-y-5">
+          {caseStudy.verificationNote ? (
+            <div className="rounded-[1.4rem] border border-dashed border-[var(--accent)]/35 bg-[var(--accent)]/10 p-4 text-sm leading-6 text-[var(--accent-2)]">
+              {resolveLocalizedValue(caseStudy.verificationNote, language)}
+            </div>
+          ) : null}
+
+          <div className="grid gap-4 lg:grid-cols-[0.92fr_1.08fr]">
             <div className="grid gap-4 sm:grid-cols-3">
               {caseStudy.metrics.map((metric, index) => (
                 <div key={`${metric.value}-${index}`} className="card-surface rounded-[1.6rem] p-4 sm:p-5">

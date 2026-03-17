@@ -257,8 +257,8 @@ export function PortfolioPageContent({
                 <h2 className="section-title text-[color:var(--foreground)]">{copy.featuredTitle}</h2>
                 <p className="body-lead max-w-2xl text-[var(--muted-2)]">{copy.featuredDescription}</p>
               </div>
-              <ButtonLink href="/kontakt" variant="ghost" className="w-full sm:w-auto">
-                {language === "no" ? "Snakk med oss om prosjektet" : "Talk to us about the project"}
+              <ButtonLink href="#portfolio-grid" variant="ghost" className="w-full sm:w-auto">
+                {language === "no" ? "Se hele porteføljen" : "View full portfolio"}
               </ButtonLink>
             </div>
           </Reveal>
@@ -513,12 +513,7 @@ function PortfolioProjectCard({
                 {language === "no" ? "Se case" : "View case"}
                 <ArrowUpRightIcon className="h-4 w-4" />
               </ButtonLink>
-            ) : (
-              <ButtonLink href="/kontakt" variant="ghost" className="w-full sm:w-auto">
-                {language === "no" ? "Snakk med oss om prosjektet" : "Talk to us about the project"}
-                <ArrowUpRightIcon className="h-4 w-4" />
-              </ButtonLink>
-            )}
+            ) : null}
           </div>
         </div>
       </div>

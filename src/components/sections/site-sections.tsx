@@ -146,7 +146,14 @@ export function ProcessSection({ steps }: { steps: ProcessStep[] }) {
         {steps.map((step, index) => (
           <Reveal key={step.step} delay={0.05 * index}>
             <article className="card-surface rounded-[1.7rem] p-5">
-              <p className="font-display text-[2rem] leading-none text-[color:var(--foreground)] sm:text-[2.2rem]">{step.step}</p>
+              <div className="flex items-center gap-3">
+                <span className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-[color:var(--line)] bg-[color:var(--surface)] font-display text-[1.15rem] text-[color:var(--foreground)]">
+                  {step.step}
+                </span>
+                <p className="text-[0.66rem] font-semibold uppercase tracking-[0.18em] text-[var(--muted)]">
+                  {language === "no" ? "Steg" : "Step"}
+                </p>
+              </div>
               <h3 className="card-title mt-4 text-[color:var(--foreground)]">
                 {resolveLocalizedValue(step.title, language)}
               </h3>
@@ -276,18 +283,14 @@ export function TeamSection({
 
             <ul className="mt-6 grid gap-3 text-sm leading-6 text-[var(--muted-2)] sm:text-base lg:grid-cols-3">
               {bullets.map((bullet, index) => (
-                <li key={`team-bullet-${index}`} className="flex gap-3">
-                  <span className="mt-2 h-1.5 w-1.5 rounded-full bg-[var(--accent)]" />
-                  <span>{resolveLocalizedValue(bullet, language)}</span>
+                <li
+                  key={`team-bullet-${index}`}
+                  className="rounded-[1.2rem] border border-[color:var(--line)] bg-white/[0.05] px-4 py-3 backdrop-blur-xl"
+                >
+                  {resolveLocalizedValue(bullet, language)}
                 </li>
               ))}
             </ul>
-
-            <p className="mt-5 text-sm leading-6 text-[var(--muted)] sm:text-[0.98rem]">
-              {language === "no"
-                ? "Trykk på portrettene for å åpne hver sin profilside med mer om bakgrunn, roller og utvalgte produksjoner."
-                : "Tap the portraits to open each profile page, with more on background, roles and selected productions."}
-            </p>
           </article>
         </FloatingLayer>
 
@@ -337,10 +340,10 @@ export function TeamSection({
                       {resolveLocalizedValue(member.summary, language)}
                     </p>
                   </div>
-                  <div className="inline-flex items-center gap-2 text-sm font-semibold text-[color:var(--foreground)]">
-                    <span>{language === "no" ? "Trykk på portrettet for å se profil" : "Tap the portrait to open the profile"}</span>
+                  <ButtonLink href={member.href ?? "/om-oss"} variant="ghost" size="compact" className="w-full sm:w-auto">
+                    {language === "no" ? "Se profil" : "View profile"}
                     <ArrowUpRightIcon className="h-4 w-4 transition duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
-                  </div>
+                  </ButtonLink>
                 </div>
               </article>
             </Reveal>
@@ -370,13 +373,18 @@ export function ContactLeadSection({
     >
       <div className="grid gap-4 xl:grid-cols-[0.9fr_1.1fr]">
         <article className="card-surface rounded-[1.9rem] p-5 sm:p-6">
-          <div className="space-y-3">
-            <h3 className="feature-title text-[color:var(--foreground)]">
-              {copy.contactHeading}
-            </h3>
+          <div className="space-y-4">
             <p className="body-copy text-[var(--muted-2)]">
               {copy.contactLead}
             </p>
+            <div className="flex flex-wrap gap-2.5">
+              <span className="founder-profile-chip founder-profile-chip-muted">
+                {language === "no" ? "Svar innen 24 timer" : "Reply within 24 hours"}
+              </span>
+              <span className="founder-profile-chip founder-profile-chip-muted">
+                {language === "no" ? "Format, prisnivå og neste steg" : "Format, budget level and next step"}
+              </span>
+            </div>
           </div>
 
           <div className="mt-6 grid gap-4 border-t border-[color:var(--line)] pt-6">
@@ -398,10 +406,7 @@ export function ContactLeadSection({
           <article className="card-surface overflow-hidden rounded-[1.9rem]">
             <div className="p-5 sm:p-6">
               <div className="max-w-2xl">
-                <h3 className="feature-title text-[color:var(--foreground)]">
-                  {copy.contactBriefTitle}
-                </h3>
-                <p className="body-copy mt-3 text-[var(--muted-2)]">
+                <p className="body-copy text-[var(--muted-2)]">
                   {copy.contactBriefDescription}
                 </p>
                 <p className="mt-4 text-sm leading-6 text-[var(--muted)] sm:text-base sm:leading-7">
@@ -422,6 +427,7 @@ export function ContactLeadSection({
                 <details
                   key={`contact-faq-${index}`}
                   className="card-surface rounded-[1.3rem] px-4 py-4"
+                  open={index === 0}
                 >
                   <summary className="cursor-pointer list-none text-sm font-semibold text-[color:var(--foreground)] sm:text-base">
                     {resolveLocalizedValue(faq.question, language)}
@@ -477,26 +483,41 @@ export function FaqList({
   title,
   description,
   items,
+  hideHeader = false,
 }: {
   title: MaybeLocalizedText;
   description: MaybeLocalizedText;
   items: FaqItem[];
+  hideHeader?: boolean;
 }) {
   const { language } = useSitePreferences();
   const copy = uiCopy.siteSections[language];
+  const quickLinks = [
+    language === "no" ? "Pris" : "Pricing",
+    language === "no" ? "Tidslinje" : "Timeline",
+    language === "no" ? "Leveranse" : "Deliverables",
+    language === "no" ? "Prosess" : "Process",
+  ];
 
-  return (
-    <SectionShell
-      eyebrow={copy.faqEyebrow}
-      title={resolveLocalizedValue(title, language)}
-      description={resolveLocalizedValue(description, language)}
-      align="center"
-    >
+  const content = (
+    <>
+      <div className="mx-auto mb-6 flex max-w-4xl flex-wrap justify-center gap-2.5">
+        {quickLinks.map((label) => (
+          <span
+            key={label}
+            className="rounded-full border border-[color:var(--line)] bg-[color:var(--surface)]/76 px-3.5 py-1.5 text-sm text-[color:var(--foreground)]/76"
+          >
+            {label}
+          </span>
+        ))}
+      </div>
+
       <div className="mx-auto max-w-4xl space-y-3">
         {items.map((item, index) => (
           <details
             key={`faq-item-${index}`}
             className="card-surface rounded-[1.5rem] px-5 py-4"
+            open={index === 0}
           >
             <summary className="cursor-pointer list-none text-base font-semibold text-[color:var(--foreground)] sm:text-lg">
               {resolveLocalizedValue(item.question, language)}
@@ -520,6 +541,25 @@ export function FaqList({
           </div>
         </div>
       </div>
+    </>
+  );
+
+  if (hideHeader) {
+    return (
+      <section className="section-space pt-0">
+        <div className="site-container">{content}</div>
+      </section>
+    );
+  }
+
+  return (
+    <SectionShell
+      eyebrow={copy.faqEyebrow}
+      title={resolveLocalizedValue(title, language)}
+      description={resolveLocalizedValue(description, language)}
+      align="center"
+    >
+      {content}
     </SectionShell>
   );
 }
