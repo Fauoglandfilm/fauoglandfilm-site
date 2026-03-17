@@ -472,29 +472,26 @@ export function AboutSection() {
     <section className="section-space">
       <div className="site-container">
         <div className="grid gap-5 sm:gap-6 lg:grid-cols-[1.02fr_0.98fr] lg:items-center">
-          <FloatingLayer className="glass-panel relative overflow-hidden rounded-[1.9rem] shadow-[0_34px_110px_rgba(0,0,0,0.2)] sm:rounded-[2rem]">
+          <FloatingLayer className="glass-panel relative overflow-hidden rounded-[1.9rem] p-5 shadow-[0_34px_110px_rgba(0,0,0,0.2)] sm:rounded-[2rem] sm:p-6 lg:p-7">
             <div className="glass-sheen absolute inset-0 opacity-50" />
-            <div className="grid gap-px bg-[color:var(--line)] lg:grid-cols-[1.1fr_0.9fr]">
-              <div className="relative flex min-h-[18rem] flex-col justify-end p-5 sm:min-h-[21rem] sm:p-6 lg:min-h-[27rem] lg:p-7">
-                <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_22%_18%,rgba(255,255,255,0.16),transparent_26%),radial-gradient(circle_at_78%_82%,rgba(122,168,255,0.16),transparent_26%),linear-gradient(180deg,rgba(255,255,255,0.08),rgba(255,255,255,0.02))]" />
-                <div className="relative">
-                  <p className="text-[0.66rem] font-semibold uppercase tracking-[0.22em] text-[var(--muted)]">
-                    {language === "no" ? "Produksjonsselskap" : "Production company"}
-                  </p>
-                  <p className="mt-3 max-w-md text-sm leading-6 text-[var(--muted-2)] sm:text-base">
-                    {language === "no"
-                      ? "Seniorledet produksjon med tett oppfølging, filmatisk presisjon og korte beslutningslinjer."
-                      : "Senior-led production with close follow-up, cinematic precision and a short path to decision-making."}
-                  </p>
-                </div>
+            <div className="relative space-y-5 sm:space-y-6">
+              <div>
+                <p className="text-[0.66rem] font-semibold uppercase tracking-[0.22em] text-[var(--muted)]">
+                  {language === "no" ? "Produksjonsselskap" : "Production company"}
+                </p>
+                <p className="mt-3 max-w-md text-sm leading-6 text-[var(--muted-2)] sm:text-base">
+                  {language === "no"
+                    ? "Seniorledet produksjon med tett oppfølging, filmatisk presisjon og korte beslutningslinjer."
+                    : "Senior-led production with close follow-up, cinematic precision and a short path to decision-making."}
+                </p>
               </div>
 
-              <div className="grid gap-px bg-[color:var(--line)] sm:grid-cols-2 lg:grid-cols-1">
+              <div className="team-portrait-stage">
                 {featuredTeam.map((member, index) => (
                   <article
                     key={member.name}
                     className={cn(
-                      "team-portrait-card team-portrait-card-compact group",
+                      "team-portrait-card group",
                       index === 0 ? "team-portrait-card-primary" : "team-portrait-card-secondary",
                     )}
                   >
@@ -507,7 +504,7 @@ export function AboutSection() {
                           : `View more about ${member.name}`
                       }
                     >
-                      <div className="team-portrait-scene team-portrait-scene-compact">
+                      <div className="team-portrait-scene">
                         <div className="team-portrait-surface" />
                         <div className="team-portrait-glow" />
                         <div className="team-portrait-shadow" />
@@ -517,9 +514,9 @@ export function AboutSection() {
                             alt={member.imageAlt ? resolveLocalizedValue(member.imageAlt, language) : member.name}
                             width={1200}
                             height={1500}
-                            sizes="(min-width: 1280px) 18vw, (min-width: 1024px) 22vw, 50vw"
+                            sizes="(min-width: 1280px) 26vw, (min-width: 768px) 42vw, 100vw"
                             className={cn(
-                              "team-portrait-image team-portrait-image-compact",
+                              "team-portrait-image",
                               index === 0 ? "team-portrait-image-left" : "team-portrait-image-right",
                             )}
                           />
@@ -528,19 +525,23 @@ export function AboutSection() {
 
                       <div
                         className={cn(
-                          "team-portrait-copy team-portrait-copy-compact",
+                          "team-portrait-copy",
                           index === 0 ? "team-portrait-copy-left" : "team-portrait-copy-right",
                         )}
                       >
-                        <p className="text-[0.64rem] font-semibold uppercase tracking-[0.2em] text-[var(--muted)]">
+                        <span className="founder-profile-chip">
                           {resolveLocalizedValue(member.role, language)}
-                        </p>
-                        <p className="mt-2 text-lg font-semibold tracking-[-0.03em] text-[color:var(--foreground)]">
-                          {member.name}
-                        </p>
-                        <p className="mt-2 text-[0.68rem] font-semibold uppercase tracking-[0.18em] text-[color:var(--foreground)]/56 transition duration-300 group-hover:text-[color:var(--foreground)]/76">
-                          {language === "no" ? "Se profil" : "Open profile"}
-                        </p>
+                        </span>
+                        <div>
+                          <h3 className="card-title text-[color:var(--foreground)]">{member.name}</h3>
+                          <p className="body-copy mt-3 text-[var(--muted-2)]">
+                            {resolveLocalizedValue(member.summary, language)}
+                          </p>
+                        </div>
+                        <ButtonLink href={member.href ?? "/om-oss"} variant="ghost" size="compact" className="w-full sm:w-auto">
+                          {language === "no" ? "Se profil" : "View profile"}
+                          <ArrowUpRightIcon className="h-4 w-4 transition duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+                        </ButtonLink>
                       </div>
                     </Link>
                   </article>
