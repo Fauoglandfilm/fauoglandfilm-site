@@ -921,6 +921,50 @@ export const caseStudies: CaseStudy[] = [
           },
         },
       },
+      {
+        slug: "kort-4x5",
+        label: {
+          no: "Kort versjon",
+          en: "Short version",
+        },
+        image: "/assets/portfolio/treningshuset/posters/treningshuset-bred-poster.png",
+        imageAlt: {
+          no: "Kort 4:5-versjon av Treningshuset-filmen",
+          en: "Short 4:5 version of the Treningshuset film",
+        },
+        mediaFit: "contain",
+        video: {
+          videoType: "direct",
+          src: "/assets/portfolio/treningshuset/videos/alternates/portrait-4x5/Kort_Reel45.mp4",
+          poster: "/assets/portfolio/treningshuset/posters/treningshuset-bred-poster.png",
+          label: {
+            no: "Treningshuset - kort versjon",
+            en: "Treningshuset - short version",
+          },
+        },
+      },
+      {
+        slug: "kort-mobil",
+        label: {
+          no: "Kort mobilversjon",
+          en: "Short mobile version",
+        },
+        image: "/assets/portfolio/treningshuset/posters/treningshuset-mobil-poster.png",
+        imageAlt: {
+          no: "Kort mobilversjon av Treningshuset-filmen",
+          en: "Short mobile version of the Treningshuset film",
+        },
+        mediaFit: "contain",
+        video: {
+          videoType: "direct",
+          src: "/assets/portfolio/treningshuset/videos/alternates/mobile-9x16/Kort_Reel.mp4",
+          poster: "/assets/portfolio/treningshuset/posters/treningshuset-mobil-poster.png",
+          label: {
+            no: "Treningshuset - kort mobilversjon",
+            en: "Treningshuset - short mobile version",
+          },
+        },
+      },
     ],
     palette: "from-[#15171c] via-[#2d3746] to-[#647c9b]",
   },
