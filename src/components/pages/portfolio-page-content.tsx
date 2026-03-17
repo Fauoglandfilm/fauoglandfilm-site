@@ -165,7 +165,9 @@ export function PortfolioPageContent({
                   <PortfolioMedia
                     project={showreelProject}
                     priority
-                    playMode="always"
+                    playMode="featured"
+                    inViewThreshold={0.18}
+                    rootMargin="260px 0px -6% 0px"
                     sizes="(min-width: 1280px) 48vw, (min-width: 1024px) 60vw, 100vw"
                     className="object-cover transition duration-700 group-hover:scale-[1.04]"
                   />
@@ -406,7 +408,9 @@ function PortfolioProjectCard({
           />
           <PortfolioMedia
             project={project}
-            playMode="hover"
+            playMode="viewport"
+            inViewThreshold={isWide ? 0.28 : 0.4}
+            rootMargin={isWide ? "180px 0px -8% 0px" : "140px 0px -12% 0px"}
             sizes={
               isWide
                 ? "(min-width: 1280px) 40vw, (min-width: 768px) 50vw, 100vw"
@@ -472,12 +476,16 @@ function PortfolioMedia({
   playMode = "static",
   sizes,
   className,
+  rootMargin,
+  inViewThreshold,
 }: {
   project: PortfolioProject;
   priority?: boolean;
-  playMode?: "static" | "hover" | "always";
+  playMode?: "static" | "viewport" | "featured";
   sizes: string;
   className?: string;
+  rootMargin?: string;
+  inViewThreshold?: number;
 }) {
   const { language } = useSitePreferences();
   const fallbackVisual = getPortfolioFallbackVisual(project.group);
@@ -487,25 +495,21 @@ function PortfolioMedia({
   const imageClassName = cn(
     "object-cover",
     "transition duration-700",
-    playMode === "hover" && "group-hover:scale-[1.03]",
-    playMode === "always" && "group-hover:scale-[1.03]",
+    playMode !== "static" && "group-hover:scale-[1.03]",
     project.mediaFit === "contain" && "object-contain p-5 sm:p-6",
     className,
   );
 
   const previewBehavior =
-    playMode === "always"
-      ? "viewport"
-      : playMode === "hover"
-        ? "hover-or-viewport"
-        : "static";
+    playMode === "static"
+      ? "static"
+      : "viewport";
 
-  if ((project.video && project.video.videoType === "direct" && playMode !== "static") || (project.externalVideo && playMode !== "static")) {
+  if (project.video && project.video.videoType === "direct" && playMode !== "static") {
     return (
       <PreviewMedia
         title={project.title}
         video={project.video}
-        externalVideo={project.externalVideo}
         image={project.image}
         imageAlt={project.imageAlt}
         mediaFit={project.mediaFit}
@@ -513,6 +517,8 @@ function PortfolioMedia({
         className="absolute inset-0"
         sizes={sizes}
         priority={priority}
+        rootMargin={rootMargin}
+        inViewThreshold={inViewThreshold}
         posterClassName={imageClassName}
         previewClassName={cn("scale-[1.02]", project.mediaFit === "contain" && "object-contain p-5 sm:p-6")}
       />
