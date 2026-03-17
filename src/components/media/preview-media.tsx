@@ -34,6 +34,10 @@ type PreviewMediaProps = {
   rootMargin?: string;
 };
 
+function hasExplicitPositionClass(value?: string) {
+  return Boolean(value && /\b(relative|absolute|fixed|sticky)\b/.test(value));
+}
+
 function resolvePosterSrc(
   video: VideoAsset | undefined,
   externalVideo: ExternalVideoAsset | undefined,
@@ -190,7 +194,7 @@ export function PreviewMedia({
   return (
     <div
       ref={containerRef}
-      className={cn("relative h-full w-full overflow-hidden", className)}
+      className={cn("h-full w-full overflow-hidden", !hasExplicitPositionClass(className) && "relative", className)}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
       aria-label={resolvedTitle}
