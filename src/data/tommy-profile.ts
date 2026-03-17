@@ -99,8 +99,8 @@ const projectGroups: TommyProjectGroup[] = [
           no: "Fra Fau&Land og Kulturarena til reklameproduksjoner for Både Og, HeiSjef, Ruter og Jac Skilt: Tommy går tett på brief, budsjett, logistikk og kundedialog for å holde produksjonen ryddig hele veien.",
           en: "From Fau&Land and Kulturarena to commercial work for Både Og, HeiSjef, Ruter and Jac Skilt, Tommy stays close to the brief, budget, logistics and client dialogue to keep production steady all the way through.",
         },
-        image: siteVisuals.filmStudioCyclorama.src,
-        imageAlt: siteVisuals.filmStudioCyclorama.alt,
+        image: siteVisuals.filmCrewOutdoors.src,
+        imageAlt: siteVisuals.filmCrewOutdoors.alt,
         companions: [
           {
             slug: "bade-og",
@@ -145,8 +145,8 @@ const projectGroups: TommyProjectGroup[] = [
           no: "Erfaring fra produksjoner som Christmas Tomorrow, Royal Teen 2, EXIT 3, Maskorama, Hodejegerne og Ølhunden Berit - arbeid som krever presisjon, trygg koordinering og høy leveringstakt under press.",
           en: "Experience from productions such as Christmas Tomorrow, Royal Teen 2, EXIT 3, Maskorama, Headhunters and Ølhunden Berit - work that demands precision, confident coordination and a high delivery tempo under pressure.",
         },
-        image: siteVisuals.cameraDarkroom.src,
-        imageAlt: siteVisuals.cameraDarkroom.alt,
+        image: siteVisuals.filmStudioCyclorama.src,
+        imageAlt: siteVisuals.filmStudioCyclorama.alt,
         companions: [
           {
             slug: "christmas-tomorrow",

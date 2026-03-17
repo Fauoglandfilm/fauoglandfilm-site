@@ -62,8 +62,12 @@ export function ServiceCard({ service }: ServiceCardProps) {
                 </h3>
               </div>
 
-              <p className="body-copy text-[var(--muted-2)]">
+              <p className="body-copy text-[color:var(--foreground)]/84">
                 {resolveLocalizedValue(service.value, language)}
+              </p>
+
+              <p className="body-copy text-[var(--muted-2)]">
+                {resolveLocalizedValue(service.summary, language)}
               </p>
             </div>
 

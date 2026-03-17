@@ -194,6 +194,40 @@ export const siteVisuals = {
     },
     ...internalAssetMeta,
   },
+  treningshusetWide: {
+    filename: "portfolio-treningshuset-bred-poster.png",
+    src: "/assets/portfolio/treningshuset/posters/treningshuset-bred-poster.png",
+    alt: {
+      no: "Still fra annonsefilm for Treningshuset",
+      en: "Still from an ad film for Treningshuset",
+    },
+    usage: {
+      no: "Reklamefilm og resultatorienterte tjenestekort",
+      en: "Commercial film and result-led service cards",
+    },
+    subject: {
+      no: "Et ekte kampanjestill som viser ferdig annonseoutput i stedet for produksjonsutstyr.",
+      en: "A real campaign still that shows finished ad output instead of production gear.",
+    },
+    ...internalAssetMeta,
+  },
+  treningshusetMobile: {
+    filename: "portfolio-treningshuset-mobil-poster.png",
+    src: "/assets/portfolio/treningshuset/posters/treningshuset-mobil-poster.png",
+    alt: {
+      no: "Vertikal annonsepreview for Treningshuset",
+      en: "Vertical ad preview for Treningshuset",
+    },
+    usage: {
+      no: "SoMe-innhold og mobilformat",
+      en: "Social content and mobile-first formats",
+    },
+    subject: {
+      no: "Et vertikalt sluttprodukt som passer kortet for SoMe-innhold bedre enn generiske kamerabilder.",
+      en: "A vertical final asset that fits the social-content card better than generic camera imagery.",
+    },
+    ...internalAssetMeta,
+  },
   eventCoverage: {
     filename: "portfolio-event-youngstorget-poster.png",
     src: "/assets/portfolio/nei-til-atomvapen/posters/internasjonal-arbeiderdag-poster.png",
@@ -360,10 +394,10 @@ export const servicePillarVisuals: Record<string, VisualAsset> = {
 };
 
 export const serviceAreaVisuals: Record<string, VisualAsset> = {
-  reklamefilm: siteVisuals.cameraDarkroom,
-  "bedriftsfilm-intervjuer": siteVisuals.filmStudioCyclorama,
-  "some-innhold": siteVisuals.cameraCloseup,
-  "event-live": siteVisuals.filmCrewOutdoors,
+  reklamefilm: siteVisuals.treningshusetWide,
+  "bedriftsfilm-intervjuer": siteVisuals.companyStory,
+  "some-innhold": siteVisuals.treningshusetMobile,
+  "event-live": siteVisuals.eventCoverage,
 };
 
 export function getPortfolioFallbackVisual(group: string): VisualAsset {

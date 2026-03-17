@@ -1,7 +1,6 @@
 import type { ExternalVideoAsset, VideoAsset } from "@/data/site-content";
 import { portfolioProjects } from "@/data/site-content";
 import { getFounderProfile } from "@/data/founder-profiles";
-import { siteVisuals } from "@/data/visual-assets";
 import type { LocalizedText } from "@/lib/i18n";
 
 export type GardFocusArea = {
@@ -62,7 +61,7 @@ const youtubeAsset = (videoId: string, label: LocalizedText): ExternalVideoAsset
   videoType: "youtube",
   videoId,
   embedUrl: `https://www.youtube.com/embed/${videoId}?rel=0&modestbranding=1&playsinline=1`,
-  thumbnailSrc: `https://i.ytimg.com/vi/${videoId}/hqdefault.jpg`,
+  thumbnailSrc: `https://i.ytimg.com/vi/${videoId}/maxresdefault.jpg`,
   label,
   sourceUrl: `https://www.youtube.com/watch?v=${videoId}`,
 });
@@ -91,9 +90,6 @@ function getPortfolioProject(slug: string) {
 
   return project;
 }
-
-const continentalBtsImage =
-  "https://images.squarespace-cdn.com/content/v1/5f44d95d64e4796dddb229d6/49de9a5d-1686-4ce9-bd95-fba5a7815ab5/Continental+BTS-293+%281%29.jpg";
 
 const projectGroups: GardProjectGroup[] = [
   {
@@ -126,11 +122,6 @@ const projectGroups: GardProjectGroup[] = [
         summary: {
           no: "Flere reklameproduksjoner for Continental, der Gard holdt tempo, opptaksflyt og leveranse samlet på tvers av VC8, 2023-kampanjen og sommeruttak.",
           en: "A run of Continental productions where Gard kept pace, set flow and delivery aligned across VC8, the 2023 campaign and summer cutdowns.",
-        },
-        image: continentalBtsImage,
-        imageAlt: {
-          no: "Behind the scenes fra Continental-produksjon",
-          en: "Behind the scenes from a Continental production",
         },
         externalVideo: youtubeAsset("Bn6j7bemquc", {
           no: "Continental Dekk VC8",
@@ -196,8 +187,6 @@ const projectGroups: GardProjectGroup[] = [
           no: "Vibb",
           en: "Vibb",
         }),
-        image: siteVisuals.cameraDarkroom.src,
-        imageAlt: siteVisuals.cameraDarkroom.alt,
         preview: true,
         companions: [
           {
@@ -241,8 +230,6 @@ const projectGroups: GardProjectGroup[] = [
           no: "NOR-WAY Bussekspress",
           en: "NOR-WAY Bussekspress",
         }),
-        image: siteVisuals.cameraCloseup.src,
-        imageAlt: siteVisuals.cameraCloseup.alt,
         preview: true,
       },
       {
@@ -508,8 +495,6 @@ const projectGroups: GardProjectGroup[] = [
           no: "The Voice Within",
           en: "The Voice Within",
         }),
-        image: siteVisuals.narrativePoster.src,
-        imageAlt: siteVisuals.narrativePoster.alt,
         preview: true,
       },
       {
@@ -536,8 +521,6 @@ const projectGroups: GardProjectGroup[] = [
           no: "Ferie for to",
           en: "Holiday for Two",
         }),
-        image: siteVisuals.narrativePoster.src,
-        imageAlt: siteVisuals.narrativePoster.alt,
         preview: true,
         companions: [
           {
@@ -585,11 +568,9 @@ const projectGroups: GardProjectGroup[] = [
             no: "Cork",
             en: "Cork",
           },
-          siteVisuals.narrativePoster.src,
+          "https://i.vimeocdn.com/video/1165845202-810cfc0fae0c0d3405e78aa9cd48584d78bdae83c53eace81e6426292e8cfda9-d_295x166?region=us",
           "693b90049d",
         ),
-        image: siteVisuals.narrativePoster.src,
-        imageAlt: siteVisuals.narrativePoster.alt,
         preview: true,
         companions: [
           {
@@ -717,8 +698,6 @@ const projectGroups: GardProjectGroup[] = [
           no: "Sweathearts",
           en: "Sweathearts",
         }),
-        image: siteVisuals.filmCrewOutdoors.src,
-        imageAlt: siteVisuals.filmCrewOutdoors.alt,
         preview: true,
         companions: [
           {

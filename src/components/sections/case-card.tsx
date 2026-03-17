@@ -21,7 +21,6 @@ export function CaseCard({
   layout = "stack",
   showVerificationNote = true,
 }: CaseCardProps) {
-  const image = caseStudy.image;
   const video = caseStudy.video;
   const externalVideo = caseStudy.externalVideo;
   const isFeature = layout === "feature";
@@ -33,6 +32,13 @@ export function CaseCard({
       : caseStudy.slug === "foreningen-norden"
         ? getPortfolioFallbackVisual("campaign")
         : getPortfolioFallbackVisual("documentary");
+  const image =
+    caseStudy.image ??
+    caseStudy.video?.poster ??
+    caseStudy.externalVideo?.thumbnailSrc ??
+    fallbackVisual.src ??
+    siteVisuals.folkPoster.src;
+  const imageAlt = caseStudy.imageAlt ?? caseStudy.title ?? fallbackVisual.alt ?? siteVisuals.folkPoster.alt;
 
   return (
     <article
@@ -49,8 +55,8 @@ export function CaseCard({
           title={caseStudy.title}
           video={video}
           externalVideo={externalVideo}
-          image={image ?? fallbackVisual.src ?? siteVisuals.folkPoster.src}
-          imageAlt={caseStudy.imageAlt ?? fallbackVisual.alt ?? siteVisuals.folkPoster.alt}
+          image={image}
+          imageAlt={imageAlt}
           previewBehavior={video || externalVideo ? "hover-or-viewport" : "static"}
           className="absolute inset-0"
           sizes={isFeature ? "(min-width: 1024px) 50vw, 100vw" : "(min-width: 1280px) 33vw, 100vw"}
