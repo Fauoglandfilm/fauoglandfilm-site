@@ -21,11 +21,8 @@ export function ContactNotificationEmail({
         <tbody>
           {[
             ["Navn", payload.name],
-            ["Firma", payload.company || "-"],
+            ["Firma", payload.company],
             ["E-post", payload.email],
-            ["Telefon", payload.phone || "-"],
-            ["Prosjekttype", payload.projectType || "-"],
-            ["Budsjett", payload.budget || "-"],
           ].map(([label, value]) => (
             <tr key={label}>
               <td
