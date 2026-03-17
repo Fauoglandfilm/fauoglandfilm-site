@@ -36,6 +36,7 @@ export function HeroSection() {
   const heroVideo = videoLibrary.hero;
   const { language } = useSitePreferences();
   const copy = uiCopy.home[language];
+  const heroBadgeItems = copy.heroBadge.split(" / ").filter(Boolean);
 
   return (
     <section className="section-vignette hero-section relative isolate overflow-hidden">
@@ -62,36 +63,52 @@ export function HeroSection() {
         <div className="grain-overlay absolute inset-0 opacity-54" />
       </div>
 
-      <div className="site-container relative flex min-h-[80svh] items-center pb-10 pt-[6.5rem] sm:min-h-[85svh] sm:pb-12 sm:pt-[7.5rem] lg:min-h-[86vh] lg:pb-14 lg:pt-32">
-        <div className="hero-copy w-full max-w-[46rem]">
+      <div className="site-container relative flex min-h-[80svh] items-end pb-10 pt-[6.5rem] sm:min-h-[85svh] sm:pb-12 sm:pt-[7.5rem] lg:min-h-[86vh] lg:pb-14 lg:pt-32">
+        <div className="hero-copy w-full">
           <Reveal y={18}>
-            <div className="hero-glass-panel max-w-[42rem]">
-              <div className="glass-sheen absolute inset-0 opacity-75" />
-              <div className="hero-panel-orb" />
-              <div className="hero-panel-orb hero-panel-orb-secondary" />
+            <div className="hero-layer-stack">
+              <div className="hero-label-chip" aria-label={copy.heroBadge}>
+                {heroBadgeItems.map((item, index) => (
+                  <span key={`${item}-${index}`} className="hero-label-chip__segment">
+                    {index > 0 ? <span className="hero-label-chip__divider" aria-hidden="true" /> : null}
+                    <span className="hero-label-chip__item">{item}</span>
+                  </span>
+                ))}
+              </div>
 
-              <div className="hero-panel-content space-y-4 p-5 sm:space-y-5 sm:p-7 lg:p-8">
-                <p className="hero-badge max-w-full">
-                  {copy.heroBadge}
-                </p>
-                <h1 className="hero-title max-w-[11ch] text-white">
-                  {resolveLocalizedValue(homeHeroContent.title, language)}
-                </h1>
-                <p className="hero-body body-lead max-w-[38rem] sm:max-w-[34rem]">
-                  {resolveLocalizedValue(homeHeroContent.description, language)}
-                </p>
+              <div className="hero-heading-strip">
+                <div className="glass-sheen absolute inset-0 opacity-58" />
+                <div className="hero-heading-strip__content">
+                  <h1 className="hero-title max-w-[12ch] text-white">
+                    {resolveLocalizedValue(homeHeroContent.title, language)}
+                  </h1>
+                  <span className="hero-heading-icon" aria-hidden="true">
+                    <ArrowUpRightIcon className="h-4 w-4" />
+                  </span>
+                </div>
+              </div>
 
-                <div className="hero-cta-row mt-6 flex flex-col gap-2.5 sm:mt-7 sm:flex-row sm:gap-3">
-                  <ButtonLink href={homeHeroContent.ctaHref} className="hero-cta-primary w-full sm:w-auto">
-                    {resolveLocalizedValue(homeHeroContent.ctaLabel, language)}
-                  </ButtonLink>
-                  <ButtonLink
-                    href="/priser"
-                    variant="secondary"
-                    className="hero-cta-secondary w-full sm:w-auto"
-                  >
-                    {copy.heroSecondaryCta}
-                  </ButtonLink>
+              <div className="hero-support-strip">
+                <div className="glass-sheen absolute inset-0 opacity-36" />
+                <div className="hero-support-strip__content">
+                  <div className="hero-support-copy">
+                    <p className="hero-body body-lead max-w-[36rem]">
+                      {resolveLocalizedValue(homeHeroContent.description, language)}
+                    </p>
+                  </div>
+
+                  <div className="hero-cta-row flex flex-col gap-2.5 sm:flex-row sm:gap-3 lg:justify-end">
+                    <ButtonLink href={homeHeroContent.ctaHref} className="hero-cta-primary w-full sm:w-auto">
+                      {resolveLocalizedValue(homeHeroContent.ctaLabel, language)}
+                    </ButtonLink>
+                    <ButtonLink
+                      href="/priser"
+                      variant="secondary"
+                      className="hero-cta-secondary w-full sm:w-auto"
+                    >
+                      {copy.heroSecondaryCta}
+                    </ButtonLink>
+                  </div>
                 </div>
               </div>
             </div>
