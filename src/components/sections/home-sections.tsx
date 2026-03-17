@@ -19,10 +19,11 @@ import {
   type ServicePillar,
   videoLibrary,
 } from "@/data/site-content";
-import { homeShowcaseVisuals, servicePillarVisuals, siteVisuals } from "@/data/visual-assets";
+import { servicePillarVisuals, siteVisuals } from "@/data/visual-assets";
 import { uiCopy } from "@/data/ui-copy";
 import type { LocalizedText } from "@/lib/i18n";
 import { resolveLocalizedValue } from "@/lib/i18n";
+import { cn } from "@/lib/utils";
 
 import { FloatingLayer, Reveal } from "../motion/reveal";
 import { ButtonLink } from "../ui/button-link";
@@ -120,7 +121,6 @@ export function SelectedWorkSection({ items }: { items: CaseStudy[] }) {
             </p>
           </div>
           <div className="flex flex-col gap-2 lg:items-end">
-            <p className="body-copy text-[var(--muted)] lg:max-w-xs lg:text-right">{copy.selectedWorkHint}</p>
             <ButtonLink href="/case" variant="ghost" className="w-full sm:w-auto">
               {language === "no" ? "Se porteføljen" : "View portfolio"}
             </ButtonLink>
@@ -163,89 +163,34 @@ export function IntroSection() {
                   {resolveLocalizedValue(homeIntroContent.description, language)}
                 </p>
               </div>
-
-              <div className="mt-6 grid gap-3 sm:grid-cols-2">
-                <div className="rounded-[1.4rem] border border-[color:var(--line)] bg-white/[0.04] p-4 backdrop-blur-xl">
-                  <p className="text-[0.66rem] font-semibold uppercase tracking-[0.22em] text-[var(--muted)]">
-                    {language === "no" ? "Arbeidsform" : "Working model"}
-                  </p>
-                  <p className="mt-3 text-sm leading-6 text-[var(--muted-2)]">
-                    {language === "no"
-                      ? "Små team, raske beslutninger og tydelig regi gjennom hele produksjonen."
-                      : "Small teams, fast decisions and clear direction throughout production."}
-                  </p>
-                </div>
-                <div className="rounded-[1.4rem] border border-[color:var(--line)] bg-white/[0.04] p-4 backdrop-blur-xl">
-                  <p className="text-[0.66rem] font-semibold uppercase tracking-[0.22em] text-[var(--muted)]">
-                    {language === "no" ? "Leveranser" : "Deliverables"}
-                  </p>
-                  <p className="mt-3 text-sm leading-6 text-[var(--muted-2)]">
-                    {language === "no"
-                      ? "Showreel, kampanje, nettsidefilm, sosialt innhold og etterbruk fra samme opptak."
-                      : "Showreels, campaigns, website films, social content and cutdowns from the same production."}
-                  </p>
-                </div>
-              </div>
             </div>
           </Reveal>
 
           <Reveal delay={0.08}>
-            <div className="grid gap-3 sm:grid-cols-[1.16fr_0.84fr]">
-              <div className="media-frame relative overflow-hidden rounded-[1.8rem]">
-                <div className="relative aspect-[1.18/0.92] min-h-[16rem]">
-                  <PreviewMedia
-                    title={servicePreview.title}
-                    video={servicePreview.video}
-                    externalVideo={servicePreview.externalVideo}
-                    image={servicePreview.image ?? siteVisuals.introShowcase.src}
-                    imageAlt={servicePreview.imageAlt ?? siteVisuals.introShowcase.alt}
-                    previewBehavior={servicePreview.video || servicePreview.externalVideo ? "viewport" : "static"}
-                    className="absolute inset-0"
-                    sizes="(min-width: 1024px) 36vw, 100vw"
-                    posterClassName="image-slow-zoom"
-                    previewClassName="scale-[1.02]"
-                  />
-                  <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(7,7,7,0.06),rgba(7,7,7,0.46)_68%,rgba(7,7,7,0.9))]" />
-                  <div className="grain-overlay absolute inset-0 opacity-45" />
-                  <div className="absolute inset-x-0 bottom-0 p-5 text-white sm:p-6">
-                    <p className="text-[0.68rem] font-semibold uppercase tracking-[0.24em] text-white/58">
-                      {language === "no" ? "Utvalgt prosjekt" : "Selected project"}
-                    </p>
-                    <p className="mt-2 max-w-sm text-sm leading-6 text-white/78 sm:text-base">
-                      {resolveLocalizedValue(servicePreview.summary, language)}
-                    </p>
-                  </div>
+            <div className="media-frame relative overflow-hidden rounded-[1.8rem]">
+              <div className="relative aspect-[1.18/0.92] min-h-[18rem] lg:min-h-[24rem]">
+                <PreviewMedia
+                  title={servicePreview.title}
+                  video={servicePreview.video}
+                  externalVideo={servicePreview.externalVideo}
+                  image={servicePreview.image ?? siteVisuals.introShowcase.src}
+                  imageAlt={servicePreview.imageAlt ?? siteVisuals.introShowcase.alt}
+                  previewBehavior={servicePreview.video || servicePreview.externalVideo ? "viewport" : "static"}
+                  className="absolute inset-0"
+                  sizes="(min-width: 1024px) 48vw, 100vw"
+                  posterClassName="image-slow-zoom"
+                  previewClassName="scale-[1.02]"
+                />
+                <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(7,7,7,0.06),rgba(7,7,7,0.46)_68%,rgba(7,7,7,0.9))]" />
+                <div className="grain-overlay absolute inset-0 opacity-45" />
+                <div className="absolute inset-x-0 bottom-0 p-5 text-white sm:p-6">
+                  <p className="text-[0.68rem] font-semibold uppercase tracking-[0.24em] text-white/58">
+                    {language === "no" ? "Utvalgt prosjekt" : "Selected project"}
+                  </p>
+                  <p className="mt-2 max-w-sm text-sm leading-6 text-white/78 sm:text-base">
+                    {resolveLocalizedValue(servicePreview.summary, language)}
+                  </p>
                 </div>
-              </div>
-
-              <div className="grid gap-3">
-                {[homeShowcaseVisuals.secondary, homeShowcaseVisuals.tertiary]
-                  .filter(Boolean)
-                  .map((visual, index) => (
-                    <div key={visual!.src} className="media-frame relative overflow-hidden rounded-[1.45rem]">
-                      <div className="relative aspect-[1.08/0.74]">
-                        <Image
-                          src={visual!.src}
-                          alt={resolveLocalizedValue(visual!.alt, language)}
-                          fill
-                          sizes="(min-width: 1024px) 15vw, 50vw"
-                          className="object-cover"
-                        />
-                        <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(7,7,7,0.04),rgba(7,7,7,0.62)_100%)]" />
-                        <div className="absolute inset-x-0 bottom-0 p-4 text-white">
-                          <p className="text-[0.62rem] font-semibold uppercase tracking-[0.2em] text-white/54">
-                            {index === 0
-                              ? language === "no"
-                                ? "Kampanje"
-                                : "Campaign"
-                              : language === "no"
-                                ? "Narrativt"
-                                : "Narrative"}
-                          </p>
-                        </div>
-                      </div>
-                    </div>
-                  ))}
               </div>
             </div>
           </Reveal>
@@ -481,11 +426,14 @@ export function FeaturedCase() {
                     </h3>
                   </div>
 
-                  <div className="grid gap-3 sm:gap-4 sm:grid-cols-3">
+                  <p className="body-copy text-white/72 sm:text-base sm:leading-7">
+                    {resolveLocalizedValue(featuredCase.solution, language)}
+                  </p>
+
+                  <div className="grid gap-3 sm:gap-4 sm:grid-cols-2">
                     {[
-                      { label: copy.featuredCaseImpact, value: resolveLocalizedValue(featuredCase.impact, language) },
                       { label: copy.featuredCaseGoal, value: resolveLocalizedValue(featuredCase.goal, language) },
-                      { label: copy.featuredCaseSolution, value: resolveLocalizedValue(featuredCase.solution, language) },
+                      { label: copy.featuredCaseImpact, value: resolveLocalizedValue(featuredCase.impact, language) },
                     ].map((item) => (
                       <div key={item.label} className="border-t border-white/10 pt-4">
                         <p className="text-[0.7rem] uppercase tracking-[0.18em] text-white/42">
@@ -493,17 +441,6 @@ export function FeaturedCase() {
                         </p>
                         <p className="mt-2 text-sm leading-6 text-white/68">{item.value}</p>
                       </div>
-                    ))}
-                  </div>
-
-                  <div className="flex flex-wrap gap-2">
-                    {featuredCase.tags.map((tag, index) => (
-                      <span
-                        key={`${featuredCase.slug}-tag-${index}`}
-                        className="rounded-full border border-white/10 px-3 py-1.5 text-xs uppercase tracking-[0.16em] text-white/60"
-                      >
-                        {resolveLocalizedValue(tag, language)}
-                      </span>
                     ))}
                   </div>
 
@@ -523,6 +460,7 @@ export function FeaturedCase() {
 export function AboutSection() {
   const { language } = useSitePreferences();
   const copy = uiCopy.home[language];
+  const featuredTeam = teamMembers.slice(0, 2);
 
   return (
     <section className="section-space">
@@ -546,40 +484,60 @@ export function AboutSection() {
               </div>
 
               <div className="grid gap-px bg-[color:var(--line)] sm:grid-cols-2 lg:grid-cols-1">
-                {[
-                  { name: teamMembers[0]?.name, role: teamMembers[0]?.role, image: siteVisuals.teamTommy, href: teamMembers[0]?.href },
-                  { name: teamMembers[1]?.name, role: teamMembers[1]?.role, image: siteVisuals.teamGard, href: teamMembers[1]?.href },
-                ].map((member) => (
-                  <Link
+                {featuredTeam.map((member, index) => (
+                  <article
                     key={member.name}
-                    href={member.href ?? "/om-oss"}
-                    className="group relative block aspect-[0.9/1.05] overflow-hidden bg-[color:var(--surface-strong)]"
-                    aria-label={
-                      language === "no"
-                        ? `Se mer om ${member.name}`
-                        : `View more about ${member.name}`
-                    }
+                    className={cn(
+                      "team-portrait-card team-portrait-card-compact group",
+                      index === 0 ? "team-portrait-card-primary" : "team-portrait-card-secondary",
+                    )}
                   >
-                    <Image
-                      src={member.image.src}
-                      alt={resolveLocalizedValue(member.image.alt, language)}
-                      fill
-                      sizes="(min-width: 1024px) 18vw, 50vw"
-                      className="object-contain object-bottom p-4 transition duration-700 group-hover:scale-[1.03] sm:p-5"
-                    />
-                    <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_18%,rgba(255,255,255,0.18),transparent_34%),linear-gradient(180deg,rgba(19,24,36,0.62),rgba(19,24,36,0.24)_36%,rgba(19,24,36,0.58)_100%)]" />
-                    <div className="absolute inset-x-0 bottom-0 p-4 sm:p-5">
-                      <p className="text-[0.64rem] font-semibold uppercase tracking-[0.2em] text-white/62">
-                        {resolveLocalizedValue(member.role!, language)}
-                      </p>
-                      <p className="mt-2 text-lg font-semibold tracking-[-0.03em] text-white">
-                        {member.name}
-                      </p>
-                      <p className="mt-2 text-[0.68rem] font-semibold uppercase tracking-[0.18em] text-white/56 transition duration-300 group-hover:text-white/76">
-                        {language === "no" ? "Se profil" : "Open profile"}
-                      </p>
-                    </div>
-                  </Link>
+                    <Link
+                      href={member.href ?? "/om-oss"}
+                      className="team-portrait-link block"
+                      aria-label={
+                        language === "no"
+                          ? `Se mer om ${member.name}`
+                          : `View more about ${member.name}`
+                      }
+                    >
+                      <div className="team-portrait-scene team-portrait-scene-compact">
+                        <div className="team-portrait-surface" />
+                        <div className="team-portrait-glow" />
+                        <div className="team-portrait-shadow" />
+                        {member.image ? (
+                          <Image
+                            src={member.image}
+                            alt={member.imageAlt ? resolveLocalizedValue(member.imageAlt, language) : member.name}
+                            width={1200}
+                            height={1500}
+                            sizes="(min-width: 1280px) 18vw, (min-width: 1024px) 22vw, 50vw"
+                            className={cn(
+                              "team-portrait-image team-portrait-image-compact",
+                              index === 0 ? "team-portrait-image-left" : "team-portrait-image-right",
+                            )}
+                          />
+                        ) : null}
+                      </div>
+
+                      <div
+                        className={cn(
+                          "team-portrait-copy team-portrait-copy-compact",
+                          index === 0 ? "team-portrait-copy-left" : "team-portrait-copy-right",
+                        )}
+                      >
+                        <p className="text-[0.64rem] font-semibold uppercase tracking-[0.2em] text-[var(--muted)]">
+                          {resolveLocalizedValue(member.role, language)}
+                        </p>
+                        <p className="mt-2 text-lg font-semibold tracking-[-0.03em] text-[color:var(--foreground)]">
+                          {member.name}
+                        </p>
+                        <p className="mt-2 text-[0.68rem] font-semibold uppercase tracking-[0.18em] text-[color:var(--foreground)]/56 transition duration-300 group-hover:text-[color:var(--foreground)]/76">
+                          {language === "no" ? "Se profil" : "Open profile"}
+                        </p>
+                      </div>
+                    </Link>
+                  </article>
                 ))}
               </div>
             </div>

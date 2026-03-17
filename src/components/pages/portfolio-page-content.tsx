@@ -94,13 +94,13 @@ export function PortfolioPageContent({
       ? {
           filterAll: "Alle prosjekter",
           featuredEyebrow: "Featured work",
-          featuredTitle: "Utvalgte produksjoner med mer format, mer tyngde og tydeligere filmfølelse.",
+          featuredTitle: "Utvalgte produksjoner",
           featuredDescription:
-            "Et håndplukket utvalg på tvers av kampanje, organisasjon, narrativt arbeid og promofilm. Mindre katalog, mer work-page.",
+            "Et håndplukket utvalg fra kampanje, organisasjon og fortellende arbeid.",
           catalogEyebrow: "Full portefølje",
-          catalogTitle: "En premium filmkatalog bygget for raske valg og dypere inntrykk.",
+          catalogTitle: "Hele porteføljen",
           catalogDescription:
-            "Filtrer på kategori, åpne prosjekter direkte og få levende forhåndsvisning på arbeid der vi har direkte videomateriale.",
+            "Filtrer på kategori og åpne prosjektene direkte.",
           catalogHint: "Direkte videoprosjekter får levende preview på desktop.",
           openProject: "Åpne prosjekt",
           openPreview: "Se preview",
@@ -113,13 +113,13 @@ export function PortfolioPageContent({
       : {
           filterAll: "All work",
           featuredEyebrow: "Featured work",
-          featuredTitle: "Selected productions with more scale, more texture and a stronger cinematic feel.",
+          featuredTitle: "Selected productions",
           featuredDescription:
-            "A hand-picked selection across campaigns, organisation work, narrative projects and promo films. Less catalog, more work page.",
+            "A hand-picked selection across campaigns, organisation work and narrative projects.",
           catalogEyebrow: "Full portfolio",
-          catalogTitle: "A premium film catalog built for quick scanning and deeper project discovery.",
+          catalogTitle: "The full portfolio",
           catalogDescription:
-            "Filter by category, open projects directly and get motion previews where direct video material is available.",
+            "Filter by category and open the projects directly.",
           catalogHint: "Direct video projects reveal motion previews on desktop.",
           openProject: "Open project",
           openPreview: "Open preview",
@@ -212,9 +212,6 @@ export function PortfolioPageContent({
                   </h2>
                   <p className="body-copy max-w-xl text-[var(--muted-2)] sm:text-base sm:leading-7">
                     {resolveLocalizedValue(portfolioPageContent.showreelDescription, language)}
-                  </p>
-                  <p className="body-copy text-[var(--muted)]">
-                    {resolveLocalizedValue(portfolioPageContent.description, language)}
                   </p>
                 </div>
 
@@ -318,7 +315,6 @@ export function PortfolioPageContent({
                   <p className="text-[0.7rem] font-semibold uppercase tracking-[0.22em] text-[var(--muted)]">
                     {projectCountLabel}
                   </p>
-                  <p className="text-sm leading-6 text-[var(--muted)]">{copy.catalogHint}</p>
                 </div>
               </div>
 
@@ -357,7 +353,7 @@ export function PortfolioPageContent({
                   group={getPortfolioGroup(project.group)}
                   onPreview={() => setActiveProject(project)}
                   layout={index % 5 === 0 ? "wide" : "default"}
-                  previewLabel={copy.openProject}
+                  previewLabel={copy.openPreview}
                 />
               </Reveal>
             ))}
@@ -479,26 +475,16 @@ function PortfolioProjectCard({
           ) : null}
         </div>
 
-        <div className="relative flex h-full flex-col bg-[linear-gradient(180deg,rgba(255,255,255,0.05),rgba(255,255,255,0.01))] p-5 sm:p-6 lg:p-6">
-          <div className="space-y-3">
-            <div className="flex flex-wrap items-center gap-2">
-              <span className="rounded-full border border-[color:var(--line)] bg-white/[0.04] px-3 py-1.5 text-[0.68rem] font-semibold uppercase tracking-[0.18em] text-[color:var(--foreground)] backdrop-blur-xl">
-                {resolveLocalizedValue(project.format, language)}
-              </span>
-              {project.video?.videoType === "direct" ? (
-                <span className="rounded-full border border-white/8 bg-white/6 px-3 py-1.5 text-[0.66rem] font-semibold uppercase tracking-[0.18em] text-[var(--muted)]">
-                  {language === "no" ? "Levende preview" : "Motion preview"}
+          <div className="relative flex h-full flex-col bg-[linear-gradient(180deg,rgba(255,255,255,0.05),rgba(255,255,255,0.01))] p-5 sm:p-6 lg:p-6">
+            <div className="space-y-3">
+              <div className="flex flex-wrap items-center gap-2">
+                <span className="rounded-full border border-[color:var(--line)] bg-white/[0.04] px-3 py-1.5 text-[0.68rem] font-semibold uppercase tracking-[0.18em] text-[color:var(--foreground)] backdrop-blur-xl">
+                  {resolveLocalizedValue(project.format, language)}
                 </span>
-              ) : null}
-            </div>
-            <p className={cn("body-copy text-[var(--muted-2)]", !isWide && "line-clamp-4 sm:line-clamp-3")}>
-              {resolveLocalizedValue(project.summary, language)}
-            </p>
-            {project.result ? (
-              <p className="text-sm leading-6 text-[color:var(--foreground)]/72">
-                {resolveLocalizedValue(project.result, language)}
+              </div>
+              <p className={cn("body-copy text-[var(--muted-2)]", !isWide && "line-clamp-4 sm:line-clamp-3")}>
+                {resolveLocalizedValue(project.summary, language)}
               </p>
-            ) : null}
             {availabilityNote ? (
               <p className="text-sm leading-6 text-[var(--muted)]">{availabilityNote}</p>
             ) : null}

@@ -218,18 +218,26 @@ export function TommyProfileContent() {
       <section className="relative isolate overflow-hidden pt-22 sm:pt-28">
         <div className="absolute inset-0">
           {backgroundUsesPortrait ? (
-            <div className="absolute inset-0 overflow-hidden">
-              <div className="absolute inset-y-0 right-[-6%] w-full sm:right-[-2%] sm:w-[86%] lg:right-0 lg:w-[70%]">
-                <Image
-                  src={profile.heroBackground}
-                  alt={resolveLocalizedValue(profile.heroBackgroundAlt, language)}
-                  fill
-                  priority
-                  sizes="100vw"
-                  className="image-slow-zoom object-contain object-[74%_100%] scale-[1.08] opacity-[0.82] blur-[0.4px] sm:object-[78%_100%] lg:object-[82%_100%]"
-                />
+            <>
+              <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(7,9,14,0.98),rgba(7,9,14,0.92)_34%,rgba(7,9,14,0.98)_100%)]" />
+              <div className="profile-hero-portrait-wrap">
+                <div className="profile-hero-portrait-frame founder-portrait-panel">
+                  <div className="profile-hero-portrait-shell founder-portrait-shell">
+                    <div className="profile-hero-portrait-backdrop" />
+                    <div className="profile-hero-portrait-glow" />
+                    <Image
+                      src={profile.heroBackground}
+                      alt={resolveLocalizedValue(profile.heroBackgroundAlt, language)}
+                      width={1200}
+                      height={1500}
+                      priority
+                      sizes="(min-width: 1280px) 34vw, (min-width: 768px) 42vw, 78vw"
+                      className="profile-hero-portrait-image profile-hero-portrait-image-tommy"
+                    />
+                  </div>
+                </div>
               </div>
-            </div>
+            </>
           ) : (
             <Image
               src={profile.heroBackground}
@@ -244,7 +252,7 @@ export function TommyProfileContent() {
             className={cn(
               "absolute inset-0",
               backgroundUsesPortrait
-                ? "bg-[radial-gradient(circle_at_18%_18%,rgba(255,255,255,0.1),transparent_22%),linear-gradient(92deg,rgba(5,7,11,0.96),rgba(5,7,11,0.88)_22%,rgba(5,7,11,0.58)_46%,rgba(5,7,11,0.28)_64%,rgba(5,7,11,0.78)_100%),linear-gradient(180deg,rgba(6,6,9,0.22),rgba(6,6,9,0.18)_28%,rgba(6,6,9,0.9)_100%)]"
+                ? "bg-[radial-gradient(circle_at_18%_18%,rgba(255,255,255,0.1),transparent_22%),linear-gradient(92deg,rgba(5,7,11,0.96),rgba(5,7,11,0.9)_22%,rgba(5,7,11,0.56)_44%,rgba(5,7,11,0.18)_68%,rgba(5,7,11,0.62)_100%),linear-gradient(180deg,rgba(6,6,9,0.12),rgba(6,6,9,0.12)_28%,rgba(6,6,9,0.84)_100%)]"
                 : "bg-[radial-gradient(circle_at_18%_18%,rgba(255,255,255,0.08),transparent_22%),linear-gradient(96deg,rgba(5,7,11,0.9),rgba(5,7,11,0.62)_34%,rgba(5,7,11,0.34)_62%,rgba(5,7,11,0.84)_100%),linear-gradient(180deg,rgba(6,6,9,0.12),rgba(6,6,9,0.18)_28%,rgba(6,6,9,0.84)_100%)]",
             )}
           />

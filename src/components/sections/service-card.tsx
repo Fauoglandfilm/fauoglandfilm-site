@@ -41,22 +41,11 @@ export function ServiceCard({ service }: ServiceCardProps) {
             />
             <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(255,255,255,0.08),transparent_36%),linear-gradient(180deg,rgba(9,9,9,0.02),rgba(9,9,9,0.2)_36%,rgba(9,9,9,0.74)_100%)]" />
             <div className="grain-overlay absolute inset-0 opacity-40" />
-            <div className="absolute inset-x-0 bottom-0 p-4 text-white sm:p-5">
-              <p className="text-[0.64rem] font-semibold uppercase tracking-[0.22em] text-white/52">
-                {resolveLocalizedValue(service.eyebrow, language)}
-              </p>
-              <p className="mt-2 max-w-sm text-sm leading-6 text-white/74">
-                {resolveLocalizedValue(service.summary, language)}
-              </p>
-            </div>
           </div>
 
           <div className="relative flex flex-col bg-[linear-gradient(180deg,rgba(255,255,255,0.05),rgba(255,255,255,0.01))] p-4.5 sm:p-6">
             <div className="flex flex-col gap-3">
               <div className="space-y-1.5">
-                <p className="text-[0.66rem] font-semibold uppercase tracking-[0.22em] text-[var(--muted)]">
-                  {resolveLocalizedValue(service.eyebrow, language)}
-                </p>
                 <h3 className="card-title text-[color:var(--foreground)]">
                   {resolveLocalizedValue(service.title, language)}
                 </h3>
@@ -65,13 +54,9 @@ export function ServiceCard({ service }: ServiceCardProps) {
               <p className="body-copy text-[color:var(--foreground)]/84">
                 {resolveLocalizedValue(service.value, language)}
               </p>
-
-              <p className="body-copy text-[var(--muted-2)]">
-                {resolveLocalizedValue(service.summary, language)}
-              </p>
             </div>
 
-            <div className="mt-5 grid gap-3 sm:grid-cols-2">
+            <div className="mt-4 grid gap-3 sm:grid-cols-2">
               {metaItems.map((item) => (
                 <div key={item.label} className="rounded-[1.2rem] border border-[color:var(--line)] bg-white/[0.04] px-3.5 py-3 backdrop-blur-xl">
                   <p className="text-[0.62rem] font-semibold uppercase tracking-[0.18em] text-[var(--muted)]">
@@ -81,6 +66,10 @@ export function ServiceCard({ service }: ServiceCardProps) {
                 </div>
               ))}
             </div>
+
+            <p className="body-copy mt-4 text-[var(--muted-2)]">
+              {resolveLocalizedValue(service.summary, language)}
+            </p>
 
             <div className="mt-4 border-t border-[color:var(--line)] pt-4">
               <p className="text-[0.62rem] font-semibold uppercase tracking-[0.18em] text-[var(--muted)]">
