@@ -155,35 +155,34 @@ export function Header() {
         <div className="mx-auto max-w-[1380px] px-4 sm:px-6 lg:px-8">
           <div
             className={cn(
-              "relative mt-2 flex items-center gap-2.5 overflow-hidden rounded-[1.6rem] px-3 py-2.5 transition duration-300 sm:mt-2.5 sm:gap-3 sm:px-4 sm:py-3 lg:grid lg:grid-cols-[auto_minmax(0,1fr)_auto] lg:items-center lg:gap-5 lg:px-5 lg:py-3",
+              "relative mt-2 flex items-center gap-2.5 overflow-hidden rounded-[1.5rem] px-3 py-2.5 transition duration-300 sm:mt-2.5 sm:gap-3 sm:px-4 sm:py-3 lg:grid lg:grid-cols-[auto_minmax(0,1fr)_auto] lg:items-center lg:gap-7 lg:px-5 lg:py-3",
               overlayMode
-                ? "border border-white/18 bg-[color:var(--header-overlay-surface)] text-white shadow-[0_30px_92px_rgba(0,0,0,0.24)] backdrop-blur-[32px]"
-                : "border border-[color:var(--line)] bg-[color:var(--header-surface)] text-[color:var(--foreground)] shadow-[0_32px_96px_rgba(7,10,18,0.16)] backdrop-blur-[32px]",
+                ? "border border-white/18 bg-[color:var(--header-overlay-surface)] text-white shadow-[0_28px_86px_rgba(0,0,0,0.22)] backdrop-blur-[30px]"
+                : "border border-[color:var(--line)] bg-[color:var(--header-surface)] text-[color:var(--foreground)] shadow-[0_26px_82px_rgba(7,10,18,0.14)] backdrop-blur-[30px]",
             )}
           >
-            <div className="glass-sheen absolute inset-0" />
-            <div className="pointer-events-none absolute inset-y-0 right-[12%] w-[26%] rounded-full bg-[radial-gradient(circle,rgba(255,255,255,0.14),transparent_72%)] blur-2xl opacity-80" />
-            <div className="pointer-events-none absolute inset-x-8 top-0 h-px bg-[linear-gradient(90deg,transparent,rgba(255,255,255,0.78),transparent)] opacity-60" />
+            <div className="glass-sheen absolute inset-0 opacity-60" />
+            <div className="pointer-events-none absolute inset-y-0 right-[14%] w-[22%] rounded-full bg-[radial-gradient(circle,rgba(255,255,255,0.12),transparent_72%)] blur-2xl opacity-70" />
 
             <Link
               href="/"
-              className="relative z-[1] flex shrink-0 items-center gap-3.5 lg:gap-4"
+              className="relative z-[1] flex shrink-0 items-center gap-3.5 lg:gap-4.5"
               aria-label="Fau&Land Film"
               onClick={() => setOpen(false)}
             >
               <div
                 className={cn(
-                  "flex h-11 w-11 items-center justify-center rounded-full border p-[0.62rem] shadow-[0_20px_36px_rgba(0,0,0,0.18)] backdrop-blur-2xl lg:h-12 lg:w-12 lg:p-[0.68rem]",
+                  "flex h-11 w-11 items-center justify-center rounded-full border p-[0.62rem] shadow-[0_20px_36px_rgba(0,0,0,0.18)] backdrop-blur-2xl lg:h-[3.25rem] lg:w-[3.25rem] lg:p-[0.74rem]",
                   overlayMode
                     ? "border-white/24 bg-white/[0.18]"
-                    : "border-white/28 bg-white/[0.24]",
+                    : "border-white/32 bg-white/[0.28]",
                 )}
               >
                 <BrandLogo
                   variant="mark"
                   className={cn(
-                    "opacity-100 saturate-[1.16] drop-shadow-[0_8px_18px_rgba(0,0,0,0.22)]",
-                    overlayMode ? "brightness-[1.26]" : "brightness-[1.14]",
+                    "opacity-100 saturate-[1.24] drop-shadow-[0_10px_20px_rgba(0,0,0,0.24)]",
+                    overlayMode ? "brightness-[1.34]" : "brightness-[1.24]",
                   )}
                   priority
                 />
@@ -191,7 +190,7 @@ export function Header() {
               <div className="min-w-0">
                 <p
                   className={cn(
-                    "font-display text-[1.02rem] font-semibold tracking-[-0.045em] sm:text-[1.06rem] lg:text-[1.14rem]",
+                    "font-display text-[1.05rem] font-semibold tracking-[-0.045em] sm:text-[1.08rem] lg:text-[1.24rem]",
                     overlayMode ? "text-white drop-shadow-[0_8px_22px_rgba(0,0,0,0.22)]" : "text-[color:var(--foreground)]",
                   )}
                 >
@@ -217,14 +216,14 @@ export function Header() {
                       key={item.href}
                       href={item.href}
                       className={cn(
-                        "inline-flex items-center rounded-full border border-transparent px-4 py-[0.62rem] text-[0.87rem] font-medium tracking-[-0.016em] transition duration-300",
+                        "inline-flex items-center rounded-full border border-transparent px-3 py-[0.5rem] text-[0.95rem] font-medium tracking-[-0.02em] transition duration-300",
                         overlayMode
-                          ? "text-white/80 hover:border-white/10 hover:bg-white/[0.08] hover:text-white"
-                          : "text-[color:var(--foreground)]/74 hover:border-white/14 hover:bg-white/[0.06] hover:text-[color:var(--foreground)]",
+                          ? "text-white/78 hover:bg-white/[0.08] hover:text-white"
+                          : "text-[color:var(--foreground)]/72 hover:bg-white/[0.08] hover:text-[color:var(--foreground)]",
                       active &&
                         (overlayMode
-                          ? "border-white/16 bg-white/[0.12] text-white shadow-[0_10px_24px_rgba(0,0,0,0.16)]"
-                          : "border-white/18 bg-white/[0.1] text-[color:var(--foreground)] shadow-[0_10px_24px_rgba(7,10,18,0.1)]"),
+                          ? "bg-white/[0.12] text-white shadow-[0_10px_24px_rgba(0,0,0,0.16)]"
+                          : "bg-white/[0.12] text-[color:var(--foreground)] shadow-[0_10px_24px_rgba(7,10,18,0.1)]"),
                     )}
                   >
                     {resolveLocalizedValue(item.label, language)}

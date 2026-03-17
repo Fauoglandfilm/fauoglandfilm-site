@@ -10,6 +10,11 @@ import { cn } from "@/lib/utils";
 
 import { MediaImage } from "./media-image";
 
+const GLOBAL_MEDIA_FALLBACKS = [
+  "/assets/visuals/cinematic/cinematic-video-camera-closeup.jpg",
+  "/assets/visuals/section-images/section-film-studio-cyclorama.jpg",
+] as const;
+
 type EmbeddedVideoPlayerProps = {
   title: string | LocalizedText;
   video?: VideoAsset;
@@ -60,10 +65,10 @@ function withPlayerParams(video: ExternalVideoAsset, autoplay: boolean, previewM
     url.searchParams.set("modestbranding", "1");
     url.searchParams.set("playsinline", "1");
     url.searchParams.set("autoplay", autoplay ? "1" : "0");
+    url.searchParams.set("mute", autoplay || previewMode ? "1" : "0");
 
     if (previewMode) {
       const videoId = url.pathname.split("/").pop();
-      url.searchParams.set("mute", "1");
       url.searchParams.set("controls", "0");
       url.searchParams.set("fs", "0");
       url.searchParams.set("loop", "1");
@@ -78,6 +83,7 @@ function withPlayerParams(video: ExternalVideoAsset, autoplay: boolean, previewM
 
   if (video.provider === "vimeo") {
     url.searchParams.set("autoplay", autoplay ? "1" : "0");
+    url.searchParams.set("muted", autoplay || previewMode ? "1" : "0");
     url.searchParams.set("title", "0");
     url.searchParams.set("byline", "0");
     url.searchParams.set("portrait", "0");
@@ -85,7 +91,6 @@ function withPlayerParams(video: ExternalVideoAsset, autoplay: boolean, previewM
 
     if (previewMode) {
       url.searchParams.set("background", "1");
-      url.searchParams.set("muted", "1");
       url.searchParams.set("loop", "1");
       url.searchParams.set("autopause", "0");
     }
@@ -117,13 +122,28 @@ function buildFallbackSources(video?: VideoAsset, externalVideo?: ExternalVideoA
 
   if (externalVideo?.provider === "youtube" && externalVideo.videoId) {
     sources.push(
+      `https://i.ytimg.com/vi/${externalVideo.videoId}/maxresdefault.jpg`,
       `https://i.ytimg.com/vi/${externalVideo.videoId}/hqdefault.jpg`,
       `https://i.ytimg.com/vi/${externalVideo.videoId}/mqdefault.jpg`,
       `https://i.ytimg.com/vi/${externalVideo.videoId}/default.jpg`,
     );
   }
 
+  sources.push(...GLOBAL_MEDIA_FALLBACKS);
+
   return Array.from(new Set(sources));
+}
+
+function isPlayableDirectVideo(video: Extract<VideoAsset, { videoType: "direct" }>) {
+  const sources = [video.src, video.mobileSrc].filter(Boolean) as string[];
+
+  return sources.some((source) => {
+    if (source.startsWith("/")) {
+      return true;
+    }
+
+    return /\.(mp4|webm|mov)(\?|$)/i.test(source);
+  });
 }
 
 function ManagedExternalFrame({
@@ -162,7 +182,7 @@ function ManagedExternalFrame({
           "absolute inset-0 h-full w-full transition duration-500",
           isReady ? "pointer-events-auto opacity-100" : "pointer-events-none opacity-0",
         )}
-        allow="autoplay; fullscreen; picture-in-picture; encrypted-media"
+        allow="autoplay; encrypted-media; picture-in-picture; fullscreen"
         referrerPolicy="strict-origin-when-cross-origin"
         allowFullScreen
         loading={previewMode ? "lazy" : undefined}
@@ -269,29 +289,6 @@ export function EmbeddedVideoPlayer({
     autoplay ? "autoplay" : "manual",
   ].join("::");
 
-  if (externalVideo && previewMode) {
-    if (fallbackSrc || fallbackSrcs.length) {
-      return (
-        <div className={cn("relative overflow-hidden", className)}>
-          <MediaImage
-            src={fallbackSrc}
-            fallbackSrcs={fallbackSrcs}
-            alt={resolvedImageAlt}
-            priority={priority}
-            sizes={sizes}
-            className={mediaObjectClass}
-          />
-        </div>
-      );
-    }
-
-    return (
-      <div className={cn(className, "relative overflow-hidden")} aria-label={resolvedTitle}>
-        <FallbackSurface />
-      </div>
-    );
-  }
-
   if (externalVideo) {
     return (
       <ManagedExternalFrame
@@ -311,6 +308,29 @@ export function EmbeddedVideoPlayer({
   }
 
   if (video?.videoType === "direct") {
+    if (!isPlayableDirectVideo(video)) {
+      if (fallbackSrc || fallbackSrcs.length) {
+        return (
+          <div className={cn("relative overflow-hidden", className)}>
+            <MediaImage
+              src={fallbackSrc}
+              fallbackSrcs={fallbackSrcs}
+              alt={resolvedImageAlt}
+              priority={priority}
+              sizes={sizes}
+              className={mediaObjectClass}
+            />
+          </div>
+        );
+      }
+
+      return (
+        <div className={cn(className, "relative overflow-hidden")} aria-label={resolvedTitle}>
+          <FallbackSurface />
+        </div>
+      );
+    }
+
     return (
       <ManagedDirectVideo
         key={mediaKey}

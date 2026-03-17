@@ -100,6 +100,9 @@ type SanityServiceArea = {
   summary?: SanityLocalized;
   eyebrow?: SanityLocalized;
   value?: SanityLocalized;
+  budget?: SanityLocalized;
+  timeline?: SanityLocalized;
+  deliverables?: SanityLocalized[];
   ctaLabel?: SanityLocalized;
   href?: string;
   exampleHref?: string;
@@ -303,6 +306,10 @@ function mapServiceArea(service: SanityServiceArea): ServiceArea | null {
     summary: toLocalizedText(service.summary, ""),
     eyebrow: toLocalizedText(service.eyebrow, ""),
     value: toLocalizedText(service.value, ""),
+    budget: toLocalizedText(service.budget, ""),
+    timeline: toLocalizedText(service.timeline, ""),
+    deliverables:
+      service.deliverables?.map((item) => toLocalizedText(item, "")).filter((item) => item.no || item.en) ?? [],
     ctaLabel: toLocalizedText(service.ctaLabel, "Read more"),
     href: service.href ?? "/kontakt",
     exampleHref: service.exampleHref,

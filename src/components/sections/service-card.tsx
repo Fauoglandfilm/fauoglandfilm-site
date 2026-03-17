@@ -16,6 +16,16 @@ type ServiceCardProps = {
 export function ServiceCard({ service }: ServiceCardProps) {
   const { language } = useSitePreferences();
   const visual = serviceAreaVisuals[service.slug];
+  const metaItems = [
+    {
+      label: language === "no" ? "Budsjett" : "Budget",
+      value: resolveLocalizedValue(service.budget, language),
+    },
+    {
+      label: language === "no" ? "Tidslinje" : "Timeline",
+      value: resolveLocalizedValue(service.timeline, language),
+    },
+  ];
 
   return (
     <article className="card-surface group overflow-hidden rounded-[1.75rem] shadow-[0_26px_80px_rgba(0,0,0,0.16)] sm:rounded-[1.9rem]">
@@ -57,7 +67,34 @@ export function ServiceCard({ service }: ServiceCardProps) {
               </p>
             </div>
 
-            <div className="mt-5 border-t border-[color:var(--line)] pt-5">
+            <div className="mt-5 grid gap-3 sm:grid-cols-2">
+              {metaItems.map((item) => (
+                <div key={item.label} className="rounded-[1.2rem] border border-[color:var(--line)] bg-white/[0.04] px-3.5 py-3 backdrop-blur-xl">
+                  <p className="text-[0.62rem] font-semibold uppercase tracking-[0.18em] text-[var(--muted)]">
+                    {item.label}
+                  </p>
+                  <p className="mt-2 text-sm leading-6 text-[color:var(--foreground)]/78">{item.value}</p>
+                </div>
+              ))}
+            </div>
+
+            <div className="mt-4 border-t border-[color:var(--line)] pt-4">
+              <p className="text-[0.62rem] font-semibold uppercase tracking-[0.18em] text-[var(--muted)]">
+                {language === "no" ? "Typiske leveranser" : "Typical deliverables"}
+              </p>
+              <div className="mt-3 flex flex-wrap gap-2">
+                {service.deliverables.map((item, index) => (
+                  <span
+                    key={`${service.slug}-deliverable-${index}`}
+                    className="rounded-full border border-[color:var(--line)] bg-[color:var(--surface)]/72 px-3 py-1.5 text-sm text-[color:var(--foreground)]/78"
+                  >
+                    {resolveLocalizedValue(item, language)}
+                  </span>
+                ))}
+              </div>
+            </div>
+
+            <div className="mt-auto border-t border-[color:var(--line)] pt-5">
               <div className="flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center sm:justify-between">
                 {service.exampleHref && service.exampleLabel ? (
                   <ButtonLink

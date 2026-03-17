@@ -55,6 +55,9 @@ export type ServiceArea = {
   summary: LocalizedText;
   eyebrow: LocalizedText;
   value: LocalizedText;
+  budget: LocalizedText;
+  timeline: LocalizedText;
+  deliverables: LocalizedText[];
   ctaLabel: LocalizedText;
   href: string;
   exampleHref?: string;
@@ -476,6 +479,19 @@ export const serviceAreas: ServiceArea[] = [
       no: "Konsept, opptak og versjoner til nettside, annonser og sosiale medier.",
       en: "Concept, production and cutdowns for websites, ads and social media.",
     },
+    budget: {
+      no: "Typisk 30 000-150 000 kr+",
+      en: "Typically NOK 30,000-150,000+",
+    },
+    timeline: {
+      no: "Vanligvis 2-5 uker",
+      en: "Usually 2-5 weeks",
+    },
+    deliverables: [
+      { no: "Hovedfilm", en: "Hero film" },
+      { no: "Annonseuttak", en: "Ad cutdowns" },
+      { no: "Versjoner til nettside og SoMe", en: "Website and social versions" },
+    ],
     ctaLabel: { no: "Få et estimat", en: "Get an estimate" },
     href: "/kontakt",
     exampleHref: "/case/nei-til-atomvapen",
@@ -493,6 +509,19 @@ export const serviceAreas: ServiceArea[] = [
       no: "Bedriftsfilm, intervjuer og profilinnhold til nettside, presentasjoner og salg.",
       en: "Company films, interviews and profile content for websites, presentations and sales.",
     },
+    budget: {
+      no: "Typisk 20 000-90 000 kr",
+      en: "Typically NOK 20,000-90,000",
+    },
+    timeline: {
+      no: "Vanligvis 1-3 uker",
+      en: "Usually 1-3 weeks",
+    },
+    deliverables: [
+      { no: "Profilfilm", en: "Brand / company film" },
+      { no: "Intervjuklipp", en: "Interview edits" },
+      { no: "Salg- og nettsideversjoner", en: "Sales and website versions" },
+    ],
     ctaLabel: { no: "Snakk med oss om prosjektet", en: "Talk to us about your project" },
     href: "/kontakt",
     exampleHref: "/case/foreningen-norden",
@@ -513,6 +542,19 @@ export const serviceAreas: ServiceArea[] = [
       no: "Korte videoer, reels og uttak til Facebook, Instagram, LinkedIn og andre flater dere faktisk bruker.",
       en: "Short videos, reels and cutdowns for Facebook, Instagram, LinkedIn and the channels you actually publish on.",
     },
+    budget: {
+      no: "Typisk 5 000-35 000 kr",
+      en: "Typically NOK 5,000-35,000",
+    },
+    timeline: {
+      no: "Vanligvis 3-10 dager",
+      en: "Usually 3-10 days",
+    },
+    deliverables: [
+      { no: "Reels og short-form", en: "Reels and short-form edits" },
+      { no: "Flere formater per opptak", en: "Multiple formats per shoot" },
+      { no: "Korte kampanjeuttak", en: "Short campaign cutdowns" },
+    ],
     ctaLabel: { no: "Send en kort brief", en: "Send a short brief" },
     href: "/kontakt",
     exampleHref: "/case/ville-gleder",
@@ -530,6 +572,19 @@ export const serviceAreas: ServiceArea[] = [
       no: "Stemningsfilmer, aftermovies, intervjuer, flerkamera, streaming og klipp til videre publisering.",
       en: "Mood films, aftermovies, interviews, multicam setups, livestreaming and cutdowns for continued publishing.",
     },
+    budget: {
+      no: "Typisk 15 000-60 000 kr+",
+      en: "Typically NOK 15,000-60,000+",
+    },
+    timeline: {
+      no: "Fra samme dag til 2 uker",
+      en: "From same-day to 2 weeks",
+    },
+    deliverables: [
+      { no: "Aftermovie / stemningsfilm", en: "Aftermovie / mood film" },
+      { no: "Reels og korte uttak", en: "Reels and short cutdowns" },
+      { no: "Flerkamera eller stream", en: "Multicam or stream" },
+    ],
     ctaLabel: { no: "Planlegg dekningen", en: "Plan the coverage" },
     href: "/kontakt",
     exampleHref: "/case/nei-til-atomvapen-arbeiderdagen",

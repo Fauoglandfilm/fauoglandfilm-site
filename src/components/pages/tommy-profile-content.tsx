@@ -5,7 +5,7 @@ import { useState } from "react";
 
 import { PreviewMedia } from "@/components/media/preview-media";
 import { ProjectVideoModal } from "@/components/media/project-video-modal";
-import { FloatingLayer, Reveal } from "@/components/motion/reveal";
+import { Reveal } from "@/components/motion/reveal";
 import { useSitePreferences } from "@/components/providers/site-preferences";
 import { Button } from "@/components/ui/button";
 import { ButtonLink } from "@/components/ui/button-link";
@@ -217,84 +217,77 @@ export function TommyProfileContent() {
     <main>
       <section className="relative isolate overflow-hidden pt-22 sm:pt-28">
         <div className="absolute inset-0">
-          <Image
-            src={profile.heroBackground}
-            alt={resolveLocalizedValue(profile.heroBackgroundAlt, language)}
-            fill
-            priority
-            sizes="100vw"
-            className={cn(
-              "image-slow-zoom",
-              backgroundUsesPortrait
-                ? "object-cover object-[center_16%] scale-[1.06] opacity-48 blur-[2px]"
-                : "object-cover",
-            )}
-          />
+          {backgroundUsesPortrait ? (
+            <div className="absolute inset-0 overflow-hidden">
+              <div className="absolute inset-y-0 right-[-6%] w-full sm:right-[-2%] sm:w-[86%] lg:right-0 lg:w-[70%]">
+                <Image
+                  src={profile.heroBackground}
+                  alt={resolveLocalizedValue(profile.heroBackgroundAlt, language)}
+                  fill
+                  priority
+                  sizes="100vw"
+                  className="image-slow-zoom object-contain object-[74%_100%] scale-[1.08] opacity-[0.82] blur-[0.4px] sm:object-[78%_100%] lg:object-[82%_100%]"
+                />
+              </div>
+            </div>
+          ) : (
+            <Image
+              src={profile.heroBackground}
+              alt={resolveLocalizedValue(profile.heroBackgroundAlt, language)}
+              fill
+              priority
+              sizes="100vw"
+              className="image-slow-zoom object-cover"
+            />
+          )}
           <div
             className={cn(
               "absolute inset-0",
               backgroundUsesPortrait
-                ? "bg-[radial-gradient(circle_at_18%_18%,rgba(255,255,255,0.1),transparent_22%),linear-gradient(94deg,rgba(5,7,11,0.94),rgba(5,7,11,0.7)_34%,rgba(5,7,11,0.48)_60%,rgba(5,7,11,0.92)_100%),linear-gradient(180deg,rgba(6,6,9,0.12),rgba(6,6,9,0.18)_28%,rgba(6,6,9,0.9)_100%)]"
+                ? "bg-[radial-gradient(circle_at_18%_18%,rgba(255,255,255,0.1),transparent_22%),linear-gradient(92deg,rgba(5,7,11,0.96),rgba(5,7,11,0.88)_22%,rgba(5,7,11,0.58)_46%,rgba(5,7,11,0.28)_64%,rgba(5,7,11,0.78)_100%),linear-gradient(180deg,rgba(6,6,9,0.22),rgba(6,6,9,0.18)_28%,rgba(6,6,9,0.9)_100%)]"
                 : "bg-[radial-gradient(circle_at_18%_18%,rgba(255,255,255,0.08),transparent_22%),linear-gradient(96deg,rgba(5,7,11,0.9),rgba(5,7,11,0.62)_34%,rgba(5,7,11,0.34)_62%,rgba(5,7,11,0.84)_100%),linear-gradient(180deg,rgba(6,6,9,0.12),rgba(6,6,9,0.18)_28%,rgba(6,6,9,0.84)_100%)]",
             )}
           />
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_72%_26%,rgba(255,255,255,0.08),transparent_18%),radial-gradient(circle_at_78%_18%,rgba(116,150,255,0.16),transparent_22%)]" />
           <div className="grain-overlay absolute inset-0 opacity-38" />
         </div>
 
-        <div className="site-container relative flex min-h-[66svh] items-center py-8 sm:min-h-[70svh] sm:py-10 lg:min-h-[74svh] lg:py-12">
-          <div className="grid w-full gap-6 lg:grid-cols-[minmax(0,0.72fr)_minmax(21rem,0.88fr)] lg:items-center lg:gap-8">
-            <Reveal className="max-w-3xl" delay={0.04} y={18}>
-              <div className="subpage-hero-panel relative overflow-hidden px-5 py-5 text-white sm:px-7 sm:py-6 lg:px-8 lg:py-7">
+        <div className="site-container relative flex min-h-[68svh] items-end py-8 sm:min-h-[72svh] sm:py-10 lg:min-h-[76svh] lg:py-12">
+          <Reveal className="max-w-3xl" delay={0.04} y={18}>
+            <div className="subpage-hero-panel relative max-w-[42rem] overflow-hidden px-5 py-5 text-white sm:px-7 sm:py-6 lg:px-8 lg:py-7">
                 <div className="glass-sheen absolute inset-0 opacity-75" />
                 <div className="pointer-events-none absolute -left-10 bottom-[-3rem] h-28 w-28 rounded-full bg-[radial-gradient(circle,rgba(255,255,255,0.18),transparent_72%)] blur-2xl opacity-70" />
                 <div className="pointer-events-none absolute right-[-2rem] top-[-2rem] h-28 w-28 rounded-full bg-[radial-gradient(circle,rgba(122,168,255,0.24),transparent_68%)] blur-2xl opacity-78" />
 
-                <div className="relative z-[1]">
-                  <ButtonLink
-                    href="/om-oss"
-                    variant="ghost"
-                    size="compact"
-                    className="w-fit border-white/14 text-white/84 hover:border-white/26 hover:text-white"
-                  >
-                    {language === "no" ? "Tilbake til Om oss" : "Back to About"}
+              <div className="relative z-[1]">
+                <ButtonLink
+                  href="/om-oss"
+                  variant="ghost"
+                  size="compact"
+                  className="w-fit border-white/14 text-white/84 hover:border-white/26 hover:text-white"
+                >
+                  {language === "no" ? "Tilbake til Om oss" : "Back to About"}
+                </ButtonLink>
+
+                <span className="hero-badge mt-5 text-white/72">
+                  {resolveLocalizedValue(tommyProfilePage.heroTitle, language)}
+                </span>
+                <h1 className="page-title mt-4 max-w-[10ch] text-white">{profile.name}</h1>
+                <p className="mt-4 max-w-[34rem] text-[1.02rem] leading-7 text-white/84 sm:text-[1.08rem] sm:leading-8">
+                  {resolveLocalizedValue(tommyProfilePage.heroIntro, language)}
+                </p>
+
+                <div className="mt-6 flex flex-col gap-2.5 sm:flex-row sm:flex-wrap">
+                  <ButtonLink href="/kontakt" className="w-full sm:w-auto">
+                    {resolveLocalizedValue(tommyProfilePage.heroCtaPrimary, language)}
                   </ButtonLink>
-
-                  <span className="hero-badge mt-5 text-white/70">
-                    {resolveLocalizedValue(tommyProfilePage.heroTitle, language)}
-                  </span>
-                  <h1 className="page-title mt-4 max-w-[10ch] text-white">{profile.name}</h1>
-                  <p className="mt-4 max-w-[40rem] text-[1.02rem] leading-7 text-white/84 sm:text-[1.08rem] sm:leading-8">
-                    {resolveLocalizedValue(tommyProfilePage.heroIntro, language)}
-                  </p>
-
-                  <div className="mt-6 flex flex-col gap-2.5 sm:flex-row sm:flex-wrap">
-                    <ButtonLink href="/kontakt" className="w-full sm:w-auto">
-                      {resolveLocalizedValue(tommyProfilePage.heroCtaPrimary, language)}
-                    </ButtonLink>
-                    <ButtonLink href="/case" variant="secondary" className="w-full sm:w-auto">
-                      {resolveLocalizedValue(tommyProfilePage.heroCtaSecondary, language)}
-                    </ButtonLink>
-                  </div>
+                  <ButtonLink href="/case" variant="secondary" className="w-full sm:w-auto">
+                    {resolveLocalizedValue(tommyProfilePage.heroCtaSecondary, language)}
+                  </ButtonLink>
                 </div>
               </div>
-            </Reveal>
-
-            <FloatingLayer className="lg:justify-self-end">
-              <div className="founder-portrait-panel w-full max-w-[33rem]">
-                <div className="founder-cutout-stage relative min-h-[22rem] overflow-hidden sm:min-h-[26rem] lg:min-h-[29rem]">
-                  <div className="pointer-events-none absolute inset-x-[12%] bottom-[7%] h-12 rounded-full bg-[radial-gradient(circle,rgba(0,0,0,0.34),transparent_72%)] blur-xl opacity-62" />
-                  <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_50%_12%,rgba(255,255,255,0.22),transparent_26%),radial-gradient(circle_at_18%_78%,rgba(122,168,255,0.16),transparent_26%),radial-gradient(circle_at_84%_76%,rgba(255,255,255,0.1),transparent_24%)]" />
-                  <Image
-                    src={profile.portrait}
-                    alt={resolveLocalizedValue(profile.portraitAlt, language)}
-                    fill
-                    sizes="(min-width: 1280px) 28vw, (min-width: 1024px) 34vw, 100vw"
-                    className="founder-cutout-image object-contain object-top px-4 pt-2 sm:px-5 sm:pt-3"
-                  />
-                </div>
-              </div>
-            </FloatingLayer>
-          </div>
+            </div>
+          </Reveal>
         </div>
       </section>
 

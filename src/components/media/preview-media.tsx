@@ -11,6 +11,11 @@ import { cn } from "@/lib/utils";
 import { EmbeddedVideoPlayer } from "./embedded-video-player";
 import { MediaImage } from "./media-image";
 
+const GLOBAL_MEDIA_FALLBACKS = [
+  "/assets/visuals/cinematic/cinematic-video-camera-closeup.jpg",
+  "/assets/visuals/section-images/section-film-studio-cyclorama.jpg",
+] as const;
+
 type PreviewBehavior = "static" | "always" | "hover" | "viewport" | "hover-or-viewport";
 
 type PreviewMediaProps = {
@@ -53,13 +58,32 @@ function buildFallbackSources(
 
   if (externalVideo?.provider === "youtube" && externalVideo.videoId) {
     sources.push(
+      `https://i.ytimg.com/vi/${externalVideo.videoId}/maxresdefault.jpg`,
       `https://i.ytimg.com/vi/${externalVideo.videoId}/hqdefault.jpg`,
       `https://i.ytimg.com/vi/${externalVideo.videoId}/mqdefault.jpg`,
       `https://i.ytimg.com/vi/${externalVideo.videoId}/default.jpg`,
     );
   }
 
+  sources.push(...GLOBAL_MEDIA_FALLBACKS);
+
   return sources;
+}
+
+function isPlayableDirectPreview(video: VideoAsset | undefined) {
+  if (!video || video.videoType !== "direct") {
+    return false;
+  }
+
+  const sources = [video.src, video.mobileSrc].filter(Boolean) as string[];
+
+  return sources.some((source) => {
+    if (source.startsWith("/")) {
+      return true;
+    }
+
+    return /\.(mp4|webm|mov)(\?|$)/i.test(source);
+  });
 }
 
 export function PreviewMedia({
@@ -131,7 +155,7 @@ export function PreviewMedia({
   const resolvedAlt = imageAlt ? resolveLocalizedValue(imageAlt, language) : resolvedTitle;
   const posterSrc = resolvePosterSrc(video, externalVideo, image);
   const fallbackSources = buildFallbackSources(video, externalVideo);
-  const hasDirectPreview = video?.videoType === "direct";
+  const hasDirectPreview = isPlayableDirectPreview(video);
   const hasExternalPreview = Boolean(externalVideo);
   const hasPlayableMedia = hasDirectPreview || hasExternalPreview;
 
@@ -147,7 +171,9 @@ export function PreviewMedia({
               ? isHovered
               : isInView
             : false;
-  const shouldRenderPreview = shouldPlay && hasDirectPreview;
+  const shouldRenderPreview =
+    shouldPlay &&
+    (hasDirectPreview || (hasExternalPreview && canHover));
   const mediaObjectClass =
     mediaFit === "contain" ? "object-contain p-5 sm:p-6" : "object-cover";
 
