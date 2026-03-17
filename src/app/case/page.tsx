@@ -1,4 +1,5 @@
 import { PortfolioPageContent } from "@/components/pages/portfolio-page-content";
+import { getPortfolioGroups, getPortfolioProjects } from "@/lib/content";
 import { buildMetadata } from "@/lib/seo";
 
 export const metadata = buildMetadata({
@@ -8,6 +9,11 @@ export const metadata = buildMetadata({
   path: "/case",
 });
 
-export default function CasePage() {
-  return <PortfolioPageContent />;
+export default async function CasePage() {
+  const [projects, groups] = await Promise.all([
+    getPortfolioProjects(),
+    getPortfolioGroups(),
+  ]);
+
+  return <PortfolioPageContent projects={projects} groups={groups} />;
 }

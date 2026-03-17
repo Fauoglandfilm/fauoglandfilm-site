@@ -2,7 +2,8 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 
 import { CaseDetailContent } from "@/components/pages/case-detail-content";
-import { caseStudies } from "@/data/site-content";
+import { VideoStructuredData } from "@/components/seo/video-structured-data";
+import { getCaseStudies, getCaseStudyBySlug } from "@/lib/content";
 import { uiCopy } from "@/data/ui-copy";
 import { absoluteUrl, buildMetadata } from "@/lib/seo";
 
@@ -11,14 +12,15 @@ type CaseDetailPageProps = {
 };
 
 export async function generateStaticParams() {
-  return caseStudies.map((caseStudy) => ({ slug: caseStudy.slug }));
+  const items = await getCaseStudies();
+  return items.map((caseStudy) => ({ slug: caseStudy.slug }));
 }
 
 export async function generateMetadata({
   params,
 }: CaseDetailPageProps): Promise<Metadata> {
   const { slug } = await params;
-  const caseStudy = caseStudies.find((entry) => entry.slug === slug);
+  const caseStudy = await getCaseStudyBySlug(slug);
 
   if (!caseStudy) {
     return buildMetadata({
@@ -38,13 +40,16 @@ export async function generateMetadata({
 
 export default async function CaseDetailPage({ params }: CaseDetailPageProps) {
   const { slug } = await params;
-  const caseStudy = caseStudies.find((entry) => entry.slug === slug);
+  const [caseStudy, allCases] = await Promise.all([
+    getCaseStudyBySlug(slug),
+    getCaseStudies(),
+  ]);
 
   if (!caseStudy) {
     notFound();
   }
 
-  const relatedCases = caseStudies
+  const relatedCases = allCases
     .filter((entry) => entry.slug !== caseStudy.slug)
     .slice(0, 3);
 
@@ -60,6 +65,14 @@ export default async function CaseDetailPage({ params }: CaseDetailPageProps) {
 
   return (
     <>
+      <VideoStructuredData
+        title={`${caseStudy.client} - ${caseStudy.title.no}`}
+        description={caseStudy.summary.no}
+        path={`/case/${caseStudy.slug}`}
+        thumbnailUrl={caseStudy.externalVideo?.thumbnailSrc ?? caseStudy.video?.poster ?? caseStudy.image}
+        embedUrl={caseStudy.externalVideo?.embedUrl}
+        contentUrl={caseStudy.video?.videoType === "direct" ? caseStudy.video.src : undefined}
+      />
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(caseSchema) }}

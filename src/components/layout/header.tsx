@@ -152,10 +152,10 @@ export function Header() {
         style={{ paddingTop: "env(safe-area-inset-top, 0px)" }}
         className="fixed inset-x-0 top-0 z-50 transition duration-300"
       >
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div className="mx-auto max-w-[1380px] px-4 sm:px-6 lg:px-8">
           <div
             className={cn(
-              "relative mt-2 flex items-center gap-2.5 overflow-hidden rounded-[1.55rem] px-3 py-2.5 transition duration-300 sm:mt-2.5 sm:gap-3 sm:px-4 sm:py-3",
+              "relative mt-2 flex items-center gap-2.5 overflow-hidden rounded-[1.6rem] px-3 py-2.5 transition duration-300 sm:mt-2.5 sm:gap-3 sm:px-4 sm:py-3 lg:grid lg:grid-cols-[auto_minmax(0,1fr)_auto] lg:items-center lg:gap-6 lg:px-5 lg:py-3.5",
               overlayMode
                 ? "border border-white/18 bg-[color:var(--header-overlay-surface)] text-white shadow-[0_30px_92px_rgba(0,0,0,0.24)] backdrop-blur-[32px]"
                 : "border border-[color:var(--line)] bg-[color:var(--header-surface)] text-[color:var(--foreground)] shadow-[0_32px_96px_rgba(7,10,18,0.16)] backdrop-blur-[32px]",
@@ -167,30 +167,54 @@ export function Header() {
 
             <Link
               href="/"
-              className="relative z-[1] flex shrink-0 items-center gap-2.5"
+              className="relative z-[1] flex shrink-0 items-center gap-3 lg:gap-3.5"
               aria-label="Fau&Land Film"
               onClick={() => setOpen(false)}
             >
-              <div className="flex h-8 w-8 items-center justify-center rounded-full border border-white/18 bg-white/[0.14] p-2 shadow-[0_18px_34px_rgba(0,0,0,0.16)] backdrop-blur-2xl sm:h-9 sm:w-9">
-                <BrandLogo variant="mark" className="opacity-100" priority />
-              </div>
-              <p
-                className={cn(
-                  "font-display text-[0.92rem] tracking-[-0.05em] sm:text-[0.98rem]",
-                  overlayMode ? "text-white" : "text-[color:var(--foreground)]",
-                )}
-            >
-              Fau&amp;Land Film
-              </p>
-            </Link>
-
-            <nav className="relative z-[1] hidden flex-1 justify-center lg:flex">
               <div
                 className={cn(
-                  "inline-flex items-center gap-1 rounded-full border px-1.5 py-1.5 backdrop-blur-[28px] transition duration-300",
+                  "flex h-10 w-10 items-center justify-center rounded-full border p-2 shadow-[0_18px_34px_rgba(0,0,0,0.16)] backdrop-blur-2xl lg:h-11 lg:w-11 lg:p-[0.62rem]",
+                  overlayMode
+                    ? "border-white/22 bg-white/[0.18]"
+                    : "border-white/26 bg-white/[0.22]",
+                )}
+              >
+                <BrandLogo
+                  variant="mark"
+                  className={cn(
+                    "opacity-100 saturate-[1.1] drop-shadow-[0_6px_16px_rgba(0,0,0,0.2)]",
+                    overlayMode ? "brightness-[1.22]" : "brightness-[1.08]",
+                  )}
+                  priority
+                />
+              </div>
+              <div className="min-w-0">
+                <p
+                className={cn(
+                  "font-display text-[1rem] font-semibold tracking-[-0.045em] sm:text-[1.03rem] lg:text-[1.08rem]",
+                  overlayMode ? "text-white drop-shadow-[0_8px_22px_rgba(0,0,0,0.22)]" : "text-[color:var(--foreground)]",
+                )}
+                >
+                  Fau&amp;Land Film
+                </p>
+                <p
+                  className={cn(
+                    "mt-0.5 hidden text-[0.63rem] font-semibold uppercase tracking-[0.2em] lg:block",
+                    overlayMode ? "text-white/58" : "text-[color:var(--foreground)]/46",
+                  )}
+                >
+                  Oslo / Production
+                </p>
+              </div>
+            </Link>
+
+            <nav className="relative z-[1] hidden lg:flex lg:justify-center">
+              <div
+                className={cn(
+                  "inline-flex items-center gap-1.5 rounded-full border px-2 py-1.5 backdrop-blur-[28px] transition duration-300",
                   overlayMode
                     ? "border-white/14 bg-white/[0.08] text-white shadow-[0_18px_40px_rgba(0,0,0,0.18)]"
-                    : "border-[color:var(--line)] bg-white/[0.04] text-[color:var(--foreground)] shadow-[0_16px_36px_rgba(7,10,18,0.08)]",
+                    : "border-[color:var(--line)] bg-white/[0.05] text-[color:var(--foreground)] shadow-[0_16px_36px_rgba(7,10,18,0.08)]",
                 )}
                 aria-label={menuLabel}
               >
@@ -202,10 +226,10 @@ export function Header() {
                       key={item.href}
                       href={item.href}
                       className={cn(
-                        "inline-flex items-center rounded-full border border-transparent px-3.5 py-2 text-[0.8rem] font-semibold tracking-[-0.02em] transition duration-300",
+                        "inline-flex items-center rounded-full border border-transparent px-4 py-2.5 text-[0.84rem] font-medium tracking-[-0.015em] transition duration-300",
                         overlayMode
                           ? "text-white/80 hover:border-white/12 hover:bg-white/[0.1] hover:text-white"
-                          : "text-[color:var(--foreground)]/78 hover:border-white/18 hover:bg-white/[0.08] hover:text-[color:var(--foreground)]",
+                          : "text-[color:var(--foreground)]/72 hover:border-white/16 hover:bg-white/[0.08] hover:text-[color:var(--foreground)]",
                         active &&
                           (overlayMode
                             ? "border-white/16 bg-white/[0.14] text-white shadow-[0_10px_28px_rgba(0,0,0,0.18)]"
@@ -219,66 +243,74 @@ export function Header() {
               </div>
             </nav>
 
-            <div className="relative z-[1] ml-auto hidden items-center gap-3 lg:flex">
-              <SegmentedToggle
-                ariaLabel={copy.languageLabel}
-                value={language}
-                options={[
-                  { label: "NO", value: "no" },
-                  { label: "EN", value: "en" },
-                ]}
-                onChange={setLanguage}
-                compact
-              />
-              <SegmentedToggle
-                ariaLabel={copy.themeLabel}
-                value={theme}
-                options={[
-                  { value: "light", icon: <SunIcon className="h-3.5 w-3.5" />, label: "Light" },
-                  { value: "dark", icon: <MoonIcon className="h-3.5 w-3.5" />, label: "Dark" },
-                ]}
-                onChange={setTheme}
-                compact
-                iconOnly
-              />
-            </div>
+            <div className="relative z-[1] ml-auto flex items-center gap-2.5 lg:ml-0">
+              <div className="hidden items-center gap-2.5 lg:flex">
+                <div className="scale-[0.95] origin-right">
+                  <SegmentedToggle
+                    ariaLabel={copy.languageLabel}
+                    value={language}
+                    options={[
+                      { label: "NO", value: "no" },
+                      { label: "EN", value: "en" },
+                    ]}
+                    onChange={setLanguage}
+                    compact
+                  />
+                </div>
+                <div className="scale-[0.95] origin-right">
+                  <SegmentedToggle
+                    ariaLabel={copy.themeLabel}
+                    value={theme}
+                    options={[
+                      { value: "light", icon: <SunIcon className="h-3.5 w-3.5" />, label: "Light" },
+                      { value: "dark", icon: <MoonIcon className="h-3.5 w-3.5" />, label: "Dark" },
+                    ]}
+                    onChange={setTheme}
+                    compact
+                    iconOnly
+                  />
+                </div>
+              </div>
 
-            <Button
-              variant="icon"
-              size="icon"
-              className="relative z-[1] ml-auto shrink-0 lg:hidden"
-              aria-label={open ? copy.menuClose : copy.menuOpen}
-              aria-controls="site-menu"
-              aria-expanded={open}
-              onClick={() => setOpen((value) => !value)}
-            >
-              <span className="relative h-4 w-4">
-                <motion.span
-                  className="absolute inset-0 flex items-center justify-center"
-                  initial={false}
-                  animate={
-                    shouldReduceMotion
-                      ? { opacity: open ? 0 : 1 }
-                      : { opacity: open ? 0 : 1, rotate: open ? -24 : 0, scale: open ? 0.78 : 1 }
-                  }
-                  transition={{ duration: 0.24, ease: [0.22, 1, 0.36, 1] }}
+              <div className="flex items-center lg:hidden">
+                <Button
+                  variant="icon"
+                  size="icon"
+                  className="relative z-[1] shrink-0"
+                  aria-label={open ? copy.menuClose : copy.menuOpen}
+                  aria-controls="site-menu"
+                  aria-expanded={open}
+                  onClick={() => setOpen((value) => !value)}
                 >
-                  <MenuIcon className="h-4 w-4" />
-                </motion.span>
-                <motion.span
-                  className="absolute inset-0 flex items-center justify-center"
-                  initial={false}
-                  animate={
-                    shouldReduceMotion
-                      ? { opacity: open ? 1 : 0 }
-                      : { opacity: open ? 1 : 0, rotate: open ? 0 : 24, scale: open ? 1 : 0.78 }
-                  }
-                  transition={{ duration: 0.24, ease: [0.22, 1, 0.36, 1] }}
-                >
-                  <CloseIcon className="h-4 w-4" />
-                </motion.span>
-              </span>
-            </Button>
+                  <span className="relative h-4 w-4">
+                    <motion.span
+                      className="absolute inset-0 flex items-center justify-center"
+                      initial={false}
+                      animate={
+                        shouldReduceMotion
+                          ? { opacity: open ? 0 : 1 }
+                          : { opacity: open ? 0 : 1, rotate: open ? -24 : 0, scale: open ? 0.78 : 1 }
+                      }
+                      transition={{ duration: 0.24, ease: [0.22, 1, 0.36, 1] }}
+                    >
+                      <MenuIcon className="h-4 w-4" />
+                    </motion.span>
+                    <motion.span
+                      className="absolute inset-0 flex items-center justify-center"
+                      initial={false}
+                      animate={
+                        shouldReduceMotion
+                          ? { opacity: open ? 1 : 0 }
+                          : { opacity: open ? 1 : 0, rotate: open ? 0 : 24, scale: open ? 1 : 0.78 }
+                      }
+                      transition={{ duration: 0.24, ease: [0.22, 1, 0.36, 1] }}
+                    >
+                      <CloseIcon className="h-4 w-4" />
+                    </motion.span>
+                  </span>
+                </Button>
+              </div>
+            </div>
           </div>
         </div>
       </header>

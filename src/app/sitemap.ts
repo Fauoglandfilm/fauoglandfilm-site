@@ -1,18 +1,21 @@
 import type { MetadataRoute } from "next";
 
-import { caseStudies } from "@/data/site-content";
+import { getArticles, getCaseStudies } from "@/lib/content";
 import { absoluteUrl } from "@/lib/seo";
 
-export default function sitemap(): MetadataRoute.Sitemap {
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const routes = [
     "",
     "/tjenester",
     "/case",
+    "/artikler",
     "/om-oss",
     "/priser",
     "/kontakt",
     "/faq",
     "/landingsside-mal",
+    "/team/tommy-garland",
+    "/team/gard-ruben-fauske",
   ];
 
   const staticPages = routes.map((route) => ({
@@ -20,10 +23,20 @@ export default function sitemap(): MetadataRoute.Sitemap {
     lastModified: new Date(),
   }));
 
-  const casePages = caseStudies.map((caseStudy) => ({
+  const [allCaseStudies, articles] = await Promise.all([
+    getCaseStudies(),
+    getArticles(),
+  ]);
+
+  const casePages = allCaseStudies.map((caseStudy) => ({
     url: absoluteUrl(`/case/${caseStudy.slug}`),
     lastModified: new Date(),
   }));
 
-  return [...staticPages, ...casePages];
+  const articlePages = articles.map((article) => ({
+    url: absoluteUrl(`/artikler/${article.slug}`),
+    lastModified: article.dateModified ? new Date(article.dateModified) : new Date(),
+  }));
+
+  return [...staticPages, ...casePages, ...articlePages];
 }

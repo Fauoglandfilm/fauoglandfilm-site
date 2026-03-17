@@ -8,9 +8,9 @@ import { SitePreferencesProvider } from "@/components/providers/site-preferences
 import { Footer } from "@/components/layout/footer";
 import { Header } from "@/components/layout/header";
 import { TrackingScripts } from "@/components/layout/tracking-scripts";
-import { JsonLd } from "@/components/ui/json-ld";
+import { OrganizationStructuredData } from "@/components/seo/organization-structured-data";
 import { siteConfig } from "@/data/site-content";
-import { buildMetadata, organizationSchema } from "@/lib/seo";
+import { buildMetadata } from "@/lib/seo";
 
 import "./globals.css";
 
@@ -68,7 +68,7 @@ export default function RootLayout({
           strategy="beforeInteractive"
           dangerouslySetInnerHTML={{ __html: preferenceBootScript }}
         />
-        <JsonLd data={organizationSchema} />
+        <OrganizationStructuredData />
         <TrackingScripts />
         <SitePreferencesProvider>
           <div className="relative min-h-screen overflow-x-clip">
