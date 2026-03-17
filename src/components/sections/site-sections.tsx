@@ -18,7 +18,7 @@ import type {
   Testimonial,
 } from "@/data/site-content";
 import { siteConfig } from "@/data/site-content";
-import { pageHeroVisuals, siteVisuals } from "@/data/visual-assets";
+import { pageHeroVisuals } from "@/data/visual-assets";
 import { uiCopy } from "@/data/ui-copy";
 import type { LocalizedText } from "@/lib/i18n";
 import { resolveLocalizedValue } from "@/lib/i18n";
@@ -264,51 +264,36 @@ export function TeamSection({
     >
       <div className="grid gap-4 xl:grid-cols-[0.78fr_1.22fr]">
         <FloatingLayer>
-          <article className="glass-panel overflow-hidden rounded-[2rem]">
-            <div className="media-frame relative aspect-[1.16/0.94] min-h-[17rem] overflow-hidden">
-              <Image
-                src={siteVisuals.filmCrewOutdoors.src}
-                alt={resolveLocalizedValue(siteVisuals.filmCrewOutdoors.alt, language)}
-                fill
-                sizes="(min-width: 1280px) 28vw, (min-width: 768px) 44vw, 100vw"
-                className="object-cover"
-              />
-              <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(8,8,10,0.08),rgba(8,8,10,0.26)_42%,rgba(8,8,10,0.84)_100%)]" />
-              <div className="grain-overlay absolute inset-0 opacity-38" />
-              <div className="absolute inset-x-0 bottom-0 p-5 text-white sm:p-6">
-                <p className="text-[0.68rem] font-semibold uppercase tracking-[0.22em] text-white/54">
-                  {language === "no" ? "To ulike styrker" : "Two complementary strengths"}
-                </p>
-                <h3 className="feature-title mt-3 max-w-md text-white">
-                  {language === "no"
-                    ? "En produsentprofil og en regiprofil, tett koblet i samme produksjon."
-                    : "A producer profile and a directing profile, tightly connected inside the same production company."}
-                </h3>
-              </div>
-            </div>
+          <article className="glass-panel rounded-[2rem] p-5 sm:p-6 lg:p-7">
+            <p className="text-[0.68rem] font-semibold uppercase tracking-[0.22em] text-[var(--muted)]">
+              {language === "no" ? "To ulike styrker" : "Two complementary strengths"}
+            </p>
+            <h3 className="feature-title mt-3 max-w-md text-[color:var(--foreground)]">
+              {language === "no"
+                ? "En produsentprofil og en regiprofil, tett koblet i samme produksjon."
+                : "A producer profile and a directing profile, tightly connected inside the same production company."}
+            </h3>
 
-            <div className="p-5 sm:p-6">
-              <ul className="space-y-3 text-sm leading-6 text-[var(--muted-2)] sm:text-base">
-                {bullets.map((bullet, index) => (
-                  <li key={`team-bullet-${index}`} className="flex gap-3">
-                    <span className="mt-2 h-1.5 w-1.5 rounded-full bg-[var(--accent)]" />
-                    <span>{resolveLocalizedValue(bullet, language)}</span>
-                  </li>
-                ))}
-              </ul>
+            <ul className="mt-6 space-y-3 text-sm leading-6 text-[var(--muted-2)] sm:text-base">
+              {bullets.map((bullet, index) => (
+                <li key={`team-bullet-${index}`} className="flex gap-3">
+                  <span className="mt-2 h-1.5 w-1.5 rounded-full bg-[var(--accent)]" />
+                  <span>{resolveLocalizedValue(bullet, language)}</span>
+                </li>
+              ))}
+            </ul>
 
-              <p className="mt-5 text-sm leading-6 text-[var(--muted)] sm:text-[0.98rem]">
-                {language === "no"
-                  ? "Portrettene er inngangen til hver sin profilside, med mer om bakgrunn, roller og utvalgte produksjoner."
-                  : "The portraits are the entrance to their own profile pages, with more on background, roles and selected productions."}
-              </p>
-            </div>
+            <p className="mt-5 text-sm leading-6 text-[var(--muted)] sm:text-[0.98rem]">
+              {language === "no"
+                ? "Trykk på portrettene for å åpne hver sin profilside med mer om bakgrunn, roller og utvalgte produksjoner."
+                : "Tap the portraits to open each profile page, with more on background, roles and selected productions."}
+            </p>
           </article>
         </FloatingLayer>
 
-        <div className="adaptive-grid-compact lg:items-start">
+        <div className="grid gap-4 md:grid-cols-2 lg:items-start">
           {team.map((member, index) => (
-            <Reveal key={member.name} delay={0.05 * index} className={index === 1 ? "lg:translate-y-8" : undefined}>
+            <Reveal key={member.name} delay={0.05 * index}>
               <article className="founder-card-shell group relative overflow-hidden rounded-[2rem] p-4 sm:p-5">
                 <div className="glass-sheen absolute inset-0 opacity-60" />
                 <div className="pointer-events-none absolute right-[-10%] top-[-6%] h-32 w-32 rounded-full bg-[radial-gradient(circle,rgba(122,168,255,0.22),transparent_72%)] blur-3xl opacity-75" />
@@ -324,7 +309,8 @@ export function TeamSection({
                         : `View more about ${member.name}`
                     }
                   >
-                    <div className="founder-portrait-shell relative aspect-[0.88/1.03] overflow-hidden">
+                    <div className="founder-portrait-shell relative aspect-[4/5] overflow-hidden">
+                      <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_20%,rgba(255,255,255,0.18),transparent_34%),linear-gradient(180deg,rgba(19,24,36,0.68),rgba(19,24,36,0.26)_36%,rgba(19,24,36,0.58)_100%)]" />
                       <Image
                         src={member.image}
                         alt={
@@ -334,10 +320,8 @@ export function TeamSection({
                         }
                         fill
                         sizes="(min-width: 1280px) 24vw, (min-width: 768px) 42vw, 100vw"
-                        className="object-cover transition duration-700 group-hover:scale-[1.045]"
+                        className="object-contain object-bottom p-4 transition duration-700 group-hover:scale-[1.03] sm:p-5"
                       />
-                      <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(10,10,12,0.02),rgba(10,10,12,0.12)_44%,rgba(10,10,12,0.76)_100%)]" />
-                      <div className="grain-overlay absolute inset-0 opacity-30" />
                     </div>
                   </Link>
                 ) : null}

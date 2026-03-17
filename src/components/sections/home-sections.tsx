@@ -526,21 +526,13 @@ export function AboutSection() {
           <FloatingLayer className="glass-panel relative overflow-hidden rounded-[1.9rem] shadow-[0_34px_110px_rgba(0,0,0,0.2)] sm:rounded-[2rem]">
             <div className="glass-sheen absolute inset-0 opacity-50" />
             <div className="grid gap-px bg-[color:var(--line)] lg:grid-cols-[1.1fr_0.9fr]">
-              <div className="media-frame relative min-h-[18rem] overflow-hidden sm:min-h-[21rem] lg:min-h-[27rem]">
-                <Image
-                  src={siteVisuals.filmCrewOutdoors.src}
-                  alt={resolveLocalizedValue(siteVisuals.filmCrewOutdoors.alt, language)}
-                  fill
-                  sizes="(min-width: 1024px) 34vw, 100vw"
-                  className="object-cover"
-                />
-                <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(7,7,7,0.08),rgba(7,7,7,0.52)_68%,rgba(7,7,7,0.84)_100%)]" />
-                <div className="grain-overlay absolute inset-0 opacity-40" />
-                <div className="absolute inset-x-0 bottom-0 p-5 text-white sm:p-6">
-                  <p className="text-[0.66rem] font-semibold uppercase tracking-[0.22em] text-white/56">
+              <div className="relative flex min-h-[18rem] flex-col justify-end p-5 sm:min-h-[21rem] sm:p-6 lg:min-h-[27rem] lg:p-7">
+                <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_22%_18%,rgba(255,255,255,0.16),transparent_26%),radial-gradient(circle_at_78%_82%,rgba(122,168,255,0.16),transparent_26%),linear-gradient(180deg,rgba(255,255,255,0.08),rgba(255,255,255,0.02))]" />
+                <div className="relative">
+                  <p className="text-[0.66rem] font-semibold uppercase tracking-[0.22em] text-[var(--muted)]">
                     {language === "no" ? "Produksjonsselskap" : "Production company"}
                   </p>
-                  <p className="mt-2 max-w-sm text-sm leading-6 text-white/74 sm:text-base">
+                  <p className="mt-3 max-w-md text-sm leading-6 text-[var(--muted-2)] sm:text-base">
                     {language === "no"
                       ? "Seniorledet produksjon med tett oppfølging, filmatisk presisjon og korte beslutningslinjer."
                       : "Senior-led production with close follow-up, cinematic precision and a short path to decision-making."}
@@ -568,9 +560,9 @@ export function AboutSection() {
                       alt={resolveLocalizedValue(member.image.alt, language)}
                       fill
                       sizes="(min-width: 1024px) 18vw, 50vw"
-                      className="object-cover transition duration-700 group-hover:scale-[1.03]"
+                      className="object-contain object-bottom p-4 transition duration-700 group-hover:scale-[1.03] sm:p-5"
                     />
-                    <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(17,17,17,0.02),rgba(17,17,17,0.18)_48%,rgba(17,17,17,0.7)_100%)]" />
+                    <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_18%,rgba(255,255,255,0.18),transparent_34%),linear-gradient(180deg,rgba(19,24,36,0.62),rgba(19,24,36,0.24)_36%,rgba(19,24,36,0.58)_100%)]" />
                     <div className="absolute inset-x-0 bottom-0 p-4 sm:p-5">
                       <p className="text-[0.64rem] font-semibold uppercase tracking-[0.2em] text-white/62">
                         {resolveLocalizedValue(member.role!, language)}

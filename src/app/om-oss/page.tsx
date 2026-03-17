@@ -5,9 +5,9 @@ import {
 } from "@/components/sections/site-sections";
 import {
   aboutBullets,
-  teamMembers,
 } from "@/data/site-content";
 import { uiCopy } from "@/data/ui-copy";
+import { getTeamMembers } from "@/lib/content";
 import { buildMetadata } from "@/lib/seo";
 
 export const metadata = buildMetadata({
@@ -17,7 +17,8 @@ export const metadata = buildMetadata({
   path: "/om-oss",
 });
 
-export default function AboutPage() {
+export default async function AboutPage() {
+  const teamMembers = await getTeamMembers();
   const copy = uiCopy.pages;
 
   return (

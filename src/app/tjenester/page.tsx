@@ -6,9 +6,9 @@ import {
 } from "@/components/sections/site-sections";
 import {
   processSteps,
-  serviceAreas,
 } from "@/data/site-content";
 import { uiCopy } from "@/data/ui-copy";
+import { getServiceAreas } from "@/lib/content";
 import { buildMetadata } from "@/lib/seo";
 
 export const metadata = buildMetadata({
@@ -18,7 +18,8 @@ export const metadata = buildMetadata({
   path: "/tjenester",
 });
 
-export default function ServicesPage() {
+export default async function ServicesPage() {
+  const services = await getServiceAreas();
   const copy = uiCopy.pages;
 
   return (
@@ -34,7 +35,7 @@ export default function ServicesPage() {
         visualKey="services"
       />
       <ServicesSection
-        services={serviceAreas}
+        services={services}
         title={{ no: copy.no.servicesSectionTitle, en: copy.en.servicesSectionTitle }}
         description={{
           no: copy.no.servicesSectionDescription,

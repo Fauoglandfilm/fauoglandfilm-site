@@ -4,21 +4,10 @@ import { useState } from "react";
 
 import { useSitePreferences } from "@/components/providers/site-preferences";
 import { Button } from "@/components/ui/button";
-import { siteConfig } from "@/data/site-content";
+import type { ContactFormPayload } from "@/lib/contact-form";
 import { uiCopy } from "@/data/ui-copy";
-import { resolveLocalizedValue } from "@/lib/i18n";
 
-type FormState = {
-  name: string;
-  company: string;
-  email: string;
-  phone: string;
-  projectType: string;
-  budget: string;
-  message: string;
-};
-
-const initialState: FormState = {
+const initialState: ContactFormPayload = {
   name: "",
   company: "",
   email: "",
@@ -29,39 +18,46 @@ const initialState: FormState = {
 };
 
 export function ContactForm() {
-  const [formState, setFormState] = useState<FormState>(initialState);
+  const [formState, setFormState] = useState<ContactFormPayload>(initialState);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [didTriggerSubmit, setDidTriggerSubmit] = useState(false);
+  const [submitError, setSubmitError] = useState<string | null>(null);
   const { language } = useSitePreferences();
   const copy = uiCopy.form[language];
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     setIsSubmitting(true);
-    setDidTriggerSubmit(true);
+    setSubmitError(null);
 
-    // Koble denne formen til CRM, API-rute eller Calendly-flow når backend er klar.
-    const subject = encodeURIComponent(
-      `${copy.subjectPrefix} ${formState.company || formState.name || copy.subjectFallback}`,
-    );
-    const body = encodeURIComponent(
-      [
-        `${copy.name}: ${formState.name}`,
-        `${copy.company}: ${formState.company}`,
-        `${copy.email}: ${formState.email}`,
-        `${copy.phone}: ${formState.phone}`,
-        `${copy.projectType}: ${formState.projectType || "-"}`,
-        `${copy.budget}: ${formState.budget || "-"}`,
-        "",
-        copy.messageLabel,
-        formState.message,
-      ].join("\n"),
-    );
+    try {
+      const response = await fetch("/api/contact", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formState),
+      });
 
-    window.setTimeout(() => {
-      window.location.href = `mailto:${siteConfig.email}?subject=${subject}&body=${body}`;
+      const result = (await response.json()) as { ok?: boolean; message?: string };
+
+      if (!response.ok || !result.ok) {
+        throw new Error(result.message ?? "Kunne ikke sende skjemaet.");
+      }
+
+      setDidTriggerSubmit(true);
+      setFormState(initialState);
+    } catch (error) {
+      setSubmitError(
+        error instanceof Error
+          ? error.message
+          : language === "no"
+            ? "Noe gikk galt. Prøv igjen."
+            : "Something went wrong. Please try again.",
+      );
+    } finally {
       setIsSubmitting(false);
-    }, 120);
+    }
   };
 
   return (
@@ -183,12 +179,17 @@ export function ContactForm() {
       <div className="flex flex-col gap-3 pt-1 sm:flex-row sm:items-center sm:justify-between">
         <div className="space-y-2">
           <p className="text-sm leading-6 text-[var(--muted)]">
-            {resolveLocalizedValue(siteConfig.responseTime, language)}
+            {language === "no" ? "Vi følger opp innen 24 timer." : "We follow up within 24 hours."}
           </p>
           {didTriggerSubmit ? (
             <div className="rounded-[1rem] border border-[var(--accent)]/24 bg-[var(--accent)]/10 px-4 py-3 text-sm leading-6 text-[color:var(--foreground)]">
               <p className="font-semibold text-[color:var(--foreground)]">{copy.successTitle}</p>
               <p className="mt-1 text-[var(--muted-2)]">{copy.successDescription}</p>
+            </div>
+          ) : null}
+          {submitError ? (
+            <div className="rounded-[1rem] border border-[color:var(--line-strong)] bg-[color:var(--surface)] px-4 py-3 text-sm leading-6 text-[color:var(--foreground)]">
+              {submitError}
             </div>
           ) : null}
         </div>

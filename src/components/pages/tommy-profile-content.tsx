@@ -268,16 +268,15 @@ export function TommyProfileContent() {
 
             <FloatingLayer className="lg:justify-self-end">
               <div className="founder-portrait-panel">
-                <div className="founder-portrait-shell relative aspect-[0.9/1.08] overflow-hidden">
+                <div className="founder-portrait-shell relative aspect-[4/5] overflow-hidden">
+                  <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_18%,rgba(255,255,255,0.18),transparent_34%),linear-gradient(180deg,rgba(19,24,36,0.62),rgba(19,24,36,0.2)_38%,rgba(19,24,36,0.52)_100%)]" />
                   <Image
                     src={profile.portrait}
                     alt={resolveLocalizedValue(profile.portraitAlt, language)}
                     fill
                     sizes="(min-width: 1280px) 28vw, (min-width: 1024px) 34vw, 100vw"
-                    className="object-cover"
+                    className="object-contain object-bottom p-4 sm:p-5"
                   />
-                  <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(10,10,12,0.02),rgba(10,10,12,0.12)_48%,rgba(10,10,12,0.76)_100%)]" />
-                  <div className="grain-overlay absolute inset-0 opacity-26" />
                 </div>
               </div>
             </FloatingLayer>

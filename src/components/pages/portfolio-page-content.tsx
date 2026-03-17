@@ -35,17 +35,23 @@ const FEATURED_PROJECT_SLUGS = [
   "ville-gleder-villmarksforedrag",
 ] as const;
 
-export function PortfolioPageContent() {
+export function PortfolioPageContent({
+  projects = portfolioProjects,
+  groups = portfolioGroups,
+}: {
+  projects?: PortfolioProject[];
+  groups?: PortfolioGroup[];
+}) {
   const { language } = useSitePreferences();
   const [activeProject, setActiveProject] = useState<PortfolioProject | null>(null);
   const [activeFilter, setActiveFilter] = useState<string>(ALL_FILTER);
 
   const showreelProject =
-    portfolioProjects.find((project) => project.group === "showreel") ?? portfolioProjects[0];
-  const portfolioSections = portfolioGroups.filter((group) => group.slug !== "showreel");
-  const allProjects = portfolioProjects.filter((project) => project.group !== "showreel");
+    projects.find((project) => project.group === "showreel") ?? projects[0];
+  const portfolioSections = groups.filter((group) => group.slug !== "showreel");
+  const allProjects = projects.filter((project) => project.group !== "showreel");
   const featuredProjects = FEATURED_PROJECT_SLUGS.map((slug) =>
-    portfolioProjects.find((project) => project.slug === slug),
+    projects.find((project) => project.slug === slug),
   ).filter((project): project is PortfolioProject => Boolean(project));
   const visibleFeaturedProjects = featuredProjects.length ? featuredProjects : allProjects.slice(0, 4);
   const featuredProjectSlugs = new Set(visibleFeaturedProjects.map((project) => project.slug));
