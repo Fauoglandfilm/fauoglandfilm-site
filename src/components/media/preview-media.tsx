@@ -1,6 +1,5 @@
 "use client";
 
-import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 
 import { useSitePreferences } from "@/components/providers/site-preferences";
@@ -10,6 +9,7 @@ import { resolveLocalizedValue } from "@/lib/i18n";
 import { cn } from "@/lib/utils";
 
 import { EmbeddedVideoPlayer } from "./embedded-video-player";
+import { MediaImage } from "./media-image";
 
 type PreviewBehavior = "static" | "always" | "hover" | "viewport" | "hover-or-viewport";
 
@@ -35,6 +35,31 @@ function resolvePosterSrc(
   image: string | undefined,
 ) {
   return image ?? video?.poster ?? externalVideo?.thumbnailSrc;
+}
+
+function buildFallbackSources(
+  video: VideoAsset | undefined,
+  externalVideo: ExternalVideoAsset | undefined,
+) {
+  const sources: string[] = [];
+
+  if (video?.videoType === "direct" && video.poster) {
+    sources.push(video.poster);
+  }
+
+  if (externalVideo?.thumbnailSrc) {
+    sources.push(externalVideo.thumbnailSrc);
+  }
+
+  if (externalVideo?.provider === "youtube" && externalVideo.videoId) {
+    sources.push(
+      `https://i.ytimg.com/vi/${externalVideo.videoId}/hqdefault.jpg`,
+      `https://i.ytimg.com/vi/${externalVideo.videoId}/mqdefault.jpg`,
+      `https://i.ytimg.com/vi/${externalVideo.videoId}/default.jpg`,
+    );
+  }
+
+  return sources;
 }
 
 export function PreviewMedia({
@@ -105,6 +130,7 @@ export function PreviewMedia({
   const resolvedTitle = resolveLocalizedValue(title, language);
   const resolvedAlt = imageAlt ? resolveLocalizedValue(imageAlt, language) : resolvedTitle;
   const posterSrc = resolvePosterSrc(video, externalVideo, image);
+  const fallbackSources = buildFallbackSources(video, externalVideo);
   const hasDirectPreview = video?.videoType === "direct";
   const hasExternalPreview = Boolean(externalVideo);
   const hasPlayableMedia = hasDirectPreview || hasExternalPreview;
@@ -133,11 +159,11 @@ export function PreviewMedia({
       onMouseLeave={() => setIsHovered(false)}
       aria-label={resolvedTitle}
     >
-      {posterSrc ? (
-        <Image
+      {posterSrc || fallbackSources.length ? (
+        <MediaImage
           src={posterSrc}
+          fallbackSrcs={fallbackSources}
           alt={resolvedAlt}
-          fill
           priority={priority}
           sizes={sizes}
           className={cn(

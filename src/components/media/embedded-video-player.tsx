@@ -1,6 +1,5 @@
 "use client";
 
-import Image from "next/image";
 import { useState } from "react";
 
 import { useSitePreferences } from "@/components/providers/site-preferences";
@@ -8,6 +7,8 @@ import type { ExternalVideoAsset, VideoAsset } from "@/data/site-content";
 import type { LocalizedText } from "@/lib/i18n";
 import { resolveLocalizedValue } from "@/lib/i18n";
 import { cn } from "@/lib/utils";
+
+import { MediaImage } from "./media-image";
 
 type EmbeddedVideoPlayerProps = {
   title: string | LocalizedText;
@@ -25,6 +26,7 @@ type EmbeddedVideoPlayerProps = {
 
 type ManagedFrameProps = {
   fallbackSrc?: string;
+  fallbackSrcs: string[];
   resolvedImageAlt: string;
   mediaObjectClass: string;
   className?: string;
@@ -37,6 +39,7 @@ type ManagedFrameProps = {
 
 type ManagedDirectVideoProps = {
   fallbackSrc?: string;
+  fallbackSrcs: string[];
   resolvedImageAlt: string;
   mediaObjectClass: string;
   className?: string;
@@ -97,8 +100,35 @@ function FallbackSurface() {
   );
 }
 
+function buildFallbackSources(video?: VideoAsset, externalVideo?: ExternalVideoAsset, image?: string) {
+  const sources: string[] = [];
+
+  if (image) {
+    sources.push(image);
+  }
+
+  if (video?.videoType === "direct" && video.poster) {
+    sources.push(video.poster);
+  }
+
+  if (externalVideo?.thumbnailSrc) {
+    sources.push(externalVideo.thumbnailSrc);
+  }
+
+  if (externalVideo?.provider === "youtube" && externalVideo.videoId) {
+    sources.push(
+      `https://i.ytimg.com/vi/${externalVideo.videoId}/hqdefault.jpg`,
+      `https://i.ytimg.com/vi/${externalVideo.videoId}/mqdefault.jpg`,
+      `https://i.ytimg.com/vi/${externalVideo.videoId}/default.jpg`,
+    );
+  }
+
+  return Array.from(new Set(sources));
+}
+
 function ManagedExternalFrame({
   fallbackSrc,
+  fallbackSrcs,
   resolvedImageAlt,
   mediaObjectClass,
   className,
@@ -112,11 +142,11 @@ function ManagedExternalFrame({
 
   return (
     <div className={cn("relative overflow-hidden bg-[#05070b]", className)}>
-      {fallbackSrc ? (
-        <Image
+      {fallbackSrc || fallbackSrcs.length ? (
+        <MediaImage
           src={fallbackSrc}
+          fallbackSrcs={fallbackSrcs}
           alt={resolvedImageAlt}
-          fill
           priority={priority}
           sizes={sizes}
           className={cn(mediaObjectClass, "transition duration-500", isReady ? "opacity-0" : "opacity-100")}
@@ -145,6 +175,7 @@ function ManagedExternalFrame({
 
 function ManagedDirectVideo({
   fallbackSrc,
+  fallbackSrcs,
   resolvedImageAlt,
   mediaObjectClass,
   className,
@@ -160,11 +191,11 @@ function ManagedDirectVideo({
 
   return (
     <div className={cn("relative overflow-hidden bg-[#05070b]", className)}>
-      {fallbackSrc ? (
-        <Image
+      {fallbackSrc || fallbackSrcs.length ? (
+        <MediaImage
           src={fallbackSrc}
+          fallbackSrcs={fallbackSrcs}
           alt={resolvedImageAlt}
-          fill
           priority={priority}
           sizes={sizes}
           className={cn(
@@ -224,6 +255,7 @@ export function EmbeddedVideoPlayer({
     ? resolveLocalizedValue(imageAlt, language)
     : resolvedTitle;
   const fallbackSrc = image ?? video?.poster ?? externalVideo?.thumbnailSrc;
+  const fallbackSrcs = buildFallbackSources(video, externalVideo, image);
   const mediaObjectClass = mediaFit === "contain" ? "object-contain p-6" : "object-cover";
   const mediaKey = [
     video?.videoType,
@@ -238,13 +270,13 @@ export function EmbeddedVideoPlayer({
   ].join("::");
 
   if (externalVideo && previewMode) {
-    if (fallbackSrc) {
+    if (fallbackSrc || fallbackSrcs.length) {
       return (
         <div className={cn("relative overflow-hidden", className)}>
-          <Image
+          <MediaImage
             src={fallbackSrc}
+            fallbackSrcs={fallbackSrcs}
             alt={resolvedImageAlt}
-            fill
             priority={priority}
             sizes={sizes}
             className={mediaObjectClass}
@@ -265,6 +297,7 @@ export function EmbeddedVideoPlayer({
       <ManagedExternalFrame
         key={mediaKey}
         fallbackSrc={fallbackSrc}
+        fallbackSrcs={fallbackSrcs}
         resolvedImageAlt={resolvedImageAlt}
         mediaObjectClass={mediaObjectClass}
         className={className}
@@ -282,6 +315,7 @@ export function EmbeddedVideoPlayer({
       <ManagedDirectVideo
         key={mediaKey}
         fallbackSrc={fallbackSrc}
+        fallbackSrcs={fallbackSrcs}
         resolvedImageAlt={resolvedImageAlt}
         mediaObjectClass={mediaObjectClass}
         className={className}
@@ -295,13 +329,13 @@ export function EmbeddedVideoPlayer({
     );
   }
 
-  if (fallbackSrc) {
+  if (fallbackSrc || fallbackSrcs.length) {
     return (
       <div className={cn("relative overflow-hidden", className)}>
-        <Image
+        <MediaImage
           src={fallbackSrc}
+          fallbackSrcs={fallbackSrcs}
           alt={resolvedImageAlt}
-          fill
           priority={priority}
           sizes={sizes}
           className={mediaObjectClass}
