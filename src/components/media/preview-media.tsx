@@ -32,6 +32,7 @@ type PreviewMediaProps = {
   posterClassName?: string;
   previewClassName?: string;
   rootMargin?: string;
+  inViewThreshold?: number;
 };
 
 function hasExplicitPositionClass(value?: string) {
@@ -115,12 +116,14 @@ export function PreviewMedia({
   posterClassName,
   previewClassName,
   rootMargin = "0px 0px -12% 0px",
+  inViewThreshold = 0.42,
 }: PreviewMediaProps) {
   const { language } = useSitePreferences();
   const containerRef = useRef<HTMLDivElement | null>(null);
   const [isHovered, setIsHovered] = useState(false);
   const [isInView, setIsInView] = useState(false);
   const [canHover, setCanHover] = useState(false);
+  const normalizedInViewThreshold = Math.min(Math.max(inViewThreshold, 0.01), 0.98);
 
   useEffect(() => {
     if (typeof window === "undefined") {
@@ -151,10 +154,10 @@ export function PreviewMedia({
 
     const observer = new IntersectionObserver(
       ([entry]) => {
-        setIsInView(entry.isIntersecting);
+        setIsInView(entry.isIntersecting && entry.intersectionRatio >= normalizedInViewThreshold);
       },
       {
-        threshold: 0.42,
+        threshold: Array.from(new Set([0, normalizedInViewThreshold])),
         rootMargin,
       },
     );
@@ -164,7 +167,7 @@ export function PreviewMedia({
     return () => {
       observer.disconnect();
     };
-  }, [previewBehavior, rootMargin]);
+  }, [normalizedInViewThreshold, previewBehavior, rootMargin]);
 
   const resolvedTitle = resolveLocalizedValue(title, language);
   const resolvedAlt = imageAlt ? resolveLocalizedValue(imageAlt, language) : resolvedTitle;
