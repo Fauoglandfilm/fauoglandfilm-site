@@ -15,7 +15,7 @@ import {
   type LocalizedValue,
 } from "@/lib/i18n";
 
-type ThemeMode = "light";
+type ThemeMode = "light" | "dark";
 
 type SitePreferencesContextValue = {
   language: LanguageCode;
@@ -25,6 +25,7 @@ type SitePreferencesContextValue = {
 };
 
 const LANGUAGE_STORAGE_KEY = "fauoglandfilm-language";
+const THEME_STORAGE_KEY = "fauoglandfilm-theme";
 const SitePreferencesContext = createContext<SitePreferencesContextValue | null>(null);
 
 function getInitialLanguage(): LanguageCode {
@@ -40,29 +41,38 @@ function getInitialLanguage(): LanguageCode {
 }
 
 function getInitialTheme(): ThemeMode {
+  if (typeof document !== "undefined") {
+    const storedTheme = document.documentElement.dataset.theme;
+
+    if (storedTheme === "light" || storedTheme === "dark") {
+      return storedTheme;
+    }
+  }
+
   return "light";
 }
 
 export function SitePreferencesProvider({ children }: { children: ReactNode }) {
   const [language, setLanguageState] = useState<LanguageCode>(getInitialLanguage);
-  const theme = getInitialTheme();
+  const [theme, setThemeState] = useState<ThemeMode>(getInitialTheme);
 
   useEffect(() => {
-    document.documentElement.dataset.theme = "light";
+    document.documentElement.dataset.theme = theme;
     document.documentElement.dataset.language = language;
     document.documentElement.lang = language === "no" ? "nb" : "en";
 
     try {
       window.localStorage.setItem(LANGUAGE_STORAGE_KEY, language);
+      window.localStorage.setItem(THEME_STORAGE_KEY, theme);
     } catch {}
-  }, [language]);
+  }, [language, theme]);
 
   const value = useMemo(
     () => ({
       language,
       setLanguage: setLanguageState,
       theme,
-      setTheme: () => undefined,
+      setTheme: setThemeState,
     }),
     [language, theme],
   );

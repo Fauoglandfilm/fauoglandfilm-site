@@ -12,7 +12,7 @@ import {
   segmentedControlOptionClassName,
   segmentedControlShellClassName,
 } from "@/components/ui/button-styles";
-import { CloseIcon, MenuIcon } from "@/components/ui/icons";
+import { CloseIcon, MenuIcon, MoonIcon, SunIcon } from "@/components/ui/icons";
 import { navItems } from "@/data/site-content";
 import { uiCopy } from "@/data/ui-copy";
 import { resolveLocalizedValue } from "@/lib/i18n";
@@ -73,7 +73,7 @@ export function Header() {
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const shouldReduceMotion = useReducedMotion();
-  const { language, setLanguage } = useSitePreferences();
+  const { language, setLanguage, theme, setTheme } = useSitePreferences();
   const copy = uiCopy.header[language];
   const overlayMode = pathname === "/" && !scrolled && !open;
   const menuLabel = language === "no" ? "Meny" : "Menu";
@@ -242,6 +242,18 @@ export function Header() {
                     compact
                   />
                 </div>
+                <div className="scale-[0.95] origin-right">
+                  <SegmentedToggle
+                    ariaLabel={copy.themeLabel}
+                    value={theme}
+                    options={[
+                      { value: "light", label: language === "no" ? "Dag" : "Day", icon: <SunIcon /> },
+                      { value: "dark", label: language === "no" ? "Natt" : "Night", icon: <MoonIcon /> },
+                    ]}
+                    onChange={setTheme}
+                    compact
+                  />
+                </div>
               </div>
 
               <div className="flex items-center lg:hidden">
@@ -388,6 +400,16 @@ export function Header() {
                         { label: "EN", value: "en" },
                       ]}
                       onChange={setLanguage}
+                      compact
+                    />
+                    <SegmentedToggle
+                      ariaLabel={copy.themeLabel}
+                      value={theme}
+                      options={[
+                        { value: "light", label: language === "no" ? "Dag" : "Day", icon: <SunIcon /> },
+                        { value: "dark", label: language === "no" ? "Natt" : "Night", icon: <MoonIcon /> },
+                      ]}
+                      onChange={setTheme}
                       compact
                     />
                   </div>

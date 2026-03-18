@@ -41,7 +41,10 @@ const preferenceBootScript = `
   (function () {
     try {
       var language = localStorage.getItem('fauoglandfilm-language');
-      document.documentElement.dataset.theme = 'light';
+      var storedTheme = localStorage.getItem('fauoglandfilm-theme');
+      var prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+      var theme = storedTheme === 'light' || storedTheme === 'dark' ? storedTheme : (prefersDark ? 'dark' : 'light');
+      document.documentElement.dataset.theme = theme;
       if (language === 'no' || language === 'en') {
         document.documentElement.dataset.language = language;
         document.documentElement.lang = language === 'no' ? 'nb' : 'en';
