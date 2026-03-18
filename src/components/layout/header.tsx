@@ -158,11 +158,11 @@ export function Header() {
               "relative mt-2 flex items-center gap-2.5 overflow-hidden rounded-[1.5rem] px-3 py-2.5 transition duration-300 sm:mt-2.5 sm:gap-3 sm:px-4 sm:py-3 lg:grid lg:grid-cols-[auto_minmax(0,1fr)_auto] lg:items-center lg:gap-7 lg:px-5 lg:py-3",
               overlayMode
                 ? "border border-[color:var(--header-overlay-border)] bg-[color:var(--header-overlay-surface)] text-white shadow-[0_24px_70px_rgba(0,0,0,0.18)] backdrop-blur-[26px]"
-                : "border border-[color:var(--line)] bg-[color:var(--header-surface)] text-[color:var(--foreground)] shadow-[0_26px_82px_rgba(7,10,18,0.14)] backdrop-blur-[30px]",
+                : "border border-[color:var(--line)] bg-[color:var(--header-surface)] text-[color:var(--foreground)] shadow-[0_26px_82px_rgba(18,14,10,0.12)] backdrop-blur-[30px]",
             )}
           >
             <div className="glass-sheen absolute inset-0 opacity-48" />
-            <div className="pointer-events-none absolute inset-y-0 right-[14%] w-[22%] rounded-full bg-[radial-gradient(circle,rgba(255,255,255,0.1),transparent_72%)] blur-2xl opacity-58" />
+            <div className="pointer-events-none absolute inset-y-0 right-[14%] w-[22%] rounded-full bg-[radial-gradient(circle,rgba(235,206,157,0.12),transparent_72%)] blur-2xl opacity-58" />
 
             <Link
               href="/"
@@ -172,17 +172,15 @@ export function Header() {
             >
               <div
                 className={cn(
-                  "flex h-11 w-11 items-center justify-center rounded-full border p-[0.62rem] shadow-[0_22px_42px_rgba(0,0,0,0.18)] backdrop-blur-2xl lg:h-[3.25rem] lg:w-[3.25rem] lg:p-[0.74rem]",
-                  overlayMode
-                    ? "border-white/40 bg-white/[0.32]"
-                    : "border-white/32 bg-white/[0.28]",
+                  "header-brand-shell flex h-11 w-11 items-center justify-center rounded-full p-[0.58rem] lg:h-[3.25rem] lg:w-[3.25rem] lg:p-[0.72rem]",
+                  overlayMode ? "shadow-[0_26px_56px_rgba(0,0,0,0.22)]" : "shadow-[0_22px_52px_rgba(18,14,10,0.12)]",
                 )}
               >
                 <BrandLogo
                   variant="mark"
                   className={cn(
-                    "opacity-100 saturate-[1.36] drop-shadow-[0_12px_22px_rgba(0,0,0,0.22)]",
-                    overlayMode ? "brightness-[1.62]" : "brightness-[1.24]",
+                    "relative z-[1] opacity-100 saturate-[1.42] drop-shadow-[0_12px_22px_rgba(0,0,0,0.22)]",
+                    overlayMode ? "brightness-[1.74] contrast-[1.12]" : "brightness-[1.34] contrast-[1.08]",
                   )}
                   priority
                 />
@@ -191,7 +189,7 @@ export function Header() {
                 <p
                   className={cn(
                     "font-display text-[1.1rem] font-semibold tracking-[-0.045em] sm:text-[1.14rem] lg:text-[1.32rem]",
-                    overlayMode ? "text-white drop-shadow-[0_10px_22px_rgba(0,0,0,0.2)]" : "text-[color:var(--foreground)]",
+                    overlayMode ? "text-white drop-shadow-[0_10px_22px_rgba(0,0,0,0.24)]" : "text-[color:var(--foreground)]",
                   )}
                 >
                   Fau&amp;Land Film
@@ -199,7 +197,7 @@ export function Header() {
                 <p
                   className={cn(
                     "mt-0.5 hidden text-[0.64rem] font-semibold uppercase tracking-[0.2em] lg:block",
-                    overlayMode ? "text-white/82" : "text-[color:var(--foreground)]/52",
+                    overlayMode ? "text-white/88" : "text-[color:var(--foreground)]/62",
                   )}
                 >
                   Oslo / Production
@@ -218,12 +216,12 @@ export function Header() {
                       className={cn(
                         "inline-flex items-center rounded-full border border-transparent px-3 py-[0.5rem] text-[0.95rem] font-medium tracking-[-0.02em] transition duration-300",
                         overlayMode
-                          ? "text-white/88 hover:bg-white/[0.1] hover:text-white"
-                          : "text-[color:var(--foreground)]/72 hover:bg-white/[0.08] hover:text-[color:var(--foreground)]",
+                          ? "text-white/88 hover:bg-[color:var(--header-nav-hover-bg)] hover:text-white"
+                          : "text-[color:var(--foreground)]/72 hover:bg-[color:var(--header-nav-hover-bg)] hover:text-[color:var(--foreground)]",
                       active &&
                         (overlayMode
-                          ? "bg-white/[0.16] text-white shadow-[0_10px_24px_rgba(0,0,0,0.16)]"
-                          : "bg-white/[0.12] text-[color:var(--foreground)] shadow-[0_10px_24px_rgba(7,10,18,0.1)]"),
+                          ? "bg-[color:var(--header-nav-active-bg)] text-white shadow-[0_10px_24px_rgba(0,0,0,0.16)]"
+                          : "bg-[color:var(--header-nav-active-bg)] text-[color:var(--foreground)] shadow-[0_10px_24px_rgba(18,14,10,0.08)]"),
                     )}
                   >
                     {resolveLocalizedValue(item.label, language)}
@@ -329,7 +327,7 @@ export function Header() {
               role="dialog"
               aria-modal="true"
               aria-label={menuLabel}
-              className="absolute inset-x-4 bottom-4 top-[calc(env(safe-area-inset-top,0px)+4.9rem)] overflow-hidden rounded-[2.1rem] border border-white/14 bg-[linear-gradient(180deg,rgba(255,255,255,0.16),rgba(255,255,255,0.05)),radial-gradient(circle_at_top_left,rgba(255,255,255,0.18),transparent_26%),radial-gradient(circle_at_86%_20%,rgba(120,164,255,0.16),transparent_24%),rgba(10,15,24,0.76)] shadow-[0_42px_140px_rgba(0,0,0,0.42)] backdrop-blur-[40px] sm:inset-x-6 sm:bottom-6 sm:top-[calc(env(safe-area-inset-top,0px)+5.25rem)] lg:inset-x-8 lg:bottom-8 lg:top-[calc(env(safe-area-inset-top,0px)+5.75rem)]"
+              className="mobile-menu-surface absolute inset-x-4 bottom-4 top-[calc(env(safe-area-inset-top,0px)+4.9rem)] overflow-hidden rounded-[2.1rem] sm:inset-x-6 sm:bottom-6 sm:top-[calc(env(safe-area-inset-top,0px)+5.25rem)] lg:inset-x-8 lg:bottom-8 lg:top-[calc(env(safe-area-inset-top,0px)+5.75rem)]"
               initial={
                 shouldReduceMotion
                   ? { opacity: 1 }
