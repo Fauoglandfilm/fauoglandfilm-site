@@ -113,7 +113,7 @@ export function HeroSection() {
         <div className="grain-overlay absolute inset-0 opacity-46" />
       </div>
 
-      <div className="site-container relative flex min-h-[72svh] items-end pb-7 pt-[5.8rem] sm:min-h-[85svh] sm:pb-12 sm:pt-[7.5rem] lg:min-h-[86vh] lg:pb-14 lg:pt-32">
+      <div className="site-container relative flex min-h-[74svh] items-end pb-8 pt-[6.6rem] sm:min-h-[85svh] sm:pb-12 sm:pt-[8.1rem] lg:min-h-[86vh] lg:pb-14 lg:pt-[9.6rem]">
         <div className="hero-copy w-full">
           <Reveal y={18}>
             <div className="hero-layer-stack">

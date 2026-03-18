@@ -148,62 +148,66 @@ export function Header() {
         style={{ paddingTop: "env(safe-area-inset-top, 0px)" }}
         className="fixed inset-x-0 top-0 z-50 transition duration-300"
       >
-        <div className="mx-auto max-w-[1380px] px-4 sm:px-6 lg:px-8">
+        <div className="mx-auto max-w-[1420px] px-4 sm:px-6 lg:px-8">
           <div
             className={cn(
-              "relative mt-1.5 flex items-center gap-2 overflow-hidden rounded-[1.2rem] px-2.5 py-2 transition duration-300 sm:mt-2.5 sm:gap-3 sm:px-4 sm:py-3 lg:grid lg:grid-cols-[auto_minmax(0,1fr)_auto] lg:items-center lg:gap-7 lg:rounded-[1.5rem] lg:px-5 lg:py-3",
+              "relative mt-2 flex items-center justify-between gap-3 overflow-hidden rounded-[1.65rem] px-3 py-2.5 transition duration-300 sm:mt-3 sm:gap-4 sm:px-4 sm:py-3 lg:grid lg:grid-cols-[auto_minmax(0,1fr)_auto] lg:items-center lg:gap-5 lg:rounded-[1.9rem] lg:px-5 lg:py-3.5",
               overlayMode
-                ? "border border-[color:var(--header-overlay-border)] bg-[color:var(--header-overlay-surface)] text-white shadow-[0_24px_70px_rgba(0,0,0,0.18)] backdrop-blur-[26px]"
-                : "border border-[color:var(--line)] bg-[color:var(--header-surface)] text-[color:var(--foreground)] shadow-[0_26px_82px_rgba(18,14,10,0.12)] backdrop-blur-[30px]",
+                ? "border border-white/18 bg-white/10 text-white shadow-[0_24px_64px_rgba(0,0,0,0.12)] backdrop-blur-[18px]"
+                : "border border-[color:var(--line)]/80 bg-[color:var(--header-surface)]/82 text-[color:var(--foreground)] shadow-[0_22px_56px_rgba(18,14,10,0.08)] backdrop-blur-[20px]",
             )}
           >
+            <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,rgba(255,255,255,0.2),rgba(255,255,255,0.06))]" />
             <Link
               href="/"
               className={cn(
-                "relative z-[1] flex shrink-0 items-center gap-2.5 rounded-[1rem] border px-1 py-1 transition duration-300 sm:gap-3.5 lg:gap-4.5",
+                "relative z-[1] flex min-w-0 shrink-0 items-center gap-3 rounded-[1.3rem] px-1 py-0.5 transition duration-300 sm:gap-3.5 lg:gap-4",
                 overlayMode
-                  ? "border-white/10 bg-white/[0.03] shadow-[0_14px_36px_rgba(0,0,0,0.14)]"
-                  : "border-[color:var(--line)]/55 bg-white shadow-[0_10px_26px_rgba(18,14,10,0.06)]",
+                  ? "text-white"
+                  : "text-[color:var(--foreground)]",
               )}
               aria-label="Fau&Land Film"
               onClick={() => setOpen(false)}
             >
-              <div
-                className={cn(
-                  "header-brand-shell flex h-[3.05rem] w-[3.05rem] items-center justify-center rounded-full p-[0.7rem] sm:h-[3.35rem] sm:w-[3.35rem] sm:p-[0.78rem] lg:h-[4.15rem] lg:w-[4.15rem] lg:p-[0.98rem]",
-                  overlayMode ? "shadow-[0_18px_40px_rgba(0,0,0,0.18)]" : "shadow-[0_12px_28px_rgba(18,14,10,0.08)]",
-                )}
-              >
+              <div className="header-brand-shell flex h-[3.55rem] w-[3.55rem] items-center justify-center rounded-full p-[0.8rem] sm:h-[4rem] sm:w-[4rem] sm:p-[0.9rem] lg:h-[4.6rem] lg:w-[4.6rem] lg:p-[1.05rem]">
                 <BrandLogo
                   variant="mark"
                   className={cn(
-                    "relative z-[1] h-auto w-full opacity-100 saturate-[1.95]",
-                    overlayMode ? "brightness-[2.42] contrast-[1.38]" : "brightness-[1.92] contrast-[1.26]",
+                    "relative z-[1] h-auto w-full opacity-100 saturate-[2.1]",
+                    overlayMode ? "brightness-[2.55] contrast-[1.42]" : "brightness-[2.08] contrast-[1.3]",
                   )}
                   priority
                 />
               </div>
               <div className="min-w-0">
+                <BrandLogo
+                  variant="full"
+                  className={cn(
+                    "w-[8.1rem] sm:w-[9.25rem] lg:w-[11rem]",
+                    overlayMode
+                      ? "brightness-[1.9] contrast-[1.14] saturate-[1.12] drop-shadow-[0_10px_18px_rgba(0,0,0,0.2)]"
+                      : "brightness-[0.16] contrast-[1.28]",
+                  )}
+                  priority
+                />
                 <p
                   className={cn(
-                    "font-display text-[1rem] font-semibold tracking-[-0.05em] sm:text-[1.2rem] lg:text-[1.46rem]",
-                    overlayMode ? "text-white drop-shadow-[0_12px_24px_rgba(0,0,0,0.26)]" : "text-[color:var(--foreground)]",
+                    "mt-1 hidden text-[0.62rem] font-semibold uppercase tracking-[0.24em] lg:block",
+                    overlayMode ? "text-white/76" : "text-[color:var(--foreground)]/56",
                   )}
                 >
-                  Fau&amp;Land Film
-                </p>
-                <p
-                  className={cn(
-                    "mt-0.5 hidden text-[0.66rem] font-semibold uppercase tracking-[0.22em] lg:block",
-                    overlayMode ? "text-white/92" : "text-[color:var(--foreground)]/74",
-                  )}
-                >
-                  Oslo / Production
+                  {menuFooterCopy}
                 </p>
               </div>
             </Link>
 
-            <nav className="relative z-[1] hidden lg:flex lg:min-w-0 lg:items-center lg:justify-center lg:gap-1.5" aria-label={menuLabel}>
+            <nav
+              className={cn(
+                "relative z-[1] hidden lg:flex lg:min-w-0 lg:items-center lg:justify-center lg:rounded-full lg:px-2 lg:py-1",
+                overlayMode ? "lg:bg-white/6" : "lg:bg-[color:var(--surface)]/78",
+              )}
+              aria-label={menuLabel}
+            >
               {navItems.map((item) => {
                 const active = item.href === "/" ? pathname === "/" : pathname.startsWith(item.href);
 
@@ -212,14 +216,14 @@ export function Header() {
                       key={item.href}
                       href={item.href}
                       className={cn(
-                        "inline-flex items-center rounded-full border border-transparent px-3 py-[0.5rem] text-[0.95rem] font-medium tracking-[-0.02em] transition duration-300",
+                        "inline-flex items-center rounded-full border border-transparent px-3.5 py-[0.65rem] text-[0.92rem] font-medium tracking-[-0.02em] transition duration-300",
                         overlayMode
-                          ? "text-white/88 hover:bg-[color:var(--header-nav-hover-bg)] hover:text-white"
+                          ? "text-white/84 hover:bg-white/10 hover:text-white"
                           : "text-[color:var(--foreground)]/72 hover:bg-[color:var(--header-nav-hover-bg)] hover:text-[color:var(--foreground)]",
                       active &&
                         (overlayMode
-                          ? "bg-[color:var(--header-nav-active-bg)] text-white shadow-[0_10px_24px_rgba(0,0,0,0.16)]"
-                          : "bg-[color:var(--header-nav-active-bg)] text-[color:var(--foreground)] shadow-[0_10px_24px_rgba(18,14,10,0.08)]"),
+                          ? "border-white/12 bg-white/14 text-white shadow-[0_10px_24px_rgba(0,0,0,0.12)]"
+                          : "bg-[color:var(--header-nav-active-bg)] text-[color:var(--foreground)] shadow-[0_10px_24px_rgba(18,14,10,0.06)]"),
                     )}
                   >
                     {resolveLocalizedValue(item.label, language)}
@@ -228,9 +232,9 @@ export function Header() {
               })}
             </nav>
 
-            <div className="relative z-[1] ml-auto flex items-center gap-2.5 lg:ml-0">
+            <div className="relative z-[1] ml-auto flex items-center gap-2 lg:ml-0">
               <div className="hidden items-center gap-2 lg:flex">
-                <div className="scale-[0.95] origin-right">
+                <div className="origin-right scale-[0.98]">
                   <SegmentedToggle
                     ariaLabel={copy.languageLabel}
                     value={language}
@@ -242,7 +246,7 @@ export function Header() {
                     compact
                   />
                 </div>
-                <div className="scale-[0.95] origin-right">
+                <div className="origin-right scale-[0.98]">
                   <SegmentedToggle
                     ariaLabel={copy.themeLabel}
                     value={theme}
@@ -260,7 +264,12 @@ export function Header() {
                 <Button
                   variant="icon"
                   size="icon"
-                  className="relative z-[1] h-11 w-11 shrink-0 rounded-full border border-white/10 bg-white/6 text-white shadow-none"
+                  className={cn(
+                    "relative z-[1] h-11 w-11 shrink-0 rounded-full shadow-none",
+                    overlayMode
+                      ? "border border-white/14 bg-white/10 text-white"
+                      : "border border-[color:var(--line)] bg-[color:var(--surface)]/88 text-[color:var(--foreground)]",
+                  )}
                   aria-label={open ? copy.menuClose : copy.menuOpen}
                   aria-controls="site-menu"
                   aria-expanded={open}
@@ -302,7 +311,7 @@ export function Header() {
       <AnimatePresence>
         {open ? (
           <motion.div
-            className="fixed inset-0 z-40 bg-[#111111] text-white lg:hidden"
+            className="fixed inset-0 z-40 bg-[rgba(10,10,10,0.44)] text-white backdrop-blur-sm lg:hidden"
             initial={shouldReduceMotion ? { opacity: 1 } : { opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
@@ -328,27 +337,29 @@ export function Header() {
               transition={{ duration: 0.28, ease: [0.22, 1, 0.36, 1] }}
             >
               <div
-                className="relative flex h-full flex-col overflow-y-auto px-5 pb-6 pt-[calc(env(safe-area-inset-top,0px)+1rem)] sm:px-6"
+                className="relative ml-auto flex h-full w-full max-w-[26rem] flex-col overflow-y-auto border-l border-white/10 px-5 pb-6 pt-[calc(env(safe-area-inset-top,0px)+1rem)] shadow-[0_30px_80px_rgba(0,0,0,0.18)] sm:px-6"
                 style={{ paddingBottom: "max(1.5rem, calc(1.25rem + env(safe-area-inset-bottom, 0px)))" }}
               >
-                <div className="flex items-start justify-between gap-4 pb-5">
+                <div className="flex items-start justify-between gap-4 pb-6">
                   <Link
                     href="/"
-                    className="flex items-center gap-3"
+                    className="flex items-center gap-3.5"
                     aria-label="Fau&Land Film"
                     onClick={() => setOpen(false)}
                   >
-                    <div className="flex h-12 w-12 items-center justify-center rounded-full border border-white/12 bg-white/8 p-2.5">
+                    <div className="header-brand-shell flex h-[3.25rem] w-[3.25rem] items-center justify-center rounded-full p-[0.82rem]">
                       <BrandLogo
                         variant="mark"
-                        className="brightness-[2.26] contrast-[1.34] saturate-[1.8]"
+                        className="brightness-[2.55] contrast-[1.42] saturate-[2.1]"
                         priority
                       />
                     </div>
                     <div>
-                      <p className="font-display text-[1.15rem] tracking-[-0.05em] text-white">
-                        Fau&amp;Land Film
-                      </p>
+                      <BrandLogo
+                        variant="full"
+                        className="w-[8.8rem] brightness-[1.92] contrast-[1.14] saturate-[1.08]"
+                        priority
+                      />
                       <p className="text-[0.62rem] font-semibold uppercase tracking-[0.2em] text-white/56">
                         {menuFooterCopy}
                       </p>
@@ -367,7 +378,7 @@ export function Header() {
                 </div>
 
                 <nav className="flex flex-1 flex-col justify-center" aria-label={menuLabel}>
-                  <div className="flex flex-col">
+                  <div className="flex flex-col rounded-[1.5rem] border border-white/8 bg-white/4 px-1">
                     {navItems.map((item) => {
                       const active = item.href === "/" ? pathname === "/" : pathname.startsWith(item.href);
 
@@ -376,8 +387,8 @@ export function Header() {
                           key={item.href}
                           href={item.href}
                           className={cn(
-                            "group border-b border-white/10 py-4 text-white/84 transition duration-300 hover:text-white",
-                            active && "text-white",
+                            "group border-b border-white/10 px-3 py-4 text-white/84 transition duration-300 hover:text-white last:border-b-0",
+                            active && "rounded-[1rem] bg-white/8 text-white",
                           )}
                           onClick={() => setOpen(false)}
                         >

@@ -70,9 +70,9 @@
   --control-option-active-bg: #111111;
   --control-option-active-text: #ffffff;
   --control-option-active-border: rgba(17, 17, 17, 0.12);
-  --header-surface: rgba(255, 255, 255, 0.96);
-  --header-overlay-surface: rgba(17, 17, 17, 0.9);
-  --header-overlay-border: rgba(255, 255, 255, 0.08);
+  --header-surface: rgba(255, 255, 255, 0.72);
+  --header-overlay-surface: rgba(255, 255, 255, 0.12);
+  --header-overlay-border: rgba(255, 255, 255, 0.18);
   --header-brand-surface: rgba(255, 247, 231, 0.92);
   --header-brand-border: rgba(210, 182, 135, 0.32);
   --header-brand-glow: rgba(210, 173, 116, 0.24);
@@ -147,9 +147,9 @@ html[data-theme="light"] {
   --control-option-active-bg: #151515;
   --control-option-active-text: #ffffff;
   --control-option-active-border: rgba(17, 17, 17, 0.12);
-  --header-surface: rgba(255, 255, 255, 0.96);
-  --header-overlay-surface: rgba(17, 17, 17, 0.9);
-  --header-overlay-border: rgba(255, 255, 255, 0.08);
+  --header-surface: rgba(255, 255, 255, 0.74);
+  --header-overlay-surface: rgba(255, 255, 255, 0.12);
+  --header-overlay-border: rgba(255, 255, 255, 0.18);
   --header-brand-surface: rgba(255, 249, 237, 0.92);
   --header-brand-border: rgba(210, 182, 135, 0.34);
   --header-brand-glow: rgba(184, 147, 94, 0.26);
@@ -224,9 +224,9 @@ html[data-theme="dark"] {
   --control-option-active-bg: #f2eee6;
   --control-option-active-text: #111111;
   --control-option-active-border: rgba(255, 255, 255, 0.12);
-  --header-surface: rgba(17, 17, 17, 0.92);
-  --header-overlay-surface: rgba(17, 17, 17, 0.92);
-  --header-overlay-border: rgba(255, 255, 255, 0.08);
+  --header-surface: rgba(22, 22, 23, 0.68);
+  --header-overlay-surface: rgba(20, 20, 21, 0.16);
+  --header-overlay-border: rgba(255, 255, 255, 0.12);
   --header-brand-surface: rgba(255, 247, 231, 0.96);
   --header-brand-border: rgba(210, 182, 135, 0.34);
   --header-brand-glow: rgba(210, 173, 116, 0.2);
@@ -336,15 +336,20 @@ summary::-webkit-details-marker {
     border: 1px solid var(--header-brand-border);
     background: color-mix(in srgb, var(--header-brand-surface) 96%, white 4%);
     box-shadow:
-      0 12px 26px rgba(17, 17, 17, 0.08),
-      inset 0 1px 0 rgba(255, 255, 255, 0.42);
+      0 14px 30px rgba(17, 17, 17, 0.08),
+      inset 0 1px 0 rgba(255, 255, 255, 0.36);
   }
 
   .brand-signature-chip {
     border-radius: 1.35rem;
-    border: 1px solid color-mix(in srgb, var(--line) 100%, rgba(255, 255, 255, 0.06));
-    background: color-mix(in srgb, var(--surface-strong) 100%, transparent);
-    box-shadow: 0 12px 26px rgba(17, 17, 17, 0.06);
+    border: 1px solid color-mix(in srgb, var(--line) 92%, rgba(255, 255, 255, 0.16));
+    background:
+      linear-gradient(180deg, rgba(255, 255, 255, 0.14), rgba(255, 255, 255, 0.04)),
+      color-mix(in srgb, var(--surface-strong) 92%, transparent);
+    box-shadow:
+      0 18px 42px rgba(17, 17, 17, 0.08),
+      inset 0 1px 0 rgba(255, 255, 255, 0.22);
+    backdrop-filter: blur(18px) saturate(150%);
   }
 
   .brand-signature-mark {
@@ -357,9 +362,11 @@ summary::-webkit-details-marker {
 
   .mobile-menu-surface {
     border: none;
-    background: #111111;
+    background:
+      linear-gradient(180deg, rgba(19, 19, 20, 0.9), rgba(19, 19, 20, 0.84)),
+      rgba(19, 19, 20, 0.9);
     box-shadow: none;
-    backdrop-filter: none;
+    backdrop-filter: blur(24px) saturate(155%);
   }
 
   .hero-title {
