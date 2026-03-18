@@ -305,6 +305,45 @@ export const videoLibrary = {
   },
 } satisfies Record<string, VideoAsset>;
 
+export const homeServiceVideoLibrary = {
+  "01": {
+    videoType: "direct",
+    src: "/assets/services/videos/reklamefilm.mp4",
+    poster: "/assets/services/posters/reklamefilm-poster.png",
+    label: {
+      no: "Reklamefilm",
+      en: "Commercial film",
+    },
+  },
+  "02": {
+    videoType: "direct",
+    src: "/assets/services/videos/bedriftfilm.mp4",
+    poster: "/assets/services/posters/bedriftfilm-poster.png",
+    label: {
+      no: "Bedriftsfilm",
+      en: "Company film",
+    },
+  },
+  "03": {
+    videoType: "direct",
+    src: "/assets/services/videos/sosiale-medier.mp4",
+    poster: "/assets/services/posters/sosiale-medier-poster.png",
+    label: {
+      no: "Innhold for sosiale medier",
+      en: "Social media content",
+    },
+  },
+  "04": {
+    videoType: "direct",
+    src: "/assets/services/videos/konsert.mp4",
+    poster: "/assets/services/posters/konsert-poster.png",
+    label: {
+      no: "Eventfilm og live",
+      en: "Event film and live",
+    },
+  },
+} satisfies Record<string, VideoAsset>;
+
 const youtubeWatchUrl = (videoId: string) => `https://www.youtube.com/watch?v=${videoId}`;
 
 const youtubeAsset = (
