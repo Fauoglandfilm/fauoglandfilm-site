@@ -68,6 +68,55 @@ function SegmentedToggle<T extends string>({
   );
 }
 
+function HeaderBrandLockup({
+  overlayMode,
+  subtitle,
+  mobile = false,
+}: {
+  overlayMode: boolean;
+  subtitle: string;
+  mobile?: boolean;
+}) {
+  const logoClassName = cn(
+    mobile ? "relative top-px w-[9.15rem]" : "relative top-[2px] w-[10.1rem] lg:w-[11.45rem]",
+    overlayMode
+      ? "brightness-[1.9] contrast-[1.14] saturate-[1.12] drop-shadow-[0_10px_18px_rgba(0,0,0,0.2)]"
+      : "brightness-[0.16] contrast-[1.28]",
+  );
+
+  if (mobile) {
+    return (
+      <div className="flex items-center justify-start">
+        <BrandLogo
+          variant="full"
+          className={logoClassName}
+          priority
+        />
+      </div>
+    );
+  }
+
+  return (
+    <div className="flex min-w-0 flex-col items-center justify-center">
+      <div className="flex w-[10.1rem] justify-center lg:w-[11.45rem]">
+        <BrandLogo
+          variant="full"
+          className={logoClassName}
+          priority
+        />
+      </div>
+      <p
+        className={cn(
+          "mt-[0.32rem] hidden w-full text-center text-[0.56rem] font-semibold uppercase leading-none tracking-[0.2em] md:block lg:text-[0.62rem]",
+          overlayMode ? "text-white/76" : "text-[color:var(--foreground)]/58",
+        )}
+      >
+        {subtitle}
+      </p>
+    </div>
+  );
+}
+
 export function Header() {
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
@@ -161,7 +210,7 @@ export function Header() {
             <Link
               href="/"
               className={cn(
-                "relative z-[1] flex min-w-0 shrink-0 items-center rounded-[1.3rem] px-1 py-0.5 transition duration-300 sm:gap-3.5 lg:gap-4",
+                "relative z-[1] flex min-w-0 shrink-0 items-center rounded-[1.3rem] px-1 py-0.5 transition duration-300",
                 overlayMode
                   ? "text-white"
                   : "text-[color:var(--foreground)]",
@@ -170,37 +219,11 @@ export function Header() {
               onClick={() => setOpen(false)}
             >
               <div className="sm:hidden">
-                <BrandLogo
-                  variant="full"
-                  className={cn(
-                    "w-[8.9rem]",
-                    overlayMode
-                      ? "brightness-[1.9] contrast-[1.14] saturate-[1.12] drop-shadow-[0_10px_18px_rgba(0,0,0,0.18)]"
-                      : "brightness-[0.16] contrast-[1.28]",
-                  )}
-                  priority
-                />
+                <HeaderBrandLockup overlayMode={overlayMode} subtitle={menuFooterCopy} mobile />
               </div>
 
-              <div className="hidden min-w-0 sm:flex sm:flex-col sm:items-start">
-                <BrandLogo
-                  variant="full"
-                  className={cn(
-                    "w-[9.8rem] lg:w-[11.25rem]",
-                    overlayMode
-                      ? "brightness-[1.9] contrast-[1.14] saturate-[1.12] drop-shadow-[0_10px_18px_rgba(0,0,0,0.2)]"
-                      : "brightness-[0.16] contrast-[1.28]",
-                  )}
-                  priority
-                />
-                <p
-                  className={cn(
-                    "mt-1 hidden text-[0.62rem] font-semibold uppercase tracking-[0.24em] lg:block",
-                    overlayMode ? "text-white/76" : "text-[color:var(--foreground)]/56",
-                  )}
-                >
-                  {menuFooterCopy}
-                </p>
+              <div className="hidden min-w-0 sm:block">
+                <HeaderBrandLockup overlayMode={overlayMode} subtitle={menuFooterCopy} />
               </div>
             </Link>
 
