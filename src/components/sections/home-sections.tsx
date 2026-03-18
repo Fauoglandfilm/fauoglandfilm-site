@@ -312,16 +312,16 @@ export function ServicesSection() {
   const copy = uiCopy.home[language];
 
   return (
-    <section className="section-space">
+    <section className="pt-[clamp(2.5rem,5vw,4.25rem)] pb-[clamp(2.75rem,5vw,4.25rem)]">
       <div className="site-container">
-        <div className="max-w-3xl space-y-2.5 sm:space-y-3">
+        <div className="max-w-[36rem] space-y-2 sm:space-y-2.5">
           <span className="eyebrow">{copy.servicesEyebrow}</span>
           <h2 className="section-title text-[color:var(--foreground)]">
             {copy.servicesTitle}
           </h2>
         </div>
 
-        <div className="mt-6 grid gap-4 sm:mt-8 md:grid-cols-2 lg:gap-5">
+        <div className="mt-5 grid gap-3 sm:mt-6 sm:grid-cols-2 lg:grid-cols-4 lg:gap-3.5 xl:gap-4">
           {servicePillars.map((pillar, index) => (
             <ServicePillarCard key={pillar.eyebrow} pillar={pillar} delay={0.05 * index} />
           ))}
@@ -345,8 +345,8 @@ function ServicePillarCard({
 
   return (
     <Reveal delay={delay}>
-      <article className="card-surface group flex h-full flex-col overflow-hidden rounded-[1.6rem] sm:rounded-[1.8rem]">
-        <div className="relative aspect-[1/0.92] overflow-hidden bg-[#0b0d12]">
+      <article className="card-surface group flex h-full flex-col overflow-hidden rounded-[1.35rem] sm:rounded-[1.5rem]">
+        <div className="relative aspect-[1.08/0.72] overflow-hidden bg-[#0b0d12]">
           <PreviewMedia
             title={pillar.title}
             video={video}
@@ -354,24 +354,24 @@ function ServicePillarCard({
             imageAlt={pillar.title}
             previewBehavior="viewport"
             className="absolute inset-0"
-            sizes="(min-width: 1024px) 42vw, (min-width: 768px) 50vw, 100vw"
-            rootMargin="120px 0px -10% 0px"
-            inViewThreshold={0.18}
-            posterClassName="transition duration-700 group-hover:scale-[1.025]"
-            previewClassName="scale-[1.02]"
+            sizes="(min-width: 1280px) 19vw, (min-width: 1024px) 22vw, (min-width: 640px) 48vw, 100vw"
+            rootMargin="140px 0px -8% 0px"
+            inViewThreshold={0.16}
+            posterClassName="transition duration-700 group-hover:scale-[1.04]"
+            previewClassName="scale-[1.03]"
           />
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(255,255,255,0.08),transparent_38%),linear-gradient(180deg,rgba(8,8,8,0.03),rgba(8,8,8,0.12)_38%,rgba(8,8,8,0.42)_100%)]" />
-          <div className="grain-overlay absolute inset-0 opacity-35" />
-          <div className="absolute left-4 top-4 inline-flex h-10 w-10 items-center justify-center rounded-[1.05rem] border border-white/12 bg-black/28 text-sm font-semibold text-white backdrop-blur sm:h-11 sm:w-11 sm:rounded-2xl">
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(255,255,255,0.08),transparent_34%),linear-gradient(180deg,rgba(8,8,8,0.02),rgba(8,8,8,0.1)_36%,rgba(8,8,8,0.34)_100%)]" />
+          <div className="grain-overlay absolute inset-0 opacity-30" />
+          <div className="absolute left-3 top-3 inline-flex h-8 w-8 items-center justify-center rounded-[0.9rem] border border-white/12 bg-black/24 text-[0.72rem] font-semibold text-white backdrop-blur sm:h-8.5 sm:w-8.5">
             {pillar.eyebrow}
           </div>
         </div>
 
-        <div className="flex flex-1 flex-col p-4.5 sm:p-5.5">
-          <h3 className="card-title text-[color:var(--foreground)]">
+        <div className="flex flex-1 flex-col p-3.5 sm:p-4">
+          <h3 className="font-display text-[1.08rem] leading-[0.96] tracking-[-0.05em] text-[color:var(--foreground)] sm:text-[1.14rem]">
             {title}
           </h3>
-          <p className="body-copy mt-2.5 max-w-[30rem] text-[var(--muted-2)] sm:mt-3">
+          <p className="mt-1.5 max-w-[22rem] text-[0.84rem] leading-5 text-[var(--muted)] sm:mt-2 sm:text-[0.88rem]">
             {summary}
           </p>
         </div>
