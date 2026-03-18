@@ -170,69 +170,37 @@ export function Header() {
               onClick={() => setOpen(false)}
             >
               <div className="sm:hidden">
-                <div className="flex items-center gap-2.5">
-                  <div className="header-brand-shell flex h-[2.55rem] w-[2.55rem] items-center justify-center rounded-full p-[0.58rem]">
-                    <BrandLogo
-                      variant="mark"
-                      className={cn(
-                        "relative z-[1] h-auto w-full opacity-100 saturate-[2.1]",
-                        overlayMode ? "brightness-[2.45] contrast-[1.38]" : "brightness-[2.05] contrast-[1.28]",
-                      )}
-                      priority
-                    />
-                  </div>
-                  <div className="min-w-0">
-                    <p
-                      className={cn(
-                        "font-display text-[1.02rem] leading-none tracking-[-0.05em]",
-                        overlayMode ? "text-white" : "text-[color:var(--foreground)]",
-                      )}
-                    >
-                      Fau&amp;Land Film
-                    </p>
-                    <p
-                      className={cn(
-                        "mt-0.5 text-[0.48rem] font-semibold uppercase tracking-[0.18em]",
-                        overlayMode ? "text-white/68" : "text-[color:var(--foreground)]/52",
-                      )}
-                    >
-                      Oslo / Production
-                    </p>
-                  </div>
-                </div>
+                <BrandLogo
+                  variant="full"
+                  className={cn(
+                    "w-[8.9rem]",
+                    overlayMode
+                      ? "brightness-[1.9] contrast-[1.14] saturate-[1.12] drop-shadow-[0_10px_18px_rgba(0,0,0,0.18)]"
+                      : "brightness-[0.16] contrast-[1.28]",
+                  )}
+                  priority
+                />
               </div>
 
-              <div className="hidden min-w-0 items-center gap-3.5 sm:flex lg:gap-4">
-                <div className="header-brand-shell flex h-[4rem] w-[4rem] items-center justify-center rounded-full p-[0.9rem] lg:h-[4.6rem] lg:w-[4.6rem] lg:p-[1.05rem]">
-                  <BrandLogo
-                    variant="mark"
-                    className={cn(
-                      "relative z-[1] h-auto w-full opacity-100 saturate-[2.1]",
-                      overlayMode ? "brightness-[2.55] contrast-[1.42]" : "brightness-[2.08] contrast-[1.3]",
-                    )}
-                    priority
-                  />
-                </div>
-                <div className="min-w-0">
-                  <BrandLogo
-                    variant="full"
-                    className={cn(
-                      "w-[9.25rem] lg:w-[11rem]",
-                      overlayMode
-                        ? "brightness-[1.9] contrast-[1.14] saturate-[1.12] drop-shadow-[0_10px_18px_rgba(0,0,0,0.2)]"
-                        : "brightness-[0.16] contrast-[1.28]",
-                    )}
-                    priority
-                  />
-                  <p
-                    className={cn(
-                      "mt-1 hidden text-[0.62rem] font-semibold uppercase tracking-[0.24em] lg:block",
-                      overlayMode ? "text-white/76" : "text-[color:var(--foreground)]/56",
-                    )}
-                  >
-                    {menuFooterCopy}
-                  </p>
-                </div>
+              <div className="hidden min-w-0 sm:flex sm:flex-col sm:items-start">
+                <BrandLogo
+                  variant="full"
+                  className={cn(
+                    "w-[9.8rem] lg:w-[11.25rem]",
+                    overlayMode
+                      ? "brightness-[1.9] contrast-[1.14] saturate-[1.12] drop-shadow-[0_10px_18px_rgba(0,0,0,0.2)]"
+                      : "brightness-[0.16] contrast-[1.28]",
+                  )}
+                  priority
+                />
+                <p
+                  className={cn(
+                    "mt-1 hidden text-[0.62rem] font-semibold uppercase tracking-[0.24em] lg:block",
+                    overlayMode ? "text-white/76" : "text-[color:var(--foreground)]/56",
+                  )}
+                >
+                  {menuFooterCopy}
+                </p>
               </div>
             </Link>
 
@@ -380,24 +348,17 @@ export function Header() {
                     href="/"
                     className="flex items-center"
                     aria-label="Fau&Land Film"
-                  onClick={() => setOpen(false)}
-                >
-                    <div className="flex items-center gap-3">
-                      <div className="header-brand-shell flex h-[2.85rem] w-[2.85rem] items-center justify-center rounded-full p-[0.68rem]">
-                        <BrandLogo
-                          variant="mark"
-                          className="relative z-[1] h-auto w-full opacity-100 brightness-[2.3] contrast-[1.38] saturate-[2.1]"
-                          priority
-                        />
-                      </div>
-                      <div>
-                        <p className="font-display text-[1.15rem] leading-none tracking-[-0.05em] text-[color:var(--foreground)]">
-                        Fau&amp;Land Film
-                        </p>
-                        <p className="text-[0.62rem] font-semibold uppercase tracking-[0.2em] text-[color:var(--foreground)]/56">
-                          {menuFooterCopy}
-                        </p>
-                      </div>
+                    onClick={() => setOpen(false)}
+                  >
+                    <div>
+                      <BrandLogo
+                        variant="full"
+                        className="w-[10rem] brightness-[1.75] contrast-[1.16] saturate-[1.1]"
+                        priority
+                      />
+                      <p className="mt-1.5 text-[0.62rem] font-semibold uppercase tracking-[0.2em] text-[color:var(--foreground)]/56">
+                        {menuFooterCopy}
+                      </p>
                     </div>
                   </Link>
 
