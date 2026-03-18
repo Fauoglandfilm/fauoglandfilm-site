@@ -50,6 +50,8 @@ export function SocialLinksRow({
   const linkClassName = cn(
     "social-link",
     compact && "min-h-[1.8rem] gap-1 px-2 py-1 text-[0.72rem] sm:text-[0.76rem]",
+    tone === "inverse" &&
+      "border-[color:var(--line)] bg-[color:var(--surface)]/76 text-[color:var(--foreground)] hover:border-[color:var(--line-strong)] hover:bg-[color:var(--surface)] hover:text-[color:var(--foreground)]",
   );
   const iconClassName = compact ? "h-[0.82rem] w-[0.82rem]" : "h-4 w-4";
   const linkRowClassName = compact
