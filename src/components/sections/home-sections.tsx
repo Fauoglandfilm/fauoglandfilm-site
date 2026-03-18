@@ -154,7 +154,7 @@ export function HeroSection() {
         ) : null}
         <video
           ref={heroVideoRef}
-          className="relative h-full w-full scale-[1.03] object-cover brightness-[0.72] saturate-[1.04] contrast-[1.1]"
+          className="relative h-full w-full scale-[1.03] object-cover brightness-[0.82] saturate-[1.05] contrast-[1.08]"
           autoPlay
           muted
           loop
@@ -169,8 +169,8 @@ export function HeroSection() {
           ) : null}
           <source src={heroVideo.src} type="video/mp4" />
         </video>
-        <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(5,7,10,0.5)_0%,rgba(5,7,10,0.26)_24%,rgba(5,7,10,0.42)_56%,rgba(5,7,10,0.82)_100%)]" />
-        <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(5,7,10,0.86)_0%,rgba(5,7,10,0.74)_22%,rgba(5,7,10,0.28)_56%,rgba(5,7,10,0.16)_100%)]" />
+        <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(5,7,10,0.38)_0%,rgba(5,7,10,0.18)_24%,rgba(5,7,10,0.32)_56%,rgba(5,7,10,0.72)_100%)]" />
+        <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(5,7,10,0.76)_0%,rgba(5,7,10,0.62)_22%,rgba(5,7,10,0.22)_56%,rgba(5,7,10,0.1)_100%)]" />
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(210,173,116,0.22),transparent_28%),radial-gradient(circle_at_82%_14%,rgba(112,143,216,0.12),transparent_22%)]" />
       </div>
 
