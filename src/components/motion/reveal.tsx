@@ -1,6 +1,7 @@
 "use client";
 
 import type { ReactNode } from "react";
+import { useEffect, useState } from "react";
 
 import { motion, useReducedMotion } from "framer-motion";
 
@@ -14,6 +15,39 @@ type RevealProps = {
   amount?: number;
 };
 
+type LegacyMediaQueryList = MediaQueryList & {
+  addListener?: (listener: (event: MediaQueryListEvent) => void) => void;
+  removeListener?: (listener: (event: MediaQueryListEvent) => void) => void;
+};
+
+function useShouldDisableViewportMotion() {
+  const shouldReduceMotion = useReducedMotion();
+  const [isMobileViewport, setIsMobileViewport] = useState(false);
+
+  useEffect(() => {
+    const mediaQuery = window.matchMedia("(max-width: 768px)") as LegacyMediaQueryList;
+    const update = () => setIsMobileViewport(mediaQuery.matches);
+
+    update();
+
+    if (typeof mediaQuery.addEventListener === "function") {
+      mediaQuery.addEventListener("change", update);
+    } else if (typeof mediaQuery.addListener === "function") {
+      mediaQuery.addListener(update);
+    }
+
+    return () => {
+      if (typeof mediaQuery.removeEventListener === "function") {
+        mediaQuery.removeEventListener("change", update);
+      } else if (typeof mediaQuery.removeListener === "function") {
+        mediaQuery.removeListener(update);
+      }
+    };
+  }, []);
+
+  return shouldReduceMotion || isMobileViewport;
+}
+
 export function Reveal({
   children,
   className,
@@ -21,9 +55,9 @@ export function Reveal({
   y = 28,
   amount = 0.25,
 }: RevealProps) {
-  const shouldReduceMotion = useReducedMotion();
+  const shouldDisableViewportMotion = useShouldDisableViewportMotion();
 
-  if (shouldReduceMotion) {
+  if (shouldDisableViewportMotion) {
     return <div className={className}>{children}</div>;
   }
 
@@ -50,9 +84,9 @@ type ParallaxProps = {
 };
 
 export function FloatingLayer({ children, className }: ParallaxProps) {
-  const shouldReduceMotion = useReducedMotion();
+  const shouldDisableViewportMotion = useShouldDisableViewportMotion();
 
-  if (shouldReduceMotion) {
+  if (shouldDisableViewportMotion) {
     return <div className={className}>{children}</div>;
   }
 

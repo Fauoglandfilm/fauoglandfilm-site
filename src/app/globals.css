@@ -363,11 +363,13 @@ summary::-webkit-details-marker {
   }
 
   .mobile-menu-surface {
-    border: none;
+    border: 1px solid color-mix(in srgb, var(--line) 78%, rgba(255, 255, 255, 0.12));
     background:
-      linear-gradient(180deg, rgba(19, 19, 20, 0.9), rgba(19, 19, 20, 0.84)),
-      rgba(19, 19, 20, 0.9);
-    box-shadow: none;
+      linear-gradient(180deg, color-mix(in srgb, var(--surface-strong) 92%, rgba(255, 255, 255, 0.08)), color-mix(in srgb, var(--surface-strong) 86%, transparent)),
+      color-mix(in srgb, var(--surface-strong) 92%, transparent);
+    box-shadow:
+      0 24px 68px rgba(17, 17, 17, 0.18),
+      inset 0 1px 0 rgba(255, 255, 255, 0.08);
     backdrop-filter: blur(24px) saturate(155%);
   }
 
@@ -2067,6 +2069,10 @@ summary::-webkit-details-marker {
   }
 
   @media (max-width: 767px) {
+    .site-container {
+      width: min(100% - 1.5rem, 84rem);
+    }
+
     .section-space {
       padding-top: 2.5rem;
       padding-bottom: 2.5rem;
@@ -2080,6 +2086,17 @@ summary::-webkit-details-marker {
 
     .brand-signature-chip {
       box-shadow: 0 10px 22px rgba(17, 17, 17, 0.06);
+    }
+
+    .brand-signature-chip .social-link {
+      min-height: 2.1rem;
+      padding: 0.5rem 0.72rem;
+      font-size: 0.74rem;
+    }
+
+    .brand-signature-chip .social-link__icon {
+      width: 0.86rem;
+      height: 0.86rem;
     }
 
     .social-link {
@@ -2218,6 +2235,11 @@ summary::-webkit-details-marker {
       font-size: clamp(2.1rem, 8.8vw, 2.25rem);
       line-height: 1.02;
       letter-spacing: -0.055em;
+    }
+
+    .hero-title {
+      font-size: clamp(2.05rem, 8.7vw, 2.3rem);
+      line-height: 1.02;
     }
 
     .hero-body {
