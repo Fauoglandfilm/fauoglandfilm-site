@@ -52,14 +52,22 @@ export function ServicesSection({
       title={title ? resolveLocalizedValue(title, language) : copy.servicesTitle}
       description={description ? resolveLocalizedValue(description, language) : copy.servicesDescription}
       id="tjenester"
+      className="pt-[clamp(2.5rem,5vw,4.5rem)] pb-[clamp(2.75rem,5vw,4.75rem)]"
     >
-      <div className="adaptive-grid-cards">
-        {services.map((service, index) => (
-          <Reveal key={service.slug} delay={0.06 * index}>
-            <ServiceCard service={service} />
-          </Reveal>
-        ))}
-      </div>
+      <Reveal>
+        <article className="glass-panel overflow-hidden rounded-[1.9rem] sm:rounded-[2rem]">
+          <div className="divide-y divide-[color:var(--line)]/80">
+            {services.map((service) => (
+              <div
+                key={service.slug}
+                className="px-4 py-4 sm:px-6 sm:py-6 lg:px-7 lg:py-7"
+              >
+                <ServiceCard service={service} />
+              </div>
+            ))}
+          </div>
+        </article>
+      </Reveal>
     </SectionShell>
   );
 }
@@ -148,27 +156,23 @@ export function ProcessSection({ steps }: { steps: ProcessStep[] }) {
       title={copy.processTitle}
       description={copy.processDescription}
       align="center"
+      className="pt-0"
     >
       <Reveal>
         <article className="glass-panel overflow-hidden rounded-[1.9rem]">
-          <div className="divide-y divide-[color:var(--line)]/80">
+          <div className="grid gap-px bg-[color:var(--line)]/80 md:grid-cols-2 xl:grid-cols-4">
             {steps.map((step) => (
               <div
                 key={step.step}
-                className="grid gap-4 px-5 py-5 sm:px-6 sm:py-6 lg:grid-cols-[auto_minmax(11rem,0.42fr)_minmax(0,1fr)] lg:items-start lg:gap-5"
+                className="bg-[linear-gradient(180deg,rgba(255,255,255,0.04),rgba(255,255,255,0.01))] px-5 py-5 text-left sm:px-6 sm:py-6"
               >
-                <span className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-[color:var(--line)] bg-[color:var(--surface)] font-display text-[1.15rem] text-[color:var(--foreground)]">
+                <span className="font-display text-[1.35rem] leading-none text-[var(--accent)]">
                   {step.step}
                 </span>
-                <div className="space-y-1.5">
-                  <p className="text-[0.66rem] font-semibold uppercase tracking-[0.18em] text-[var(--muted)]">
-                    {language === "no" ? "Steg" : "Step"}
-                  </p>
-                  <h3 className="card-title text-[color:var(--foreground)]">
-                    {resolveLocalizedValue(step.title, language)}
-                  </h3>
-                </div>
-                <p className="body-copy text-[var(--muted-2)]">
+                <h3 className="mt-3 text-[1.08rem] font-semibold tracking-[-0.04em] text-[color:var(--foreground)]">
+                  {resolveLocalizedValue(step.title, language)}
+                </h3>
+                <p className="mt-2 text-sm leading-6 text-[var(--muted-2)]">
                   {resolveLocalizedValue(step.description, language)}
                 </p>
               </div>

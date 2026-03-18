@@ -1,10 +1,9 @@
 "use client";
 
-import Image from "next/image";
-
+import { PreviewMedia } from "@/components/media/preview-media";
 import { useSitePreferences } from "@/components/providers/site-preferences";
 import { ButtonLink } from "@/components/ui/button-link";
-import type { ServiceArea } from "@/data/site-content";
+import { homeServiceVideoLibrary, type ServiceArea } from "@/data/site-content";
 import { serviceAreaVisuals } from "@/data/visual-assets";
 import { resolveLocalizedValue } from "@/lib/i18n";
 
@@ -12,9 +11,18 @@ type ServiceCardProps = {
   service: ServiceArea;
 };
 
+const serviceVideoKeyBySlug = {
+  reklamefilm: "01",
+  "bedriftsfilm-intervjuer": "02",
+  "some-innhold": "03",
+  "event-live": "04",
+} as const;
+
 export function ServiceCard({ service }: ServiceCardProps) {
   const { language } = useSitePreferences();
   const visual = serviceAreaVisuals[service.slug];
+  const videoKey = serviceVideoKeyBySlug[service.slug as keyof typeof serviceVideoKeyBySlug];
+  const video = videoKey ? homeServiceVideoLibrary[videoKey] : undefined;
   const metaItems = [
     {
       label: language === "no" ? "Budsjett" : "Budget",
@@ -25,72 +33,77 @@ export function ServiceCard({ service }: ServiceCardProps) {
       value: resolveLocalizedValue(service.timeline, language),
     },
   ];
+  const deliverablesSummary = service.deliverables
+    .map((item) => resolveLocalizedValue(item, language))
+    .join(" · ");
+  const mediaAlt = visual ? resolveLocalizedValue(visual.alt, language) : resolveLocalizedValue(service.title, language);
 
   return (
-    <article className="card-surface group overflow-hidden rounded-[1.75rem] shadow-[0_26px_80px_rgba(0,0,0,0.16)] sm:rounded-[1.9rem]">
-      {visual ? (
-        <div className="grid gap-px bg-[color:var(--line)] lg:grid-cols-[0.94fr_1.06fr]">
-          <div className="media-frame relative aspect-[1.08/0.86] overflow-hidden lg:min-h-[19rem] lg:aspect-auto">
-            <Image
-              src={visual.src}
-              alt={resolveLocalizedValue(visual.alt, language)}
-              fill
-              sizes="(min-width: 1024px) 24vw, (min-width: 768px) 50vw, 100vw"
-              className="object-cover transition duration-700 group-hover:scale-[1.04]"
-            />
-            <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(255,255,255,0.08),transparent_36%),linear-gradient(180deg,rgba(9,9,9,0.02),rgba(9,9,9,0.2)_36%,rgba(9,9,9,0.74)_100%)]" />
-            <div className="grain-overlay absolute inset-0 opacity-40" />
-          </div>
+    <article className="group grid gap-4 lg:grid-cols-[minmax(0,0.43fr)_minmax(0,0.57fr)] lg:items-start lg:gap-6">
+      <div className="media-frame relative overflow-hidden rounded-[1.45rem]">
+        <div className="relative aspect-[1.18/0.78] overflow-hidden bg-[#0b0d12] lg:min-h-[14rem] lg:aspect-auto">
+          <PreviewMedia
+            title={service.title}
+            video={video}
+            image={video?.poster ?? visual?.src}
+            imageAlt={mediaAlt}
+            previewBehavior={video ? "viewport" : "static"}
+            className="absolute inset-0"
+            sizes="(min-width: 1280px) 28vw, (min-width: 1024px) 36vw, 100vw"
+            rootMargin="180px 0px -8% 0px"
+            inViewThreshold={0.16}
+            posterClassName="transition duration-700 group-hover:scale-[1.035]"
+            previewClassName="scale-[1.02]"
+          />
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(255,255,255,0.08),transparent_36%),linear-gradient(180deg,rgba(9,9,9,0.02),rgba(9,9,9,0.16)_36%,rgba(9,9,9,0.58)_100%)]" />
+          <div className="grain-overlay absolute inset-0 opacity-36" />
+        </div>
+      </div>
 
-          <div className="relative flex flex-col bg-[linear-gradient(180deg,rgba(255,255,255,0.05),rgba(255,255,255,0.01))] p-4.5 sm:p-6">
-            <div className="flex flex-col gap-3">
-              <div className="space-y-1.5">
-                <h3 className="card-title text-[color:var(--foreground)]">
-                  {resolveLocalizedValue(service.title, language)}
-                </h3>
-              </div>
-
-              <p className="body-copy text-[color:var(--foreground)]/84">
-                {resolveLocalizedValue(service.value, language)}
-              </p>
-            </div>
-
-            <p className="body-copy mt-3 text-[var(--muted-2)]">
+      <div className="flex min-w-0 flex-col justify-between gap-4">
+        <div className="space-y-4">
+          <div className="space-y-2.5">
+            <p className="text-[0.64rem] font-semibold uppercase tracking-[0.2em] text-[var(--muted)]">
+              {resolveLocalizedValue(service.eyebrow, language)}
+            </p>
+            <h3 className="card-title text-[color:var(--foreground)]">
+              {resolveLocalizedValue(service.title, language)}
+            </h3>
+            <p className="text-[0.98rem] font-medium leading-6 text-[color:var(--foreground)]/82 sm:text-[1.02rem]">
+              {resolveLocalizedValue(service.value, language)}
+            </p>
+            <p className="text-sm leading-6 text-[var(--muted-2)] sm:text-[0.98rem] sm:leading-7">
               {resolveLocalizedValue(service.summary, language)}
             </p>
+          </div>
 
-            <div className="mt-4 grid gap-3 border-t border-[color:var(--line)] pt-4 sm:grid-cols-2">
-              {metaItems.map((item) => (
-                <div key={item.label}>
-                  <p className="text-[0.62rem] font-semibold uppercase tracking-[0.18em] text-[var(--muted)]">
-                    {item.label}
-                  </p>
-                  <p className="mt-2 text-sm leading-6 text-[color:var(--foreground)]/78">{item.value}</p>
-                </div>
-              ))}
-            </div>
-
-            <div className="mt-4 border-t border-[color:var(--line)] pt-4">
-              <p className="text-[0.62rem] font-semibold uppercase tracking-[0.18em] text-[var(--muted)]">
-                {language === "no" ? "Typiske leveranser" : "Typical deliverables"}
-              </p>
-              <p className="mt-3 text-sm leading-6 text-[var(--muted-2)]">
-                {service.deliverables
-                  .map((item) => resolveLocalizedValue(item, language))
-                  .join(", ")}
-              </p>
-            </div>
-
-            <div className="mt-auto border-t border-[color:var(--line)] pt-5">
-              <div className="flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center">
-                <ButtonLink href={service.href} variant="ghost" fullWidth className="sm:w-auto">
-                  {resolveLocalizedValue(service.ctaLabel, language)}
-                </ButtonLink>
+          <div className="grid gap-3 border-t border-[color:var(--line)]/80 pt-4 sm:grid-cols-2">
+            {metaItems.map((item) => (
+              <div key={item.label}>
+                <p className="text-[0.62rem] font-semibold uppercase tracking-[0.18em] text-[var(--muted)]">
+                  {item.label}
+                </p>
+                <p className="mt-1.5 text-sm leading-6 text-[color:var(--foreground)]/78">{item.value}</p>
               </div>
-            </div>
+            ))}
+          </div>
+
+          <div className="border-t border-[color:var(--line)]/80 pt-4">
+            <p className="text-[0.62rem] font-semibold uppercase tracking-[0.18em] text-[var(--muted)]">
+              {language === "no" ? "Typiske leveranser" : "Typical deliverables"}
+            </p>
+            <p className="mt-2.5 text-sm leading-6 text-[var(--muted-2)]">
+              {deliverablesSummary}
+            </p>
           </div>
         </div>
-      ) : null}
+
+        <div className="pt-1">
+          <ButtonLink href={service.href} variant="ghost" size="compact" fullWidth className="sm:w-auto">
+            {resolveLocalizedValue(service.ctaLabel, language)}
+          </ButtonLink>
+        </div>
+      </div>
     </article>
   );
 }

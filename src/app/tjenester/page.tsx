@@ -32,7 +32,6 @@ export default async function ServicesPage() {
           label: { no: copy.no.servicesPrimaryCta, en: copy.en.servicesPrimaryCta },
           href: "/kontakt",
         }}
-        visualKey="services"
       />
       <ServicesSection
         services={services}
