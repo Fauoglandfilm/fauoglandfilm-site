@@ -19,6 +19,10 @@ public/assets/**/*.webm
 !public/assets/portfolio/foreningen-norden/videos/foreningen-norden-nettsideinnhold.mp4
 !public/assets/portfolio/ville-gleder/videos/ville-gleder-villmarksforedrag.mp4
 !public/assets/portfolio/ville-gleder/videos/ville-gleder-vat-kald-sulten.mp4
+!public/assets/services/videos/bedriftfilm.mp4
+!public/assets/services/videos/konsert.mp4
+!public/assets/services/videos/reklamefilm.mp4
+!public/assets/services/videos/sosiale-medier.mp4
 public/assets/_legacy-import/
 public/assets/unmatched/
 public/assets/unverified-downloads/

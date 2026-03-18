@@ -12,6 +12,7 @@ import {
   clientLogos,
   homeHeroContent,
   homeIntroContent,
+  homeServiceVideoLibrary,
   servicePillars,
   siteConfig,
   teamMembers,
@@ -19,7 +20,7 @@ import {
   type ServicePillar,
   videoLibrary,
 } from "@/data/site-content";
-import { servicePillarVisuals, siteVisuals } from "@/data/visual-assets";
+import { siteVisuals } from "@/data/visual-assets";
 import { uiCopy } from "@/data/ui-copy";
 import type { LocalizedText } from "@/lib/i18n";
 import { resolveLocalizedValue } from "@/lib/i18n";
@@ -317,7 +318,7 @@ export function ServicesSection() {
           </h2>
         </div>
 
-        <div className="adaptive-grid-cards mt-6 sm:mt-8">
+        <div className="mt-6 grid gap-4 sm:mt-8 md:grid-cols-2 lg:gap-5">
           {servicePillars.map((pillar, index) => (
             <ServicePillarCard key={pillar.eyebrow} pillar={pillar} delay={0.05 * index} />
           ))}
@@ -335,32 +336,40 @@ function ServicePillarCard({
   delay: number;
 }) {
   const { language } = useSitePreferences();
-  const visual = servicePillarVisuals[pillar.eyebrow];
+  const video = homeServiceVideoLibrary[pillar.eyebrow as keyof typeof homeServiceVideoLibrary];
+  const title = resolveLocalizedValue(pillar.title, language);
+  const summary = resolveLocalizedValue(pillar.summary, language);
 
   return (
     <Reveal delay={delay}>
-      <article className="card-surface group overflow-hidden rounded-[1.6rem] sm:rounded-[1.8rem]">
-        <div className="relative aspect-[1.08/0.82] overflow-hidden">
-          <Image
-            src={visual.src}
-            alt={resolveLocalizedValue(visual.alt, language)}
-            fill
-            sizes="(min-width: 768px) 50vw, 100vw"
-            className="object-cover transition duration-700 group-hover:scale-[1.04]"
+      <article className="card-surface group flex h-full flex-col overflow-hidden rounded-[1.6rem] sm:rounded-[1.8rem]">
+        <div className="relative aspect-[1/0.92] overflow-hidden bg-[#0b0d12]">
+          <PreviewMedia
+            title={pillar.title}
+            video={video}
+            image={video?.poster}
+            imageAlt={pillar.title}
+            previewBehavior="viewport"
+            className="absolute inset-0"
+            sizes="(min-width: 1024px) 42vw, (min-width: 768px) 50vw, 100vw"
+            rootMargin="120px 0px -10% 0px"
+            inViewThreshold={0.18}
+            posterClassName="transition duration-700 group-hover:scale-[1.025]"
+            previewClassName="scale-[1.02]"
           />
-          <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(8,8,8,0.04),rgba(8,8,8,0.52)_100%)]" />
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(255,255,255,0.08),transparent_38%),linear-gradient(180deg,rgba(8,8,8,0.03),rgba(8,8,8,0.12)_38%,rgba(8,8,8,0.42)_100%)]" />
           <div className="grain-overlay absolute inset-0 opacity-35" />
           <div className="absolute left-4 top-4 inline-flex h-10 w-10 items-center justify-center rounded-[1.05rem] border border-white/12 bg-black/28 text-sm font-semibold text-white backdrop-blur sm:h-11 sm:w-11 sm:rounded-2xl">
             {pillar.eyebrow}
           </div>
         </div>
 
-        <div className="p-4.5 sm:p-6">
+        <div className="flex flex-1 flex-col p-4.5 sm:p-5.5">
           <h3 className="card-title text-[color:var(--foreground)]">
-            {resolveLocalizedValue(pillar.title, language)}
+            {title}
           </h3>
-          <p className="body-copy mt-2.5 text-[var(--muted-2)] sm:mt-3">
-            {resolveLocalizedValue(pillar.summary, language)}
+          <p className="body-copy mt-2.5 max-w-[30rem] text-[var(--muted-2)] sm:mt-3">
+            {summary}
           </p>
         </div>
       </article>
