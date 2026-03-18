@@ -97,7 +97,7 @@ export function CaseDetailContent({
             <section className="grid gap-4 md:grid-cols-2">
               {caseStudy.videoVariants.map((variant) => (
                 <article key={variant.slug} className="card-surface overflow-hidden rounded-[1.8rem]">
-                  <div className="relative min-h-[20rem] bg-[#0b0d12] sm:min-h-[24rem]">
+                  <div className="relative min-h-[14.5rem] bg-[#0b0d12] sm:min-h-[18rem] md:min-h-[24rem]">
                     <EmbeddedVideoPlayer
                       title={variant.label}
                       video={variant.video}

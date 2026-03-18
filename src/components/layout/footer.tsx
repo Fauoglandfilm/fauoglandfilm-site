@@ -15,14 +15,14 @@ export function Footer() {
 
   return (
     <footer className="bg-[#111111] text-white">
-      <div className="site-container py-7 sm:py-10">
-        <div className="brand-signature-chip rounded-[1.9rem] px-5 py-5 sm:rounded-[2.1rem] sm:px-6 sm:py-6 lg:px-7 lg:py-7">
-          <div className="grid gap-6 text-center sm:gap-7 lg:grid-cols-[minmax(0,1.08fr)_minmax(0,0.82fr)_minmax(0,0.8fr)] lg:items-start lg:text-left">
-            <div className="flex flex-col items-center gap-4 lg:items-start">
-              <Link href="/" aria-label="Fau&Land Film" className="flex flex-col items-center gap-2.5 lg:items-start">
+      <div className="site-container py-6 sm:py-10">
+        <div className="brand-signature-chip rounded-[1.6rem] px-4 py-4 sm:rounded-[2.1rem] sm:px-6 sm:py-6 lg:px-7 lg:py-7">
+          <div className="grid gap-5 text-center sm:gap-7 lg:grid-cols-[minmax(0,1.08fr)_minmax(0,0.82fr)_minmax(0,0.8fr)] lg:items-start lg:text-left">
+            <div className="flex flex-col items-center gap-3 lg:items-start">
+              <Link href="/" aria-label="Fau&Land Film" className="flex flex-col items-center gap-2 lg:items-start">
                 <BrandLogo
                   variant="full"
-                  className="w-[10.75rem] brightness-[1.26] contrast-[1.08] saturate-[1.1] drop-shadow-[0_10px_22px_rgba(0,0,0,0.18)] sm:w-[12.75rem]"
+                  className="w-[9.8rem] brightness-[1.26] contrast-[1.08] saturate-[1.1] drop-shadow-[0_10px_22px_rgba(0,0,0,0.18)] sm:w-[12.75rem]"
                 />
                 <p className="text-[0.62rem] font-semibold uppercase tracking-[0.22em] text-[var(--foreground)]/48">
                   {copy.productionCompany}
@@ -39,7 +39,7 @@ export function Footer() {
               </div>
             </div>
 
-            <div className="flex flex-col items-center gap-3.5 lg:items-start">
+            <div className="flex flex-col items-center gap-3 lg:items-start">
               <div className="space-y-1.5">
                 <p className="text-[0.68rem] font-semibold uppercase tracking-[0.24em] text-[var(--foreground)]/52">
                   {copy.social}
@@ -53,7 +53,7 @@ export function Footer() {
               />
             </div>
 
-            <div className="flex flex-col items-center gap-4 lg:items-end lg:text-right">
+            <div className="flex flex-col items-center gap-3 lg:items-end lg:text-right">
               <div className="space-y-2">
                 <p className="text-[0.68rem] font-semibold uppercase tracking-[0.24em] text-[var(--foreground)]/52">
                   {copy.navigation}

@@ -174,7 +174,7 @@ export function HeroSection() {
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(210,173,116,0.22),transparent_28%),radial-gradient(circle_at_82%_14%,rgba(112,143,216,0.12),transparent_22%)]" />
       </div>
 
-      <div className="site-container relative z-[1] flex min-h-[88svh] items-end pb-10 pt-[7.2rem] sm:min-h-[92svh] sm:pb-14 sm:pt-[8.8rem] lg:min-h-[96vh] lg:pb-16 lg:pt-[10.5rem]">
+      <div className="site-container relative z-[1] flex min-h-[80svh] items-end pb-8 pt-[6.3rem] sm:min-h-[92svh] sm:pb-14 sm:pt-[8.8rem] lg:min-h-[96vh] lg:pb-16 lg:pt-[10.5rem]">
         <Reveal y={20} className="w-full">
           <div className="max-w-[42rem]">
             <p className="text-[0.72rem] font-semibold uppercase tracking-[0.24em] text-white/72 sm:text-[0.76rem]">
@@ -203,11 +203,11 @@ export function HeroSection() {
               </ButtonLink>
             </div>
 
-            <div className="mt-8 grid gap-2.5 rounded-[1.45rem] border border-white/14 bg-white/8 p-3 backdrop-blur-md sm:mt-10 sm:grid-cols-3 sm:gap-3 sm:p-4">
+            <div className="mt-7 flex flex-wrap gap-2 rounded-[1.25rem] border border-white/14 bg-white/8 p-2.5 backdrop-blur-md sm:mt-10 sm:grid sm:grid-cols-3 sm:gap-3 sm:p-4">
               {proofItems.map((item) => (
                 <div
                   key={item}
-                  className="rounded-[1rem] border border-white/8 bg-black/12 px-3.5 py-3 text-[0.74rem] font-medium tracking-[0.01em] text-white/76 sm:text-[0.8rem]"
+                  className="rounded-full border border-white/8 bg-black/12 px-3.5 py-2.5 text-[0.72rem] font-medium tracking-[0.01em] text-white/76 sm:rounded-[1rem] sm:px-3.5 sm:py-3 sm:text-[0.8rem]"
                 >
                   {item}
                 </div>

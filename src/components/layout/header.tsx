@@ -151,7 +151,7 @@ export function Header() {
         <div className="mx-auto max-w-[1420px] px-4 sm:px-6 lg:px-8">
           <div
             className={cn(
-              "relative mt-2 flex items-center justify-between gap-3 overflow-hidden rounded-[1.65rem] px-3 py-2.5 transition duration-300 sm:mt-3 sm:gap-4 sm:px-4 sm:py-3 lg:grid lg:grid-cols-[auto_minmax(0,1fr)_auto] lg:items-center lg:gap-5 lg:rounded-[1.9rem] lg:px-5 lg:py-3.5",
+              "relative mt-2 flex items-center justify-between gap-2.5 overflow-hidden rounded-[1.45rem] px-3 py-2 transition duration-300 sm:mt-3 sm:gap-4 sm:px-4 sm:py-3 lg:grid lg:grid-cols-[auto_minmax(0,1fr)_auto] lg:items-center lg:gap-5 lg:rounded-[1.9rem] lg:px-5 lg:py-3.5",
               overlayMode
                 ? "border border-white/18 bg-white/10 text-white shadow-[0_24px_64px_rgba(0,0,0,0.12)] backdrop-blur-[18px]"
                 : "border border-[color:var(--line)]/80 bg-[color:var(--header-surface)]/82 text-[color:var(--foreground)] shadow-[0_22px_56px_rgba(18,14,10,0.08)] backdrop-blur-[20px]",
@@ -170,22 +170,36 @@ export function Header() {
               onClick={() => setOpen(false)}
             >
               <div className="sm:hidden">
-                <p
-                  className={cn(
-                    "font-display text-[1.12rem] leading-none tracking-[-0.05em]",
-                    overlayMode ? "text-white" : "text-[color:var(--foreground)]",
-                  )}
-                >
-                  Fau&amp;Land Film
-                </p>
-                <p
-                  className={cn(
-                    "mt-1 text-[0.5rem] font-semibold uppercase tracking-[0.22em]",
-                    overlayMode ? "text-white/68" : "text-[color:var(--foreground)]/52",
-                  )}
-                >
-                  Oslo / Production
-                </p>
+                <div className="flex items-center gap-2.5">
+                  <div className="header-brand-shell flex h-[2.55rem] w-[2.55rem] items-center justify-center rounded-full p-[0.58rem]">
+                    <BrandLogo
+                      variant="mark"
+                      className={cn(
+                        "relative z-[1] h-auto w-full opacity-100 saturate-[2.1]",
+                        overlayMode ? "brightness-[2.45] contrast-[1.38]" : "brightness-[2.05] contrast-[1.28]",
+                      )}
+                      priority
+                    />
+                  </div>
+                  <div className="min-w-0">
+                    <p
+                      className={cn(
+                        "font-display text-[1.02rem] leading-none tracking-[-0.05em]",
+                        overlayMode ? "text-white" : "text-[color:var(--foreground)]",
+                      )}
+                    >
+                      Fau&amp;Land Film
+                    </p>
+                    <p
+                      className={cn(
+                        "mt-0.5 text-[0.48rem] font-semibold uppercase tracking-[0.18em]",
+                        overlayMode ? "text-white/68" : "text-[color:var(--foreground)]/52",
+                      )}
+                    >
+                      Oslo / Production
+                    </p>
+                  </div>
+                </div>
               </div>
 
               <div className="hidden min-w-0 items-center gap-3.5 sm:flex lg:gap-4">
@@ -332,7 +346,7 @@ export function Header() {
       <AnimatePresence>
         {open ? (
           <motion.div
-            className="fixed inset-0 z-40 bg-[rgba(10,10,10,0.44)] text-white backdrop-blur-sm lg:hidden"
+            className="fixed inset-0 z-40 bg-[rgba(10,10,10,0.44)] text-[color:var(--foreground)] backdrop-blur-sm lg:hidden"
             initial={shouldReduceMotion ? { opacity: 1 } : { opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
@@ -366,22 +380,31 @@ export function Header() {
                     href="/"
                     className="flex items-center"
                     aria-label="Fau&Land Film"
-                    onClick={() => setOpen(false)}
-                  >
-                    <div>
-                      <p className="font-display text-[1.2rem] leading-none tracking-[-0.05em] text-white">
+                  onClick={() => setOpen(false)}
+                >
+                    <div className="flex items-center gap-3">
+                      <div className="header-brand-shell flex h-[2.85rem] w-[2.85rem] items-center justify-center rounded-full p-[0.68rem]">
+                        <BrandLogo
+                          variant="mark"
+                          className="relative z-[1] h-auto w-full opacity-100 brightness-[2.3] contrast-[1.38] saturate-[2.1]"
+                          priority
+                        />
+                      </div>
+                      <div>
+                        <p className="font-display text-[1.15rem] leading-none tracking-[-0.05em] text-[color:var(--foreground)]">
                         Fau&amp;Land Film
-                      </p>
-                      <p className="text-[0.62rem] font-semibold uppercase tracking-[0.2em] text-white/56">
-                        {menuFooterCopy}
-                      </p>
+                        </p>
+                        <p className="text-[0.62rem] font-semibold uppercase tracking-[0.2em] text-[color:var(--foreground)]/56">
+                          {menuFooterCopy}
+                        </p>
+                      </div>
                     </div>
                   </Link>
 
                   <Button
                     variant="icon"
                     size="icon"
-                    className="h-11 w-11 rounded-full border border-white/12 bg-white/8 text-white shadow-none"
+                    className="h-11 w-11 rounded-full border border-[color:var(--line)] bg-[color:var(--surface)]/82 text-[color:var(--foreground)] shadow-none"
                     aria-label={copy.menuClose}
                     onClick={() => setOpen(false)}
                   >
@@ -390,7 +413,7 @@ export function Header() {
                 </div>
 
                 <nav className="flex flex-1 flex-col justify-center" aria-label={menuLabel}>
-                  <div className="flex flex-col rounded-[1.5rem] border border-white/8 bg-white/4 px-1">
+                  <div className="flex flex-col rounded-[1.5rem] border border-[color:var(--line)] bg-[color:var(--surface)]/42 px-1">
                     {navItems.map((item) => {
                       const active = item.href === "/" ? pathname === "/" : pathname.startsWith(item.href);
 
@@ -399,8 +422,8 @@ export function Header() {
                           key={item.href}
                           href={item.href}
                           className={cn(
-                            "group border-b border-white/10 px-3 py-4 text-white/84 transition duration-300 hover:text-white last:border-b-0",
-                            active && "rounded-[1rem] bg-white/8 text-white",
+                            "group border-b border-[color:var(--line)] px-3 py-4 text-[color:var(--foreground)]/84 transition duration-300 hover:text-[color:var(--foreground)] last:border-b-0",
+                            active && "rounded-[1rem] bg-[color:var(--surface)]/72 text-[color:var(--foreground)]",
                           )}
                           onClick={() => setOpen(false)}
                         >
@@ -413,7 +436,7 @@ export function Header() {
                   </div>
                 </nav>
 
-                <div className="mt-8 border-t border-white/12 pt-5">
+                <div className="mt-8 border-t border-[color:var(--line)] pt-5">
                   <div className="flex flex-wrap items-center gap-3">
                     <SegmentedToggle
                       ariaLabel={copy.languageLabel}
@@ -436,7 +459,7 @@ export function Header() {
                       compact
                     />
                   </div>
-                  <p className="mt-4 text-[0.68rem] font-semibold uppercase tracking-[0.24em] text-white/42">
+                  <p className="mt-4 text-[0.68rem] font-semibold uppercase tracking-[0.24em] text-[color:var(--foreground)]/42">
                     {menuFooterCopy}
                   </p>
                 </div>
