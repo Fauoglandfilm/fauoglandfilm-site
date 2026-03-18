@@ -320,12 +320,21 @@ function ManagedDirectVideo({
   const [hasFailed, setHasFailed] = useState(false);
   const [hasStartedPlayback, setHasStartedPlayback] = useState(false);
   const videoRef = useRef<HTMLVideoElement | null>(null);
+  const retryTimeoutRef = useRef<number | null>(null);
   const shouldHoldPosterUntilPlay = autoplay || previewMode || showControls;
   const posterVisible = hasFailed
     ? true
     : shouldHoldPosterUntilPlay
       ? !hasStartedPlayback
       : !isReady;
+
+  useEffect(() => {
+    return () => {
+      if (retryTimeoutRef.current) {
+        window.clearTimeout(retryTimeoutRef.current);
+      }
+    };
+  }, []);
 
   useEffect(() => {
     if (!shouldLoadMedia || hasFailed) {
@@ -338,14 +347,33 @@ function ManagedDirectVideo({
       return;
     }
 
+    node.muted = true;
+    node.playsInline = true;
+
     if (shouldActivatePlayback) {
       const playPromise = node.play();
       if (playPromise && typeof playPromise.catch === "function") {
-        playPromise.catch(() => undefined);
+        playPromise.catch(() => {
+          if (retryTimeoutRef.current) {
+            window.clearTimeout(retryTimeoutRef.current);
+          }
+
+          retryTimeoutRef.current = window.setTimeout(() => {
+            retryTimeoutRef.current = null;
+            node
+              .play()
+              .then(() => undefined)
+              .catch(() => undefined);
+          }, 160);
+        });
       }
       return;
     }
 
+    if (retryTimeoutRef.current) {
+      window.clearTimeout(retryTimeoutRef.current);
+      retryTimeoutRef.current = null;
+    }
     node.pause();
   }, [autoplay, hasFailed, previewMode, shouldActivatePlayback, shouldLoadMedia]);
 
