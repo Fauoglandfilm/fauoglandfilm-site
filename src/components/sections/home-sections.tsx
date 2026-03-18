@@ -28,6 +28,7 @@ import { cn } from "@/lib/utils";
 
 import { FloatingLayer, Reveal } from "../motion/reveal";
 import { ButtonLink } from "../ui/button-link";
+import { BrandLogo } from "../ui/brand-logo";
 import { ArrowUpRightIcon, MailIcon, PhoneIcon, PinIcon } from "../ui/icons";
 import { CaseCard } from "./case-card";
 import { ClientLogoMarquee } from "./client-logo-marquee";
@@ -595,6 +596,20 @@ export function ContactSection() {
         <div className="grid gap-3.5 sm:gap-4 lg:grid-cols-[0.9fr_1.1fr]">
           <article className="glass-panel relative overflow-hidden rounded-[1.8rem] p-4.5 shadow-[0_28px_90px_rgba(0,0,0,0.18)] sm:rounded-[2rem] sm:p-6 lg:p-7">
             <div className="glass-sheen absolute inset-0 opacity-50" />
+            <Link href="/" className="brand-signature-chip mb-4 flex w-fit items-center gap-3 px-2.5 py-2 sm:mb-5">
+              <div className="brand-signature-mark flex h-11 w-11 items-center justify-center rounded-full p-[0.62rem]">
+                <BrandLogo
+                  variant="mark"
+                  className="relative z-[1] h-auto w-full brightness-[1.82] contrast-[1.14] saturate-[1.36]"
+                />
+              </div>
+              <div>
+                <p className="font-display text-[1rem] text-[color:var(--foreground)]">Fau&amp;Land Film</p>
+                <p className="text-[0.58rem] font-semibold uppercase tracking-[0.22em] text-[var(--muted)]">
+                  Oslo / Production
+                </p>
+              </div>
+            </Link>
             <span className="eyebrow">{copy.contactEyebrow}</span>
             <h2 className="section-title mt-3 text-[color:var(--foreground)] sm:mt-4">
               {copy.contactTitle}

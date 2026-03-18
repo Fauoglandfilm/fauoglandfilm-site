@@ -25,6 +25,7 @@ import { resolveLocalizedValue } from "@/lib/i18n";
 import { cn } from "@/lib/utils";
 
 import { ButtonLink } from "../ui/button-link";
+import { BrandLogo } from "../ui/brand-logo";
 import { ArrowUpRightIcon, MailIcon, PhoneIcon, PinIcon } from "../ui/icons";
 import { SectionShell } from "../ui/section-shell";
 import { CaseCard } from "./case-card";
@@ -396,8 +397,28 @@ export function ContactLeadSection({
       description={copy.contactDescription}
     >
       <div className="grid gap-4 xl:grid-cols-[0.9fr_1.1fr]">
-        <article className="card-surface rounded-[1.9rem] p-5 sm:p-6">
+        <article className="card-surface relative overflow-hidden rounded-[1.9rem] p-5 sm:p-6">
+          <div className="pointer-events-none absolute -bottom-8 right-[-0.5rem] hidden h-28 w-28 md:block opacity-[0.06]">
+            <BrandLogo
+              variant="mark"
+              className="h-auto w-full brightness-[1.4] saturate-[1.15] drop-shadow-[0_18px_32px_rgba(0,0,0,0.16)]"
+            />
+          </div>
           <div className="space-y-4">
+            <Link href="/" className="brand-signature-chip flex w-fit items-center gap-3 px-2.5 py-2">
+              <div className="brand-signature-mark flex h-11 w-11 items-center justify-center rounded-full p-[0.62rem]">
+                <BrandLogo
+                  variant="mark"
+                  className="relative z-[1] h-auto w-full brightness-[1.74] contrast-[1.12] saturate-[1.34]"
+                />
+              </div>
+              <div>
+                <p className="font-display text-[1rem] text-[color:var(--foreground)]">Fau&amp;Land Film</p>
+                <p className="text-[0.58rem] font-semibold uppercase tracking-[0.22em] text-[var(--muted)]">
+                  Oslo / Production
+                </p>
+              </div>
+            </Link>
             <p className="body-copy text-[var(--muted-2)]">
               {copy.contactLead}
             </p>
@@ -555,7 +576,14 @@ export function CtaBanner({
   return (
     <section className="section-space">
       <div className="site-container">
-        <div className="overflow-hidden rounded-[1.8rem] border border-[color:var(--line)] bg-[#111111] px-4 py-5 text-white shadow-[0_32px_100px_rgba(15,15,15,0.14)] sm:rounded-[2rem] sm:px-6 sm:py-7 lg:px-8 lg:py-8">
+        <div className="relative overflow-hidden rounded-[1.8rem] border border-[color:var(--line)] bg-[#111111] px-4 py-5 text-white shadow-[0_32px_100px_rgba(15,15,15,0.14)] sm:rounded-[2rem] sm:px-6 sm:py-7 lg:px-8 lg:py-8">
+          <div className="pointer-events-none absolute -bottom-8 right-[-0.5rem] hidden h-36 w-36 md:block opacity-[0.08]">
+            <BrandLogo
+              variant="mark"
+              className="h-auto w-full brightness-[1.5] saturate-[1.18] drop-shadow-[0_24px_40px_rgba(0,0,0,0.26)]"
+            />
+          </div>
+          <div className="pointer-events-none absolute inset-x-10 top-0 h-px bg-[linear-gradient(90deg,transparent,rgba(255,239,211,0.68),transparent)] opacity-72" />
           <div
             className={
               align === "center"

@@ -166,21 +166,26 @@ export function Header() {
 
             <Link
               href="/"
-              className="relative z-[1] flex shrink-0 items-center gap-3.5 lg:gap-4.5"
+              className={cn(
+                "relative z-[1] flex shrink-0 items-center gap-4 rounded-[1.3rem] border px-1.5 py-1.5 transition duration-300 lg:gap-5",
+                overlayMode
+                  ? "border-white/10 bg-white/[0.045] shadow-[0_20px_48px_rgba(0,0,0,0.16)]"
+                  : "border-[color:var(--line)]/55 bg-white/[0.03] shadow-[0_16px_40px_rgba(18,14,10,0.08)]",
+              )}
               aria-label="Fau&Land Film"
               onClick={() => setOpen(false)}
             >
               <div
                 className={cn(
-                  "header-brand-shell flex h-11 w-11 items-center justify-center rounded-full p-[0.58rem] lg:h-[3.25rem] lg:w-[3.25rem] lg:p-[0.72rem]",
-                  overlayMode ? "shadow-[0_26px_56px_rgba(0,0,0,0.22)]" : "shadow-[0_22px_52px_rgba(18,14,10,0.12)]",
+                  "header-brand-shell flex h-12 w-12 items-center justify-center rounded-full p-[0.62rem] sm:h-[3.15rem] sm:w-[3.15rem] sm:p-[0.76rem] lg:h-[3.9rem] lg:w-[3.9rem] lg:p-[0.92rem]",
+                  overlayMode ? "shadow-[0_30px_68px_rgba(0,0,0,0.26)]" : "shadow-[0_24px_58px_rgba(18,14,10,0.14)]",
                 )}
               >
                 <BrandLogo
                   variant="mark"
                   className={cn(
-                    "relative z-[1] opacity-100 saturate-[1.42] drop-shadow-[0_12px_22px_rgba(0,0,0,0.22)]",
-                    overlayMode ? "brightness-[1.74] contrast-[1.12]" : "brightness-[1.34] contrast-[1.08]",
+                    "relative z-[1] opacity-100 saturate-[1.62] drop-shadow-[0_14px_26px_rgba(0,0,0,0.24)]",
+                    overlayMode ? "brightness-[2.08] contrast-[1.2]" : "brightness-[1.5] contrast-[1.14]",
                   )}
                   priority
                 />
@@ -188,16 +193,16 @@ export function Header() {
               <div className="min-w-0">
                 <p
                   className={cn(
-                    "font-display text-[1.1rem] font-semibold tracking-[-0.045em] sm:text-[1.14rem] lg:text-[1.32rem]",
-                    overlayMode ? "text-white drop-shadow-[0_10px_22px_rgba(0,0,0,0.24)]" : "text-[color:var(--foreground)]",
+                    "font-display text-[1.16rem] font-semibold tracking-[-0.05em] sm:text-[1.24rem] lg:text-[1.48rem]",
+                    overlayMode ? "text-white drop-shadow-[0_12px_24px_rgba(0,0,0,0.26)]" : "text-[color:var(--foreground)]",
                   )}
                 >
                   Fau&amp;Land Film
                 </p>
                 <p
                   className={cn(
-                    "mt-0.5 hidden text-[0.64rem] font-semibold uppercase tracking-[0.2em] lg:block",
-                    overlayMode ? "text-white/88" : "text-[color:var(--foreground)]/62",
+                    "mt-0.5 hidden text-[0.66rem] font-semibold uppercase tracking-[0.22em] lg:block",
+                    overlayMode ? "text-white/92" : "text-[color:var(--foreground)]/74",
                   )}
                 >
                   Oslo / Production
