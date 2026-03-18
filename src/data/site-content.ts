@@ -955,8 +955,8 @@ export const caseStudies: CaseStudy[] = [
     mediaFit: "cover",
     video: {
       videoType: "direct",
-      src: "/assets/portfolio/treningshuset/videos/web/treningshuset-desktop-4x5-web.mp4",
-      mobileSrc: "/assets/portfolio/treningshuset/videos/web/treningshuset-mobile-9x16-web.mp4",
+      src: "/assets/portfolio/treningshuset/videos/alternates/portrait-4x5/Kort_Reel45.mp4",
+      mobileSrc: "/assets/portfolio/treningshuset/videos/alternates/mobile-9x16/Kort_Reel.mp4",
       poster: "/assets/portfolio/treningshuset/posters/treningshuset-bred-poster.png",
       label: {
         no: "Treningshuset - annonser og sosiale medier",
@@ -965,24 +965,24 @@ export const caseStudies: CaseStudy[] = [
     },
     videoVariants: [
       {
-        slug: "bred",
+        slug: "4x5",
         label: {
-          no: "Bred versjon",
-          en: "Wide version",
+          no: "4:5-versjon",
+          en: "4:5 version",
         },
         image: "/assets/portfolio/treningshuset/posters/treningshuset-bred-poster.png",
         imageAlt: {
-          no: "Bred versjon av Treningshuset-filmen",
-          en: "Wide version of the Treningshuset film",
+          no: "4:5-versjon av Treningshuset-filmen",
+          en: "4:5 version of the Treningshuset film",
         },
         mediaFit: "cover",
         video: {
           videoType: "direct",
-          src: "/assets/portfolio/treningshuset/videos/web/treningshuset-desktop-4x5-web.mp4",
+          src: "/assets/portfolio/treningshuset/videos/alternates/portrait-4x5/Kort_Reel45.mp4",
           poster: "/assets/portfolio/treningshuset/posters/treningshuset-bred-poster.png",
           label: {
-            no: "Treningshuset - bred versjon",
-            en: "Treningshuset - wide version",
+            no: "Treningshuset - 4:5-versjon",
+            en: "Treningshuset - 4:5 version",
           },
         },
       },
@@ -1000,55 +1000,11 @@ export const caseStudies: CaseStudy[] = [
         mediaFit: "cover",
         video: {
           videoType: "direct",
-          src: "/assets/portfolio/treningshuset/videos/web/treningshuset-mobile-9x16-web.mp4",
+          src: "/assets/portfolio/treningshuset/videos/alternates/mobile-9x16/Kort_Reel.mp4",
           poster: "/assets/portfolio/treningshuset/posters/treningshuset-mobil-poster.png",
           label: {
             no: "Treningshuset - mobil versjon",
             en: "Treningshuset - mobile version",
-          },
-        },
-      },
-      {
-        slug: "kort-4x5",
-        label: {
-          no: "Kort versjon",
-          en: "Short version",
-        },
-        image: "/assets/portfolio/treningshuset/posters/treningshuset-bred-poster.png",
-        imageAlt: {
-          no: "Kort 4:5-versjon av Treningshuset-filmen",
-          en: "Short 4:5 version of the Treningshuset film",
-        },
-        mediaFit: "cover",
-        video: {
-          videoType: "direct",
-          src: "/assets/portfolio/treningshuset/videos/alternates/portrait-4x5/Kort_Reel45.mp4",
-          poster: "/assets/portfolio/treningshuset/posters/treningshuset-bred-poster.png",
-          label: {
-            no: "Treningshuset - kort versjon",
-            en: "Treningshuset - short version",
-          },
-        },
-      },
-      {
-        slug: "kort-mobil",
-        label: {
-          no: "Kort mobilversjon",
-          en: "Short mobile version",
-        },
-        image: "/assets/portfolio/treningshuset/posters/treningshuset-mobil-poster.png",
-        imageAlt: {
-          no: "Kort mobilversjon av Treningshuset-filmen",
-          en: "Short mobile version of the Treningshuset film",
-        },
-        mediaFit: "cover",
-        video: {
-          videoType: "direct",
-          src: "/assets/portfolio/treningshuset/videos/alternates/mobile-9x16/Kort_Reel.mp4",
-          poster: "/assets/portfolio/treningshuset/posters/treningshuset-mobil-poster.png",
-          label: {
-            no: "Treningshuset - kort mobilversjon",
-            en: "Treningshuset - short mobile version",
           },
         },
       },
@@ -1698,8 +1654,8 @@ export const portfolioProjects: PortfolioProject[] = [
       en: "We created 10 films for Treningshuset across multiple formats, messages and campaign versions designed to drive more memberships.",
     },
     result: {
-      no: "Bred versjon prioriteres på desktop, mobilversjon prioriteres på mobil, og begge kan vises i caset.",
-      en: "The wider version is prioritised on desktop, the mobile version on mobile, and both are available inside the case.",
+      no: "4:5-versjonen prioriteres på desktop, mobilversjonen prioriteres på mobil, og begge er klare for annonser og sosiale medier.",
+      en: "The 4:5 version is prioritised on desktop, the mobile version on mobile, and both are ready for ads and social media.",
     },
     detailHref: "/case/treningshuset",
     ctaLabel: viewCaseCta,
@@ -1711,8 +1667,8 @@ export const portfolioProjects: PortfolioProject[] = [
     },
     video: {
       videoType: "direct",
-      src: "/assets/portfolio/treningshuset/videos/web/treningshuset-desktop-4x5-web.mp4",
-      mobileSrc: "/assets/portfolio/treningshuset/videos/web/treningshuset-mobile-9x16-web.mp4",
+      src: "/assets/portfolio/treningshuset/videos/alternates/portrait-4x5/Kort_Reel45.mp4",
+      mobileSrc: "/assets/portfolio/treningshuset/videos/alternates/mobile-9x16/Kort_Reel.mp4",
       poster: "/assets/portfolio/treningshuset/posters/treningshuset-bred-poster.png",
       label: {
         no: "Treningshuset - filmer for annonser og sosiale medier",
