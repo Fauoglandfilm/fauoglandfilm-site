@@ -955,8 +955,8 @@ export const caseStudies: CaseStudy[] = [
     mediaFit: "contain",
     video: {
       videoType: "direct",
-      src: "/assets/portfolio/treningshuset/videos/web/treningshuset-desktop-4x5.mp4",
-      mobileSrc: "/assets/portfolio/treningshuset/videos/web/treningshuset-mobile-9x16.mp4",
+      src: "/assets/portfolio/treningshuset/videos/web/treningshuset-desktop-4x5-web.mp4",
+      mobileSrc: "/assets/portfolio/treningshuset/videos/web/treningshuset-mobile-9x16-web.mp4",
       poster: "/assets/portfolio/treningshuset/posters/treningshuset-bred-poster.png",
       label: {
         no: "Treningshuset - annonser og sosiale medier",
@@ -978,7 +978,7 @@ export const caseStudies: CaseStudy[] = [
         mediaFit: "contain",
         video: {
           videoType: "direct",
-          src: "/assets/portfolio/treningshuset/videos/web/treningshuset-desktop-4x5.mp4",
+          src: "/assets/portfolio/treningshuset/videos/web/treningshuset-desktop-4x5-web.mp4",
           poster: "/assets/portfolio/treningshuset/posters/treningshuset-bred-poster.png",
           label: {
             no: "Treningshuset - bred versjon",
@@ -1000,7 +1000,7 @@ export const caseStudies: CaseStudy[] = [
         mediaFit: "contain",
         video: {
           videoType: "direct",
-          src: "/assets/portfolio/treningshuset/videos/web/treningshuset-mobile-9x16.mp4",
+          src: "/assets/portfolio/treningshuset/videos/web/treningshuset-mobile-9x16-web.mp4",
           poster: "/assets/portfolio/treningshuset/posters/treningshuset-mobil-poster.png",
           label: {
             no: "Treningshuset - mobil versjon",
@@ -1711,8 +1711,8 @@ export const portfolioProjects: PortfolioProject[] = [
     },
     video: {
       videoType: "direct",
-      src: "/assets/portfolio/treningshuset/videos/web/treningshuset-desktop-4x5.mp4",
-      mobileSrc: "/assets/portfolio/treningshuset/videos/web/treningshuset-mobile-9x16.mp4",
+      src: "/assets/portfolio/treningshuset/videos/web/treningshuset-desktop-4x5-web.mp4",
+      mobileSrc: "/assets/portfolio/treningshuset/videos/web/treningshuset-mobile-9x16-web.mp4",
       poster: "/assets/portfolio/treningshuset/posters/treningshuset-bred-poster.png",
       label: {
         no: "Treningshuset - filmer for annonser og sosiale medier",

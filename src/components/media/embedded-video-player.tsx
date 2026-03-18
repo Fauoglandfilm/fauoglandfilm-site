@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, type MutableRefObject } from "react";
 
 import { useSitePreferences } from "@/components/providers/site-preferences";
 import type { ExternalVideoAsset, VideoAsset } from "@/data/site-content";
@@ -58,6 +58,37 @@ type ManagedDirectVideoProps = {
   shouldActivatePlayback: boolean;
   showControls: boolean;
 };
+
+function triggerManagedVideoPlayback(
+  node: HTMLVideoElement,
+  retryTimeoutRef: MutableRefObject<number | null>,
+  retryOnFailure = true,
+) {
+  node.muted = true;
+  node.playsInline = true;
+
+  const playPromise = node.play();
+
+  if (playPromise && typeof playPromise.catch === "function") {
+    playPromise.catch(() => {
+      if (!retryOnFailure) {
+        return;
+      }
+
+      if (retryTimeoutRef.current) {
+        window.clearTimeout(retryTimeoutRef.current);
+      }
+
+      retryTimeoutRef.current = window.setTimeout(() => {
+        retryTimeoutRef.current = null;
+        node
+          .play()
+          .then(() => undefined)
+          .catch(() => undefined);
+      }, 160);
+    });
+  }
+}
 
 function hasExplicitPositionClass(value?: string) {
   return Boolean(value && /\b(relative|absolute|fixed|sticky)\b/.test(value));
@@ -347,26 +378,8 @@ function ManagedDirectVideo({
       return;
     }
 
-    node.muted = true;
-    node.playsInline = true;
-
     if (shouldActivatePlayback) {
-      const playPromise = node.play();
-      if (playPromise && typeof playPromise.catch === "function") {
-        playPromise.catch(() => {
-          if (retryTimeoutRef.current) {
-            window.clearTimeout(retryTimeoutRef.current);
-          }
-
-          retryTimeoutRef.current = window.setTimeout(() => {
-            retryTimeoutRef.current = null;
-            node
-              .play()
-              .then(() => undefined)
-              .catch(() => undefined);
-          }, 160);
-        });
-      }
+      triggerManagedVideoPlayback(node, retryTimeoutRef);
       return;
     }
 
@@ -413,7 +426,13 @@ function ManagedDirectVideo({
           loop={previewMode || autoplay}
           poster={video.poster ?? image}
           onLoadedData={() => setIsReady(true)}
-          onCanPlay={() => setIsReady(true)}
+          onCanPlay={() => {
+            setIsReady(true);
+
+            if ((autoplay || previewMode) && shouldActivatePlayback && videoRef.current) {
+              triggerManagedVideoPlayback(videoRef.current, retryTimeoutRef, false);
+            }
+          }}
           onPlay={() => setHasStartedPlayback(true)}
           onError={() => setHasFailed(true)}
         >
