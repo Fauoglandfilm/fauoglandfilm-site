@@ -223,16 +223,16 @@ export function HeroSection() {
 export function ClientSlider() {
   const { language } = useSitePreferences();
   const label =
-    language === "no" ? "Noen som bruker oss" : "Some of the teams that trust us";
+    language === "no" ? "Utvalgte kunder" : "Selected clients";
 
   return (
-    <section className="border-y border-[color:var(--line)] bg-[color:var(--surface-muted)] py-4 sm:py-5">
+    <section className="border-y border-[color:var(--line)] bg-[color:var(--surface-muted)] py-5 sm:py-6">
       <div className="site-container">
         <p className="text-[0.7rem] font-semibold uppercase tracking-[0.2em] text-[var(--muted)]">
           {label}
         </p>
-        <div className="mt-3 sm:mt-4">
-          <ClientLogoMarquee logos={clientLogos} durationSeconds={32} />
+        <div className="mt-3.5 sm:mt-4.5">
+          <ClientLogoMarquee logos={clientLogos} durationSeconds={46} />
         </div>
       </div>
     </section>
