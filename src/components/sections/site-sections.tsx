@@ -18,7 +18,6 @@ import type {
   Testimonial,
 } from "@/data/site-content";
 import { siteConfig } from "@/data/site-content";
-import { pageHeroVisuals } from "@/data/visual-assets";
 import { uiCopy } from "@/data/ui-copy";
 import type { LocalizedText } from "@/lib/i18n";
 import { resolveLocalizedValue } from "@/lib/i18n";
@@ -165,7 +164,7 @@ export function ProcessSection({ steps }: { steps: ProcessStep[] }) {
             {steps.map((step) => (
               <div
                 key={step.step}
-                className="bg-[linear-gradient(180deg,rgba(255,255,255,0.04),rgba(255,255,255,0.01))] px-5 py-5 text-left sm:px-6 sm:py-6"
+                className="bg-[color:var(--surface)] px-5 py-5 text-left sm:px-6 sm:py-6"
               >
                 <span className="font-display text-[1.35rem] leading-none text-[var(--accent)]">
                   {step.step}
@@ -500,7 +499,7 @@ export function FaqList({
 
   const content = (
     <div className="mx-auto max-w-4xl">
-      <article className="glass-panel overflow-hidden rounded-[1.8rem] shadow-[0_24px_80px_rgba(0,0,0,0.16)]">
+      <article className="card-surface overflow-hidden rounded-[1.8rem] shadow-[0_18px_48px_rgba(18,14,10,0.08)]">
         <div className="divide-y divide-[color:var(--line)]/80">
           {items.map((item, index) => (
             <details
@@ -576,14 +575,7 @@ export function CtaBanner({
   return (
     <section className="section-space">
       <div className="site-container">
-        <div className="relative overflow-hidden rounded-[1.8rem] border border-[color:var(--line)] bg-[#111111] px-4 py-5 text-white shadow-[0_32px_100px_rgba(15,15,15,0.14)] sm:rounded-[2rem] sm:px-6 sm:py-7 lg:px-8 lg:py-8">
-          <div className="pointer-events-none absolute -bottom-8 right-[-0.5rem] hidden h-36 w-36 md:block opacity-[0.08]">
-            <BrandLogo
-              variant="mark"
-              className="h-auto w-full brightness-[1.5] saturate-[1.18] drop-shadow-[0_24px_40px_rgba(0,0,0,0.26)]"
-            />
-          </div>
-          <div className="pointer-events-none absolute inset-x-10 top-0 h-px bg-[linear-gradient(90deg,transparent,rgba(255,239,211,0.68),transparent)] opacity-72" />
+        <div className="overflow-hidden rounded-[1.6rem] border border-black/8 bg-[#111111] px-4 py-5 text-white shadow-[0_20px_56px_rgba(15,15,15,0.1)] sm:rounded-[1.8rem] sm:px-6 sm:py-6 lg:px-7 lg:py-7">
           <div
             className={
               align === "center"
@@ -591,14 +583,14 @@ export function CtaBanner({
                 : "grid gap-5 xl:grid-cols-[1.1fr_0.9fr] xl:items-end"
             }
           >
-            <div className="space-y-3">
+            <div className="space-y-2.5">
               <p className="text-[0.72rem] font-semibold uppercase tracking-[0.24em] text-white/44">
                 {copy.ctaEyebrow}
               </p>
               <h2 className="section-title text-white">
                 {resolveLocalizedValue(title, language)}
               </h2>
-              <p className="body-lead max-w-2xl text-white/68">
+              <p className="body-copy max-w-2xl text-white/68">
                 {resolveLocalizedValue(description, language)}
               </p>
             </div>
@@ -645,117 +637,52 @@ export function RelatedLinks({
   );
 }
 
-export function PageHero({
-  eyebrow,
-  title,
-  description,
-  primaryCta,
-  secondaryCta,
-  video,
-  visualKey,
-}: {
+export function PageHero(props: {
   eyebrow: MaybeLocalizedText;
   title: MaybeLocalizedText;
   description: MaybeLocalizedText;
   primaryCta?: { label: MaybeLocalizedText; href: string };
   secondaryCta?: { label: MaybeLocalizedText; href: string };
   video?: CaseStudy["video"];
-  visualKey?: keyof typeof pageHeroVisuals;
+  visualKey?: string;
 }) {
-  const { language, theme } = useSitePreferences();
-  const visuals = visualKey ? pageHeroVisuals[visualKey] : null;
-  const backgroundVisual = visuals?.primary;
-  const hasMediaBackground = Boolean(video?.videoType === "direct" || backgroundVisual);
+  const {
+    eyebrow,
+    title,
+    description,
+    primaryCta,
+    secondaryCta,
+  } = props;
+  const { language } = useSitePreferences();
 
   return (
-    <section className="relative isolate overflow-hidden pt-22 sm:pt-28">
-      <div className="absolute inset-0">
-        {video?.videoType === "direct" ? (
-          <>
-            <video
-              className="h-full w-full object-cover"
-              autoPlay
-              muted
-              loop
-              playsInline
-              preload="metadata"
-              poster={video.poster}
-            >
-              {video.mobileSrc ? (
-                <source media="(max-width: 767px)" src={video.mobileSrc} type="video/mp4" />
-              ) : null}
-              <source src={video.src} type="video/mp4" />
-            </video>
-            <div className="absolute inset-0 bg-[radial-gradient(circle_at_18%_24%,rgba(255,255,255,0.06),transparent_24%),linear-gradient(90deg,rgba(5,6,10,0.84),rgba(5,6,10,0.48)_34%,rgba(5,6,10,0.56)_58%,rgba(5,6,10,0.82)_100%),linear-gradient(180deg,rgba(6,6,9,0.14),rgba(6,6,9,0.28)_28%,rgba(6,6,9,0.72)_100%)]" />
-            <div className="grain-overlay absolute inset-0 opacity-34" />
-          </>
-        ) : backgroundVisual ? (
-          <>
-            <Image
-              src={backgroundVisual.src}
-              alt={resolveLocalizedValue(backgroundVisual.alt, language)}
-              fill
-              priority
-              sizes="100vw"
-              className="object-cover image-slow-zoom"
-            />
-            <div className="absolute inset-0 bg-[radial-gradient(circle_at_18%_24%,rgba(255,255,255,0.07),transparent_24%),linear-gradient(90deg,rgba(6,7,11,0.82),rgba(6,7,11,0.44)_34%,rgba(6,7,11,0.5)_58%,rgba(6,7,11,0.84)_100%),linear-gradient(180deg,rgba(6,6,9,0.1),rgba(6,6,9,0.24)_28%,rgba(6,6,9,0.74)_100%)]" />
-            <div className="grain-overlay absolute inset-0 opacity-34" />
-          </>
-        ) : (
-          <>
-            <div
-              className={
-                theme === "dark"
-                  ? "absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(210,173,116,0.18),transparent_34%),radial-gradient(circle_at_82%_18%,rgba(57,78,108,0.18),transparent_28%),linear-gradient(180deg,rgba(8,9,12,0.9),rgba(8,9,12,0.97))]"
-                  : "absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(210,173,116,0.18),transparent_34%),linear-gradient(180deg,rgba(236,228,216,0.96),rgba(228,218,206,0.98))]"
-              }
-            />
-            <div className="grain-overlay absolute inset-0 opacity-34" />
-          </>
-        )}
-      </div>
-
-      <div className="site-container relative flex min-h-[clamp(22rem,42svh,33rem)] items-end pb-[clamp(1.5rem,4vw,2.5rem)]">
-        <Reveal className="w-full max-w-[46rem]" delay={0.04} y={18}>
-          <div
-            className={`subpage-hero-panel relative overflow-hidden px-5 py-5 sm:px-7 sm:py-6 lg:px-8 lg:py-7 ${
-              hasMediaBackground ? "text-white" : "text-[color:var(--foreground)]"
-            }`}
-          >
-            <div className="glass-sheen absolute inset-0" />
-            <div className="pointer-events-none absolute -left-8 bottom-[-3rem] h-28 w-28 rounded-full bg-[radial-gradient(circle,rgba(255,255,255,0.2),transparent_72%)] blur-2xl opacity-70" />
-            <div className="pointer-events-none absolute right-[-2.5rem] top-[-2.5rem] h-28 w-28 rounded-full bg-[radial-gradient(circle,rgba(122,168,255,0.28),transparent_70%)] blur-2xl opacity-78" />
-
-            <div className="relative z-[1]">
-              <span className={hasMediaBackground ? "hero-badge text-white/74" : "eyebrow"}>
-                {resolveLocalizedValue(eyebrow, language)}
-              </span>
-              <h1 className={`page-title mt-4 max-w-[13ch] ${hasMediaBackground ? "text-white" : ""}`}>
-                {resolveLocalizedValue(title, language)}
-              </h1>
-              <p
-                className={`body-lead mt-4 max-w-2xl text-[0.98rem] leading-7 sm:text-[1.03rem] sm:leading-8 ${
-                  hasMediaBackground ? "text-white/82" : "text-[var(--muted-2)]"
-                }`}
-              >
-                {resolveLocalizedValue(description, language)}
-              </p>
-              {primaryCta || secondaryCta ? (
-                <div className="mt-6 flex flex-col gap-2.5 sm:mt-7 sm:flex-row sm:flex-wrap sm:gap-3">
-                  {primaryCta ? (
-                    <ButtonLink href={primaryCta.href} className="w-full sm:w-auto">
-                      {resolveLocalizedValue(primaryCta.label, language)}
-                    </ButtonLink>
-                  ) : null}
-                  {secondaryCta ? (
-                    <ButtonLink href={secondaryCta.href} variant="secondary" className="w-full sm:w-auto">
-                      {resolveLocalizedValue(secondaryCta.label, language)}
-                    </ButtonLink>
-                  ) : null}
-                </div>
-              ) : null}
-            </div>
+    <section className="bg-[#111111] pt-22 text-white sm:pt-28">
+      <div className="site-container">
+        <Reveal className="w-full py-12 sm:py-14 lg:py-16" delay={0.04} y={18}>
+          <div className="max-w-[44rem]">
+            <span className="hero-badge text-white/62">
+              {resolveLocalizedValue(eyebrow, language)}
+            </span>
+            <h1 className="page-title mt-3 max-w-[13ch] text-white">
+              {resolveLocalizedValue(title, language)}
+            </h1>
+            <p className="body-copy mt-4 max-w-2xl text-white/76 sm:text-base sm:leading-7">
+              {resolveLocalizedValue(description, language)}
+            </p>
+            {primaryCta || secondaryCta ? (
+              <div className="mt-6 flex flex-col gap-2.5 sm:flex-row sm:flex-wrap sm:gap-3">
+                {primaryCta ? (
+                  <ButtonLink href={primaryCta.href} className="w-full sm:w-auto">
+                    {resolveLocalizedValue(primaryCta.label, language)}
+                  </ButtonLink>
+                ) : null}
+                {secondaryCta ? (
+                  <ButtonLink href={secondaryCta.href} variant="secondary" className="w-full sm:w-auto">
+                    {resolveLocalizedValue(secondaryCta.label, language)}
+                  </ButtonLink>
+                ) : null}
+              </div>
+            ) : null}
           </div>
         </Reveal>
       </div>

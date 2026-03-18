@@ -1,116 +1,116 @@
 @import "tailwindcss";
 
 :root {
-  --background: #06070a;
-  --foreground: #f5efe7;
-  --surface: rgba(24, 31, 45, 0.36);
-  --surface-strong: rgba(12, 18, 30, 0.72);
-  --surface-muted: rgba(255, 255, 255, 0.06);
-  --line: rgba(255, 255, 255, 0.16);
-  --line-strong: rgba(255, 255, 255, 0.3);
-  --muted: #b6becc;
-  --muted-2: #e3e9f2;
+  --background: #ffffff;
+  --foreground: #111111;
+  --surface: #ffffff;
+  --surface-strong: #ffffff;
+  --surface-muted: #f7f7f8;
+  --line: rgba(17, 17, 17, 0.08);
+  --line-strong: rgba(17, 17, 17, 0.16);
+  --muted: #71757c;
+  --muted-2: #3f4349;
   --accent: #d2ad74;
-  --accent-2: #f0d9ac;
-  --shadow: 0 44px 140px rgba(0, 0, 0, 0.42);
-  --glass-tint-top: rgba(255, 246, 229, 0.16);
-  --glass-tint-bottom: rgba(255, 239, 219, 0.035);
-  --glass-border: rgba(244, 229, 197, 0.2);
-  --glass-border-soft: rgba(255, 255, 255, 0.14);
-  --glass-top-highlight: rgba(255, 247, 232, 0.22);
-  --glass-inner-top: rgba(255, 248, 234, 0.28);
-  --glass-inner-bottom: rgba(255, 233, 199, 0.06);
-  --glass-warm-glow: rgba(210, 173, 116, 0.1);
-  --glass-warm-glow-strong: rgba(210, 173, 116, 0.16);
-  --glass-cool-glow: rgba(118, 159, 248, 0.08);
-  --glass-shadow-deep: rgba(6, 12, 24, 0.28);
-  --glass-shadow-soft: rgba(6, 10, 20, 0.16);
-  --glass-sheen-bright: rgba(255, 247, 230, 0.2);
-  --glass-sheen-soft: rgba(255, 232, 196, 0.06);
-  --logo-strip-bg: rgba(224, 215, 201, 0.92);
-  --logo-strip-border: rgba(255, 255, 255, 0.12);
-  --btn-border: rgba(255, 255, 255, 0.16);
-  --btn-primary-bg: #f4eee5;
-  --btn-primary-text: #0f1013;
-  --btn-primary-border: rgba(255, 255, 255, 0.18);
-  --btn-primary-hover-bg: #ffffff;
-  --btn-primary-hover-text: #0f1013;
-  --btn-primary-active-bg: #e6dccb;
-  --btn-primary-active-text: #0f1013;
-  --btn-secondary-bg: rgba(255, 255, 255, 0.08);
-  --btn-secondary-text: #f4eee5;
-  --btn-secondary-border: rgba(255, 255, 255, 0.18);
-  --btn-secondary-hover-bg: rgba(255, 255, 255, 0.14);
-  --btn-secondary-hover-text: #ffffff;
-  --btn-secondary-active-bg: rgba(255, 255, 255, 0.18);
-  --btn-secondary-active-text: #ffffff;
+  --accent-2: #8d7349;
+  --shadow: 0 24px 60px rgba(17, 17, 17, 0.08);
+  --glass-tint-top: #ffffff;
+  --glass-tint-bottom: #ffffff;
+  --glass-border: rgba(17, 17, 17, 0.08);
+  --glass-border-soft: rgba(17, 17, 17, 0.05);
+  --glass-top-highlight: rgba(255, 255, 255, 0);
+  --glass-inner-top: rgba(255, 255, 255, 0);
+  --glass-inner-bottom: rgba(255, 255, 255, 0);
+  --glass-warm-glow: rgba(210, 173, 116, 0.05);
+  --glass-warm-glow-strong: rgba(210, 173, 116, 0.08);
+  --glass-cool-glow: rgba(17, 17, 17, 0);
+  --glass-shadow-deep: rgba(17, 17, 17, 0.08);
+  --glass-shadow-soft: rgba(17, 17, 17, 0.04);
+  --glass-sheen-bright: rgba(255, 255, 255, 0);
+  --glass-sheen-soft: rgba(255, 255, 255, 0);
+  --logo-strip-bg: #f7f7f8;
+  --logo-strip-border: rgba(17, 17, 17, 0.08);
+  --btn-border: rgba(17, 17, 17, 0.12);
+  --btn-primary-bg: #111111;
+  --btn-primary-text: #ffffff;
+  --btn-primary-border: #111111;
+  --btn-primary-hover-bg: #1f1f1f;
+  --btn-primary-hover-text: #ffffff;
+  --btn-primary-active-bg: #050505;
+  --btn-primary-active-text: #ffffff;
+  --btn-secondary-bg: #ffffff;
+  --btn-secondary-text: #111111;
+  --btn-secondary-border: rgba(17, 17, 17, 0.12);
+  --btn-secondary-hover-bg: #f7f7f8;
+  --btn-secondary-hover-text: #111111;
+  --btn-secondary-active-bg: #f0f0f2;
+  --btn-secondary-active-text: #111111;
   --btn-ghost-bg: transparent;
-  --btn-ghost-text: #f4eee5;
-  --btn-ghost-border: rgba(244, 238, 229, 0.34);
-  --btn-ghost-hover-bg: rgba(255, 255, 255, 0.1);
-  --btn-ghost-hover-text: #ffffff;
-  --btn-ghost-active-bg: rgba(255, 255, 255, 0.16);
-  --btn-ghost-active-text: #ffffff;
-  --btn-icon-bg: rgba(20, 25, 36, 0.72);
-  --btn-icon-text: #f4eee5;
-  --btn-icon-border: rgba(255, 255, 255, 0.18);
-  --btn-icon-hover-bg: rgba(28, 34, 48, 0.92);
-  --btn-icon-hover-text: #ffffff;
-  --btn-icon-active-bg: rgba(38, 45, 60, 0.98);
-  --btn-icon-active-text: #ffffff;
+  --btn-ghost-text: #111111;
+  --btn-ghost-border: rgba(17, 17, 17, 0.12);
+  --btn-ghost-hover-bg: #f7f7f8;
+  --btn-ghost-hover-text: #111111;
+  --btn-ghost-active-bg: #f0f0f2;
+  --btn-ghost-active-text: #111111;
+  --btn-icon-bg: #ffffff;
+  --btn-icon-text: #111111;
+  --btn-icon-border: rgba(17, 17, 17, 0.12);
+  --btn-icon-hover-bg: #f7f7f8;
+  --btn-icon-hover-text: #111111;
+  --btn-icon-active-bg: #f0f0f2;
+  --btn-icon-active-text: #111111;
   --btn-disabled-opacity: 0.52;
-  --control-shell-bg: rgba(22, 29, 42, 0.52);
-  --control-shell-border: rgba(255, 255, 255, 0.16);
+  --control-shell-bg: #ffffff;
+  --control-shell-border: rgba(17, 17, 17, 0.12);
   --control-option-bg: transparent;
-  --control-option-text: #dde5f0;
+  --control-option-text: #71757c;
   --control-option-border: transparent;
-  --control-option-hover-bg: rgba(255, 255, 255, 0.12);
-  --control-option-hover-text: #ffffff;
+  --control-option-hover-bg: #f7f7f8;
+  --control-option-hover-text: #111111;
   --control-option-hover-border: transparent;
-  --control-option-active-bg: #f4eee5;
-  --control-option-active-text: #0f1013;
-  --control-option-active-border: rgba(255, 255, 255, 0.18);
-  --header-surface: rgba(22, 24, 31, 0.36);
-  --header-overlay-surface: rgba(18, 21, 29, 0.3);
-  --header-overlay-border: rgba(244, 228, 196, 0.2);
-  --header-brand-surface: rgba(255, 247, 231, 0.24);
-  --header-brand-border: rgba(247, 231, 198, 0.42);
-  --header-brand-glow: rgba(210, 173, 116, 0.34);
-  --header-nav-hover-bg: rgba(210, 173, 116, 0.12);
-  --header-nav-active-bg: rgba(255, 250, 240, 0.15);
-  color-scheme: dark;
+  --control-option-active-bg: #111111;
+  --control-option-active-text: #ffffff;
+  --control-option-active-border: rgba(17, 17, 17, 0.12);
+  --header-surface: rgba(255, 255, 255, 0.96);
+  --header-overlay-surface: rgba(17, 17, 17, 0.9);
+  --header-overlay-border: rgba(255, 255, 255, 0.08);
+  --header-brand-surface: rgba(255, 247, 231, 0.92);
+  --header-brand-border: rgba(210, 182, 135, 0.32);
+  --header-brand-glow: rgba(210, 173, 116, 0.24);
+  --header-nav-hover-bg: #f7f7f8;
+  --header-nav-active-bg: #f7f7f8;
+  color-scheme: light;
 }
 
 html[data-theme="light"] {
-  --background: #e4ebf7;
-  --foreground: #101826;
-  --surface: rgba(255, 255, 255, 0.28);
-  --surface-strong: rgba(247, 250, 255, 0.54);
-  --surface-muted: rgba(255, 255, 255, 0.52);
-  --line: rgba(255, 255, 255, 0.52);
-  --line-strong: rgba(255, 255, 255, 0.78);
-  --muted: #667181;
-  --muted-2: #3c4658;
+  --background: #ffffff;
+  --foreground: #111111;
+  --surface: #ffffff;
+  --surface-strong: #ffffff;
+  --surface-muted: #f7f7f8;
+  --line: rgba(17, 17, 17, 0.08);
+  --line-strong: rgba(17, 17, 17, 0.16);
+  --muted: #71757c;
+  --muted-2: #3f4349;
   --accent: #b8935e;
   --accent-2: #8d7349;
-  --shadow: 0 32px 100px rgba(38, 54, 82, 0.12);
-  --glass-tint-top: rgba(255, 252, 247, 0.56);
-  --glass-tint-bottom: rgba(255, 246, 235, 0.22);
-  --glass-border: rgba(210, 182, 135, 0.2);
-  --glass-border-soft: rgba(255, 255, 255, 0.56);
-  --glass-top-highlight: rgba(255, 255, 255, 0.5);
-  --glass-inner-top: rgba(255, 255, 255, 0.58);
-  --glass-inner-bottom: rgba(184, 147, 94, 0.06);
-  --glass-warm-glow: rgba(184, 147, 94, 0.1);
-  --glass-warm-glow-strong: rgba(184, 147, 94, 0.14);
-  --glass-cool-glow: rgba(121, 162, 246, 0.08);
-  --glass-shadow-deep: rgba(38, 54, 82, 0.12);
-  --glass-shadow-soft: rgba(38, 54, 82, 0.08);
-  --glass-sheen-bright: rgba(255, 255, 255, 0.34);
-  --glass-sheen-soft: rgba(224, 196, 144, 0.08);
-  --logo-strip-bg: rgba(244, 237, 228, 0.92);
+  --shadow: 0 24px 60px rgba(17, 17, 17, 0.08);
+  --glass-tint-top: #ffffff;
+  --glass-tint-bottom: #ffffff;
+  --glass-border: rgba(17, 17, 17, 0.08);
+  --glass-border-soft: rgba(17, 17, 17, 0.05);
+  --glass-top-highlight: rgba(255, 255, 255, 0);
+  --glass-inner-top: rgba(255, 255, 255, 0);
+  --glass-inner-bottom: rgba(255, 255, 255, 0);
+  --glass-warm-glow: rgba(210, 173, 116, 0.05);
+  --glass-warm-glow-strong: rgba(210, 173, 116, 0.08);
+  --glass-cool-glow: rgba(17, 17, 17, 0);
+  --glass-shadow-deep: rgba(17, 17, 17, 0.08);
+  --glass-shadow-soft: rgba(17, 17, 17, 0.04);
+  --glass-sheen-bright: rgba(255, 255, 255, 0);
+  --glass-sheen-soft: rgba(255, 255, 255, 0);
+  --logo-strip-bg: #f7f7f8;
   --logo-strip-border: rgba(17, 17, 17, 0.06);
-  --btn-border: rgba(255, 255, 255, 0.58);
+  --btn-border: rgba(17, 17, 17, 0.12);
   --btn-primary-bg: #151515;
   --btn-primary-text: #ffffff;
   --btn-primary-border: #151515;
@@ -118,48 +118,48 @@ html[data-theme="light"] {
   --btn-primary-hover-text: #ffffff;
   --btn-primary-active-bg: #090909;
   --btn-primary-active-text: #ffffff;
-  --btn-secondary-bg: rgba(255, 255, 255, 0.42);
-  --btn-secondary-text: #101826;
-  --btn-secondary-border: rgba(255, 255, 255, 0.68);
-  --btn-secondary-hover-bg: rgba(255, 255, 255, 0.6);
-  --btn-secondary-hover-text: #101826;
-  --btn-secondary-active-bg: rgba(255, 255, 255, 0.72);
-  --btn-secondary-active-text: #101826;
+  --btn-secondary-bg: #ffffff;
+  --btn-secondary-text: #111111;
+  --btn-secondary-border: rgba(17, 17, 17, 0.12);
+  --btn-secondary-hover-bg: #f7f7f8;
+  --btn-secondary-hover-text: #111111;
+  --btn-secondary-active-bg: #f0f0f2;
+  --btn-secondary-active-text: #111111;
   --btn-ghost-bg: transparent;
-  --btn-ghost-text: #101826;
-  --btn-ghost-border: rgba(255, 255, 255, 0.74);
-  --btn-ghost-hover-bg: rgba(255, 255, 255, 0.42);
-  --btn-ghost-hover-text: #101826;
-  --btn-ghost-active-bg: rgba(255, 255, 255, 0.56);
-  --btn-ghost-active-text: #101826;
-  --btn-icon-bg: rgba(255, 255, 255, 0.52);
-  --btn-icon-text: #101826;
-  --btn-icon-border: rgba(255, 255, 255, 0.72);
-  --btn-icon-hover-bg: rgba(255, 255, 255, 0.68);
-  --btn-icon-hover-text: #101826;
-  --btn-icon-active-bg: rgba(255, 255, 255, 0.8);
-  --btn-icon-active-text: #101826;
-  --control-shell-bg: rgba(255, 255, 255, 0.42);
-  --control-shell-border: rgba(255, 255, 255, 0.72);
-  --control-option-text: #536071;
-  --control-option-hover-bg: rgba(255, 255, 255, 0.5);
-  --control-option-hover-text: #101826;
+  --btn-ghost-text: #111111;
+  --btn-ghost-border: rgba(17, 17, 17, 0.12);
+  --btn-ghost-hover-bg: #f7f7f8;
+  --btn-ghost-hover-text: #111111;
+  --btn-ghost-active-bg: #f0f0f2;
+  --btn-ghost-active-text: #111111;
+  --btn-icon-bg: #ffffff;
+  --btn-icon-text: #111111;
+  --btn-icon-border: rgba(17, 17, 17, 0.12);
+  --btn-icon-hover-bg: #f7f7f8;
+  --btn-icon-hover-text: #111111;
+  --btn-icon-active-bg: #f0f0f2;
+  --btn-icon-active-text: #111111;
+  --control-shell-bg: #ffffff;
+  --control-shell-border: rgba(17, 17, 17, 0.12);
+  --control-option-text: #71757c;
+  --control-option-hover-bg: #f7f7f8;
+  --control-option-hover-text: #111111;
   --control-option-active-bg: #151515;
   --control-option-active-text: #ffffff;
   --control-option-active-border: rgba(17, 17, 17, 0.12);
-  --header-surface: rgba(255, 250, 244, 0.42);
-  --header-overlay-surface: rgba(25, 25, 31, 0.3);
-  --header-overlay-border: rgba(247, 228, 196, 0.22);
-  --header-brand-surface: rgba(255, 249, 237, 0.62);
+  --header-surface: rgba(255, 255, 255, 0.96);
+  --header-overlay-surface: rgba(17, 17, 17, 0.9);
+  --header-overlay-border: rgba(255, 255, 255, 0.08);
+  --header-brand-surface: rgba(255, 249, 237, 0.92);
   --header-brand-border: rgba(210, 182, 135, 0.34);
   --header-brand-glow: rgba(184, 147, 94, 0.26);
-  --header-nav-hover-bg: rgba(184, 147, 94, 0.12);
-  --header-nav-active-bg: rgba(255, 255, 255, 0.18);
+  --header-nav-hover-bg: #f7f7f8;
+  --header-nav-active-bg: #f7f7f8;
   color-scheme: light;
 }
 
 html[data-theme="dark"] {
-  color-scheme: dark;
+  color-scheme: light;
 }
 
 @theme inline {
@@ -181,18 +181,7 @@ html {
 
 body {
   min-height: 100vh;
-  background:
-    radial-gradient(circle at 8% 0%, rgba(122, 168, 255, 0.24), transparent 22%),
-    radial-gradient(circle at 84% 4%, rgba(255, 255, 255, 0.09), transparent 18%),
-    radial-gradient(circle at 76% 18%, rgba(87, 133, 255, 0.15), transparent 24%),
-    radial-gradient(circle at 18% 72%, rgba(210, 173, 116, 0.1), transparent 26%),
-    linear-gradient(
-      180deg,
-      color-mix(in srgb, var(--background) 92%, #0f1728) 0%,
-      color-mix(in srgb, var(--background) 96%, #09101a) 22%,
-      color-mix(in srgb, var(--background) 92%, #06090f) 58%,
-      color-mix(in srgb, var(--background) 84%, #030509) 100%
-    );
+  background: var(--background);
   color: var(--foreground);
   font-family: var(--font-manrope), sans-serif;
   text-rendering: optimizeLegibility;
@@ -200,48 +189,19 @@ body {
 }
 
 body::before {
-  content: "";
-  position: fixed;
-  inset: 0;
-  pointer-events: none;
-  background:
-    radial-gradient(circle at 16% 4%, rgba(255, 255, 255, 0.2), transparent 18%),
-    radial-gradient(circle at 84% 8%, rgba(147, 188, 255, 0.12), transparent 20%),
-    linear-gradient(180deg, rgba(255, 255, 255, 0.05), transparent 22%, transparent 72%, rgba(0, 0, 0, 0.18));
-  opacity: 0.86;
+  content: none;
 }
 
 body::after {
-  content: "";
-  position: fixed;
-  inset: 0;
-  pointer-events: none;
-  background-image: url("/assets/visuals/textures/film-grain.png");
-  background-repeat: repeat;
-  mix-blend-mode: soft-light;
-  opacity: 0.14;
+  content: none;
 }
 
 html[data-theme="light"] body {
-  background:
-    radial-gradient(circle at 10% 0%, rgba(255, 255, 255, 0.88), transparent 26%),
-    radial-gradient(circle at 86% 6%, rgba(121, 162, 246, 0.24), transparent 22%),
-    radial-gradient(circle at 22% 36%, rgba(255, 255, 255, 0.46), transparent 24%),
-    radial-gradient(circle at 72% 72%, rgba(196, 155, 87, 0.12), transparent 24%),
-    linear-gradient(
-      180deg,
-      color-mix(in srgb, var(--background) 94%, #f8fbff) 0%,
-      color-mix(in srgb, var(--background) 98%, #edf3fc) 44%,
-      color-mix(in srgb, var(--background) 92%, #dbe5f3) 100%
-    );
+  background: var(--background);
 }
 
 html[data-theme="light"] body::before {
-  background:
-    radial-gradient(circle at 14% 6%, rgba(255, 255, 255, 0.78), transparent 22%),
-    radial-gradient(circle at 82% 6%, rgba(125, 165, 248, 0.18), transparent 22%),
-    linear-gradient(180deg, rgba(255, 255, 255, 0.26), transparent 26%, transparent 72%, rgba(77, 100, 136, 0.08));
-  opacity: 0.92;
+  content: none;
 }
 
 a {
@@ -281,13 +241,13 @@ summary::-webkit-details-marker {
   }
 
   .site-container {
-    width: min(100% - clamp(1.25rem, 4vw, 4rem), 84rem);
+    width: min(100% - clamp(2rem, 4vw, 5rem), 84rem);
     margin-inline: auto;
   }
 
   .section-space {
-    padding-top: clamp(3.25rem, 7vw, 6rem);
-    padding-bottom: clamp(3.25rem, 7vw, 6rem);
+    padding-top: clamp(3rem, 5vw, 6.25rem);
+    padding-bottom: clamp(3rem, 5vw, 6.25rem);
   }
 
   .header-brand-shell {
@@ -377,69 +337,69 @@ summary::-webkit-details-marker {
   }
 
   .mobile-menu-surface {
-    border: 1px solid color-mix(in srgb, var(--header-overlay-border) 92%, var(--glass-border));
-    background:
-      linear-gradient(180deg, var(--glass-tint-top), var(--glass-tint-bottom)),
-      radial-gradient(circle at top left, var(--glass-top-highlight), transparent 26%),
-      radial-gradient(circle at 86% 20%, var(--glass-warm-glow), transparent 24%),
-      color-mix(in srgb, var(--surface-strong) 92%, rgba(10, 15, 24, 0.62));
-    box-shadow:
-      0 42px 140px rgba(0, 0, 0, 0.42),
-      inset 0 1px 0 var(--glass-inner-top),
-      inset 0 18px 36px var(--glass-inner-bottom);
-    backdrop-filter: blur(36px) saturate(185%);
+    border: none;
+    background: #111111;
+    box-shadow: none;
+    backdrop-filter: none;
   }
 
   .hero-title {
     font-family: var(--font-sora), sans-serif;
-    font-size: clamp(2.55rem, 10vw, 5.9rem);
-    line-height: 0.88;
+    font-size: clamp(2.25rem, 7vw, 5.9rem);
+    line-height: 1.05;
     letter-spacing: -0.06em;
     text-wrap: balance;
+    font-weight: 700;
   }
 
   .page-title {
     font-family: var(--font-sora), sans-serif;
-    font-size: clamp(2.25rem, 9vw, 5rem);
-    line-height: 0.9;
+    font-size: clamp(2.25rem, 7vw, 5rem);
+    line-height: 1.08;
     letter-spacing: -0.058em;
     text-wrap: balance;
+    font-weight: 700;
   }
 
   .section-title {
     font-family: var(--font-sora), sans-serif;
-    font-size: clamp(1.95rem, 8vw, 4rem);
-    line-height: 0.94;
+    font-size: clamp(1.75rem, 6vw, 4rem);
+    line-height: 1.08;
     letter-spacing: -0.055em;
     text-wrap: balance;
+    font-weight: 600;
   }
 
   .feature-title {
     font-family: var(--font-sora), sans-serif;
-    font-size: clamp(1.8rem, 6.5vw, 3rem);
-    line-height: 0.94;
+    font-size: clamp(1.5rem, 5vw, 3rem);
+    line-height: 1.08;
     letter-spacing: -0.052em;
     text-wrap: balance;
+    font-weight: 600;
   }
 
   .card-title {
     font-family: var(--font-sora), sans-serif;
-    font-size: clamp(1.34rem, 5.6vw, 2.15rem);
-    line-height: 0.98;
+    font-size: clamp(1.2rem, 4.6vw, 2.15rem);
+    line-height: 1.08;
     letter-spacing: -0.05em;
     text-wrap: balance;
+    font-weight: 600;
   }
 
   .body-lead {
-    font-size: clamp(1rem, 0.34vw + 0.92rem, 1.18rem);
-    line-height: 1.76;
+    font-size: clamp(0.96rem, 0.24vw + 0.92rem, 1.08rem);
+    line-height: 1.6;
     text-wrap: pretty;
+    font-weight: 400;
   }
 
   .body-copy {
-    font-size: clamp(0.96rem, 0.2vw + 0.92rem, 1.04rem);
-    line-height: 1.72;
+    font-size: clamp(0.95rem, 0.18vw + 0.91rem, 1rem);
+    line-height: 1.6;
     text-wrap: pretty;
+    font-weight: 400;
   }
 
   .adaptive-grid-cards {
@@ -475,38 +435,20 @@ summary::-webkit-details-marker {
   .media-interlude-panel {
     max-width: min(36rem, 100%);
     overflow: hidden;
-    border-radius: 2rem;
-    border: 1px solid color-mix(in srgb, var(--line) 86%, var(--glass-border));
-    background:
-      linear-gradient(180deg, var(--glass-tint-top), var(--glass-tint-bottom)),
-      radial-gradient(circle at top left, var(--glass-top-highlight), transparent 34%),
-      radial-gradient(circle at 84% 10%, var(--glass-warm-glow), transparent 32%),
-      linear-gradient(135deg, color-mix(in srgb, var(--surface) 86%, transparent), color-mix(in srgb, var(--surface-strong) 84%, transparent));
-    box-shadow:
-      0 34px 120px var(--glass-shadow-deep),
-      0 14px 44px var(--glass-shadow-soft),
-      inset 0 1px 0 var(--glass-inner-top),
-      inset 0 18px 42px var(--glass-inner-bottom);
-    backdrop-filter: blur(32px) saturate(178%);
+    border-radius: 1.5rem;
+    border: 1px solid var(--line);
+    background: #ffffff;
+    box-shadow: 0 18px 48px rgba(17, 17, 17, 0.08);
+    backdrop-filter: none;
   }
 
   .card-surface {
     position: relative;
     isolation: isolate;
-    border: 1px solid color-mix(in srgb, var(--line) 86%, var(--glass-border));
-    background:
-      linear-gradient(180deg, var(--glass-tint-top), var(--glass-tint-bottom)),
-      radial-gradient(circle at top left, var(--glass-top-highlight), transparent 36%),
-      radial-gradient(circle at bottom right, var(--glass-cool-glow), transparent 28%),
-      radial-gradient(circle at 84% 6%, var(--glass-warm-glow), transparent 32%),
-      color-mix(in srgb, var(--surface-strong) 84%, transparent);
-    box-shadow:
-      0 40px 120px var(--glass-shadow-deep),
-      0 8px 34px var(--glass-shadow-soft),
-      inset 0 1px 0 var(--glass-inner-top),
-      inset 0 -1px 0 rgba(255, 255, 255, 0.04),
-      inset 0 18px 40px var(--glass-inner-bottom);
-    backdrop-filter: blur(32px) saturate(178%);
+    border: 1px solid var(--line);
+    background: #ffffff;
+    box-shadow: 0 18px 48px rgba(17, 17, 17, 0.08);
+    backdrop-filter: none;
     transition:
       transform 280ms ease,
       box-shadow 280ms ease,
@@ -517,36 +459,19 @@ summary::-webkit-details-marker {
   .glass-panel {
     position: relative;
     isolation: isolate;
-    border: 1px solid color-mix(in srgb, var(--line) 84%, var(--glass-border));
-    background:
-      linear-gradient(180deg, var(--glass-tint-top), var(--glass-tint-bottom)),
-      radial-gradient(circle at top left, var(--glass-top-highlight), transparent 30%),
-      radial-gradient(circle at bottom right, var(--glass-cool-glow), transparent 30%),
-      radial-gradient(circle at 82% 0%, var(--glass-warm-glow), transparent 32%),
-      color-mix(in srgb, var(--surface) 74%, transparent);
-    box-shadow:
-      0 34px 110px var(--glass-shadow-deep),
-      0 10px 30px var(--glass-shadow-soft),
-      inset 0 1px 0 var(--glass-inner-top),
-      inset 0 -1px 0 rgba(255, 255, 255, 0.06),
-      inset 0 22px 44px var(--glass-inner-bottom);
-    backdrop-filter: blur(32px) saturate(182%);
+    border: 1px solid var(--line);
+    background: #f7f7f8;
+    box-shadow: 0 18px 48px rgba(17, 17, 17, 0.06);
+    backdrop-filter: none;
   }
 
   .cinematic-panel {
     position: relative;
     isolation: isolate;
-    border: 1px solid color-mix(in srgb, var(--line) 86%, var(--glass-border));
-    background:
-      linear-gradient(180deg, var(--glass-tint-top), transparent 22%),
-      radial-gradient(circle at top right, var(--glass-cool-glow), transparent 28%),
-      radial-gradient(circle at 10% 0%, var(--glass-warm-glow), transparent 28%),
-      linear-gradient(180deg, color-mix(in srgb, var(--surface-strong) 84%, rgba(255, 255, 255, 0.08)), color-mix(in srgb, var(--surface-strong) 96%, rgba(6, 8, 14, 0.26)));
-    box-shadow:
-      0 38px 120px var(--glass-shadow-deep),
-      inset 0 1px 0 var(--glass-inner-top),
-      inset 0 18px 40px var(--glass-inner-bottom);
-    backdrop-filter: blur(32px) saturate(178%);
+    border: 1px solid var(--line);
+    background: #ffffff;
+    box-shadow: 0 18px 48px rgba(17, 17, 17, 0.08);
+    backdrop-filter: none;
   }
 
   .glass-sheen {
@@ -559,16 +484,9 @@ summary::-webkit-details-marker {
   }
 
   .media-frame {
-    border: 1px solid color-mix(in srgb, var(--line) 88%, var(--glass-border));
-    background:
-      radial-gradient(circle at top, var(--glass-top-highlight), transparent 30%),
-      radial-gradient(circle at bottom right, var(--glass-cool-glow), transparent 28%),
-      radial-gradient(circle at 12% 10%, var(--glass-warm-glow), transparent 26%),
-      linear-gradient(180deg, rgba(9, 12, 18, 0.92), rgba(4, 5, 8, 0.98));
-    box-shadow:
-      0 30px 100px var(--glass-shadow-deep),
-      inset 0 1px 0 rgba(255, 255, 255, 0.12),
-      inset 0 20px 36px var(--glass-inner-bottom);
+    border: 1px solid var(--line);
+    background: #f7f7f8;
+    box-shadow: 0 16px 42px rgba(17, 17, 17, 0.06);
     transition:
       transform 320ms ease,
       box-shadow 320ms ease,
@@ -601,30 +519,13 @@ summary::-webkit-details-marker {
   .card-surface::before,
   .glass-panel::before,
   .cinematic-panel::before {
-    content: "";
-    position: absolute;
-    inset: 0;
-    border-radius: inherit;
-    background:
-      linear-gradient(140deg, var(--glass-inner-top), transparent 20%, transparent 58%, var(--glass-inner-bottom)),
-      radial-gradient(circle at top left, var(--glass-top-highlight), transparent 32%);
-    pointer-events: none;
-    opacity: 0.82;
+    content: none;
   }
 
   .card-surface::after,
   .glass-panel::after,
   .cinematic-panel::after {
-    content: "";
-    position: absolute;
-    inset: auto 12% 10% auto;
-    width: 34%;
-    height: 26%;
-    border-radius: 999px;
-    background: radial-gradient(circle, var(--glass-warm-glow-strong), transparent 70%);
-    pointer-events: none;
-    filter: blur(22px);
-    opacity: 0.7;
+    content: none;
   }
 
   .card-surface > *,
@@ -639,14 +540,7 @@ summary::-webkit-details-marker {
   }
 
   .section-vignette::before {
-    content: "";
-    position: absolute;
-    inset: -4% -4% auto;
-    height: 14rem;
-    background: radial-gradient(circle at center, rgba(210, 173, 116, 0.12), transparent 70%);
-    opacity: 0.6;
-    pointer-events: none;
-    filter: blur(28px);
+    content: none;
   }
 
   .hero-section::after {
@@ -866,48 +760,19 @@ summary::-webkit-details-marker {
   .subpage-hero-panel {
     position: relative;
     isolation: isolate;
-    border-radius: 2rem 2.6rem 2.15rem 2.85rem / 2rem 2.15rem 2.55rem 2.4rem;
-    border: 1px solid color-mix(in srgb, var(--glass-border) 94%, rgba(255, 255, 255, 0.14));
-    background:
-      linear-gradient(180deg, var(--glass-tint-top), var(--glass-tint-bottom)),
-      radial-gradient(circle at top left, var(--glass-top-highlight), transparent 28%),
-      radial-gradient(circle at bottom right, var(--glass-cool-glow), transparent 28%),
-      radial-gradient(circle at 84% 0%, var(--glass-warm-glow), transparent 32%),
-      rgba(13, 18, 29, 0.42);
-    box-shadow:
-      0 34px 120px var(--glass-shadow-deep),
-      0 10px 34px var(--glass-shadow-soft),
-      inset 0 1px 0 var(--glass-inner-top),
-      inset 0 -1px 0 rgba(255, 255, 255, 0.05),
-      inset 0 18px 42px var(--glass-inner-bottom);
-    backdrop-filter: blur(30px) saturate(180%);
+    border-radius: 0;
+    border: none;
+    background: transparent;
+    box-shadow: none;
+    backdrop-filter: none;
   }
 
   .subpage-hero-panel::before {
-    content: "";
-    position: absolute;
-    inset: 0;
-    border-radius: inherit;
-    background:
-      linear-gradient(132deg, var(--glass-inner-top), transparent 24%, transparent 62%, var(--glass-inner-bottom)),
-      radial-gradient(circle at 16% 12%, var(--glass-top-highlight), transparent 22%);
-    opacity: 0.88;
-    pointer-events: none;
+    content: none;
   }
 
   .subpage-hero-panel::after {
-    content: "";
-    position: absolute;
-    right: -10%;
-    top: 8%;
-    height: 60%;
-    width: 36%;
-    border-radius: 999px;
-    background: linear-gradient(120deg, rgba(255, 255, 255, 0.18), rgba(255, 255, 255, 0.02));
-    filter: blur(18px);
-    opacity: 0.55;
-    pointer-events: none;
-    transform: rotate(-20deg);
+    content: none;
   }
 
   .founder-card-link {

@@ -422,7 +422,6 @@ function ManagedDirectVideo({
             isReady ? "opacity-100" : "opacity-0",
           )}
           controls={showControls}
-          defaultMuted={autoplay || previewMode}
           playsInline
           preload="metadata"
           autoPlay={autoplay || previewMode}
