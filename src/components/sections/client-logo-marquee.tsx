@@ -23,7 +23,7 @@ export function ClientLogoMarquee({
           {logos.map((logo) => (
             <li
               key={logo.name}
-              className="flex h-[4rem] min-w-[8.75rem] items-center justify-center rounded-full border border-[color:var(--line)] bg-white px-5 shadow-[0_12px_32px_rgba(18,14,10,0.06)]"
+              className="flex h-[4rem] min-w-[8.75rem] items-center justify-center rounded-full border border-[color:var(--line)] bg-[color:var(--surface)] px-5 shadow-[0_12px_32px_rgba(18,14,10,0.06)]"
             >
               <Image
                 src={logo.src}

@@ -161,7 +161,7 @@ export function Header() {
             <Link
               href="/"
               className={cn(
-                "relative z-[1] flex min-w-0 shrink-0 items-center gap-3 rounded-[1.3rem] px-1 py-0.5 transition duration-300 sm:gap-3.5 lg:gap-4",
+                "relative z-[1] flex min-w-0 shrink-0 items-center rounded-[1.3rem] px-1 py-0.5 transition duration-300 sm:gap-3.5 lg:gap-4",
                 overlayMode
                   ? "text-white"
                   : "text-[color:var(--foreground)]",
@@ -169,35 +169,56 @@ export function Header() {
               aria-label="Fau&Land Film"
               onClick={() => setOpen(false)}
             >
-              <div className="header-brand-shell flex h-[3.55rem] w-[3.55rem] items-center justify-center rounded-full p-[0.8rem] sm:h-[4rem] sm:w-[4rem] sm:p-[0.9rem] lg:h-[4.6rem] lg:w-[4.6rem] lg:p-[1.05rem]">
-                <BrandLogo
-                  variant="mark"
-                  className={cn(
-                    "relative z-[1] h-auto w-full opacity-100 saturate-[2.1]",
-                    overlayMode ? "brightness-[2.55] contrast-[1.42]" : "brightness-[2.08] contrast-[1.3]",
-                  )}
-                  priority
-                />
-              </div>
-              <div className="min-w-0">
-                <BrandLogo
-                  variant="full"
-                  className={cn(
-                    "w-[8.1rem] sm:w-[9.25rem] lg:w-[11rem]",
-                    overlayMode
-                      ? "brightness-[1.9] contrast-[1.14] saturate-[1.12] drop-shadow-[0_10px_18px_rgba(0,0,0,0.2)]"
-                      : "brightness-[0.16] contrast-[1.28]",
-                  )}
-                  priority
-                />
+              <div className="sm:hidden">
                 <p
                   className={cn(
-                    "mt-1 hidden text-[0.62rem] font-semibold uppercase tracking-[0.24em] lg:block",
-                    overlayMode ? "text-white/76" : "text-[color:var(--foreground)]/56",
+                    "font-display text-[1.12rem] leading-none tracking-[-0.05em]",
+                    overlayMode ? "text-white" : "text-[color:var(--foreground)]",
                   )}
                 >
-                  {menuFooterCopy}
+                  Fau&amp;Land Film
                 </p>
+                <p
+                  className={cn(
+                    "mt-1 text-[0.5rem] font-semibold uppercase tracking-[0.22em]",
+                    overlayMode ? "text-white/68" : "text-[color:var(--foreground)]/52",
+                  )}
+                >
+                  Oslo / Production
+                </p>
+              </div>
+
+              <div className="hidden min-w-0 items-center gap-3.5 sm:flex lg:gap-4">
+                <div className="header-brand-shell flex h-[4rem] w-[4rem] items-center justify-center rounded-full p-[0.9rem] lg:h-[4.6rem] lg:w-[4.6rem] lg:p-[1.05rem]">
+                  <BrandLogo
+                    variant="mark"
+                    className={cn(
+                      "relative z-[1] h-auto w-full opacity-100 saturate-[2.1]",
+                      overlayMode ? "brightness-[2.55] contrast-[1.42]" : "brightness-[2.08] contrast-[1.3]",
+                    )}
+                    priority
+                  />
+                </div>
+                <div className="min-w-0">
+                  <BrandLogo
+                    variant="full"
+                    className={cn(
+                      "w-[9.25rem] lg:w-[11rem]",
+                      overlayMode
+                        ? "brightness-[1.9] contrast-[1.14] saturate-[1.12] drop-shadow-[0_10px_18px_rgba(0,0,0,0.2)]"
+                        : "brightness-[0.16] contrast-[1.28]",
+                    )}
+                    priority
+                  />
+                  <p
+                    className={cn(
+                      "mt-1 hidden text-[0.62rem] font-semibold uppercase tracking-[0.24em] lg:block",
+                      overlayMode ? "text-white/76" : "text-[color:var(--foreground)]/56",
+                    )}
+                  >
+                    {menuFooterCopy}
+                  </p>
+                </div>
               </div>
             </Link>
 
@@ -343,23 +364,14 @@ export function Header() {
                 <div className="flex items-start justify-between gap-4 pb-6">
                   <Link
                     href="/"
-                    className="flex items-center gap-3.5"
+                    className="flex items-center"
                     aria-label="Fau&Land Film"
                     onClick={() => setOpen(false)}
                   >
-                    <div className="header-brand-shell flex h-[3.25rem] w-[3.25rem] items-center justify-center rounded-full p-[0.82rem]">
-                      <BrandLogo
-                        variant="mark"
-                        className="brightness-[2.55] contrast-[1.42] saturate-[2.1]"
-                        priority
-                      />
-                    </div>
                     <div>
-                      <BrandLogo
-                        variant="full"
-                        className="w-[8.8rem] brightness-[1.92] contrast-[1.14] saturate-[1.08]"
-                        priority
-                      />
+                      <p className="font-display text-[1.2rem] leading-none tracking-[-0.05em] text-white">
+                        Fau&amp;Land Film
+                      </p>
                       <p className="text-[0.62rem] font-semibold uppercase tracking-[0.2em] text-white/56">
                         {menuFooterCopy}
                       </p>
