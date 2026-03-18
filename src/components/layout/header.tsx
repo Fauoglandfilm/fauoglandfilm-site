@@ -12,7 +12,7 @@ import {
   segmentedControlOptionClassName,
   segmentedControlShellClassName,
 } from "@/components/ui/button-styles";
-import { CloseIcon, MenuIcon, MoonIcon, SunIcon } from "@/components/ui/icons";
+import { CloseIcon, MenuIcon } from "@/components/ui/icons";
 import { navItems } from "@/data/site-content";
 import { uiCopy } from "@/data/ui-copy";
 import { resolveLocalizedValue } from "@/lib/i18n";
@@ -73,14 +73,10 @@ export function Header() {
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const shouldReduceMotion = useReducedMotion();
-  const { language, setLanguage, theme, setTheme } = useSitePreferences();
+  const { language, setLanguage } = useSitePreferences();
   const copy = uiCopy.header[language];
   const overlayMode = pathname === "/" && !scrolled && !open;
   const menuLabel = language === "no" ? "Meny" : "Menu";
-  const menuDescription =
-    language === "no"
-      ? "Utforsk arbeid, tjenester og neste steg."
-      : "Explore work, services and next steps.";
   const menuFooterCopy =
     language === "no"
       ? "Oslo / Reklamefilm / Produksjon"
@@ -236,7 +232,7 @@ export function Header() {
             </nav>
 
             <div className="relative z-[1] ml-auto flex items-center gap-2.5 lg:ml-0">
-              <div className="hidden items-center gap-2.5 lg:flex">
+              <div className="hidden items-center gap-2 lg:flex">
                 <div className="scale-[0.95] origin-right">
                   <SegmentedToggle
                     ariaLabel={copy.languageLabel}
@@ -249,26 +245,13 @@ export function Header() {
                     compact
                   />
                 </div>
-                <div className="scale-[0.95] origin-right">
-                  <SegmentedToggle
-                    ariaLabel={copy.themeLabel}
-                    value={theme}
-                    options={[
-                      { value: "light", icon: <SunIcon className="h-3.5 w-3.5" />, label: "Light" },
-                      { value: "dark", icon: <MoonIcon className="h-3.5 w-3.5" />, label: "Dark" },
-                    ]}
-                    onChange={setTheme}
-                    compact
-                    iconOnly
-                  />
-                </div>
               </div>
 
               <div className="flex items-center lg:hidden">
                 <Button
                   variant="icon"
                   size="icon"
-                  className="relative z-[1] shrink-0"
+                  className="relative z-[1] h-11 w-11 shrink-0 rounded-full"
                   aria-label={open ? copy.menuClose : copy.menuOpen}
                   aria-controls="site-menu"
                   aria-expanded={open}
@@ -310,63 +293,73 @@ export function Header() {
       <AnimatePresence>
         {open ? (
           <motion.div
-            className="fixed inset-0 z-40 lg:hidden"
+            className="fixed inset-0 z-40 bg-[#111111] text-white lg:hidden"
             initial={shouldReduceMotion ? { opacity: 1 } : { opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.24, ease: [0.22, 1, 0.36, 1] }}
           >
-            <motion.button
-              type="button"
-              aria-label={copy.menuClose}
-              className="absolute inset-0 h-full w-full bg-[rgba(4,7,12,0.58)] backdrop-blur-[18px]"
-              initial={shouldReduceMotion ? { opacity: 1 } : { opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 0.22, ease: "easeOut" }}
-              onClick={() => setOpen(false)}
-            />
-
             <motion.div
               id="site-menu"
               role="dialog"
               aria-modal="true"
               aria-label={menuLabel}
-              className="mobile-menu-surface absolute inset-x-4 bottom-4 top-[calc(env(safe-area-inset-top,0px)+4.9rem)] overflow-hidden rounded-[2.1rem] sm:inset-x-6 sm:bottom-6 sm:top-[calc(env(safe-area-inset-top,0px)+5.25rem)] lg:inset-x-8 lg:bottom-8 lg:top-[calc(env(safe-area-inset-top,0px)+5.75rem)]"
+              className="mobile-menu-surface absolute inset-0"
               initial={
                 shouldReduceMotion
                   ? { opacity: 1 }
-                  : { opacity: 0, x: 48, scale: 0.985, filter: "blur(12px)" }
+                  : { opacity: 0, y: 12 }
               }
-              animate={{ opacity: 1, x: 0, scale: 1, filter: "blur(0px)" }}
+              animate={{ opacity: 1, y: 0 }}
               exit={
                 shouldReduceMotion
                   ? { opacity: 0 }
-                  : { opacity: 0, x: 32, scale: 0.99, filter: "blur(8px)" }
+                  : { opacity: 0, y: 8 }
               }
-              transition={{ duration: 0.34, ease: [0.22, 1, 0.36, 1] }}
+              transition={{ duration: 0.28, ease: [0.22, 1, 0.36, 1] }}
             >
-              <div className="glass-sheen absolute inset-0" />
-              <div className="pointer-events-none absolute inset-y-[12%] right-[-8%] w-[42%] rounded-full bg-[radial-gradient(circle,rgba(255,255,255,0.14),transparent_70%)] blur-3xl opacity-80" />
-              <div className="pointer-events-none absolute left-[-6%] top-[10%] h-48 w-48 rounded-full bg-[radial-gradient(circle,rgba(118,161,255,0.26),transparent_68%)] blur-3xl opacity-72" />
-              <div className="pointer-events-none absolute inset-x-10 top-0 h-px bg-[linear-gradient(90deg,transparent,rgba(255,255,255,0.78),transparent)] opacity-70" />
-
               <div
-                className="relative flex h-full flex-col overflow-y-auto p-5 sm:p-7 lg:p-9"
-                style={{ paddingBottom: "max(1.5rem, calc(1rem + env(safe-area-inset-bottom, 0px)))" }}
+                className="relative flex h-full flex-col overflow-y-auto px-5 pb-6 pt-[calc(env(safe-area-inset-top,0px)+1rem)] sm:px-6"
+                style={{ paddingBottom: "max(1.5rem, calc(1.25rem + env(safe-area-inset-bottom, 0px)))" }}
               >
-                <div className="max-w-lg">
-                  <p className="text-[0.68rem] font-semibold uppercase tracking-[0.24em] text-white/56">
-                    {menuLabel}
-                  </p>
-                  <p className="mt-3 max-w-md text-sm leading-6 text-white/66 sm:text-base sm:leading-7">
-                    {menuDescription}
-                  </p>
+                <div className="flex items-start justify-between gap-4 pb-5">
+                  <Link
+                    href="/"
+                    className="flex items-center gap-3"
+                    aria-label="Fau&Land Film"
+                    onClick={() => setOpen(false)}
+                  >
+                    <div className="flex h-12 w-12 items-center justify-center rounded-full border border-white/12 bg-white/8 p-2.5">
+                      <BrandLogo
+                        variant="mark"
+                        className="brightness-[1.95] contrast-[1.18] saturate-[1.22]"
+                        priority
+                      />
+                    </div>
+                    <div>
+                      <p className="font-display text-[1.15rem] tracking-[-0.05em] text-white">
+                        Fau&amp;Land Film
+                      </p>
+                      <p className="text-[0.62rem] font-semibold uppercase tracking-[0.2em] text-white/56">
+                        {menuFooterCopy}
+                      </p>
+                    </div>
+                  </Link>
+
+                  <Button
+                    variant="icon"
+                    size="icon"
+                    className="h-11 w-11 rounded-full border border-white/12 bg-white/8 text-white shadow-none"
+                    aria-label={copy.menuClose}
+                    onClick={() => setOpen(false)}
+                  >
+                    <CloseIcon className="h-4 w-4" />
+                  </Button>
                 </div>
 
-                <nav className="mt-8 flex flex-1 flex-col justify-center">
+                <nav className="flex flex-1 flex-col justify-center" aria-label={menuLabel}>
                   <div className="flex flex-col">
-                    {navItems.map((item, index) => {
+                    {navItems.map((item) => {
                       const active = item.href === "/" ? pathname === "/" : pathname.startsWith(item.href);
 
                       return (
@@ -374,16 +367,13 @@ export function Header() {
                           key={item.href}
                           href={item.href}
                           className={cn(
-                            "group flex items-center justify-between gap-5 border-b border-white/10 py-4 text-white/84 transition duration-300 hover:text-white sm:py-5",
+                            "group border-b border-white/10 py-4 text-white/84 transition duration-300 hover:text-white",
                             active && "text-white",
                           )}
                           onClick={() => setOpen(false)}
                         >
-                          <span className="font-display text-[2rem] leading-none tracking-[-0.06em] sm:text-[2.5rem] lg:text-[3.4rem]">
+                          <span className="font-display text-[1.8rem] leading-none tracking-[-0.05em] sm:text-[2.05rem]">
                             {resolveLocalizedValue(item.label, language)}
-                          </span>
-                          <span className="text-[0.72rem] font-semibold uppercase tracking-[0.22em] text-white/38 transition duration-300 group-hover:translate-x-1 group-hover:text-white/66">
-                            {String(index + 1).padStart(2, "0")}
                           </span>
                         </Link>
                       );
@@ -391,7 +381,7 @@ export function Header() {
                   </div>
                 </nav>
 
-                <div className="mt-8 flex flex-col gap-4 border-t border-white/12 pt-5 sm:mt-10 sm:flex-row sm:items-end sm:justify-between sm:gap-6">
+                <div className="mt-8 border-t border-white/12 pt-5">
                   <div className="flex flex-wrap items-center gap-3">
                     <SegmentedToggle
                       ariaLabel={copy.languageLabel}
@@ -403,19 +393,8 @@ export function Header() {
                       onChange={setLanguage}
                       compact
                     />
-                    <SegmentedToggle
-                      ariaLabel={copy.themeLabel}
-                      value={theme}
-                      options={[
-                        { value: "light", icon: <SunIcon className="h-3.5 w-3.5" />, label: "Light" },
-                        { value: "dark", icon: <MoonIcon className="h-3.5 w-3.5" />, label: "Dark" },
-                      ]}
-                      onChange={setTheme}
-                      compact
-                      iconOnly
-                    />
                   </div>
-                  <p className="text-[0.68rem] font-semibold uppercase tracking-[0.24em] text-white/42">
+                  <p className="mt-4 text-[0.68rem] font-semibold uppercase tracking-[0.24em] text-white/42">
                     {menuFooterCopy}
                   </p>
                 </div>

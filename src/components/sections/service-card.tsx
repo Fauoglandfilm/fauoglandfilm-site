@@ -77,7 +77,7 @@ export function ServiceCard({ service }: ServiceCardProps) {
             </p>
           </div>
 
-          <div className="grid gap-3 border-t border-[color:var(--line)]/80 pt-4 sm:grid-cols-2">
+          <div className="hidden gap-3 border-t border-[color:var(--line)]/80 pt-4 md:grid md:grid-cols-2">
             {metaItems.map((item) => (
               <div key={item.label}>
                 <p className="text-[0.62rem] font-semibold uppercase tracking-[0.18em] text-[var(--muted)]">
@@ -88,7 +88,7 @@ export function ServiceCard({ service }: ServiceCardProps) {
             ))}
           </div>
 
-          <div className="border-t border-[color:var(--line)]/80 pt-4">
+          <div className="hidden border-t border-[color:var(--line)]/80 pt-4 md:block">
             <p className="text-[0.62rem] font-semibold uppercase tracking-[0.18em] text-[var(--muted)]">
               {language === "no" ? "Typiske leveranser" : "Typical deliverables"}
             </p>

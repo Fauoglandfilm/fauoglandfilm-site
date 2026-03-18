@@ -8,7 +8,7 @@ import { getPortfolioFallbackVisual, siteVisuals } from "@/data/visual-assets";
 import { uiCopy } from "@/data/ui-copy";
 import { resolveLocalizedValue } from "@/lib/i18n";
 
-import { ArrowUpRightIcon, PlayIcon } from "../ui/icons";
+import { ArrowUpRightIcon } from "../ui/icons";
 
 type CaseCardProps = {
   caseStudy: CaseStudy;
@@ -73,14 +73,9 @@ export function CaseCard({
         />
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(255,255,255,0.08),transparent_32%),linear-gradient(180deg,rgba(17,17,17,0.05),rgba(17,17,17,0.22)_34%,rgba(17,17,17,0.82)_100%)]" />
         <div className="grain-overlay absolute inset-0 opacity-45" />
-        {video || externalVideo ? (
-          <span className="absolute right-4 top-4 z-[2] inline-flex h-11 w-11 items-center justify-center rounded-full border border-white/16 bg-white/90 text-[#111111] shadow-[0_16px_36px_rgba(0,0,0,0.22)] backdrop-blur-sm">
-            <PlayIcon className="h-4 w-4 translate-x-[1px]" />
-          </span>
-        ) : null}
       </div>
 
-      <div className="relative flex flex-1 flex-col gap-4 bg-[linear-gradient(180deg,rgba(255,255,255,0.04),rgba(255,255,255,0.01))] p-4 sm:p-5 lg:p-6">
+      <div className="relative flex flex-1 flex-col gap-4 bg-[color:var(--surface)] p-4 sm:p-5 lg:p-6">
         <div className="space-y-2">
           <p className="text-[0.68rem] font-semibold uppercase tracking-[0.22em] text-[var(--muted)]">
             {caseStudy.client}
@@ -93,7 +88,7 @@ export function CaseCard({
           </p>
         </div>
 
-        <div className="grid gap-3 sm:grid-cols-3">
+        <div className="hidden gap-3 md:grid md:grid-cols-3">
           {[
             { label: copy.relatedCaseGoal, value: resolveLocalizedValue(caseStudy.goal, language) },
             {
@@ -112,7 +107,7 @@ export function CaseCard({
         </div>
 
         {caseStudy.metrics.length ? (
-          <p className="text-sm font-medium text-[color:var(--foreground)]/76">
+          <p className="hidden text-sm font-medium text-[color:var(--foreground)]/76 md:block">
             {caseStudy.metrics
               .slice(0, 2)
               .map((metric) => `${metric.value} ${resolveLocalizedValue(metric.label, language)}`)
@@ -121,7 +116,7 @@ export function CaseCard({
         ) : null}
 
         {showVerificationNote && caseStudy.verificationNote ? (
-          <div className="rounded-[1rem] border border-dashed border-[var(--accent)]/28 bg-[var(--accent)]/10 px-4 py-3 text-sm text-[var(--accent-2)]">
+          <div className="hidden rounded-[1rem] border border-dashed border-[var(--accent)]/28 bg-[var(--accent)]/10 px-4 py-3 text-sm text-[var(--accent-2)] md:block">
             {resolveLocalizedValue(caseStudy.verificationNote, language)}
           </div>
         ) : null}

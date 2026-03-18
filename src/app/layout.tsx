@@ -34,17 +34,14 @@ export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
   viewportFit: "cover",
-  themeColor: "#0b0d11",
+  themeColor: "#ffffff",
 };
 
 const preferenceBootScript = `
   (function () {
     try {
-      var theme = localStorage.getItem('fauoglandfilm-theme');
       var language = localStorage.getItem('fauoglandfilm-language');
-      if (theme === 'light' || theme === 'dark') {
-        document.documentElement.dataset.theme = theme;
-      }
+      document.documentElement.dataset.theme = 'light';
       if (language === 'no' || language === 'en') {
         document.documentElement.dataset.language = language;
         document.documentElement.lang = language === 'no' ? 'nb' : 'en';
@@ -59,7 +56,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="nb" data-theme="dark" data-language="no" suppressHydrationWarning>
+    <html lang="nb" data-theme="light" data-language="no" suppressHydrationWarning>
       <body
         className={`${manrope.variable} ${sora.variable} antialiased`}
       >

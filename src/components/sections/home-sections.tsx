@@ -298,9 +298,7 @@ export function ClientSlider() {
         <div className="flex flex-col gap-2.5">
           <p className="eyebrow">{copy.clientsEyebrow}</p>
         </div>
-        <div className="relative mt-5">
-          <div className="pointer-events-none absolute inset-x-0 top-1/2 h-24 -translate-y-1/2 bg-[radial-gradient(circle,rgba(255,255,255,0.14),transparent_62%)] opacity-70 blur-2xl" />
-          <div className="pointer-events-none absolute inset-x-[12%] top-1/2 h-px -translate-y-1/2 bg-[linear-gradient(90deg,transparent,rgba(255,255,255,0.24),transparent)]" />
+        <div className="mt-4">
           <ClientLogoMarquee logos={clientLogos} durationSeconds={34} />
         </div>
       </div>
@@ -594,8 +592,7 @@ export function ContactSection() {
     <section className="section-space pt-0" id="kontakt">
       <div className="site-container">
         <div className="grid gap-3.5 sm:gap-4 lg:grid-cols-[0.9fr_1.1fr]">
-          <article className="glass-panel relative overflow-hidden rounded-[1.8rem] p-4.5 shadow-[0_28px_90px_rgba(0,0,0,0.18)] sm:rounded-[2rem] sm:p-6 lg:p-7">
-            <div className="glass-sheen absolute inset-0 opacity-50" />
+          <article className="card-surface rounded-[1.8rem] p-4.5 shadow-[0_18px_48px_rgba(18,14,10,0.08)] sm:rounded-[2rem] sm:p-6 lg:p-7">
             <Link href="/" className="brand-signature-chip mb-4 flex w-fit items-center gap-3 px-2.5 py-2 sm:mb-5">
               <div className="brand-signature-mark flex h-11 w-11 items-center justify-center rounded-full p-[0.62rem]">
                 <BrandLogo
@@ -639,43 +636,22 @@ export function ContactSection() {
             </div>
           </article>
 
-          <article className="glass-panel overflow-hidden rounded-[1.8rem] shadow-[0_28px_90px_rgba(0,0,0,0.18)] sm:rounded-[2rem]">
-            <div className="grid gap-px bg-[color:var(--line)] lg:grid-cols-[0.96fr_1.04fr]">
-              <div className="media-frame relative min-h-[15rem] overflow-hidden">
-                <Image
-                  src={siteVisuals.filmStudioCyclorama.src}
-                  alt={resolveLocalizedValue(siteVisuals.filmStudioCyclorama.alt, language)}
-                  fill
-                  sizes="(min-width: 1024px) 24vw, 100vw"
-                  className="object-cover"
-                />
-                <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(7,7,7,0.08),rgba(7,7,7,0.56)_72%,rgba(7,7,7,0.88))]" />
-                <div className="grain-overlay absolute inset-0 opacity-40" />
-                <div className="absolute inset-x-0 bottom-0 p-5 text-white sm:p-6">
-                  <p className="text-[0.66rem] font-semibold uppercase tracking-[0.22em] text-white/54">
-                    {language === "no" ? "Klar for opptak" : "Ready to shoot"}
-                  </p>
-                  <p className="mt-2 max-w-sm text-sm leading-6 text-white/74">
-                    {language === "no"
-                      ? "Vi svarer raskt med forslag til format, crew og neste steg."
-                      : "We reply quickly with the right format, crew and next steps."}
-                  </p>
-                </div>
-              </div>
-
-              <div className="p-4.5 sm:p-6 lg:p-7">
-                <div className="max-w-2xl">
-                  <p className="text-[0.72rem] font-semibold uppercase tracking-[0.24em] text-[var(--muted)]">
-                    {copy.contactProjectBrief}
-                  </p>
-                  <h3 className="feature-title mt-3 text-[color:var(--foreground)]">
-                    {copy.contactProjectTitle}
-                  </h3>
-                </div>
-                <div className="mt-5 sm:mt-6">
-                  <ContactForm />
-                </div>
-              </div>
+          <article className="card-surface rounded-[1.8rem] p-4.5 shadow-[0_18px_48px_rgba(18,14,10,0.08)] sm:rounded-[2rem] sm:p-6 lg:p-7">
+            <div className="max-w-2xl">
+              <p className="text-[0.72rem] font-semibold uppercase tracking-[0.24em] text-[var(--muted)]">
+                {copy.contactProjectBrief}
+              </p>
+              <h3 className="feature-title mt-3 text-[color:var(--foreground)]">
+                {copy.contactProjectTitle}
+              </h3>
+              <p className="body-copy mt-3 text-[var(--muted-2)]">
+                {language === "no"
+                  ? "Fortell kort om mål, kanal og tidslinje, så svarer vi med anbefalt oppsett og neste steg."
+                  : "Share the goal, channel and timeline and we will reply with the right setup and next step."}
+              </p>
+            </div>
+            <div className="mt-5 sm:mt-6">
+              <ContactForm />
             </div>
           </article>
         </div>
@@ -696,7 +672,7 @@ function InfoRow({
   href?: string;
 }) {
   const content = (
-    <div className="flex items-start gap-3.5 rounded-[1.25rem] border border-[color:var(--line)] bg-white/[0.04] px-4 py-3.5 shadow-[0_18px_48px_rgba(0,0,0,0.12)] backdrop-blur-xl transition duration-300 hover:-translate-y-0.5 sm:gap-4 sm:rounded-[1.4rem] sm:py-4">
+    <div className="flex items-start gap-3.5 rounded-[1.25rem] border border-[color:var(--line)] bg-[color:var(--surface)] px-4 py-3.5 shadow-[0_12px_32px_rgba(18,14,10,0.06)] transition duration-300 hover:-translate-y-0.5 sm:gap-4 sm:rounded-[1.4rem] sm:py-4">
       <div className="mt-0.5 flex h-10 w-10 items-center justify-center rounded-full bg-[color:var(--foreground)] text-[color:var(--background)]">
         {icon}
       </div>
