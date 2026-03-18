@@ -49,7 +49,7 @@ export function SocialLinksRow({
       : "body-copy max-w-lg text-[var(--muted)]";
   const linkClassName = cn(
     "social-link",
-    compact && "min-h-[1.95rem] gap-1 px-2 py-1 text-[0.72rem] sm:text-[0.76rem]",
+    compact && "min-h-[1.8rem] gap-1 px-2 py-1 text-[0.72rem] sm:text-[0.76rem]",
   );
   const iconClassName = compact ? "h-[0.82rem] w-[0.82rem]" : "h-4 w-4";
   const linkRowClassName = compact
@@ -83,7 +83,7 @@ export function SocialLinksRow({
               <span className="social-link__icon" aria-hidden="true">
                 <Icon className={iconClassName} />
               </span>
-              <span>{item.name}</span>
+              <span className={compact ? "hidden sm:inline" : undefined}>{item.name}</span>
             </a>
           );
         })}

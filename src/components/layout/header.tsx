@@ -151,7 +151,7 @@ export function Header() {
         <div className="mx-auto max-w-[1380px] px-4 sm:px-6 lg:px-8">
           <div
             className={cn(
-              "relative mt-2 flex items-center gap-2.5 overflow-hidden rounded-[1.5rem] px-3 py-2.5 transition duration-300 sm:mt-2.5 sm:gap-3 sm:px-4 sm:py-3 lg:grid lg:grid-cols-[auto_minmax(0,1fr)_auto] lg:items-center lg:gap-7 lg:px-5 lg:py-3",
+              "relative mt-1.5 flex items-center gap-2 overflow-hidden rounded-[1.2rem] px-2.5 py-2 transition duration-300 sm:mt-2.5 sm:gap-3 sm:px-4 sm:py-3 lg:grid lg:grid-cols-[auto_minmax(0,1fr)_auto] lg:items-center lg:gap-7 lg:rounded-[1.5rem] lg:px-5 lg:py-3",
               overlayMode
                 ? "border border-[color:var(--header-overlay-border)] bg-[color:var(--header-overlay-surface)] text-white shadow-[0_24px_70px_rgba(0,0,0,0.18)] backdrop-blur-[26px]"
                 : "border border-[color:var(--line)] bg-[color:var(--header-surface)] text-[color:var(--foreground)] shadow-[0_26px_82px_rgba(18,14,10,0.12)] backdrop-blur-[30px]",
@@ -163,7 +163,7 @@ export function Header() {
             <Link
               href="/"
               className={cn(
-                "relative z-[1] flex shrink-0 items-center gap-4 rounded-[1.3rem] border px-1.5 py-1.5 transition duration-300 lg:gap-5",
+                "relative z-[1] flex shrink-0 items-center gap-2.5 rounded-[1rem] border px-1 py-1 transition duration-300 sm:gap-4 lg:gap-5",
                 overlayMode
                   ? "border-white/10 bg-white/[0.045] shadow-[0_20px_48px_rgba(0,0,0,0.16)]"
                   : "border-[color:var(--line)]/55 bg-white/[0.03] shadow-[0_16px_40px_rgba(18,14,10,0.08)]",
@@ -173,7 +173,7 @@ export function Header() {
             >
               <div
                 className={cn(
-                  "header-brand-shell flex h-12 w-12 items-center justify-center rounded-full p-[0.62rem] sm:h-[3.15rem] sm:w-[3.15rem] sm:p-[0.76rem] lg:h-[3.9rem] lg:w-[3.9rem] lg:p-[0.92rem]",
+                  "header-brand-shell flex h-10 w-10 items-center justify-center rounded-full p-[0.5rem] sm:h-[3.15rem] sm:w-[3.15rem] sm:p-[0.76rem] lg:h-[3.9rem] lg:w-[3.9rem] lg:p-[0.92rem]",
                   overlayMode ? "shadow-[0_30px_68px_rgba(0,0,0,0.26)]" : "shadow-[0_24px_58px_rgba(18,14,10,0.14)]",
                 )}
               >
@@ -181,7 +181,7 @@ export function Header() {
                   variant="mark"
                   className={cn(
                     "relative z-[1] opacity-100 saturate-[1.62] drop-shadow-[0_14px_26px_rgba(0,0,0,0.24)]",
-                    overlayMode ? "brightness-[2.08] contrast-[1.2]" : "brightness-[1.5] contrast-[1.14]",
+                    overlayMode ? "brightness-[2.18] contrast-[1.24]" : "brightness-[1.62] contrast-[1.18]",
                   )}
                   priority
                 />
@@ -189,7 +189,7 @@ export function Header() {
               <div className="min-w-0">
                 <p
                   className={cn(
-                    "font-display text-[1.16rem] font-semibold tracking-[-0.05em] sm:text-[1.24rem] lg:text-[1.48rem]",
+                    "font-display text-[0.98rem] font-semibold tracking-[-0.05em] sm:text-[1.24rem] lg:text-[1.48rem]",
                     overlayMode ? "text-white drop-shadow-[0_12px_24px_rgba(0,0,0,0.26)]" : "text-[color:var(--foreground)]",
                   )}
                 >
@@ -251,7 +251,7 @@ export function Header() {
                 <Button
                   variant="icon"
                   size="icon"
-                  className="relative z-[1] h-11 w-11 shrink-0 rounded-full"
+                  className="relative z-[1] h-11 w-11 shrink-0 rounded-full border border-white/10 bg-white/6 text-white shadow-none"
                   aria-label={open ? copy.menuClose : copy.menuOpen}
                   aria-controls="site-menu"
                   aria-expanded={open}
