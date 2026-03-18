@@ -46,7 +46,7 @@ export function CaseDetailContent({
 
       <section className="section-space">
         <div className="site-container space-y-5">
-          <article className="card-surface overflow-hidden rounded-[2rem]">
+          <article className="-mx-4 overflow-hidden sm:mx-0 sm:rounded-[2rem] sm:border sm:border-[color:var(--line)] sm:bg-[color:var(--surface)]">
             {caseStudy.video || caseStudy.externalVideo ? (
               <div className="relative aspect-video w-full bg-[#111111]">
                 <EmbeddedVideoPlayer
@@ -210,17 +210,17 @@ export function CaseDetailContent({
 
               <div
                 className={cn(
-                  "flex flex-col gap-4 border-t border-[color:var(--line)]/80 pt-6 xl:flex-row xl:items-end",
+                  "flex flex-col gap-4 border-t border-[color:var(--line)]/80 pt-6 text-center xl:flex-row xl:items-end xl:text-left",
                   caseStudy.verificationNote ? "xl:justify-between" : "xl:justify-end",
                 )}
               >
                 {caseStudy.verificationNote ? (
-                  <p className="max-w-3xl text-sm leading-6 text-[var(--accent-2)]">
+                  <p className="mx-auto max-w-3xl text-sm leading-6 text-[var(--accent-2)] xl:mx-0">
                     {resolveLocalizedValue(caseStudy.verificationNote, language)}
                   </p>
                 ) : null}
 
-                <div className="flex flex-col gap-2.5 sm:flex-row sm:flex-wrap xl:justify-end">
+                <div className="flex flex-col gap-2.5 sm:flex-row sm:flex-wrap sm:justify-center xl:justify-end">
                   <ButtonLink href="/kontakt">
                     {language === "no" ? "Book møte" : "Book a meeting"}
                   </ButtonLink>
@@ -236,14 +236,14 @@ export function CaseDetailContent({
 
       <section className="section-space pt-0">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="flex flex-wrap items-end justify-between gap-4">
+          <div className="flex flex-col gap-4 text-center sm:flex-row sm:flex-wrap sm:items-end sm:justify-between sm:text-left">
             <div>
               <p className="eyebrow">{copy.caseMoreProjectsEyebrow}</p>
               <h2 className="section-title mt-3 text-[color:var(--foreground)]">
                 {copy.caseMoreProjectsTitle}
               </h2>
             </div>
-            <ButtonLink href="/case" variant="ghost">
+            <ButtonLink href="/case" variant="ghost" className="w-full sm:w-auto">
               {copy.caseBackToOverview}
             </ButtonLink>
           </div>

@@ -88,7 +88,7 @@ export function PriceGuideSection({ items }: { items: PriceGuide[] }) {
             {items.map((item, index) => (
               <div
                 key={`price-guide-${index}`}
-                className="grid gap-3 px-5 py-5 sm:px-6 sm:py-6 lg:grid-cols-[minmax(13rem,0.42fr)_minmax(0,1fr)] lg:items-start"
+                className="grid gap-3 px-4 py-4 sm:px-6 sm:py-6 lg:grid-cols-[minmax(13rem,0.42fr)_minmax(0,1fr)] lg:items-start"
               >
                 <div className="space-y-2">
                   <p className="text-[0.68rem] font-semibold uppercase tracking-[0.2em] text-[var(--muted)]">
@@ -396,7 +396,7 @@ export function ContactLeadSection({
       description={copy.contactDescription}
     >
       <div className="grid gap-4 xl:grid-cols-[0.9fr_1.1fr]">
-        <article className="card-surface relative overflow-hidden rounded-[1.9rem] p-5 sm:p-6">
+        <article className="order-2 card-surface relative overflow-hidden rounded-[1.9rem] p-5 sm:p-6 xl:order-1">
           <div className="pointer-events-none absolute -bottom-8 right-[-0.5rem] hidden h-28 w-28 md:block opacity-[0.06]">
             <BrandLogo
               variant="mark"
@@ -430,7 +430,7 @@ export function ContactLeadSection({
           </div>
         </article>
 
-        <div className="grid gap-4">
+        <div className="order-1 grid gap-4 xl:order-2">
           <article className="card-surface overflow-hidden rounded-[1.9rem]">
             <div className="p-5 sm:p-6">
               <div className="max-w-2xl">

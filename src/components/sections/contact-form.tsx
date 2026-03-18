@@ -59,7 +59,7 @@ export function ContactForm() {
 
   return (
     <form className="grid gap-3.5" onSubmit={handleSubmit} id="foresporsel">
-      <div className="grid gap-3.5 sm:grid-cols-2">
+      <div className="grid gap-3.5 md:grid-cols-2">
         <label className="space-y-2">
           <span className="text-sm font-medium text-[color:var(--foreground)]">{copy.name}</span>
           <input
@@ -87,7 +87,7 @@ export function ContactForm() {
         </label>
       </div>
 
-      <div className="grid gap-3.5 sm:grid-cols-2">
+      <div className="grid gap-3.5 md:grid-cols-2">
         <label className="space-y-2">
           <span className="text-sm font-medium text-[color:var(--foreground)]">{copy.email}</span>
           <input
