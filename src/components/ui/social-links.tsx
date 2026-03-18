@@ -39,7 +39,7 @@ export function SocialLinksRow({
   const { language } = useSitePreferences();
   const titleClassName =
     tone === "inverse"
-      ? "text-[0.68rem] font-semibold uppercase tracking-[0.24em] text-white/52"
+      ? "sr-only"
       : "eyebrow";
   const descriptionClassName =
     tone === "inverse"
@@ -55,7 +55,7 @@ export function SocialLinksRow({
   );
   const iconClassName = compact ? "h-[0.82rem] w-[0.82rem]" : "h-4 w-4";
   const linkRowClassName = compact
-    ? "mt-1.5 flex flex-wrap gap-1.5 sm:gap-1.5"
+    ? "mt-1.5 flex flex-wrap justify-center gap-1.5 sm:gap-1.5 lg:justify-start"
     : "mt-3 flex flex-wrap gap-2.5 sm:gap-3";
 
   return (
@@ -85,7 +85,7 @@ export function SocialLinksRow({
               <span className="social-link__icon" aria-hidden="true">
                 <Icon className={iconClassName} />
               </span>
-              <span className={compact ? "hidden sm:inline" : undefined}>{item.name}</span>
+              <span>{item.name}</span>
             </a>
           );
         })}
