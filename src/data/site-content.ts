@@ -952,7 +952,7 @@ export const caseStudies: CaseStudy[] = [
       no: "Still fra Treningshuset-kampanje",
       en: "Still from the Treningshuset campaign",
     },
-    mediaFit: "contain",
+    mediaFit: "cover",
     video: {
       videoType: "direct",
       src: "/assets/portfolio/treningshuset/videos/web/treningshuset-desktop-4x5-web.mp4",
@@ -975,7 +975,7 @@ export const caseStudies: CaseStudy[] = [
           no: "Bred versjon av Treningshuset-filmen",
           en: "Wide version of the Treningshuset film",
         },
-        mediaFit: "contain",
+        mediaFit: "cover",
         video: {
           videoType: "direct",
           src: "/assets/portfolio/treningshuset/videos/web/treningshuset-desktop-4x5-web.mp4",
@@ -997,7 +997,7 @@ export const caseStudies: CaseStudy[] = [
           no: "Mobil versjon av Treningshuset-filmen",
           en: "Mobile version of the Treningshuset film",
         },
-        mediaFit: "contain",
+        mediaFit: "cover",
         video: {
           videoType: "direct",
           src: "/assets/portfolio/treningshuset/videos/web/treningshuset-mobile-9x16-web.mp4",
@@ -1019,7 +1019,7 @@ export const caseStudies: CaseStudy[] = [
           no: "Kort 4:5-versjon av Treningshuset-filmen",
           en: "Short 4:5 version of the Treningshuset film",
         },
-        mediaFit: "contain",
+        mediaFit: "cover",
         video: {
           videoType: "direct",
           src: "/assets/portfolio/treningshuset/videos/alternates/portrait-4x5/Kort_Reel45.mp4",
@@ -1041,7 +1041,7 @@ export const caseStudies: CaseStudy[] = [
           no: "Kort mobilversjon av Treningshuset-filmen",
           en: "Short mobile version of the Treningshuset film",
         },
-        mediaFit: "contain",
+        mediaFit: "cover",
         video: {
           videoType: "direct",
           src: "/assets/portfolio/treningshuset/videos/alternates/mobile-9x16/Kort_Reel.mp4",
@@ -1703,7 +1703,7 @@ export const portfolioProjects: PortfolioProject[] = [
     },
     detailHref: "/case/treningshuset",
     ctaLabel: viewCaseCta,
-    mediaFit: "contain",
+    mediaFit: "cover",
     image: "/assets/portfolio/treningshuset/posters/treningshuset-bred-poster.png",
     imageAlt: {
       no: "Still fra Treningshuset-filmen",

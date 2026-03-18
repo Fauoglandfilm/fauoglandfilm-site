@@ -351,16 +351,19 @@ function ManagedDirectVideo({
   showControls,
 }: ManagedDirectVideoProps) {
   const [isReady, setIsReady] = useState(false);
+  const [hasLoadedMetadata, setHasLoadedMetadata] = useState(false);
   const [hasFailed, setHasFailed] = useState(false);
   const [hasStartedPlayback, setHasStartedPlayback] = useState(false);
   const videoRef = useRef<HTMLVideoElement | null>(null);
   const retryTimeoutRef = useRef<number | null>(null);
   const shouldHoldPosterUntilPlay = showControls;
+  const hasConfirmedVideoSurface = hasLoadedMetadata || isReady || hasStartedPlayback;
   const posterVisible = hasFailed
     ? true
     : shouldHoldPosterUntilPlay
       ? !hasStartedPlayback
-      : !isReady;
+      : !hasConfirmedVideoSurface;
+  const preloadMode = autoplay && !previewMode ? "auto" : "metadata";
 
   useEffect(() => {
     return () => {
@@ -419,17 +422,18 @@ function ManagedDirectVideo({
           className={cn(
             "absolute inset-0 h-full w-full transition duration-500",
             mediaObjectClass,
-            isReady ? "opacity-100" : "opacity-0",
+            hasConfirmedVideoSurface ? "opacity-100" : "opacity-0",
           )}
           controls={showControls}
           playsInline
-          preload="metadata"
+          preload={preloadMode}
           autoPlay={autoplay || previewMode}
           muted={autoplay || previewMode}
           loop={previewMode || autoplay}
           poster={video.poster ?? image}
           onLoadedData={() => setIsReady(true)}
           onLoadedMetadata={() => {
+            setHasLoadedMetadata(true);
             const node = videoRef.current;
 
             if (!node) {
@@ -443,6 +447,10 @@ function ManagedDirectVideo({
 
             if (autoplay || previewMode) {
               node.setAttribute("muted", "");
+            }
+
+            if ((autoplay || previewMode) && shouldActivatePlayback) {
+              triggerManagedVideoPlayback(node, retryTimeoutRef, false);
             }
           }}
           onCanPlay={() => {
