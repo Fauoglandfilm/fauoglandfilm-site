@@ -30,17 +30,27 @@ export function Footer() {
       <div className="relative mx-auto max-w-7xl px-4 py-4 sm:px-6 sm:py-5 lg:px-8 lg:py-6">
         <div className="glass-panel relative overflow-hidden rounded-[1.7rem] px-4 py-4 shadow-[0_18px_56px_rgba(0,0,0,0.14)] sm:px-[1.125rem] sm:py-[1.125rem] lg:px-5 lg:py-[1.125rem]">
           <div className="glass-sheen absolute inset-0 opacity-34" />
+          <div className="pointer-events-none absolute -bottom-10 right-[-0.5rem] hidden h-40 w-40 md:block opacity-[0.08]">
+            <BrandLogo
+              variant="mark"
+              className="h-auto w-full brightness-[1.55] saturate-[1.3] drop-shadow-[0_24px_42px_rgba(0,0,0,0.28)]"
+            />
+          </div>
           <div className="grid gap-4 lg:grid-cols-[0.92fr_1.08fr] lg:gap-5">
             <div className="space-y-2 sm:space-y-3">
-              <Link href="/" className="flex w-fit items-center gap-1.5 transition hover:opacity-100">
-                <div className="flex h-8 w-8 items-center justify-center rounded-full border border-white/10 bg-white/[0.085] p-2 backdrop-blur-lg">
-                  <BrandLogo variant="mark" className="opacity-100" />
+              <Link href="/" className="brand-signature-chip flex w-fit items-center gap-3 px-2 py-2 transition hover:opacity-100">
+                <div className="brand-signature-mark flex h-[3.2rem] w-[3.2rem] items-center justify-center rounded-full p-[0.72rem]">
+                  <BrandLogo
+                    variant="mark"
+                    className="relative z-[1] h-auto w-full brightness-[1.82] contrast-[1.16] saturate-[1.48] drop-shadow-[0_12px_24px_rgba(0,0,0,0.2)]"
+                  />
                 </div>
-                <div>
-                  <p className="font-display text-[0.9rem] text-white">
-                    Fau&amp;Land Film
-                  </p>
-                  <p className="text-[0.62rem] uppercase tracking-[0.2em] text-white/46">
+                <div className="space-y-1">
+                  <BrandLogo
+                    variant="full"
+                    className="w-[10.8rem] brightness-[1.2] contrast-[1.06] saturate-[1.16] drop-shadow-[0_12px_24px_rgba(0,0,0,0.16)] sm:w-[12rem]"
+                  />
+                  <p className="text-[0.62rem] uppercase tracking-[0.22em] text-white/50">
                     {copy.productionCompany}
                   </p>
                 </div>
