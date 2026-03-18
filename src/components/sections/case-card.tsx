@@ -14,12 +14,18 @@ type CaseCardProps = {
   caseStudy: CaseStudy;
   layout?: "stack" | "feature";
   showVerificationNote?: boolean;
+  previewBehavior?: "static" | "always" | "hover" | "viewport" | "hover-or-viewport";
+  previewRootMargin?: string;
+  previewInViewThreshold?: number;
 };
 
 export function CaseCard({
   caseStudy,
   layout = "stack",
   showVerificationNote = true,
+  previewBehavior = "hover-or-viewport",
+  previewRootMargin,
+  previewInViewThreshold,
 }: CaseCardProps) {
   const video = caseStudy.video;
   const externalVideo = caseStudy.externalVideo;
@@ -57,9 +63,11 @@ export function CaseCard({
           externalVideo={externalVideo}
           image={image}
           imageAlt={imageAlt}
-          previewBehavior={video || externalVideo ? "hover-or-viewport" : "static"}
+          previewBehavior={video || externalVideo ? previewBehavior : "static"}
           className="absolute inset-0"
           sizes={isFeature ? "(min-width: 1024px) 50vw, 100vw" : "(min-width: 1280px) 33vw, 100vw"}
+          rootMargin={previewRootMargin}
+          inViewThreshold={previewInViewThreshold}
           posterClassName="group-hover:scale-[1.035]"
           previewClassName="scale-[1.02]"
         />

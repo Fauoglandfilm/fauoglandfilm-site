@@ -147,6 +147,9 @@ export function SelectedWorkSection({ items }: { items: CaseStudy[] }) {
                 caseStudy={caseStudy}
                 layout={index === 0 ? "feature" : "stack"}
                 showVerificationNote={false}
+                previewBehavior="viewport"
+                previewRootMargin="160px 0px -8% 0px"
+                previewInViewThreshold={0.18}
               />
             </Reveal>
           ))}
