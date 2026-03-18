@@ -64,8 +64,11 @@ function triggerManagedVideoPlayback(
   retryTimeoutRef: MutableRefObject<number | null>,
   retryOnFailure = true,
 ) {
+  node.defaultMuted = true;
   node.muted = true;
   node.playsInline = true;
+  node.setAttribute("muted", "");
+  node.setAttribute("playsinline", "");
 
   const playPromise = node.play();
 
@@ -352,7 +355,7 @@ function ManagedDirectVideo({
   const [hasStartedPlayback, setHasStartedPlayback] = useState(false);
   const videoRef = useRef<HTMLVideoElement | null>(null);
   const retryTimeoutRef = useRef<number | null>(null);
-  const shouldHoldPosterUntilPlay = autoplay || previewMode || showControls;
+  const shouldHoldPosterUntilPlay = showControls;
   const posterVisible = hasFailed
     ? true
     : shouldHoldPosterUntilPlay
@@ -419,6 +422,7 @@ function ManagedDirectVideo({
             isReady ? "opacity-100" : "opacity-0",
           )}
           controls={showControls}
+          defaultMuted={autoplay || previewMode}
           playsInline
           preload="metadata"
           autoPlay={autoplay || previewMode}
@@ -426,6 +430,22 @@ function ManagedDirectVideo({
           loop={previewMode || autoplay}
           poster={video.poster ?? image}
           onLoadedData={() => setIsReady(true)}
+          onLoadedMetadata={() => {
+            const node = videoRef.current;
+
+            if (!node) {
+              return;
+            }
+
+            node.defaultMuted = autoplay || previewMode;
+            node.muted = autoplay || previewMode;
+            node.playsInline = true;
+            node.setAttribute("playsinline", "");
+
+            if (autoplay || previewMode) {
+              node.setAttribute("muted", "");
+            }
+          }}
           onCanPlay={() => {
             setIsReady(true);
 
@@ -434,6 +454,12 @@ function ManagedDirectVideo({
             }
           }}
           onPlay={() => setHasStartedPlayback(true)}
+          onPlaying={() => setHasStartedPlayback(true)}
+          onTimeUpdate={() => {
+            if (videoRef.current && videoRef.current.currentTime > 0) {
+              setHasStartedPlayback(true);
+            }
+          }}
           onError={() => setHasFailed(true)}
         >
           {video.mobileSrc ? (
