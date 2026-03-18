@@ -159,7 +159,80 @@ html[data-theme="light"] {
 }
 
 html[data-theme="dark"] {
-  color-scheme: light;
+  --background: #111111;
+  --foreground: #f4f1ea;
+  --surface: #171717;
+  --surface-strong: #1b1b1c;
+  --surface-muted: #202022;
+  --line: rgba(255, 255, 255, 0.1);
+  --line-strong: rgba(255, 255, 255, 0.18);
+  --muted: #aaa7a1;
+  --muted-2: #d1cec8;
+  --accent: #d2ad74;
+  --accent-2: #f0d2a0;
+  --shadow: 0 24px 60px rgba(0, 0, 0, 0.3);
+  --glass-tint-top: #171717;
+  --glass-tint-bottom: #171717;
+  --glass-border: rgba(255, 255, 255, 0.08);
+  --glass-border-soft: rgba(255, 255, 255, 0.05);
+  --glass-top-highlight: rgba(255, 255, 255, 0);
+  --glass-inner-top: rgba(255, 255, 255, 0);
+  --glass-inner-bottom: rgba(255, 255, 255, 0);
+  --glass-warm-glow: rgba(210, 173, 116, 0.05);
+  --glass-warm-glow-strong: rgba(210, 173, 116, 0.08);
+  --glass-cool-glow: rgba(255, 255, 255, 0);
+  --glass-shadow-deep: rgba(0, 0, 0, 0.24);
+  --glass-shadow-soft: rgba(0, 0, 0, 0.14);
+  --glass-sheen-bright: rgba(255, 255, 255, 0);
+  --glass-sheen-soft: rgba(255, 255, 255, 0);
+  --logo-strip-bg: #171717;
+  --logo-strip-border: rgba(255, 255, 255, 0.08);
+  --btn-border: rgba(255, 255, 255, 0.14);
+  --btn-primary-bg: #f2eee6;
+  --btn-primary-text: #111111;
+  --btn-primary-border: rgba(255, 255, 255, 0.16);
+  --btn-primary-hover-bg: #ffffff;
+  --btn-primary-hover-text: #111111;
+  --btn-primary-active-bg: #dfd9cf;
+  --btn-primary-active-text: #111111;
+  --btn-secondary-bg: #171717;
+  --btn-secondary-text: #f4f1ea;
+  --btn-secondary-border: rgba(255, 255, 255, 0.14);
+  --btn-secondary-hover-bg: #202022;
+  --btn-secondary-hover-text: #ffffff;
+  --btn-secondary-active-bg: #252528;
+  --btn-secondary-active-text: #ffffff;
+  --btn-ghost-bg: transparent;
+  --btn-ghost-text: #f4f1ea;
+  --btn-ghost-border: rgba(255, 255, 255, 0.14);
+  --btn-ghost-hover-bg: #202022;
+  --btn-ghost-hover-text: #ffffff;
+  --btn-ghost-active-bg: #252528;
+  --btn-ghost-active-text: #ffffff;
+  --btn-icon-bg: #171717;
+  --btn-icon-text: #f4f1ea;
+  --btn-icon-border: rgba(255, 255, 255, 0.14);
+  --btn-icon-hover-bg: #202022;
+  --btn-icon-hover-text: #ffffff;
+  --btn-icon-active-bg: #252528;
+  --btn-icon-active-text: #ffffff;
+  --control-shell-bg: #171717;
+  --control-shell-border: rgba(255, 255, 255, 0.14);
+  --control-option-text: #b0aca4;
+  --control-option-hover-bg: #202022;
+  --control-option-hover-text: #ffffff;
+  --control-option-active-bg: #f2eee6;
+  --control-option-active-text: #111111;
+  --control-option-active-border: rgba(255, 255, 255, 0.12);
+  --header-surface: rgba(17, 17, 17, 0.92);
+  --header-overlay-surface: rgba(17, 17, 17, 0.92);
+  --header-overlay-border: rgba(255, 255, 255, 0.08);
+  --header-brand-surface: rgba(255, 247, 231, 0.96);
+  --header-brand-border: rgba(210, 182, 135, 0.34);
+  --header-brand-glow: rgba(210, 173, 116, 0.2);
+  --header-nav-hover-bg: #202022;
+  --header-nav-active-bg: #202022;
+  color-scheme: dark;
 }
 
 @theme inline {
@@ -201,6 +274,14 @@ html[data-theme="light"] body {
 }
 
 html[data-theme="light"] body::before {
+  content: none;
+}
+
+html[data-theme="dark"] body {
+  background: var(--background);
+}
+
+html[data-theme="dark"] body::before {
   content: none;
 }
 
