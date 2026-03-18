@@ -405,10 +405,10 @@ export function ContactLeadSection({
           </div>
           <div className="space-y-4">
             <Link href="/" className="brand-signature-chip flex w-fit items-center gap-3 px-2.5 py-2">
-              <div className="brand-signature-mark flex h-11 w-11 items-center justify-center rounded-full p-[0.62rem]">
+              <div className="brand-signature-mark flex h-12 w-12 items-center justify-center rounded-full p-[0.72rem]">
                 <BrandLogo
                   variant="mark"
-                  className="relative z-[1] h-auto w-full brightness-[1.74] contrast-[1.12] saturate-[1.34]"
+                  className="relative z-[1] h-auto w-full brightness-[2.02] contrast-[1.24] saturate-[1.82]"
                 />
               </div>
               <div>

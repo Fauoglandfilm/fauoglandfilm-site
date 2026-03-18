@@ -35,35 +35,29 @@ export function FounderProfileContent({ profile }: { profile: FounderProfile }) 
         <div className="relative mx-auto flex min-h-[62svh] max-w-7xl items-end px-4 pb-8 sm:min-h-[66svh] sm:px-6 sm:pb-10 lg:min-h-[72svh] lg:px-8 lg:pb-12">
           <div className="grid w-full gap-5 lg:grid-cols-[0.9fr_0.72fr] lg:items-end">
             <Reveal className="max-w-3xl" delay={0.04} y={18}>
-              <div className="subpage-hero-panel relative overflow-hidden px-5 py-5 text-white sm:px-7 sm:py-6 lg:px-8 lg:py-7">
-                <div className="glass-sheen absolute inset-0" />
-                <div className="pointer-events-none absolute -left-8 bottom-[-3rem] h-28 w-28 rounded-full bg-[radial-gradient(circle,rgba(255,255,255,0.2),transparent_72%)] blur-2xl opacity-70" />
-                <div className="pointer-events-none absolute right-[-2.5rem] top-[-2.5rem] h-28 w-28 rounded-full bg-[radial-gradient(circle,rgba(122,168,255,0.28),transparent_70%)] blur-2xl opacity-78" />
+              <div className="px-1 py-2 text-white sm:px-0 sm:py-4">
+                <ButtonLink href="/om-oss" variant="ghost" size="compact" className="w-fit border-white/16 text-white/86 hover:border-white/26 hover:text-white">
+                  {backLabel}
+                </ButtonLink>
 
-                <div className="relative z-[1]">
-                  <ButtonLink href="/om-oss" variant="ghost" size="compact" className="w-fit border-white/16 text-white/86 hover:border-white/26 hover:text-white">
-                    {backLabel}
+                <span className="hero-badge mt-5 text-white/72">
+                  {resolveLocalizedValue(profile.role, language)}
+                </span>
+                <h1 className="page-title mt-4 max-w-[12ch] text-white">{profile.name}</h1>
+                <p className="body-lead mt-4 max-w-2xl text-[1rem] leading-7 text-white/86 sm:text-[1.05rem] sm:leading-8">
+                  {resolveLocalizedValue(profile.tagline, language)}
+                </p>
+                <p className="body-copy mt-4 max-w-[40rem] text-white/74 sm:text-base sm:leading-7">
+                  {resolveLocalizedValue(profile.summary, language)}
+                </p>
+
+                <div className="mt-6 flex flex-col gap-2.5 sm:flex-row sm:flex-wrap sm:gap-3">
+                  <ButtonLink href="/kontakt" className="w-full sm:w-auto">
+                    {resolveLocalizedValue(profile.ctaLabel, language)}
                   </ButtonLink>
-
-                  <span className="hero-badge mt-5 text-white/72">
-                    {resolveLocalizedValue(profile.role, language)}
-                  </span>
-                  <h1 className="page-title mt-4 max-w-[12ch] text-white">{profile.name}</h1>
-                  <p className="body-lead mt-4 max-w-2xl text-[1rem] leading-7 text-white/86 sm:text-[1.05rem] sm:leading-8">
-                    {resolveLocalizedValue(profile.tagline, language)}
-                  </p>
-                  <p className="body-copy mt-4 max-w-[40rem] text-white/74 sm:text-base sm:leading-7">
-                    {resolveLocalizedValue(profile.summary, language)}
-                  </p>
-
-                  <div className="mt-6 flex flex-col gap-2.5 sm:flex-row sm:flex-wrap sm:gap-3">
-                    <ButtonLink href="/kontakt" className="w-full sm:w-auto">
-                      {resolveLocalizedValue(profile.ctaLabel, language)}
-                    </ButtonLink>
-                    <ButtonLink href="/case" variant="secondary" className="w-full sm:w-auto">
-                      {language === "no" ? "Se porteføljen" : "View portfolio"}
-                    </ButtonLink>
-                  </div>
+                  <ButtonLink href="/case" variant="secondary" className="w-full sm:w-auto">
+                    {language === "no" ? "Se porteføljen" : "View portfolio"}
+                  </ButtonLink>
                 </div>
               </div>
             </Reveal>
