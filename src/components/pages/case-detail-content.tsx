@@ -27,6 +27,7 @@ export function CaseDetailContent({
     resolveLocalizedValue(item, language),
   );
   const localizedTags = caseStudy.tags.map((tag) => resolveLocalizedValue(tag, language));
+  const isTreningshuset = caseStudy.slug === "treningshuset";
 
   return (
     <main>
@@ -46,9 +47,21 @@ export function CaseDetailContent({
 
       <section className="section-space">
         <div className="site-container space-y-5">
-          <article className="-mx-4 overflow-hidden sm:mx-0 sm:rounded-[2rem] sm:border sm:border-[color:var(--line)] sm:bg-[color:var(--surface)]">
+          <article
+            className={cn(
+              "overflow-hidden",
+              isTreningshuset
+                ? "-mx-4 bg-[#0b0d12] sm:mx-auto sm:max-w-[30rem] sm:rounded-[2rem] sm:border sm:border-[color:var(--line)] sm:bg-[color:var(--surface)] lg:max-w-[34rem] xl:max-w-[38rem]"
+                : "-mx-4 sm:mx-0 sm:rounded-[2rem] sm:border sm:border-[color:var(--line)] sm:bg-[color:var(--surface)]",
+            )}
+          >
             {caseStudy.video || caseStudy.externalVideo ? (
-              <div className="relative aspect-video w-full bg-[#111111]">
+              <div
+                className={cn(
+                  "relative w-full bg-[#111111]",
+                  isTreningshuset ? "aspect-[9/16] sm:aspect-[4/5]" : "aspect-video",
+                )}
+              >
                 <EmbeddedVideoPlayer
                   title={caseStudy.title}
                   video={caseStudy.video}
@@ -59,7 +72,11 @@ export function CaseDetailContent({
                   autoplay
                   priority
                   className="relative h-full w-full"
-                  sizes="100vw"
+                  sizes={
+                    isTreningshuset
+                      ? "(min-width: 1280px) 38rem, (min-width: 1024px) 34rem, (min-width: 640px) 30rem, 100vw"
+                      : "100vw"
+                  }
                 />
                 <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,rgba(17,17,17,0.04),rgba(17,17,17,0.24))]" />
               </div>
