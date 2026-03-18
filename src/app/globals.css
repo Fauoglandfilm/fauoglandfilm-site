@@ -331,16 +331,6 @@ summary::-webkit-details-marker {
     padding-bottom: clamp(3rem, 5vw, 6.25rem);
   }
 
-  .header-brand-shell {
-    position: relative;
-    overflow: hidden;
-    border: 1px solid var(--header-brand-border);
-    background: color-mix(in srgb, var(--header-brand-surface) 96%, white 4%);
-    box-shadow:
-      0 14px 30px rgba(17, 17, 17, 0.08),
-      inset 0 1px 0 rgba(255, 255, 255, 0.36);
-  }
-
   .brand-signature-chip {
     border-radius: 1.35rem;
     border: 1px solid color-mix(in srgb, var(--line) 92%, rgba(255, 255, 255, 0.16));
@@ -2076,12 +2066,6 @@ summary::-webkit-details-marker {
     .section-space {
       padding-top: 2.5rem;
       padding-bottom: 2.5rem;
-    }
-
-    .header-brand-shell {
-      box-shadow:
-        0 10px 22px rgba(17, 17, 17, 0.08),
-        inset 0 1px 0 rgba(255, 255, 255, 0.34);
     }
 
     .brand-signature-chip {
