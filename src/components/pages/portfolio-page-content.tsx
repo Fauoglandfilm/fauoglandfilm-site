@@ -115,8 +115,8 @@ export function PortfolioPageContent({
         <div className="site-container">
           <div className="grid gap-4 lg:grid-cols-[1.16fr_0.84fr]">
             <Reveal>
-              <article className="cinematic-panel group overflow-hidden rounded-[2rem] shadow-[0_34px_110px_rgba(0,0,0,0.24)]">
-                <div className="media-frame relative aspect-[1.16/0.96] min-h-[18rem] overflow-hidden sm:aspect-[1.3/0.94] lg:min-h-[28rem]">
+              <article className="card-surface group overflow-hidden rounded-[2rem] shadow-[0_20px_56px_rgba(18,14,10,0.1)]">
+                <div className="media-frame relative aspect-video min-h-[13rem] overflow-hidden sm:min-h-[18rem] lg:min-h-[28rem]">
                   {getPortfolioCardHref(showreelProject) ? (
                     <Link
                       href={getPortfolioCardHref(showreelProject)!}
@@ -151,8 +151,7 @@ export function PortfolioPageContent({
             </Reveal>
 
             <Reveal delay={0.06}>
-              <article className="glass-panel relative flex h-full flex-col overflow-hidden rounded-[2rem] p-5 shadow-[0_30px_100px_rgba(0,0,0,0.2)] sm:p-6 lg:p-7">
-                <div className="glass-sheen absolute inset-0 opacity-50" />
+              <article className="card-surface relative flex h-full flex-col overflow-hidden rounded-[2rem] p-5 shadow-[0_18px_48px_rgba(18,14,10,0.08)] sm:p-6 lg:p-7">
                 <div className="space-y-3">
                   <span className="eyebrow">
                     {resolveLocalizedValue(portfolioPageContent.showreelEyebrow, language)}
@@ -191,7 +190,7 @@ export function PortfolioPageContent({
             ) : null}
 
             {visibleFeaturedProjects.length > 1 ? (
-              <div className="adaptive-grid-cards">
+              <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
                 {visibleFeaturedProjects.slice(1).map((project, index) => (
                   <Reveal key={project.slug} delay={0.05 * (index + 1)}>
                     <PortfolioProjectCard
@@ -210,8 +209,7 @@ export function PortfolioPageContent({
       <section id="portfolio-grid" className="section-space pt-0">
         <div className="site-container">
           <Reveal>
-            <div className="glass-panel relative overflow-hidden rounded-[2rem] p-5 shadow-[0_28px_90px_rgba(0,0,0,0.18)] sm:p-6 lg:p-7">
-              <div className="glass-sheen absolute inset-0 opacity-45" />
+            <div className="card-surface relative overflow-hidden rounded-[2rem] p-5 shadow-[0_18px_48px_rgba(18,14,10,0.08)] sm:p-6 lg:p-7">
               <div className="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
                 <div className="max-w-3xl space-y-3">
                   <span className="eyebrow">{copy.catalogEyebrow}</span>
@@ -260,7 +258,7 @@ export function PortfolioPageContent({
             </div>
           </Reveal>
 
-          <div className="adaptive-grid-cards mt-6">
+          <div className="mt-6 grid gap-4 md:grid-cols-2 xl:grid-cols-3">
             {filteredProjects.map((project, index) => (
               <Reveal key={project.slug} delay={0.03 * index}>
                 <PortfolioProjectCard
@@ -344,7 +342,7 @@ function PortfolioProjectCard({
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(255,255,255,0.06),transparent_32%),linear-gradient(180deg,rgba(8,8,8,0.01),rgba(8,8,8,0.08)_46%,rgba(8,8,8,0.52)_100%)]" />
 
         {group ? (
-          <span className="absolute left-4 top-4 z-[2] rounded-full border border-white/12 bg-black/18 px-3 py-1.5 text-[0.62rem] font-semibold uppercase tracking-[0.2em] text-white/78 backdrop-blur-xl">
+          <span className="absolute left-4 top-4 z-[2] rounded-full border border-white/12 bg-black/24 px-3 py-1.5 text-[0.62rem] font-semibold uppercase tracking-[0.2em] text-white/78">
             {resolveLocalizedValue(group.title, language)}
           </span>
         ) : null}

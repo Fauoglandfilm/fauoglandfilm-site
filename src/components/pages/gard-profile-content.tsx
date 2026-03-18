@@ -256,39 +256,33 @@ export function GardProfileContent() {
           <div className="grain-overlay absolute inset-0 opacity-38" />
         </div>
 
-        <div className="site-container relative flex min-h-[68svh] items-end py-8 sm:min-h-[72svh] sm:py-10 lg:min-h-[76svh] lg:py-12">
+        <div className="site-container relative flex min-h-[60svh] items-end py-8 sm:min-h-[68svh] sm:py-10 lg:min-h-[76svh] lg:py-12">
           <Reveal className="max-w-3xl" delay={0.04} y={18}>
-            <div className="subpage-hero-panel relative max-w-[42rem] overflow-hidden px-5 py-5 text-white sm:px-7 sm:py-6 lg:px-8 lg:py-7">
-                <div className="glass-sheen absolute inset-0 opacity-75" />
-                <div className="pointer-events-none absolute -left-10 bottom-[-3rem] h-28 w-28 rounded-full bg-[radial-gradient(circle,rgba(255,255,255,0.18),transparent_72%)] blur-2xl opacity-70" />
-                <div className="pointer-events-none absolute right-[-2rem] top-[-2rem] h-28 w-28 rounded-full bg-[radial-gradient(circle,rgba(122,168,255,0.24),transparent_68%)] blur-2xl opacity-78" />
+            <div className="max-w-[42rem] text-white">
+              <ButtonLink
+                href="/om-oss"
+                variant="ghost"
+                size="compact"
+                className="w-fit border-white/14 text-white/84 hover:border-white/26 hover:text-white"
+              >
+                {language === "no" ? "Tilbake til Om oss" : "Back to About"}
+              </ButtonLink>
 
-              <div className="relative z-[1]">
-                <ButtonLink
-                  href="/om-oss"
-                  variant="ghost"
-                  size="compact"
-                  className="w-fit border-white/14 text-white/84 hover:border-white/26 hover:text-white"
-                >
-                  {language === "no" ? "Tilbake til Om oss" : "Back to About"}
+              <span className="hero-badge mt-5 text-white/72">
+                {resolveLocalizedValue(gardProfilePage.heroTitle, language)}
+              </span>
+              <h1 className="page-title mt-4 max-w-[10ch] text-white">{profile.name}</h1>
+              <p className="mt-4 max-w-[34rem] text-[1rem] leading-7 text-white/84 sm:text-[1.08rem] sm:leading-8">
+                {resolveLocalizedValue(gardProfilePage.heroIntro, language)}
+              </p>
+
+              <div className="mt-6 flex flex-col gap-2.5 sm:flex-row sm:flex-wrap">
+                <ButtonLink href="/kontakt" className="w-full sm:w-auto">
+                  {resolveLocalizedValue(gardProfilePage.heroCtaPrimary, language)}
                 </ButtonLink>
-
-                <span className="hero-badge mt-5 text-white/72">
-                  {resolveLocalizedValue(gardProfilePage.heroTitle, language)}
-                </span>
-                <h1 className="page-title mt-4 max-w-[10ch] text-white">{profile.name}</h1>
-                <p className="mt-4 max-w-[34rem] text-[1.02rem] leading-7 text-white/84 sm:text-[1.08rem] sm:leading-8">
-                  {resolveLocalizedValue(gardProfilePage.heroIntro, language)}
-                </p>
-
-                <div className="mt-6 flex flex-col gap-2.5 sm:flex-row sm:flex-wrap">
-                  <ButtonLink href="/kontakt" className="w-full sm:w-auto">
-                    {resolveLocalizedValue(gardProfilePage.heroCtaPrimary, language)}
-                  </ButtonLink>
-                  <ButtonLink href="/case" variant="secondary" className="w-full sm:w-auto">
-                    {resolveLocalizedValue(gardProfilePage.heroCtaSecondary, language)}
-                  </ButtonLink>
-                </div>
+                <ButtonLink href="/case" variant="secondary" className="w-full sm:w-auto">
+                  {resolveLocalizedValue(gardProfilePage.heroCtaSecondary, language)}
+                </ButtonLink>
               </div>
             </div>
           </Reveal>
@@ -313,7 +307,7 @@ export function GardProfileContent() {
             </Reveal>
 
             <Reveal delay={0.06}>
-              <div className="glass-panel rounded-[2rem] px-5 py-5 sm:px-6 sm:py-6 lg:px-7 lg:py-7">
+              <div className="card-surface rounded-[2rem] px-5 py-5 sm:px-6 sm:py-6 lg:px-7 lg:py-7">
                 <span className="eyebrow">{resolveLocalizedValue(gardProfilePage.introEyebrow, language)}</span>
                 <h2 className="section-title mt-3 text-[color:var(--foreground)]">
                   {resolveLocalizedValue(gardProfilePage.introTitle, language)}
@@ -388,9 +382,8 @@ export function GardProfileContent() {
       <section className="section-space pt-0">
         <div className="site-container">
           <Reveal>
-            <article className="glass-panel overflow-hidden rounded-[2.1rem] px-5 py-6 sm:px-7 sm:py-7">
-              <div className="glass-sheen absolute inset-0 opacity-45" />
-              <div className="relative z-[1] grid gap-6 lg:grid-cols-[minmax(0,0.92fr)_minmax(18rem,1.08fr)] lg:items-end">
+            <article className="card-surface overflow-hidden rounded-[2.1rem] px-5 py-6 sm:px-7 sm:py-7">
+              <div className="grid gap-6 lg:grid-cols-[minmax(0,0.92fr)_minmax(18rem,1.08fr)] lg:items-end">
                 <div className="space-y-3">
                   <span className="eyebrow">{profile.name}</span>
                   <h2 className="section-title text-[color:var(--foreground)]">
