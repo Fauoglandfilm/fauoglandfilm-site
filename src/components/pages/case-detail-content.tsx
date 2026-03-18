@@ -57,6 +57,7 @@ export function CaseDetailContent({
                   imageAlt={caseStudy.imageAlt}
                   mediaFit={caseStudy.mediaFit}
                   autoplay
+                  priority
                   className="relative h-full w-full"
                   sizes="100vw"
                 />
