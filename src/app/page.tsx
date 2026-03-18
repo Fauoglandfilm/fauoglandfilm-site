@@ -1,11 +1,11 @@
 import {
-  AboutSection,
   ClientSlider,
-  ContactSection,
-  FeaturedCase,
+  ClosingCtaSection,
   HeroSection,
+  ResultsSection,
   SelectedWorkSection,
   ServicesSection,
+  WhyChooseUsSection,
 } from "@/components/sections/home-sections";
 import { caseStudies, siteConfig } from "@/data/site-content";
 import { buildMetadata } from "@/lib/seo";
@@ -16,19 +16,20 @@ export const metadata = buildMetadata({
   path: "/",
 });
 
-const homepageCaseStudies = caseStudies
-  .filter((entry) => entry.slug !== "nei-til-atomvapen")
-  .slice(0, 3);
+const homepageCaseStudies = ["treningshuset", "ville-gleder", "foreningen-norden"]
+  .map((slug) => caseStudies.find((entry) => entry.slug === slug))
+  .filter((entry): entry is (typeof caseStudies)[number] => Boolean(entry));
+
 export default function HomePage() {
   return (
     <main>
       <HeroSection />
-      <SelectedWorkSection items={homepageCaseStudies} />
       <ClientSlider />
+      <SelectedWorkSection items={homepageCaseStudies} />
+      <WhyChooseUsSection />
       <ServicesSection />
-      <FeaturedCase />
-      <AboutSection />
-      <ContactSection />
+      <ResultsSection />
+      <ClosingCtaSection />
     </main>
   );
 }

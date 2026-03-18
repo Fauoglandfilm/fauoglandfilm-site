@@ -333,6 +333,7 @@ summary::-webkit-details-marker {
 
   .header-brand-shell {
     position: relative;
+    overflow: hidden;
     border: 1px solid var(--header-brand-border);
     background: color-mix(in srgb, var(--header-brand-surface) 96%, white 4%);
     box-shadow:
@@ -353,6 +354,7 @@ summary::-webkit-details-marker {
   }
 
   .brand-signature-mark {
+    overflow: hidden;
     border: 1px solid var(--header-brand-border);
     background: color-mix(in srgb, var(--header-brand-surface) 98%, white 2%);
     box-shadow:

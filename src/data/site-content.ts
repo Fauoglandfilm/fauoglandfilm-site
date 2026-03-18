@@ -214,16 +214,16 @@ export const siteConfig = {
 
 export const homeHeroContent = {
   title: {
-    no: "Film som beveger merkevarer.",
-    en: "Film that moves brands.",
+    no: "Film som faktisk selger.",
+    en: "Film that actually sells.",
   },
   description: {
-    no: "Vi lager reklamefilm og innholdsproduksjon som gjør oppmerksomhet om til tillit, henvendelser og nye kunder.",
-    en: "We create commercials and content that turn attention into trust, inquiries and new customers.",
+    no: "Mer synlighet, flere henvendelser og bedre konvertering fra film bygget for nettside, annonser og sosiale medier.",
+    en: "More visibility, more inquiries and better conversion from films built for websites, ads and social media.",
   },
   ctaLabel: {
-    no: "Book et uforpliktende møte",
-    en: "Book an introductory call",
+    no: "Book møte",
+    en: "Book a meeting",
   },
   ctaHref: "/kontakt",
 };
