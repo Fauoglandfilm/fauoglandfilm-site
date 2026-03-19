@@ -5,7 +5,7 @@ import { buildMetadata } from "@/lib/seo";
 export const metadata = buildMetadata({
   title: "Tommy R.A. Garland",
   description:
-    "Møt Tommy R.A. Garland, producer og partner i Fau&Land Film med erfaring fra reklame, event, TV og kortfilm.",
+    "Tommy R.A. Garland er producer, line producer og prosjektleder med erfaring fra prisvinnende kortfilm, reklame, event og større produksjoner.",
   path: "/team/tommy-garland",
 });
 
