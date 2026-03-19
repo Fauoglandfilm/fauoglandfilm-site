@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { useReducedMotion } from "framer-motion";
@@ -798,7 +799,16 @@ export function ResultsSection() {
 }
 
 export function WhyUsProofSection() {
-  const { language } = useSitePreferences();
+  const { language, theme } = useSitePreferences();
+  const testimonialLogos = useMemo(
+    () =>
+      new Map(
+        clientLogos
+          .filter((logo) => ["Ville Gleder", "Nei til Atomvåpen", "Vikingmaxtrading"].includes(logo.name))
+          .map((logo) => [logo.name, logo]),
+      ),
+    [],
+  );
 
   return (
     <section className="section-space pt-0">
@@ -821,18 +831,39 @@ export function WhyUsProofSection() {
           </Reveal>
 
           <div className="grid gap-4">
-            {testimonials.map((testimonial, index) => (
-              <Reveal key={`${testimonial.company}-${testimonial.name}`} delay={0.04 * index} y={12}>
-                <blockquote className="result-testimonial-card px-5 py-4.5 text-[var(--muted-2)] sm:px-6 sm:py-5.5">
-                  <p className="text-[0.98rem] leading-7 sm:text-[1.03rem]">
-                    “{resolveLocalizedValue(testimonial.quote, language)}”
-                  </p>
-                  <footer className="mt-3.5 text-sm text-[var(--muted)]">
-                    {testimonial.name} ({testimonial.company})
-                  </footer>
-                </blockquote>
-              </Reveal>
-            ))}
+            {testimonials.map((testimonial, index) => {
+              const logo = testimonialLogos.get(testimonial.company);
+
+              return (
+                <Reveal key={`${testimonial.company}-${testimonial.name}`} delay={0.04 * index} y={12}>
+                  <blockquote className="result-testimonial-card px-5 py-4.5 text-[var(--muted-2)] sm:px-6 sm:py-5.5">
+                    <p className="text-[0.98rem] leading-7 sm:text-[1.03rem]">
+                      “{resolveLocalizedValue(testimonial.quote, language)}”
+                    </p>
+                    <footer className="mt-4 border-t border-[color:var(--line)]/80 pt-4">
+                      <div className="flex flex-wrap items-center justify-between gap-3">
+                        <div className="flex min-h-[2rem] items-center">
+                          {logo ? (
+                            <Image
+                              src={theme === "dark" ? logo.darkSrc ?? logo.src : logo.lightSrc ?? logo.src}
+                              alt={testimonial.company}
+                              width={logo.width}
+                              height={logo.height}
+                              className="block h-[1.65rem] w-auto max-w-[8.5rem] object-contain"
+                            />
+                          ) : (
+                            <span className="text-[0.72rem] font-semibold uppercase tracking-[0.18em] text-[var(--muted)]">
+                              {testimonial.company}
+                            </span>
+                          )}
+                        </div>
+                        <span className="text-sm text-[var(--muted)]">{testimonial.name}</span>
+                      </div>
+                    </footer>
+                  </blockquote>
+                </Reveal>
+              );
+            })}
           </div>
         </div>
       </div>
