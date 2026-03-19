@@ -28,6 +28,7 @@ export function CaseDetailContent({
   );
   const localizedTags = caseStudy.tags.map((tag) => resolveLocalizedValue(tag, language));
   const isTreningshuset = caseStudy.slug === "treningshuset";
+  const hasMixedVideoVariants = isTreningshuset && caseStudy.videoVariants?.length === 2;
 
   return (
     <main>
@@ -51,7 +52,7 @@ export function CaseDetailContent({
             className={cn(
               "overflow-hidden",
               isTreningshuset
-                ? "-mx-4 bg-[#0b0d12] sm:mx-auto sm:max-w-[30rem] sm:rounded-[2rem] sm:border sm:border-[color:var(--line)] sm:bg-[color:var(--surface)] lg:max-w-[34rem] xl:max-w-[38rem]"
+                ? "-mx-4 sm:mx-0 sm:rounded-[2rem] sm:border sm:border-[color:var(--line)] sm:bg-[color:var(--surface)]"
                 : "-mx-4 sm:mx-0 sm:rounded-[2rem] sm:border sm:border-[color:var(--line)] sm:bg-[color:var(--surface)]",
             )}
           >
@@ -59,7 +60,7 @@ export function CaseDetailContent({
               <div
                 className={cn(
                   "relative w-full bg-[#111111]",
-                  isTreningshuset ? "aspect-[9/16] sm:aspect-[4/5]" : "aspect-video",
+                  "aspect-video",
                 )}
               >
                 <EmbeddedVideoPlayer
@@ -72,11 +73,8 @@ export function CaseDetailContent({
                   autoplay
                   priority
                   className="relative h-full w-full"
-                  sizes={
-                    isTreningshuset
-                      ? "(min-width: 1280px) 38rem, (min-width: 1024px) 34rem, (min-width: 640px) 30rem, 100vw"
-                      : "100vw"
-                  }
+                  sizes="100vw"
+                  disableMobileSource={isTreningshuset}
                 />
                 <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,rgba(17,17,17,0.04),rgba(17,17,17,0.24))]" />
               </div>
@@ -112,10 +110,30 @@ export function CaseDetailContent({
           </article>
 
           {caseStudy.videoVariants?.length ? (
-            <section className="grid gap-4 md:grid-cols-2">
+            <section
+              className={cn(
+                "grid gap-4",
+                hasMixedVideoVariants ? "md:grid-cols-[minmax(0,1.28fr)_minmax(16rem,0.72fr)]" : "md:grid-cols-2",
+              )}
+            >
               {caseStudy.videoVariants.map((variant) => (
-                <article key={variant.slug} className="card-surface overflow-hidden rounded-[1.8rem]">
-                  <div className="relative min-h-[14.5rem] bg-[#0b0d12] sm:min-h-[18rem] md:min-h-[24rem]">
+                <article
+                  key={variant.slug}
+                  className={cn(
+                    "card-surface overflow-hidden rounded-[1.8rem]",
+                    variant.frame === "portrait" && hasMixedVideoVariants && "md:justify-self-end md:w-full md:max-w-[22rem]",
+                  )}
+                >
+                  <div
+                    className={cn(
+                      "relative bg-[#0b0d12]",
+                      variant.frame === "portrait"
+                        ? "aspect-[9/16]"
+                        : variant.frame === "landscape"
+                          ? "aspect-video"
+                          : "min-h-[14.5rem] sm:min-h-[18rem] md:min-h-[24rem]",
+                    )}
+                  >
                     <EmbeddedVideoPlayer
                       title={variant.label}
                       video={variant.video}

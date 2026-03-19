@@ -13,6 +13,7 @@ public/assets/**/*.mov
 public/assets/**/*.mkv
 public/assets/**/*.webm
 !public/assets/portfolio/treningshuset/videos/web/treningshuset-desktop-4x5-web.mp4
+!public/assets/portfolio/treningshuset/videos/web/treningshuset-desktop-16x9-web.mp4
 !public/assets/portfolio/treningshuset/videos/web/treningshuset-mobile-9x16-web.mp4
 !public/assets/portfolio/treningshuset/videos/alternates/mobile-9x16/Kort_Reel.mp4
 !public/assets/portfolio/treningshuset/videos/alternates/portrait-4x5/Kort_Reel45.mp4
