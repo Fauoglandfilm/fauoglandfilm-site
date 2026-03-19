@@ -345,7 +345,7 @@ export function GardProfileContent() {
           <div className="adaptive-grid-compact mt-6">
             {gardProfilePage.focusAreas.map((area, index) => (
               <Reveal key={resolveLocalizedValue(area.title, language)} delay={0.05 * index}>
-                <article className="card-surface rounded-[1.7rem] px-4 py-4 sm:px-5 sm:py-5">
+                <article className="card-surface rounded-[2rem] px-5 py-5 sm:px-6 sm:py-6">
                   <h3 className="card-title text-[color:var(--foreground)]">
                     {resolveLocalizedValue(area.title, language)}
                   </h3>
@@ -382,7 +382,7 @@ export function GardProfileContent() {
       <section className="section-space pt-0">
         <div className="site-container">
           <Reveal>
-            <article className="card-surface overflow-hidden rounded-[2.1rem] px-5 py-6 sm:px-7 sm:py-7">
+            <article className="card-surface overflow-hidden rounded-[2rem] px-5 py-6 sm:px-7 sm:py-7">
               <div className="grid gap-6 lg:grid-cols-[minmax(0,0.92fr)_minmax(18rem,1.08fr)] lg:items-end">
                 <div className="space-y-3">
                   <span className="eyebrow">{profile.name}</span>
