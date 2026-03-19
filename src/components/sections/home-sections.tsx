@@ -126,10 +126,8 @@ function HeroTypewriterTitle({
 export function HeroSection() {
   const heroVideo = videoLibrary.hero;
   const { language } = useSitePreferences();
-  const heroVideoRef = useRef<HTMLVideoElement | null>(null);
   const [hasVideoError, setHasVideoError] = useState(false);
-  const [hasVideoFrame, setHasVideoFrame] = useState(false);
-  const [hasPlaybackStarted, setHasPlaybackStarted] = useState(false);
+  const [isPosterVisible, setIsPosterVisible] = useState(true);
 
   const eyebrow =
     language === "no"
@@ -137,139 +135,57 @@ export function HeroSection() {
       : "Oslo / Commercial Film / Production";
   const secondaryCta = language === "no" ? "Se arbeid" : "View work";
   const heroTitle = resolveLocalizedValue(homeHeroContent.title, language);
-  const heroVideoKey = `${heroVideo.mobileSrc ?? ""}|${heroVideo.src}`;
-
-  useEffect(() => {
-    const video = heroVideoRef.current;
-
-    if (!video || hasVideoError) {
-      return;
-    }
-
-    video.defaultMuted = true;
-    video.muted = true;
-    video.loop = true;
-    video.playsInline = true;
-    video.autoplay = true;
-    video.setAttribute("muted", "");
-    video.setAttribute("playsinline", "");
-    video.setAttribute("webkit-playsinline", "");
-    video.setAttribute("autoplay", "");
-    video.setAttribute("disableRemotePlayback", "");
-
-    const markVideoVisible = () => {
-      setHasVideoFrame(true);
-    };
-
-    const playVideo = () => {
-      video
-        .play()
-        .then(() => undefined)
-        .catch(() => {
-          window.setTimeout(() => {
-            video.play().catch(() => undefined);
-          }, 180);
-        });
-    };
-
-    const handleLoadedMetadata = () => {
-      if (video.readyState >= HTMLMediaElement.HAVE_METADATA) {
-        markVideoVisible();
-      }
-
-      playVideo();
-    };
-    const handleLoadedData = () => {
-      markVideoVisible();
-    };
-    const handleCanPlay = () => {
-      if (video.readyState >= HTMLMediaElement.HAVE_CURRENT_DATA) {
-        markVideoVisible();
-      }
-
-      playVideo();
-    };
-    const handlePlay = () => {
-      markVideoVisible();
-    };
-    const handlePlaying = () => {
-      markVideoVisible();
-      setHasPlaybackStarted(true);
-    };
-    const handleTimeUpdate = () => {
-      if (video.currentTime > 0) {
-        markVideoVisible();
-        setHasPlaybackStarted(true);
-      }
-    };
-    const handleVisibility = () => {
-      if (document.visibilityState === "visible") {
-        playVideo();
-      }
-    };
-
-    if (video.readyState >= HTMLMediaElement.HAVE_CURRENT_DATA) {
-      markVideoVisible();
-    }
-
-    video.load();
-    playVideo();
-    video.addEventListener("loadedmetadata", handleLoadedMetadata);
-    video.addEventListener("loadeddata", handleLoadedData);
-    video.addEventListener("canplay", handleCanPlay);
-    video.addEventListener("play", handlePlay);
-    video.addEventListener("playing", handlePlaying);
-    video.addEventListener("timeupdate", handleTimeUpdate);
-    document.addEventListener("visibilitychange", handleVisibility);
-
-    return () => {
-      video.removeEventListener("loadedmetadata", handleLoadedMetadata);
-      video.removeEventListener("loadeddata", handleLoadedData);
-      video.removeEventListener("canplay", handleCanPlay);
-      video.removeEventListener("play", handlePlay);
-      video.removeEventListener("playing", handlePlaying);
-      video.removeEventListener("timeupdate", handleTimeUpdate);
-      document.removeEventListener("visibilitychange", handleVisibility);
-    };
-  }, [hasVideoError, heroVideo.mobileSrc, heroVideo.src]);
 
   return (
     <section className="relative isolate overflow-hidden bg-[#05070a] text-white">
       <div className="absolute inset-0">
-        <div
+        <picture
           className={cn(
-            "absolute inset-0 bg-cover bg-center transition duration-500",
-            hasVideoError || !hasVideoFrame ? "opacity-100" : "opacity-0",
+            "absolute inset-0 z-[1] block overflow-hidden transition-opacity duration-300 pointer-events-none",
+            hasVideoError || isPosterVisible ? "opacity-100" : "opacity-0",
           )}
-          style={{ backgroundImage: `url(${heroVideo.poster})` }}
-        />
-        {hasVideoError ? null : (
-          <video
-            ref={heroVideoRef}
-            key={heroVideoKey}
-            className={cn(
-              "relative h-full w-full object-cover brightness-[0.88] saturate-[1.04] contrast-[1.04] transition duration-500",
-              hasVideoFrame || hasPlaybackStarted ? "scale-[1.015] opacity-100" : "scale-[1.01] opacity-0",
-            )}
-            autoPlay
-            muted
-            loop
-            playsInline
-            preload="metadata"
-            poster={heroVideo.poster}
-            disablePictureInPicture
-            onError={() => setHasVideoError(true)}
-          >
-            {heroVideo.mobileSrc ? (
-              <source
-                src={heroVideo.mobileSrc}
-                media="(max-width: 767px)"
-                type="video/mp4"
-              />
-            ) : null}
-            <source src={heroVideo.src} type="video/mp4" />
-          </video>
-        )}
+        >
+          {heroVideo.mobilePoster ? (
+            <source media="(max-width: 767px)" srcSet={heroVideo.mobilePoster} />
+          ) : null}
+          <img
+            src={heroVideo.poster}
+            alt=""
+            className="h-full w-full object-cover"
+            loading="eager"
+            fetchPriority="high"
+            decoding="async"
+          />
+        </picture>
+        <video
+          className={cn(
+            "absolute inset-0 z-0 h-full w-full object-cover brightness-[0.88] saturate-[1.04] contrast-[1.04] transition-opacity duration-300",
+            hasVideoError ? "opacity-0" : "opacity-100",
+          )}
+          autoPlay
+          muted
+          loop
+          playsInline
+          preload="auto"
+          poster={heroVideo.poster}
+          disablePictureInPicture
+          aria-hidden="true"
+          onLoadedData={() => setIsPosterVisible(false)}
+          onPlaying={() => setIsPosterVisible(false)}
+          onError={() => {
+            setHasVideoError(true);
+            setIsPosterVisible(true);
+          }}
+        >
+          {heroVideo.mobileSrc ? (
+            <source
+              src={heroVideo.mobileSrc}
+              media="(max-width: 767px)"
+              type="video/mp4"
+            />
+          ) : null}
+          <source src={heroVideo.src} type="video/mp4" />
+        </video>
         <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(5,7,10,0.28)_0%,rgba(5,7,10,0.14)_24%,rgba(5,7,10,0.26)_56%,rgba(5,7,10,0.62)_100%)]" />
         <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(5,7,10,0.66)_0%,rgba(5,7,10,0.5)_22%,rgba(5,7,10,0.16)_56%,rgba(5,7,10,0.08)_100%)]" />
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(210,173,116,0.18),transparent_30%),radial-gradient(circle_at_82%_14%,rgba(112,143,216,0.1),transparent_22%)]" />

@@ -10,6 +10,7 @@ export type VideoAsset =
       videoType: "direct";
       src: string;
       poster?: string;
+      mobilePoster?: string;
       label: LocalizedText;
       mobileSrc?: string;
       hasEmbeddedText?: boolean;
@@ -298,7 +299,8 @@ export const videoLibrary = {
     videoType: "direct",
     src: "/media/hero/hero-nature-desktop.mp4",
     mobileSrc: "/media/hero/hero-nature-mobile.mp4",
-    poster: "/media/placeholders/hero-poster.svg",
+    poster: "/media/hero/hero-nature-desktop-poster.png",
+    mobilePoster: "/media/hero/hero-nature-mobile-poster.png",
     label: {
       no: "Naturfilm for Fau&Land Film",
       en: "Nature film for Fau&Land Film",
