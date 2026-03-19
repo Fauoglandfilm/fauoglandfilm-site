@@ -614,7 +614,7 @@ export function ResultsSection() {
             suffix="+"
             trigger={animationReady}
             locale={language === "no" ? "nb-NO" : "en-US"}
-            durationMs={1200}
+            durationMs={1800}
           />
         ),
         label: resultMetrics[0]?.label ?? "",
@@ -627,7 +627,7 @@ export function ResultsSection() {
             suffix="+"
             trigger={animationReady}
             locale={language === "no" ? "nb-NO" : "en-US"}
-            durationMs={1600}
+            durationMs={2400}
           />
         ),
         label: resultMetrics[1]?.label ?? "",
