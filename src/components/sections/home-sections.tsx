@@ -332,14 +332,14 @@ export function HeroSection() {
             <div className="mt-6 flex flex-col gap-2.5 sm:mt-8 sm:flex-row sm:gap-3">
               <ButtonLink
                 href={siteConfig.bookingHref}
-                className="w-full border-white/16 bg-white text-[#111111] hover:bg-white/92 hover:text-[#111111] sm:w-auto"
+                className="hero-cta-primary w-full sm:w-auto"
               >
                 {resolveLocalizedValue(homeHeroContent.ctaLabel, language)}
               </ButtonLink>
               <ButtonLink
                 href="#selected-work"
                 variant="secondary"
-                className="w-full border-white/18 bg-white/8 text-white hover:bg-white/14 hover:text-white sm:w-auto"
+                className="hero-cta-secondary w-full sm:w-auto"
               >
                 {secondaryCta}
               </ButtonLink>
@@ -725,7 +725,7 @@ export function ResultsSection() {
                 <div className="mt-6">
                   <ButtonLink
                     href="/kontakt"
-                    className="w-full border-white/16 bg-white text-[#111111] hover:bg-white/92 hover:text-[#111111] sm:w-auto"
+                    className="w-full sm:w-auto"
                   >
                     {language === "no" ? "Book møte" : "Book a meeting"}
                   </ButtonLink>
@@ -881,14 +881,14 @@ export function ClosingCtaSection() {
             <div className="mt-7 flex flex-col gap-3 sm:flex-row lg:mt-0 lg:shrink-0">
               <ButtonLink
                 href={siteConfig.bookingHref}
-                className="w-full border-white/16 bg-white text-[#111111] hover:bg-white/92 hover:text-[#111111] sm:w-auto"
+                className="w-full sm:w-auto"
               >
                 {resolveLocalizedValue(homeHeroContent.ctaLabel, language)}
               </ButtonLink>
               <ButtonLink
                 href="/priser"
                 variant="secondary"
-                className="w-full border-white/18 bg-white/8 text-white hover:bg-white/14 hover:text-white sm:w-auto"
+                className="w-full sm:w-auto"
               >
                 {resolveLocalizedValue(closingCtaContent.secondaryCta, language)}
               </ButtonLink>

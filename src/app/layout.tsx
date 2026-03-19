@@ -51,6 +51,10 @@ const preferenceBootScript = `
       var prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
       var theme = storedTheme === 'light' || storedTheme === 'dark' ? storedTheme : (prefersDark ? 'dark' : 'light');
       document.documentElement.dataset.theme = theme;
+      var themeColorMeta = document.querySelector('meta[name="theme-color"]');
+      if (themeColorMeta) {
+        themeColorMeta.setAttribute('content', theme === 'dark' ? '#111111' : '#ffffff');
+      }
       if (language === 'no' || language === 'en') {
         document.documentElement.dataset.language = language;
         document.documentElement.lang = language === 'no' ? 'nb' : 'en';
