@@ -86,7 +86,13 @@ const closingCtaContent = {
   secondaryCta: LocalizedText;
 };
 
-function HeroTypewriterTitle({ title }: { title: string }) {
+function HeroTypewriterTitle({
+  title,
+  className,
+}: {
+  title: string;
+  className?: string;
+}) {
   const shouldReduceMotion = useReducedMotion();
   const characters = useMemo(() => Array.from(title), [title]);
   const words = useMemo(() => title.split(" "), [title]);
@@ -154,7 +160,7 @@ function HeroTypewriterTitle({ title }: { title: string }) {
   }, [isAnimating, shouldReduceMotion, totalCharacters]);
 
   return (
-    <span aria-label={title} role="text" className="hero-typewriter">
+    <span aria-label={title} role="text" className={cn("hero-typewriter", className)}>
       <span className="sr-only">{title}</span>
       <span aria-hidden="true" className="hero-typewriter__line">
         {words.map((word, wordIndex) => {
@@ -316,7 +322,7 @@ export function HeroSection() {
               </span>
             </div>
             <h1 className="hero-title mt-4 max-w-[10.2ch] text-white sm:mt-6 lg:max-w-[10.6ch]">
-              <HeroTypewriterTitle title={heroTitle} />
+              <HeroTypewriterTitle title={heroTitle} className="hero-typewriter--gold" />
             </h1>
             <p className="mt-3.5 max-w-[31rem] text-[0.94rem] leading-6 text-white/80 sm:mt-5 sm:text-[1.05rem] sm:leading-7">
               {resolveLocalizedValue(homeHeroContent.description, language)}
