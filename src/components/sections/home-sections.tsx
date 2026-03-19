@@ -329,7 +329,7 @@ export function HeroSection() {
               {resolveLocalizedValue(homeHeroContent.description, language)}
             </p>
 
-            <div className="mt-6 flex flex-col gap-2.5 sm:mt-8 sm:flex-row sm:gap-3">
+            <div className="hidden sm:mt-8 sm:flex sm:flex-row sm:gap-3">
               <ButtonLink
                 href={siteConfig.bookingHref}
                 className="hero-cta-primary w-full sm:w-auto"
@@ -509,30 +509,35 @@ function CountUpValue({
   suffix,
   trigger,
   locale,
+  durationMs,
 }: {
   target: number;
   suffix: string;
   trigger: boolean;
   locale: string;
+  durationMs: number;
 }) {
   const shouldReduceMotion = useReducedMotion();
   const [value, setValue] = useState(0);
   const displayValue = shouldReduceMotion && trigger ? target : value;
 
   useEffect(() => {
-    if (!trigger || shouldReduceMotion) {
+    if (!trigger) {
       return;
     }
 
-    const duration = 19600;
+    if (shouldReduceMotion) {
+      return;
+    }
+
     const start = performance.now();
     let frameId = 0;
 
-    const easeOutExpo = (t: number) => (t >= 1 ? 1 : 1 - 2 ** (-10 * t));
+    const easeOutCubic = (t: number) => 1 - (1 - t) ** 3;
 
     const tick = (now: number) => {
-      const progress = Math.min((now - start) / duration, 1);
-      const eased = easeOutExpo(progress);
+      const progress = Math.min((now - start) / durationMs, 1);
+      const eased = easeOutCubic(progress);
       setValue(Math.round(target * eased));
 
       if (progress < 1) {
@@ -545,7 +550,7 @@ function CountUpValue({
     return () => {
       window.cancelAnimationFrame(frameId);
     };
-  }, [shouldReduceMotion, target, trigger]);
+  }, [durationMs, shouldReduceMotion, target, trigger]);
 
   return (
     <>
@@ -559,7 +564,6 @@ export function ResultsSection() {
   const { language } = useSitePreferences();
   const shouldReduceMotion = useReducedMotion();
   const sectionRef = useRef<HTMLElement | null>(null);
-  const statsRef = useRef<HTMLDivElement | null>(null);
   const [hasAnimated, setHasAnimated] = useState(false);
   const animationReady = shouldReduceMotion || hasAnimated;
   const resultMetrics = useMemo(
@@ -649,6 +653,7 @@ export function ResultsSection() {
             suffix="+"
             trigger={animationReady}
             locale={language === "no" ? "nb-NO" : "en-US"}
+            durationMs={1200}
           />
         ),
         label: resultMetrics[0]?.label ?? "",
@@ -661,6 +666,7 @@ export function ResultsSection() {
             suffix="+"
             trigger={animationReady}
             locale={language === "no" ? "nb-NO" : "en-US"}
+            durationMs={1600}
           />
         ),
         label: resultMetrics[1]?.label ?? "",
@@ -676,21 +682,48 @@ export function ResultsSection() {
   );
 
   useEffect(() => {
-    const node = statsRef.current;
+    const node = sectionRef.current;
 
-    if (shouldReduceMotion || !node || hasAnimated || typeof IntersectionObserver === "undefined") {
+    if (shouldReduceMotion || !node || hasAnimated) {
+      return;
+    }
+
+    const triggerAnimation = () => {
+      setHasAnimated((current) => {
+        if (current) {
+          return current;
+        }
+
+        return true;
+      });
+    };
+
+    const isSectionVisible = () => {
+      const rect = node.getBoundingClientRect();
+
+      return rect.top <= window.innerHeight * 0.9 && rect.bottom >= window.innerHeight * 0.18;
+    };
+
+    if (isSectionVisible()) {
+      triggerAnimation();
+      return;
+    }
+
+    if (typeof IntersectionObserver === "undefined") {
+      triggerAnimation();
       return;
     }
 
     const observer = new IntersectionObserver(
       ([entry]) => {
-        if (entry.isIntersecting && entry.intersectionRatio >= 0.72) {
-          setHasAnimated(true);
+        if (entry.isIntersecting || entry.intersectionRatio >= 0.18) {
+          triggerAnimation();
           observer.disconnect();
         }
       },
       {
-        threshold: [0, 0.72, 0.9],
+        rootMargin: "0px 0px -10% 0px",
+        threshold: [0, 0.18, 0.32],
       },
     );
 
@@ -731,7 +764,7 @@ export function ResultsSection() {
                   </ButtonLink>
                 </div>
 
-                <div ref={statsRef} className="mt-6 grid gap-3 sm:grid-cols-2">
+                <div className="mt-6 grid gap-3 sm:grid-cols-2">
                   {animatedMetrics.slice(0, 2).map((metric) => (
                     <div
                       key={metric.label}
