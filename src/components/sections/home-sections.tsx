@@ -1,7 +1,8 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
+import { useReducedMotion } from "framer-motion";
 
 import { PreviewMedia } from "@/components/media/preview-media";
 import { useSitePreferences } from "@/components/providers/site-preferences";
@@ -388,47 +389,177 @@ export function ServicesSection() {
   );
 }
 
-export function ResultsSection() {
-  const { language } = useSitePreferences();
-  const resultMetrics =
-    language === "no"
-      ? [
-          {
-            value: "10",
-            label: "filmer levert",
-            detail: "Bygget for flere uttak, flater og kampanjer.",
-          },
-          {
-            value: "60 000+",
-            label: "SoMe-visninger",
-            detail: "Dokumentert rekkevidde fra kampanjer og promofilmer.",
-          },
-          {
-            value: "Mer verdi",
-            label: "for samme opptak",
-            detail: "Flere versjoner gir lengre levetid og tydeligere ROI.",
-          },
-        ]
-      : [
-          {
-            value: "10",
-            label: "films delivered",
-            detail: "Built for multiple cutdowns, placements and campaigns.",
-          },
-          {
-            value: "60,000+",
-            label: "social views",
-            detail: "Documented reach from campaigns and promo films.",
-          },
-          {
-            value: "More value",
-            label: "from one production",
-            detail: "More versions create longer use and clearer ROI.",
-          },
-        ];
+function CountUpValue({
+  target,
+  suffix,
+  trigger,
+  locale,
+}: {
+  target: number;
+  suffix: string;
+  trigger: boolean;
+  locale: string;
+}) {
+  const shouldReduceMotion = useReducedMotion();
+  const [value, setValue] = useState(0);
+  const displayValue = shouldReduceMotion && trigger ? target : value;
+
+  useEffect(() => {
+    if (!trigger || shouldReduceMotion) {
+      return;
+    }
+
+    const duration = 980;
+    const start = performance.now();
+    let frameId = 0;
+
+    const easeOutExpo = (t: number) => (t >= 1 ? 1 : 1 - 2 ** (-10 * t));
+
+    const tick = (now: number) => {
+      const progress = Math.min((now - start) / duration, 1);
+      const eased = easeOutExpo(progress);
+      setValue(Math.round(target * eased));
+
+      if (progress < 1) {
+        frameId = window.requestAnimationFrame(tick);
+      }
+    };
+
+    frameId = window.requestAnimationFrame(tick);
+
+    return () => {
+      window.cancelAnimationFrame(frameId);
+    };
+  }, [shouldReduceMotion, target, trigger]);
 
   return (
-    <section className="section-space">
+    <>
+      {displayValue.toLocaleString(locale)}
+      {suffix}
+    </>
+  );
+}
+
+export function ResultsSection() {
+  const { language } = useSitePreferences();
+  const shouldReduceMotion = useReducedMotion();
+  const sectionRef = useRef<HTMLElement | null>(null);
+  const [hasAnimated, setHasAnimated] = useState(false);
+  const animationReady = shouldReduceMotion || hasAnimated;
+  const resultMetrics = useMemo(
+    () =>
+      language === "no"
+        ? [
+            {
+              value: "100+",
+              label: "filmer levert",
+              detail: "Over 100 filmer levert for kampanjer, nettsider, annonser og SoMe.",
+            },
+            {
+              value: "5 000 000+",
+              label: "visninger på sosiale medier",
+              detail: "Over 5 millioner visninger på sosiale medier fra kampanjer og promofilmer.",
+            },
+            {
+              value: "Mer verdi",
+              label: "fra samme opptak",
+              detail: "Flere versjoner gir lengre levetid, flere uttak og tydeligere ROI.",
+            },
+          ]
+        : [
+            {
+              value: "100+",
+              label: "films delivered",
+              detail: "Over 100 films delivered for campaigns, websites, ads and social.",
+            },
+            {
+              value: "5,000,000+",
+              label: "social views",
+              detail: "Over 5 million social views across campaigns and promo films.",
+            },
+            {
+              value: "More value",
+              label: "from one production",
+              detail: "More versions create longer use, more cutdowns and clearer ROI.",
+            },
+          ],
+    [language],
+  );
+  const roiPoints =
+    language === "no"
+      ? [
+          "Flere annonser og uttak fra samme opptak.",
+          "Lengre levetid på innholdet i digitale flater.",
+          "Klarere vei fra synlighet til henvendelser.",
+        ]
+      : [
+          "More ads and cutdowns from the same shoot.",
+          "Longer content lifespan across digital placements.",
+          "A clearer path from visibility to enquiries.",
+        ];
+  const animatedMetrics = useMemo(
+    () => [
+      {
+        value: (
+          <CountUpValue
+            target={100}
+            suffix="+"
+            trigger={animationReady}
+            locale={language === "no" ? "nb-NO" : "en-US"}
+          />
+        ),
+        label: resultMetrics[0]?.label ?? "",
+        detail: resultMetrics[0]?.detail ?? "",
+      },
+      {
+        value: (
+          <CountUpValue
+            target={5_000_000}
+            suffix="+"
+            trigger={animationReady}
+            locale={language === "no" ? "nb-NO" : "en-US"}
+          />
+        ),
+        label: resultMetrics[1]?.label ?? "",
+        detail: resultMetrics[1]?.detail ?? "",
+      },
+      {
+        value: resultMetrics[2]?.value ?? "",
+        label: resultMetrics[2]?.label ?? "",
+        detail: resultMetrics[2]?.detail ?? "",
+      },
+    ],
+    [animationReady, language, resultMetrics],
+  );
+
+  useEffect(() => {
+    const node = sectionRef.current;
+
+    if (shouldReduceMotion || !node || hasAnimated || typeof IntersectionObserver === "undefined") {
+      return;
+    }
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting && entry.intersectionRatio >= 0.35) {
+          setHasAnimated(true);
+          observer.disconnect();
+        }
+      },
+      {
+        threshold: [0, 0.35, 0.6],
+      },
+    );
+
+    observer.observe(node);
+
+    return () => {
+      observer.disconnect();
+    };
+  }, [hasAnimated, shouldReduceMotion]);
+
+  return (
+    <section ref={sectionRef} className="section-space">
       <div className="site-container">
         <Reveal y={18}>
           <div className="overflow-hidden rounded-[2rem] bg-[#0d1014] text-white shadow-[0_38px_120px_rgba(0,0,0,0.22)]">
@@ -437,59 +568,59 @@ export function ResultsSection() {
                 <p className="text-[0.72rem] font-semibold uppercase tracking-[0.24em] text-white/48">
                   {language === "no" ? "Resultater" : "Results"}
                 </p>
-                <h2 className="feature-title mt-4 max-w-[13ch] text-white">
+                <h2 className="feature-title mt-4 max-w-[12ch] text-white">
                   {language === "no"
                     ? "Film som fortsatt jobber etter publisering."
                     : "Film that keeps working after launch."}
                 </h2>
-                <p className="mt-4 max-w-[34rem] text-sm leading-7 text-white/72 sm:text-base">
+                <p className="mt-4 max-w-[34rem] text-sm leading-7 text-white/70 sm:text-base">
                   {language === "no"
                     ? "Vi bygger filmer som kan brukes i annonser, SoMe og nettside over tid. Det gir mer materiale per opptak, flere uttak og tydeligere kommersiell effekt."
                     : "We build films that can keep working across ads, social and websites over time. That means more material per shoot, more cutdowns and clearer commercial impact."}
                 </p>
 
-                <div className="mt-8 grid gap-3 sm:grid-cols-3">
-                  {resultMetrics.map((metric) => (
+                <div className="mt-8 grid gap-3 sm:grid-cols-2">
+                  {animatedMetrics.slice(0, 2).map((metric) => (
                     <div
                       key={metric.label}
-                      className="rounded-[1.4rem] border border-white/10 bg-white/6 px-4 py-4"
+                      className="rounded-[1.5rem] border border-white/10 bg-white/[0.055] px-5 py-5"
                     >
-                      <p className="text-[1.7rem] font-semibold leading-none tracking-[-0.05em] text-white">
+                      <p className="text-[2.6rem] font-semibold leading-none tracking-[-0.07em] text-white sm:text-[3rem]">
                         {metric.value}
                       </p>
-                      <p className="mt-2 text-[0.72rem] font-semibold uppercase tracking-[0.2em] text-white/44">
+                      <p className="mt-3 text-[0.72rem] font-semibold uppercase tracking-[0.2em] text-white/42">
                         {metric.label}
                       </p>
-                      <p className="mt-3 text-sm leading-6 text-white/66">{metric.detail}</p>
+                      <p className="mt-3 text-sm leading-6 text-white/64">{metric.detail}</p>
                     </div>
                   ))}
                 </div>
 
-                <div className="mt-8 rounded-[1.5rem] border border-white/10 bg-black/18 px-5 py-5">
-                  <p className="text-[0.72rem] font-semibold uppercase tracking-[0.2em] text-white/44">
-                    {language === "no" ? "Forventet ROI" : "Expected ROI"}
-                  </p>
-                  <div className="mt-4 grid gap-3 sm:grid-cols-3">
-                    {(
-                      language === "no"
-                        ? [
-                            "Flere annonser og uttak fra samme opptak.",
-                            "Lenger levetid på innholdet i digitale flater.",
-                            "Klarere vei fra synlighet til henvendelser.",
-                          ]
-                        : [
-                            "More ads and cutdowns from the same shoot.",
-                            "Longer content lifespan across digital placements.",
-                            "A clearer path from visibility to enquiries.",
-                          ]
-                    ).map((item) => (
-                      <div
-                        key={item}
-                        className="rounded-[1.1rem] border border-white/8 bg-white/5 px-4 py-4 text-sm leading-6 text-white/74"
-                      >
-                        {item}
-                      </div>
-                    ))}
+                <div className="mt-8 grid gap-5 border-t border-white/8 pt-6 sm:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)] sm:items-start">
+                  <div>
+                    <p className="text-[2rem] font-semibold leading-none tracking-[-0.06em] text-white sm:text-[2.2rem]">
+                      {animatedMetrics[2]?.value}
+                    </p>
+                    <p className="mt-2 text-[0.72rem] font-semibold uppercase tracking-[0.2em] text-white/42">
+                      {animatedMetrics[2]?.label}
+                    </p>
+                    <p className="mt-3 max-w-[18rem] text-sm leading-6 text-white/64">
+                      {animatedMetrics[2]?.detail}
+                    </p>
+                  </div>
+
+                  <div>
+                    <p className="text-[0.72rem] font-semibold uppercase tracking-[0.2em] text-white/44">
+                      {language === "no" ? "Forventet ROI" : "Expected ROI"}
+                    </p>
+                    <div className="mt-4 grid gap-3">
+                      {roiPoints.map((item) => (
+                        <div key={item} className="flex items-start gap-3 text-sm leading-6 text-white/72">
+                          <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-white/46" />
+                          <span>{item}</span>
+                        </div>
+                      ))}
+                    </div>
                   </div>
                 </div>
 
@@ -511,12 +642,12 @@ export function ResultsSection() {
                   {testimonials.map((testimonial) => (
                     <blockquote
                       key={`${testimonial.company}-${testimonial.name}`}
-                      className="rounded-[1.5rem] border border-white/10 bg-white/[0.045] px-5 py-5 text-white/78"
+                      className="rounded-[1.45rem] border border-white/8 bg-white/[0.032] px-5 py-4.5 text-white/76"
                     >
-                      <p className="text-[1rem] leading-7 sm:text-[1.06rem]">
+                      <p className="text-[0.98rem] leading-7 sm:text-[1.03rem]">
                         “{resolveLocalizedValue(testimonial.quote, language)}”
                       </p>
-                      <footer className="mt-4 text-sm text-white/54">
+                      <footer className="mt-3.5 text-sm text-white/52">
                         {testimonial.name} ({testimonial.company})
                       </footer>
                     </blockquote>
