@@ -478,6 +478,7 @@ export function TommyProfileContent() {
   const { language } = useSitePreferences();
   const [lightbox, setLightbox] = useState<LightboxState>(null);
   const profile = tommyPortfolioPage.baseProfile;
+  const backgroundUsesPortrait = profile.heroBackground === profile.portrait;
 
   const openGallery = (title: string, images: TommyPortfolioImage[], index = 0) => {
     setLightbox({
@@ -490,101 +491,123 @@ export function TommyProfileContent() {
   return (
     <main>
       <section className="relative isolate overflow-hidden pt-22 sm:pt-28">
-        <div className="absolute inset-0 bg-[#05070a]" />
-        <Image
-          src={profile.heroBackground}
-          alt={resolveLocalizedValue(profile.heroBackgroundAlt, language)}
-          fill
-          priority
-          sizes="100vw"
-          className="object-cover object-[68%_16%] opacity-24 sm:object-[72%_14%] sm:opacity-28 lg:opacity-34"
-        />
-        <div className="absolute inset-0 bg-[linear-gradient(94deg,rgba(5,7,11,0.96),rgba(5,7,11,0.88)_24%,rgba(5,7,11,0.56)_52%,rgba(5,7,11,0.74)_100%),linear-gradient(180deg,rgba(5,7,11,0.08),rgba(5,7,11,0.18)_34%,rgba(5,7,11,0.92)_100%)]" />
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_22%_18%,rgba(212,177,120,0.18),transparent_24%),radial-gradient(circle_at_78%_20%,rgba(116,150,255,0.1),transparent_24%)]" />
-        <div className="grain-overlay absolute inset-0 opacity-34" />
+        <div className="absolute inset-0">
+          {backgroundUsesPortrait ? (
+            <>
+              <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(7,9,14,0.98),rgba(7,9,14,0.92)_34%,rgba(7,9,14,0.98)_100%)]" />
+              <div className="profile-hero-portrait-wrap">
+                <div className="profile-hero-portrait-frame founder-portrait-panel">
+                  <div className="profile-hero-portrait-shell founder-portrait-shell">
+                    <div className="profile-hero-portrait-backdrop" />
+                    <div className="profile-hero-portrait-glow" />
+                    <Image
+                      src={profile.heroBackground}
+                      alt={resolveLocalizedValue(profile.heroBackgroundAlt, language)}
+                      width={1200}
+                      height={1500}
+                      priority
+                      sizes="(min-width: 1280px) 34vw, (min-width: 768px) 42vw, 78vw"
+                      className="profile-hero-portrait-image"
+                    />
+                  </div>
+                </div>
+              </div>
+            </>
+          ) : (
+            <Image
+              src={profile.heroBackground}
+              alt={resolveLocalizedValue(profile.heroBackgroundAlt, language)}
+              fill
+              priority
+              sizes="100vw"
+              className="image-slow-zoom object-cover"
+            />
+          )}
+          <div
+            className={cn(
+              "absolute inset-0",
+              backgroundUsesPortrait
+                ? "bg-[radial-gradient(circle_at_18%_18%,rgba(255,255,255,0.1),transparent_22%),linear-gradient(92deg,rgba(5,7,11,0.96),rgba(5,7,11,0.9)_22%,rgba(5,7,11,0.54)_44%,rgba(5,7,11,0.18)_68%,rgba(5,7,11,0.62)_100%),linear-gradient(180deg,rgba(6,6,9,0.12),rgba(6,6,9,0.12)_28%,rgba(6,6,9,0.84)_100%)]"
+                : "bg-[radial-gradient(circle_at_18%_18%,rgba(255,255,255,0.08),transparent_22%),linear-gradient(96deg,rgba(5,7,11,0.9),rgba(5,7,11,0.62)_34%,rgba(5,7,11,0.34)_62%,rgba(5,7,11,0.84)_100%),linear-gradient(180deg,rgba(6,6,9,0.12),rgba(6,6,9,0.18)_28%,rgba(6,6,9,0.84)_100%)]",
+            )}
+          />
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_74%_24%,rgba(255,255,255,0.08),transparent_18%),radial-gradient(circle_at_78%_16%,rgba(116,150,255,0.16),transparent_22%)]" />
+          <div className="grain-overlay absolute inset-0 opacity-38" />
+        </div>
 
-        <div className="site-container relative z-[1] grid gap-7 py-10 sm:py-14 lg:grid-cols-[minmax(0,1fr)_20rem] lg:items-end lg:gap-8 lg:py-18 xl:grid-cols-[minmax(0,1fr)_23rem]">
+        <div className="site-container relative flex min-h-[60svh] items-end py-8 sm:min-h-[68svh] sm:py-10 lg:min-h-[76svh] lg:py-12">
           <Reveal className="max-w-3xl" delay={0.04} y={18}>
-            <div className="text-white">
+            <div className="max-w-[42rem] text-white">
               <ButtonLink
                 href="/om-oss"
                 variant="ghost"
                 size="compact"
-                className="w-fit border-white/14 text-white/82 hover:border-white/26 hover:text-white"
+                className="w-fit border-white/14 text-white/84 hover:border-white/26 hover:text-white"
               >
                 {language === "no" ? "Tilbake til Om oss" : "Back to About"}
               </ButtonLink>
 
               <span className="hero-badge mt-5 text-white/72">
-                {resolveLocalizedValue(tommyPortfolioPage.heroEyebrow, language)}
-              </span>
-              <h1 className="page-title mt-4 max-w-[11ch] text-white">
                 {resolveLocalizedValue(tommyPortfolioPage.heroTitle, language)}
-              </h1>
-              <p className="mt-4 max-w-[39rem] text-[0.98rem] leading-7 text-white/84 sm:text-[1.04rem] sm:leading-8">
+              </span>
+              <h1 className="page-title mt-4 max-w-[10ch] text-white">{profile.name}</h1>
+              <p className="mt-4 max-w-[34rem] text-[1rem] leading-7 text-white/84 sm:text-[1.08rem] sm:leading-8">
                 {resolveLocalizedValue(tommyPortfolioPage.heroDescription, language)}
               </p>
-
-              <div className="mt-5 flex flex-wrap gap-2">
-                {tommyPortfolioPage.heroRoles.map((role) => (
-                  <span
-                    key={resolveLocalizedValue(role, language)}
-                    className="inline-flex min-h-9 items-center justify-center rounded-full border border-white/14 bg-white/8 px-3.5 py-2 text-[0.68rem] font-semibold uppercase tracking-[0.16em] text-white/86 backdrop-blur-md"
-                  >
-                    {resolveLocalizedValue(role, language)}
-                  </span>
-                ))}
-              </div>
 
               <div className="mt-6 flex flex-col gap-2.5 sm:flex-row sm:flex-wrap">
                 <ButtonLink href="/kontakt" className="w-full sm:w-auto">
                   {resolveLocalizedValue(tommyPortfolioPage.heroPrimaryCta, language)}
                 </ButtonLink>
-                <ButtonLink href="#tommy-shortfilms" variant="secondary" className="w-full border-white/18 bg-white/8 text-white hover:bg-white/14 hover:text-white sm:w-auto">
+                <ButtonLink href="#tommy-shortfilms" variant="secondary" className="w-full sm:w-auto">
                   {resolveLocalizedValue(tommyPortfolioPage.heroSecondaryCta, language)}
                 </ButtonLink>
               </div>
             </div>
           </Reveal>
+        </div>
+      </section>
 
-          <Reveal delay={0.08} y={18}>
-            <article className="hero-glass-panel overflow-hidden rounded-[2rem] p-4 sm:p-5">
-              <div className="relative overflow-hidden rounded-[1.45rem] border border-white/12 bg-[#07090d]">
-                <div className="relative aspect-[4/5]">
-                  <Image
-                    src={profile.portrait}
-                    alt={resolveLocalizedValue(profile.portraitAlt, language)}
-                    fill
-                    sizes="(min-width: 1280px) 23rem, (min-width: 1024px) 20rem, 100vw"
-                    className="object-cover object-top"
-                  />
-                  <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(8,10,14,0.04),rgba(8,10,14,0.12)_56%,rgba(8,10,14,0.62)_100%)]" />
-                </div>
+      <section className="section-space pt-0">
+        <div className="site-container">
+          <div className="grid gap-5 lg:grid-cols-[minmax(0,1.02fr)_minmax(18rem,0.98fr)] lg:items-center">
+            <Reveal>
+              <div className="media-frame relative min-h-[18rem] overflow-hidden rounded-[2rem] bg-[#090b10] sm:min-h-[23rem] lg:min-h-[30rem]">
+                <Image
+                  src={profile.supportingVisual}
+                  alt={resolveLocalizedValue(profile.supportingVisualAlt, language)}
+                  fill
+                  sizes="(min-width: 1280px) 46vw, (min-width: 1024px) 50vw, 100vw"
+                  className="object-cover"
+                />
+                <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(6,7,10,0.02),rgba(6,7,10,0.14)_46%,rgba(6,7,10,0.74)_100%)]" />
+                <div className="grain-overlay absolute inset-0 opacity-28" />
               </div>
+            </Reveal>
 
-              <div className="mt-4 space-y-2">
-                <p className="text-[0.68rem] font-semibold uppercase tracking-[0.18em] text-white/62">
-                  {language === "no" ? "Direkte kontakt" : "Direct contact"}
+            <Reveal delay={0.06}>
+              <div className="card-surface rounded-[2rem] px-5 py-5 sm:px-6 sm:py-6 lg:px-7 lg:py-7">
+                <span className="eyebrow">{resolveLocalizedValue(profile.introEyebrow, language)}</span>
+                <h2 className="section-title mt-3 text-[color:var(--foreground)]">
+                  {resolveLocalizedValue(profile.introTitle, language)}
+                </h2>
+                <p className="body-lead mt-4 text-[var(--muted-2)]">
+                  {resolveLocalizedValue(profile.introBody, language)}
                 </p>
-                <div className="grid gap-2">
-                  <a
-                    href={`mailto:${tommyPortfolioPage.contactEmail}`}
-                    className="inline-flex items-center gap-3 rounded-[1rem] border border-white/12 bg-white/7 px-3.5 py-3 text-sm text-white/88 transition hover:bg-white/12"
-                  >
-                    <MailIcon className="h-4.5 w-4.5 shrink-0" />
-                    <span className="truncate">{tommyPortfolioPage.contactEmail}</span>
-                  </a>
-                  <a
-                    href={siteConfig.phonePrimaryHref}
-                    className="inline-flex items-center gap-3 rounded-[1rem] border border-white/12 bg-white/7 px-3.5 py-3 text-sm text-white/88 transition hover:bg-white/12"
-                  >
-                    <PhoneIcon className="h-4.5 w-4.5 shrink-0" />
-                    <span>{tommyPortfolioPage.contactPhone}</span>
-                  </a>
+
+                <div className="mt-6 flex flex-wrap gap-2.5">
+                  {tommyPortfolioPage.heroRoles.map((role) => (
+                    <span
+                      key={resolveLocalizedValue(role, language)}
+                      className="founder-profile-chip founder-profile-chip-muted"
+                    >
+                      {resolveLocalizedValue(role, language)}
+                    </span>
+                  ))}
                 </div>
               </div>
-            </article>
-          </Reveal>
+            </Reveal>
+          </div>
         </div>
       </section>
 
