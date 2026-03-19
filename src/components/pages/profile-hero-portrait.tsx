@@ -39,3 +39,37 @@ export function ProfileHeroPortrait({
     </div>
   );
 }
+
+type ProfileHeroPortraitMobileProps = {
+  src: string;
+  alt: string;
+  imageClassName: string;
+  sizes: string;
+  className?: string;
+  priority?: boolean;
+};
+
+export function ProfileHeroPortraitMobile({
+  src,
+  alt,
+  imageClassName,
+  sizes,
+  className,
+  priority = false,
+}: ProfileHeroPortraitMobileProps) {
+  return (
+    <div className={cn("profile-hero-mobile-portrait", className)}>
+      <div className="profile-hero-mobile-portrait__shell">
+        <Image
+          src={src}
+          alt={alt}
+          width={1200}
+          height={1500}
+          priority={priority}
+          sizes={sizes}
+          className={cn("profile-hero-mobile-portrait__image", imageClassName)}
+        />
+      </div>
+    </div>
+  );
+}
