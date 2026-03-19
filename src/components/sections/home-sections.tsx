@@ -163,15 +163,35 @@ export function HeroSection() {
             hasVideoError ? "opacity-0" : "opacity-100",
           )}
           autoPlay
+          controls={false}
           muted
           loop
           playsInline
           preload="auto"
           poster={heroVideo.poster}
           disablePictureInPicture
+          disableRemotePlayback
           aria-hidden="true"
-          onLoadedData={() => setIsPosterVisible(false)}
+          onLoadedMetadata={(event) => {
+            const node = event.currentTarget;
+
+            node.defaultMuted = true;
+            node.muted = true;
+            node.playsInline = true;
+            node.setAttribute("muted", "");
+            node.setAttribute("playsinline", "");
+            node.setAttribute("webkit-playsinline", "");
+            node.play().catch(() => undefined);
+          }}
+          onCanPlay={(event) => {
+            event.currentTarget.play().catch(() => undefined);
+          }}
           onPlaying={() => setIsPosterVisible(false)}
+          onTimeUpdate={(event) => {
+            if (event.currentTarget.currentTime > 0) {
+              setIsPosterVisible(false);
+            }
+          }}
           onError={() => {
             setHasVideoError(true);
             setIsPosterVisible(true);
@@ -530,7 +550,7 @@ export function ResultsSection() {
             suffix="+"
             trigger={animationReady}
             locale={language === "no" ? "nb-NO" : "en-US"}
-            durationMs={1800}
+            durationMs={3600}
           />
         ),
         label: resultMetrics[0]?.label ?? "",
@@ -543,7 +563,7 @@ export function ResultsSection() {
             suffix="+"
             trigger={animationReady}
             locale={language === "no" ? "nb-NO" : "en-US"}
-            durationMs={2400}
+            durationMs={4800}
           />
         ),
         label: resultMetrics[1]?.label ?? "",
