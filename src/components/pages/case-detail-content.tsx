@@ -83,11 +83,11 @@ export function CaseDetailContent({
                     caseStudy.palette ?? "from-[#efe9df] via-[#d4c8b5] to-[#bba68a]"
                   } p-6 sm:p-8`}
                 >
-                  <div className="max-w-sm rounded-[1.6rem] border border-white/28 bg-white/62 p-5 backdrop-blur">
+                  <div className="max-w-sm rounded-[1.6rem] border border-[color:var(--line-strong)]/70 bg-[color:var(--surface)]/82 p-5 backdrop-blur-md">
                     <p className="text-[0.72rem] font-semibold uppercase tracking-[0.22em] text-[var(--muted)]">
                       {resolveLocalizedValue(caseStudy.category, language)}
                     </p>
-                    <h2 className="feature-title mt-3 text-[#111111]">
+                    <h2 className="feature-title mt-3 text-[color:var(--foreground)]">
                       {caseStudy.client}
                     </h2>
                     <p className="body-copy mt-3 text-[var(--muted-2)] sm:text-base sm:leading-7">
@@ -135,7 +135,7 @@ export function CaseDetailContent({
                       sizes="(min-width: 768px) 50vw, 100vw"
                     />
                     <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,rgba(17,17,17,0.03),rgba(17,17,17,0.18)_48%,rgba(17,17,17,0.54)_100%)]" />
-                    <div className="absolute left-4 top-4 z-[2] rounded-full border border-white/14 bg-white/88 px-3.5 py-1.5 text-[0.68rem] font-semibold uppercase tracking-[0.18em] text-[#111111] shadow-[0_12px_32px_rgba(0,0,0,0.18)] backdrop-blur-md">
+                    <div className="absolute left-4 top-4 z-[2] rounded-full border border-[color:var(--line-strong)] bg-[color:var(--surface)]/84 px-3.5 py-1.5 text-[0.68rem] font-semibold uppercase tracking-[0.18em] text-[color:var(--foreground)] shadow-[0_12px_32px_rgba(0,0,0,0.18)] backdrop-blur-md">
                       {resolveLocalizedValue(variant.label, language)}
                     </div>
                   </div>

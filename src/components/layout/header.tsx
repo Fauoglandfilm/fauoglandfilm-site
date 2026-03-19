@@ -125,6 +125,7 @@ export function Header() {
   const { language, setLanguage, theme, setTheme } = useSitePreferences();
   const copy = uiCopy.header[language];
   const overlayMode = pathname === "/" && !scrolled && !open;
+  const darkOverlayMode = overlayMode && theme === "dark";
   const menuLabel = language === "no" ? "Meny" : "Menu";
   const menuFooterCopy =
     language === "no"
@@ -201,12 +202,21 @@ export function Header() {
           <div
             className={cn(
               "relative mt-2 flex items-center justify-between gap-2.5 overflow-hidden rounded-[1.45rem] px-3 py-2 transition duration-300 sm:mt-3 sm:gap-4 sm:px-4 sm:py-3 lg:grid lg:grid-cols-[auto_minmax(0,1fr)_auto] lg:items-center lg:gap-5 lg:rounded-[1.9rem] lg:px-5 lg:py-3.5",
-              overlayMode
+              darkOverlayMode
+                ? "border border-white/12 bg-[rgba(14,14,15,0.42)] text-white shadow-[0_24px_64px_rgba(0,0,0,0.26)] backdrop-blur-[18px]"
+                : overlayMode
                 ? "border border-white/18 bg-white/10 text-white shadow-[0_24px_64px_rgba(0,0,0,0.12)] backdrop-blur-[18px]"
                 : "border border-[color:var(--line)]/80 bg-[color:var(--header-surface)]/82 text-[color:var(--foreground)] shadow-[0_22px_56px_rgba(18,14,10,0.08)] backdrop-blur-[20px]",
             )}
           >
-            <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,rgba(255,255,255,0.2),rgba(255,255,255,0.06))]" />
+            <div
+              className={cn(
+                "pointer-events-none absolute inset-0",
+                darkOverlayMode
+                  ? "bg-[linear-gradient(180deg,rgba(255,255,255,0.08),rgba(255,255,255,0.02))]"
+                  : "bg-[linear-gradient(180deg,rgba(255,255,255,0.2),rgba(255,255,255,0.06))]",
+              )}
+            />
             <Link
               href="/"
               className={cn(
@@ -230,7 +240,7 @@ export function Header() {
             <nav
               className={cn(
                 "relative z-[1] hidden lg:flex lg:min-w-0 lg:items-center lg:justify-center lg:rounded-full lg:px-2 lg:py-1",
-                overlayMode ? "lg:bg-white/6" : "lg:bg-[color:var(--surface)]/78",
+                darkOverlayMode ? "lg:bg-black/20" : overlayMode ? "lg:bg-white/6" : "lg:bg-[color:var(--surface)]/78",
               )}
               aria-label={menuLabel}
             >
@@ -292,7 +302,9 @@ export function Header() {
                   size="icon"
                   className={cn(
                     "relative z-[1] h-11 w-11 shrink-0 rounded-full shadow-none",
-                    overlayMode
+                    darkOverlayMode
+                      ? "border border-white/12 bg-black/20 text-white"
+                      : overlayMode
                       ? "border border-white/14 bg-white/10 text-white"
                       : "border border-[color:var(--line)] bg-[color:var(--surface)]/88 text-[color:var(--foreground)]",
                   )}
@@ -363,7 +375,7 @@ export function Header() {
               transition={{ duration: 0.28, ease: [0.22, 1, 0.36, 1] }}
             >
               <div
-                className="relative ml-auto flex h-full w-full max-w-[26rem] flex-col overflow-y-auto border-l border-white/10 px-5 pb-6 pt-[calc(env(safe-area-inset-top,0px)+1rem)] shadow-[0_30px_80px_rgba(0,0,0,0.18)] sm:px-6"
+                className="relative ml-auto flex h-full w-full max-w-[26rem] flex-col overflow-y-auto border-l border-[color:var(--line)]/80 px-5 pb-6 pt-[calc(env(safe-area-inset-top,0px)+1rem)] shadow-[0_30px_80px_rgba(0,0,0,0.18)] sm:px-6"
                 style={{ paddingBottom: "max(1.5rem, calc(1.25rem + env(safe-area-inset-bottom, 0px)))" }}
               >
                 <div className="flex items-start justify-between gap-4 pb-6">

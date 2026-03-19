@@ -110,7 +110,7 @@ function GardEditorialCase({
           </div>
 
           {hasPlayableMedia(activeProject) ? (
-            <span className="absolute right-4 top-4 z-[4] inline-flex h-11 w-11 items-center justify-center rounded-full border border-white/16 bg-white/90 text-[#111111] shadow-[0_16px_40px_rgba(0,0,0,0.22)] backdrop-blur-md transition duration-300 group-hover:scale-[1.03] sm:right-5 sm:top-5">
+            <span className="absolute right-4 top-4 z-[4] inline-flex h-11 w-11 items-center justify-center rounded-full border border-[color:var(--line-strong)] bg-[color:var(--surface)]/82 text-[color:var(--foreground)] shadow-[0_16px_40px_rgba(0,0,0,0.22)] backdrop-blur-md transition duration-300 group-hover:scale-[1.03] sm:right-5 sm:top-5">
               <PlayIcon className="h-4 w-4 translate-x-[1px]" />
             </span>
           ) : null}

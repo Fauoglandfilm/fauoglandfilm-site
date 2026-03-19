@@ -61,6 +61,13 @@ export function SitePreferencesProvider({ children }: { children: ReactNode }) {
     document.documentElement.dataset.language = language;
     document.documentElement.lang = language === "no" ? "nb" : "en";
 
+    const themeColor = theme === "dark" ? "#111111" : "#ffffff";
+    const themeColorMeta = document.querySelector('meta[name="theme-color"]');
+
+    if (themeColorMeta instanceof HTMLMetaElement) {
+      themeColorMeta.setAttribute("content", themeColor);
+    }
+
     try {
       window.localStorage.setItem(LANGUAGE_STORAGE_KEY, language);
       window.localStorage.setItem(THEME_STORAGE_KEY, theme);
