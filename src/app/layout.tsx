@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Cormorant_Garamond, Manrope, Sora } from "next/font/google";
+import { Manrope, Playfair_Display, Sora } from "next/font/google";
 import Script from "next/script";
 import { Analytics } from "@vercel/analytics/next";
 import { SpeedInsights } from "@vercel/speed-insights/next";
@@ -24,10 +24,10 @@ const sora = Sora({
   subsets: ["latin"],
 });
 
-const cormorantGaramond = Cormorant_Garamond({
+const playfairDisplay = Playfair_Display({
   variable: "--font-hero",
   subsets: ["latin", "latin-ext"],
-  weight: ["600", "700"],
+  weight: ["700", "800"],
 });
 
 export const metadata: Metadata = buildMetadata({
@@ -67,7 +67,7 @@ export default function RootLayout({
   return (
     <html lang="nb" data-theme="light" data-language="no" suppressHydrationWarning>
       <body
-        className={`${manrope.variable} ${sora.variable} ${cormorantGaramond.variable} antialiased`}
+        className={`${manrope.variable} ${sora.variable} ${playfairDisplay.variable} antialiased`}
       >
         <Script
           id="preference-boot"
