@@ -2322,17 +2322,17 @@ summary::-webkit-details-marker {
     }
 
     .profile-hero-portrait-frame {
-      width: min(70vw, 16rem);
+      width: min(66vw, 14.75rem);
     }
 
     .profile-hero-portrait-image-tommy {
-      left: 50.6%;
-      width: min(92%, 15.8rem);
+      left: 50.4%;
+      width: min(90%, 14.4rem);
     }
 
     .profile-hero-portrait-image-gard {
       left: 50%;
-      width: min(93%, 16.2rem);
+      width: min(91%, 14.8rem);
     }
 
     .hero-layer-stack {
@@ -2418,15 +2418,11 @@ summary::-webkit-details-marker {
 
     .founder-portrait-shell {
       border-radius: 1.45rem;
-      border-color: rgba(255, 255, 255, 0.12);
-      background:
-        linear-gradient(180deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.02)),
-        linear-gradient(180deg, rgba(14, 20, 32, 0.08), rgba(14, 20, 32, 0.22));
-      box-shadow:
-        0 8px 18px rgba(5, 10, 20, 0.1),
-        inset 0 1px 0 rgba(255, 255, 255, 0.14);
-      backdrop-filter: blur(8px) saturate(122%);
-      -webkit-backdrop-filter: blur(8px) saturate(122%);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      background: rgba(255, 255, 255, 0.03);
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.14);
+      backdrop-filter: blur(4px) saturate(112%);
+      -webkit-backdrop-filter: blur(4px) saturate(112%);
     }
 
     .profile-hero-portrait-backdrop,
@@ -2437,8 +2433,8 @@ summary::-webkit-details-marker {
     .profile-hero-portrait-image {
       bottom: 0;
       filter:
-        drop-shadow(0 18px 24px rgba(0, 0, 0, 0.12))
-        drop-shadow(0 4px 10px rgba(255, 255, 255, 0.06));
+        drop-shadow(0 8px 12px rgba(0, 0, 0, 0.08))
+        drop-shadow(0 2px 6px rgba(255, 255, 255, 0.04));
     }
 
     .hero-copy .hero-title {
