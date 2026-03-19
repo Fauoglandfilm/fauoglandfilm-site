@@ -98,7 +98,6 @@ function HeroTypewriterTitle({
 
   return (
     <span aria-label={title} role="text" className={cn("hero-typewriter", className)}>
-      <span className="sr-only">{title}</span>
       <span aria-hidden="true" className="hero-typewriter__line">
         {words.map((word, wordIndex) => {
           return (
@@ -277,7 +276,7 @@ export function HeroSection() {
       </div>
 
       <div className="site-container relative z-[1] flex min-h-[72svh] items-end pb-7 pt-[5.35rem] sm:min-h-[92svh] sm:pb-14 sm:pt-[8.8rem] lg:min-h-[96vh] lg:pb-16 lg:pt-[10.5rem]">
-        <Reveal y={20} className="w-full">
+        <div className="w-full">
           <div className="max-w-[42rem]">
             <div className="hero-label-chip">
               <span className="hero-label-chip__segment">
@@ -307,7 +306,7 @@ export function HeroSection() {
               </ButtonLink>
             </div>
           </div>
-        </Reveal>
+        </div>
       </div>
     </section>
   );
