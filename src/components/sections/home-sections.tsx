@@ -748,19 +748,6 @@ export function ResultsSection() {
                   ))}
                 </div>
 
-                <div className="mt-5 border-t border-[color:var(--line)]/90 pt-5">
-                  <div className="result-stat-card max-w-[20rem] px-5 py-5">
-                    <p className="text-[2rem] font-semibold leading-none tracking-[-0.06em] text-[color:var(--foreground)] sm:text-[2.2rem]">
-                      {animatedMetrics[2]?.value}
-                    </p>
-                    <p className="mt-2 text-[0.72rem] font-semibold uppercase tracking-[0.2em] text-[var(--muted)]">
-                      {animatedMetrics[2]?.label}
-                    </p>
-                    <p className="mt-3 max-w-[18rem] text-sm leading-6 text-[var(--muted-2)]">
-                      {animatedMetrics[2]?.detail}
-                    </p>
-                  </div>
-                </div>
               </div>
 
               <div className="border-t border-[color:var(--line)]/90 p-6 sm:p-8 lg:border-l lg:border-t-0 lg:p-10">
