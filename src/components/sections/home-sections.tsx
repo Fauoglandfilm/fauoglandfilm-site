@@ -94,101 +94,25 @@ function HeroTypewriterTitle({
   title: string;
   className?: string;
 }) {
-  const shouldReduceMotion = useReducedMotion();
-  const characters = useMemo(() => Array.from(title), [title]);
   const words = useMemo(() => title.split(" "), [title]);
-  const totalCharacters = characters.length;
-  const [visibleCount, setVisibleCount] = useState(totalCharacters);
-  const [isAnimating, setIsAnimating] = useState(false);
-
-  useEffect(() => {
-    let frameId = 0;
-
-    if (shouldReduceMotion) {
-      frameId = window.requestAnimationFrame(() => {
-        setVisibleCount(totalCharacters);
-        setIsAnimating(false);
-      });
-
-      return () => window.cancelAnimationFrame(frameId);
-    }
-
-    frameId = window.requestAnimationFrame(() => {
-      setVisibleCount(0);
-      setIsAnimating(true);
-    });
-
-    return () => window.cancelAnimationFrame(frameId);
-  }, [shouldReduceMotion, totalCharacters, title]);
-
-  useEffect(() => {
-    if (shouldReduceMotion || !isAnimating) {
-      return;
-    }
-
-    let cancelled = false;
-    let currentIndex = 0;
-    let timeoutId: number | undefined;
-    const cadence = [83, 109, 70, 96, 74, 115, 64, 93, 80, 102];
-
-    const typeNextCharacter = () => {
-      if (cancelled) {
-        return;
-      }
-
-      currentIndex += 1;
-      setVisibleCount(currentIndex);
-
-      if (currentIndex >= totalCharacters) {
-        setIsAnimating(false);
-        return;
-      }
-
-      timeoutId = window.setTimeout(
-        typeNextCharacter,
-        cadence[(currentIndex - 1) % cadence.length],
-      );
-    };
-
-    timeoutId = window.setTimeout(typeNextCharacter, 190);
-
-    return () => {
-      cancelled = true;
-      if (timeoutId) {
-        window.clearTimeout(timeoutId);
-      }
-    };
-  }, [isAnimating, shouldReduceMotion, totalCharacters]);
 
   return (
     <span aria-label={title} role="text" className={cn("hero-typewriter", className)}>
       <span className="sr-only">{title}</span>
       <span aria-hidden="true" className="hero-typewriter__line">
         {words.map((word, wordIndex) => {
-          const leadingCharacters = words
-            .slice(0, wordIndex)
-            .reduce((count, currentWord) => count + currentWord.length + 1, 0);
-
           return (
             <span key={`${word}-${wordIndex}`} className="hero-typewriter__word">
               {Array.from(word).map((character, index) => (
                 <span
                   key={`${character}-${wordIndex}-${index}`}
-                  className={cn(
-                    "hero-typewriter__char",
-                    leadingCharacters + index < visibleCount && "hero-typewriter__char--visible",
-                  )}
+                  className="hero-typewriter__char hero-typewriter__char--visible"
                 >
                   {character}
                 </span>
               ))}
               {wordIndex < words.length - 1 ? (
-                <span
-                  className={cn(
-                    "hero-typewriter__char hero-typewriter__space",
-                    leadingCharacters + word.length < visibleCount && "hero-typewriter__char--visible",
-                  )}
-                >
+                <span className="hero-typewriter__char hero-typewriter__char--visible hero-typewriter__space">
                   {"\u00A0"}
                 </span>
               ) : null}
