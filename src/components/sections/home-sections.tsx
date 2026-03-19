@@ -705,7 +705,7 @@ export function ResultsSection() {
       <div className="site-container">
         <Reveal y={18}>
           <div className="results-showcase">
-            <div className="grid gap-0 lg:grid-cols-[0.94fr_1.06fr]">
+            <div className="grid gap-0 lg:grid-cols-[1fr_0.92fr]">
               <div className="flex flex-col p-6 sm:p-8 lg:p-10">
                 <p className="text-[0.72rem] font-semibold uppercase tracking-[0.24em] text-[var(--muted)]">
                   {language === "no" ? "Resultater" : "Results"}
@@ -721,7 +721,16 @@ export function ResultsSection() {
                     : "We build films that can keep working across ads, social and websites over time. That means more material per shoot, more cutdowns and clearer commercial impact."}
                 </p>
 
-                <div ref={statsRef} className="mt-8 grid gap-3 sm:grid-cols-2">
+                <div className="mt-6">
+                  <ButtonLink
+                    href="/kontakt"
+                    className="w-full border-white/16 bg-white text-[#111111] hover:bg-white/92 hover:text-[#111111] sm:w-auto"
+                  >
+                    {language === "no" ? "Book møte" : "Book a meeting"}
+                  </ButtonLink>
+                </div>
+
+                <div ref={statsRef} className="mt-6 grid gap-3 sm:grid-cols-2">
                   {animatedMetrics.slice(0, 2).map((metric) => (
                     <div
                       key={metric.label}
@@ -738,8 +747,8 @@ export function ResultsSection() {
                   ))}
                 </div>
 
-                <div className="mt-8 grid gap-4 border-t border-[color:var(--line)]/90 pt-6 sm:grid-cols-[minmax(0,0.92fr)_minmax(0,1.08fr)] sm:items-end">
-                  <div className="result-stat-card px-5 py-5">
+                <div className="mt-5 border-t border-[color:var(--line)]/90 pt-5">
+                  <div className="result-stat-card max-w-[20rem] px-5 py-5">
                     <p className="text-[2rem] font-semibold leading-none tracking-[-0.06em] text-[color:var(--foreground)] sm:text-[2.2rem]">
                       {animatedMetrics[2]?.value}
                     </p>
@@ -750,71 +759,82 @@ export function ResultsSection() {
                       {animatedMetrics[2]?.detail}
                     </p>
                   </div>
-
-                  <div className="flex sm:justify-end">
-                    <ButtonLink
-                      href="/kontakt"
-                      className="w-full border-white/16 bg-white text-[#111111] hover:bg-white/92 hover:text-[#111111] sm:w-auto"
-                    >
-                      {language === "no" ? "Book møte" : "Book a meeting"}
-                    </ButtonLink>
-                  </div>
                 </div>
               </div>
 
               <div className="border-t border-[color:var(--line)]/90 p-6 sm:p-8 lg:border-l lg:border-t-0 lg:p-10">
-                <div className="results-aside-stack">
-                  <div className="roi-proof-card px-5 py-5 sm:px-6 sm:py-6">
-                    <p className="text-[0.72rem] font-semibold uppercase tracking-[0.22em] text-[var(--muted)]">
-                      {language === "no" ? "Forventet ROI" : "Expected ROI"}
-                    </p>
-                    <h3 className="mt-3 max-w-[15ch] font-display text-[1.65rem] leading-[1.02] tracking-[-0.055em] text-[color:var(--foreground)] sm:text-[2rem]">
-                      {language === "no"
-                        ? "Bevis som støtter investeringene tidligere i prosessen."
-                        : "Proof that supports the investment earlier in the process."}
-                    </h3>
-                    <div className="mt-5 grid gap-5">
-                      {roiPoints.map((item) => (
-                        <div key={item.value} className="roi-proof-card__item">
-                          <p className="text-[2rem] font-semibold leading-none tracking-[-0.07em] text-[color:var(--foreground)] sm:text-[2.25rem]">
-                            {item.value}
-                          </p>
-                          <p className="mt-2 max-w-[18rem] text-[0.74rem] font-semibold uppercase tracking-[0.18em] text-[var(--muted)]">
-                            {item.label}
-                          </p>
-                          <p className="mt-3 max-w-[20rem] text-sm leading-6 text-[var(--muted-2)]">
-                            {item.detail}
-                          </p>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-
-                  <div>
-                    <p className="text-[0.72rem] font-semibold uppercase tracking-[0.24em] text-[var(--muted)]">
-                      {language === "no" ? "Hvorfor oss?" : "Why us?"}
-                    </p>
-                    <div className="mt-5 grid gap-4">
-                      {testimonials.map((testimonial) => (
-                        <blockquote
-                          key={`${testimonial.company}-${testimonial.name}`}
-                          className="result-testimonial-card px-5 py-4.5 text-[var(--muted-2)]"
-                        >
-                          <p className="text-[0.98rem] leading-7 sm:text-[1.03rem]">
-                            “{resolveLocalizedValue(testimonial.quote, language)}”
-                          </p>
-                          <footer className="mt-3.5 text-sm text-[var(--muted)]">
-                            {testimonial.name} ({testimonial.company})
-                          </footer>
-                        </blockquote>
-                      ))}
-                    </div>
+                <div className="roi-proof-card px-5 py-5 sm:px-6 sm:py-6 lg:px-7 lg:py-7">
+                  <p className="text-[0.72rem] font-semibold uppercase tracking-[0.22em] text-[var(--muted)]">
+                    {language === "no" ? "Forventet ROI" : "Expected ROI"}
+                  </p>
+                  <h3 className="mt-3 max-w-[15ch] font-display text-[1.75rem] leading-[1.02] tracking-[-0.055em] text-[color:var(--foreground)] sm:text-[2.15rem]">
+                    {language === "no"
+                      ? "Bevis som støtter investeringene tidligere i prosessen."
+                      : "Proof that supports the investment earlier in the process."}
+                  </h3>
+                  <div className="mt-6 grid gap-6">
+                    {roiPoints.map((item) => (
+                      <div key={item.value} className="roi-proof-card__item">
+                        <p className="text-[2.15rem] font-semibold leading-none tracking-[-0.075em] text-[color:var(--foreground)] sm:text-[2.55rem]">
+                          {item.value}
+                        </p>
+                        <p className="mt-2 max-w-[19rem] text-[0.74rem] font-semibold uppercase tracking-[0.18em] text-[var(--muted)]">
+                          {item.label}
+                        </p>
+                        <p className="mt-3 max-w-[23rem] text-sm leading-6 text-[var(--muted-2)] sm:text-[0.98rem]">
+                          {item.detail}
+                        </p>
+                      </div>
+                    ))}
                   </div>
                 </div>
               </div>
             </div>
           </div>
         </Reveal>
+      </div>
+    </section>
+  );
+}
+
+export function WhyUsProofSection() {
+  const { language } = useSitePreferences();
+
+  return (
+    <section className="section-space pt-0">
+      <div className="site-container">
+        <div className="grid gap-5 lg:grid-cols-[minmax(0,0.92fr)_minmax(0,1.08fr)] lg:gap-8">
+          <Reveal y={14}>
+            <div className="max-w-[32rem]">
+              <p className="eyebrow">{language === "no" ? "Hvorfor oss?" : "Why us?"}</p>
+              <h2 className="section-title mt-3 text-[color:var(--foreground)] sm:mt-4">
+                {language === "no"
+                  ? "Trygg levering med tydelig oppfølging hele veien."
+                  : "Reliable delivery with clear follow-through throughout."}
+              </h2>
+              <p className="body-lead mt-4 text-[var(--muted-2)]">
+                {language === "no"
+                  ? "Etter proof-delen kommer bekreftelsen: kundene beskriver samarbeidet som nært, ryddig og profesjonelt."
+                  : "After the proof comes the confirmation: clients describe the collaboration as close, structured and professional."}
+              </p>
+            </div>
+          </Reveal>
+
+          <div className="grid gap-4">
+            {testimonials.map((testimonial, index) => (
+              <Reveal key={`${testimonial.company}-${testimonial.name}`} delay={0.04 * index} y={12}>
+                <blockquote className="result-testimonial-card px-5 py-4.5 text-[var(--muted-2)] sm:px-6 sm:py-5.5">
+                  <p className="text-[0.98rem] leading-7 sm:text-[1.03rem]">
+                    “{resolveLocalizedValue(testimonial.quote, language)}”
+                  </p>
+                  <footer className="mt-3.5 text-sm text-[var(--muted)]">
+                    {testimonial.name} ({testimonial.company})
+                  </footer>
+                </blockquote>
+              </Reveal>
+            ))}
+          </div>
+        </div>
       </div>
     </section>
   );

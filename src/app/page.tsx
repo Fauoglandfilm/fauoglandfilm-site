@@ -5,6 +5,7 @@ import {
   ResultsSection,
   SelectedWorkSection,
   ServicesSection,
+  WhyUsProofSection,
   WhyChooseUsSection,
 } from "@/components/sections/home-sections";
 import { caseStudies, siteConfig } from "@/data/site-content";
@@ -26,9 +27,10 @@ export default function HomePage() {
       <HeroSection />
       <ClientSlider />
       <SelectedWorkSection items={homepageCaseStudies} />
+      <ResultsSection />
+      <WhyUsProofSection />
       <WhyChooseUsSection />
       <ServicesSection />
-      <ResultsSection />
       <ClosingCtaSection />
     </main>
   );
