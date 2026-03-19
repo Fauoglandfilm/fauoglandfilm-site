@@ -594,18 +594,45 @@ export function ResultsSection() {
           ],
     [language],
   );
-  const roiPoints =
-    language === "no"
-      ? [
-          "Flere annonser og uttak fra samme opptak.",
-          "Lengre levetid på innholdet i digitale flater.",
-          "Klarere vei fra synlighet til henvendelser.",
-        ]
-      : [
-          "More ads and cutdowns from the same shoot.",
-          "Longer content lifespan across digital placements.",
-          "A clearer path from visibility to enquiries.",
-        ];
+  const roiPoints = useMemo(
+    () =>
+      language === "no"
+        ? [
+            {
+              value: "93%",
+              label: "av bedrifter får positiv avkastning fra video",
+              detail: "Video er en av de mest lønnsomme kanalene i moderne markedsføring.",
+            },
+            {
+              value: "Opptil 80%",
+              label: "høyere konvertering med video",
+              detail: "Flere besøk blir til faktiske kunder.",
+            },
+            {
+              value: "87%",
+              label: "opplever økt salg fra video",
+              detail: "Video driver både leads, kjøp og omsetning.",
+            },
+          ]
+        : [
+            {
+              value: "93%",
+              label: "of businesses report positive ROI from video",
+              detail: "Video remains one of the highest-yield channels in modern marketing.",
+            },
+            {
+              value: "Up to 80%",
+              label: "higher conversion with video",
+              detail: "More visits turn into actual customers.",
+            },
+            {
+              value: "87%",
+              label: "report higher sales from video",
+              detail: "Video drives leads, purchases and revenue.",
+            },
+          ],
+    [language],
+  );
   const animatedMetrics = useMemo(
     () => [
       {
@@ -722,11 +749,18 @@ export function ResultsSection() {
                     <p className="text-[0.72rem] font-semibold uppercase tracking-[0.2em] text-white/44">
                       {language === "no" ? "Forventet ROI" : "Expected ROI"}
                     </p>
-                    <div className="mt-4 grid gap-3">
+                    <div className="mt-4 grid gap-4">
                       {roiPoints.map((item) => (
-                        <div key={item} className="flex items-start gap-3 text-sm leading-6 text-white/72">
-                          <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-white/46" />
-                          <span>{item}</span>
+                        <div key={item.value} className="grid gap-1.5">
+                          <p className="text-[1.58rem] font-semibold leading-none tracking-[-0.06em] text-white sm:text-[1.72rem]">
+                            {item.value}
+                          </p>
+                          <p className="max-w-[20rem] text-[0.74rem] font-semibold uppercase tracking-[0.18em] text-white/52">
+                            {item.label}
+                          </p>
+                          <p className="max-w-[22rem] text-sm leading-6 text-white/68">
+                            {item.detail}
+                          </p>
                         </div>
                       ))}
                     </div>
