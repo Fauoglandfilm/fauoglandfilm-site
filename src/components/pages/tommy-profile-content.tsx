@@ -329,22 +329,8 @@ function RoleGroupCard({
   return (
     <Reveal delay={0.04 * index}>
       <article className="glass-panel rounded-[2rem] px-5 py-5 sm:px-6 sm:py-6 lg:px-7 lg:py-7">
-        <div className="space-y-2">
-          <h3 className="text-[1.1rem] font-semibold tracking-[-0.03em] text-[color:var(--foreground)] sm:text-[1.2rem]">
-            {resolveLocalizedValue(group.title, language)}
-          </h3>
-          <p className="text-sm leading-6 text-[var(--muted-2)]">
-            {resolveLocalizedValue(group.description, language)}
-          </p>
-        </div>
-
-        <div className="mt-5">
-          <div className="mb-4 inline-flex min-h-9 items-center rounded-full border border-[color:var(--line)]/70 bg-[color:var(--surface-muted)]/78 px-3.5 py-2 text-[0.68rem] font-semibold uppercase tracking-[0.16em] text-[var(--muted)]">
-            {language === "no" ? "Producer / Crew" : "Producer / Crew"}
-          </div>
-
-          <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-          {group.items.map((item) => {
+        <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+          {group.items.filter((item) => item.poster).map((item) => {
             const gallery = item.poster ? [item.poster] : [];
 
             return (
@@ -369,13 +355,7 @@ function RoleGroupCard({
                         className={cn(item.poster.fit === "cover" ? "object-cover" : "object-contain p-1.5")}
                       />
                     </button>
-                  ) : (
-                    <div className="flex aspect-[0.72/1] items-end rounded-[1.45rem] border border-dashed border-[color:var(--line)]/70 bg-[color:var(--surface-muted)]/76 p-4">
-                      <p className="max-w-[12ch] text-sm font-medium leading-6 text-[var(--muted)]">
-                        {resolveLocalizedValue(item.title, language)}
-                      </p>
-                    </div>
-                  )}
+                  ) : null}
 
                   <div className="min-w-0">
                     <p className="text-sm font-semibold leading-6 text-[color:var(--foreground)]">
@@ -391,7 +371,6 @@ function RoleGroupCard({
               </div>
             );
           })}
-          </div>
         </div>
       </article>
     </Reveal>
