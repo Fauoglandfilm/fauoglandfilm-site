@@ -48,13 +48,13 @@ export function CaseCard({
 
   return (
     <article
-      className={`card-surface group overflow-hidden rounded-[1.8rem] shadow-[0_28px_90px_rgba(0,0,0,0.18)] sm:rounded-[1.95rem] ${
+      className={`card-surface group overflow-hidden rounded-[1.65rem] shadow-[0_28px_90px_rgba(0,0,0,0.18)] sm:rounded-[1.95rem] ${
         isFeature ? "lg:grid lg:grid-cols-[1.02fr_0.98fr]" : "md:grid md:grid-cols-[0.95fr_1.05fr]"
       }`}
     >
       <div
         className={`relative overflow-hidden ${
-          isFeature ? "min-h-[14.5rem] sm:min-h-[16rem] lg:min-h-[19rem]" : "aspect-[1.25/0.82] min-h-[13rem] md:min-h-[14.5rem]"
+          isFeature ? "min-h-[13.1rem] sm:min-h-[16rem] lg:min-h-[19rem]" : "aspect-[1.25/0.8] min-h-[12rem] md:min-h-[14.5rem]"
         }`}
       >
         <PreviewMedia
@@ -75,8 +75,8 @@ export function CaseCard({
         <div className="grain-overlay absolute inset-0 opacity-45" />
       </div>
 
-      <div className="relative flex flex-1 flex-col gap-4 bg-[color:var(--surface)] p-4 sm:p-5 lg:p-6">
-        <div className="space-y-2">
+      <div className="relative flex flex-1 flex-col gap-3.5 bg-[color:var(--surface)] p-3.5 sm:p-5 lg:p-6">
+        <div className="space-y-1.5">
           <p className="text-[0.68rem] font-semibold uppercase tracking-[0.22em] text-[var(--muted)]">
             {caseStudy.client}
           </p>

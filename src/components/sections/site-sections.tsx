@@ -60,7 +60,7 @@ export function ServicesSection({
             {services.map((service) => (
               <div
                 key={service.slug}
-                className="px-4 py-4 sm:px-6 sm:py-6 lg:px-7 lg:py-7"
+                className="px-3.5 py-3.5 sm:px-6 sm:py-6 lg:px-7 lg:py-7"
               >
                 <ServiceCard service={service} />
               </div>
@@ -88,7 +88,7 @@ export function PriceGuideSection({ items }: { items: PriceGuide[] }) {
             {items.map((item, index) => (
               <div
                 key={`price-guide-${index}`}
-                className="grid gap-3 px-4 py-4 sm:px-6 sm:py-6 lg:grid-cols-[minmax(13rem,0.42fr)_minmax(0,1fr)] lg:items-start"
+                className="grid gap-2.5 px-3.5 py-3.5 sm:px-6 sm:py-6 lg:grid-cols-[minmax(13rem,0.42fr)_minmax(0,1fr)] lg:items-start"
               >
                 <div className="space-y-2">
                   <p className="text-[0.68rem] font-semibold uppercase tracking-[0.2em] text-[var(--muted)]">
@@ -164,7 +164,7 @@ export function ProcessSection({ steps }: { steps: ProcessStep[] }) {
             {steps.map((step) => (
               <div
                 key={step.step}
-                className="bg-[color:var(--surface)] px-5 py-5 text-left sm:px-6 sm:py-6"
+                className="bg-[color:var(--surface)] px-4 py-4 text-left sm:px-6 sm:py-6"
               >
                 <span className="font-display text-[1.35rem] leading-none text-[var(--accent)]">
                   {step.step}
@@ -575,7 +575,7 @@ export function CtaBanner({
   return (
     <section className="section-space">
       <div className="site-container">
-        <div className="overflow-hidden rounded-[1.6rem] border border-black/8 bg-[#111111] px-4 py-5 text-white shadow-[0_20px_56px_rgba(15,15,15,0.1)] sm:rounded-[1.8rem] sm:px-6 sm:py-6 lg:px-7 lg:py-7">
+        <div className="overflow-hidden rounded-[1.6rem] border border-black/8 bg-[#111111] px-4 py-4.5 text-white shadow-[0_20px_56px_rgba(15,15,15,0.1)] sm:rounded-[1.8rem] sm:px-6 sm:py-6 lg:px-7 lg:py-7">
           <div
             className={
               align === "center"
@@ -656,9 +656,9 @@ export function PageHero(props: {
   const { language } = useSitePreferences();
 
   return (
-    <section className="bg-[#111111] pt-22 text-white sm:pt-28">
+    <section className="bg-[#111111] pt-20 text-white sm:pt-28">
       <div className="site-container">
-        <Reveal className="w-full py-12 sm:py-14 lg:py-16" delay={0.04} y={18}>
+        <Reveal className="w-full py-10 sm:py-14 lg:py-16" delay={0.04} y={18}>
           <div className="max-w-[44rem]">
             <span className="hero-badge text-white/62">
               {resolveLocalizedValue(eyebrow, language)}
@@ -666,11 +666,11 @@ export function PageHero(props: {
             <h1 className="page-title mt-3 max-w-[13ch] text-white">
               {resolveLocalizedValue(title, language)}
             </h1>
-            <p className="body-copy mt-4 max-w-2xl text-white/76 sm:text-base sm:leading-7">
+            <p className="body-copy mt-3.5 max-w-2xl text-white/76 sm:mt-4 sm:text-base sm:leading-7">
               {resolveLocalizedValue(description, language)}
             </p>
             {primaryCta || secondaryCta ? (
-              <div className="mt-6 flex flex-col gap-2.5 sm:flex-row sm:flex-wrap sm:gap-3">
+              <div className="mt-5 flex flex-col gap-2.5 sm:mt-6 sm:flex-row sm:flex-wrap sm:gap-3">
                 {primaryCta ? (
                   <ButtonLink href={primaryCta.href} className="w-full sm:w-auto">
                     {resolveLocalizedValue(primaryCta.label, language)}

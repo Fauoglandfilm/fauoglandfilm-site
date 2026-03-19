@@ -52,6 +52,7 @@ export type ClientLogo = {
   width: number;
   height: number;
   scale?: number;
+  invertInLight?: boolean;
 };
 
 export type SocialLink = {
@@ -392,22 +393,22 @@ export const navItems: NavItem[] = [
 // Curated active set from clients/COLOR. The marquee only uses verified brand files.
 export const clientLogos: ClientLogo[] = [
   {
-    name: "Actors Hub",
-    src: "/media/logos/clients/COLOR/actorshub_logo_white_NY-kopi.png",
-    width: 1500,
-    height: 844,
-    scale: 0.93,
-  },
-  {
-    name: "Foreningen Norden",
-    src: "/media/logos/clients/COLOR/Foreningen%20norden.png",
+    name: "Ville Gleder",
+    src: "/media/logos/clients/COLOR/Ville%20gleder.png",
     width: 1563,
     height: 1563,
-    scale: 0.96,
+    scale: 0.94,
   },
   {
-    name: "The International Stunt Academy",
-    src: "/media/logos/clients/COLOR/ISA.png",
+    name: "Treningshuset",
+    src: "/media/logos/clients/COLOR/Treningshuset.png",
+    width: 726,
+    height: 146,
+    scale: 1,
+  },
+  {
+    name: "STUA",
+    src: "/media/logos/clients/COLOR/STUA.png",
     width: 1563,
     height: 1563,
     scale: 0.94,
@@ -417,28 +418,43 @@ export const clientLogos: ClientLogo[] = [
     src: "/media/logos/clients/COLOR/Norske%20Bunader.webp",
     width: 500,
     height: 200,
-    scale: 0.96,
-  },
-  {
-    name: "STUA",
-    src: "/media/logos/clients/COLOR/STUA.png",
-    width: 1563,
-    height: 1563,
     scale: 0.98,
   },
   {
-    name: "Treningshuset",
-    src: "/media/logos/clients/COLOR/Treningshuset.png",
-    width: 726,
-    height: 146,
-    scale: 1.06,
+    name: "Actors Hub",
+    src: "/media/logos/clients/COLOR/actorshub_logo_white_NY-kopi.png",
+    width: 1500,
+    height: 844,
+    scale: 0.98,
+    invertInLight: true,
   },
   {
-    name: "Ville Gleder",
-    src: "/media/logos/clients/COLOR/Ville%20gleder.png",
+    name: "Gina",
+    src: "/media/logos/clients/COLOR/GinaLiggende-01.webp",
+    width: 1500,
+    height: 341,
+    scale: 0.98,
+  },
+  {
+    name: "The International Stunt Academy",
+    src: "/media/logos/clients/COLOR/ISA.png",
     width: 1563,
     height: 1563,
-    scale: 1,
+    scale: 0.92,
+  },
+  {
+    name: "Nei til Atomvåpen",
+    src: "/media/logos/clients/COLOR/Nei_til_atomva%CC%8Apen-logo.svg.png",
+    width: 1200,
+    height: 889,
+    scale: 0.9,
+  },
+  {
+    name: "Foreningen Norden",
+    src: "/media/logos/clients/COLOR/Foreningen%20norden.png",
+    width: 1563,
+    height: 1563,
+    scale: 0.92,
   },
 ];
 

@@ -1,7 +1,11 @@
+"use client";
+
 import Image from "next/image";
 import type { CSSProperties } from "react";
 
+import { useSitePreferences } from "@/components/providers/site-preferences";
 import type { ClientLogo } from "@/data/site-content";
+import { cn } from "@/lib/utils";
 
 type ClientLogoMarqueeProps = {
   logos: ClientLogo[];
@@ -12,6 +16,7 @@ export function ClientLogoMarquee({
   logos,
   durationSeconds = 48,
 }: ClientLogoMarqueeProps) {
+  const { theme } = useSitePreferences();
   const uniqueLogos = logos.filter(
     (logo, index, list) => list.findIndex((entry) => entry.name === logo.name) === index,
   );
@@ -20,58 +25,37 @@ export function ClientLogoMarquee({
   } as CSSProperties;
 
   return (
-    <>
-      <div className="overflow-x-auto pb-1 sm:hidden [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
-        <ul className="flex min-w-max snap-x snap-mandatory items-center gap-3.5 pr-4">
-          {uniqueLogos.map((logo) => (
-            <li
-              key={logo.name}
-              className="flex h-[4.9rem] min-w-[10.25rem] snap-start items-center justify-center rounded-[1.3rem] border border-[color:var(--line)] bg-[color:var(--surface)]/92 px-5 shadow-[0_16px_34px_rgba(18,14,10,0.06)]"
-            >
-              <Image
-                src={logo.src}
-                alt={logo.name}
-                width={logo.width}
-                height={logo.height}
-                className="h-9 w-auto max-w-[8.4rem] object-contain opacity-100"
-                style={{
-                  transform: `scale(${logo.scale ?? 1})`,
-                  transformOrigin: "center center",
-                }}
-              />
-            </li>
-          ))}
-        </ul>
+    <div className="relative overflow-hidden">
+      <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-10 bg-[linear-gradient(90deg,var(--surface-muted)_0%,color-mix(in_srgb,var(--surface-muted)_70%,transparent)_58%,transparent_100%)] sm:w-16" />
+      <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-10 bg-[linear-gradient(270deg,var(--surface-muted)_0%,color-mix(in_srgb,var(--surface-muted)_70%,transparent)_58%,transparent_100%)] sm:w-16" />
+      <div className="logo-marquee-track" style={marqueeStyle}>
+        {[0, 1].map((copyIndex) => (
+          <ul key={copyIndex} className="logo-marquee-group" aria-hidden={copyIndex === 1}>
+            {uniqueLogos.map((logo) => (
+              <li
+                key={`${copyIndex}-${logo.name}`}
+                className="flex h-[3rem] min-w-[7.75rem] shrink-0 items-center justify-center sm:h-[3.4rem] sm:min-w-[9rem] lg:h-[3.8rem] lg:min-w-[10.5rem]"
+              >
+                <Image
+                  src={logo.src}
+                  alt={logo.name}
+                  width={logo.width}
+                  height={logo.height}
+                  className={cn(
+                    "h-7 w-auto max-w-[6.75rem] object-contain opacity-100 transition duration-300 sm:h-8 sm:max-w-[7.8rem] lg:h-9 lg:max-w-[9.4rem]",
+                    theme === "dark" && "brightness-[1.08] contrast-[1.04]",
+                    theme === "light" && logo.invertInLight && "invert brightness-[0.18] contrast-[1.12]",
+                  )}
+                  style={{
+                    transform: `scale(${logo.scale ?? 1})`,
+                    transformOrigin: "center center",
+                  }}
+                />
+              </li>
+            ))}
+          </ul>
+        ))}
       </div>
-
-      <div className="relative hidden overflow-hidden sm:block">
-        <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-20 bg-[linear-gradient(90deg,var(--background)_0%,color-mix(in_srgb,var(--background)_88%,transparent)_58%,transparent_100%)]" />
-        <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-20 bg-[linear-gradient(270deg,var(--background)_0%,color-mix(in_srgb,var(--background)_88%,transparent)_58%,transparent_100%)]" />
-        <div className="logo-marquee-track" style={marqueeStyle}>
-          {[0, 1].map((copyIndex) => (
-            <ul key={copyIndex} className="logo-marquee-group" aria-hidden={copyIndex === 1}>
-              {uniqueLogos.map((logo) => (
-                <li
-                  key={`${copyIndex}-${logo.name}`}
-                  className="flex h-[5.4rem] min-w-[12rem] shrink-0 items-center justify-center rounded-[1.45rem] border border-[color:var(--line)] bg-[color:var(--surface)]/9 px-6 shadow-[0_16px_34px_rgba(18,14,10,0.06)] backdrop-blur-sm"
-                >
-                  <Image
-                    src={logo.src}
-                    alt={logo.name}
-                    width={logo.width}
-                    height={logo.height}
-                    className="h-10 w-auto max-w-[9.8rem] object-contain opacity-100"
-                    style={{
-                      transform: `scale(${logo.scale ?? 1})`,
-                      transformOrigin: "center center",
-                    }}
-                  />
-                </li>
-              ))}
-            </ul>
-          ))}
-        </div>
-      </div>
-    </>
+    </div>
   );
 }
