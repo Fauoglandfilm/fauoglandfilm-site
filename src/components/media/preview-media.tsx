@@ -1,7 +1,5 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
-
 import { useSitePreferences } from "@/components/providers/site-preferences";
 import type { ExternalVideoAsset, VideoAsset } from "@/data/site-content";
 import type { LocalizedText } from "@/lib/i18n";
@@ -115,87 +113,8 @@ export function PreviewMedia({
   priority = false,
   posterClassName,
   previewClassName,
-  rootMargin = "0px 0px -12% 0px",
-  inViewThreshold = 0.42,
 }: PreviewMediaProps) {
   const { language } = useSitePreferences();
-  const containerRef = useRef<HTMLDivElement | null>(null);
-  const [isHovered, setIsHovered] = useState(false);
-  const [isInView, setIsInView] = useState(false);
-  const [canHover, setCanHover] = useState(false);
-  const normalizedInViewThreshold = Math.min(Math.max(inViewThreshold, 0.01), 0.98);
-
-  useEffect(() => {
-    if (typeof window === "undefined") {
-      return;
-    }
-
-    const mediaQuery = window.matchMedia("(hover: hover) and (pointer: fine)");
-    const update = () => setCanHover(mediaQuery.matches);
-
-    update();
-    mediaQuery.addEventListener("change", update);
-
-    return () => {
-      mediaQuery.removeEventListener("change", update);
-    };
-  }, []);
-
-  useEffect(() => {
-    if (previewBehavior === "static" || previewBehavior === "always") {
-      return;
-    }
-
-    const node = containerRef.current;
-
-    if (!node) {
-      return;
-    }
-
-    const updateFromViewport = () => {
-      const rect = node.getBoundingClientRect();
-      const viewportWidth = window.innerWidth || document.documentElement.clientWidth;
-      const viewportHeight = window.innerHeight || document.documentElement.clientHeight;
-      const visibleWidth = Math.max(0, Math.min(rect.right, viewportWidth) - Math.max(rect.left, 0));
-      const visibleHeight = Math.max(0, Math.min(rect.bottom, viewportHeight) - Math.max(rect.top, 0));
-      const visibleArea = visibleWidth * visibleHeight;
-      const totalArea = Math.max(rect.width * rect.height, 1);
-      const visibilityRatio = visibleArea / totalArea;
-
-      setIsInView(visibleWidth > 0 && visibleHeight > 0 && visibilityRatio >= normalizedInViewThreshold);
-    };
-
-    const raf = window.requestAnimationFrame(updateFromViewport);
-    window.addEventListener("scroll", updateFromViewport, { passive: true });
-    window.addEventListener("resize", updateFromViewport);
-
-    if (typeof IntersectionObserver === "undefined") {
-      return () => {
-        window.cancelAnimationFrame(raf);
-        window.removeEventListener("scroll", updateFromViewport);
-        window.removeEventListener("resize", updateFromViewport);
-      };
-    }
-
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        setIsInView(entry.isIntersecting && entry.intersectionRatio >= normalizedInViewThreshold);
-      },
-      {
-        threshold: Array.from(new Set([0, normalizedInViewThreshold])),
-        rootMargin,
-      },
-    );
-
-    observer.observe(node);
-
-    return () => {
-      window.cancelAnimationFrame(raf);
-      window.removeEventListener("scroll", updateFromViewport);
-      window.removeEventListener("resize", updateFromViewport);
-      observer.disconnect();
-    };
-  }, [normalizedInViewThreshold, previewBehavior, rootMargin]);
 
   const resolvedTitle = resolveLocalizedValue(title, language);
   const resolvedAlt = imageAlt ? resolveLocalizedValue(imageAlt, language) : resolvedTitle;
@@ -206,28 +125,14 @@ export function PreviewMedia({
   const hasPlayableMedia = hasDirectPreview || hasExternalPreview;
   const fallbackContent = <PreviewFallbackState title={resolvedTitle} />;
 
-  const shouldPlay =
-    previewBehavior === "always"
-      ? true
-      : previewBehavior === "hover"
-        ? canHover && isHovered
-        : previewBehavior === "viewport"
-          ? isInView
-          : previewBehavior === "hover-or-viewport"
-            ? canHover
-              ? isHovered
-              : isInView
-            : false;
+  const shouldPlay = previewBehavior !== "static";
   const shouldRenderPreview = shouldPlay && hasPlayableMedia;
   const mediaObjectClass =
     mediaFit === "contain" ? "object-contain p-5 sm:p-6" : "object-cover";
 
   return (
     <div
-      ref={containerRef}
       className={cn("h-full w-full overflow-hidden", !hasExplicitPositionClass(className) && "relative", className)}
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
       aria-label={resolvedTitle}
     >
       {posterSrc || fallbackSources.length ? (

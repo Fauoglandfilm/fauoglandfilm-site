@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState, type MutableRefObject } from "react";
+import { useEffect, useRef, useState } from "react";
 
 import { useSitePreferences } from "@/components/providers/site-preferences";
 import type { ExternalVideoAsset, VideoAsset } from "@/data/site-content";
@@ -55,45 +55,9 @@ type ManagedDirectVideoProps = {
   image?: string;
   autoplay: boolean;
   previewMode: boolean;
-  shouldLoadMedia: boolean;
-  shouldActivatePlayback: boolean;
   showControls: boolean;
   disableMobileSource: boolean;
 };
-
-function triggerManagedVideoPlayback(
-  node: HTMLVideoElement,
-  retryTimeoutRef: MutableRefObject<number | null>,
-  retryOnFailure = true,
-) {
-  node.defaultMuted = true;
-  node.muted = true;
-  node.playsInline = true;
-  node.setAttribute("muted", "");
-  node.setAttribute("playsinline", "");
-
-  const playPromise = node.play();
-
-  if (playPromise && typeof playPromise.catch === "function") {
-    playPromise.catch(() => {
-      if (!retryOnFailure) {
-        return;
-      }
-
-      if (retryTimeoutRef.current) {
-        window.clearTimeout(retryTimeoutRef.current);
-      }
-
-      retryTimeoutRef.current = window.setTimeout(() => {
-        retryTimeoutRef.current = null;
-        node
-          .play()
-          .then(() => undefined)
-          .catch(() => undefined);
-      }, 160);
-    });
-  }
-}
 
 function hasExplicitPositionClass(value?: string) {
   return Boolean(value && /\b(relative|absolute|fixed|sticky)\b/.test(value));
@@ -101,16 +65,17 @@ function hasExplicitPositionClass(value?: string) {
 
 function withPlayerParams(video: ExternalVideoAsset, autoplay: boolean, previewMode: boolean) {
   const url = new URL(video.embedUrl);
+  const shouldAutoplay = autoplay || previewMode;
 
   if (video.provider === "youtube") {
     url.hostname = "www.youtube-nocookie.com";
     url.searchParams.set("rel", "0");
     url.searchParams.set("modestbranding", "1");
     url.searchParams.set("playsinline", "1");
-    url.searchParams.set("autoplay", autoplay ? "1" : "0");
-    url.searchParams.set("mute", autoplay || previewMode ? "1" : "0");
+    url.searchParams.set("autoplay", shouldAutoplay ? "1" : "0");
+    url.searchParams.set("mute", shouldAutoplay ? "1" : "0");
 
-    if (previewMode) {
+    if (shouldAutoplay) {
       const videoId = url.pathname.split("/").pop();
       url.searchParams.set("controls", "0");
       url.searchParams.set("fs", "0");
@@ -125,14 +90,14 @@ function withPlayerParams(video: ExternalVideoAsset, autoplay: boolean, previewM
   }
 
   if (video.provider === "vimeo") {
-    url.searchParams.set("autoplay", autoplay ? "1" : "0");
-    url.searchParams.set("muted", autoplay || previewMode ? "1" : "0");
+    url.searchParams.set("autoplay", shouldAutoplay ? "1" : "0");
+    url.searchParams.set("muted", shouldAutoplay ? "1" : "0");
     url.searchParams.set("title", "0");
     url.searchParams.set("byline", "0");
     url.searchParams.set("portrait", "0");
     url.searchParams.set("dnt", "1");
 
-    if (previewMode) {
+    if (shouldAutoplay) {
       url.searchParams.set("background", "1");
       url.searchParams.set("loop", "1");
       url.searchParams.set("autopause", "0");
@@ -189,100 +154,6 @@ function isPlayableDirectVideo(video: Extract<VideoAsset, { videoType: "direct" 
   });
 }
 
-function useSmartMediaState({
-  autoplay,
-  previewMode,
-  priority,
-}: {
-  autoplay: boolean;
-  previewMode: boolean;
-  priority: boolean;
-}) {
-  const containerRef = useRef<HTMLDivElement | null>(null);
-  const [isNearViewport, setIsNearViewport] = useState(previewMode || priority);
-  const [isInViewport, setIsInViewport] = useState(previewMode || priority);
-  const [isMobileViewport, setIsMobileViewport] = useState(false);
-
-  useEffect(() => {
-    if (typeof window === "undefined") {
-      return;
-    }
-
-    const mediaQuery = window.matchMedia("(max-width: 767px)");
-    const updateViewport = () => setIsMobileViewport(mediaQuery.matches);
-
-    updateViewport();
-
-    if (typeof mediaQuery.addEventListener === "function") {
-      mediaQuery.addEventListener("change", updateViewport);
-      return () => mediaQuery.removeEventListener("change", updateViewport);
-    }
-
-    mediaQuery.addListener(updateViewport);
-    return () => mediaQuery.removeListener(updateViewport);
-  }, []);
-
-  useEffect(() => {
-    if (previewMode || priority) {
-      return;
-    }
-
-    const node = containerRef.current;
-
-    if (!node || typeof IntersectionObserver === "undefined") {
-      const frame = window.requestAnimationFrame(() => {
-        setIsNearViewport(true);
-        setIsInViewport(true);
-      });
-
-      return () => {
-        window.cancelAnimationFrame(frame);
-      };
-    }
-
-    const nearObserver = new IntersectionObserver(
-      ([entry]) => {
-        setIsNearViewport(entry.isIntersecting);
-      },
-      {
-        threshold: 0.01,
-        rootMargin: isMobileViewport ? "160px 0px" : "320px 0px",
-      },
-    );
-
-    nearObserver.observe(node);
-
-    let playObserver: IntersectionObserver | null = null;
-
-    if (autoplay) {
-      playObserver = new IntersectionObserver(
-        ([entry]) => {
-          setIsInViewport(
-            entry.isIntersecting &&
-              entry.intersectionRatio >= (isMobileViewport ? 0.5 : 0.35),
-          );
-        },
-        {
-          threshold: isMobileViewport ? [0, 0.5, 0.75] : [0, 0.35, 0.6],
-        },
-      );
-
-      playObserver.observe(node);
-    }
-
-    return () => {
-      nearObserver.disconnect();
-      playObserver?.disconnect();
-    };
-  }, [autoplay, isMobileViewport, previewMode, priority]);
-
-  return {
-    containerRef,
-    shouldLoadMedia: previewMode || priority || isNearViewport,
-    shouldActivatePlayback: previewMode || (autoplay && isInViewport),
-  };
-}
-
 function ManagedExternalFrame({
   fallbackSrc,
   fallbackSrcs,
@@ -334,7 +205,7 @@ function ManagedExternalFrame({
           fallbackContent={<FallbackSurface />}
           className={cn(
             mediaObjectClass,
-            "transition duration-500",
+            "z-[1] transition duration-500",
             isReady && shouldRenderFrame ? "opacity-0" : "opacity-100",
           )}
         />
@@ -347,7 +218,7 @@ function ManagedExternalFrame({
           src={iframeSrc}
           title={iframeTitle}
           className={cn(
-            "absolute inset-0 h-full w-full transition duration-500",
+            "absolute inset-0 z-0 h-full w-full transition duration-500",
             isReady ? "pointer-events-auto opacity-100" : "pointer-events-none opacity-0",
           )}
           allow="autoplay; encrypted-media; picture-in-picture; fullscreen"
@@ -371,56 +242,14 @@ function ManagedDirectVideo({
   image,
   autoplay,
   previewMode,
-  shouldLoadMedia,
-  shouldActivatePlayback,
   showControls,
   disableMobileSource,
 }: ManagedDirectVideoProps) {
-  const [isReady, setIsReady] = useState(false);
-  const [hasLoadedMetadata, setHasLoadedMetadata] = useState(false);
   const [hasFailed, setHasFailed] = useState(false);
   const [hasStartedPlayback, setHasStartedPlayback] = useState(false);
-  const videoRef = useRef<HTMLVideoElement | null>(null);
-  const retryTimeoutRef = useRef<number | null>(null);
-  const shouldHoldPosterUntilPlay = showControls;
-  const hasConfirmedVideoSurface = hasLoadedMetadata || isReady || hasStartedPlayback;
-  const posterVisible = hasFailed
-    ? true
-    : shouldHoldPosterUntilPlay
-      ? !hasStartedPlayback
-      : !hasConfirmedVideoSurface;
-  const preloadMode = autoplay && !previewMode ? "auto" : "metadata";
-
-  useEffect(() => {
-    return () => {
-      if (retryTimeoutRef.current) {
-        window.clearTimeout(retryTimeoutRef.current);
-      }
-    };
-  }, []);
-
-  useEffect(() => {
-    if (!shouldLoadMedia || hasFailed) {
-      return;
-    }
-
-    const node = videoRef.current;
-
-    if (!node || (!autoplay && !previewMode)) {
-      return;
-    }
-
-    if (shouldActivatePlayback) {
-      triggerManagedVideoPlayback(node, retryTimeoutRef);
-      return;
-    }
-
-    if (retryTimeoutRef.current) {
-      window.clearTimeout(retryTimeoutRef.current);
-      retryTimeoutRef.current = null;
-    }
-    node.pause();
-  }, [autoplay, hasFailed, previewMode, shouldActivatePlayback, shouldLoadMedia]);
+  const shouldAutoplay = autoplay || previewMode;
+  const controlsEnabled = !shouldAutoplay && showControls;
+  const posterVisible = hasFailed || !hasStartedPlayback;
 
   return (
     <div className="relative h-full w-full overflow-hidden bg-[#05070b]">
@@ -434,7 +263,7 @@ function ManagedDirectVideo({
           fallbackContent={<FallbackSurface />}
           className={cn(
             mediaObjectClass,
-            "pointer-events-none transition duration-500",
+            "pointer-events-none z-[1] transition duration-500",
             posterVisible ? "opacity-100" : "opacity-0",
           )}
         />
@@ -442,54 +271,46 @@ function ManagedDirectVideo({
         <FallbackSurface />
       )}
 
-      {!hasFailed && shouldLoadMedia ? (
+      {!hasFailed ? (
         <video
-          ref={videoRef}
           className={cn(
-            "absolute inset-0 h-full w-full transition duration-500",
+            "absolute inset-0 z-0 h-full w-full transition duration-500",
             mediaObjectClass,
-            hasConfirmedVideoSurface ? "opacity-100" : "opacity-0",
+            hasFailed ? "opacity-0" : "opacity-100",
           )}
-          controls={showControls}
+          controls={controlsEnabled}
+          controlsList="nodownload noplaybackrate nofullscreen"
           playsInline
-          preload={preloadMode}
-          autoPlay={autoplay || previewMode}
-          muted={autoplay || previewMode}
-          loop={previewMode || autoplay}
+          preload="auto"
+          autoPlay={shouldAutoplay}
+          muted
+          loop
           poster={video.poster ?? image}
-          onLoadedData={() => setIsReady(true)}
-          onLoadedMetadata={() => {
-            setHasLoadedMetadata(true);
-            const node = videoRef.current;
+          disablePictureInPicture
+          disableRemotePlayback
+          onLoadedMetadata={(event) => {
+            const node = event.currentTarget;
 
-            if (!node) {
-              return;
-            }
-
-            node.defaultMuted = autoplay || previewMode;
-            node.muted = autoplay || previewMode;
+            node.defaultMuted = true;
+            node.muted = true;
             node.playsInline = true;
+            node.setAttribute("muted", "");
             node.setAttribute("playsinline", "");
+            node.setAttribute("webkit-playsinline", "");
 
-            if (autoplay || previewMode) {
-              node.setAttribute("muted", "");
-            }
-
-            if ((autoplay || previewMode) && shouldActivatePlayback) {
-              triggerManagedVideoPlayback(node, retryTimeoutRef, false);
+            if (shouldAutoplay) {
+              node.play().catch(() => undefined);
             }
           }}
-          onCanPlay={() => {
-            setIsReady(true);
-
-            if ((autoplay || previewMode) && shouldActivatePlayback && videoRef.current) {
-              triggerManagedVideoPlayback(videoRef.current, retryTimeoutRef, false);
+          onCanPlay={(event) => {
+            if (shouldAutoplay) {
+              event.currentTarget.play().catch(() => undefined);
             }
           }}
           onPlay={() => setHasStartedPlayback(true)}
           onPlaying={() => setHasStartedPlayback(true)}
-          onTimeUpdate={() => {
-            if (videoRef.current && videoRef.current.currentTime > 0) {
+          onTimeUpdate={(event) => {
+            if (event.currentTarget.currentTime > 0) {
               setHasStartedPlayback(true);
             }
           }}
@@ -528,12 +349,7 @@ export function EmbeddedVideoPlayer({
   const fallbackSrc = image ?? video?.poster ?? externalVideo?.thumbnailSrc;
   const fallbackSrcs = buildFallbackSources(video, externalVideo, image);
   const mediaObjectClass = mediaFit === "contain" ? "object-contain p-6" : "object-cover";
-  const { containerRef, shouldLoadMedia, shouldActivatePlayback } = useSmartMediaState({
-    autoplay,
-    previewMode,
-    priority,
-  });
-  const resolvedShowControls = showControls ?? (!previewMode && !autoplay);
+  const resolvedShowControls = showControls ?? false;
   const mediaKey = [
     video?.videoType,
     video?.videoType === "direct" ? video.src : "",
@@ -553,10 +369,10 @@ export function EmbeddedVideoPlayer({
   );
 
   if (externalVideo) {
-    const shouldRenderFrame = previewMode ? true : autoplay ? shouldActivatePlayback : shouldLoadMedia;
+    const shouldRenderFrame = true;
 
     return (
-      <div ref={containerRef} className={wrapperClassName} aria-label={resolvedTitle}>
+      <div className={wrapperClassName} aria-label={resolvedTitle}>
         <ManagedExternalFrame
           key={`${mediaKey}::${shouldRenderFrame ? "active" : "idle"}`}
           fallbackSrc={fallbackSrc}
@@ -568,7 +384,7 @@ export function EmbeddedVideoPlayer({
           iframeTitle={resolveLocalizedValue(externalVideo.label, language)}
           iframeSrc={withPlayerParams(
             externalVideo,
-            shouldRenderFrame && (autoplay || previewMode),
+            autoplay || previewMode,
             previewMode,
           )}
           shouldRenderFrame={shouldRenderFrame}
@@ -604,7 +420,7 @@ export function EmbeddedVideoPlayer({
     }
 
     return (
-      <div ref={containerRef} className={wrapperClassName} aria-label={resolvedTitle}>
+      <div className={wrapperClassName} aria-label={resolvedTitle}>
         <ManagedDirectVideo
           key={mediaKey}
           fallbackSrc={fallbackSrc}
@@ -617,8 +433,6 @@ export function EmbeddedVideoPlayer({
           image={image}
           autoplay={autoplay}
           previewMode={previewMode}
-          shouldLoadMedia={shouldLoadMedia}
-          shouldActivatePlayback={shouldActivatePlayback}
           showControls={resolvedShowControls}
           disableMobileSource={disableMobileSource}
         />

@@ -27,6 +27,7 @@ export function VideoEmbed({
   thumbnailSrc,
   externalVideo,
   title,
+  autoplay = true,
   ...props
 }: VideoEmbedProps) {
   const resolvedExternalVideo =
@@ -38,5 +39,5 @@ export function VideoEmbed({
     }) ??
     undefined;
 
-  return <EmbeddedVideoPlayer title={title} externalVideo={resolvedExternalVideo} {...props} />;
+  return <EmbeddedVideoPlayer title={title} externalVideo={resolvedExternalVideo} autoplay={autoplay} {...props} />;
 }
