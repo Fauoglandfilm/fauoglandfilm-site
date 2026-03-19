@@ -331,36 +331,6 @@ export function GardProfileContent() {
 
       <section className="section-space pt-0">
         <div className="site-container">
-          <Reveal className="max-w-2xl">
-            <div className="space-y-3">
-              <span className="eyebrow">{resolveLocalizedValue(gardProfilePage.focusEyebrow, language)}</span>
-              <h2 className="section-title text-[color:var(--foreground)]">
-                {language === "no"
-                  ? "Fire ting Gard ofte hentes inn for."
-                  : "Four areas Gard is often brought in for."}
-              </h2>
-            </div>
-          </Reveal>
-
-          <div className="adaptive-grid-compact mt-6">
-            {gardProfilePage.focusAreas.map((area, index) => (
-              <Reveal key={resolveLocalizedValue(area.title, language)} delay={0.05 * index}>
-                <article className="card-surface rounded-[2rem] px-5 py-5 sm:px-6 sm:py-6">
-                  <h3 className="card-title text-[color:var(--foreground)]">
-                    {resolveLocalizedValue(area.title, language)}
-                  </h3>
-                  <p className="body-copy mt-3 text-[var(--muted-2)]">
-                    {resolveLocalizedValue(area.description, language)}
-                  </p>
-                </article>
-              </Reveal>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <section className="section-space pt-0">
-        <div className="site-container">
           <Reveal className="max-w-3xl">
             <div className="space-y-3">
               <span className="eyebrow">{resolveLocalizedValue(gardProfilePage.projectEyebrow, language)}</span>
