@@ -213,8 +213,8 @@ export function HeroSection() {
       ? "Oslo / Reklamefilm / Produksjon"
       : "Oslo / Commercial Film / Production";
   const secondaryCta = language === "no" ? "Se arbeid" : "View work";
-  const activeHeroSrc = heroVideo.src;
   const heroTitle = resolveLocalizedValue(homeHeroContent.title, language);
+  const heroVideoKey = `${heroVideo.mobileSrc ?? ""}|${heroVideo.src}`;
 
   useEffect(() => {
     const video = heroVideoRef.current;
@@ -234,6 +234,10 @@ export function HeroSection() {
     video.setAttribute("autoplay", "");
     video.setAttribute("disableRemotePlayback", "");
 
+    const markVideoVisible = () => {
+      setHasVideoFrame(true);
+    };
+
     const playVideo = () => {
       video
         .play()
@@ -245,14 +249,33 @@ export function HeroSection() {
         });
     };
 
-    const handleLoadedData = () => setHasVideoFrame(true);
+    const handleLoadedMetadata = () => {
+      if (video.readyState >= HTMLMediaElement.HAVE_METADATA) {
+        markVideoVisible();
+      }
+
+      playVideo();
+    };
+    const handleLoadedData = () => {
+      markVideoVisible();
+    };
+    const handleCanPlay = () => {
+      if (video.readyState >= HTMLMediaElement.HAVE_CURRENT_DATA) {
+        markVideoVisible();
+      }
+
+      playVideo();
+    };
+    const handlePlay = () => {
+      markVideoVisible();
+    };
     const handlePlaying = () => {
-      setHasVideoFrame(true);
+      markVideoVisible();
       setHasPlaybackStarted(true);
     };
     const handleTimeUpdate = () => {
       if (video.currentTime > 0) {
-        setHasVideoFrame(true);
+        markVideoVisible();
         setHasPlaybackStarted(true);
       }
     };
@@ -262,23 +285,30 @@ export function HeroSection() {
       }
     };
 
+    if (video.readyState >= HTMLMediaElement.HAVE_CURRENT_DATA) {
+      markVideoVisible();
+    }
+
+    video.load();
     playVideo();
+    video.addEventListener("loadedmetadata", handleLoadedMetadata);
     video.addEventListener("loadeddata", handleLoadedData);
-    video.addEventListener("loadedmetadata", playVideo);
-    video.addEventListener("canplay", playVideo);
+    video.addEventListener("canplay", handleCanPlay);
+    video.addEventListener("play", handlePlay);
     video.addEventListener("playing", handlePlaying);
     video.addEventListener("timeupdate", handleTimeUpdate);
     document.addEventListener("visibilitychange", handleVisibility);
 
     return () => {
+      video.removeEventListener("loadedmetadata", handleLoadedMetadata);
       video.removeEventListener("loadeddata", handleLoadedData);
-      video.removeEventListener("loadedmetadata", playVideo);
-      video.removeEventListener("canplay", playVideo);
+      video.removeEventListener("canplay", handleCanPlay);
+      video.removeEventListener("play", handlePlay);
       video.removeEventListener("playing", handlePlaying);
       video.removeEventListener("timeupdate", handleTimeUpdate);
       document.removeEventListener("visibilitychange", handleVisibility);
     };
-  }, [activeHeroSrc, hasVideoError]);
+  }, [hasVideoError, heroVideo.mobileSrc, heroVideo.src]);
 
   return (
     <section className="relative isolate overflow-hidden bg-[#05070a] text-white">
@@ -286,17 +316,17 @@ export function HeroSection() {
         <div
           className={cn(
             "absolute inset-0 bg-cover bg-center transition duration-500",
-            hasVideoError || !hasVideoFrame || !hasPlaybackStarted ? "opacity-100" : "opacity-0",
+            hasVideoError || !hasVideoFrame ? "opacity-100" : "opacity-0",
           )}
           style={{ backgroundImage: `url(${heroVideo.poster})` }}
         />
         {hasVideoError ? null : (
           <video
             ref={heroVideoRef}
-            key={activeHeroSrc}
+            key={heroVideoKey}
             className={cn(
               "relative h-full w-full object-cover brightness-[0.88] saturate-[1.04] contrast-[1.04] transition duration-500",
-              hasVideoFrame ? "scale-[1.015] opacity-100" : "scale-[1.01] opacity-0",
+              hasVideoFrame || hasPlaybackStarted ? "scale-[1.015] opacity-100" : "scale-[1.01] opacity-0",
             )}
             autoPlay
             muted
@@ -306,8 +336,16 @@ export function HeroSection() {
             poster={heroVideo.poster}
             disablePictureInPicture
             onError={() => setHasVideoError(true)}
-            src={activeHeroSrc}
-          />
+          >
+            {heroVideo.mobileSrc ? (
+              <source
+                src={heroVideo.mobileSrc}
+                media="(max-width: 767px)"
+                type="video/mp4"
+              />
+            ) : null}
+            <source src={heroVideo.src} type="video/mp4" />
+          </video>
         )}
         <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(5,7,10,0.28)_0%,rgba(5,7,10,0.14)_24%,rgba(5,7,10,0.26)_56%,rgba(5,7,10,0.62)_100%)]" />
         <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(5,7,10,0.66)_0%,rgba(5,7,10,0.5)_22%,rgba(5,7,10,0.16)_56%,rgba(5,7,10,0.08)_100%)]" />
