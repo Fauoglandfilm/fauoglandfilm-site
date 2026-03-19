@@ -45,6 +45,7 @@ export type TommyShowcaseProject = {
 export type TommyRoleItem = {
   slug: string;
   title: LocalizedText;
+  summary?: LocalizedText;
   poster?: TommyPortfolioImage;
   links?: TommyPortfolioLink[];
 };
@@ -589,7 +590,18 @@ export const tommyPortfolioPage = {
         },
         {
           slug: "the-actors-hub-oslo",
-          title: sameText("The Actors' Hub Oslo"),
+          title: sameText("THE ACTORS HUB: \"DON'T ACT\""),
+          summary: {
+            no: "An intensive acting workshop with top instructors from Los Angeles. Showreels and production by Fau&Land Film. Executive Producer: David Nutter. Instructors: Natassia Malthe & David Nutter.",
+            en: "An intensive acting workshop with top instructors from Los Angeles. Showreels and production by Fau&Land Film. Executive Producer: David Nutter. Instructors: Natassia Malthe & David Nutter.",
+          },
+          poster: poster(
+            "/media/logos/clients/COLOR/actorshub_logo_white_NY-kopi.png",
+            "Logo for The Actors Hub",
+            "Logo for The Actors Hub",
+            "contain",
+            "wide",
+          ),
         },
         {
           slug: "mitt-skeive-oslo",
