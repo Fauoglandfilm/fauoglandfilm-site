@@ -329,22 +329,6 @@ export function GardProfileContent() {
         </div>
       </section>
 
-      <section className="section-space pt-0">
-        <div className="site-container">
-          <Reveal className="max-w-3xl">
-            <div className="space-y-3">
-              <span className="eyebrow">{resolveLocalizedValue(gardProfilePage.projectEyebrow, language)}</span>
-              <h2 className="section-title text-[color:var(--foreground)]">
-                {resolveLocalizedValue(gardProfilePage.projectTitle, language)}
-              </h2>
-              <p className="body-lead text-[var(--muted-2)]">
-                {resolveLocalizedValue(gardProfilePage.projectDescription, language)}
-              </p>
-            </div>
-          </Reveal>
-        </div>
-      </section>
-
       {gardProfilePage.projectGroups.map((group) => (
         <ProjectGroupSection key={group.slug} group={group} />
       ))}
