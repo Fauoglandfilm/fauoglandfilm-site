@@ -428,7 +428,8 @@ summary::-webkit-details-marker {
   }
 
   .hero-typewriter {
-    display: inline-block;
+    display: block;
+    max-width: 100%;
   }
 
   .hero-typewriter--gold {
@@ -2472,17 +2473,17 @@ summary::-webkit-details-marker {
     }
 
     .hero-copy .hero-title {
-      max-width: 10.4ch;
-      font-size: clamp(3.9rem, 15.8vw, 4.35rem);
-      line-height: 0.9;
-      letter-spacing: -0.068em;
+      max-width: 8.75ch;
+      font-size: clamp(3.05rem, 12.8vw, 3.55rem);
+      line-height: 0.92;
+      letter-spacing: -0.062em;
     }
 
     .hero-title {
-      max-width: 10.4ch;
-      font-size: clamp(3.9rem, 15.8vw, 4.35rem);
-      line-height: 0.9;
-      letter-spacing: -0.068em;
+      max-width: 8.75ch;
+      font-size: clamp(3.05rem, 12.8vw, 3.55rem);
+      line-height: 0.92;
+      letter-spacing: -0.062em;
     }
 
     .hero-body {

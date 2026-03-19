@@ -283,7 +283,7 @@ export function HeroSection() {
                 <span className="hero-label-chip__item">{eyebrow}</span>
               </span>
             </div>
-            <h1 className="hero-title mt-4 max-w-[10.4ch] text-white sm:mt-6 sm:max-w-[10.2ch] lg:max-w-[10.6ch]">
+            <h1 className="hero-title mt-4 max-w-[8.75ch] text-white sm:mt-6 sm:max-w-[10.2ch] lg:max-w-[10.6ch]">
               <HeroTypewriterTitle title={heroTitle} className="hero-typewriter--gold" />
             </h1>
             <p className="mt-3.5 max-w-[31rem] text-[0.94rem] leading-6 text-white/80 sm:mt-5 sm:text-[1.05rem] sm:leading-7">
