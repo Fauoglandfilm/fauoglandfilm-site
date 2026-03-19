@@ -329,7 +329,7 @@ export function ClientSlider() {
     language === "no" ? "Utvalgte kunder" : "Selected clients";
 
   return (
-    <section className="border-y border-[color:var(--line)] bg-[color:var(--surface-muted)] py-4 sm:py-6">
+    <section className="bg-transparent py-4 sm:py-5">
       <div className="site-container">
         <p className="text-[0.7rem] font-semibold uppercase tracking-[0.2em] text-[var(--muted)]">
           {label}
@@ -355,7 +355,7 @@ export function SelectedWorkSection({ items }: { items: CaseStudy[] }) {
       : "A small set of productions built for websites, campaigns and social media.";
 
   return (
-    <section id="selected-work" className="section-space">
+    <section id="selected-work" className="section-space pt-[clamp(2.3rem,3.8vw,5.3rem)]">
       <div className="site-container">
         <div className="flex flex-col gap-4 sm:gap-5 lg:flex-row lg:items-end lg:justify-between">
           <div className="max-w-[40rem]">
