@@ -1,30 +1,29 @@
 import { NextResponse } from "next/server";
+import { ZodError } from "zod";
 
 import { ContactConfirmationEmail } from "@/components/emails/contact-confirmation-email";
 import { ContactNotificationEmail } from "@/components/emails/contact-notification-email";
-import { siteConfig } from "@/data/site-content";
 import { contactFormSchema } from "@/lib/contact-form";
-import { appEnv, hasResendConfig, resendDefaults } from "@/lib/env";
 import { getResend } from "@/lib/resend";
+import { getResendConfig, hasResendServerConfig } from "@/lib/server/resend-config";
 
 export async function POST(request: Request) {
   try {
     const json = await request.json();
     const payload = contactFormSchema.parse(json);
 
-    if (!hasResendConfig()) {
+    if (!hasResendServerConfig()) {
       return NextResponse.json(
         {
           ok: false,
-          message: "RESEND_API_KEY must be configured on the server.",
+          message: "Kontaktskjemaet er midlertidig utilgjengelig. Prøv igjen snart.",
         },
         { status: 503 },
       );
     }
 
     const resend = getResend();
-    const from = appEnv.resendFromEmail ?? resendDefaults.fromEmail;
-    const to = appEnv.contactToEmail ?? resendDefaults.toEmail ?? siteConfig.email;
+    const { fromEmail: from, toEmail: to } = getResendConfig();
 
     await resend.emails.send({
       from,
@@ -46,12 +45,22 @@ export async function POST(request: Request) {
   } catch (error) {
     console.error("[contact] submit failed", error);
 
+    if (error instanceof ZodError) {
+      return NextResponse.json(
+        {
+          ok: false,
+          message: "Sjekk feltene og prøv igjen.",
+        },
+        { status: 400 },
+      );
+    }
+
     return NextResponse.json(
       {
         ok: false,
         message: "Kunne ikke sende henvendelsen akkurat nå.",
       },
-      { status: 400 },
+      { status: 502 },
     );
   }
 }

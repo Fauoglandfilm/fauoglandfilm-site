@@ -1,12 +1,18 @@
 import { Resend } from "resend";
 
-import { appEnv, readRequiredEnv } from "@/lib/env";
+import { getResendConfig } from "@/lib/server/resend-config";
 
 let resendInstance: Resend | null = null;
 
 export function getResend() {
   if (!resendInstance) {
-    resendInstance = new Resend(readRequiredEnv(appEnv.resendApiKey, "RESEND_API_KEY"));
+    const config = getResendConfig();
+
+    if (!config.apiKey) {
+      throw new Error("Missing required server configuration: RESEND_API_KEY");
+    }
+
+    resendInstance = new Resend(config.apiKey);
   }
 
   return resendInstance;
