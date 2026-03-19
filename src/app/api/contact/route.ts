@@ -1,10 +1,12 @@
 import { NextResponse } from "next/server";
 import { ZodError } from "zod";
 
-import { ContactConfirmationEmail } from "@/components/emails/contact-confirmation-email";
-import { ContactNotificationEmail } from "@/components/emails/contact-notification-email";
 import { contactFormSchema } from "@/lib/contact-form";
 import { getResend } from "@/lib/resend";
+import {
+  buildConfirmationEmail,
+  buildNotificationEmail,
+} from "@/lib/server/contact-email";
 import { getResendConfig, hasResendServerConfig } from "@/lib/server/resend-config";
 
 export async function POST(request: Request) {
@@ -24,21 +26,25 @@ export async function POST(request: Request) {
 
     const resend = getResend();
     const { fromEmail: from, toEmail: to } = getResendConfig();
+    const notificationEmail = buildNotificationEmail(payload);
+    const confirmationEmail = buildConfirmationEmail(payload);
 
     await resend.emails.send({
       from,
       to: [to],
       replyTo: payload.email,
-      subject: "Ny forespørsel fra nettsiden",
-      react: ContactNotificationEmail({ payload }),
+      subject: notificationEmail.subject,
+      html: notificationEmail.html,
+      text: notificationEmail.text,
     });
 
     await resend.emails.send({
       from,
       to: [payload.email],
       replyTo: to,
-      subject: "Vi har mottatt forespørselen din",
-      react: ContactConfirmationEmail({ payload }),
+      subject: confirmationEmail.subject,
+      html: confirmationEmail.html,
+      text: confirmationEmail.text,
     });
 
     return NextResponse.json({ ok: true });
