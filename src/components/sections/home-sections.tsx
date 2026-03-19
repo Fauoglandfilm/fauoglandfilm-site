@@ -73,8 +73,8 @@ const closingCtaContent = {
     en: "Book a short meeting and we will recommend the right setup.",
   },
   description: {
-    no: "Send noen linjer om mål, kanal og timing. Vi følger opp innen 24 timer.",
-    en: "Send a few lines about the goal, channel and timeline. We follow up within 24 hours.",
+    no: "Send noen linjer om mål, kanal og timing. Vi foreslår riktig oppsett og neste steg.",
+    en: "Send a few lines about the goal, channel and timeline. We recommend the right setup and next step.",
   },
   secondaryCta: {
     no: "Se priser",

@@ -123,9 +123,6 @@ export function ContactForm() {
 
       <div className="flex flex-col gap-3 pt-1 sm:flex-row sm:items-center sm:justify-between">
         <div className="space-y-2">
-          <p className="text-sm leading-6 text-[var(--muted)]">
-            {language === "no" ? "Vi følger opp innen 24 timer." : "We follow up within 24 hours."}
-          </p>
           {didTriggerSubmit ? (
             <div className="rounded-[1rem] border border-[var(--accent)]/24 bg-[var(--accent)]/10 px-4 py-3 text-sm leading-6 text-[color:var(--foreground)]">
               <p className="font-semibold text-[color:var(--foreground)]">{copy.successTitle}</p>

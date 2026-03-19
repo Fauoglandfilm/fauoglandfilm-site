@@ -66,7 +66,7 @@ export const uiCopy = {
       contactEyebrow: "Kontakt",
       contactTitle: "Fortell oss kort hva dere trenger.",
       contactDescription:
-        "Vi følger opp innen 24 timer.",
+        "Fortell oss kort om prosjektet, så foreslår vi riktig oppsett og neste steg.",
       contactMail: "E-post",
       contactPhone: "Telefon",
       contactLocation: "Base",
@@ -101,7 +101,7 @@ export const uiCopy = {
       contactEyebrow: "Contact",
       contactTitle: "Tell us briefly what you need.",
       contactDescription:
-        "We follow up within 24 hours with the right setup and next step.",
+        "Tell us briefly about the project and we will recommend the right setup and next step.",
       contactMail: "Email",
       contactPhone: "Phone",
       contactLocation: "Base",
@@ -150,7 +150,7 @@ export const uiCopy = {
       contactEyebrow: "Kontakt",
       contactTitle: "Klar for å snakke om prosjektet?",
       contactDescription:
-        "Send en kort brief, så følger vi opp innen 24 timer.",
+        "Send en kort brief, så foreslår vi riktig oppsett og neste steg.",
       contactHeading: "Kontakt Fau&Land Film",
       contactLead:
         "Oslo-basert partner for reklamefilm, SoMe, bedriftsfilm og event.",
@@ -207,7 +207,7 @@ export const uiCopy = {
       contactEyebrow: "Contact",
       contactTitle: "Ready to talk about the project?",
       contactDescription:
-        "Send a short brief and we will follow up within 24 hours.",
+        "Send a short brief and we will recommend the right setup and next step.",
       contactHeading: "Contact Fau&Land Film",
       contactLead:
         "Oslo-based production partner for commercials, company films, social content and event work.",
@@ -270,7 +270,7 @@ export const uiCopy = {
       contactHeroEyebrow: "Kontakt",
       contactHeroTitle: "Send en kort brief",
       contactHeroDescription:
-        "Fortell oss kort hva dere trenger, så følger vi opp innen 24 timer.",
+        "Fortell oss kort hva dere trenger, så foreslår vi riktig oppsett og neste steg.",
       faqHeroEyebrow: "Vanlige spørsmål",
       faqHeroTitle: "Svar på det kundene oftest lurer på",
       faqHeroDescription:
@@ -356,7 +356,7 @@ export const uiCopy = {
       contactHeroEyebrow: "Contact",
       contactHeroTitle: "Send a short brief",
       contactHeroDescription:
-        "Tell us briefly what you need and we will follow up within 24 hours.",
+        "Tell us briefly what you need and we will recommend the right setup and next step.",
       faqHeroEyebrow: "FAQs",
       faqHeroTitle: "Answers to the questions clients ask most often",
       faqHeroDescription:
@@ -429,7 +429,7 @@ export const uiCopy = {
       submit: "Send prosjektbeskrivelse",
       successTitle: "E-postutkastet åpnes nå",
       successDescription:
-        "Send det gjerne videre, så følger vi opp innen 24 timer. Hvis mail-appen ikke åpner seg, kan dere sende direkte til post@fauoglandfilm.com.",
+        "Send det gjerne videre. Hvis mail-appen ikke åpner seg, kan dere sende direkte til post@fauoglandfilm.com.",
       subjectFallback: "nettsiden",
       subjectPrefix: "Ny henvendelse fra",
       messageLabel: "Prosjektbeskrivelse:",
@@ -461,7 +461,7 @@ export const uiCopy = {
       submit: "Send project details",
       successTitle: "Your email draft is opening",
       successDescription:
-        "Send it through and we will follow up within 24 hours. If your mail app does not open, you can email us directly at post@fauoglandfilm.com.",
+        "Send it through. If your mail app does not open, you can email us directly at post@fauoglandfilm.com.",
       subjectFallback: "the website",
       subjectPrefix: "New inquiry from",
       messageLabel: "Project outline:",
