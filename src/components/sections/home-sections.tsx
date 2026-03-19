@@ -409,7 +409,7 @@ function CountUpValue({
       return;
     }
 
-    const duration = 980;
+    const duration = 9800;
     const start = performance.now();
     let frameId = 0;
 
@@ -444,6 +444,7 @@ export function ResultsSection() {
   const { language } = useSitePreferences();
   const shouldReduceMotion = useReducedMotion();
   const sectionRef = useRef<HTMLElement | null>(null);
+  const statsRef = useRef<HTMLDivElement | null>(null);
   const [hasAnimated, setHasAnimated] = useState(false);
   const animationReady = shouldReduceMotion || hasAnimated;
   const resultMetrics = useMemo(
@@ -533,7 +534,7 @@ export function ResultsSection() {
   );
 
   useEffect(() => {
-    const node = sectionRef.current;
+    const node = statsRef.current;
 
     if (shouldReduceMotion || !node || hasAnimated || typeof IntersectionObserver === "undefined") {
       return;
@@ -541,13 +542,13 @@ export function ResultsSection() {
 
     const observer = new IntersectionObserver(
       ([entry]) => {
-        if (entry.isIntersecting && entry.intersectionRatio >= 0.35) {
+        if (entry.isIntersecting && entry.intersectionRatio >= 0.72) {
           setHasAnimated(true);
           observer.disconnect();
         }
       },
       {
-        threshold: [0, 0.35, 0.6],
+        threshold: [0, 0.72, 0.9],
       },
     );
 
@@ -579,7 +580,7 @@ export function ResultsSection() {
                     : "We build films that can keep working across ads, social and websites over time. That means more material per shoot, more cutdowns and clearer commercial impact."}
                 </p>
 
-                <div className="mt-8 grid gap-3 sm:grid-cols-2">
+                <div ref={statsRef} className="mt-8 grid gap-3 sm:grid-cols-2">
                   {animatedMetrics.slice(0, 2).map((metric) => (
                     <div
                       key={metric.label}
