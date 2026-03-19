@@ -90,12 +90,36 @@ export function HeroSection() {
   const { language } = useSitePreferences();
   const heroVideoRef = useRef<HTMLVideoElement | null>(null);
   const [hasVideoError, setHasVideoError] = useState(false);
+  const [isMobileViewport, setIsMobileViewport] = useState(false);
 
   const eyebrow =
     language === "no"
       ? "Oslo / Reklamefilm / Produksjon"
       : "Oslo / Commercial Film / Production";
   const secondaryCta = language === "no" ? "Se arbeid" : "View work";
+  const activeHeroSrc =
+    isMobileViewport && heroVideo.mobileSrc ? heroVideo.mobileSrc : heroVideo.src;
+
+  useEffect(() => {
+    if (typeof window === "undefined") {
+      return;
+    }
+
+    const mediaQuery = window.matchMedia("(max-width: 767px)");
+    const updateViewport = () => {
+      setIsMobileViewport(mediaQuery.matches);
+    };
+
+    updateViewport();
+
+    if (typeof mediaQuery.addEventListener === "function") {
+      mediaQuery.addEventListener("change", updateViewport);
+      return () => mediaQuery.removeEventListener("change", updateViewport);
+    }
+
+    mediaQuery.addListener(updateViewport);
+    return () => mediaQuery.removeListener(updateViewport);
+  }, []);
 
   useEffect(() => {
     const video = heroVideoRef.current;
@@ -110,6 +134,8 @@ export function HeroSection() {
     video.playsInline = true;
     video.setAttribute("muted", "");
     video.setAttribute("playsinline", "");
+    video.setAttribute("webkit-playsinline", "");
+    video.load();
 
     const playVideo = () => {
       video
@@ -123,12 +149,14 @@ export function HeroSection() {
     };
 
     playVideo();
+    video.addEventListener("loadedmetadata", playVideo);
     video.addEventListener("canplay", playVideo);
 
     return () => {
+      video.removeEventListener("loadedmetadata", playVideo);
       video.removeEventListener("canplay", playVideo);
     };
-  }, [hasVideoError]);
+  }, [activeHeroSrc, hasVideoError]);
 
   return (
     <section className="relative isolate overflow-hidden bg-[#05070a] text-white">
@@ -141,6 +169,7 @@ export function HeroSection() {
         ) : null}
         <video
           ref={heroVideoRef}
+          key={activeHeroSrc}
           className="relative h-full w-full scale-[1.03] object-cover brightness-[0.82] saturate-[1.05] contrast-[1.08]"
           autoPlay
           muted
@@ -150,11 +179,9 @@ export function HeroSection() {
           poster={heroVideo.poster}
           disablePictureInPicture
           onError={() => setHasVideoError(true)}
+          src={activeHeroSrc}
         >
-          {heroVideo.mobileSrc ? (
-            <source media="(max-width: 767px)" src={heroVideo.mobileSrc} type="video/mp4" />
-          ) : null}
-          <source src={heroVideo.src} type="video/mp4" />
+          <source src={activeHeroSrc} type="video/mp4" />
         </video>
         <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(5,7,10,0.38)_0%,rgba(5,7,10,0.18)_24%,rgba(5,7,10,0.32)_56%,rgba(5,7,10,0.72)_100%)]" />
         <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(5,7,10,0.76)_0%,rgba(5,7,10,0.62)_22%,rgba(5,7,10,0.22)_56%,rgba(5,7,10,0.1)_100%)]" />
