@@ -376,6 +376,7 @@ export function ServicesSection() {
 export function ResultsSection() {
   const { language } = useSitePreferences();
   const resultCase = caseStudies.find((entry) => entry.slug === "treningshuset") ?? caseStudies[0];
+  const shouldForceResultPreview = resultCase.slug === "treningshuset";
   const highlightCases = [
     caseStudies.find((entry) => entry.slug === "treningshuset"),
     caseStudies.find((entry) => entry.slug === "ville-gleder"),
@@ -452,9 +453,16 @@ export function ResultsSection() {
                   image={resultCase.image}
                   imageAlt={resultCase.imageAlt}
                   mediaFit={resultCase.mediaFit}
-                  previewBehavior={resultCase.video || resultCase.externalVideo ? "viewport" : "static"}
+                  previewBehavior={
+                    resultCase.video || resultCase.externalVideo
+                      ? shouldForceResultPreview
+                        ? "always"
+                        : "viewport"
+                      : "static"
+                  }
                   className="absolute inset-0"
                   sizes="(min-width: 1024px) 52vw, 100vw"
+                  priority={shouldForceResultPreview}
                   rootMargin="160px 0px -8% 0px"
                   inViewThreshold={0.18}
                   posterClassName="scale-[1.02]"
@@ -531,6 +539,7 @@ function HomeCaseCard({
   delay?: number;
 }) {
   const { language } = useSitePreferences();
+  const shouldForcePreview = caseStudy.slug === "treningshuset";
   const metric = caseStudy.metrics[0]
     ? `${caseStudy.metrics[0].value} ${resolveLocalizedValue(caseStudy.metrics[0].label, language)}`
     : resolveLocalizedValue(caseStudy.category, language);
@@ -551,9 +560,16 @@ function HomeCaseCard({
             image={caseStudy.image}
             imageAlt={caseStudy.imageAlt}
             mediaFit={caseStudy.mediaFit}
-            previewBehavior={caseStudy.video || caseStudy.externalVideo ? "viewport" : "static"}
+            previewBehavior={
+              caseStudy.video || caseStudy.externalVideo
+                ? shouldForcePreview
+                  ? "always"
+                  : "viewport"
+                : "static"
+            }
             className="absolute inset-0"
             sizes={featured ? "(min-width: 1024px) 58vw, 100vw" : "(min-width: 1024px) 36vw, 100vw"}
+            priority={shouldForcePreview}
             rootMargin="160px 0px -8% 0px"
             inViewThreshold={0.18}
             posterClassName="transition duration-700 group-hover:scale-[1.035]"
