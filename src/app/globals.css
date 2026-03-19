@@ -433,7 +433,7 @@ summary::-webkit-details-marker {
 
   .hero-typewriter--gold {
     color: #d7b678;
-    background-image: linear-gradient(
+    --hero-gold-gradient: linear-gradient(
       102deg,
       #72501f 0%,
       #9c7330 16%,
@@ -445,22 +445,24 @@ summary::-webkit-details-marker {
       #cda15a 84%,
       #6f4c1d 100%
     );
-    background-size: 240% 100%;
-    background-position: 14% 50%;
   }
 
-  @supports ((-webkit-background-clip: text) or (background-clip: text)) {
-    .hero-typewriter--gold {
+  .hero-typewriter--gold .hero-typewriter__char--visible {
+    color: #d7b678;
+  }
+
+  @supports (-webkit-background-clip: text) {
+    .hero-typewriter--gold .hero-typewriter__char--visible {
+      background-image: var(--hero-gold-gradient);
+      background-size: 240% 100%;
+      background-position: 14% 50%;
       color: transparent;
+      animation:
+        hero-typewriter-hit 120ms cubic-bezier(0.22, 1, 0.36, 1),
+        hero-gold-sheen 18s ease-in-out infinite alternate;
       -webkit-text-fill-color: transparent;
       -webkit-background-clip: text;
       background-clip: text;
-      animation: hero-gold-sheen 18s ease-in-out infinite alternate;
-    }
-
-    .hero-typewriter--gold .hero-typewriter__char--visible {
-      color: inherit;
-      -webkit-text-fill-color: inherit;
     }
   }
 
