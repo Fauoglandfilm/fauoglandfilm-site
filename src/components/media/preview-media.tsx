@@ -148,8 +148,33 @@ export function PreviewMedia({
 
     const node = containerRef.current;
 
-    if (!node || typeof IntersectionObserver === "undefined") {
+    if (!node) {
       return;
+    }
+
+    const updateFromViewport = () => {
+      const rect = node.getBoundingClientRect();
+      const viewportWidth = window.innerWidth || document.documentElement.clientWidth;
+      const viewportHeight = window.innerHeight || document.documentElement.clientHeight;
+      const visibleWidth = Math.max(0, Math.min(rect.right, viewportWidth) - Math.max(rect.left, 0));
+      const visibleHeight = Math.max(0, Math.min(rect.bottom, viewportHeight) - Math.max(rect.top, 0));
+      const visibleArea = visibleWidth * visibleHeight;
+      const totalArea = Math.max(rect.width * rect.height, 1);
+      const visibilityRatio = visibleArea / totalArea;
+
+      setIsInView(visibleWidth > 0 && visibleHeight > 0 && visibilityRatio >= normalizedInViewThreshold);
+    };
+
+    const raf = window.requestAnimationFrame(updateFromViewport);
+    window.addEventListener("scroll", updateFromViewport, { passive: true });
+    window.addEventListener("resize", updateFromViewport);
+
+    if (typeof IntersectionObserver === "undefined") {
+      return () => {
+        window.cancelAnimationFrame(raf);
+        window.removeEventListener("scroll", updateFromViewport);
+        window.removeEventListener("resize", updateFromViewport);
+      };
     }
 
     const observer = new IntersectionObserver(
@@ -165,6 +190,9 @@ export function PreviewMedia({
     observer.observe(node);
 
     return () => {
+      window.cancelAnimationFrame(raf);
+      window.removeEventListener("scroll", updateFromViewport);
+      window.removeEventListener("resize", updateFromViewport);
       observer.disconnect();
     };
   }, [normalizedInViewThreshold, previewBehavior, rootMargin]);
