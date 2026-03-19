@@ -2,8 +2,9 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
+import { EmbeddedVideoPlayer } from "@/components/media/embedded-video-player";
 import { PreviewMedia } from "@/components/media/preview-media";
 import { Reveal } from "@/components/motion/reveal";
 import { useSitePreferences } from "@/components/providers/site-preferences";
@@ -12,6 +13,7 @@ import {
   segmentedControlOptionClassName,
   segmentedControlShellClassName,
 } from "@/components/ui/button-styles";
+import { CloseIcon } from "@/components/ui/icons";
 import {
   portfolioGroups,
   portfolioPageContent,
@@ -41,6 +43,7 @@ export function PortfolioPageContent({
 }) {
   const { language } = useSitePreferences();
   const [activeFilter, setActiveFilter] = useState<string>(ALL_FILTER);
+  const [activeProject, setActiveProject] = useState<PortfolioProject | null>(null);
 
   const showreelProject =
     projects.find((project) => project.group === "showreel") ?? projects[0];
@@ -82,6 +85,27 @@ export function PortfolioPageContent({
             "Filter by category and scroll through the work directly on the page.",
         };
 
+  useEffect(() => {
+    if (!activeProject) {
+      return;
+    }
+
+    const previousOverflow = document.body.style.overflow;
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        setActiveProject(null);
+      }
+    };
+
+    document.body.style.overflow = "hidden";
+    window.addEventListener("keydown", handleKeyDown);
+
+    return () => {
+      document.body.style.overflow = previousOverflow;
+      window.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [activeProject]);
+
   return (
     <main>
       <PageHero
@@ -118,10 +142,9 @@ export function PortfolioPageContent({
               <article className="card-surface group overflow-hidden rounded-[2rem] shadow-[0_20px_56px_rgba(18,14,10,0.1)]">
                 <div className="media-frame relative aspect-video min-h-[13rem] overflow-hidden sm:min-h-[18rem] lg:min-h-[28rem]">
                   {getPortfolioCardHref(showreelProject) ? (
-                    <Link
-                      href={getPortfolioCardHref(showreelProject)!}
-                      target={opensExternally(showreelProject) ? "_blank" : undefined}
-                      rel={opensExternally(showreelProject) ? "noreferrer" : undefined}
+                    <button
+                      type="button"
+                      onClick={() => setActiveProject(showreelProject)}
                       className="card-trigger absolute inset-0 z-[3]"
                       aria-label={resolveLocalizedValue(showreelProject.title, language)}
                     />
@@ -185,6 +208,7 @@ export function PortfolioPageContent({
                   project={visibleFeaturedProjects[0]}
                   group={getPortfolioGroup(visibleFeaturedProjects[0].group)}
                   layout="wide"
+                  onOpen={setActiveProject}
                 />
               </Reveal>
             ) : null}
@@ -197,6 +221,7 @@ export function PortfolioPageContent({
                       project={project}
                       group={getPortfolioGroup(project.group)}
                       layout="default"
+                      onOpen={setActiveProject}
                     />
                   </Reveal>
                 ))}
@@ -265,6 +290,7 @@ export function PortfolioPageContent({
                   project={project}
                   group={getPortfolioGroup(project.group)}
                   layout={index % 6 === 0 ? "wide" : "default"}
+                  onOpen={setActiveProject}
                 />
               </Reveal>
             ))}
@@ -282,6 +308,14 @@ export function PortfolioPageContent({
         secondaryLabel={null}
         align="center"
       />
+
+      {activeProject ? (
+        <PortfolioVideoModal
+          project={activeProject}
+          group={getPortfolioGroup(activeProject.group)}
+          onClose={() => setActiveProject(null)}
+        />
+      ) : null}
     </main>
   );
 }
@@ -290,15 +324,16 @@ function PortfolioProjectCard({
   project,
   group,
   layout,
+  onOpen,
 }: {
   project: PortfolioProject;
   group?: PortfolioGroup;
   layout: "default" | "wide";
+  onOpen: (project: PortfolioProject) => void;
 }) {
   const { language } = useSitePreferences();
   const isWide = layout === "wide";
-  const href = getPortfolioCardHref(project);
-  const external = opensExternally(project);
+  const canOpen = Boolean(project.video || project.externalVideo || project.image);
 
   return (
     <article
@@ -317,11 +352,10 @@ function PortfolioProjectCard({
               : "aspect-[1.08/0.94] sm:aspect-[1.14/0.98]",
         )}
       >
-        {href ? (
-          <Link
-            href={href}
-            target={external ? "_blank" : undefined}
-            rel={external ? "noreferrer" : undefined}
+        {canOpen ? (
+          <button
+            type="button"
+            onClick={() => onOpen(project)}
             className="card-trigger absolute inset-0 z-[3]"
             aria-label={resolveLocalizedValue(project.title, language)}
           />
@@ -363,6 +397,133 @@ function PortfolioProjectCard({
         </div>
       </div>
     </article>
+  );
+}
+
+function PortfolioVideoModal({
+  project,
+  group,
+  onClose,
+}: {
+  project: PortfolioProject;
+  group?: PortfolioGroup;
+  onClose: () => void;
+}) {
+  const { language } = useSitePreferences();
+  const title = resolveLocalizedValue(project.title, language);
+  const format = resolveLocalizedValue(project.format, language);
+  const summary = resolveLocalizedValue(project.summary, language);
+  const modalLabel = language === "no" ? "Lukk video" : "Close video";
+
+  return (
+    <div
+      className="fixed inset-0 z-[80] flex items-end justify-center bg-[#040507]/72 p-3 backdrop-blur-md sm:p-5 lg:items-center lg:p-8"
+      role="dialog"
+      aria-modal="true"
+      aria-label={title}
+      onClick={onClose}
+    >
+      <div
+        className="card-surface relative flex max-h-[92svh] w-full max-w-6xl flex-col overflow-hidden rounded-[2rem] border border-[color:var(--line-strong)] bg-[color:var(--surface-strong)] shadow-[0_32px_120px_rgba(0,0,0,0.34)]"
+        onClick={(event) => event.stopPropagation()}
+      >
+        <button
+          type="button"
+          onClick={onClose}
+          aria-label={modalLabel}
+          className="absolute right-3 top-3 z-[3] inline-flex h-11 w-11 items-center justify-center rounded-full border border-white/12 bg-black/48 text-white backdrop-blur-md transition hover:bg-black/58 lg:right-5 lg:top-5"
+        >
+          <CloseIcon className="h-4 w-4" />
+        </button>
+
+        <div className="grid min-h-0 gap-0 lg:grid-cols-[minmax(0,1.15fr)_minmax(20rem,0.85fr)]">
+          <div className="relative min-h-[14rem] bg-[#05070b] sm:min-h-[18rem] lg:min-h-[36rem]">
+            {project.video || project.externalVideo ? (
+              <EmbeddedVideoPlayer
+                title={project.title}
+                video={project.video}
+                externalVideo={project.externalVideo}
+                image={project.image}
+                imageAlt={project.imageAlt}
+                mediaFit={project.mediaFit}
+                autoplay
+                showControls
+                className="absolute inset-0"
+                sizes="(min-width: 1280px) 62vw, (min-width: 1024px) 58vw, 100vw"
+                priority
+              />
+            ) : project.image ? (
+              <Image
+                src={project.image}
+                alt={project.imageAlt ? resolveLocalizedValue(project.imageAlt, language) : title}
+                fill
+                priority
+                sizes="(min-width: 1280px) 62vw, (min-width: 1024px) 58vw, 100vw"
+                className={cn(
+                  "object-cover",
+                  project.mediaFit === "contain" && "object-contain p-6 sm:p-8",
+                )}
+              />
+            ) : (
+              <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(255,255,255,0.14),transparent_24%),linear-gradient(135deg,rgba(120,164,255,0.18),rgba(10,12,18,0.94))]" />
+            )}
+          </div>
+
+          <div className="flex min-h-0 flex-col p-5 sm:p-6 lg:p-8">
+            <div className="space-y-4">
+              <div className="flex flex-wrap items-center gap-2 text-[0.68rem] font-semibold uppercase tracking-[0.2em] text-[var(--muted)]">
+                {group ? <span>{resolveLocalizedValue(group.title, language)}</span> : null}
+                {group ? <span className="h-1 w-1 rounded-full bg-[color:var(--muted)]/50" /> : null}
+                <span>{project.client}</span>
+                {project.year ? (
+                  <>
+                    <span className="h-1 w-1 rounded-full bg-[color:var(--muted)]/50" />
+                    <span>{project.year}</span>
+                  </>
+                ) : null}
+              </div>
+
+              <div>
+                <h2 className="section-title text-[color:var(--foreground)]">{title}</h2>
+                <p className="mt-3 text-[0.78rem] font-semibold uppercase tracking-[0.18em] text-[var(--muted)]">
+                  {format}
+                </p>
+                <p className="mt-4 text-sm leading-7 text-[var(--muted-2)] sm:text-[0.98rem]">
+                  {summary}
+                </p>
+                {project.result ? (
+                  <p className="mt-4 text-sm leading-7 text-[color:var(--foreground)]/88 sm:text-[0.98rem]">
+                    {resolveLocalizedValue(project.result, language)}
+                  </p>
+                ) : null}
+              </div>
+            </div>
+
+            <div className="mt-auto flex flex-col gap-2.5 pt-6 sm:flex-row sm:flex-wrap">
+              {project.detailHref ? (
+                <Link
+                  href={project.detailHref}
+                  className="inline-flex items-center justify-center gap-2 rounded-full border border-[color:var(--btn-primary-border)] bg-[color:var(--btn-primary-bg)] px-5 py-3 text-sm font-semibold text-[color:var(--btn-primary-text)] transition hover:bg-[color:var(--btn-primary-hover-bg)] hover:text-[color:var(--btn-primary-hover-text)]"
+                >
+                  <span>{language === "no" ? "Se case" : "View case"}</span>
+                </Link>
+              ) : null}
+
+              {project.externalVideo?.sourceUrl ? (
+                <a
+                  href={project.externalVideo.sourceUrl}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="inline-flex items-center justify-center gap-2 rounded-full border border-[color:var(--btn-ghost-border)] px-5 py-3 text-sm font-semibold text-[color:var(--foreground)] transition hover:bg-[color:var(--btn-ghost-hover-bg)] hover:text-[color:var(--btn-ghost-hover-text)]"
+                >
+                  <span>{language === "no" ? "Åpne kilde" : "Open source"}</span>
+                </a>
+              ) : null}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   );
 }
 
@@ -475,10 +636,6 @@ function PortfolioMedia({
 
 function getPortfolioCardHref(project: PortfolioProject) {
   return project.detailHref ?? project.externalVideo?.sourceUrl ?? null;
-}
-
-function opensExternally(project: PortfolioProject) {
-  return !project.detailHref && Boolean(project.externalVideo?.sourceUrl);
 }
 
 function getPortfolioGroup(slug: string) {
