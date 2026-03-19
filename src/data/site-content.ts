@@ -394,10 +394,10 @@ export const navItems: NavItem[] = [
 export const clientLogos: ClientLogo[] = [
   {
     name: "Ville Gleder",
-    src: "/media/logos/clients/COLOR/Ville%20gleder.png",
-    darkSrc: "/media/logos/clients/COLOR/ville-gleder-dark.png",
-    width: 1563,
-    height: 1563,
+    src: "/media/logos/clients/COLOR/marquee/ville-gleder-marquee.png",
+    darkSrc: "/media/logos/clients/COLOR/marquee/ville-gleder-dark-marquee.png",
+    width: 1466,
+    height: 476,
   },
   {
     name: "Treningshuset",
@@ -435,23 +435,23 @@ export const clientLogos: ClientLogo[] = [
   },
   {
     name: "The International Stunt Academy",
-    src: "/media/logos/clients/COLOR/ISA.png",
-    darkSrc: "/media/logos/clients/COLOR/isa-dark.png",
-    width: 1563,
-    height: 1563,
+    src: "/media/logos/clients/COLOR/marquee/isa-marquee.png",
+    darkSrc: "/media/logos/clients/COLOR/marquee/isa-dark-marquee.png",
+    width: 1483,
+    height: 660,
   },
   {
     name: "Nei til Atomvåpen",
-    src: "/media/logos/clients/COLOR/ny-nei-til-atomvapen.avif",
-    width: 800,
-    height: 797,
+    src: "/media/logos/clients/COLOR/marquee/ny-nei-til-atomvapen-marquee.png",
+    width: 447,
+    height: 448,
   },
   {
     name: "Foreningen Norden",
-    src: "/media/logos/clients/COLOR/Foreningen%20norden.png",
-    darkSrc: "/media/logos/clients/COLOR/foreningen-norden-dark.png",
-    width: 1563,
-    height: 1563,
+    src: "/media/logos/clients/COLOR/marquee/foreningen-norden-marquee.png",
+    darkSrc: "/media/logos/clients/COLOR/marquee/foreningen-norden-dark-marquee.png",
+    width: 1282,
+    height: 508,
   },
 ];
 
