@@ -97,18 +97,6 @@ export function HeroSection() {
       ? "Oslo / Reklamefilm / Produksjon"
       : "Oslo / Commercial Film / Production";
   const secondaryCta = language === "no" ? "Se arbeid" : "View work";
-  const proofItems =
-    language === "no"
-      ? [
-          "2 seniorer på hvert prosjekt",
-          "Format for web, annonser og SoMe",
-          "Svar innen 24 timer",
-        ]
-      : [
-          "2 senior leads on every project",
-          "Formats for web, ads and social",
-          "Reply within 24 hours",
-        ];
 
   useEffect(() => {
     const video = heroVideoRef.current;
@@ -177,9 +165,11 @@ export function HeroSection() {
       <div className="site-container relative z-[1] flex min-h-[74svh] items-end pb-6 pt-[5.8rem] sm:min-h-[92svh] sm:pb-14 sm:pt-[8.8rem] lg:min-h-[96vh] lg:pb-16 lg:pt-[10.5rem]">
         <Reveal y={20} className="w-full">
           <div className="max-w-[42rem]">
-            <p className="text-[0.68rem] font-semibold uppercase tracking-[0.22em] text-white/72 sm:text-[0.76rem]">
-              {eyebrow}
-            </p>
+            <div className="hero-label-chip">
+              <span className="hero-label-chip__segment">
+                <span className="hero-label-chip__item">{eyebrow}</span>
+              </span>
+            </div>
             <h1 className="hero-title mt-4 max-w-[9.4ch] text-white sm:mt-6">
               {resolveLocalizedValue(homeHeroContent.title, language)}
             </h1>
@@ -201,17 +191,6 @@ export function HeroSection() {
               >
                 {secondaryCta}
               </ButtonLink>
-            </div>
-
-            <div className="mt-5 flex flex-wrap gap-1.5 rounded-[1.1rem] border border-white/12 bg-white/7 p-2 backdrop-blur-md sm:mt-10 sm:grid sm:grid-cols-3 sm:gap-3 sm:p-4">
-              {proofItems.map((item) => (
-                <div
-                  key={item}
-                  className="rounded-full border border-white/8 bg-black/12 px-3 py-2 text-[0.68rem] font-medium tracking-[0.01em] text-white/76 sm:rounded-[1rem] sm:px-3.5 sm:py-3 sm:text-[0.8rem]"
-                >
-                  {item}
-                </div>
-              ))}
             </div>
           </div>
         </Reveal>
