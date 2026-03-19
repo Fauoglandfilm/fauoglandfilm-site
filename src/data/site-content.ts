@@ -992,7 +992,7 @@ export const caseStudies: CaseStudy[] = [
           no: "Liggende versjon av Treningshuset-filmen",
           en: "Landscape version of the Treningshuset film",
         },
-        mediaFit: "cover",
+        mediaFit: "contain",
         frame: "landscape",
         video: {
           videoType: "direct",
