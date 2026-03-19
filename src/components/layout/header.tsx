@@ -78,7 +78,7 @@ function HeaderBrandLockup({
   mobile?: boolean;
 }) {
   const logoClassName = cn(
-    mobile ? "relative top-px w-[9.15rem]" : "relative top-[2px] w-[10.1rem] lg:w-[11.45rem]",
+    mobile ? "relative top-px w-full" : "relative top-[2px] w-full",
     overlayMode
       ? "brightness-[1.9] contrast-[1.14] saturate-[1.12] drop-shadow-[0_10px_18px_rgba(0,0,0,0.2)]"
       : "brightness-[0.16] contrast-[1.28]",
@@ -86,7 +86,7 @@ function HeaderBrandLockup({
 
   if (mobile) {
     return (
-      <div className="flex items-center justify-start">
+      <div className="flex w-[9.15rem] max-w-full shrink-0 items-center justify-start">
         <BrandLogo
           variant="full"
           className={logoClassName}
@@ -98,7 +98,7 @@ function HeaderBrandLockup({
 
   return (
     <div className="flex min-w-0 flex-col items-center justify-center">
-      <div className="flex w-[10.1rem] justify-center lg:w-[11.45rem]">
+      <div className="flex w-[10.1rem] max-w-full shrink-0 justify-center lg:w-[11.45rem]">
         <BrandLogo
           variant="full"
           className={logoClassName}
@@ -210,7 +210,7 @@ export function Header() {
             <Link
               href="/"
               className={cn(
-                "relative z-[1] flex min-w-0 shrink-0 items-center rounded-[1.3rem] px-1 py-0.5 transition duration-300",
+                "relative z-[1] flex min-w-0 shrink-0 items-center rounded-[1.3rem] px-1 py-0.5 transition duration-300 lg:max-w-none",
                 overlayMode
                   ? "text-white"
                   : "text-[color:var(--foreground)]",
@@ -369,14 +369,14 @@ export function Header() {
                 <div className="flex items-start justify-between gap-4 pb-6">
                   <Link
                     href="/"
-                    className="flex items-center"
+                    className="flex max-w-[calc(100vw-8rem)] shrink-0 items-center"
                     aria-label="Fau&Land Film"
                     onClick={() => setOpen(false)}
                   >
-                    <div>
+                    <div className="min-w-0">
                       <BrandLogo
                         variant="full"
-                        className="w-[10rem] brightness-[1.75] contrast-[1.16] saturate-[1.1]"
+                        className="w-[9.6rem] max-w-full brightness-[1.75] contrast-[1.16] saturate-[1.1] sm:w-[10rem]"
                         priority
                       />
                       <p className="mt-1.5 text-[0.62rem] font-semibold uppercase tracking-[0.2em] text-[color:var(--foreground)]/56">
