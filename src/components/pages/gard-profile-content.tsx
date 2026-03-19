@@ -211,7 +211,7 @@ export function GardProfileContent() {
 
   return (
     <main>
-      <section className="relative isolate overflow-hidden pt-[9.2rem] sm:pt-28">
+      <section className="relative isolate overflow-hidden pt-[7rem] sm:pt-28">
         <div className="absolute inset-0">
           {backgroundUsesPortrait ? (
             <>
@@ -256,7 +256,7 @@ export function GardProfileContent() {
           <div className="grain-overlay absolute inset-0 opacity-38" />
         </div>
 
-        <div className="site-container relative flex flex-col items-start py-10 md:min-h-[60svh] md:justify-end md:py-10 lg:min-h-[76svh] lg:py-12">
+        <div className="site-container relative flex flex-col items-start py-6 md:min-h-[60svh] md:justify-end md:py-10 lg:min-h-[76svh] lg:py-12">
           <Reveal className="max-w-3xl" delay={0.04} y={18}>
             <div className="max-w-[42rem] text-white">
               <ButtonLink
@@ -288,7 +288,7 @@ export function GardProfileContent() {
           </Reveal>
 
           {backgroundUsesPortrait ? (
-            <div className="mt-12 flex w-full justify-center md:hidden">
+            <div className="mt-10 flex w-full justify-center md:hidden">
               <div className="profile-hero-portrait-frame founder-portrait-panel">
                 <div className="profile-hero-portrait-shell founder-portrait-shell">
                   <div className="profile-hero-portrait-backdrop" />
