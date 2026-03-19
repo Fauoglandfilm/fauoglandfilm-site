@@ -427,6 +427,19 @@ summary::-webkit-details-marker {
     font-weight: 700;
   }
 
+  .hero-typewriter {
+    display: inline;
+  }
+
+  .hero-typewriter__char {
+    display: inline-block;
+    opacity: 0;
+    transform: translate3d(0, 0.38em, 0);
+    filter: blur(6px);
+    animation: hero-typewriter-reveal 420ms cubic-bezier(0.22, 1, 0.36, 1) forwards;
+    will-change: opacity, transform, filter;
+  }
+
   .page-title {
     font-family: var(--font-sora), sans-serif;
     font-size: clamp(2.25rem, 7vw, 5rem);
@@ -2491,6 +2504,20 @@ summary::-webkit-details-marker {
   }
 }
 
+@keyframes hero-typewriter-reveal {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 0.38em, 0);
+    filter: blur(6px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+    filter: blur(0);
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
@@ -2511,6 +2538,13 @@ summary::-webkit-details-marker {
 
   .ambient-drift {
     animation: none;
+  }
+
+  .hero-typewriter__char {
+    animation: none;
+    opacity: 1;
+    transform: none;
+    filter: none;
   }
 
   .card-surface:hover,
