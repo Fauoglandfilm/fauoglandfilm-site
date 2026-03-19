@@ -17,7 +17,7 @@ const initialState: ContactFormPayload = {
 export function ContactForm() {
   const [formState, setFormState] = useState<ContactFormPayload>(initialState);
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [didTriggerSubmit, setDidTriggerSubmit] = useState(false);
+  const [didSubmitSuccessfully, setDidSubmitSuccessfully] = useState(false);
   const [submitError, setSubmitError] = useState<string | null>(null);
   const { language } = useSitePreferences();
   const copy = uiCopy.form[language];
@@ -26,6 +26,7 @@ export function ContactForm() {
     event.preventDefault();
     setIsSubmitting(true);
     setSubmitError(null);
+    setDidSubmitSuccessfully(false);
 
     try {
       const response = await fetch("/api/contact", {
@@ -42,7 +43,7 @@ export function ContactForm() {
         throw new Error(result.message ?? "Kunne ikke sende skjemaet.");
       }
 
-      setDidTriggerSubmit(true);
+      setDidSubmitSuccessfully(true);
       setFormState(initialState);
     } catch (error) {
       setSubmitError(
@@ -123,10 +124,9 @@ export function ContactForm() {
 
       <div className="flex flex-col gap-3 pt-1 sm:flex-row sm:items-center sm:justify-between">
         <div className="space-y-2">
-          {didTriggerSubmit ? (
+          {didSubmitSuccessfully ? (
             <div className="rounded-[1rem] border border-[var(--accent)]/24 bg-[var(--accent)]/10 px-4 py-3 text-sm leading-6 text-[color:var(--foreground)]">
-              <p className="font-semibold text-[color:var(--foreground)]">{copy.successTitle}</p>
-              <p className="mt-1 text-[var(--muted-2)]">{copy.successDescription}</p>
+              <p className="font-semibold text-[color:var(--foreground)]">{copy.successMessage}</p>
             </div>
           ) : null}
           {submitError ? (
