@@ -5,6 +5,7 @@ import { useRef, useState } from "react";
 
 import { PreviewMedia } from "@/components/media/preview-media";
 import { Reveal } from "@/components/motion/reveal";
+import { ProfileHeroPortrait } from "@/components/pages/profile-hero-portrait";
 import { useSitePreferences } from "@/components/providers/site-preferences";
 import { Button } from "@/components/ui/button";
 import { ButtonLink } from "@/components/ui/button-link";
@@ -217,21 +218,13 @@ export function GardProfileContent() {
             <>
               <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(7,9,14,0.98),rgba(7,9,14,0.92)_34%,rgba(7,9,14,0.98)_100%)]" />
               <div className="profile-hero-portrait-wrap hidden md:flex">
-                <div className="profile-hero-portrait-frame founder-portrait-panel">
-                  <div className="profile-hero-portrait-shell founder-portrait-shell">
-                    <div className="profile-hero-portrait-backdrop" />
-                    <div className="profile-hero-portrait-glow" />
-                    <Image
-                      src={profile.heroBackground}
-                      alt={resolveLocalizedValue(profile.heroBackgroundAlt, language)}
-                      width={1200}
-                      height={1500}
-                      priority
-                      sizes="(min-width: 1280px) 34vw, (min-width: 768px) 42vw, 78vw"
-                      className="profile-hero-portrait-image profile-hero-portrait-image-gard"
-                    />
-                  </div>
-                </div>
+                <ProfileHeroPortrait
+                  src={profile.heroBackground}
+                  alt={resolveLocalizedValue(profile.heroBackgroundAlt, language)}
+                  priority
+                  sizes="(min-width: 1280px) 34vw, (min-width: 768px) 42vw, 78vw"
+                  imageClassName="profile-hero-portrait-image-gard"
+                />
               </div>
             </>
           ) : (
@@ -289,21 +282,13 @@ export function GardProfileContent() {
 
           {backgroundUsesPortrait ? (
             <div className="mt-10 flex w-full justify-center md:hidden">
-              <div className="profile-hero-portrait-frame founder-portrait-panel">
-                <div className="profile-hero-portrait-shell founder-portrait-shell">
-                  <div className="profile-hero-portrait-backdrop" />
-                  <div className="profile-hero-portrait-glow" />
-                  <Image
-                    src={profile.heroBackground}
-                    alt={resolveLocalizedValue(profile.heroBackgroundAlt, language)}
-                    width={1200}
-                    height={1500}
-                    priority
-                    sizes="82vw"
-                    className="profile-hero-portrait-image profile-hero-portrait-image-gard"
-                  />
-                </div>
-              </div>
+              <ProfileHeroPortrait
+                src={profile.heroBackground}
+                alt={resolveLocalizedValue(profile.heroBackgroundAlt, language)}
+                priority
+                sizes="82vw"
+                imageClassName="profile-hero-portrait-image-gard"
+              />
             </div>
           ) : null}
         </div>
