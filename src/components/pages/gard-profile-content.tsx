@@ -5,7 +5,7 @@ import { useRef, useState } from "react";
 
 import { PreviewMedia } from "@/components/media/preview-media";
 import { Reveal } from "@/components/motion/reveal";
-import { ProfilePortraitCard } from "@/components/pages/profile-portrait-card";
+import { ProfileImageCard } from "@/components/pages/profile-image-card";
 import { useSitePreferences } from "@/components/providers/site-preferences";
 import { Button } from "@/components/ui/button";
 import { ButtonLink } from "@/components/ui/button-link";
@@ -244,8 +244,8 @@ export function GardProfileContent() {
               </div>
             </Reveal>
 
-            <Reveal delay={0.08} y={18} className="flex justify-center md:justify-end">
-              <ProfilePortraitCard
+            <Reveal delay={0.08} y={18} className="w-full md:flex md:justify-end">
+              <ProfileImageCard
                 src={profile.portrait}
                 alt={resolveLocalizedValue(profile.portraitAlt, language)}
                 priority

@@ -4,7 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 
 import { Reveal } from "@/components/motion/reveal";
-import { ProfilePortraitCard } from "@/components/pages/profile-portrait-card";
+import { ProfileImageCard } from "@/components/pages/profile-image-card";
 import { useSitePreferences } from "@/components/providers/site-preferences";
 import { ButtonLink } from "@/components/ui/button-link";
 import { ArrowUpRightIcon, MailIcon, PhoneIcon } from "@/components/ui/icons";
@@ -342,8 +342,8 @@ export function TommyProfileContent() {
               </div>
             </Reveal>
 
-            <Reveal delay={0.08} y={18} className="flex justify-center md:justify-end">
-              <ProfilePortraitCard
+            <Reveal delay={0.08} y={18} className="w-full md:flex md:justify-end">
+              <ProfileImageCard
                 src={profile.portrait}
                 alt={resolveLocalizedValue(profile.portraitAlt, language)}
                 priority
