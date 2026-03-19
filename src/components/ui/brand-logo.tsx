@@ -21,7 +21,7 @@ export function BrandLogo({
         width={5000}
         height={2817}
         priority={priority}
-        className={cn("h-auto w-full", className)}
+        className={cn("block h-auto max-w-full", className)}
       />
     );
   }
@@ -33,7 +33,7 @@ export function BrandLogo({
       width={5000}
       height={1225}
       priority={priority}
-      className={cn("h-auto w-full", className)}
+      className={cn("block h-auto max-w-full", className)}
     />
   );
 }
