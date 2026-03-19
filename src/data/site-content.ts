@@ -53,7 +53,6 @@ export type ClientLogo = {
   darkSrc?: string;
   width: number;
   height: number;
-  scale?: number;
 };
 
 export type SocialLink = {
@@ -399,14 +398,12 @@ export const clientLogos: ClientLogo[] = [
     darkSrc: "/media/logos/clients/COLOR/ville-gleder-dark.png",
     width: 1563,
     height: 1563,
-    scale: 1.02,
   },
   {
     name: "Treningshuset",
     src: "/media/logos/clients/COLOR/Treningshuset.png",
     width: 726,
     height: 146,
-    scale: 1,
   },
   {
     name: "STUA",
@@ -414,7 +411,6 @@ export const clientLogos: ClientLogo[] = [
     darkSrc: "/media/logos/clients/COLOR/stua-dark.png",
     width: 1563,
     height: 1563,
-    scale: 1.02,
   },
   {
     name: "Norske Bunader",
@@ -422,7 +418,6 @@ export const clientLogos: ClientLogo[] = [
     darkSrc: "/media/logos/clients/COLOR/norske-bunader-dark.png",
     width: 500,
     height: 200,
-    scale: 1.02,
   },
   {
     name: "Actors Hub",
@@ -430,7 +425,6 @@ export const clientLogos: ClientLogo[] = [
     darkSrc: "/media/logos/clients/COLOR/actorshub_logo_white_NY-kopi.png",
     width: 1500,
     height: 844,
-    scale: 0.98,
   },
   {
     name: "Gina",
@@ -438,7 +432,6 @@ export const clientLogos: ClientLogo[] = [
     darkSrc: "/media/logos/clients/COLOR/gina-dark.png",
     width: 1500,
     height: 341,
-    scale: 1,
   },
   {
     name: "The International Stunt Academy",
@@ -446,14 +439,12 @@ export const clientLogos: ClientLogo[] = [
     darkSrc: "/media/logos/clients/COLOR/isa-dark.png",
     width: 1563,
     height: 1563,
-    scale: 1.02,
   },
   {
     name: "Nei til Atomvåpen",
-    src: "/media/logos/clients/COLOR/nei-til-atomvapen-logo.png",
-    width: 600,
-    height: 420,
-    scale: 1,
+    src: "/media/logos/clients/COLOR/ny-nei-til-atomvapen.avif",
+    width: 800,
+    height: 797,
   },
   {
     name: "Foreningen Norden",
@@ -461,7 +452,6 @@ export const clientLogos: ClientLogo[] = [
     darkSrc: "/media/logos/clients/COLOR/foreningen-norden-dark.png",
     width: 1563,
     height: 1563,
-    scale: 1.02,
   },
 ];
 
