@@ -60,7 +60,7 @@ function ProjectLinkPill({ link }: { link: TommyPortfolioLink }) {
         href={href}
         target="_blank"
         rel="noreferrer"
-        className="inline-flex items-center gap-2 rounded-full border border-[color:var(--line)]/75 bg-[color:var(--surface)]/78 px-3 py-2 text-[0.72rem] font-semibold tracking-[0.12em] text-[color:var(--foreground)] transition hover:border-[color:var(--accent)]/36 hover:bg-[color:var(--surface)] hover:text-[color:var(--foreground)]"
+        className="inline-flex items-center gap-2 rounded-full border border-[color:var(--line-strong)] bg-[color:var(--surface)]/78 px-3.5 py-2 text-[0.72rem] font-semibold tracking-[0.12em] text-[color:var(--foreground)] transition hover:border-[color:var(--accent)]/38 hover:bg-[color:var(--surface-2)] hover:text-[color:var(--foreground)]"
       >
         <span>{resolveLocalizedValue(label, language)}</span>
         <ArrowUpRightIcon className="h-3.5 w-3.5 shrink-0" />
@@ -71,7 +71,7 @@ function ProjectLinkPill({ link }: { link: TommyPortfolioLink }) {
   return (
     <Link
       href={href}
-      className="inline-flex items-center gap-2 rounded-full border border-[color:var(--line)]/75 bg-[color:var(--surface)]/78 px-3 py-2 text-[0.72rem] font-semibold tracking-[0.12em] text-[color:var(--foreground)] transition hover:border-[color:var(--accent)]/36 hover:bg-[color:var(--surface)] hover:text-[color:var(--foreground)]"
+      className="inline-flex items-center gap-2 rounded-full border border-[color:var(--line-strong)] bg-[color:var(--surface)]/78 px-3.5 py-2 text-[0.72rem] font-semibold tracking-[0.12em] text-[color:var(--foreground)] transition hover:border-[color:var(--accent)]/38 hover:bg-[color:var(--surface-2)] hover:text-[color:var(--foreground)]"
     >
       <span>{resolveLocalizedValue(label, language)}</span>
       <ArrowUpRightIcon className="h-3.5 w-3.5 shrink-0" />
@@ -96,7 +96,7 @@ function PosterButton({
     return (
       <div
         className={cn(
-          "flex items-end rounded-[1.5rem] border border-dashed border-[color:var(--line)]/70 bg-[color:var(--surface-muted)]/78 p-4",
+          "flex items-end rounded-[1.45rem] border border-dashed border-[color:var(--line)]/70 bg-[color:var(--surface-muted)]/78 p-4",
           className,
         )}
       >
@@ -110,7 +110,7 @@ function PosterButton({
       type="button"
       onClick={() => onOpen(title, images.length ? images : [image], 0)}
       className={cn(
-        "group relative overflow-hidden rounded-[1.5rem] border border-[color:var(--line)]/70 bg-[#0b0d12] text-left transition hover:border-[color:var(--accent)]/36",
+        "group relative overflow-hidden rounded-[1.45rem] border border-[color:var(--line)]/70 bg-[#0b0d12] text-left transition hover:border-[color:var(--accent)]/36",
         className,
       )}
     >
@@ -276,7 +276,7 @@ function ShowcaseCard({
 
   return (
     <Reveal delay={0.05 * index}>
-      <article className="card-surface overflow-hidden rounded-[1.9rem]">
+      <article className="card-surface overflow-hidden rounded-[2rem]">
         {project.poster ? (
           <PosterButton
             image={project.poster}
@@ -328,7 +328,7 @@ function RoleGroupCard({
 
   return (
     <Reveal delay={0.04 * index}>
-      <article className="glass-panel rounded-[1.9rem] px-5 py-5 sm:px-6 sm:py-6">
+      <article className="glass-panel rounded-[2rem] px-5 py-5 sm:px-6 sm:py-6 lg:px-7 lg:py-7">
         <div className="space-y-2">
           <h3 className="text-[1.1rem] font-semibold tracking-[-0.03em] text-[color:var(--foreground)] sm:text-[1.2rem]">
             {resolveLocalizedValue(group.title, language)}
@@ -355,7 +355,7 @@ function RoleGroupCard({
                       type="button"
                       onClick={() => onOpenGallery(resolveLocalizedValue(item.title, language), gallery, 0)}
                       className={cn(
-                        "relative w-full shrink-0 overflow-hidden rounded-[1.2rem] border border-[color:var(--line)]/70 bg-[#0b0d12] transition hover:border-[color:var(--accent)]/36",
+                        "relative w-full shrink-0 overflow-hidden rounded-[1.45rem] border border-[color:var(--line)]/70 bg-[#0b0d12] transition hover:border-[color:var(--accent)]/36",
                         item.poster.aspect === "landscape" || item.poster.aspect === "wide"
                           ? "aspect-[16/10]"
                           : "aspect-[0.72/1]",
@@ -370,7 +370,7 @@ function RoleGroupCard({
                       />
                     </button>
                   ) : (
-                    <div className="flex aspect-[0.72/1] items-end rounded-[1.2rem] border border-dashed border-[color:var(--line)]/70 bg-[color:var(--surface-muted)]/76 p-4">
+                    <div className="flex aspect-[0.72/1] items-end rounded-[1.45rem] border border-dashed border-[color:var(--line)]/70 bg-[color:var(--surface-muted)]/76 p-4">
                       <p className="max-w-[12ch] text-sm font-medium leading-6 text-[var(--muted)]">
                         {resolveLocalizedValue(item.title, language)}
                       </p>
@@ -611,7 +611,7 @@ export function TommyProfileContent() {
         description={resolveLocalizedValue(tommyPortfolioPage.shortFilmsDescription, language)}
         className="pt-0"
       >
-        <div className="grid gap-4">
+        <div className="grid gap-5">
           {tommyPortfolioPage.shortFilms.map((project, index) => (
             <ShortFilmCard
               key={project.slug}
@@ -629,7 +629,7 @@ export function TommyProfileContent() {
         description={resolveLocalizedValue(tommyPortfolioPage.otherRolesDescription, language)}
         className="pt-0"
       >
-        <div className="grid gap-4">
+        <div className="grid gap-5">
           {tommyPortfolioPage.otherRoleGroups.map((group, index) => (
             <RoleGroupCard
               key={group.slug}
@@ -647,7 +647,7 @@ export function TommyProfileContent() {
         description={resolveLocalizedValue(tommyPortfolioPage.commercialDescription, language)}
         className="pt-0"
       >
-        <div className="grid gap-4 lg:grid-cols-2 xl:grid-cols-3">
+        <div className="grid gap-5 lg:grid-cols-2 xl:grid-cols-3">
           {tommyPortfolioPage.commercialProjects.map((project, index) => (
             <ShowcaseCard
               key={project.slug}
@@ -665,7 +665,7 @@ export function TommyProfileContent() {
         description={resolveLocalizedValue(tommyPortfolioPage.eventsDescription, language)}
         className="pt-0"
       >
-        <div className="grid gap-4 lg:grid-cols-2 xl:grid-cols-3">
+        <div className="grid gap-5 lg:grid-cols-2 xl:grid-cols-3">
           {tommyPortfolioPage.eventProjects.map((project, index) => (
             <ShowcaseCard
               key={project.slug}
@@ -684,7 +684,7 @@ export function TommyProfileContent() {
         className="pt-0"
       >
         <Reveal>
-          <article className="card-surface overflow-hidden rounded-[2rem] p-5 sm:p-6 lg:p-7">
+          <article className="card-surface overflow-hidden rounded-[2rem] px-5 py-5 sm:px-6 sm:py-6 lg:px-7 lg:py-7">
             <div className="grid gap-6 lg:grid-cols-[minmax(0,1.05fr)_minmax(0,0.95fr)]">
               <div className="space-y-5">
                 <div className="space-y-3">
@@ -747,30 +747,37 @@ export function TommyProfileContent() {
       <section className="section-space pt-0">
         <div className="site-container">
           <Reveal>
-            <article className="card-surface overflow-hidden rounded-[2rem] px-5 py-6 sm:px-6 sm:py-6 lg:px-7">
-              <div className="max-w-3xl space-y-3">
-                <span className="eyebrow">{profile.name}</span>
-                <h2 className="section-title text-[color:var(--foreground)]">
-                  {resolveLocalizedValue(tommyPortfolioPage.ctaTitle, language)}
-                </h2>
-                <p className="body-lead max-w-2xl text-[var(--muted-2)]">
-                  {resolveLocalizedValue(tommyPortfolioPage.ctaDescription, language)}
-                </p>
-              </div>
+            <article className="card-surface overflow-hidden rounded-[2rem] px-5 py-6 sm:px-7 sm:py-7">
+              <div className="grid gap-6 lg:grid-cols-[minmax(0,0.92fr)_minmax(18rem,1.08fr)] lg:items-end">
+                <div className="space-y-3">
+                  <span className="eyebrow">{profile.name}</span>
+                  <h2 className="section-title text-[color:var(--foreground)]">
+                    {resolveLocalizedValue(tommyPortfolioPage.ctaTitle, language)}
+                  </h2>
+                  <p className="body-lead max-w-2xl text-[var(--muted-2)]">
+                    {resolveLocalizedValue(tommyPortfolioPage.ctaDescription, language)}
+                  </p>
+                </div>
 
-              <div className="mt-6 flex flex-col gap-2.5 sm:flex-row sm:flex-wrap">
-                <ButtonLink href="/kontakt" className="w-full sm:w-auto">
-                  {resolveLocalizedValue(tommyPortfolioPage.ctaPrimaryLabel, language)}
-                </ButtonLink>
-                <ButtonLink href="/kontakt" variant="ghost" className="w-full sm:w-auto">
-                  {resolveLocalizedValue(tommyPortfolioPage.ctaSecondaryLabel, language)}
-                  <ArrowUpRightIcon className="h-4 w-4" />
-                </ButtonLink>
-              </div>
+                <div className="space-y-4">
+                  <div className="flex flex-col gap-2.5 sm:flex-row sm:flex-wrap">
+                    <ButtonLink href="/kontakt" className="w-full sm:w-auto">
+                      {resolveLocalizedValue(tommyPortfolioPage.ctaPrimaryLabel, language)}
+                    </ButtonLink>
+                    <ButtonLink href="/kontakt" variant="secondary" className="w-full sm:w-auto">
+                      {resolveLocalizedValue(tommyPortfolioPage.ctaSecondaryLabel, language)}
+                      <ArrowUpRightIcon className="h-4 w-4" />
+                    </ButtonLink>
+                    <ButtonLink href={siteConfig.phonePrimaryHref} variant="ghost" className="w-full sm:w-auto">
+                      {siteConfig.phonePrimary}
+                    </ButtonLink>
+                  </div>
 
-              <p className="mt-4 text-sm leading-6 text-[var(--muted)]">
-                {tommyPortfolioPage.contactEmail} · {tommyPortfolioPage.contactPhone} · {siteConfig.locationLabel}
-              </p>
+                  <p className="text-sm leading-6 text-[var(--muted)]">
+                    {tommyPortfolioPage.contactEmail} · {tommyPortfolioPage.contactPhone} · {siteConfig.locationLabel}
+                  </p>
+                </div>
+              </div>
             </article>
           </Reveal>
         </div>
