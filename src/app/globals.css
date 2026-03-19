@@ -1204,6 +1204,8 @@ summary::-webkit-details-marker {
       transform 320ms ease,
       box-shadow 320ms ease,
       border-color 320ms ease;
+    display: flex;
+    flex-direction: column;
   }
 
   .team-portrait-card::before {
@@ -1229,7 +1231,9 @@ summary::-webkit-details-marker {
   .team-portrait-link {
     position: relative;
     z-index: 1;
-    display: block;
+    display: flex;
+    min-height: 100%;
+    flex-direction: column;
     color: inherit;
   }
 
@@ -1249,47 +1253,15 @@ summary::-webkit-details-marker {
     position: relative;
     min-height: clamp(23.5rem, 46vw, 31rem);
     overflow: hidden;
-  }
-
-  .team-portrait-surface {
-    position: absolute;
-    inset: 5.5% 5.5% 0 5.5%;
-    border-radius: 2rem 2.45rem 2.1rem 2.75rem / 2rem 2.2rem 2.5rem 2.35rem;
+    margin: clamp(0.8rem, 1.2vw, 0.95rem) clamp(0.8rem, 1.2vw, 0.95rem) 0;
+    border-radius: 1.8rem 2.2rem 1.9rem 2.4rem / 1.8rem 1.95rem 2.25rem 2.1rem;
     background:
-      linear-gradient(180deg, rgba(255, 255, 255, 0.26), rgba(255, 255, 255, 0.06)),
-      radial-gradient(circle at top left, rgba(255, 255, 255, 0.3), transparent 28%),
-      radial-gradient(circle at bottom right, rgba(122, 168, 255, 0.14), transparent 30%),
-      color-mix(in srgb, var(--surface) 94%, transparent);
+      linear-gradient(180deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.025)),
+      radial-gradient(circle at top left, rgba(255, 255, 255, 0.16), transparent 28%),
+      color-mix(in srgb, var(--surface) 92%, transparent);
     box-shadow:
-      0 22px 54px rgba(16, 24, 36, 0.08),
-      inset 0 1px 0 rgba(255, 255, 255, 0.24),
-      inset 0 18px 34px rgba(255, 255, 255, 0.07);
-    backdrop-filter: blur(24px) saturate(150%);
-  }
-
-  .team-portrait-glow {
-    position: absolute;
-    inset: 5% 8% 14% 8%;
-    border-radius: 999px;
-    background:
-      radial-gradient(circle at 50% 24%, rgba(255, 255, 255, 0.34), transparent 46%),
-      radial-gradient(circle at 24% 78%, rgba(122, 168, 255, 0.14), transparent 34%);
-    filter: blur(20px);
-    opacity: 0.96;
-    pointer-events: none;
-  }
-
-  .team-portrait-shadow {
-    position: absolute;
-    left: 16%;
-    right: 16%;
-    bottom: 3.5%;
-    height: 1.15rem;
-    border-radius: 999px;
-    background: radial-gradient(circle, rgba(0, 0, 0, 0.22), transparent 72%);
-    filter: blur(16px);
-    opacity: 0.42;
-    pointer-events: none;
+      inset 0 1px 0 rgba(255, 255, 255, 0.14),
+      inset 0 14px 28px rgba(255, 255, 255, 0.03);
   }
 
   .team-portrait-image {
@@ -1331,27 +1303,11 @@ summary::-webkit-details-marker {
   .team-portrait-copy {
     position: relative;
     z-index: 3;
-    margin-top: -0.35rem;
-    border: 1px solid color-mix(in srgb, var(--line) 84%, rgba(255, 255, 255, 0.14));
-    border-radius: 1.55rem 1.9rem 1.65rem 2.1rem / 1.55rem 1.7rem 2rem 1.95rem;
-    background:
-      linear-gradient(180deg, rgba(255, 255, 255, 0.24), rgba(255, 255, 255, 0.07)),
-      radial-gradient(circle at top left, rgba(255, 255, 255, 0.22), transparent 28%),
-      color-mix(in srgb, var(--surface) 95%, transparent);
-    padding: 1.05rem 1rem 1.12rem;
-    box-shadow:
-      0 16px 40px rgba(8, 14, 24, 0.1),
-      inset 0 1px 0 rgba(255, 255, 255, 0.22),
-      inset 0 14px 22px rgba(255, 255, 255, 0.04);
-    backdrop-filter: blur(18px) saturate(145%);
-  }
-
-  .team-portrait-copy-left {
-    margin-right: 1rem;
-  }
-
-  .team-portrait-copy-right {
-    margin-left: 1rem;
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    gap: 1rem;
+    padding: 1.15rem 1.1rem 1.2rem;
   }
 
   .team-portrait-card-compact {
@@ -1391,12 +1347,6 @@ summary::-webkit-details-marker {
     box-shadow:
       0 12px 30px rgba(8, 14, 24, 0.08),
       inset 0 1px 0 rgba(255, 255, 255, 0.2);
-  }
-
-  .team-portrait-copy-compact.team-portrait-copy-left,
-  .team-portrait-copy-compact.team-portrait-copy-right {
-    margin-left: 0.75rem;
-    margin-right: 0.75rem;
   }
 
   .home-team-panel {
@@ -2351,21 +2301,9 @@ summary::-webkit-details-marker {
       transform: none;
     }
 
-    .team-portrait-copy-left,
-    .team-portrait-copy-right {
-      margin-left: 0;
-      margin-right: 0;
-    }
-
     .team-portrait-image-left,
     .team-portrait-image-right {
       width: min(94%, 23.8rem);
-    }
-
-    .team-portrait-copy-compact.team-portrait-copy-left,
-    .team-portrait-copy-compact.team-portrait-copy-right {
-      margin-left: 0.6rem;
-      margin-right: 0.6rem;
     }
 
     .home-team-image-left,

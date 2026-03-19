@@ -329,9 +329,6 @@ export function TeamSection({
                   }
                 >
                   <div className="team-portrait-scene">
-                    <div className="team-portrait-surface" />
-                    <div className="team-portrait-glow" />
-                    <div className="team-portrait-shadow" />
                     {member.image ? (
                       <Image
                         src={member.image}
@@ -351,12 +348,7 @@ export function TeamSection({
                     ) : null}
                   </div>
 
-                  <div
-                    className={cn(
-                      "team-portrait-copy",
-                      index === 0 ? "team-portrait-copy-left" : "team-portrait-copy-right",
-                    )}
-                  >
+                  <div className="team-portrait-copy">
                     <span className="founder-profile-chip">
                       {resolveLocalizedValue(member.role, language)}
                     </span>
