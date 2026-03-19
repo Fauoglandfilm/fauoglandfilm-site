@@ -607,6 +607,13 @@ export function ResultsSection() {
       return;
     }
 
+    const viewport = window.matchMedia("(max-width: 767px)");
+    const coarsePointer = window.matchMedia("(pointer: coarse)");
+    const isMobileViewport = viewport.matches || coarsePointer.matches;
+    let frameId: number | null = null;
+    let mobileFallbackTimer: number | null = null;
+    let mobileSafetyTimer: number | null = null;
+
     const triggerAnimation = () => {
       setHasAnimated((current) => {
         if (current) {
@@ -617,39 +624,76 @@ export function ResultsSection() {
       });
     };
 
-    const isSectionVisible = () => {
+    const isNearViewport = () => {
       const rect = triggerNode.getBoundingClientRect();
+      const viewportHeight = window.innerHeight || document.documentElement.clientHeight || 0;
+      const enterBuffer = isMobileViewport ? viewportHeight * 0.95 : viewportHeight * 0.5;
+      const exitBuffer = isMobileViewport ? viewportHeight * 0.35 : viewportHeight * 0.18;
 
-      return rect.top <= window.innerHeight * 0.82 && rect.bottom >= window.innerHeight * 0.32;
+      return rect.top <= viewportHeight + enterBuffer && rect.bottom >= -exitBuffer;
     };
 
-    if (isSectionVisible()) {
-      triggerAnimation();
-      return;
-    }
+    const evaluateTrigger = () => {
+      if (isNearViewport()) {
+        triggerAnimation();
+      }
+    };
 
-    if (typeof IntersectionObserver === "undefined") {
-      triggerAnimation();
-      return;
-    }
+    const scheduleEvaluation = () => {
+      if (frameId !== null) {
+        window.cancelAnimationFrame(frameId);
+      }
 
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting && entry.intersectionRatio >= 0.42) {
+      frameId = window.requestAnimationFrame(evaluateTrigger);
+    };
+
+    scheduleEvaluation();
+
+    window.addEventListener("scroll", scheduleEvaluation, { passive: true });
+    window.addEventListener("resize", scheduleEvaluation);
+    window.addEventListener("orientationchange", scheduleEvaluation);
+    window.addEventListener("pageshow", scheduleEvaluation);
+
+    if (isMobileViewport) {
+      mobileFallbackTimer = window.setTimeout(() => {
+        const rect = triggerNode.getBoundingClientRect();
+        const viewportHeight = window.innerHeight || document.documentElement.clientHeight || 0;
+
+        if (rect.top <= viewportHeight * 1.7) {
           triggerAnimation();
-          observer.disconnect();
+          return;
         }
-      },
-      {
-        rootMargin: "0px 0px -18% 0px",
-        threshold: [0, 0.42, 0.6],
-      },
-    );
 
-    observer.observe(triggerNode);
+        scheduleEvaluation();
+      }, 900);
+
+      mobileSafetyTimer = window.setTimeout(() => {
+        const rect = triggerNode.getBoundingClientRect();
+        const viewportHeight = window.innerHeight || document.documentElement.clientHeight || 0;
+
+        if (window.scrollY > 0 && rect.top <= viewportHeight * 2.2) {
+          triggerAnimation();
+        }
+      }, 1800);
+    }
 
     return () => {
-      observer.disconnect();
+      if (frameId !== null) {
+        window.cancelAnimationFrame(frameId);
+      }
+
+      if (mobileFallbackTimer !== null) {
+        window.clearTimeout(mobileFallbackTimer);
+      }
+
+      if (mobileSafetyTimer !== null) {
+        window.clearTimeout(mobileSafetyTimer);
+      }
+
+      window.removeEventListener("scroll", scheduleEvaluation);
+      window.removeEventListener("resize", scheduleEvaluation);
+      window.removeEventListener("orientationchange", scheduleEvaluation);
+      window.removeEventListener("pageshow", scheduleEvaluation);
     };
   }, [hasAnimated, shouldReduceMotion]);
 
