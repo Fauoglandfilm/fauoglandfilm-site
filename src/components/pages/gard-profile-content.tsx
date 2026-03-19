@@ -211,7 +211,7 @@ export function GardProfileContent() {
 
   return (
     <main>
-      <section className="relative isolate overflow-hidden pt-22 sm:pt-28">
+      <section className="relative isolate overflow-hidden pt-[7.6rem] sm:pt-28">
         <div className="absolute inset-0">
           {backgroundUsesPortrait ? (
             <>
@@ -288,7 +288,7 @@ export function GardProfileContent() {
           </Reveal>
 
           {backgroundUsesPortrait ? (
-            <div className="mt-8 flex w-full justify-center md:hidden">
+            <div className="mt-12 flex w-full justify-center md:hidden">
               <div className="profile-hero-portrait-frame founder-portrait-panel">
                 <div className="profile-hero-portrait-shell founder-portrait-shell">
                   <div className="profile-hero-portrait-backdrop" />
