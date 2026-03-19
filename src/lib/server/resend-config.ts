@@ -58,16 +58,14 @@ function readFallbackEnv() {
 }
 
 function readValue(primary: string | undefined, fallbackKey: string) {
-  if (typeof primary === "string" && primary.trim().length > 0) {
-    return primary.trim();
-  }
-
   const fallbackEnv = readFallbackEnv();
   const fallback = fallbackEnv[fallbackKey];
 
-  return typeof fallback === "string" && fallback.trim().length > 0
-    ? fallback.trim()
-    : null;
+  if (typeof fallback === "string" && fallback.trim().length > 0) {
+    return fallback.trim();
+  }
+
+  return typeof primary === "string" && primary.trim().length > 0 ? primary.trim() : null;
 }
 
 export function getResendConfig(): ResendConfig {
