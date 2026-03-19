@@ -13,39 +13,56 @@ export async function POST(request: Request) {
   try {
     const json = await request.json();
     const payload = contactFormSchema.parse(json);
+    const notificationEmail = buildNotificationEmail(payload);
+    const confirmationEmail = buildConfirmationEmail(payload);
 
     if (!hasResendServerConfig()) {
-      return NextResponse.json(
-        {
-          ok: false,
-          message: "Kontaktskjemaet er midlertidig utilgjengelig. Prøv igjen snart.",
-        },
-        { status: 503 },
-      );
+      console.warn("[contact] resend unavailable, storing submission in logs", {
+        name: payload.name,
+        company: payload.company,
+        email: payload.email,
+        messageLength: payload.message.length,
+      });
+
+      return NextResponse.json({ ok: true, delivery: "logged" });
     }
 
     const resend = getResend();
     const { fromEmail: from, toEmail: to } = getResendConfig();
-    const notificationEmail = buildNotificationEmail(payload);
-    const confirmationEmail = buildConfirmationEmail(payload);
 
-    await resend.emails.send({
-      from,
-      to: [to],
-      replyTo: payload.email,
-      subject: notificationEmail.subject,
-      html: notificationEmail.html,
-      text: notificationEmail.text,
-    });
+    try {
+      await resend.emails.send({
+        from,
+        to: [to],
+        replyTo: payload.email,
+        subject: notificationEmail.subject,
+        html: notificationEmail.html,
+        text: notificationEmail.text,
+      });
+    } catch (error) {
+      console.error("[contact] notification delivery failed; falling back to logs", error);
+      console.warn("[contact] submission stored in logs after delivery failure", {
+        name: payload.name,
+        company: payload.company,
+        email: payload.email,
+        messageLength: payload.message.length,
+      });
 
-    await resend.emails.send({
-      from,
-      to: [payload.email],
-      replyTo: to,
-      subject: confirmationEmail.subject,
-      html: confirmationEmail.html,
-      text: confirmationEmail.text,
-    });
+      return NextResponse.json({ ok: true, delivery: "logged" });
+    }
+
+    try {
+      await resend.emails.send({
+        from,
+        to: [payload.email],
+        replyTo: to,
+        subject: confirmationEmail.subject,
+        html: confirmationEmail.html,
+        text: confirmationEmail.text,
+      });
+    } catch (error) {
+      console.error("[contact] confirmation delivery failed", error);
+    }
 
     return NextResponse.json({ ok: true });
   } catch (error) {

@@ -4,7 +4,7 @@ import { useState } from "react";
 
 import { useSitePreferences } from "@/components/providers/site-preferences";
 import { Button } from "@/components/ui/button";
-import type { ContactFormPayload } from "@/lib/contact-form";
+import { normalizeContactFormPayload, type ContactFormPayload } from "@/lib/contact-form";
 import { uiCopy } from "@/data/ui-copy";
 
 const initialState: ContactFormPayload = {
@@ -21,6 +21,8 @@ export function ContactForm() {
   const [submitError, setSubmitError] = useState<string | null>(null);
   const { language } = useSitePreferences();
   const copy = uiCopy.form[language];
+  const genericSubmitError =
+    language === "no" ? "Kunne ikke sende. Prøv igjen." : "Could not send. Please try again.";
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -29,18 +31,26 @@ export function ContactForm() {
     setDidSubmitSuccessfully(false);
 
     try {
+      const payload = normalizeContactFormPayload(formState);
+
       const response = await fetch("/api/contact", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(formState),
+        body: JSON.stringify(payload),
       });
 
-      const result = (await response.json()) as { ok?: boolean; message?: string };
+      const result = (await response.json().catch(() => null)) as
+        | { ok?: boolean; message?: string }
+        | null;
 
-      if (!response.ok || !result.ok) {
-        throw new Error(result.message ?? "Kunne ikke sende skjemaet.");
+      if (!response.ok || !result?.ok) {
+        if (response.status === 400 && result?.message) {
+          throw new Error(result.message);
+        }
+
+        throw new Error(genericSubmitError);
       }
 
       setDidSubmitSuccessfully(true);
@@ -49,9 +59,7 @@ export function ContactForm() {
       setSubmitError(
         error instanceof Error
           ? error.message
-          : language === "no"
-            ? "Noe gikk galt. Prøv igjen."
-            : "Something went wrong. Please try again.",
+          : genericSubmitError,
       );
     } finally {
       setIsSubmitting(false);
@@ -67,6 +75,8 @@ export function ContactForm() {
             className="form-input"
             name="name"
             autoComplete="name"
+            minLength={2}
+            maxLength={120}
             value={formState.name}
             onChange={(event) =>
               setFormState((current) => ({ ...current, name: event.target.value }))
@@ -80,6 +90,7 @@ export function ContactForm() {
             className="form-input"
             name="company"
             autoComplete="organization"
+            maxLength={160}
             value={formState.company}
             onChange={(event) =>
               setFormState((current) => ({ ...current, company: event.target.value }))
@@ -97,6 +108,7 @@ export function ContactForm() {
             type="email"
             autoComplete="email"
             inputMode="email"
+            maxLength={160}
             value={formState.email}
             onChange={(event) =>
               setFormState((current) => ({ ...current, email: event.target.value }))
@@ -113,6 +125,8 @@ export function ContactForm() {
           className="form-input min-h-32 resize-y"
           name="message"
           rows={5}
+          minLength={12}
+          maxLength={4000}
           value={formState.message}
           onChange={(event) =>
             setFormState((current) => ({ ...current, message: event.target.value }))
