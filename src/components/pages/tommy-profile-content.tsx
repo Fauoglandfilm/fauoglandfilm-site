@@ -4,13 +4,10 @@ import Image from "next/image";
 import Link from "next/link";
 
 import { Reveal } from "@/components/motion/reveal";
+import { ProfilePortraitCard } from "@/components/pages/profile-portrait-card";
 import { useSitePreferences } from "@/components/providers/site-preferences";
 import { ButtonLink } from "@/components/ui/button-link";
 import { ArrowUpRightIcon, MailIcon, PhoneIcon } from "@/components/ui/icons";
-import {
-  ProfileHeroPortrait,
-  ProfileHeroPortraitMobile,
-} from "@/components/pages/profile-hero-portrait";
 import { SectionShell } from "@/components/ui/section-shell";
 import {
   tommyPortfolioPage,
@@ -309,89 +306,51 @@ function RoleGroupCard({
 export function TommyProfileContent() {
   const { language } = useSitePreferences();
   const profile = tommyPortfolioPage.baseProfile;
-  const backgroundUsesPortrait = profile.heroBackground === profile.portrait;
 
   return (
     <main>
-      <section className="relative isolate overflow-hidden pt-[6.35rem] sm:pt-28">
-        <div className="absolute inset-0">
-          {backgroundUsesPortrait ? (
-            <>
-              <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(7,9,14,0.98),rgba(7,9,14,0.92)_34%,rgba(7,9,14,0.98)_100%)]" />
-              <div className="profile-hero-portrait-wrap hidden md:flex">
-                <ProfileHeroPortrait
-                  src={profile.heroBackground}
-                  alt={resolveLocalizedValue(profile.heroBackgroundAlt, language)}
-                  priority
-                  sizes="(min-width: 1280px) 34vw, (min-width: 768px) 42vw, 78vw"
-                  imageClassName="profile-hero-portrait-image-tommy"
-                />
-              </div>
-            </>
-          ) : (
-            <Image
-              src={profile.heroBackground}
-              alt={resolveLocalizedValue(profile.heroBackgroundAlt, language)}
-              fill
-              priority
-              sizes="100vw"
-              className="image-slow-zoom object-cover"
-            />
-          )}
-          <div
-            className={cn(
-              "absolute inset-0",
-              backgroundUsesPortrait
-                ? "bg-[radial-gradient(circle_at_18%_18%,rgba(255,255,255,0.1),transparent_22%),linear-gradient(92deg,rgba(5,7,11,0.96),rgba(5,7,11,0.9)_22%,rgba(5,7,11,0.54)_44%,rgba(5,7,11,0.18)_68%,rgba(5,7,11,0.62)_100%),linear-gradient(180deg,rgba(6,6,9,0.12),rgba(6,6,9,0.12)_28%,rgba(6,6,9,0.84)_100%)]"
-                : "bg-[radial-gradient(circle_at_18%_18%,rgba(255,255,255,0.08),transparent_22%),linear-gradient(96deg,rgba(5,7,11,0.9),rgba(5,7,11,0.62)_34%,rgba(5,7,11,0.34)_62%,rgba(5,7,11,0.84)_100%),linear-gradient(180deg,rgba(6,6,9,0.12),rgba(6,6,9,0.18)_28%,rgba(6,6,9,0.84)_100%)]",
-            )}
-          />
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_74%_24%,rgba(255,255,255,0.08),transparent_18%),radial-gradient(circle_at_78%_16%,rgba(116,150,255,0.16),transparent_22%)]" />
-          <div className="grain-overlay absolute inset-0 opacity-38" />
-        </div>
-
-        <div className="site-container relative flex flex-col items-start py-4 md:min-h-[60svh] md:justify-end md:py-10 lg:min-h-[76svh] lg:py-12">
-          <Reveal className="max-w-3xl" delay={0.04} y={18}>
-            <div className="max-w-[42rem] text-white">
-              <ButtonLink
-                href="/om-oss"
-                variant="ghost"
-                size="compact"
-                className="w-fit border-white/14 text-white/84 hover:border-white/26 hover:text-white"
-              >
-                {language === "no" ? "Tilbake til Om oss" : "Back to About"}
-              </ButtonLink>
-
-              <span className="hero-badge mt-5 text-white/72">
-                {resolveLocalizedValue(tommyPortfolioPage.heroTitle, language)}
-              </span>
-              <h1 className="page-title mt-4 max-w-[10ch] text-white">{profile.name}</h1>
-              <p className="mt-4 max-w-[34rem] text-[1rem] leading-7 text-white/84 sm:text-[1.08rem] sm:leading-8">
-                {resolveLocalizedValue(tommyPortfolioPage.heroDescription, language)}
-              </p>
-
-              <div className="mt-6 flex flex-col gap-2.5 sm:flex-row sm:flex-wrap">
-                <ButtonLink href="/kontakt" className="w-full sm:w-auto">
-                  {resolveLocalizedValue(tommyPortfolioPage.heroPrimaryCta, language)}
+      <section className="overflow-hidden bg-[radial-gradient(circle_at_top_left,rgba(255,255,255,0.14),transparent_24%),linear-gradient(180deg,#0b1220_0%,#0d1422_52%,#101723_100%)] pt-[6.35rem] sm:pt-28">
+        <div className="site-container py-8 sm:py-10 lg:py-14">
+          <div className="grid gap-8 md:grid-cols-[minmax(0,1fr)_minmax(16rem,20rem)] md:items-end lg:grid-cols-[minmax(0,1fr)_minmax(18rem,22rem)] lg:gap-12">
+            <Reveal className="max-w-3xl" delay={0.04} y={18}>
+              <div className="max-w-[42rem] text-white">
+                <ButtonLink
+                  href="/om-oss"
+                  variant="ghost"
+                  size="compact"
+                  className="w-fit border-white/14 text-white/84 hover:border-white/26 hover:text-white"
+                >
+                  {language === "no" ? "Tilbake til Om oss" : "Back to About"}
                 </ButtonLink>
-                <ButtonLink href="#tommy-shortfilms" variant="secondary" className="w-full sm:w-auto">
-                  {resolveLocalizedValue(tommyPortfolioPage.heroSecondaryCta, language)}
-                </ButtonLink>
-              </div>
-            </div>
-          </Reveal>
 
-          {backgroundUsesPortrait ? (
-            <div className="mt-7 flex w-full justify-center md:hidden">
-              <ProfileHeroPortraitMobile
-                src={profile.heroBackground}
-                alt={resolveLocalizedValue(profile.heroBackgroundAlt, language)}
+                <span className="hero-badge mt-5 text-white/72">
+                  {resolveLocalizedValue(tommyPortfolioPage.heroTitle, language)}
+                </span>
+                <h1 className="page-title mt-4 max-w-[10ch] text-white">{profile.name}</h1>
+                <p className="mt-4 max-w-[34rem] text-[1rem] leading-7 text-white/84 sm:text-[1.08rem] sm:leading-8">
+                  {resolveLocalizedValue(tommyPortfolioPage.heroDescription, language)}
+                </p>
+
+                <div className="mt-6 flex flex-col gap-2.5 sm:flex-row sm:flex-wrap">
+                  <ButtonLink href="/kontakt" className="w-full sm:w-auto">
+                    {resolveLocalizedValue(tommyPortfolioPage.heroPrimaryCta, language)}
+                  </ButtonLink>
+                  <ButtonLink href="#tommy-shortfilms" variant="secondary" className="w-full sm:w-auto">
+                    {resolveLocalizedValue(tommyPortfolioPage.heroSecondaryCta, language)}
+                  </ButtonLink>
+                </div>
+              </div>
+            </Reveal>
+
+            <Reveal delay={0.08} y={18} className="flex justify-center md:justify-end">
+              <ProfilePortraitCard
+                src={profile.portrait}
+                alt={resolveLocalizedValue(profile.portraitAlt, language)}
                 priority
-                sizes="46vw"
-                imageClassName="profile-hero-mobile-portrait__image-tommy"
+                sizes="(min-width: 1024px) 22rem, (min-width: 768px) 20rem, 72vw"
               />
-            </div>
-          ) : null}
+            </Reveal>
+          </div>
         </div>
       </section>
 
