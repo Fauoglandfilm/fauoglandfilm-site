@@ -322,8 +322,13 @@ summary::-webkit-details-marker {
   }
 
   .site-container {
-    width: min(100% - clamp(1.75rem, 4vw, 5rem), 84rem);
+    --site-container-gutter: clamp(1.75rem, 4vw, 5rem);
+    width: min(100% - var(--site-container-gutter), 84rem);
     margin-inline: auto;
+  }
+
+  .carousel-mobile-bleed {
+    margin-inline: 0;
   }
 
   .section-space {
@@ -2199,7 +2204,7 @@ summary::-webkit-details-marker {
 
   @media (max-width: 767px) {
     .site-container {
-      width: min(100% - 1.25rem, 84rem);
+      --site-container-gutter: 2rem;
     }
 
     .section-space {
@@ -2207,19 +2212,33 @@ summary::-webkit-details-marker {
       padding-bottom: 2rem;
     }
 
+    .carousel-mobile-bleed {
+      margin-inline: calc(var(--site-container-gutter) / -2);
+    }
+
     .brand-signature-chip {
       box-shadow:
-        0 12px 26px rgba(17, 17, 17, 0.1),
+        0 10px 22px rgba(17, 17, 17, 0.08),
         inset 0 1px 0 rgba(255, 255, 255, 0.24);
+      backdrop-filter: blur(18px) saturate(155%);
+      -webkit-backdrop-filter: blur(18px) saturate(155%);
     }
 
     .footer-glass-panel {
       box-shadow:
-        0 16px 34px color-mix(in srgb, var(--glass-shadow-deep) 32%, transparent),
-        0 6px 18px color-mix(in srgb, var(--glass-shadow-soft) 40%, transparent),
+        0 14px 28px color-mix(in srgb, var(--glass-shadow-deep) 28%, transparent),
+        0 4px 14px color-mix(in srgb, var(--glass-shadow-soft) 32%, transparent),
         inset 0 1px 0 rgba(255, 255, 255, 0.26);
-      backdrop-filter: blur(24px) saturate(175%);
-      -webkit-backdrop-filter: blur(24px) saturate(175%);
+      backdrop-filter: blur(18px) saturate(155%);
+      -webkit-backdrop-filter: blur(18px) saturate(155%);
+    }
+
+    .mobile-menu-surface {
+      box-shadow:
+        0 18px 44px rgba(17, 17, 17, 0.14),
+        inset 0 1px 0 rgba(255, 255, 255, 0.08);
+      backdrop-filter: blur(16px) saturate(145%);
+      -webkit-backdrop-filter: blur(16px) saturate(145%);
     }
 
     .brand-signature-chip .social-link {
@@ -2311,13 +2330,14 @@ summary::-webkit-details-marker {
     .hero-label-chip {
       margin-left: 0;
       gap: 0.38rem;
-      padding: 0.42rem 0.72rem;
+      padding: 0.42rem 0.76rem;
       transform: translateY(-0.16rem);
       border-color: rgba(255, 255, 255, 0.16);
       box-shadow:
-        0 10px 24px rgba(0, 0, 0, 0.12),
+        0 8px 18px rgba(0, 0, 0, 0.08),
         inset 0 1px 0 rgba(255, 255, 255, 0.14);
-      backdrop-filter: blur(14px) saturate(148%);
+      backdrop-filter: blur(10px) saturate(135%);
+      -webkit-backdrop-filter: blur(10px) saturate(135%);
     }
 
     .hero-label-chip__item {
@@ -2349,9 +2369,10 @@ summary::-webkit-details-marker {
         linear-gradient(180deg, rgba(12, 18, 30, 0.36), rgba(12, 18, 30, 0.26)),
         linear-gradient(135deg, rgba(122, 168, 255, 0.04), rgba(255, 255, 255, 0.018) 48%, rgba(8, 12, 20, 0.04) 100%);
       box-shadow:
-        0 16px 38px rgba(0, 0, 0, 0.12),
+        0 10px 24px rgba(0, 0, 0, 0.08),
         inset 0 1px 0 rgba(255, 255, 255, 0.12);
-      backdrop-filter: blur(14px) saturate(148%);
+      backdrop-filter: blur(10px) saturate(138%);
+      -webkit-backdrop-filter: blur(10px) saturate(138%);
     }
 
     .hero-support-strip__content {
@@ -2378,24 +2399,24 @@ summary::-webkit-details-marker {
 
     .hero-copy .hero-title {
       max-width: 11ch;
-      font-size: clamp(1.95rem, 8.2vw, 2.18rem);
-      line-height: 1.02;
+      font-size: clamp(1.95rem, 7.6vw, 2.18rem);
+      line-height: 1.01;
       letter-spacing: -0.055em;
     }
 
     .hero-title {
-      font-size: clamp(1.95rem, 8.1vw, 2.18rem);
-      line-height: 1.02;
+      font-size: clamp(1.95rem, 7.6vw, 2.18rem);
+      line-height: 1.01;
     }
 
     .hero-body {
       max-width: 30rem;
-      font-size: 0.95rem;
-      line-height: 1.58;
+      font-size: 0.96rem;
+      line-height: 1.6;
     }
 
     .hero-section .ambient-drift {
-      opacity: 0.42;
+      opacity: 0.24;
     }
 
     .hero-section::after {
@@ -2411,11 +2432,18 @@ summary::-webkit-details-marker {
       min-height: 2.85rem;
       padding-inline: 1rem;
       font-size: 0.9rem;
-      box-shadow: 0 12px 28px rgba(0, 0, 0, 0.14);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
     }
 
     .hero-panel-content {
       padding: 1.35rem;
+    }
+
+    .image-slow-zoom,
+    .ambient-drift {
+      animation: none;
+      transform: none;
+      will-change: auto;
     }
   }
 }

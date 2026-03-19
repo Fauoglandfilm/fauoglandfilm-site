@@ -2,12 +2,11 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useEffect, useState } from "react";
 
 import { Reveal } from "@/components/motion/reveal";
 import { useSitePreferences } from "@/components/providers/site-preferences";
 import { ButtonLink } from "@/components/ui/button-link";
-import { ArrowUpRightIcon, CloseIcon, MailIcon, PhoneIcon } from "@/components/ui/icons";
+import { ArrowUpRightIcon, MailIcon, PhoneIcon } from "@/components/ui/icons";
 import { SectionShell } from "@/components/ui/section-shell";
 import {
   tommyPortfolioPage,
@@ -20,12 +19,6 @@ import {
 import { siteConfig } from "@/data/site-content";
 import { resolveLocalizedValue } from "@/lib/i18n";
 import { cn } from "@/lib/utils";
-
-type LightboxState = {
-  title: string;
-  images: TommyPortfolioImage[];
-  index: number;
-} | null;
 
 function isExternalHref(href: string) {
   return href.startsWith("http://") || href.startsWith("https://");
@@ -82,14 +75,10 @@ function ProjectLinkPill({ link }: { link: TommyPortfolioLink }) {
 function PosterButton({
   image,
   title,
-  images,
-  onOpen,
   className,
 }: {
   image?: TommyPortfolioImage;
   title: string;
-  images: TommyPortfolioImage[];
-  onOpen: (title: string, images: TommyPortfolioImage[], index?: number) => void;
   className?: string;
 }) {
   if (!image) {
@@ -106,11 +95,9 @@ function PosterButton({
   }
 
   return (
-    <button
-      type="button"
-      onClick={() => onOpen(title, images.length ? images : [image], 0)}
+    <div
       className={cn(
-        "group relative overflow-hidden rounded-[1.45rem] border border-[color:var(--line)]/70 bg-[#0b0d12] text-left transition hover:border-[color:var(--accent)]/36",
+        "group relative overflow-hidden rounded-[1.45rem] border border-[color:var(--line)]/70 bg-[#0b0d12] text-left",
         className,
       )}
     >
@@ -125,50 +112,6 @@ function PosterButton({
         )}
       />
       <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(8,10,14,0.02),rgba(8,10,14,0.12)_42%,rgba(8,10,14,0.5)_100%)]" />
-      <div className="absolute inset-x-0 bottom-0 flex items-center justify-between px-3 py-3 text-[0.65rem] font-semibold uppercase tracking-[0.18em] text-white/88 sm:px-4">
-        <span>Poster</span>
-        <span className="rounded-full border border-white/16 bg-black/26 px-2 py-1 text-[0.58rem] tracking-[0.14em] text-white/82">
-          {images.length > 1 ? `${images.length} bilder` : "Åpne"}
-        </span>
-      </div>
-    </button>
-  );
-}
-
-function GalleryStrip({
-  images,
-  title,
-  onOpen,
-}: {
-  images: TommyPortfolioImage[];
-  title: string;
-  onOpen: (title: string, images: TommyPortfolioImage[], index?: number) => void;
-}) {
-  if (images.length <= 1) {
-    return null;
-  }
-
-  return (
-    <div className="space-y-2.5">
-      <p className="text-[0.66rem] font-semibold uppercase tracking-[0.18em] text-[var(--muted)]">Galleri</p>
-      <div className="flex gap-2 overflow-x-auto pb-1">
-        {images.map((image, index) => (
-          <button
-            key={`${image.src}-${index}`}
-            type="button"
-            onClick={() => onOpen(title, images, index)}
-            className="relative h-[4.5rem] w-14 shrink-0 overflow-hidden rounded-[0.9rem] border border-[color:var(--line)]/70 bg-[#0b0d12] transition hover:border-[color:var(--accent)]/36"
-          >
-            <Image
-              src={image.src}
-              alt={image.alt.no}
-              fill
-              sizes="56px"
-              className={cn(image.fit === "cover" ? "object-cover" : "object-contain p-1.5")}
-            />
-          </button>
-        ))}
-      </div>
     </div>
   );
 }
@@ -176,14 +119,11 @@ function GalleryStrip({
 function ShortFilmCard({
   project,
   index,
-  onOpenGallery,
 }: {
   project: TommyShortFilmProject;
   index: number;
-  onOpenGallery: (title: string, images: TommyPortfolioImage[], index?: number) => void;
 }) {
   const { language } = useSitePreferences();
-  const allImages = [project.poster, ...project.gallery];
   const title = resolveLocalizedValue(project.title, language);
 
   return (
@@ -193,8 +133,6 @@ function ShortFilmCard({
           <PosterButton
             image={project.poster}
             title={title}
-            images={allImages}
-            onOpen={onOpenGallery}
             className={cn("w-full", getAspectClass(project.poster))}
           />
 
@@ -252,8 +190,6 @@ function ShortFilmCard({
                 <ProjectLinkPill key={`${project.slug}-${link.href}`} link={link} />
               ))}
             </div>
-
-            <GalleryStrip images={allImages} title={title} onOpen={onOpenGallery} />
           </div>
         </div>
       </article>
@@ -264,15 +200,12 @@ function ShortFilmCard({
 function ShowcaseCard({
   project,
   index,
-  onOpenGallery,
 }: {
   project: TommyShowcaseProject;
   index: number;
-  onOpenGallery: (title: string, images: TommyPortfolioImage[], index?: number) => void;
 }) {
   const { language } = useSitePreferences();
   const title = resolveLocalizedValue(project.title, language);
-  const gallery = project.poster ? [project.poster, ...(project.gallery ?? [])] : project.gallery ?? [];
 
   return (
     <Reveal delay={0.05 * index}>
@@ -281,8 +214,6 @@ function ShowcaseCard({
           <PosterButton
             image={project.poster}
             title={title}
-            images={gallery}
-            onOpen={onOpenGallery}
             className={cn("w-full rounded-none", getAspectClass(project.poster, "landscape"))}
           />
         ) : null}
@@ -318,11 +249,9 @@ function ShowcaseCard({
 function RoleGroupCard({
   group,
   index,
-  onOpenGallery,
 }: {
   group: TommyRoleGroup;
   index: number;
-  onOpenGallery: (title: string, images: TommyPortfolioImage[], index?: number) => void;
 }) {
   const { language } = useSitePreferences();
 
@@ -331,17 +260,13 @@ function RoleGroupCard({
       <article className="glass-panel rounded-[2rem] px-5 py-5 sm:px-6 sm:py-6 lg:px-7 lg:py-7">
         <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
           {group.items.filter((item) => item.poster).map((item) => {
-            const gallery = item.poster ? [item.poster] : [];
-
             return (
               <div key={item.slug} className="min-w-0">
                 <div className="flex h-full flex-col gap-3">
                   {item.poster ? (
-                    <button
-                      type="button"
-                      onClick={() => onOpenGallery(resolveLocalizedValue(item.title, language), gallery, 0)}
+                    <div
                       className={cn(
-                        "relative w-full shrink-0 overflow-hidden rounded-[1.45rem] border border-[color:var(--line)]/70 bg-[#0b0d12] transition hover:border-[color:var(--accent)]/36",
+                        "relative w-full shrink-0 overflow-hidden rounded-[1.45rem] border border-[color:var(--line)]/70 bg-[#0b0d12]",
                         item.poster.aspect === "landscape" || item.poster.aspect === "wide"
                           ? "aspect-[16/10]"
                           : "aspect-[0.72/1]",
@@ -354,7 +279,7 @@ function RoleGroupCard({
                         sizes="(min-width: 1280px) 14rem, (min-width: 1024px) 18vw, (min-width: 640px) 40vw, 100vw"
                         className={cn(item.poster.fit === "cover" ? "object-cover" : "object-contain p-1.5")}
                       />
-                    </button>
+                    </div>
                   ) : null}
 
                   <div className="min-w-0">
@@ -377,116 +302,10 @@ function RoleGroupCard({
   );
 }
 
-function GalleryLightbox({
-  state,
-  onClose,
-  onSelect,
-}: {
-  state: LightboxState;
-  onClose: () => void;
-  onSelect: (index: number) => void;
-}) {
-  const { language } = useSitePreferences();
-
-  useEffect(() => {
-    if (!state) {
-      return;
-    }
-
-    const onKeyDown = (event: KeyboardEvent) => {
-      if (event.key === "Escape") {
-        onClose();
-      }
-    };
-
-    window.addEventListener("keydown", onKeyDown);
-    return () => window.removeEventListener("keydown", onKeyDown);
-  }, [onClose, state]);
-
-  if (!state) {
-    return null;
-  }
-
-  const activeImage = state.images[state.index];
-
-  return (
-    <div className="fixed inset-0 z-[80] flex items-center justify-center bg-[rgba(4,6,10,0.82)] px-4 py-6 backdrop-blur-md" role="dialog" aria-modal="true" aria-label={state.title}>
-      <button type="button" aria-label={language === "no" ? "Lukk galleri" : "Close gallery"} className="absolute inset-0" onClick={onClose} />
-
-      <div className="relative z-[1] w-full max-w-5xl rounded-[2rem] border border-white/12 bg-[rgba(10,14,22,0.58)] p-4 shadow-[0_28px_80px_rgba(0,0,0,0.38)] backdrop-blur-2xl sm:p-5">
-        <div className="flex items-start justify-between gap-4">
-          <div>
-            <p className="text-[0.68rem] font-semibold uppercase tracking-[0.18em] text-white/62">
-              {language === "no" ? "Galleri" : "Gallery"}
-            </p>
-            <h3 className="mt-2 text-[1.15rem] font-semibold tracking-[-0.03em] text-white sm:text-[1.32rem]">
-              {state.title}
-            </h3>
-          </div>
-          <button
-            type="button"
-            onClick={onClose}
-            className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-white/16 bg-white/10 text-white transition hover:bg-white/16"
-          >
-            <CloseIcon className="h-4.5 w-4.5" />
-          </button>
-        </div>
-
-        <div className="mt-4 overflow-hidden rounded-[1.45rem] border border-white/10 bg-[#090c12]">
-          <div className="relative aspect-[16/10] w-full">
-            <Image
-              src={activeImage.src}
-              alt={resolveLocalizedValue(activeImage.alt, language)}
-              fill
-              sizes="100vw"
-              className={cn(activeImage.fit === "cover" ? "object-cover" : "object-contain p-4 sm:p-6")}
-            />
-          </div>
-        </div>
-
-        {state.images.length > 1 ? (
-          <div className="mt-4 flex gap-2 overflow-x-auto pb-1">
-            {state.images.map((image, index) => (
-              <button
-                key={`${image.src}-${index}`}
-                type="button"
-                onClick={() => onSelect(index)}
-                className={cn(
-                  "relative h-[4.5rem] w-14 shrink-0 overflow-hidden rounded-[0.95rem] border transition",
-                  state.index === index
-                    ? "border-white/42"
-                    : "border-white/12 hover:border-white/24",
-                )}
-              >
-                <Image
-                  src={image.src}
-                  alt={resolveLocalizedValue(image.alt, language)}
-                  fill
-                  sizes="56px"
-                  className={cn(image.fit === "cover" ? "object-cover" : "object-contain p-1.5")}
-                />
-              </button>
-            ))}
-          </div>
-        ) : null}
-      </div>
-    </div>
-  );
-}
-
 export function TommyProfileContent() {
   const { language } = useSitePreferences();
-  const [lightbox, setLightbox] = useState<LightboxState>(null);
   const profile = tommyPortfolioPage.baseProfile;
   const backgroundUsesPortrait = profile.heroBackground === profile.portrait;
-
-  const openGallery = (title: string, images: TommyPortfolioImage[], index = 0) => {
-    setLightbox({
-      title,
-      images,
-      index,
-    });
-  };
 
   return (
     <main>
@@ -570,23 +389,9 @@ export function TommyProfileContent() {
 
       <section className="section-space pt-0">
         <div className="site-container">
-          <div className="grid gap-5 lg:grid-cols-[minmax(0,1.02fr)_minmax(18rem,0.98fr)] lg:items-center">
-            <Reveal>
-              <div className="media-frame relative min-h-[18rem] overflow-hidden rounded-[2rem] bg-[#090b10] sm:min-h-[23rem] lg:min-h-[30rem]">
-                <Image
-                  src={profile.supportingVisual}
-                  alt={resolveLocalizedValue(profile.supportingVisualAlt, language)}
-                  fill
-                  sizes="(min-width: 1280px) 46vw, (min-width: 1024px) 50vw, 100vw"
-                  className="object-cover"
-                />
-                <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(6,7,10,0.02),rgba(6,7,10,0.14)_46%,rgba(6,7,10,0.74)_100%)]" />
-                <div className="grain-overlay absolute inset-0 opacity-28" />
-              </div>
-            </Reveal>
-
-            <Reveal delay={0.06}>
-              <div className="card-surface rounded-[2rem] px-5 py-5 sm:px-6 sm:py-6 lg:px-7 lg:py-7">
+          <Reveal className="max-w-5xl">
+            <article className="card-surface rounded-[2rem] px-5 py-5 sm:px-6 sm:py-6 lg:px-7 lg:py-7">
+              <div className="max-w-4xl">
                 <span className="eyebrow">{resolveLocalizedValue(profile.introEyebrow, language)}</span>
                 <h2 className="section-title mt-3 text-[color:var(--foreground)]">
                   {resolveLocalizedValue(profile.introTitle, language)}
@@ -594,20 +399,20 @@ export function TommyProfileContent() {
                 <p className="body-lead mt-4 text-[var(--muted-2)]">
                   {resolveLocalizedValue(profile.introBody, language)}
                 </p>
-
-                <div className="mt-6 flex flex-wrap gap-2.5">
-                  {tommyPortfolioPage.heroRoles.map((role) => (
-                    <span
-                      key={resolveLocalizedValue(role, language)}
-                      className="founder-profile-chip founder-profile-chip-muted"
-                    >
-                      {resolveLocalizedValue(role, language)}
-                    </span>
-                  ))}
-                </div>
               </div>
-            </Reveal>
-          </div>
+
+              <div className="mt-6 flex flex-wrap gap-2.5">
+                {tommyPortfolioPage.heroRoles.map((role) => (
+                  <span
+                    key={resolveLocalizedValue(role, language)}
+                    className="founder-profile-chip founder-profile-chip-muted"
+                  >
+                    {resolveLocalizedValue(role, language)}
+                  </span>
+                ))}
+              </div>
+            </article>
+          </Reveal>
         </div>
       </section>
 
@@ -624,7 +429,6 @@ export function TommyProfileContent() {
               key={project.slug}
               project={project}
               index={index}
-              onOpenGallery={openGallery}
             />
           ))}
         </div>
@@ -642,7 +446,6 @@ export function TommyProfileContent() {
               key={group.slug}
               group={group}
               index={index}
-              onOpenGallery={openGallery}
             />
           ))}
         </div>
@@ -660,7 +463,6 @@ export function TommyProfileContent() {
               key={project.slug}
               project={project}
               index={index}
-              onOpenGallery={openGallery}
             />
           ))}
         </div>
@@ -678,7 +480,6 @@ export function TommyProfileContent() {
               key={project.slug}
               project={project}
               index={index}
-              onOpenGallery={openGallery}
             />
           ))}
         </div>
@@ -789,14 +590,6 @@ export function TommyProfileContent() {
           </Reveal>
         </div>
       </section>
-
-      <GalleryLightbox
-        state={lightbox}
-        onClose={() => setLightbox(null)}
-        onSelect={(index) =>
-          setLightbox((current) => (current ? { ...current, index } : current))
-        }
-      />
     </main>
   );
 }
