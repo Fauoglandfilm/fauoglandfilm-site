@@ -416,6 +416,9 @@ function CountUpValue({
 }) {
   const shouldReduceMotion = useReducedMotion();
   const [value, setValue] = useState(0);
+  const frameRef = useRef<number | null>(null);
+  const startTimeRef = useRef<number | null>(null);
+  const hasStartedRef = useRef(false);
   const displayValue = shouldReduceMotion && trigger ? target : value;
 
   useEffect(() => {
@@ -427,25 +430,43 @@ function CountUpValue({
       return;
     }
 
-    const start = performance.now();
-    let frameId = 0;
+    if (hasStartedRef.current) {
+      return;
+    }
 
-    const easeOutCubic = (t: number) => 1 - (1 - t) ** 3;
+    hasStartedRef.current = true;
+    startTimeRef.current = null;
 
-    const tick = (now: number) => {
-      const progress = Math.min((now - start) / durationMs, 1);
+    const startValue = 0;
+    const endValue = target;
+    const effectiveDuration = Math.max(durationMs, 3000);
+
+    const easeOutCubic = (t: number) => 1 - Math.pow(1 - t, 3);
+
+    const tick = (timestamp: number) => {
+      if (startTimeRef.current === null) {
+        startTimeRef.current = timestamp;
+      }
+
+      const elapsed = timestamp - startTimeRef.current;
+      const progress = Math.min(elapsed / effectiveDuration, 1);
       const eased = easeOutCubic(progress);
-      setValue(Math.round(target * eased));
+      const currentValue = startValue + (endValue - startValue) * eased;
+
+      setValue(progress >= 1 ? endValue : Math.floor(currentValue));
 
       if (progress < 1) {
-        frameId = window.requestAnimationFrame(tick);
+        frameRef.current = window.requestAnimationFrame(tick);
       }
     };
 
-    frameId = window.requestAnimationFrame(tick);
+    frameRef.current = window.requestAnimationFrame(tick);
 
     return () => {
-      window.cancelAnimationFrame(frameId);
+      if (frameRef.current !== null) {
+        window.cancelAnimationFrame(frameRef.current);
+        frameRef.current = null;
+      }
     };
   }, [durationMs, shouldReduceMotion, target, trigger]);
 
@@ -461,6 +482,7 @@ export function ResultsSection() {
   const { language } = useSitePreferences();
   const shouldReduceMotion = useReducedMotion();
   const sectionRef = useRef<HTMLElement | null>(null);
+  const statsGridRef = useRef<HTMLDivElement | null>(null);
   const [hasAnimated, setHasAnimated] = useState(false);
   const animationReady = shouldReduceMotion || hasAnimated;
   const resultMetrics = useMemo(
@@ -550,7 +572,7 @@ export function ResultsSection() {
             suffix="+"
             trigger={animationReady}
             locale={language === "no" ? "nb-NO" : "en-US"}
-            durationMs={3600}
+            durationMs={3200}
           />
         ),
         label: resultMetrics[0]?.label ?? "",
@@ -563,7 +585,7 @@ export function ResultsSection() {
             suffix="+"
             trigger={animationReady}
             locale={language === "no" ? "nb-NO" : "en-US"}
-            durationMs={4800}
+            durationMs={3400}
           />
         ),
         label: resultMetrics[1]?.label ?? "",
@@ -579,9 +601,9 @@ export function ResultsSection() {
   );
 
   useEffect(() => {
-    const node = sectionRef.current;
+    const triggerNode = statsGridRef.current ?? sectionRef.current;
 
-    if (shouldReduceMotion || !node || hasAnimated) {
+    if (shouldReduceMotion || !triggerNode || hasAnimated) {
       return;
     }
 
@@ -596,9 +618,9 @@ export function ResultsSection() {
     };
 
     const isSectionVisible = () => {
-      const rect = node.getBoundingClientRect();
+      const rect = triggerNode.getBoundingClientRect();
 
-      return rect.top <= window.innerHeight * 0.9 && rect.bottom >= window.innerHeight * 0.18;
+      return rect.top <= window.innerHeight * 0.82 && rect.bottom >= window.innerHeight * 0.32;
     };
 
     if (isSectionVisible()) {
@@ -613,18 +635,18 @@ export function ResultsSection() {
 
     const observer = new IntersectionObserver(
       ([entry]) => {
-        if (entry.isIntersecting || entry.intersectionRatio >= 0.18) {
+        if (entry.isIntersecting && entry.intersectionRatio >= 0.42) {
           triggerAnimation();
           observer.disconnect();
         }
       },
       {
-        rootMargin: "0px 0px -10% 0px",
-        threshold: [0, 0.18, 0.32],
+        rootMargin: "0px 0px -18% 0px",
+        threshold: [0, 0.42, 0.6],
       },
     );
 
-    observer.observe(node);
+    observer.observe(triggerNode);
 
     return () => {
       observer.disconnect();
@@ -661,7 +683,7 @@ export function ResultsSection() {
                   </ButtonLink>
                 </div>
 
-                <div className="mt-6 grid gap-3 sm:grid-cols-2">
+                <div ref={statsGridRef} className="mt-6 grid gap-3 sm:grid-cols-2">
                   {animatedMetrics.slice(0, 2).map((metric) => (
                     <div
                       key={metric.label}
