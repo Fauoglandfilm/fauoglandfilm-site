@@ -314,7 +314,7 @@ export function TommyProfileContent() {
           {backgroundUsesPortrait ? (
             <>
               <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(7,9,14,0.98),rgba(7,9,14,0.92)_34%,rgba(7,9,14,0.98)_100%)]" />
-              <div className="profile-hero-portrait-wrap">
+              <div className="profile-hero-portrait-wrap hidden md:flex">
                 <div className="profile-hero-portrait-frame founder-portrait-panel">
                   <div className="profile-hero-portrait-shell founder-portrait-shell">
                     <div className="profile-hero-portrait-backdrop" />
@@ -326,7 +326,7 @@ export function TommyProfileContent() {
                       height={1500}
                       priority
                       sizes="(min-width: 1280px) 34vw, (min-width: 768px) 42vw, 78vw"
-                      className="profile-hero-portrait-image"
+                      className="profile-hero-portrait-image profile-hero-portrait-image-tommy"
                     />
                   </div>
                 </div>
@@ -354,7 +354,7 @@ export function TommyProfileContent() {
           <div className="grain-overlay absolute inset-0 opacity-38" />
         </div>
 
-        <div className="site-container relative flex min-h-[60svh] items-end py-8 sm:min-h-[68svh] sm:py-10 lg:min-h-[76svh] lg:py-12">
+        <div className="site-container relative flex flex-col items-start py-8 md:min-h-[60svh] md:justify-end md:py-10 lg:min-h-[76svh] lg:py-12">
           <Reveal className="max-w-3xl" delay={0.04} y={18}>
             <div className="max-w-[42rem] text-white">
               <ButtonLink
@@ -384,6 +384,26 @@ export function TommyProfileContent() {
               </div>
             </div>
           </Reveal>
+
+          {backgroundUsesPortrait ? (
+            <div className="mt-8 flex w-full justify-center md:hidden">
+              <div className="profile-hero-portrait-frame founder-portrait-panel">
+                <div className="profile-hero-portrait-shell founder-portrait-shell">
+                  <div className="profile-hero-portrait-backdrop" />
+                  <div className="profile-hero-portrait-glow" />
+                  <Image
+                    src={profile.heroBackground}
+                    alt={resolveLocalizedValue(profile.heroBackgroundAlt, language)}
+                    width={1200}
+                    height={1500}
+                    priority
+                    sizes="82vw"
+                    className="profile-hero-portrait-image profile-hero-portrait-image-tommy"
+                  />
+                </div>
+              </div>
+            </div>
+          ) : null}
         </div>
       </section>
 
