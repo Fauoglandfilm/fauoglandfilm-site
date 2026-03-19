@@ -89,6 +89,7 @@ const closingCtaContent = {
 function HeroTypewriterTitle({ title }: { title: string }) {
   const shouldReduceMotion = useReducedMotion();
   const characters = useMemo(() => Array.from(title), [title]);
+  const words = useMemo(() => title.split(" "), [title]);
   const totalCharacters = characters.length;
   const [visibleCount, setVisibleCount] = useState(totalCharacters);
   const [isAnimating, setIsAnimating] = useState(false);
@@ -121,7 +122,7 @@ function HeroTypewriterTitle({ title }: { title: string }) {
     let cancelled = false;
     let currentIndex = 0;
     let timeoutId: number | undefined;
-    const cadence = [52, 68, 44, 60, 46, 72, 40, 58, 50, 64];
+    const cadence = [83, 109, 70, 96, 74, 115, 64, 93, 80, 102];
 
     const typeNextCharacter = () => {
       if (cancelled) {
@@ -142,7 +143,7 @@ function HeroTypewriterTitle({ title }: { title: string }) {
       );
     };
 
-    timeoutId = window.setTimeout(typeNextCharacter, 120);
+    timeoutId = window.setTimeout(typeNextCharacter, 190);
 
     return () => {
       cancelled = true;
@@ -156,17 +157,37 @@ function HeroTypewriterTitle({ title }: { title: string }) {
     <span aria-label={title} role="text" className="hero-typewriter">
       <span className="sr-only">{title}</span>
       <span aria-hidden="true" className="hero-typewriter__line">
-        {characters.map((character, index) => (
-          <span
-            key={`${character}-${index}`}
-            className={cn(
-              "hero-typewriter__char",
-              index < visibleCount && "hero-typewriter__char--visible",
-            )}
-          >
-            {character === " " ? "\u00A0" : character}
-          </span>
-        ))}
+        {words.map((word, wordIndex) => {
+          const leadingCharacters = words
+            .slice(0, wordIndex)
+            .reduce((count, currentWord) => count + currentWord.length + 1, 0);
+
+          return (
+            <span key={`${word}-${wordIndex}`} className="hero-typewriter__word">
+              {Array.from(word).map((character, index) => (
+                <span
+                  key={`${character}-${wordIndex}-${index}`}
+                  className={cn(
+                    "hero-typewriter__char",
+                    leadingCharacters + index < visibleCount && "hero-typewriter__char--visible",
+                  )}
+                >
+                  {character}
+                </span>
+              ))}
+              {wordIndex < words.length - 1 ? (
+                <span
+                  className={cn(
+                    "hero-typewriter__char hero-typewriter__space",
+                    leadingCharacters + word.length < visibleCount && "hero-typewriter__char--visible",
+                  )}
+                >
+                  {"\u00A0"}
+                </span>
+              ) : null}
+            </span>
+          );
+        })}
       </span>
     </span>
   );
@@ -294,7 +315,7 @@ export function HeroSection() {
                 <span className="hero-label-chip__item">{eyebrow}</span>
               </span>
             </div>
-            <h1 className="hero-title mt-4 max-w-[9.4ch] text-white sm:mt-6">
+            <h1 className="hero-title mt-4 max-w-[10.2ch] text-white sm:mt-6 lg:max-w-[10.6ch]">
               <HeroTypewriterTitle title={heroTitle} />
             </h1>
             <p className="mt-3.5 max-w-[31rem] text-[0.94rem] leading-6 text-white/80 sm:mt-5 sm:text-[1.05rem] sm:leading-7">

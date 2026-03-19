@@ -435,10 +435,19 @@ summary::-webkit-details-marker {
     display: inline;
   }
 
+  .hero-typewriter__word {
+    display: inline;
+    white-space: nowrap;
+  }
+
   .hero-typewriter__char {
     display: inline-block;
     color: transparent;
     will-change: color, opacity, transform;
+  }
+
+  .hero-typewriter__space {
+    width: 0.32em;
   }
 
   .hero-typewriter__char--visible {
