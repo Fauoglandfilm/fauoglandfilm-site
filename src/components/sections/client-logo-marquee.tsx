@@ -5,6 +5,7 @@ import type { CSSProperties } from "react";
 
 import { useSitePreferences } from "@/components/providers/site-preferences";
 import type { ClientLogo } from "@/data/site-content";
+import { cn } from "@/lib/utils";
 
 type ClientLogoMarqueeProps = {
   logos: ClientLogo[];
@@ -16,6 +17,16 @@ export function ClientLogoMarquee({
   durationSeconds = 48,
 }: ClientLogoMarqueeProps) {
   const { theme } = useSitePreferences();
+  const boostedLogoClassNames: Record<string, string> = {
+    "The International Stunt Academy":
+      "h-[5.25rem] sm:h-[6.05rem] lg:h-[6.7rem]",
+    "Foreningen Norden":
+      "h-[5.25rem] sm:h-[6.05rem] lg:h-[6.7rem]",
+    "Ville Gleder":
+      "h-[5.75rem] sm:h-[6.55rem] lg:h-[7.25rem]",
+    "Nei til Atomvåpen":
+      "h-[5.75rem] sm:h-[6.55rem] lg:h-[7.25rem]",
+  };
   const uniqueLogos = logos.filter(
     (logo, index, list) => list.findIndex((entry) => entry.name === logo.name) === index,
   );
@@ -38,7 +49,10 @@ export function ClientLogoMarquee({
                   alt={logo.name}
                   width={logo.width}
                   height={logo.height}
-                  className="block h-[3.9rem] w-full max-w-[12.6rem] object-contain sm:h-[4.5rem] sm:max-w-[14.1rem] lg:h-[5.05rem] lg:max-w-[15.6rem]"
+                  className={cn(
+                    "block h-[3.9rem] w-full max-w-[12.6rem] object-contain sm:h-[4.5rem] sm:max-w-[14.1rem] lg:h-[5.05rem] lg:max-w-[15.6rem]",
+                    boostedLogoClassNames[logo.name],
+                  )}
                 />
               </li>
             ))}
