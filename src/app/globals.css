@@ -419,10 +419,10 @@ summary::-webkit-details-marker {
   }
 
   .hero-title {
-    font-family: var(--font-sora), sans-serif;
+    font-family: var(--font-hero), var(--font-sora), serif;
     font-size: clamp(2.25rem, 7vw, 5.9rem);
-    line-height: 1.05;
-    letter-spacing: -0.06em;
+    line-height: 0.97;
+    letter-spacing: -0.032em;
     text-wrap: balance;
     font-weight: 700;
   }
@@ -432,30 +432,31 @@ summary::-webkit-details-marker {
   }
 
   .hero-typewriter--gold {
-    color: #e0bd67;
+    color: #dfaf37;
     --hero-gold-gradient: linear-gradient(
-      98deg,
-      #dbb45b 0%,
-      #e0bd67 38%,
-      #eed89a 49%,
-      #e2c473 60%,
-      #dbb45b 100%
+      100deg,
+      #cf9f2f 0%,
+      #dfaf37 32%,
+      #f2d67f 50%,
+      #e6bf4e 61%,
+      #dfaf37 74%,
+      #cf9f2f 100%
     );
   }
 
   .hero-typewriter--gold .hero-typewriter__char--visible {
-    color: #e0bd67;
+    color: #dfaf37;
   }
 
   @supports (-webkit-background-clip: text) {
     .hero-typewriter--gold .hero-typewriter__char--visible {
       background-image: var(--hero-gold-gradient);
-      background-size: 180% 100%;
-      background-position: 18% 50%;
+      background-size: 220% 100%;
+      background-position: 16% 50%;
       color: transparent;
       animation:
         hero-typewriter-hit 120ms cubic-bezier(0.22, 1, 0.36, 1),
-        hero-gold-sheen 24s ease-in-out infinite alternate;
+        hero-gold-sheen 18s ease-in-out infinite alternate;
       -webkit-text-fill-color: transparent;
       -webkit-background-clip: text;
       background-clip: text;
@@ -494,15 +495,15 @@ summary::-webkit-details-marker {
 
   @keyframes hero-gold-sheen {
     0% {
-      background-position: 18% 50%;
+      background-position: 12% 50%;
     }
 
     50% {
-      background-position: 28% 50%;
+      background-position: 34% 50%;
     }
 
     100% {
-      background-position: 42% 50%;
+      background-position: 58% 50%;
     }
   }
 
