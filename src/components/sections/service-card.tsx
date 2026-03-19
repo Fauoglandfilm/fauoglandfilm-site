@@ -39,9 +39,9 @@ export function ServiceCard({ service }: ServiceCardProps) {
   const mediaAlt = visual ? resolveLocalizedValue(visual.alt, language) : resolveLocalizedValue(service.title, language);
 
   return (
-    <article className="group grid gap-4 lg:grid-cols-[minmax(0,0.43fr)_minmax(0,0.57fr)] lg:items-start lg:gap-6">
+    <article className="group grid gap-3.5 lg:grid-cols-[minmax(0,0.43fr)_minmax(0,0.57fr)] lg:items-start lg:gap-6">
       <div className="media-frame relative overflow-hidden rounded-[1.45rem]">
-        <div className="relative aspect-[1.18/0.78] overflow-hidden bg-[#0b0d12] lg:min-h-[14rem] lg:aspect-auto">
+        <div className="relative aspect-[1.18/0.72] overflow-hidden bg-[#0b0d12] lg:min-h-[14rem] lg:aspect-auto">
           <PreviewMedia
             title={service.title}
             video={video}
@@ -60,9 +60,9 @@ export function ServiceCard({ service }: ServiceCardProps) {
         </div>
       </div>
 
-      <div className="flex min-w-0 flex-col justify-between gap-4">
-        <div className="space-y-4">
-          <div className="space-y-2.5">
+      <div className="flex min-w-0 flex-col justify-between gap-3.5">
+        <div className="space-y-3.5">
+          <div className="space-y-2">
             <p className="text-[0.64rem] font-semibold uppercase tracking-[0.2em] text-[var(--muted)]">
               {resolveLocalizedValue(service.eyebrow, language)}
             </p>
@@ -98,7 +98,7 @@ export function ServiceCard({ service }: ServiceCardProps) {
           </div>
         </div>
 
-        <div className="pt-1">
+        <div className="pt-0.5">
           <ButtonLink href={service.href} variant="ghost" size="compact" fullWidth className="sm:w-auto">
             {resolveLocalizedValue(service.ctaLabel, language)}
           </ButtonLink>

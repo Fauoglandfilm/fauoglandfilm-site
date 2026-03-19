@@ -32,13 +32,13 @@ export function SectionShell({
       <div className={cn("site-container", innerClassName)}>
         <div
           className={cn(
-            "flex flex-col gap-3 sm:gap-4",
+            "flex flex-col gap-2.5 sm:gap-4",
             isCentered
               ? "mx-auto max-w-3xl items-center text-center"
               : "lg:flex-row lg:items-end lg:justify-between",
           )}
         >
-          <div className={cn("space-y-2.5 sm:space-y-3", !isCentered && "max-w-3xl")}>
+          <div className={cn("space-y-2 sm:space-y-3", !isCentered && "max-w-3xl")}>
             {eyebrow ? (
               <span className="eyebrow">
                 {eyebrow}
@@ -56,7 +56,7 @@ export function SectionShell({
           {!isCentered && action ? <div className="shrink-0 pt-1 max-sm:w-full">{action}</div> : null}
           {isCentered && action ? <div className="pt-1 max-sm:w-full">{action}</div> : null}
         </div>
-        {children ? <div className="mt-[clamp(1.5rem,3vw,2.25rem)]">{children}</div> : null}
+        {children ? <div className="mt-[clamp(1.15rem,2.6vw,2.1rem)]">{children}</div> : null}
       </div>
     </section>
   );
