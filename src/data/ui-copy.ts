@@ -427,12 +427,7 @@ export const uiCopy = {
       placeholder:
         "Beskriv kort hva dere trenger, når dere trenger det og hvor filmen skal brukes.",
       submit: "Send prosjektbeskrivelse",
-      successTitle: "E-postutkastet åpnes nå",
-      successDescription:
-        "Send det gjerne videre. Hvis mail-appen ikke åpner seg, kan dere sende direkte til post@fauoglandfilm.com.",
-      subjectFallback: "nettsiden",
-      subjectPrefix: "Ny henvendelse fra",
-      messageLabel: "Prosjektbeskrivelse:",
+      successMessage: "Meldingen er sendt. En av oss tar kontakt med deg snart.",
     },
     en: {
       name: "Name",
@@ -459,12 +454,7 @@ export const uiCopy = {
       placeholder:
         "Briefly describe what you need, when you need it and where the film will be used.",
       submit: "Send project details",
-      successTitle: "Your email draft is opening",
-      successDescription:
-        "Send it through. If your mail app does not open, you can email us directly at post@fauoglandfilm.com.",
-      subjectFallback: "the website",
-      subjectPrefix: "New inquiry from",
-      messageLabel: "Project outline:",
+      successMessage: "Your message has been sent. One of us will contact you soon.",
     },
   },
 } as const;
