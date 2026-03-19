@@ -126,8 +126,10 @@ function HeroTypewriterTitle({
 export function HeroSection() {
   const heroVideo = videoLibrary.hero;
   const { language } = useSitePreferences();
+  const videoRef = useRef<HTMLVideoElement | null>(null);
   const [hasVideoError, setHasVideoError] = useState(false);
   const [isPosterVisible, setIsPosterVisible] = useState(true);
+  const [hasVideoLoadedFrame, setHasVideoLoadedFrame] = useState(false);
 
   const eyebrow =
     language === "no"
@@ -135,6 +137,58 @@ export function HeroSection() {
       : "Oslo / Commercial Film / Production";
   const secondaryCta = language === "no" ? "Se arbeid" : "View work";
   const heroTitle = resolveLocalizedValue(homeHeroContent.title, language);
+
+  useEffect(() => {
+    if (typeof window === "undefined") {
+      return;
+    }
+
+    const node = videoRef.current;
+
+    if (!node) {
+      return;
+    }
+
+    const mediaQuery = window.matchMedia("(max-width: 767px)");
+
+    const applyPreferredSource = () => {
+      const shouldUseMobileSource = mediaQuery.matches && Boolean(heroVideo.mobileSrc);
+      const nextSource = shouldUseMobileSource && heroVideo.mobileSrc ? heroVideo.mobileSrc : heroVideo.src;
+      const nextPoster =
+        shouldUseMobileSource && heroVideo.mobilePoster ? heroVideo.mobilePoster : heroVideo.poster;
+
+      if (node.dataset.activeSrc === nextSource) {
+        return;
+      }
+
+      node.dataset.activeSrc = nextSource;
+      node.poster = nextPoster;
+      node.src = nextSource;
+      node.defaultMuted = true;
+      node.muted = true;
+      node.playsInline = true;
+      node.setAttribute("muted", "");
+      node.setAttribute("playsinline", "");
+      node.setAttribute("webkit-playsinline", "");
+      setHasVideoError(false);
+      setHasVideoLoadedFrame(false);
+      setIsPosterVisible(true);
+      node.load();
+      node.play().catch(() => undefined);
+    };
+
+    applyPreferredSource();
+
+    const onChange = () => {
+      applyPreferredSource();
+    };
+
+    mediaQuery.addEventListener("change", onChange);
+
+    return () => {
+      mediaQuery.removeEventListener("change", onChange);
+    };
+  }, [heroVideo.mobilePoster, heroVideo.mobileSrc, heroVideo.poster, heroVideo.src]);
 
   return (
     <section className="relative isolate overflow-hidden bg-[#05070a] text-white">
@@ -158,6 +212,7 @@ export function HeroSection() {
           />
         </picture>
         <video
+          ref={videoRef}
           className={cn(
             "absolute inset-0 z-0 h-full w-full object-cover brightness-[0.88] saturate-[1.04] contrast-[1.04] transition-opacity duration-300",
             hasVideoError ? "opacity-0" : "opacity-100",
@@ -183,6 +238,11 @@ export function HeroSection() {
             node.setAttribute("webkit-playsinline", "");
             node.play().catch(() => undefined);
           }}
+          onLoadedData={(event) => {
+            setHasVideoLoadedFrame(true);
+            event.currentTarget.play().catch(() => undefined);
+            setIsPosterVisible(false);
+          }}
           onCanPlay={(event) => {
             event.currentTarget.play().catch(() => undefined);
           }}
@@ -194,6 +254,7 @@ export function HeroSection() {
           }}
           onError={() => {
             setHasVideoError(true);
+            setHasVideoLoadedFrame(false);
             setIsPosterVisible(true);
           }}
         >
@@ -206,6 +267,9 @@ export function HeroSection() {
           ) : null}
           <source src={heroVideo.src} type="video/mp4" />
         </video>
+        {!hasVideoError && !hasVideoLoadedFrame ? (
+          <div className="absolute inset-0 z-[1] bg-[radial-gradient(circle_at_top,rgba(255,255,255,0.08),transparent_40%),linear-gradient(180deg,rgba(5,7,10,0.02),rgba(5,7,10,0.2))]" />
+        ) : null}
         <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(5,7,10,0.28)_0%,rgba(5,7,10,0.14)_24%,rgba(5,7,10,0.26)_56%,rgba(5,7,10,0.62)_100%)]" />
         <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(5,7,10,0.66)_0%,rgba(5,7,10,0.5)_22%,rgba(5,7,10,0.16)_56%,rgba(5,7,10,0.08)_100%)]" />
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(210,173,116,0.18),transparent_30%),radial-gradient(circle_at_82%_14%,rgba(112,143,216,0.1),transparent_22%)]" />
@@ -219,7 +283,7 @@ export function HeroSection() {
                 <span className="hero-label-chip__item">{eyebrow}</span>
               </span>
             </div>
-            <h1 className="hero-title mt-4 max-w-[10.2ch] text-white sm:mt-6 lg:max-w-[10.6ch]">
+            <h1 className="hero-title mt-4 max-w-[10.4ch] text-white sm:mt-6 sm:max-w-[10.2ch] lg:max-w-[10.6ch]">
               <HeroTypewriterTitle title={heroTitle} className="hero-typewriter--gold" />
             </h1>
             <p className="mt-3.5 max-w-[31rem] text-[0.94rem] leading-6 text-white/80 sm:mt-5 sm:text-[1.05rem] sm:leading-7">

@@ -2472,15 +2472,17 @@ summary::-webkit-details-marker {
     }
 
     .hero-copy .hero-title {
-      max-width: 11ch;
-      font-size: clamp(1.95rem, 7.6vw, 2.18rem);
-      line-height: 1.01;
-      letter-spacing: -0.055em;
+      max-width: 10.4ch;
+      font-size: clamp(3.9rem, 15.8vw, 4.35rem);
+      line-height: 0.9;
+      letter-spacing: -0.068em;
     }
 
     .hero-title {
-      font-size: clamp(1.95rem, 7.6vw, 2.18rem);
-      line-height: 1.01;
+      max-width: 10.4ch;
+      font-size: clamp(3.9rem, 15.8vw, 4.35rem);
+      line-height: 0.9;
+      letter-spacing: -0.068em;
     }
 
     .hero-body {
