@@ -294,9 +294,9 @@ export const videoLibrary = {
   hero: {
     videoType: "direct",
     src: "/media/hero/hero-nature-desktop.mp4",
-    mobileSrc: "/media/hero/hero-nature-mobile.mp4",
+    mobileSrc: "/media/hero/hero-vinter-mobile-optimized.mp4",
     poster: "/media/hero/hero-nature-desktop-poster.png",
-    mobilePoster: "/media/hero/hero-nature-mobile-poster.png",
+    mobilePoster: "/media/hero/hero-vinter-mobile-poster.png",
     label: {
       no: "Naturfilm for Fau&Land Film",
       en: "Nature film for Fau&Land Film",
