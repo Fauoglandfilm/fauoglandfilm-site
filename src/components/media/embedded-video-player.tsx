@@ -201,6 +201,26 @@ function useSmartMediaState({
   const containerRef = useRef<HTMLDivElement | null>(null);
   const [isNearViewport, setIsNearViewport] = useState(previewMode || priority);
   const [isInViewport, setIsInViewport] = useState(previewMode || priority);
+  const [isMobileViewport, setIsMobileViewport] = useState(false);
+
+  useEffect(() => {
+    if (typeof window === "undefined") {
+      return;
+    }
+
+    const mediaQuery = window.matchMedia("(max-width: 767px)");
+    const updateViewport = () => setIsMobileViewport(mediaQuery.matches);
+
+    updateViewport();
+
+    if (typeof mediaQuery.addEventListener === "function") {
+      mediaQuery.addEventListener("change", updateViewport);
+      return () => mediaQuery.removeEventListener("change", updateViewport);
+    }
+
+    mediaQuery.addListener(updateViewport);
+    return () => mediaQuery.removeListener(updateViewport);
+  }, []);
 
   useEffect(() => {
     if (previewMode || priority) {
@@ -226,7 +246,7 @@ function useSmartMediaState({
       },
       {
         threshold: 0.01,
-        rootMargin: "320px 0px",
+        rootMargin: isMobileViewport ? "160px 0px" : "320px 0px",
       },
     );
 
@@ -237,10 +257,13 @@ function useSmartMediaState({
     if (autoplay) {
       playObserver = new IntersectionObserver(
         ([entry]) => {
-          setIsInViewport(entry.isIntersecting && entry.intersectionRatio >= 0.35);
+          setIsInViewport(
+            entry.isIntersecting &&
+              entry.intersectionRatio >= (isMobileViewport ? 0.5 : 0.35),
+          );
         },
         {
-          threshold: [0, 0.35, 0.6],
+          threshold: isMobileViewport ? [0, 0.5, 0.75] : [0, 0.35, 0.6],
         },
       );
 
@@ -251,7 +274,7 @@ function useSmartMediaState({
       nearObserver.disconnect();
       playObserver?.disconnect();
     };
-  }, [autoplay, previewMode, priority]);
+  }, [autoplay, isMobileViewport, previewMode, priority]);
 
   return {
     containerRef,

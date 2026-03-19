@@ -90,36 +90,15 @@ export function HeroSection() {
   const { language } = useSitePreferences();
   const heroVideoRef = useRef<HTMLVideoElement | null>(null);
   const [hasVideoError, setHasVideoError] = useState(false);
-  const [isMobileViewport, setIsMobileViewport] = useState(false);
+  const [hasVideoFrame, setHasVideoFrame] = useState(false);
+  const [hasPlaybackStarted, setHasPlaybackStarted] = useState(false);
 
   const eyebrow =
     language === "no"
       ? "Oslo / Reklamefilm / Produksjon"
       : "Oslo / Commercial Film / Production";
   const secondaryCta = language === "no" ? "Se arbeid" : "View work";
-  const activeHeroSrc =
-    isMobileViewport && heroVideo.mobileSrc ? heroVideo.mobileSrc : heroVideo.src;
-
-  useEffect(() => {
-    if (typeof window === "undefined") {
-      return;
-    }
-
-    const mediaQuery = window.matchMedia("(max-width: 767px)");
-    const updateViewport = () => {
-      setIsMobileViewport(mediaQuery.matches);
-    };
-
-    updateViewport();
-
-    if (typeof mediaQuery.addEventListener === "function") {
-      mediaQuery.addEventListener("change", updateViewport);
-      return () => mediaQuery.removeEventListener("change", updateViewport);
-    }
-
-    mediaQuery.addListener(updateViewport);
-    return () => mediaQuery.removeListener(updateViewport);
-  }, []);
+  const activeHeroSrc = heroVideo.src;
 
   useEffect(() => {
     const video = heroVideoRef.current;
@@ -132,10 +111,12 @@ export function HeroSection() {
     video.muted = true;
     video.loop = true;
     video.playsInline = true;
+    video.autoplay = true;
     video.setAttribute("muted", "");
     video.setAttribute("playsinline", "");
     video.setAttribute("webkit-playsinline", "");
-    video.load();
+    video.setAttribute("autoplay", "");
+    video.setAttribute("disableRemotePlayback", "");
 
     const playVideo = () => {
       video
@@ -148,47 +129,76 @@ export function HeroSection() {
         });
     };
 
+    const handleLoadedData = () => setHasVideoFrame(true);
+    const handlePlaying = () => {
+      setHasVideoFrame(true);
+      setHasPlaybackStarted(true);
+    };
+    const handleTimeUpdate = () => {
+      if (video.currentTime > 0) {
+        setHasVideoFrame(true);
+        setHasPlaybackStarted(true);
+      }
+    };
+    const handleVisibility = () => {
+      if (document.visibilityState === "visible") {
+        playVideo();
+      }
+    };
+
     playVideo();
+    video.addEventListener("loadeddata", handleLoadedData);
     video.addEventListener("loadedmetadata", playVideo);
     video.addEventListener("canplay", playVideo);
+    video.addEventListener("playing", handlePlaying);
+    video.addEventListener("timeupdate", handleTimeUpdate);
+    document.addEventListener("visibilitychange", handleVisibility);
 
     return () => {
+      video.removeEventListener("loadeddata", handleLoadedData);
       video.removeEventListener("loadedmetadata", playVideo);
       video.removeEventListener("canplay", playVideo);
+      video.removeEventListener("playing", handlePlaying);
+      video.removeEventListener("timeupdate", handleTimeUpdate);
+      document.removeEventListener("visibilitychange", handleVisibility);
     };
   }, [activeHeroSrc, hasVideoError]);
 
   return (
     <section className="relative isolate overflow-hidden bg-[#05070a] text-white">
       <div className="absolute inset-0">
-        {hasVideoError ? (
-          <div
-            className="absolute inset-0 bg-cover bg-center"
-            style={{ backgroundImage: `url(${heroVideo.poster})` }}
+        <div
+          className={cn(
+            "absolute inset-0 bg-cover bg-center transition duration-500",
+            hasVideoError || !hasVideoFrame || !hasPlaybackStarted ? "opacity-100" : "opacity-0",
+          )}
+          style={{ backgroundImage: `url(${heroVideo.poster})` }}
+        />
+        {hasVideoError ? null : (
+          <video
+            ref={heroVideoRef}
+            key={activeHeroSrc}
+            className={cn(
+              "relative h-full w-full object-cover brightness-[0.88] saturate-[1.04] contrast-[1.04] transition duration-500",
+              hasVideoFrame ? "scale-[1.015] opacity-100" : "scale-[1.01] opacity-0",
+            )}
+            autoPlay
+            muted
+            loop
+            playsInline
+            preload="metadata"
+            poster={heroVideo.poster}
+            disablePictureInPicture
+            onError={() => setHasVideoError(true)}
+            src={activeHeroSrc}
           />
-        ) : null}
-        <video
-          ref={heroVideoRef}
-          key={activeHeroSrc}
-          className="relative h-full w-full scale-[1.03] object-cover brightness-[0.82] saturate-[1.05] contrast-[1.08]"
-          autoPlay
-          muted
-          loop
-          playsInline
-          preload="auto"
-          poster={heroVideo.poster}
-          disablePictureInPicture
-          onError={() => setHasVideoError(true)}
-          src={activeHeroSrc}
-        >
-          <source src={activeHeroSrc} type="video/mp4" />
-        </video>
-        <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(5,7,10,0.38)_0%,rgba(5,7,10,0.18)_24%,rgba(5,7,10,0.32)_56%,rgba(5,7,10,0.72)_100%)]" />
-        <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(5,7,10,0.76)_0%,rgba(5,7,10,0.62)_22%,rgba(5,7,10,0.22)_56%,rgba(5,7,10,0.1)_100%)]" />
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(210,173,116,0.22),transparent_28%),radial-gradient(circle_at_82%_14%,rgba(112,143,216,0.12),transparent_22%)]" />
+        )}
+        <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(5,7,10,0.28)_0%,rgba(5,7,10,0.14)_24%,rgba(5,7,10,0.26)_56%,rgba(5,7,10,0.62)_100%)]" />
+        <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(5,7,10,0.66)_0%,rgba(5,7,10,0.5)_22%,rgba(5,7,10,0.16)_56%,rgba(5,7,10,0.08)_100%)]" />
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(210,173,116,0.18),transparent_30%),radial-gradient(circle_at_82%_14%,rgba(112,143,216,0.1),transparent_22%)]" />
       </div>
 
-      <div className="site-container relative z-[1] flex min-h-[74svh] items-end pb-6 pt-[5.8rem] sm:min-h-[92svh] sm:pb-14 sm:pt-[8.8rem] lg:min-h-[96vh] lg:pb-16 lg:pt-[10.5rem]">
+      <div className="site-container relative z-[1] flex min-h-[72svh] items-end pb-7 pt-[5.35rem] sm:min-h-[92svh] sm:pb-14 sm:pt-[8.8rem] lg:min-h-[96vh] lg:pb-16 lg:pt-[10.5rem]">
         <Reveal y={20} className="w-full">
           <div className="max-w-[42rem]">
             <div className="hero-label-chip">
@@ -199,7 +209,7 @@ export function HeroSection() {
             <h1 className="hero-title mt-4 max-w-[9.4ch] text-white sm:mt-6">
               {resolveLocalizedValue(homeHeroContent.title, language)}
             </h1>
-            <p className="mt-3.5 max-w-[32rem] text-[0.94rem] leading-6 text-white/78 sm:mt-5 sm:text-[1.05rem] sm:leading-7">
+            <p className="mt-3.5 max-w-[31rem] text-[0.94rem] leading-6 text-white/80 sm:mt-5 sm:text-[1.05rem] sm:leading-7">
               {resolveLocalizedValue(homeHeroContent.description, language)}
             </p>
 
@@ -236,7 +246,7 @@ export function ClientSlider() {
         <p className="text-[0.7rem] font-semibold uppercase tracking-[0.2em] text-[var(--muted)]">
           {label}
         </p>
-        <div className="mt-3 sm:mt-4.5">
+        <div className="carousel-mobile-bleed mt-3 sm:mt-4.5">
           <ClientLogoMarquee logos={clientLogos} durationSeconds={46} />
         </div>
       </div>
