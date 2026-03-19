@@ -88,21 +88,81 @@ const closingCtaContent = {
 
 function HeroTypewriterTitle({ title }: { title: string }) {
   const shouldReduceMotion = useReducedMotion();
-  const characters = Array.from(title);
+  const characters = useMemo(() => Array.from(title), [title]);
+  const totalCharacters = characters.length;
+  const [visibleCount, setVisibleCount] = useState(totalCharacters);
+  const [isAnimating, setIsAnimating] = useState(false);
 
-  if (shouldReduceMotion) {
-    return <>{title}</>;
-  }
+  useEffect(() => {
+    let frameId = 0;
+
+    if (shouldReduceMotion) {
+      frameId = window.requestAnimationFrame(() => {
+        setVisibleCount(totalCharacters);
+        setIsAnimating(false);
+      });
+
+      return () => window.cancelAnimationFrame(frameId);
+    }
+
+    frameId = window.requestAnimationFrame(() => {
+      setVisibleCount(0);
+      setIsAnimating(true);
+    });
+
+    return () => window.cancelAnimationFrame(frameId);
+  }, [shouldReduceMotion, totalCharacters, title]);
+
+  useEffect(() => {
+    if (shouldReduceMotion || !isAnimating) {
+      return;
+    }
+
+    let cancelled = false;
+    let currentIndex = 0;
+    let timeoutId: number | undefined;
+    const cadence = [52, 68, 44, 60, 46, 72, 40, 58, 50, 64];
+
+    const typeNextCharacter = () => {
+      if (cancelled) {
+        return;
+      }
+
+      currentIndex += 1;
+      setVisibleCount(currentIndex);
+
+      if (currentIndex >= totalCharacters) {
+        setIsAnimating(false);
+        return;
+      }
+
+      timeoutId = window.setTimeout(
+        typeNextCharacter,
+        cadence[(currentIndex - 1) % cadence.length],
+      );
+    };
+
+    timeoutId = window.setTimeout(typeNextCharacter, 120);
+
+    return () => {
+      cancelled = true;
+      if (timeoutId) {
+        window.clearTimeout(timeoutId);
+      }
+    };
+  }, [isAnimating, shouldReduceMotion, totalCharacters]);
 
   return (
     <span aria-label={title} role="text" className="hero-typewriter">
       <span className="sr-only">{title}</span>
-      <span aria-hidden="true">
+      <span aria-hidden="true" className="hero-typewriter__line">
         {characters.map((character, index) => (
           <span
             key={`${character}-${index}`}
-            className="hero-typewriter__char"
-            style={{ animationDelay: `${index * 0.038}s` }}
+            className={cn(
+              "hero-typewriter__char",
+              index < visibleCount && "hero-typewriter__char--visible",
+            )}
           >
             {character === " " ? "\u00A0" : character}
           </span>
