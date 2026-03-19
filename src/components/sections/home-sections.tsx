@@ -6,7 +6,6 @@ import { useEffect, useRef, useState } from "react";
 import { PreviewMedia } from "@/components/media/preview-media";
 import { useSitePreferences } from "@/components/providers/site-preferences";
 import {
-  caseStudies,
   clientLogos,
   homeHeroContent,
   homeServiceVideoLibrary,
@@ -354,108 +353,137 @@ export function ServicesSection() {
 
 export function ResultsSection() {
   const { language } = useSitePreferences();
-  const resultCase = caseStudies.find((entry) => entry.slug === "treningshuset") ?? caseStudies[0];
-  const shouldForceResultPreview = resultCase.slug === "treningshuset";
-  const highlightCases = [
-    caseStudies.find((entry) => entry.slug === "treningshuset"),
-    caseStudies.find((entry) => entry.slug === "ville-gleder"),
-    caseStudies.find((entry) => entry.slug === "nei-til-atomvapen"),
-  ].filter(Boolean) as CaseStudy[];
-  const testimonial = testimonials.find((entry) => entry.company === "Ville Gleder") ?? testimonials[0];
+  const resultMetrics =
+    language === "no"
+      ? [
+          {
+            value: "10",
+            label: "filmer levert",
+            detail: "Bygget for flere uttak, flater og kampanjer.",
+          },
+          {
+            value: "60 000+",
+            label: "SoMe-visninger",
+            detail: "Dokumentert rekkevidde fra kampanjer og promofilmer.",
+          },
+          {
+            value: "Mer verdi",
+            label: "for samme opptak",
+            detail: "Flere versjoner gir lengre levetid og tydeligere ROI.",
+          },
+        ]
+      : [
+          {
+            value: "10",
+            label: "films delivered",
+            detail: "Built for multiple cutdowns, placements and campaigns.",
+          },
+          {
+            value: "60,000+",
+            label: "social views",
+            detail: "Documented reach from campaigns and promo films.",
+          },
+          {
+            value: "More value",
+            label: "from one production",
+            detail: "More versions create longer use and clearer ROI.",
+          },
+        ];
 
   return (
     <section className="section-space">
       <div className="site-container">
         <Reveal y={18}>
           <div className="overflow-hidden rounded-[2rem] bg-[#0d1014] text-white shadow-[0_38px_120px_rgba(0,0,0,0.22)]">
-            <div className="grid gap-0 lg:grid-cols-[0.92fr_1.08fr]">
+            <div className="grid gap-0 lg:grid-cols-[0.9fr_1.1fr]">
               <div className="flex flex-col p-6 sm:p-8 lg:p-10">
                 <p className="text-[0.72rem] font-semibold uppercase tracking-[0.24em] text-white/48">
                   {language === "no" ? "Resultater" : "Results"}
                 </p>
-                <h2 className="feature-title mt-4 max-w-[14ch] text-white">
+                <h2 className="feature-title mt-4 max-w-[13ch] text-white">
                   {language === "no"
                     ? "Film som fortsatt jobber etter publisering."
                     : "Film that keeps working after launch."}
                 </h2>
                 <p className="mt-4 max-w-[34rem] text-sm leading-7 text-white/72 sm:text-base">
                   {language === "no"
-                    ? "Vi bygger film som skal brukes på flere flater, over tid og med tydeligere effekt enn én enkelt publisering."
-                    : "We build films that are meant to work across placements, over time and with more impact than a single publish."}
+                    ? "Vi bygger filmer som kan brukes i annonser, SoMe og nettside over tid. Det gir mer materiale per opptak, flere uttak og tydeligere kommersiell effekt."
+                    : "We build films that can keep working across ads, social and websites over time. That means more material per shoot, more cutdowns and clearer commercial impact."}
                 </p>
 
                 <div className="mt-8 grid gap-3 sm:grid-cols-3">
-                  {highlightCases.map((caseStudy) => {
-                    const primaryMetric = caseStudy.metrics[0];
-
-                    return (
-                      <div
-                        key={caseStudy.slug}
-                        className="rounded-[1.4rem] border border-white/10 bg-white/6 px-4 py-4"
-                      >
-                        <p className="text-[1.7rem] font-semibold leading-none tracking-[-0.05em] text-white">
-                          {primaryMetric?.value}
-                        </p>
-                        <p className="mt-2 text-[0.72rem] font-semibold uppercase tracking-[0.2em] text-white/44">
-                          {primaryMetric ? resolveLocalizedValue(primaryMetric.label, language) : caseStudy.client}
-                        </p>
-                        <p className="mt-3 text-sm leading-6 text-white/66">{caseStudy.client}</p>
-                      </div>
-                    );
-                  })}
+                  {resultMetrics.map((metric) => (
+                    <div
+                      key={metric.label}
+                      className="rounded-[1.4rem] border border-white/10 bg-white/6 px-4 py-4"
+                    >
+                      <p className="text-[1.7rem] font-semibold leading-none tracking-[-0.05em] text-white">
+                        {metric.value}
+                      </p>
+                      <p className="mt-2 text-[0.72rem] font-semibold uppercase tracking-[0.2em] text-white/44">
+                        {metric.label}
+                      </p>
+                      <p className="mt-3 text-sm leading-6 text-white/66">{metric.detail}</p>
+                    </div>
+                  ))}
                 </div>
 
-                <blockquote className="mt-8 rounded-[1.5rem] border border-white/10 bg-black/18 px-5 py-5 text-white/78">
-                  <p className="text-[1.02rem] leading-7 sm:text-[1.08rem]">
-                    “{resolveLocalizedValue(testimonial.quote, language)}”
+                <div className="mt-8 rounded-[1.5rem] border border-white/10 bg-black/18 px-5 py-5">
+                  <p className="text-[0.72rem] font-semibold uppercase tracking-[0.2em] text-white/44">
+                    {language === "no" ? "Forventet ROI" : "Expected ROI"}
                   </p>
-                  <footer className="mt-4 text-sm text-white/52">
-                    {testimonial.name} / {testimonial.company}
-                  </footer>
-                </blockquote>
+                  <div className="mt-4 grid gap-3 sm:grid-cols-3">
+                    {(
+                      language === "no"
+                        ? [
+                            "Flere annonser og uttak fra samme opptak.",
+                            "Lenger levetid på innholdet i digitale flater.",
+                            "Klarere vei fra synlighet til henvendelser.",
+                          ]
+                        : [
+                            "More ads and cutdowns from the same shoot.",
+                            "Longer content lifespan across digital placements.",
+                            "A clearer path from visibility to enquiries.",
+                          ]
+                    ).map((item) => (
+                      <div
+                        key={item}
+                        className="rounded-[1.1rem] border border-white/8 bg-white/5 px-4 py-4 text-sm leading-6 text-white/74"
+                      >
+                        {item}
+                      </div>
+                    ))}
+                  </div>
+                </div>
 
                 <div className="mt-8">
                   <ButtonLink
-                    href={`/case/${resultCase.slug}`}
+                    href="/kontakt"
                     className="w-full border-white/16 bg-white text-[#111111] hover:bg-white/92 hover:text-[#111111] sm:w-auto"
                   >
-                    {language === "no" ? "Se case" : "View case"}
+                    {language === "no" ? "Book møte" : "Book a meeting"}
                   </ButtonLink>
                 </div>
               </div>
 
-              <div className="relative min-h-[21rem] lg:min-h-full">
-                <PreviewMedia
-                  title={resultCase.title}
-                  video={resultCase.video}
-                  externalVideo={resultCase.externalVideo}
-                  image={resultCase.image}
-                  imageAlt={resultCase.imageAlt}
-                  mediaFit={resultCase.mediaFit}
-                  previewBehavior={
-                    resultCase.video || resultCase.externalVideo
-                      ? shouldForceResultPreview
-                        ? "always"
-                        : "viewport"
-                      : "static"
-                  }
-                  className="absolute inset-0"
-                  sizes="(min-width: 1024px) 52vw, 100vw"
-                  priority={shouldForceResultPreview}
-                  rootMargin="160px 0px -8% 0px"
-                  inViewThreshold={0.18}
-                  posterClassName="scale-[1.02]"
-                  previewClassName="scale-[1.04]"
-                />
-                <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(8,10,14,0.08),rgba(8,10,14,0.3)_34%,rgba(8,10,14,0.84)_100%)]" />
-                <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(8,10,14,0.06),rgba(8,10,14,0.02)_26%,rgba(8,10,14,0.42)_100%)]" />
-                <div className="absolute inset-x-0 bottom-0 p-6 sm:p-8">
-                  <p className="text-[0.68rem] font-semibold uppercase tracking-[0.24em] text-white/48">
-                    {resultCase.client}
-                  </p>
-                  <p className="mt-2 max-w-md text-[1.3rem] font-semibold leading-[1.08] tracking-[-0.05em] text-white sm:text-[1.6rem]">
-                    {resolveLocalizedValue(resultCase.title, language)}
-                  </p>
+              <div className="border-t border-white/8 p-6 sm:p-8 lg:border-l lg:border-t-0 lg:p-10">
+                <p className="text-[0.72rem] font-semibold uppercase tracking-[0.24em] text-white/44">
+                  {language === "no" ? "Hvorfor oss?" : "Why us?"}
+                </p>
+                <div className="mt-5 grid gap-4">
+                  {testimonials.map((testimonial) => (
+                    <blockquote
+                      key={`${testimonial.company}-${testimonial.name}`}
+                      className="rounded-[1.5rem] border border-white/10 bg-white/[0.045] px-5 py-5 text-white/78"
+                    >
+                      <p className="text-[1rem] leading-7 sm:text-[1.06rem]">
+                        “{resolveLocalizedValue(testimonial.quote, language)}”
+                      </p>
+                      <footer className="mt-4 text-sm text-white/54">
+                        {testimonial.name} ({testimonial.company})
+                      </footer>
+                    </blockquote>
+                  ))}
                 </div>
               </div>
             </div>
