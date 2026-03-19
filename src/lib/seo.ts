@@ -27,6 +27,14 @@ export function buildMetadata({
     title: fullTitle,
     description,
     keywords: [...siteConfig.keywords, ...keywords],
+    icons: {
+      icon: [
+        { url: "/favicon.ico", sizes: "any" },
+        { url: "/icon.png", type: "image/png", sizes: "512x512" },
+      ],
+      shortcut: [{ url: "/favicon.ico" }],
+      apple: [{ url: "/apple-icon.png", sizes: "180x180", type: "image/png" }],
+    },
     alternates: {
       canonical: url,
     },
