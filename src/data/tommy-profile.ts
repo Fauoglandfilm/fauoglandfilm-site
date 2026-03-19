@@ -45,8 +45,6 @@ export type TommyShowcaseProject = {
 export type TommyRoleItem = {
   slug: string;
   title: LocalizedText;
-  role: LocalizedText;
-  summary: LocalizedText;
   poster?: TommyPortfolioImage;
   links?: TommyPortfolioLink[];
 };
@@ -137,63 +135,64 @@ export const tommyPortfolioPage = {
     en: "Short films & festivals",
   },
   shortFilmsDescription: {
-    no: "De viktigste kortfilmprosjektene Tommy har produsert, strukturert med plakat, awards, festivaler og lenker. Hver film kan senere utvides med flere posters, stills og galleriinnhold uten å endre layouten.",
-    en: "Tommy's key short-film credits, structured with poster, awards, festivals and links. Each project can later be expanded with more posters, stills and gallery assets without touching the layout.",
+    no: "Prisvinnende kortfilmer og festivalprosjekter, sortert kronologisk og bygget for rask oversikt.",
+    en: "Award-winning short films and festival projects, ordered chronologically for a faster overview.",
   },
   shortFilms: [
     {
-      slug: "mirror-effect",
+      slug: "a-message-from-martha",
       type: "shortfilm",
-      title: sameText("Mirror Effect"),
-      year: "2021",
+      title: sameText("A Message from Martha"),
+      year: "2025",
       role: sameText("Producer"),
       logline: {
-        no: "Et psykologisk kortdrama om Markus og Mona, et kjærestepar som møter den perfekte familien og gradvis trekkes inn i en urovekkende spiral av sammenligning, begjær og kontroll.",
-        en: "A psychological short drama about Markus and Mona, a young couple who meet the perfect family and are slowly pulled into an unsettling spiral of comparison, desire and control.",
+        no: "Kort dramafilm regissert av Elia Biondi, produsert av Tommy gjennom Fau&Land i samarbeid med DeBlonde, med fokus på presis gjennomføring og et tydelig internasjonalt uttrykk.",
+        en: "A short drama directed by Elia Biondi and produced by Tommy through Fau&Land in collaboration with DeBlonde, built around precise execution and a clear international tone.",
       },
       awards: [
-        "South Film and Arts Academy Festival - Best Poster, Best Female Director (2025)",
-        "Five Continents International Film Festival - Award Winner (2025)",
-        "FICOCC - Special Mention, Best Lead Actor (2025)",
+        "Short to the Point - Official Selection (Producer)",
+        "Amandus Blikkfang - Official Selection (Producer)",
       ],
       festivals: [
-        "MegaFlix Movie Awards - Official Selection",
-        "Dare To Imagin9ne Festival - Official Selection",
-        "Athens Monthly Art Film Festival - Official Selection",
+        "Short to the Point - Official Selection",
+        "Amandus Blikkfang - Official Selection",
       ],
-      links: [externalLink("FilmFreeway", "https://filmfreeway.com/TitleMirrorEffect")],
+      links: [
+        externalLink("FilmFreeway", "https://filmfreeway.com/AmessagefromMartha"),
+      ],
       poster: poster(
-        "/assets/team/tommy/portfolio/mirror-effect/mirror-effect-poster.jpg",
-        "Plakat for Mirror Effect",
-        "Poster for Mirror Effect",
+        "/assets/portfolio/a-message-from-martha/posters/a-message-from-martha-poster.jpeg",
+        "Plakat for A Message from Martha",
+        "Poster for A Message from Martha",
       ),
       gallery: [],
     },
     {
-      slug: "huldredans",
+      slug: "en-midnatts-vuggesang",
       type: "shortfilm",
-      title: sameText("Huldredans"),
-      year: "2022",
+      title: {
+        no: "En Midnatts Vuggesang / A Midnight Lullaby",
+        en: "En Midnatts Vuggesang / A Midnight Lullaby",
+      },
+      year: "2023",
       role: sameText("Producer"),
       logline: {
-        no: "Et mørkt folkeeventyr om et vinterlig møte mellom Magne og en huldra, bygget som en stemningsdrevet kortfilm med sterk visuell identitet og tydelig festivalprofil.",
-        en: "A dark folk tale about a winter encounter between Magne and a huldra, built as an atmosphere-driven short with a strong visual identity and clear festival profile.",
+        no: "Kort drama om Li-hua, en alenemor i Oslo som forsøker å holde hverdagen sammen mens presset rundt henne øker.",
+        en: "A short drama about Li-hua, a single mother in Oslo trying to keep everyday life together as the pressure around her grows.",
       },
       awards: [
-        "South Film and Arts Academy Festival - Best Horror, Screenplay, Cinematography, Art Direction, Audience Award, Hon. Mention Director",
-        "Five Continents International Film Festival - Award Winner (2025)",
-        "International Sound & Film Music Festival, Croatia - Nominee, Crystal Pine Award (2025)",
+        "Golden Chair Award - Nominee, Best Norwegian Short Film (Norwegian Short Film Festival, 2023)",
       ],
       festivals: [
-        "Anatolia IFF - Official Selection",
-        "Athens Monthly Art Film Festival - Official Selection",
-        "Sustain Film Festival - Official Selection",
+        "Norwegian Short Film Festival, Grimstad - Official Selection",
       ],
-      links: [externalLink("FilmFreeway", "https://filmfreeway.com/HuldredansSHORT")],
+      links: [
+        externalLink("Festival page", "https://kortfilmfestivalen.no/film/en-midnatts-vuggesang/"),
+      ],
       poster: poster(
-        "/assets/portfolio/huldredans/posters/huldredans-poster.jpg",
-        "Plakat for Huldredans",
-        "Poster for Huldredans",
+        "/assets/portfolio/midnatts-vuggesang/posters/en-midnatts-vuggesang-poster.jpg",
+        "Plakat for En Midnatts Vuggesang",
+        "Poster for A Midnight Lullaby",
       ),
       gallery: [],
     },
@@ -229,59 +228,58 @@ export const tommyPortfolioPage = {
       gallery: [],
     },
     {
-      slug: "en-midnatts-vuggesang",
+      slug: "huldredans",
       type: "shortfilm",
-      title: {
-        no: "En Midnatts Vuggesang / A Midnight Lullaby",
-        en: "En Midnatts Vuggesang / A Midnight Lullaby",
-      },
-      year: "2023",
+      title: sameText("Huldredans"),
+      year: "2022",
       role: sameText("Producer"),
       logline: {
-        no: "Kort drama om Li-hua, en alenemor i Oslo som forsøker å holde hverdagen sammen mens presset rundt henne øker.",
-        en: "A short drama about Li-hua, a single mother in Oslo trying to keep everyday life together as the pressure around her grows.",
+        no: "Et mørkt folkeeventyr om et vinterlig møte mellom Magne og en huldra, bygget som en stemningsdrevet kortfilm med sterk visuell identitet og tydelig festivalprofil.",
+        en: "A dark folk tale about a winter encounter between Magne and a huldra, built as an atmosphere-driven short with a strong visual identity and clear festival profile.",
       },
       awards: [
-        "Golden Chair Award - Nominee, Best Norwegian Short Film (Norwegian Short Film Festival, 2023)",
+        "South Film and Arts Academy Festival - Best Horror, Screenplay, Cinematography, Art Direction, Audience Award, Hon. Mention Director",
+        "Five Continents International Film Festival - Award Winner (2025)",
+        "International Sound & Film Music Festival, Croatia - Nominee, Crystal Pine Award (2025)",
       ],
       festivals: [
-        "Norwegian Short Film Festival, Grimstad - Official Selection",
+        "Anatolia IFF - Official Selection",
+        "Athens Monthly Art Film Festival - Official Selection",
+        "Sustain Film Festival - Official Selection",
       ],
-      links: [
-        externalLink("Festival page", "https://kortfilmfestivalen.no/film/en-midnatts-vuggesang/"),
-      ],
+      links: [externalLink("FilmFreeway", "https://filmfreeway.com/HuldredansSHORT")],
       poster: poster(
-        "/assets/portfolio/midnatts-vuggesang/posters/en-midnatts-vuggesang-poster.jpg",
-        "Plakat for En Midnatts Vuggesang",
-        "Poster for A Midnight Lullaby",
+        "/assets/portfolio/huldredans/posters/huldredans-poster.jpg",
+        "Plakat for Huldredans",
+        "Poster for Huldredans",
       ),
       gallery: [],
     },
     {
-      slug: "a-message-from-martha",
+      slug: "mirror-effect",
       type: "shortfilm",
-      title: sameText("A Message from Martha"),
-      year: "2025",
+      title: sameText("Mirror Effect"),
+      year: "2021",
       role: sameText("Producer"),
       logline: {
-        no: "Kort dramafilm regissert av Elia Biondi, produsert av Tommy gjennom Fau&Land i samarbeid med DeBlonde, med fokus på presis gjennomføring og et tydelig internasjonalt uttrykk.",
-        en: "A short drama directed by Elia Biondi and produced by Tommy through Fau&Land in collaboration with DeBlonde, built around precise execution and a clear international tone.",
+        no: "Et psykologisk kortdrama om Markus og Mona, et kjærestepar som møter den perfekte familien og gradvis trekkes inn i en urovekkende spiral av sammenligning, begjær og kontroll.",
+        en: "A psychological short drama about Markus and Mona, a young couple who meet the perfect family and are slowly pulled into an unsettling spiral of comparison, desire and control.",
       },
       awards: [
-        "Short to the Point - Official Selection (Producer)",
-        "Amandus Blikkfang - Official Selection (Producer)",
+        "South Film and Arts Academy Festival - Best Poster, Best Female Director (2025)",
+        "Five Continents International Film Festival - Award Winner (2025)",
+        "FICOCC - Special Mention, Best Lead Actor (2025)",
       ],
       festivals: [
-        "Short to the Point - Official Selection",
-        "Amandus Blikkfang - Official Selection",
+        "MegaFlix Movie Awards - Official Selection",
+        "Dare To Imagin9ne Festival - Official Selection",
+        "Athens Monthly Art Film Festival - Official Selection",
       ],
-      links: [
-        externalLink("FilmFreeway", "https://filmfreeway.com/AmessagefromMartha"),
-      ],
+      links: [externalLink("FilmFreeway", "https://filmfreeway.com/TitleMirrorEffect")],
       poster: poster(
-        "/assets/portfolio/a-message-from-martha/posters/a-message-from-martha-poster.jpeg",
-        "Plakat for A Message from Martha",
-        "Poster for A Message from Martha",
+        "/assets/team/tommy/portfolio/mirror-effect/mirror-effect-poster.jpg",
+        "Plakat for Mirror Effect",
+        "Poster for Mirror Effect",
       ),
       gallery: [],
     },
@@ -295,8 +293,8 @@ export const tommyPortfolioPage = {
     en: "Commercial & content",
   },
   commercialDescription: {
-    no: "Kommersielle leveranser Tommy kan stå inne for som produsent og prosjektleder - strukturert som cards, så det er lett å fylle på nye kundeprosjekter, videolenker og posters senere.",
-    en: "Commercial deliveries Tommy can stand behind as producer and project manager - structured as cards so new client projects, video links and posters can be added later without touching the layout.",
+    no: "Utvalgte kommersielle produksjoner der Tommy har holdt struktur, fremdrift og leveranse samlet.",
+    en: "Selected commercial productions where Tommy has held structure, momentum and delivery together.",
   },
   commercialProjects: [
     {
@@ -320,6 +318,32 @@ export const tommyPortfolioPage = {
         "/assets/portfolio/treningshuset/posters/treningshuset-bred-poster.png",
         "Still fra Treningshuset-kampanje",
         "Still from the Treningshuset campaign",
+        "cover",
+        "landscape",
+      ),
+      gallery: [],
+    },
+    {
+      slug: "ville-gleder",
+      type: "commercial",
+      client: "Ville Gleder",
+      title: sameText("Promofilm og innhold for foredrag"),
+      role: sameText("Producer / Project Manager"),
+      impact: {
+        no: "Innhold laget for booking, synlighet og tydeligere profil på tvers av web og sosiale flater.",
+        en: "Content built for bookings, visibility and a clearer profile across web and social channels.",
+      },
+      summary: {
+        no: "Et kommersielt oppsett med flere filmer og uttak som gjør det enklere å selge foredragene videre over tid.",
+        en: "A commercial setup with multiple films and cutdowns that makes the talks easier to sell over time.",
+      },
+      links: [
+        internalLink("Åpne case", "Open case", "/case/ville-gleder"),
+      ],
+      poster: poster(
+        "/assets/portfolio/ville-gleder/stills/villmarksforedrag-photo.jpg",
+        "Still fra Ville Gleder",
+        "Still from Ville Gleder",
         "cover",
         "landscape",
       ),
@@ -358,12 +382,12 @@ export const tommyPortfolioPage = {
       title: sameText("Kampanjefilm for mobilisering og synlighet"),
       role: sameText("Producer / Project Manager"),
       impact: {
-        no: "Kortformat og kampanjefilm som støtter synlighet, mobilisering og klar politisk kommunikasjon.",
-        en: "Short-form and campaign films that support visibility, mobilisation and clear political communication.",
+        no: "Film og uttak som støtter synlighet, mobilisering og tydelig kampanjekommunikasjon på tvers av flere produksjoner.",
+        en: "Film and cutdowns that support visibility, mobilisation and clear campaign communication across multiple productions.",
       },
       summary: {
-        no: "Produksjon med flere uttak og distribusjonsflater, tilpasset organisasjonsarbeid og målrettede digitale kampanjer.",
-        en: "A production setup with multiple outputs and distribution surfaces, tailored for organisational work and targeted digital campaigns.",
+        no: "Samlet produksjonsarbeid for kampanjefilm, konferanse og 1. mai-innhold - bygget for bruk i organisasjonsarbeid og digitale flater.",
+        en: "Combined production work across campaign film, conference coverage and 1 May content - built for organisational work and digital distribution.",
       },
       links: [
         internalLink("Åpne case", "Open case", "/case/nei-til-atomvapen"),
@@ -387,8 +411,8 @@ export const tommyPortfolioPage = {
     en: "Events & live",
   },
   eventsDescription: {
-    no: "Utvalgte oppdrag der Tommy leder opplevelser, logistikk og gjennomføring i settinger som krever presisjon, trygghet og høy finish.",
-    en: "Selected assignments where Tommy leads experience design, logistics and execution in settings that require precision, calm and high finish.",
+    no: "Prosjekter der Tommy holder konsept, logistikk og gjennomføring samlet i live- og eventformat.",
+    en: "Projects where Tommy keeps concept, logistics and execution aligned in event and live settings.",
   },
   eventProjects: [
     {
@@ -430,6 +454,13 @@ export const tommyPortfolioPage = {
         en: "Responsible for coordination, design and delivery across luxury rentals and property-related guest experiences.",
       },
       links: [],
+      poster: poster(
+        "/assets/team/tommy/portfolio/event/the-key-collection-logo.svg",
+        "Logo for The Key Collection",
+        "Logo for The Key Collection",
+        "contain",
+        "wide",
+      ),
     },
     {
       slug: "galleri-tm51",
@@ -446,49 +477,53 @@ export const tommyPortfolioPage = {
         en: "Work spanning exhibitions, communication and visual concepts in a format that requires both structure and curatorial sensitivity.",
       },
       links: [],
+      poster: poster(
+        "/assets/team/tommy/portfolio/event/tm51-logo.svg",
+        "Logo for TM51",
+        "Logo for TM51",
+        "contain",
+        "wide",
+      ),
     },
   ] satisfies TommyShowcaseProject[],
   otherRolesEyebrow: {
-    no: "Bredde",
-    en: "Breadth",
+    no: "Produksjonsbredde",
+    en: "Production breadth",
   },
   otherRolesTitle: {
-    no: "Andre roller i film & TV",
-    en: "Other roles in film & TV",
+    no: "Film & TV",
+    en: "Film & TV",
   },
   otherRolesDescription: {
-    no: "Et sideblikk på roller som bygger produksjonsforståelsen, uten å ta fokus fra Tommy sitt hovedspor som produsent.",
-    en: "A side view of the roles that strengthen Tommy's production judgement, without stealing focus from his core producer track.",
+    no: "Utvalgte produksjoner som viser bredde fra større film- og TV-oppsett, holdt bevisst korte og visuelle.",
+    en: "Selected productions showing breadth from larger film and TV setups, intentionally kept short and visual.",
   },
   otherRoleGroups: [
     {
-      slug: "line-producer-and-wrangler",
+      slug: "film-and-tv",
       title: {
-        no: "Line producer & wrangler",
-        en: "Line producer & wrangler",
+        no: "Utvalgte produksjoner",
+        en: "Selected productions",
       },
       description: {
-        no: "Større produksjoner og settroller som viser evne til logistikk, koordinering og ro under press.",
-        en: "Larger productions and on-set roles that show strong logistics, coordination and calm under pressure.",
+        no: "Holdt til ett visuelt utvalg, med fokus på prosjektene fremfor rolletitlene.",
+        en: "Kept to one visual selection, with focus on the projects rather than the role titles.",
       },
       items: [
         {
           slug: "skjonnheten-skal-frelse-verden",
           title: sameText("Skjønnheten skal frelse verden"),
-          role: sameText("Line Producer"),
-          summary: {
-            no: "Holdes som en tydelig line producer-credit og ligger bevisst utenfor hovedseksjonen for kortfilm, slik at produsentsporet fortsatt er hovedfokus.",
-            en: "Kept as a distinct line producer credit outside the primary short-film section so the producer track remains the main focus.",
-          },
+          poster: poster(
+            "/assets/team/tommy/portfolio/other-roles/skjonnheten-skal-frelse-verden-poster.svg",
+            "Poster for Skjønnheten skal frelse verden",
+            "Poster for Skjønnheten skal frelse verden",
+            "cover",
+            "portrait",
+          ),
         },
         {
           slug: "royalteen",
           title: sameText("Royalteen"),
-          role: sameText("Wrangler"),
-          summary: {
-            no: "Wrangler-rolle i en større Netflix-produksjon med behov for tydelig koordinering og kontroll på statist- og setflyt.",
-            en: "Wrangler role on a larger Netflix production that required clear coordination and control across extras and on-set flow.",
-          },
           poster: poster(
             "/assets/team/tommy/portfolio/other-roles/royalteen-poster.png",
             "Poster for Royalteen",
@@ -500,11 +535,6 @@ export const tommyPortfolioPage = {
         {
           slug: "royalteen-princesse-margrethe",
           title: sameText("Royalteen: Princess Margrethe"),
-          role: sameText("Wrangler"),
-          summary: {
-            no: "Videre arbeid i Netflix-universet, med ansvar som bygger erfaring fra større sett og krevende produksjonsflyt.",
-            en: "Continued work in the Netflix universe, building experience from larger sets and demanding production flow.",
-          },
           poster: poster(
             "/assets/team/tommy/portfolio/other-roles/royalteen-princesse-margrethe-poster.png",
             "Poster for Royalteen: Princess Margrethe",
@@ -519,11 +549,6 @@ export const tommyPortfolioPage = {
             no: "På vill spor",
             en: "On the Wrong Track",
           },
-          role: sameText("Wrangler"),
-          summary: {
-            no: "Wrangler-arbeid i en større Netflix-produksjon med høyt tempo og behov for trygg koordinering.",
-            en: "Wrangler work on a larger Netflix production with a fast pace and a need for dependable coordination.",
-          },
           poster: poster(
             "/assets/team/tommy/portfolio/other-roles/pa-vill-spor-poster.jpg",
             "Poster for På vill spor",
@@ -535,11 +560,6 @@ export const tommyPortfolioPage = {
         {
           slug: "a-storm-for-christmas",
           title: sameText("A Storm for Christmas"),
-          role: sameText("Wrangler"),
-          summary: {
-            no: "Wrangler-rolle i juleproduksjon med mange bevegelige deler og krevende gjennomføring.",
-            en: "Wrangler role on a Christmas production with many moving parts and demanding execution.",
-          },
           poster: poster(
             "/assets/team/tommy/portfolio/other-roles/storm-for-christmas-poster.png",
             "Poster for A Storm for Christmas",
@@ -551,60 +571,29 @@ export const tommyPortfolioPage = {
         {
           slug: "affeksjonsverdi",
           title: sameText("Affeksjonsverdi"),
-          role: sameText("Wrangler"),
-          summary: {
-            no: "Settrolle i en større spillefilmproduksjon som understøtter Tommy sin bredde og on-set erfaring.",
-            en: "An on-set role in a larger feature-film production that underlines Tommy's breadth and on-set experience.",
-          },
+          poster: poster(
+            "/assets/team/tommy/portfolio/other-roles/affeksjonsverdi-poster.svg",
+            "Poster for Affeksjonsverdi",
+            "Poster for Affeksjonsverdi",
+            "cover",
+            "portrait",
+          ),
         },
         {
           slug: "christmas-tomorrow",
           title: sameText("Christmas Tomorrow"),
-          role: sameText("Wrangler"),
-          summary: {
-            no: "Wrangler-arbeid i Netflix-relatert produksjonsløp med fokus på kontroll og gjennomføring under press.",
-            en: "Wrangler work in a Netflix-related production flow focused on control and execution under pressure.",
-          },
         },
-      ],
-    },
-    {
-      slug: "producer-other-projects",
-      title: {
-        no: "Producer - andre prosjekter",
-        en: "Producer - other projects",
-      },
-      description: {
-        no: "Prosjekter og miljøer der Tommy har produsert workshops, kulturinnhold og andre formater utenfor hovedsporet i kortfilm og reklame.",
-        en: "Projects and environments where Tommy has produced workshops, cultural content and other formats outside his main short-film and commercial focus.",
-      },
-      items: [
         {
           slug: "north-stars-acting-hub",
           title: sameText("North Stars Acting Hub"),
-          role: sameText("Producer"),
-          summary: {
-            no: "Produsent på flere workshops og prosjekter, blant annet med David Nutter, Paul Johansson og Albert Hughes.",
-            en: "Producer on multiple workshops and projects, including work connected to David Nutter, Paul Johansson and Albert Hughes.",
-          },
         },
         {
           slug: "the-actors-hub-oslo",
           title: sameText("The Actors' Hub Oslo"),
-          role: sameText("Producer"),
-          summary: {
-            no: "Produsentarbeid for acting hub og workshop-format med fokus på trygg gjennomføring og tydelig ramme rundt deltakere og fagpersoner.",
-            en: "Producer work for an acting hub and workshop format focused on calm execution and a clear framework for participants and mentors.",
-          },
         },
         {
           slug: "mitt-skeive-oslo",
           title: sameText("Mitt skeive Oslo"),
-          role: sameText("Producer"),
-          summary: {
-            no: "Produsentrolle på kultur- og identitetsdrevet prosjekt med tydelig innholdsmessig profil.",
-            en: "Producer role on a culturally and identity-driven project with a clear editorial profile.",
-          },
           poster: poster(
             "/assets/team/tommy/portfolio/other-roles/mitt-skeive-oslo-poster.png",
             "Still fra Mitt skeive Oslo",
@@ -613,54 +602,21 @@ export const tommyPortfolioPage = {
             "landscape",
           ),
         },
-      ],
-    },
-    {
-      slug: "photo-first-ad-pa",
-      title: {
-        no: "Foto / 1st AD / PA",
-        en: "Photo / 1st AD / PA",
-      },
-      description: {
-        no: "Produksjonsnære roller som viser praktisk bredde og forståelse for hvordan team og opptaksdager faktisk fungerer.",
-        en: "Hands-on production roles that show practical breadth and a strong understanding of how teams and shooting days actually work.",
-      },
-      items: [
         {
           slug: "norgesexpo",
           title: sameText("Norgesexpo - PlayStation L2R2"),
-          role: sameText("Photographer"),
-          summary: {
-            no: "Fotograf for studioopptak med fokus på kontrollert produksjonsmiljø og tydelig leveranse.",
-            en: "Photographer for studio work with focus on a controlled production setup and clear delivery.",
-          },
         },
         {
           slug: "norwegian-film-school",
           title: sameText("Norwegian Film School"),
-          role: sameText("1st Assistant Director"),
-          summary: {
-            no: "1st AD-rolle som bygger praktisk erfaring med plan, settflyt og tydelig avvikling av opptaksdager.",
-            en: "1st AD work that builds practical experience with planning, on-set flow and clear execution of shooting days.",
-          },
         },
         {
           slug: "heisjef-advertising",
           title: sameText("HeiSjef Advertising"),
-          role: sameText("Production Assistant"),
-          summary: {
-            no: "Production assistant på kommersielle produksjoner med fokus på støttefunksjoner og struktur i gjennomføringen.",
-            en: "Production assistant work on commercial productions focused on support functions and structure in execution.",
-          },
         },
         {
           slug: "ruter-jac-skilt",
           title: sameText("Ruter / Jac Skilt Advertising"),
-          role: sameText("Advertising & Coordination"),
-          summary: {
-            no: "Koordinering og reklamerelatert arbeid som styrker forståelsen for kommersielle leveranser og kundekrav.",
-            en: "Coordination and advertising-related work that strengthens Tommy's understanding of commercial delivery and client requirements.",
-          },
         },
       ],
     },

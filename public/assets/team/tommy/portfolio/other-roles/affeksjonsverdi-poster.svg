@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 1000" fill="none">
+  <rect width="720" height="1000" fill="#E8E0EC"/>
+  <rect y="0" width="720" height="520" fill="#D5D1D6"/>
+  <rect y="520" width="720" height="480" fill="#F2D9E7"/>
+  <text x="88" y="540" fill="white" font-family="Helvetica, Arial, sans-serif" font-size="78" font-weight="700">Affeksjonsverdi</text>
+  <text x="176" y="852" fill="#4A4A4A" font-family="Georgia, Times New Roman, serif" font-size="34">Producer / Crew</text>
+</svg>
