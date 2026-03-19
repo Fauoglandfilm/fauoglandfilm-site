@@ -48,66 +48,56 @@ export function CaseDetailContent({
 
       <section className="section-space">
         <div className="site-container space-y-5">
-          <article
-            className={cn(
-              "overflow-hidden",
-              isTreningshuset
-                ? "-mx-4 sm:mx-0 sm:rounded-[2rem] sm:border sm:border-[color:var(--line)] sm:bg-[color:var(--surface)]"
-                : "-mx-4 sm:mx-0 sm:rounded-[2rem] sm:border sm:border-[color:var(--line)] sm:bg-[color:var(--surface)]",
-            )}
-          >
-            {caseStudy.video || caseStudy.externalVideo ? (
-              <div
-                className={cn(
-                  "relative w-full bg-[#111111]",
-                  "aspect-video",
-                )}
-              >
-                <EmbeddedVideoPlayer
-                  title={caseStudy.title}
-                  video={caseStudy.video}
-                  externalVideo={caseStudy.externalVideo}
-                  image={caseStudy.image}
-                  imageAlt={caseStudy.imageAlt}
-                  mediaFit={caseStudy.mediaFit}
-                  autoplay
-                  priority
-                  className="relative h-full w-full"
-                  sizes="100vw"
-                  disableMobileSource={isTreningshuset}
-                />
-                <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,rgba(17,17,17,0.04),rgba(17,17,17,0.24))]" />
-              </div>
-            ) : caseStudy.image ? (
-              <div className="relative aspect-video w-full">
-                <Image
-                  src={caseStudy.image}
-                  alt={caseStudy.imageAlt ? resolveLocalizedValue(caseStudy.imageAlt, language) : `${caseStudy.client} case`}
-                  fill
-                  className="object-cover"
-                  priority
-                />
-              </div>
-            ) : (
-              <div
-                className={`flex aspect-[4/5] items-end bg-gradient-to-br ${
-                  caseStudy.palette ?? "from-[#efe9df] via-[#d4c8b5] to-[#bba68a]"
-                } p-6 sm:p-8`}
-              >
-                <div className="max-w-sm rounded-[1.6rem] border border-white/28 bg-white/62 p-5 backdrop-blur">
-                  <p className="text-[0.72rem] font-semibold uppercase tracking-[0.22em] text-[var(--muted)]">
-                    {resolveLocalizedValue(caseStudy.category, language)}
-                  </p>
-                  <h2 className="feature-title mt-3 text-[#111111]">
-                    {caseStudy.client}
-                  </h2>
-                  <p className="body-copy mt-3 text-[var(--muted-2)] sm:text-base sm:leading-7">
-                    {resolveLocalizedValue(caseStudy.summary, language)}
-                  </p>
+          {!isTreningshuset ? (
+            <article className="-mx-4 overflow-hidden sm:mx-0 sm:rounded-[2rem] sm:border sm:border-[color:var(--line)] sm:bg-[color:var(--surface)]">
+              {caseStudy.video || caseStudy.externalVideo ? (
+                <div className="relative aspect-video w-full bg-[#111111]">
+                  <EmbeddedVideoPlayer
+                    title={caseStudy.title}
+                    video={caseStudy.video}
+                    externalVideo={caseStudy.externalVideo}
+                    image={caseStudy.image}
+                    imageAlt={caseStudy.imageAlt}
+                    mediaFit={caseStudy.mediaFit}
+                    autoplay
+                    priority
+                    className="relative h-full w-full"
+                    sizes="100vw"
+                    disableMobileSource={isTreningshuset}
+                  />
+                  <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,rgba(17,17,17,0.04),rgba(17,17,17,0.24))]" />
                 </div>
-              </div>
-            )}
-          </article>
+              ) : caseStudy.image ? (
+                <div className="relative aspect-video w-full">
+                  <Image
+                    src={caseStudy.image}
+                    alt={caseStudy.imageAlt ? resolveLocalizedValue(caseStudy.imageAlt, language) : `${caseStudy.client} case`}
+                    fill
+                    className="object-cover"
+                    priority
+                  />
+                </div>
+              ) : (
+                <div
+                  className={`flex aspect-[4/5] items-end bg-gradient-to-br ${
+                    caseStudy.palette ?? "from-[#efe9df] via-[#d4c8b5] to-[#bba68a]"
+                  } p-6 sm:p-8`}
+                >
+                  <div className="max-w-sm rounded-[1.6rem] border border-white/28 bg-white/62 p-5 backdrop-blur">
+                    <p className="text-[0.72rem] font-semibold uppercase tracking-[0.22em] text-[var(--muted)]">
+                      {resolveLocalizedValue(caseStudy.category, language)}
+                    </p>
+                    <h2 className="feature-title mt-3 text-[#111111]">
+                      {caseStudy.client}
+                    </h2>
+                    <p className="body-copy mt-3 text-[var(--muted-2)] sm:text-base sm:leading-7">
+                      {resolveLocalizedValue(caseStudy.summary, language)}
+                    </p>
+                  </div>
+                </div>
+              )}
+            </article>
+          ) : null}
 
           {caseStudy.videoVariants?.length ? (
             <section
