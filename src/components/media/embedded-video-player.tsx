@@ -28,6 +28,7 @@ type EmbeddedVideoPlayerProps = {
   priority?: boolean;
   previewMode?: boolean;
   showControls?: boolean;
+  disableMobileSource?: boolean;
 };
 
 type ManagedFrameProps = {
@@ -57,6 +58,7 @@ type ManagedDirectVideoProps = {
   shouldLoadMedia: boolean;
   shouldActivatePlayback: boolean;
   showControls: boolean;
+  disableMobileSource: boolean;
 };
 
 function triggerManagedVideoPlayback(
@@ -349,6 +351,7 @@ function ManagedDirectVideo({
   shouldLoadMedia,
   shouldActivatePlayback,
   showControls,
+  disableMobileSource,
 }: ManagedDirectVideoProps) {
   const [isReady, setIsReady] = useState(false);
   const [hasLoadedMetadata, setHasLoadedMetadata] = useState(false);
@@ -469,7 +472,7 @@ function ManagedDirectVideo({
           }}
           onError={() => setHasFailed(true)}
         >
-          {video.mobileSrc ? (
+          {video.mobileSrc && !disableMobileSource ? (
             <source media="(max-width: 767px)" src={video.mobileSrc} type="video/mp4" />
           ) : null}
           <source src={video.src} type="video/mp4" />
@@ -492,6 +495,7 @@ export function EmbeddedVideoPlayer({
   priority = false,
   previewMode = false,
   showControls,
+  disableMobileSource = false,
 }: EmbeddedVideoPlayerProps) {
   const { language } = useSitePreferences();
   const resolvedTitle = resolveLocalizedValue(title, language);
@@ -517,6 +521,7 @@ export function EmbeddedVideoPlayer({
     fallbackSrc ?? "",
     previewMode ? "preview" : "full",
     autoplay ? "autoplay" : "manual",
+    disableMobileSource ? "primary-only" : "responsive",
   ].join("::");
   const wrapperClassName = cn(
     "overflow-hidden",
@@ -592,6 +597,7 @@ export function EmbeddedVideoPlayer({
           shouldLoadMedia={shouldLoadMedia}
           shouldActivatePlayback={shouldActivatePlayback}
           showControls={resolvedShowControls}
+          disableMobileSource={disableMobileSource}
         />
       </div>
     );

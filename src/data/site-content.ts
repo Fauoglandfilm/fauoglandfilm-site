@@ -38,6 +38,7 @@ export type VideoVariant = {
   image?: string;
   imageAlt?: LocalizedText;
   mediaFit?: "cover" | "contain";
+  frame?: "landscape" | "portrait";
 };
 
 export type NavItem = {
@@ -955,7 +956,7 @@ export const caseStudies: CaseStudy[] = [
     mediaFit: "cover",
     video: {
       videoType: "direct",
-      src: "/assets/portfolio/treningshuset/videos/alternates/portrait-4x5/Kort_Reel45.mp4",
+      src: "/assets/portfolio/treningshuset/videos/web/treningshuset-desktop-16x9-web.mp4",
       mobileSrc: "/assets/portfolio/treningshuset/videos/alternates/mobile-9x16/Kort_Reel.mp4",
       poster: "/assets/portfolio/treningshuset/posters/treningshuset-bred-poster.png",
       label: {
@@ -965,46 +966,48 @@ export const caseStudies: CaseStudy[] = [
     },
     videoVariants: [
       {
-        slug: "4x5",
+        slug: "liggende",
         label: {
-          no: "4:5-versjon",
-          en: "4:5 version",
+          no: "Liggende versjon",
+          en: "Landscape version",
         },
         image: "/assets/portfolio/treningshuset/posters/treningshuset-bred-poster.png",
         imageAlt: {
-          no: "4:5-versjon av Treningshuset-filmen",
-          en: "4:5 version of the Treningshuset film",
+          no: "Liggende versjon av Treningshuset-filmen",
+          en: "Landscape version of the Treningshuset film",
         },
         mediaFit: "cover",
+        frame: "landscape",
         video: {
           videoType: "direct",
-          src: "/assets/portfolio/treningshuset/videos/alternates/portrait-4x5/Kort_Reel45.mp4",
+          src: "/assets/portfolio/treningshuset/videos/web/treningshuset-desktop-16x9-web.mp4",
           poster: "/assets/portfolio/treningshuset/posters/treningshuset-bred-poster.png",
           label: {
-            no: "Treningshuset - 4:5-versjon",
-            en: "Treningshuset - 4:5 version",
+            no: "Treningshuset - liggende versjon",
+            en: "Treningshuset - landscape version",
           },
         },
       },
       {
-        slug: "mobil",
+        slug: "staende",
         label: {
-          no: "Mobil versjon",
-          en: "Mobile version",
+          no: "Stående versjon",
+          en: "Portrait version",
         },
         image: "/assets/portfolio/treningshuset/posters/treningshuset-mobil-poster.png",
         imageAlt: {
-          no: "Mobil versjon av Treningshuset-filmen",
-          en: "Mobile version of the Treningshuset film",
+          no: "Stående versjon av Treningshuset-filmen",
+          en: "Portrait version of the Treningshuset film",
         },
         mediaFit: "cover",
+        frame: "portrait",
         video: {
           videoType: "direct",
           src: "/assets/portfolio/treningshuset/videos/alternates/mobile-9x16/Kort_Reel.mp4",
           poster: "/assets/portfolio/treningshuset/posters/treningshuset-mobil-poster.png",
           label: {
-            no: "Treningshuset - mobil versjon",
-            en: "Treningshuset - mobile version",
+            no: "Treningshuset - stående versjon",
+            en: "Treningshuset - portrait version",
           },
         },
       },
@@ -1654,8 +1657,8 @@ export const portfolioProjects: PortfolioProject[] = [
       en: "We created 10 films for Treningshuset across multiple formats, messages and campaign versions designed to drive more memberships.",
     },
     result: {
-      no: "4:5-versjonen prioriteres på desktop, mobilversjonen prioriteres på mobil, og begge er klare for annonser og sosiale medier.",
-      en: "The 4:5 version is prioritised on desktop, the mobile version on mobile, and both are ready for ads and social media.",
+      no: "Den liggende versjonen brukes i brede flater, mens den stående versjonen er klar for mobilannonser og sosiale medier.",
+      en: "The landscape version is used in wider placements, while the portrait version is ready for mobile ads and social media.",
     },
     detailHref: "/case/treningshuset",
     ctaLabel: viewCaseCta,
@@ -1667,7 +1670,7 @@ export const portfolioProjects: PortfolioProject[] = [
     },
     video: {
       videoType: "direct",
-      src: "/assets/portfolio/treningshuset/videos/alternates/portrait-4x5/Kort_Reel45.mp4",
+      src: "/assets/portfolio/treningshuset/videos/web/treningshuset-desktop-16x9-web.mp4",
       mobileSrc: "/assets/portfolio/treningshuset/videos/alternates/mobile-9x16/Kort_Reel.mp4",
       poster: "/assets/portfolio/treningshuset/posters/treningshuset-bred-poster.png",
       label: {
