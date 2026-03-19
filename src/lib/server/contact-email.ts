@@ -58,7 +58,7 @@ export function buildConfirmationEmail(payload: ContactFormPayload) {
     html: `
       <div style="font-family:Arial,Helvetica,sans-serif;color:#111827;line-height:1.6;">
         <h1 style="font-size:22px;margin-bottom:8px;">Takk for henvendelsen</h1>
-        <p style="margin:0 0 14px;">Hei ${escapeHtml(payload.name)}, vi har mottatt forespørselen din og følger opp innen 24 timer.</p>
+        <p style="margin:0 0 14px;">Hei ${escapeHtml(payload.name)}, vi har mottatt forespørselen din.</p>
         <p style="margin:0 0 14px;">Vi ser gjennom briefen, vurderer format og omfang, og kommer tilbake med anbefalt neste steg.</p>
         <div style="margin-top:18px;padding:14px 16px;border-radius:14px;background:#f3f4f6;">
           <p style="margin:0;font-weight:700;">Kort oppsummering</p>
@@ -68,7 +68,7 @@ export function buildConfirmationEmail(payload: ContactFormPayload) {
     text: [
       "Takk for henvendelsen",
       "",
-      `Hei ${payload.name}, vi har mottatt forespørselen din og følger opp innen 24 timer.`,
+      `Hei ${payload.name}, vi har mottatt forespørselen din.`,
       "Vi ser gjennom briefen, vurderer format og omfang, og kommer tilbake med anbefalt neste steg.",
       "",
       "Kort oppsummering:",

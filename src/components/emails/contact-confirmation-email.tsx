@@ -15,7 +15,7 @@ export function ContactConfirmationEmail({
     >
       <h1 style={{ fontSize: "22px", marginBottom: "8px" }}>Takk for henvendelsen</h1>
       <p style={{ margin: "0 0 14px" }}>
-        Hei {payload.name}, vi har mottatt forespørselen din og følger opp innen 24 timer.
+        Hei {payload.name}, vi har mottatt forespørselen din.
       </p>
       <p style={{ margin: "0 0 14px" }}>
         Vi ser gjennom briefen, vurderer format og omfang, og kommer tilbake med anbefalt neste steg.

@@ -177,10 +177,6 @@ export const siteConfig = {
   phonePrimaryHref: "tel:+4794053050",
   location: "Oslo",
   locationLabel: "Oslo, Norway",
-  responseTime: {
-    no: "Vi følger opp innen 24 timer.",
-    en: "We follow up within 24 hours.",
-  },
   bookingHref: "/kontakt",
   bookingLabel: {
     no: "Book et uforpliktende møte",
@@ -520,7 +516,6 @@ export const aboutStudioContent = {
   stats: [
     { value: "2", label: { no: "seniorer", en: "seniors" } },
     { value: "Oslo", label: { no: "base", en: "base" } },
-    { value: "24 t", label: { no: "første respons", en: "first reply" } },
   ],
 } satisfies {
   eyebrow: LocalizedText;
@@ -1991,8 +1986,8 @@ export const contactFaq: FaqItem[] = [
   {
     question: { no: "Hva skjer etter at vi tar kontakt?", en: "What happens after we get in touch?" },
     answer: {
-      no: "Vi følger opp innen 24 timer, avklarer mål, kanal og tidslinje, og foreslår riktig oppsett og neste steg.",
-      en: "We follow up within 24 hours, align on goal, channel and timing, and recommend the right setup and next step.",
+      no: "Vi avklarer mål, kanal og tidslinje, og foreslår riktig oppsett og neste steg.",
+      en: "We align on goal, channel and timing, and recommend the right setup and next step.",
     },
   },
 ];
