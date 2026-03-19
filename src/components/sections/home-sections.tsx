@@ -86,6 +86,32 @@ const closingCtaContent = {
   secondaryCta: LocalizedText;
 };
 
+function HeroTypewriterTitle({ title }: { title: string }) {
+  const shouldReduceMotion = useReducedMotion();
+  const characters = Array.from(title);
+
+  if (shouldReduceMotion) {
+    return <>{title}</>;
+  }
+
+  return (
+    <span aria-label={title} role="text" className="hero-typewriter">
+      <span className="sr-only">{title}</span>
+      <span aria-hidden="true">
+        {characters.map((character, index) => (
+          <span
+            key={`${character}-${index}`}
+            className="hero-typewriter__char"
+            style={{ animationDelay: `${index * 0.038}s` }}
+          >
+            {character === " " ? "\u00A0" : character}
+          </span>
+        ))}
+      </span>
+    </span>
+  );
+}
+
 export function HeroSection() {
   const heroVideo = videoLibrary.hero;
   const { language } = useSitePreferences();
@@ -100,6 +126,7 @@ export function HeroSection() {
       : "Oslo / Commercial Film / Production";
   const secondaryCta = language === "no" ? "Se arbeid" : "View work";
   const activeHeroSrc = heroVideo.src;
+  const heroTitle = resolveLocalizedValue(homeHeroContent.title, language);
 
   useEffect(() => {
     const video = heroVideoRef.current;
@@ -208,7 +235,7 @@ export function HeroSection() {
               </span>
             </div>
             <h1 className="hero-title mt-4 max-w-[9.4ch] text-white sm:mt-6">
-              {resolveLocalizedValue(homeHeroContent.title, language)}
+              <HeroTypewriterTitle title={heroTitle} />
             </h1>
             <p className="mt-3.5 max-w-[31rem] text-[0.94rem] leading-6 text-white/80 sm:mt-5 sm:text-[1.05rem] sm:leading-7">
               {resolveLocalizedValue(homeHeroContent.description, language)}

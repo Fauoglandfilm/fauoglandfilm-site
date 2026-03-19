@@ -216,8 +216,8 @@ export const siteConfig = {
 
 export const homeHeroContent = {
   title: {
-    no: "Film som faktisk selger.",
-    en: "Film that actually sells.",
+    no: "Film som faktisk selger!",
+    en: "Film that actually sells!",
   },
   description: {
     no: "Mer synlighet, flere henvendelser og bedre konvertering fra film bygget for nettside, annonser og sosiale medier.",
