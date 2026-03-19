@@ -189,7 +189,7 @@ function ShortFilmCard({
   return (
     <Reveal delay={0.04 * index}>
       <article className="card-surface overflow-hidden rounded-[2rem] p-4 sm:p-5 lg:p-6">
-        <div className="grid gap-5 lg:grid-cols-[minmax(13rem,16rem)_1fr] xl:grid-cols-[17rem_1fr] xl:gap-6">
+        <div className="grid gap-5 lg:grid-cols-[minmax(14rem,17rem)_1fr] xl:grid-cols-[18rem_1fr] xl:gap-6">
           <PosterButton
             image={project.poster}
             title={title}
@@ -212,7 +212,7 @@ function ShortFilmCard({
                 {title}
               </h3>
 
-              <p className="mt-3 max-w-3xl text-[0.98rem] leading-7 text-[var(--muted-2)]">
+              <p className="mt-3 max-w-3xl text-[0.94rem] leading-7 text-[var(--muted-2)]">
                 {resolveLocalizedValue(project.logline, language)}
               </p>
             </div>
@@ -288,21 +288,17 @@ function ShowcaseCard({
         ) : null}
 
         <div className="p-5 sm:p-6">
-          <div className="flex flex-wrap items-center gap-2 text-[0.68rem] font-semibold uppercase tracking-[0.18em] text-[var(--muted)]">
-            <span>{project.client}</span>
-            <span className="h-1 w-1 rounded-full bg-[color:var(--muted)]/50" />
-            <span>{resolveLocalizedValue(project.role, language)}</span>
-          </div>
+          <div className="text-[0.68rem] font-semibold uppercase tracking-[0.18em] text-[var(--muted)]">{project.client}</div>
 
           <h3 className="mt-3 text-[1.28rem] font-semibold tracking-[-0.03em] text-[color:var(--foreground)]">
             {title}
           </h3>
 
-          <p className="mt-3 text-[0.96rem] font-medium leading-7 text-[color:var(--foreground)]/92">
+          <p className="mt-3 text-[0.94rem] font-medium leading-7 text-[color:var(--foreground)]/92">
             {resolveLocalizedValue(project.impact, language)}
           </p>
 
-          <p className="mt-3 text-sm leading-6 text-[var(--muted-2)]">
+          <p className="mt-2.5 text-sm leading-6 text-[var(--muted-2)]">
             {resolveLocalizedValue(project.summary, language)}
           </p>
 
@@ -342,58 +338,55 @@ function RoleGroupCard({
           </p>
         </div>
 
-        <div className="mt-5 divide-y divide-[color:var(--line)]/70">
+        <div className="mt-5">
+          <div className="mb-4 inline-flex min-h-9 items-center rounded-full border border-[color:var(--line)]/70 bg-[color:var(--surface-muted)]/78 px-3.5 py-2 text-[0.68rem] font-semibold uppercase tracking-[0.16em] text-[var(--muted)]">
+            {language === "no" ? "Producer / Crew" : "Producer / Crew"}
+          </div>
+
+          <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
           {group.items.map((item) => {
             const gallery = item.poster ? [item.poster] : [];
 
             return (
-              <div key={item.slug} className="py-4 first:pt-0 last:pb-0">
-                <div className="flex gap-3">
+              <div key={item.slug} className="min-w-0">
+                <div className="flex h-full flex-col gap-3">
                   {item.poster ? (
                     <button
                       type="button"
                       onClick={() => onOpenGallery(resolveLocalizedValue(item.title, language), gallery, 0)}
                       className={cn(
-                        "relative hidden shrink-0 overflow-hidden rounded-[1rem] border border-[color:var(--line)]/70 bg-[#0b0d12] transition hover:border-[color:var(--accent)]/36 sm:block",
+                        "relative w-full shrink-0 overflow-hidden rounded-[1.2rem] border border-[color:var(--line)]/70 bg-[#0b0d12] transition hover:border-[color:var(--accent)]/36",
                         item.poster.aspect === "landscape" || item.poster.aspect === "wide"
-                          ? "h-[4.5rem] w-24"
-                          : "h-[5.5rem] w-16",
+                          ? "aspect-[16/10]"
+                          : "aspect-[0.72/1]",
                       )}
                     >
                       <Image
                         src={item.poster.src}
                         alt={resolveLocalizedValue(item.poster.alt, language)}
                         fill
-                        sizes="96px"
+                        sizes="(min-width: 1280px) 14rem, (min-width: 1024px) 18vw, (min-width: 640px) 40vw, 100vw"
                         className={cn(item.poster.fit === "cover" ? "object-cover" : "object-contain p-1.5")}
                       />
                     </button>
-                  ) : null}
-
-                  <div className="min-w-0 flex-1">
-                    <div className="flex flex-wrap items-center gap-2">
-                      <p className="text-sm font-semibold text-[color:var(--foreground)]">
+                  ) : (
+                    <div className="flex aspect-[0.72/1] items-end rounded-[1.2rem] border border-dashed border-[color:var(--line)]/70 bg-[color:var(--surface-muted)]/76 p-4">
+                      <p className="max-w-[12ch] text-sm font-medium leading-6 text-[var(--muted)]">
                         {resolveLocalizedValue(item.title, language)}
                       </p>
-                      <span className="rounded-full border border-[color:var(--line)]/70 bg-[color:var(--surface-muted)]/78 px-2.5 py-1 text-[0.62rem] font-semibold uppercase tracking-[0.14em] text-[var(--muted)]">
-                        {resolveLocalizedValue(item.role, language)}
-                      </span>
                     </div>
-                    <p className="mt-2 text-sm leading-6 text-[var(--muted-2)]">
-                      {resolveLocalizedValue(item.summary, language)}
+                  )}
+
+                  <div className="min-w-0">
+                    <p className="text-sm font-semibold leading-6 text-[color:var(--foreground)]">
+                      {resolveLocalizedValue(item.title, language)}
                     </p>
-                    {item.links?.length ? (
-                      <div className="mt-3 flex flex-wrap gap-2">
-                        {item.links.map((link) => (
-                          <ProjectLinkPill key={`${item.slug}-${link.href}`} link={link} />
-                        ))}
-                      </div>
-                    ) : null}
                   </div>
                 </div>
               </div>
             );
           })}
+          </div>
         </div>
       </article>
     </Reveal>
@@ -631,6 +624,24 @@ export function TommyProfileContent() {
       </SectionShell>
 
       <SectionShell
+        eyebrow={resolveLocalizedValue(tommyPortfolioPage.otherRolesEyebrow, language)}
+        title={resolveLocalizedValue(tommyPortfolioPage.otherRolesTitle, language)}
+        description={resolveLocalizedValue(tommyPortfolioPage.otherRolesDescription, language)}
+        className="pt-0"
+      >
+        <div className="grid gap-4">
+          {tommyPortfolioPage.otherRoleGroups.map((group, index) => (
+            <RoleGroupCard
+              key={group.slug}
+              group={group}
+              index={index}
+              onOpenGallery={openGallery}
+            />
+          ))}
+        </div>
+      </SectionShell>
+
+      <SectionShell
         eyebrow={resolveLocalizedValue(tommyPortfolioPage.commercialEyebrow, language)}
         title={resolveLocalizedValue(tommyPortfolioPage.commercialTitle, language)}
         description={resolveLocalizedValue(tommyPortfolioPage.commercialDescription, language)}
@@ -659,24 +670,6 @@ export function TommyProfileContent() {
             <ShowcaseCard
               key={project.slug}
               project={project}
-              index={index}
-              onOpenGallery={openGallery}
-            />
-          ))}
-        </div>
-      </SectionShell>
-
-      <SectionShell
-        eyebrow={resolveLocalizedValue(tommyPortfolioPage.otherRolesEyebrow, language)}
-        title={resolveLocalizedValue(tommyPortfolioPage.otherRolesTitle, language)}
-        description={resolveLocalizedValue(tommyPortfolioPage.otherRolesDescription, language)}
-        className="pt-0"
-      >
-        <div className="grid gap-4 xl:grid-cols-3">
-          {tommyPortfolioPage.otherRoleGroups.map((group, index) => (
-            <RoleGroupCard
-              key={group.slug}
-              group={group}
               index={index}
               onOpenGallery={openGallery}
             />
