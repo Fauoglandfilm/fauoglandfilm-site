@@ -496,7 +496,7 @@ function CountUpValue({
       return;
     }
 
-    const duration = 9800;
+    const duration = 19600;
     const start = performance.now();
     let frameId = 0;
 
