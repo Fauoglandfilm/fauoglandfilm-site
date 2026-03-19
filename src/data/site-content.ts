@@ -444,7 +444,7 @@ export const clientLogos: ClientLogo[] = [
   },
   {
     name: "Nei til Atomvåpen",
-    src: "/media/logos/clients/COLOR/Nei_til_atomva%CC%8Apen-logo.png",
+    src: "/media/logos/clients/COLOR/nei-til-atomvapen-logo.png",
     width: 600,
     height: 420,
     scale: 1.1,
