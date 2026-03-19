@@ -34,7 +34,7 @@ export function ClientLogoMarquee({
             {uniqueLogos.map((logo) => (
               <li
                 key={`${copyIndex}-${logo.name}`}
-                className="flex h-[3rem] min-w-[7.75rem] shrink-0 items-center justify-center sm:h-[3.4rem] sm:min-w-[9rem] lg:h-[3.8rem] lg:min-w-[10.5rem]"
+                className="flex h-[4.45rem] min-w-[8.25rem] shrink-0 items-center justify-center px-2 sm:h-[5rem] sm:min-w-[9.75rem] sm:px-2.5 lg:h-[5.6rem] lg:min-w-[11.25rem] lg:px-3"
               >
                 <Image
                   src={logo.src}
@@ -42,9 +42,9 @@ export function ClientLogoMarquee({
                   width={logo.width}
                   height={logo.height}
                   className={cn(
-                    "h-7 w-auto max-w-[6.75rem] object-contain opacity-100 transition duration-300 sm:h-8 sm:max-w-[7.8rem] lg:h-9 lg:max-w-[9.4rem]",
+                    "h-10 w-auto max-w-[8.35rem] object-contain opacity-100 transition duration-300 sm:h-[4.45rem] sm:max-w-[9.5rem] lg:h-[4.95rem] lg:max-w-[10.8rem]",
                     theme === "dark" && "brightness-[1.08] contrast-[1.04]",
-                    theme === "light" && logo.invertInLight && "invert brightness-[0.18] contrast-[1.12]",
+                    theme === "light" && logo.invertInLight && "invert brightness-[0.14] contrast-[1.14]",
                   )}
                   style={{
                     transform: `scale(${logo.scale ?? 1})`,
