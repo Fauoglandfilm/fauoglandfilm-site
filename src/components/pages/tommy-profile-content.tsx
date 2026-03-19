@@ -381,6 +381,11 @@ function RoleGroupCard({
                     <p className="text-sm font-semibold leading-6 text-[color:var(--foreground)]">
                       {resolveLocalizedValue(item.title, language)}
                     </p>
+                    {item.summary ? (
+                      <p className="mt-1.5 text-sm leading-6 text-[var(--muted-2)]">
+                        {resolveLocalizedValue(item.summary, language)}
+                      </p>
+                    ) : null}
                   </div>
                 </div>
               </div>
