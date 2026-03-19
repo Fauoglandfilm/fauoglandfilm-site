@@ -162,7 +162,7 @@ export const tommyPortfolioPage = {
         externalLink("FilmFreeway", "https://filmfreeway.com/AmessagefromMartha"),
       ],
       poster: poster(
-        "/assets/portfolio/a-message-from-martha/posters/a-message-from-martha-poster.jpeg",
+        "/assets/team/tommy/portfolio/shortfilms/a-message-from-martha-poster.jpg",
         "Plakat for A Message from Martha",
         "Poster for A Message from Martha",
       ),
@@ -191,7 +191,7 @@ export const tommyPortfolioPage = {
         externalLink("Festival page", "https://kortfilmfestivalen.no/film/en-midnatts-vuggesang/"),
       ],
       poster: poster(
-        "/assets/portfolio/midnatts-vuggesang/posters/en-midnatts-vuggesang-poster.jpg",
+        "/assets/team/tommy/portfolio/shortfilms/a-midnight-lullaby-poster.png",
         "Plakat for En Midnatts Vuggesang",
         "Poster for A Midnight Lullaby",
       ),
@@ -222,7 +222,7 @@ export const tommyPortfolioPage = {
         externalLink("IMDb", "https://www.imdb.com/title/tt32215748/"),
       ],
       poster: poster(
-        "/assets/team/tommy/portfolio/maura/maura-poster.png",
+        "/assets/team/tommy/portfolio/shortfilms/maura-poster.png",
         "Plakat for Maura",
         "Poster for Maura",
       ),
@@ -250,7 +250,7 @@ export const tommyPortfolioPage = {
       ],
       links: [externalLink("FilmFreeway", "https://filmfreeway.com/HuldredansSHORT")],
       poster: poster(
-        "/assets/portfolio/huldredans/posters/huldredans-poster.jpg",
+        "/assets/team/tommy/portfolio/shortfilms/huldredans-poster.png",
         "Plakat for Huldredans",
         "Poster for Huldredans",
       ),
@@ -278,7 +278,7 @@ export const tommyPortfolioPage = {
       ],
       links: [externalLink("FilmFreeway", "https://filmfreeway.com/TitleMirrorEffect")],
       poster: poster(
-        "/assets/team/tommy/portfolio/mirror-effect/mirror-effect-poster.jpg",
+        "/assets/team/tommy/portfolio/shortfilms/mirror-effect-poster.jpg",
         "Plakat for Mirror Effect",
         "Poster for Mirror Effect",
       ),
@@ -456,9 +456,9 @@ export const tommyPortfolioPage = {
       },
       links: [],
       poster: poster(
-        "/assets/team/tommy/portfolio/event/the-key-collection-logo.svg",
-        "Logo for The Key Collection",
-        "Logo for The Key Collection",
+        "/assets/team/tommy/portfolio/event/the-key-collection-poster.png",
+        "Visual for The Key Collection",
+        "Visual for The Key Collection",
         "contain",
         "wide",
       ),
@@ -479,9 +479,9 @@ export const tommyPortfolioPage = {
       },
       links: [],
       poster: poster(
-        "/assets/team/tommy/portfolio/event/tm51-logo.svg",
-        "Logo for TM51",
-        "Logo for TM51",
+        "/assets/team/tommy/portfolio/event/tm51-poster.png",
+        "Visual for TM51",
+        "Visual for TM51",
         "contain",
         "wide",
       ),
@@ -496,26 +496,26 @@ export const tommyPortfolioPage = {
     en: "Film & TV",
   },
   otherRolesDescription: {
-    no: "Utvalgte produksjoner som viser bredde fra større film- og TV-oppsett, holdt bevisst korte og visuelle.",
-    en: "Selected productions showing breadth from larger film and TV setups, intentionally kept short and visual.",
+    no: "",
+    en: "",
   },
   otherRoleGroups: [
     {
       slug: "film-and-tv",
       title: {
-        no: "Utvalgte produksjoner",
-        en: "Selected productions",
+        no: "",
+        en: "",
       },
       description: {
-        no: "Holdt til ett visuelt utvalg, med fokus på prosjektene fremfor rolletitlene.",
-        en: "Kept to one visual selection, with focus on the projects rather than the role titles.",
+        no: "",
+        en: "",
       },
       items: [
         {
           slug: "skjonnheten-skal-frelse-verden",
           title: sameText("Skjønnheten skal frelse verden"),
           poster: poster(
-            "/assets/team/tommy/portfolio/other-roles/skjonnheten-skal-frelse-verden-poster.svg",
+            "/assets/team/tommy/portfolio/other-roles/skjonnheten-skal-frelse-verden-poster.png",
             "Poster for Skjønnheten skal frelse verden",
             "Poster for Skjønnheten skal frelse verden",
             "cover",
@@ -573,7 +573,7 @@ export const tommyPortfolioPage = {
           slug: "affeksjonsverdi",
           title: sameText("Affeksjonsverdi"),
           poster: poster(
-            "/assets/team/tommy/portfolio/other-roles/affeksjonsverdi-poster.svg",
+            "/assets/team/tommy/portfolio/other-roles/affeksjonsverdi-poster.png",
             "Poster for Affeksjonsverdi",
             "Poster for Affeksjonsverdi",
             "cover",
@@ -585,10 +585,6 @@ export const tommyPortfolioPage = {
           title: sameText("Christmas Tomorrow"),
         },
         {
-          slug: "north-stars-acting-hub",
-          title: sameText("North Stars Acting Hub"),
-        },
-        {
           slug: "the-actors-hub-oslo",
           title: sameText("THE ACTORS HUB: \"DON'T ACT\""),
           summary: {
@@ -596,11 +592,11 @@ export const tommyPortfolioPage = {
             en: "An intensive acting workshop with top instructors from Los Angeles. Showreels and production by Fau&Land Film. Executive Producer: David Nutter. Instructors: Natassia Malthe & David Nutter.",
           },
           poster: poster(
-            "/media/logos/clients/COLOR/actorshub_logo_white_NY-kopi.png",
-            "Logo for The Actors Hub",
-            "Logo for The Actors Hub",
-            "contain",
-            "wide",
+            "/assets/team/tommy/portfolio/other-roles/the-actors-hub-dont-act-poster.png",
+            "Poster for The Actors Hub: Don't Act",
+            "Poster for The Actors Hub: Don't Act",
+            "cover",
+            "landscape",
           ),
         },
         {
@@ -613,22 +609,6 @@ export const tommyPortfolioPage = {
             "cover",
             "landscape",
           ),
-        },
-        {
-          slug: "norgesexpo",
-          title: sameText("Norgesexpo - PlayStation L2R2"),
-        },
-        {
-          slug: "norwegian-film-school",
-          title: sameText("Norwegian Film School"),
-        },
-        {
-          slug: "heisjef-advertising",
-          title: sameText("HeiSjef Advertising"),
-        },
-        {
-          slug: "ruter-jac-skilt",
-          title: sameText("Ruter / Jac Skilt Advertising"),
         },
       ],
     },
