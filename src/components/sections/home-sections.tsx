@@ -94,24 +94,9 @@ function HeroTypewriterTitle({
   title: string;
   className?: string;
 }) {
-  const trimmedTitle = title.trim();
-
-  const forcedLines =
-    trimmedTitle === "Film som faktisk selger!"
-      ? ["Film som faktisk", "selger!"]
-      : trimmedTitle === "Film that actually sells!"
-        ? ["Film that actually", "sells!"]
-        : null;
-
   return (
     <span className={cn("hero-typewriter", className)}>
-      {forcedLines
-        ? forcedLines.map((line) => (
-            <span key={line} className="hero-typewriter__line">
-              {line}
-            </span>
-          ))
-        : <span className="hero-typewriter__line">{trimmedTitle}</span>}
+      <span className="hero-typewriter__line">{title.trim()}</span>
     </span>
   );
 }
@@ -202,9 +187,9 @@ export function HeroSection() {
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(210,173,116,0.11),transparent_30%),radial-gradient(circle_at_82%_14%,rgba(112,143,216,0.06),transparent_22%)]" />
       </div>
 
-      <div className="site-container relative z-[1] flex min-h-[72svh] items-end pb-7 pt-[5.35rem] sm:min-h-[92svh] sm:pb-14 sm:pt-[8.8rem] lg:min-h-[96vh] lg:justify-end lg:pb-16 lg:pt-[10.5rem]">
-        <div className="w-full lg:flex lg:justify-end">
-          <div className="max-w-[23.5rem] sm:max-w-[27rem] lg:max-w-[29rem] xl:max-w-[31rem]">
+      <div className="site-container relative z-[1] flex min-h-[72svh] items-end pb-7 pt-[5.35rem] sm:min-h-[92svh] sm:pb-14 sm:pt-[8.8rem] lg:min-h-[96vh] lg:pb-16 lg:pt-[10.5rem]">
+        <div className="w-full">
+          <div className="max-w-[24rem] sm:max-w-[27rem] lg:max-w-[33rem] xl:max-w-[35rem]">
             <div className="hero-editorial-block">
               <p className="hero-editorial-kicker">{eyebrow}</p>
               <h1 className="hero-title hero-title--editorial text-white">
