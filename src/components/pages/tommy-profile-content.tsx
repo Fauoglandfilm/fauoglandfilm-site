@@ -263,25 +263,40 @@ function RoleGroupCard({
       <article className="glass-panel rounded-[2rem] px-5 py-5 sm:px-6 sm:py-6 lg:px-7 lg:py-7">
         <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
           {group.items.filter((item) => item.poster).map((item) => {
+            const isActorsHub = item.slug === "the-actors-hub-oslo";
+
             return (
               <div key={item.slug} className="min-w-0">
                 <div className="flex h-full flex-col gap-3">
                   {item.poster ? (
                     <div
                       className={cn(
-                        "relative w-full shrink-0 overflow-hidden rounded-[1.45rem] border border-[color:var(--line)]/70 bg-[#0b0d12]",
+                        "relative w-full shrink-0 overflow-hidden rounded-[1.45rem] border border-[color:var(--line)]/70",
+                        isActorsHub ? "bg-black" : "bg-[#0b0d12]",
                         item.poster.aspect === "landscape" || item.poster.aspect === "wide"
                           ? "aspect-[16/10]"
                           : "aspect-[0.72/1]",
                       )}
                     >
-                      <Image
-                        src={item.poster.src}
-                        alt={resolveLocalizedValue(item.poster.alt, language)}
-                        fill
-                        sizes="(min-width: 1280px) 14rem, (min-width: 1024px) 18vw, (min-width: 640px) 40vw, 100vw"
-                        className={cn(item.poster.fit === "cover" ? "object-cover" : "object-contain p-1.5")}
-                      />
+                      {isActorsHub ? (
+                        <div className="absolute inset-0 flex items-center justify-center bg-black p-5 sm:p-6">
+                          <Image
+                            src="/media/logos/clients/COLOR/actorshub_logo_white_NY-kopi.png"
+                            alt={resolveLocalizedValue(item.poster.alt, language)}
+                            fill
+                            sizes="(min-width: 1280px) 14rem, (min-width: 1024px) 18vw, (min-width: 640px) 40vw, 100vw"
+                            className="object-contain p-5 sm:p-6"
+                          />
+                        </div>
+                      ) : (
+                        <Image
+                          src={item.poster.src}
+                          alt={resolveLocalizedValue(item.poster.alt, language)}
+                          fill
+                          sizes="(min-width: 1280px) 14rem, (min-width: 1024px) 18vw, (min-width: 640px) 40vw, 100vw"
+                          className={cn(item.poster.fit === "cover" ? "object-cover" : "object-contain p-1.5")}
+                        />
+                      )}
                     </div>
                   ) : null}
 
