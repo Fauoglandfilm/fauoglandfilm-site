@@ -292,10 +292,8 @@ export const portfolioPageContent = {
 export const videoLibrary = {
   hero: {
     videoType: "direct",
-    src: "/media/hero/FL-Bakgrunn_2-1-.mp4", // previous hero video backup: /media/hero/hero-nature-desktop.mp4
-    mobileSrc: "/media/hero/FL-Bakgrunn-4-5-1.mp4",
-    poster: "/media/hero/hero-nature-desktop-poster.png",
-    mobilePoster: "/media/hero/FL-Bakgrunn-4-5-1-poster.jpg",
+    src: "/media/hero/FL-Bakgrunn_2-1-.mp4",
+    poster: "/media/hero/FL-Bakgrunn_2-1--poster.jpg",
     label: {
       no: "Naturfilm for Fau&Land Film",
       en: "Nature film for Fau&Land Film",
