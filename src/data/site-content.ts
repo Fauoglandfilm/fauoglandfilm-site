@@ -206,7 +206,6 @@ export const siteConfig = {
     "bedriftsfilm Oslo",
     "aftermovie Oslo",
     "employer branding video Oslo",
-    "live streaming Oslo",
     "videobyrå Oslo",
   ],
 };
@@ -338,8 +337,8 @@ export const homeServiceVideoLibrary = {
     src: "/assets/services/videos/konsert.mp4",
     poster: "/assets/services/posters/konsert-poster.png",
     label: {
-      no: "Aftermovie og live",
-      en: "Aftermovie and live",
+      no: "Aftermovie",
+      en: "Aftermovie",
     },
   },
 } satisfies Record<string, VideoAsset>;
@@ -490,8 +489,8 @@ export const servicePillars: ServicePillar[] = [
   {
     eyebrow: "04",
     title: {
-      no: "Aftermovie og live",
-      en: "Aftermovie and live",
+      no: "Aftermovie",
+      en: "Aftermovie",
     },
     summary: {
       no: "Dekning og uttak som gir arrangementet lengre levetid.",
@@ -620,10 +619,10 @@ export const serviceAreas: ServiceArea[] = [
   },
   {
     slug: "event-live",
-    title: { no: "Aftermovie og live", en: "Aftermovie and live" },
+    title: { no: "Aftermovie", en: "Aftermovie" },
     summary: {
-      no: "Aftermovies, reels, intervjuer og livesendinger med gjenbruk i fokus.",
-      en: "Aftermovies, reels, interviews and livestreams built for reuse.",
+      no: "Aftermovies, reels og intervjuer med gjenbruk i fokus.",
+      en: "Aftermovies, reels and interviews built for reuse.",
     },
     eyebrow: { no: "Arrangement og etterbruk", en: "Events and reuse" },
     value: {
@@ -641,7 +640,7 @@ export const serviceAreas: ServiceArea[] = [
     deliverables: [
       { no: "Aftermovie / stemningsfilm", en: "Aftermovie / mood film" },
       { no: "Reels og korte uttak", en: "Reels and short cutdowns" },
-      { no: "Flerkamera eller stream", en: "Multicam or stream" },
+      { no: "Flerkameraopptak", en: "Multicam capture" },
     ],
     ctaLabel: { no: "Få et konkret forslag", en: "Get a concrete recommendation" },
     href: "/kontakt",
@@ -695,11 +694,11 @@ export const priceGuides: PriceGuide[] = [
     },
   },
   {
-    title: { no: "Aftermovie og livestream", en: "Aftermovie and livestream" },
+    title: { no: "Aftermovie", en: "Aftermovie" },
     range: { no: "Fra 15 000-60 000 kr+", en: "From NOK 15,000-60,000+" },
     detail: {
-      no: "Typisk for konferanser, høydepunktfilmer, intervjuer og streaming.",
-      en: "Typical for conferences, highlight films, interviews and livestreams.",
+      no: "Typisk for konferanser, høydepunktfilmer, intervjuer og dokumentasjon.",
+      en: "Typical for conferences, highlight films, interviews and event documentation.",
     },
   },
   {

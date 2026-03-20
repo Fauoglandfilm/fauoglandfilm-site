@@ -112,7 +112,7 @@ export const tommyPortfolioPage = {
   },
   heroDescription: {
     no: "Tommy kombinerer prisvinnende kortfilm, kommersielle produksjoner og eventer med tydelig produksjonsledelse. Han går inn som produsent, line producer og prosjektleder når prosjekter må lande på tid og budsjett.",
-    en: "Tommy combines award-winning short film, commercial productions and live events with clear production leadership. He steps in as producer, line producer and project manager when projects need to land on time and on budget.",
+    en: "Tommy combines award-winning short film, commercial productions and events with clear production leadership. He steps in as producer, line producer and project manager when projects need to land on time and on budget.",
   },
   heroRoles: [
     sameText("Producer"),
@@ -214,7 +214,7 @@ export const tommyPortfolioPage = {
       ],
       festivals: [
         "Nepal Cultural International Film Festival - Official Selection",
-        "FICOCC - Live Screening",
+        "FICOCC - Screening",
       ],
       links: [
         externalLink("FilmFreeway", "https://filmfreeway.com/MauraShort"),
@@ -408,12 +408,12 @@ export const tommyPortfolioPage = {
     en: "Project leadership",
   },
   eventsTitle: {
-    no: "Event & live",
-    en: "Events & live",
+    no: "Event",
+    en: "Events",
   },
   eventsDescription: {
-    no: "Prosjekter der Tommy holder konsept, logistikk og gjennomføring samlet i live- og eventformat.",
-    en: "Projects where Tommy keeps concept, logistics and execution aligned in event and live settings.",
+    no: "Prosjekter der Tommy holder konsept, logistikk og gjennomføring samlet i eventformat.",
+    en: "Projects where Tommy keeps concept, logistics and execution aligned in event settings.",
   },
   eventProjects: [
     {

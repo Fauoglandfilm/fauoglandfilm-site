@@ -413,7 +413,7 @@ export const uiCopy = {
         "Reklamefilm",
         "Bedriftsfilm",
         "SoMe-innhold",
-        "Aftermovie / live",
+        "Aftermovie",
         "Usikker ennå",
       ],
       budgets: [
@@ -440,7 +440,7 @@ export const uiCopy = {
         "Commercial film",
         "Company film",
         "Social content",
-        "Aftermovie / live",
+        "Aftermovie",
         "Not sure yet",
       ],
       budgets: [

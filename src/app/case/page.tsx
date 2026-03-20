@@ -5,7 +5,7 @@ import { buildMetadata } from "@/lib/seo";
 export const metadata = buildMetadata({
   title: "Portefølje | Showreel, kampanje, kortfilm og event",
   description:
-    "Se Fau&Land Films portefølje med showreel, kampanjefilm, kortfilm, musikkvideo, event og kommersielt innhold bygget på dagens live-portefølje.",
+    "Se Fau&Land Films portefølje med showreel, kampanjefilm, kortfilm, musikkvideo, event og kommersielt innhold bygget på dagens portefølje.",
   path: "/case",
 });
 
