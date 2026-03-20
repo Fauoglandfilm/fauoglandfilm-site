@@ -294,7 +294,7 @@ export const videoLibrary = {
   hero: {
     videoType: "direct",
     src: "/media/hero/FL-Bakgrunn_2-1-.mp4",
-    poster: "/media/hero/FL-Bakgrunn_2-1--poster.jpg",
+    poster: "/media/hero/hero-clean-preload.jpg",
     label: {
       no: "Naturfilm for Fau&Land Film",
       en: "Nature film for Fau&Land Film",
