@@ -34,6 +34,37 @@ const FEATURED_PROJECT_SLUGS = [
   "ville-gleder-villmarksforedrag",
 ] as const;
 
+const portfolioModalCopyOverrides = {
+  "ville-gleder-villmarksforedrag": {
+    no: {
+      summary:
+        "Promofilmen løfter fram Mattis Thørud og Jan Monsen i naturen, og gjør villmarksforedraget lettere å forstå, huske og booke.",
+      result:
+        "Bygget for å skape nysgjerrighet rundt foredraget og gi arrangører en tydelig følelse av stemning, innhold og målgruppe.",
+    },
+    en: {
+      summary:
+        "This promo film places Mattis Thørud and Jan Monsen in the outdoors and makes the wilderness talk easier to understand, remember and book.",
+      result:
+        "Built to spark curiosity around the talk and give organisers a clear sense of the tone, content and audience fit.",
+    },
+  },
+  "ville-gleder-vat-kald-sulten": {
+    no: {
+      summary:
+        "Filmen setter foredraget \"Våt, kald og sulten\" opp mot en vanlig arbeidshverdag, og gjør konseptet tydeligere og mer salgbart.",
+      result:
+        "Bygget for å gjøre innholdet lettere å formidle raskt, og for å hjelpe Ville Gleder med flere relevante bookinger.",
+    },
+    en: {
+      summary:
+        "This film contrasts the talk “Wet, cold and hungry” with everyday working life, making the concept clearer and easier to sell.",
+      result:
+        "Built to communicate the idea faster and help Ville Gleder convert more relevant bookings.",
+    },
+  },
+} as const;
+
 export function PortfolioPageContent({
   projects = portfolioProjects,
   groups = portfolioGroups,
@@ -412,7 +443,12 @@ function PortfolioVideoModal({
   const { language } = useSitePreferences();
   const title = resolveLocalizedValue(project.title, language);
   const format = resolveLocalizedValue(project.format, language);
-  const summary = resolveLocalizedValue(project.summary, language);
+  const copyOverride =
+    project.slug in portfolioModalCopyOverrides
+      ? portfolioModalCopyOverrides[project.slug as keyof typeof portfolioModalCopyOverrides][language]
+      : null;
+  const summary = copyOverride?.summary ?? resolveLocalizedValue(project.summary, language);
+  const result = copyOverride?.result ?? (project.result ? resolveLocalizedValue(project.result, language) : null);
   const modalLabel = language === "no" ? "Lukk video" : "Close video";
   const modalActionClassName =
     "inline-flex items-center justify-center gap-2 rounded-full border px-5 py-3 text-sm font-semibold transition [html[data-theme='light']_&]:border-black/12 [html[data-theme='light']_&]:bg-white [html[data-theme='light']_&]:text-black [html[data-theme='light']_&]:hover:bg-[#f7f7f8] [html[data-theme='light']_&]:hover:text-black [html[data-theme='dark']_&]:border-white/14 [html[data-theme='dark']_&]:bg-black [html[data-theme='dark']_&]:text-white [html[data-theme='dark']_&]:hover:bg-[#202022] [html[data-theme='dark']_&]:hover:text-white";
@@ -433,9 +469,9 @@ function PortfolioVideoModal({
           type="button"
           onClick={onClose}
           aria-label={modalLabel}
-          className="absolute right-3 top-3 z-[3] flex h-9 w-9 items-center justify-center rounded-full border border-white/12 bg-black/48 p-0 text-white backdrop-blur-md transition hover:bg-black/58 lg:right-5 lg:top-5 lg:h-10 lg:w-10"
+          className="absolute left-3 top-3 z-[4] flex h-11 w-11 items-center justify-center rounded-full border p-0 shadow-[0_16px_34px_rgba(0,0,0,0.18)] backdrop-blur-md transition [html[data-theme='light']_&]:border-black/10 [html[data-theme='light']_&]:bg-white/96 [html[data-theme='light']_&]:text-black [html[data-theme='light']_&]:hover:bg-white [html[data-theme='dark']_&]:border-white/12 [html[data-theme='dark']_&]:bg-black/82 [html[data-theme='dark']_&]:text-white [html[data-theme='dark']_&]:hover:bg-black lg:left-5 lg:top-5 lg:h-11 lg:w-11"
         >
-          <CloseIcon className="h-3.5 w-3.5 shrink-0" />
+          <CloseIcon className="h-3 w-3 shrink-0" />
         </button>
 
         <div className="grid min-h-0 gap-0 lg:grid-cols-[minmax(0,1.15fr)_minmax(20rem,0.85fr)]">
@@ -493,9 +529,9 @@ function PortfolioVideoModal({
                 <p className="mt-4 text-sm leading-7 text-[var(--muted-2)] sm:text-[0.98rem]">
                   {summary}
                 </p>
-                {project.result ? (
+                {result ? (
                   <p className="mt-4 text-sm leading-7 text-[color:var(--foreground)]/88 sm:text-[0.98rem]">
-                    {resolveLocalizedValue(project.result, language)}
+                    {result}
                   </p>
                 ) : null}
               </div>
