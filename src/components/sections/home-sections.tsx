@@ -283,7 +283,7 @@ export function HeroSection() {
 
       <div className="site-container relative z-[1] flex min-h-[72svh] items-end pb-7 pt-[5.35rem] sm:min-h-[92svh] sm:pb-14 sm:pt-[8.8rem] lg:min-h-[96vh] lg:pb-16 lg:pt-[10.5rem]">
         <div className="w-full">
-          <div className="max-w-[24rem] sm:max-w-[27rem] lg:max-w-[33rem] xl:max-w-[35rem]">
+          <div className="w-full max-w-full sm:max-w-[27rem] lg:max-w-[33rem] xl:max-w-[35rem]">
             <div className="hero-editorial-block">
               <p className="hero-editorial-kicker">{eyebrow}</p>
               <h1 className="hero-title hero-title--editorial text-white">
