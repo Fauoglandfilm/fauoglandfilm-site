@@ -245,15 +245,17 @@ export function HeroSection() {
 
       <div className="site-container relative z-[1] flex min-h-[72svh] items-end pb-7 pt-[5.35rem] sm:min-h-[92svh] sm:pb-14 sm:pt-[8.8rem] lg:min-h-[96vh] lg:pb-16 lg:pt-[10.5rem]">
         <div className="w-full">
-          <div className="max-w-[42rem] lg:max-w-[36rem] xl:max-w-[37.5rem]">
-            <div className="hero-label-chip">
+          <div className="max-w-[42rem] lg:max-w-[56rem] xl:max-w-[61rem]">
+            <div className="hero-heading-row">
+              <div className="hero-label-chip hero-label-chip--headline">
               <span className="hero-label-chip__segment">
                 <span className="hero-label-chip__item">{eyebrow}</span>
               </span>
+              </div>
+              <h1 className="hero-title text-white lg:whitespace-nowrap">
+                <HeroTypewriterTitle title={heroTitle} className="hero-typewriter--gold" />
+              </h1>
             </div>
-            <h1 className="hero-title mt-4 text-white sm:mt-6">
-              <HeroTypewriterTitle title={heroTitle} className="hero-typewriter--gold" />
-            </h1>
             <p className="mt-3.5 max-w-[31rem] text-[0.94rem] leading-6 text-white/80 sm:mt-5 sm:text-[1.05rem] sm:leading-7">
               {resolveLocalizedValue(homeHeroContent.description, language)}
             </p>
