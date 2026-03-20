@@ -802,15 +802,6 @@ export const caseStudies: CaseStudy[] = [
       no: "Mattis Thørud og Jan Monsen ved vannet under opptak for Ville Gleder",
       en: "Mattis Thorud and Jan Monsen by the lake during the Ville Gleder production",
     },
-    video: {
-      videoType: "direct",
-      src: "/assets/portfolio/ville-gleder/videos/ville-gleder-villmarksforedrag.mp4",
-      poster: "/assets/portfolio/ville-gleder/stills/villmarksforedrag-photo.jpg",
-      label: {
-        no: "Ville Gleder - Villmarkspromo",
-        en: "Ville Gleder wilderness promo",
-      },
-    },
     videoVariants: [
       {
         slug: "villmarksforedrag",
@@ -825,7 +816,7 @@ export const caseStudies: CaseStudy[] = [
         },
         video: {
           videoType: "direct",
-          src: "/assets/portfolio/ville-gleder/videos/ville-gleder-villmarksforedrag.mp4",
+          src: "/assets/portfolio/ville-gleder/videos/ville-gleder-villmarksforedrag-web.mp4",
           poster: "/assets/portfolio/ville-gleder/stills/villmarksforedrag-photo.jpg",
           label: {
             no: "Ville Gleder - Villmarksforedrag",
@@ -846,7 +837,7 @@ export const caseStudies: CaseStudy[] = [
         },
         video: {
           videoType: "direct",
-          src: "/assets/portfolio/ville-gleder/videos/ville-gleder-vat-kald-sulten.mp4",
+          src: "/assets/portfolio/ville-gleder/videos/ville-gleder-vat-kald-sulten-web.mp4",
           poster: "/assets/portfolio/ville-gleder/stills/vat-kald-sulten-still010.jpg",
           label: {
             no: "Ville Gleder - Våt, kald og sulten",
@@ -1716,7 +1707,7 @@ export const portfolioProjects: PortfolioProject[] = [
     },
     video: {
       videoType: "direct",
-      src: "/assets/portfolio/ville-gleder/videos/ville-gleder-villmarksforedrag.mp4",
+      src: "/assets/portfolio/ville-gleder/videos/ville-gleder-villmarksforedrag-web.mp4",
       poster: "/assets/portfolio/ville-gleder/stills/villmarksforedrag-photo.jpg",
       label: {
         no: "Ville Gleder - Villmarksforedrag",
@@ -1754,7 +1745,7 @@ export const portfolioProjects: PortfolioProject[] = [
     },
     video: {
       videoType: "direct",
-      src: "/assets/portfolio/ville-gleder/videos/ville-gleder-vat-kald-sulten.mp4",
+      src: "/assets/portfolio/ville-gleder/videos/ville-gleder-vat-kald-sulten-web.mp4",
       poster: "/assets/portfolio/ville-gleder/stills/vat-kald-sulten-still010.jpg",
       label: {
         no: "Ville Gleder - Våt, kald og sulten",

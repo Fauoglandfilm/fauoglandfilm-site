@@ -52,6 +52,9 @@ export default async function CaseDetailPage({ params }: CaseDetailPageProps) {
   const relatedCases = allCases
     .filter((entry) => entry.slug !== caseStudy.slug)
     .slice(0, 3);
+  const primaryVideo =
+    caseStudy.video ??
+    caseStudy.videoVariants?.find((variant) => variant.video?.videoType === "direct")?.video;
 
   const caseSchema = {
     "@context": "https://schema.org",
@@ -68,9 +71,9 @@ export default async function CaseDetailPage({ params }: CaseDetailPageProps) {
       <VideoStructuredData
         title={`${caseStudy.client} - ${caseStudy.title.no}`}
         description={caseStudy.summary.no}
-        thumbnailUrl={caseStudy.externalVideo?.thumbnailSrc ?? caseStudy.video?.poster ?? caseStudy.image}
+        thumbnailUrl={caseStudy.externalVideo?.thumbnailSrc ?? primaryVideo?.poster ?? caseStudy.image}
         embedUrl={caseStudy.externalVideo?.embedUrl}
-        contentUrl={caseStudy.video?.videoType === "direct" ? caseStudy.video.src : undefined}
+        contentUrl={primaryVideo?.videoType === "direct" ? primaryVideo.src : undefined}
       />
       <script
         type="application/ld+json"
