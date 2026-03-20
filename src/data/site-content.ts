@@ -9,6 +9,7 @@ export type VideoAsset =
   | {
       videoType: "direct";
       src: string;
+      fullSrc?: string;
       poster?: string;
       mobilePoster?: string;
       label: LocalizedText;
@@ -987,6 +988,7 @@ export const caseStudies: CaseStudy[] = [
         video: {
           videoType: "direct",
           src: "/assets/portfolio/treningshuset/videos/portrait/treningshuset-velkommen-sindre-web.mp4",
+          fullSrc: "/assets/portfolio/treningshuset/videos/portrait/treningshuset-velkommen-sindre-full.mp4",
           poster: "/assets/portfolio/treningshuset/posters/treningshuset-velkommen-sindre-poster.png",
           label: {
             no: "Treningshuset - Velkommen Sindre",
@@ -1010,6 +1012,7 @@ export const caseStudies: CaseStudy[] = [
         video: {
           videoType: "direct",
           src: "/assets/portfolio/treningshuset/videos/portrait/treningshuset-musikk-1-web.mp4",
+          fullSrc: "/assets/portfolio/treningshuset/videos/portrait/treningshuset-musikk-1-full.mp4",
           poster: "/assets/portfolio/treningshuset/posters/treningshuset-musikk-1-poster.png",
           label: {
             no: "Treningshuset - Musikk 1",
@@ -1033,6 +1036,7 @@ export const caseStudies: CaseStudy[] = [
         video: {
           videoType: "direct",
           src: "/assets/portfolio/treningshuset/videos/portrait/treningshuset-musikk-2-45-web.mp4",
+          fullSrc: "/assets/portfolio/treningshuset/videos/portrait/treningshuset-musikk-2-45-full.mp4",
           poster: "/assets/portfolio/treningshuset/posters/treningshuset-musikk-2-45-poster.png",
           label: {
             no: "Treningshuset - Musikk 2",

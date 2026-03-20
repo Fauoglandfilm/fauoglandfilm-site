@@ -30,8 +30,16 @@ function CaseVideoModal({
 }) {
   const { language } = useSitePreferences();
   const videoRef = useRef<HTMLVideoElement | null>(null);
+  const directVideo = variant.video?.videoType === "direct" ? variant.video : null;
   const title = resolveLocalizedValue(variant.label, language);
   const imageAlt = variant.imageAlt ? resolveLocalizedValue(variant.imageAlt, language) : title;
+  const modalVideoSrc = directVideo?.fullSrc ?? directVideo?.src;
+  const modalFrameClassName =
+    variant.frame === "portrait"
+      ? "aspect-[9/16] max-w-[22rem] sm:max-w-[24rem] lg:max-w-[26rem]"
+      : variant.frame === "portrait4x5"
+        ? "aspect-[4/5] max-w-[24rem] sm:max-w-[26rem] lg:max-w-[29rem]"
+        : "aspect-video max-w-full";
 
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
@@ -63,7 +71,7 @@ function CaseVideoModal({
     void node.play().catch(() => undefined);
   }, [variant.slug]);
 
-  if (!variant.video || variant.video.videoType !== "direct") {
+  if (!directVideo || !modalVideoSrc) {
     return null;
   }
 
@@ -88,24 +96,23 @@ function CaseVideoModal({
           <CloseIcon className="h-3 w-3 shrink-0" />
         </button>
 
-        <div className="grid min-h-0 gap-0 lg:grid-cols-[minmax(0,1.18fr)_minmax(20rem,0.82fr)]">
-          <div className="relative min-h-[14rem] bg-[#05070b] sm:min-h-[18rem] lg:min-h-[36rem]">
-            <video
-              ref={videoRef}
-              className={cn(
-                "absolute inset-0 h-full w-full bg-[#05070b]",
-                (variant.mediaFit ?? "cover") === "contain" ? "object-contain p-5 sm:p-6" : "object-cover",
-              )}
-              src={variant.video.src}
-              poster={variant.video.poster ?? variant.image}
-              controls
-              playsInline
-              preload="auto"
-              autoPlay
-              controlsList="nodownload noplaybackrate"
-              disablePictureInPicture
-              disableRemotePlayback
-            />
+        <div className="grid min-h-0 gap-0 lg:grid-cols-[minmax(0,1fr)_minmax(20rem,0.82fr)]">
+          <div className="relative flex min-h-[18rem] items-center justify-center bg-[#05070b] px-4 py-6 sm:min-h-[22rem] sm:px-6 sm:py-8 lg:min-h-[36rem] lg:px-8">
+            <div className={cn("relative w-full", modalFrameClassName)}>
+              <video
+                ref={videoRef}
+                className="absolute inset-0 h-full w-full rounded-[1.3rem] bg-[#05070b] object-contain"
+                src={modalVideoSrc}
+                poster={directVideo.poster ?? variant.image}
+                controls
+                playsInline
+                preload="auto"
+                autoPlay
+                controlsList="nodownload noplaybackrate"
+                disablePictureInPicture
+                disableRemotePlayback
+              />
+            </div>
           </div>
 
           <div className="flex min-h-0 flex-col p-5 sm:p-6 lg:p-8">
