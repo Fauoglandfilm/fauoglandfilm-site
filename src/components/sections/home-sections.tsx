@@ -94,7 +94,26 @@ function HeroTypewriterTitle({
   title: string;
   className?: string;
 }) {
-  return <span className={cn("hero-typewriter", className)}>{title}</span>;
+  const trimmedTitle = title.trim();
+
+  const forcedLines =
+    trimmedTitle === "Film som faktisk selger!"
+      ? ["Film som faktisk", "selger!"]
+      : trimmedTitle === "Film that actually sells!"
+        ? ["Film that actually", "sells!"]
+        : null;
+
+  return (
+    <span className={cn("hero-typewriter", className)}>
+      {forcedLines
+        ? forcedLines.map((line) => (
+            <span key={line} className="hero-typewriter__line">
+              {line}
+            </span>
+          ))
+        : title}
+    </span>
+  );
 }
 
 export function HeroSection() {
@@ -238,13 +257,13 @@ export function HeroSection() {
 
       <div className="site-container relative z-[1] flex min-h-[72svh] items-end pb-7 pt-[5.35rem] sm:min-h-[92svh] sm:pb-14 sm:pt-[8.8rem] lg:min-h-[96vh] lg:pb-16 lg:pt-[10.5rem]">
         <div className="w-full">
-          <div className="max-w-[42rem]">
+          <div className="max-w-[42rem] lg:max-w-[36rem] xl:max-w-[37.5rem]">
             <div className="hero-label-chip">
               <span className="hero-label-chip__segment">
                 <span className="hero-label-chip__item">{eyebrow}</span>
               </span>
             </div>
-            <h1 className="hero-title mt-4 max-w-[8.75ch] text-white sm:mt-6 sm:max-w-[10.2ch] lg:max-w-[10.6ch]">
+            <h1 className="hero-title mt-4 text-white sm:mt-6">
               <HeroTypewriterTitle title={heroTitle} className="hero-typewriter--gold" />
             </h1>
             <p className="mt-3.5 max-w-[31rem] text-[0.94rem] leading-6 text-white/80 sm:mt-5 sm:text-[1.05rem] sm:leading-7">
