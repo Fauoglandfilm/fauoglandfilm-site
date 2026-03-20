@@ -962,6 +962,14 @@ function HomeCaseCard({
   const metric = caseStudy.metrics[0]
     ? `${caseStudy.metrics[0].value} ${resolveLocalizedValue(caseStudy.metrics[0].label, language)}`
     : resolveLocalizedValue(caseStudy.category, language);
+  const videoRef = useRef<HTMLVideoElement | null>(null);
+  const [hasVideoError, setHasVideoError] = useState(false);
+  const [isPosterVisible, setIsPosterVisible] = useState(true);
+  const previewVideo = caseStudy.video?.videoType === "direct" ? caseStudy.video : null;
+  const previewMediaFit = caseStudy.slug === "treningshuset" ? "contain" : caseStudy.mediaFit ?? "cover";
+  const previewImage = caseStudy.image ?? previewVideo?.poster;
+  const previewImageAlt = caseStudy.imageAlt ?? caseStudy.title;
+  const previewSizes = featured ? "(min-width: 1024px) 58vw, 100vw" : "(min-width: 1024px) 36vw, 100vw";
 
   return (
     <Reveal delay={delay} y={16}>
@@ -972,26 +980,98 @@ function HomeCaseCard({
             featured ? "min-h-[24rem] sm:min-h-[29rem] lg:min-h-[34rem]" : "min-h-[18rem] sm:min-h-[20rem]",
           )}
         >
-          <PreviewMedia
-            title={caseStudy.title}
-            video={caseStudy.video}
-            externalVideo={caseStudy.externalVideo}
-            image={caseStudy.image}
-            imageAlt={caseStudy.imageAlt}
-            mediaFit={caseStudy.mediaFit}
-            previewBehavior={
-              caseStudy.video || caseStudy.externalVideo
-                ? "viewport"
-                : "static"
-            }
-            className="absolute inset-0"
-            sizes={featured ? "(min-width: 1024px) 58vw, 100vw" : "(min-width: 1024px) 36vw, 100vw"}
-            priority={false}
-            rootMargin="160px 0px -8% 0px"
-            inViewThreshold={0.18}
-            posterClassName="transition duration-700 group-hover:scale-[1.035]"
-            previewClassName="scale-[1.03]"
-          />
+          {previewVideo ? (
+            <div className="absolute inset-0 bg-[#05070b]">
+              {previewImage ? (
+                <div
+                  className={cn(
+                    "absolute inset-0 z-[1] transition-opacity duration-300",
+                    hasVideoError || isPosterVisible ? "opacity-100" : "opacity-0",
+                  )}
+                >
+                  <Image
+                    src={previewImage}
+                    alt={resolveLocalizedValue(previewImageAlt, language)}
+                    fill
+                    sizes={previewSizes}
+                    className={cn(
+                      previewMediaFit === "contain" ? "object-contain p-4 sm:p-5" : "object-cover",
+                      "transition duration-700",
+                      caseStudy.slug === "treningshuset" ? "" : "group-hover:scale-[1.035]",
+                    )}
+                  />
+                </div>
+              ) : null}
+              <video
+                ref={videoRef}
+                className={cn(
+                  "absolute inset-0 z-0 h-full w-full transition-opacity duration-300",
+                  previewMediaFit === "contain" ? "object-contain p-4 sm:p-5" : "object-cover",
+                  hasVideoError ? "opacity-0" : "opacity-100",
+                )}
+                src={previewVideo.src}
+                autoPlay
+                muted
+                loop
+                playsInline
+                poster={previewVideo.poster ?? previewImage}
+                preload="auto"
+                disablePictureInPicture
+                disableRemotePlayback
+                aria-hidden="true"
+                onLoadedMetadata={(event) => {
+                  const node = event.currentTarget;
+
+                  node.defaultMuted = true;
+                  node.muted = true;
+                  node.playsInline = true;
+                  node.setAttribute("muted", "");
+                  node.setAttribute("playsinline", "");
+                  node.setAttribute("webkit-playsinline", "");
+                  void node.play().catch(() => undefined);
+                }}
+                onLoadedData={(event) => {
+                  if (event.currentTarget.readyState >= 2) {
+                    setHasVideoError(false);
+                    setIsPosterVisible(false);
+                  }
+                }}
+                onCanPlay={(event) => {
+                  void event.currentTarget.play().catch(() => undefined);
+                }}
+                onPlaying={() => {
+                  setHasVideoError(false);
+                  setIsPosterVisible(false);
+                }}
+                onTimeUpdate={(event) => {
+                  if (event.currentTarget.currentTime > 0) {
+                    setIsPosterVisible(false);
+                  }
+                }}
+                onError={() => {
+                  setHasVideoError(true);
+                  setIsPosterVisible(true);
+                }}
+              />
+            </div>
+          ) : (
+            <PreviewMedia
+              title={caseStudy.title}
+              video={caseStudy.video}
+              externalVideo={caseStudy.externalVideo}
+              image={caseStudy.image}
+              imageAlt={caseStudy.imageAlt}
+              mediaFit={caseStudy.mediaFit}
+              previewBehavior={caseStudy.video || caseStudy.externalVideo ? "always" : "static"}
+              className="absolute inset-0"
+              sizes={previewSizes}
+              priority={false}
+              rootMargin="160px 0px -8% 0px"
+              inViewThreshold={0.18}
+              posterClassName="transition duration-700 group-hover:scale-[1.035]"
+              previewClassName="scale-[1.03]"
+            />
+          )}
           <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(8,10,14,0.06),rgba(8,10,14,0.08)_24%,rgba(8,10,14,0.78)_100%)]" />
           <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(8,10,14,0.48),rgba(8,10,14,0.1)_38%,rgba(8,10,14,0.36)_100%)]" />
 
