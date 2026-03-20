@@ -414,6 +414,8 @@ function PortfolioVideoModal({
   const format = resolveLocalizedValue(project.format, language);
   const summary = resolveLocalizedValue(project.summary, language);
   const modalLabel = language === "no" ? "Lukk video" : "Close video";
+  const modalActionClassName =
+    "inline-flex items-center justify-center gap-2 rounded-full border px-5 py-3 text-sm font-semibold transition [html[data-theme='light']_&]:border-black/12 [html[data-theme='light']_&]:bg-white [html[data-theme='light']_&]:text-black [html[data-theme='light']_&]:hover:bg-[#f7f7f8] [html[data-theme='light']_&]:hover:text-black [html[data-theme='dark']_&]:border-white/14 [html[data-theme='dark']_&]:bg-black [html[data-theme='dark']_&]:text-white [html[data-theme='dark']_&]:hover:bg-[#202022] [html[data-theme='dark']_&]:hover:text-white";
 
   return (
     <div
@@ -431,9 +433,9 @@ function PortfolioVideoModal({
           type="button"
           onClick={onClose}
           aria-label={modalLabel}
-          className="absolute right-3 top-3 z-[3] inline-flex h-11 w-11 items-center justify-center rounded-full border border-white/12 bg-black/48 text-white backdrop-blur-md transition hover:bg-black/58 lg:right-5 lg:top-5"
+          className="absolute right-3 top-3 z-[3] flex h-9 w-9 items-center justify-center rounded-full border border-white/12 bg-black/48 p-0 text-white backdrop-blur-md transition hover:bg-black/58 lg:right-5 lg:top-5 lg:h-10 lg:w-10"
         >
-          <CloseIcon className="h-4 w-4" />
+          <CloseIcon className="h-3.5 w-3.5 shrink-0" />
         </button>
 
         <div className="grid min-h-0 gap-0 lg:grid-cols-[minmax(0,1.15fr)_minmax(20rem,0.85fr)]">
@@ -503,7 +505,7 @@ function PortfolioVideoModal({
               {project.detailHref ? (
                 <Link
                   href={project.detailHref}
-                  className="inline-flex items-center justify-center gap-2 rounded-full border border-[color:var(--btn-primary-border)] bg-[color:var(--btn-primary-bg)] px-5 py-3 text-sm font-semibold text-[color:var(--btn-primary-text)] transition hover:bg-[color:var(--btn-primary-hover-bg)] hover:text-[color:var(--btn-primary-hover-text)]"
+                  className={modalActionClassName}
                 >
                   <span>{language === "no" ? "Se case" : "View case"}</span>
                 </Link>
@@ -514,7 +516,7 @@ function PortfolioVideoModal({
                   href={project.externalVideo.sourceUrl}
                   target="_blank"
                   rel="noreferrer"
-                  className="inline-flex items-center justify-center gap-2 rounded-full border border-[color:var(--btn-ghost-border)] px-5 py-3 text-sm font-semibold text-[color:var(--foreground)] transition hover:bg-[color:var(--btn-ghost-hover-bg)] hover:text-[color:var(--btn-ghost-hover-text)]"
+                  className={modalActionClassName}
                 >
                   <span>{language === "no" ? "Åpne kilde" : "Open source"}</span>
                 </a>
