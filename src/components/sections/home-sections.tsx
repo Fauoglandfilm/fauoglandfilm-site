@@ -124,13 +124,13 @@ export function HeroSection() {
             hasVideoError || isPosterVisible ? "opacity-100" : "opacity-0",
           )}
         >
-          <img
-            src={heroVideo.poster}
+          <Image
+            src={heroVideo.poster ?? ""}
             alt=""
-            className="h-full w-full object-cover"
-            loading="eager"
-            fetchPriority="high"
-            decoding="async"
+            fill
+            priority
+            sizes="100vw"
+            className="object-cover"
           />
         </div>
         <video
@@ -144,7 +144,6 @@ export function HeroSection() {
           muted
           loop
           playsInline
-          poster={heroVideo.poster}
           preload="auto"
           disablePictureInPicture
           disableRemotePlayback
@@ -193,14 +192,12 @@ export function HeroSection() {
           <div className="max-w-[42rem] lg:max-w-[68rem] xl:max-w-[74rem]">
             <div className="hero-editorial-block">
               <p className="hero-editorial-kicker">{eyebrow}</p>
-              <div className="hero-editorial-copy">
-                <h1 className="hero-title hero-title--editorial text-white">
-                  <HeroTypewriterTitle title={heroTitle} className="hero-typewriter--gold hero-typewriter--editorial" />
-                </h1>
-                <p className="hero-editorial-support text-[0.98rem] leading-6 text-white/88 sm:text-[1.02rem] sm:leading-7">
-                  {resolveLocalizedValue(homeHeroContent.description, language)}
-                </p>
-              </div>
+              <h1 className="hero-title hero-title--editorial text-white">
+                <HeroTypewriterTitle title={heroTitle} className="hero-typewriter--gold hero-typewriter--editorial" />
+              </h1>
+              <p className="hero-editorial-support text-[0.98rem] leading-6 text-white/88 sm:text-[1.02rem] sm:leading-7">
+                {resolveLocalizedValue(homeHeroContent.description, language)}
+              </p>
             </div>
 
             <div className="hidden sm:mt-7 sm:flex sm:flex-row sm:gap-3">
