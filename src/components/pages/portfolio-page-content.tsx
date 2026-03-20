@@ -4,7 +4,6 @@ import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 
-import { EmbeddedVideoPlayer } from "@/components/media/embedded-video-player";
 import { PreviewMedia } from "@/components/media/preview-media";
 import { Reveal } from "@/components/motion/reveal";
 import { useSitePreferences } from "@/components/providers/site-preferences";
@@ -18,8 +17,10 @@ import {
   portfolioGroups,
   portfolioPageContent,
   portfolioProjects,
+  type ExternalVideoAsset,
   type PortfolioGroup,
   type PortfolioProject,
+  type VideoAsset,
 } from "@/data/site-content";
 import { getPortfolioFallbackVisual } from "@/data/visual-assets";
 import { uiCopy } from "@/data/ui-copy";
@@ -64,6 +65,85 @@ const portfolioModalCopyOverrides = {
     },
   },
 } as const;
+
+type PortfolioModalMedia =
+  | {
+      kind: "direct";
+      src: string;
+      poster?: string;
+    }
+  | {
+      kind: "external";
+      provider: "youtube" | "vimeo";
+      iframeSrc: string;
+    };
+
+function getPortfolioDirectVideo(project: PortfolioProject): Extract<VideoAsset, { videoType: "direct" }> | null {
+  if (project.video?.videoType === "direct") {
+    return project.video;
+  }
+
+  if (project.slug === "liten-bedrift") {
+    return {
+      videoType: "direct",
+      src: "/assets/services/videos/bedriftfilm.mp4",
+      poster: project.image,
+      label: project.video?.label ?? project.title,
+      hasEmbeddedText: false,
+    };
+  }
+
+  return null;
+}
+
+function buildPortfolioModalIframeSrc(video: ExternalVideoAsset) {
+  const url = new URL(video.embedUrl);
+
+  if (video.provider === "youtube") {
+    url.hostname = "www.youtube-nocookie.com";
+    url.searchParams.set("rel", "0");
+    url.searchParams.set("modestbranding", "1");
+    url.searchParams.set("playsinline", "1");
+    url.searchParams.set("autoplay", "0");
+    url.searchParams.set("mute", "0");
+    url.searchParams.set("controls", "1");
+    url.searchParams.set("fs", "1");
+  }
+
+  if (video.provider === "vimeo") {
+    url.searchParams.set("autoplay", "0");
+    url.searchParams.set("muted", "0");
+    url.searchParams.set("title", "0");
+    url.searchParams.set("byline", "0");
+    url.searchParams.set("portrait", "0");
+    url.searchParams.set("dnt", "1");
+    url.searchParams.delete("background");
+  }
+
+  return url.toString();
+}
+
+function resolvePortfolioModalMedia(project: PortfolioProject): PortfolioModalMedia | null {
+  const directVideo = getPortfolioDirectVideo(project);
+
+  if (directVideo) {
+    return {
+      kind: "direct",
+      src: directVideo.fullSrc ?? directVideo.src,
+      poster: directVideo.poster ?? project.image,
+    };
+  }
+
+  if (project.externalVideo) {
+    return {
+      kind: "external",
+      provider: project.externalVideo.provider,
+      iframeSrc: buildPortfolioModalIframeSrc(project.externalVideo),
+    };
+  }
+
+  return null;
+}
 
 export function PortfolioPageContent({
   projects = portfolioProjects,
@@ -451,9 +531,8 @@ function PortfolioVideoModal({
   const summary = copyOverride?.summary ?? resolveLocalizedValue(project.summary, language);
   const result = copyOverride?.result ?? (project.result ? resolveLocalizedValue(project.result, language) : null);
   const modalLabel = language === "no" ? "Lukk video" : "Close video";
-  const directVideo = project.video?.videoType === "direct" ? project.video : null;
-  const isDirectVideo = Boolean(directVideo);
-  const modalVideoSrc = directVideo?.fullSrc ?? directVideo?.src;
+  const modalMedia = resolvePortfolioModalMedia(project);
+  const isDirectVideo = modalMedia?.kind === "direct";
   const modalActionClassName =
     "inline-flex items-center justify-center gap-2 rounded-full border px-5 py-3 text-sm font-semibold transition [html[data-theme='light']_&]:border-black/12 [html[data-theme='light']_&]:bg-white [html[data-theme='light']_&]:text-black [html[data-theme='light']_&]:hover:bg-[#f7f7f8] [html[data-theme='light']_&]:hover:text-black [html[data-theme='dark']_&]:border-white/14 [html[data-theme='dark']_&]:bg-black [html[data-theme='dark']_&]:text-white [html[data-theme='dark']_&]:hover:bg-[#202022] [html[data-theme='dark']_&]:hover:text-white";
 
@@ -493,12 +572,12 @@ function PortfolioVideoModal({
 
         <div className="flex min-h-0 flex-1 flex-col lg:grid lg:grid-cols-[minmax(0,1.06fr)_minmax(19rem,0.94fr)]">
           <div className="relative flex min-h-[15rem] flex-none items-center justify-center bg-[#05070b] px-3 pb-4 pt-16 sm:min-h-[20rem] sm:px-5 sm:pb-5 sm:pt-16 lg:min-h-[36rem] lg:px-8 lg:py-8">
-            {isDirectVideo ? (
+            {modalMedia?.kind === "direct" ? (
               <video
                 ref={videoRef}
                 className="block max-h-[46svh] w-auto max-w-full rounded-[1.3rem] bg-[#05070b] object-contain sm:max-h-[52svh] lg:max-h-[72svh]"
-                src={modalVideoSrc}
-                poster={directVideo!.poster ?? project.image}
+                src={modalMedia.src}
+                poster={modalMedia.poster}
                 controls
                 playsInline
                 preload="auto"
@@ -507,19 +586,15 @@ function PortfolioVideoModal({
                 disablePictureInPicture
                 disableRemotePlayback
               />
-            ) : project.externalVideo ? (
+            ) : modalMedia?.kind === "external" ? (
               <div className="relative w-full max-w-[min(100%,48rem)] overflow-hidden rounded-[1.3rem] aspect-video max-h-[46svh] sm:max-h-[52svh] lg:max-h-none">
-                <EmbeddedVideoPlayer
-                  title={project.title}
-                  externalVideo={project.externalVideo}
-                  image={project.image}
-                  imageAlt={project.imageAlt}
-                  mediaFit={project.mediaFit}
-                  autoplay={false}
-                  showControls
-                  className="absolute inset-0"
-                  sizes="(min-width: 1280px) 62vw, (min-width: 1024px) 58vw, 100vw"
-                  priority
+                <iframe
+                  src={modalMedia.iframeSrc}
+                  title={title}
+                  className="absolute inset-0 h-full w-full"
+                  allow="autoplay; encrypted-media; picture-in-picture; fullscreen; clipboard-write"
+                  referrerPolicy="strict-origin-when-cross-origin"
+                  allowFullScreen
                 />
               </div>
             ) : project.image ? (
