@@ -355,8 +355,8 @@ const projectGroups: GardProjectGroup[] = [
           en: "The Nordic Association - website film, debate and teaser work",
         },
         format: {
-          no: "Organisasjonsfilm og live-opptak",
-          en: "Organisation film and live capture",
+          no: "Organisasjonsfilm og flerkameraopptak",
+          en: "Organisation film and multicam capture",
         },
         role: {
           no: "Klipp, animasjon, regi og multicam",
