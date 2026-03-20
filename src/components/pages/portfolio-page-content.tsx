@@ -453,6 +453,7 @@ function PortfolioVideoModal({
   const modalLabel = language === "no" ? "Lukk video" : "Close video";
   const directVideo = project.video?.videoType === "direct" ? project.video : null;
   const isDirectVideo = Boolean(directVideo);
+  const modalVideoSrc = directVideo?.fullSrc ?? directVideo?.src;
   const modalActionClassName =
     "inline-flex items-center justify-center gap-2 rounded-full border px-5 py-3 text-sm font-semibold transition [html[data-theme='light']_&]:border-black/12 [html[data-theme='light']_&]:bg-white [html[data-theme='light']_&]:text-black [html[data-theme='light']_&]:hover:bg-[#f7f7f8] [html[data-theme='light']_&]:hover:text-black [html[data-theme='dark']_&]:border-white/14 [html[data-theme='dark']_&]:bg-black [html[data-theme='dark']_&]:text-white [html[data-theme='dark']_&]:hover:bg-[#202022] [html[data-theme='dark']_&]:hover:text-white";
 
@@ -471,35 +472,36 @@ function PortfolioVideoModal({
 
   return (
     <div
-      className="fixed inset-0 z-[80] flex items-end justify-center bg-[#040507]/72 p-3 backdrop-blur-md sm:p-5 lg:items-center lg:p-8"
+      className="fixed inset-0 z-[80] flex items-start justify-center bg-[#040507]/72 px-2 pb-2 pt-3 backdrop-blur-md sm:p-5 lg:items-center lg:p-8"
       role="dialog"
       aria-modal="true"
       aria-label={title}
       onClick={onClose}
+      style={{
+        paddingTop: "max(env(safe-area-inset-top), 0.75rem)",
+        paddingBottom: "max(env(safe-area-inset-bottom), 0.5rem)",
+      }}
     >
       <div
-        className="card-surface relative flex max-h-[92svh] w-full max-w-6xl flex-col overflow-hidden rounded-[2rem] border border-[color:var(--line-strong)] bg-[color:var(--surface-strong)] shadow-[0_32px_120px_rgba(0,0,0,0.34)]"
+        className="card-surface relative flex max-h-[calc(100svh-0.5rem)] w-full max-w-6xl flex-col overflow-hidden rounded-[1.6rem] border border-[color:var(--line-strong)] bg-[color:var(--surface-strong)] shadow-[0_32px_120px_rgba(0,0,0,0.34)] sm:max-h-[calc(100svh-2.5rem)] sm:rounded-[2rem]"
         onClick={(event) => event.stopPropagation()}
       >
         <button
           type="button"
           onClick={onClose}
           aria-label={modalLabel}
-          className="absolute left-4 top-4 z-[4] flex h-10 w-10 items-center justify-center rounded-full border p-0 shadow-[0_16px_34px_rgba(0,0,0,0.18)] backdrop-blur-md transition [html[data-theme='light']_&]:border-black/10 [html[data-theme='light']_&]:bg-white/96 [html[data-theme='light']_&]:text-black [html[data-theme='light']_&]:hover:bg-white [html[data-theme='dark']_&]:border-white/12 [html[data-theme='dark']_&]:bg-black/82 [html[data-theme='dark']_&]:text-white [html[data-theme='dark']_&]:hover:bg-black sm:h-11 sm:w-11 lg:left-5 lg:top-5"
+          className="absolute left-3 top-3 z-[4] flex h-10 w-10 items-center justify-center rounded-full border p-0 shadow-[0_16px_34px_rgba(0,0,0,0.18)] backdrop-blur-md transition [html[data-theme='light']_&]:border-black/10 [html[data-theme='light']_&]:bg-white/96 [html[data-theme='light']_&]:text-black [html[data-theme='light']_&]:hover:bg-white [html[data-theme='dark']_&]:border-white/12 [html[data-theme='dark']_&]:bg-black/82 [html[data-theme='dark']_&]:text-white [html[data-theme='dark']_&]:hover:bg-black sm:left-4 sm:top-4 sm:h-11 sm:w-11 lg:left-5 lg:top-5"
         >
           <CloseIcon className="h-3 w-3 shrink-0" />
         </button>
 
-        <div className="grid min-h-0 gap-0 lg:grid-cols-[minmax(0,1.15fr)_minmax(20rem,0.85fr)]">
-          <div className="relative min-h-[14rem] bg-[#05070b] sm:min-h-[18rem] lg:min-h-[36rem]">
+        <div className="flex min-h-0 flex-col overflow-y-auto lg:grid lg:grid-cols-[minmax(0,1.06fr)_minmax(19rem,0.94fr)] lg:overflow-hidden">
+          <div className="relative flex min-h-[16rem] flex-none items-center justify-center bg-[#05070b] px-3 pb-4 pt-14 sm:min-h-[20rem] sm:px-5 sm:pb-5 sm:pt-16 lg:min-h-[36rem] lg:px-8 lg:py-8">
             {isDirectVideo ? (
               <video
                 ref={videoRef}
-                className={cn(
-                  "absolute inset-0 h-full w-full bg-[#05070b]",
-                  (project.mediaFit ?? "cover") === "contain" ? "object-contain p-5 sm:p-6" : "object-cover",
-                )}
-                src={directVideo!.src}
+                className="block max-h-[52svh] w-auto max-w-full rounded-[1.3rem] bg-[#05070b] object-contain lg:max-h-[72svh]"
+                src={modalVideoSrc}
                 poster={directVideo!.poster ?? project.image}
                 controls
                 playsInline
@@ -510,36 +512,45 @@ function PortfolioVideoModal({
                 disableRemotePlayback
               />
             ) : project.externalVideo ? (
-              <EmbeddedVideoPlayer
-                title={project.title}
-                externalVideo={project.externalVideo}
-                image={project.image}
-                imageAlt={project.imageAlt}
-                mediaFit={project.mediaFit}
-                autoplay={false}
-                showControls
-                className="absolute inset-0"
-                sizes="(min-width: 1280px) 62vw, (min-width: 1024px) 58vw, 100vw"
-                priority
-              />
+              <div className="relative w-full max-w-[min(100%,48rem)] overflow-hidden rounded-[1.3rem] aspect-video">
+                <EmbeddedVideoPlayer
+                  title={project.title}
+                  externalVideo={project.externalVideo}
+                  image={project.image}
+                  imageAlt={project.imageAlt}
+                  mediaFit={project.mediaFit}
+                  autoplay={false}
+                  showControls
+                  className="absolute inset-0"
+                  sizes="(min-width: 1280px) 62vw, (min-width: 1024px) 58vw, 100vw"
+                  priority
+                />
+              </div>
             ) : project.image ? (
-              <Image
-                src={project.image}
-                alt={project.imageAlt ? resolveLocalizedValue(project.imageAlt, language) : title}
-                fill
-                priority
-                sizes="(min-width: 1280px) 62vw, (min-width: 1024px) 58vw, 100vw"
+              <div
                 className={cn(
-                  "object-cover",
-                  project.mediaFit === "contain" && "object-contain p-6 sm:p-8",
+                  "relative w-full max-w-[min(100%,42rem)] overflow-hidden rounded-[1.3rem]",
+                  project.mediaFit === "contain" ? "aspect-[4/5]" : "aspect-video",
                 )}
-              />
+              >
+                <Image
+                  src={project.image}
+                  alt={project.imageAlt ? resolveLocalizedValue(project.imageAlt, language) : title}
+                  fill
+                  priority
+                  sizes="(min-width: 1280px) 62vw, (min-width: 1024px) 58vw, 100vw"
+                  className={cn(
+                    "object-cover",
+                    project.mediaFit === "contain" && "object-contain p-4 sm:p-6",
+                  )}
+                />
+              </div>
             ) : (
               <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(255,255,255,0.14),transparent_24%),linear-gradient(135deg,rgba(120,164,255,0.18),rgba(10,12,18,0.94))]" />
             )}
           </div>
 
-          <div className="flex min-h-0 flex-col p-5 sm:p-6 lg:p-8">
+          <div className="flex min-h-0 flex-col border-t border-[color:var(--line)]/75 p-4 sm:p-6 lg:border-l lg:border-t-0 lg:p-8">
             <div className="space-y-4">
               <div className="flex flex-wrap items-center gap-2 text-[0.68rem] font-semibold uppercase tracking-[0.2em] text-[var(--muted)]">
                 {group ? <span>{resolveLocalizedValue(group.title, language)}</span> : null}

@@ -36,10 +36,10 @@ function CaseVideoModal({
   const modalVideoSrc = directVideo?.fullSrc ?? directVideo?.src;
   const modalFrameClassName =
     variant.frame === "portrait"
-      ? "aspect-[9/16] max-w-[22rem] sm:max-w-[24rem] lg:max-w-[26rem]"
+      ? "aspect-[9/16] w-full max-w-[min(100%,16.5rem)] sm:max-w-[21rem] lg:max-w-[24rem]"
       : variant.frame === "portrait4x5"
-        ? "aspect-[4/5] max-w-[24rem] sm:max-w-[26rem] lg:max-w-[29rem]"
-        : "aspect-video max-w-full";
+        ? "aspect-[4/5] w-full max-w-[min(100%,17.5rem)] sm:max-w-[22rem] lg:max-w-[26rem]"
+        : "aspect-video w-full max-w-[min(100%,48rem)]";
 
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
@@ -77,27 +77,31 @@ function CaseVideoModal({
 
   return (
     <div
-      className="fixed inset-0 z-[90] flex items-end justify-center bg-[#040507]/76 p-3 backdrop-blur-md sm:p-5 lg:items-center lg:p-8"
+      className="fixed inset-0 z-[90] flex items-start justify-center bg-[#040507]/76 px-2 pb-2 pt-3 backdrop-blur-md sm:p-5 lg:items-center lg:p-8"
       role="dialog"
       aria-modal="true"
       aria-label={title}
       onClick={onClose}
+      style={{
+        paddingTop: "max(env(safe-area-inset-top), 0.75rem)",
+        paddingBottom: "max(env(safe-area-inset-bottom), 0.5rem)",
+      }}
     >
       <div
-        className="card-surface relative flex max-h-[92svh] w-full max-w-6xl flex-col overflow-hidden rounded-[2rem] border border-[color:var(--line-strong)] bg-[color:var(--surface-strong)] shadow-[0_32px_120px_rgba(0,0,0,0.34)]"
+        className="card-surface relative flex max-h-[calc(100svh-0.5rem)] w-full max-w-6xl flex-col overflow-hidden rounded-[1.6rem] border border-[color:var(--line-strong)] bg-[color:var(--surface-strong)] shadow-[0_32px_120px_rgba(0,0,0,0.34)] sm:max-h-[calc(100svh-2.5rem)] sm:rounded-[2rem]"
         onClick={(event) => event.stopPropagation()}
       >
         <button
           type="button"
           onClick={onClose}
           aria-label={language === "no" ? "Lukk video" : "Close video"}
-          className="absolute left-4 top-4 z-[4] flex h-10 w-10 items-center justify-center rounded-full border p-0 shadow-[0_16px_34px_rgba(0,0,0,0.18)] backdrop-blur-md transition [html[data-theme='light']_&]:border-black/10 [html[data-theme='light']_&]:bg-white/96 [html[data-theme='light']_&]:text-black [html[data-theme='light']_&]:hover:bg-white [html[data-theme='dark']_&]:border-white/12 [html[data-theme='dark']_&]:bg-black/82 [html[data-theme='dark']_&]:text-white [html[data-theme='dark']_&]:hover:bg-black sm:h-11 sm:w-11 lg:left-5 lg:top-5"
+          className="absolute left-3 top-3 z-[4] flex h-10 w-10 items-center justify-center rounded-full border p-0 shadow-[0_16px_34px_rgba(0,0,0,0.18)] backdrop-blur-md transition [html[data-theme='light']_&]:border-black/10 [html[data-theme='light']_&]:bg-white/96 [html[data-theme='light']_&]:text-black [html[data-theme='light']_&]:hover:bg-white [html[data-theme='dark']_&]:border-white/12 [html[data-theme='dark']_&]:bg-black/82 [html[data-theme='dark']_&]:text-white [html[data-theme='dark']_&]:hover:bg-black sm:left-4 sm:top-4 sm:h-11 sm:w-11 lg:left-5 lg:top-5"
         >
           <CloseIcon className="h-3 w-3 shrink-0" />
         </button>
 
-        <div className="grid min-h-0 gap-0 lg:grid-cols-[minmax(0,1fr)_minmax(20rem,0.82fr)]">
-          <div className="relative flex min-h-[18rem] items-center justify-center bg-[#05070b] px-4 py-6 sm:min-h-[22rem] sm:px-6 sm:py-8 lg:min-h-[36rem] lg:px-8">
+        <div className="flex min-h-0 flex-col overflow-y-auto lg:grid lg:grid-cols-[minmax(0,1fr)_minmax(20rem,0.82fr)] lg:overflow-hidden">
+          <div className="relative flex min-h-[16rem] flex-none items-center justify-center bg-[#05070b] px-3 pb-4 pt-14 sm:min-h-[20rem] sm:px-6 sm:pb-6 sm:pt-16 lg:min-h-[36rem] lg:px-8 lg:py-8">
             <div className={cn("relative w-full", modalFrameClassName)}>
               <video
                 ref={videoRef}
@@ -115,7 +119,7 @@ function CaseVideoModal({
             </div>
           </div>
 
-          <div className="flex min-h-0 flex-col p-5 sm:p-6 lg:p-8">
+          <div className="flex min-h-0 flex-col border-t border-[color:var(--line)]/75 p-4 sm:p-6 lg:border-l lg:border-t-0 lg:p-8">
             <div className="space-y-4">
               <div className="flex flex-wrap items-center gap-2 text-[0.68rem] font-semibold uppercase tracking-[0.2em] text-[var(--muted)]">
                 <span>{title}</span>
