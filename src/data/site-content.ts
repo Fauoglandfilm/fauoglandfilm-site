@@ -985,7 +985,7 @@ export const caseStudies: CaseStudy[] = [
           no: "Liggende versjon av Treningshuset-filmen",
           en: "Landscape version of the Treningshuset film",
         },
-        mediaFit: "contain",
+        mediaFit: "cover",
         frame: "landscape",
         video: {
           videoType: "direct",
