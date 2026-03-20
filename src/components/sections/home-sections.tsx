@@ -122,7 +122,6 @@ export function HeroSection() {
   const videoRef = useRef<HTMLVideoElement | null>(null);
   const [hasVideoError, setHasVideoError] = useState(false);
   const [isPosterVisible, setIsPosterVisible] = useState(true);
-  const [showMobilePlayOverlay, setShowMobilePlayOverlay] = useState(false);
 
   const eyebrow =
     language === "no"
@@ -130,45 +129,6 @@ export function HeroSection() {
       : "Oslo / Commercial Film / Production";
   const secondaryCta = language === "no" ? "Se arbeid" : "View work";
   const heroTitle = resolveLocalizedValue(homeHeroContent.title, language);
-  const mobilePlayLabel = language === "no" ? "Spill av hero-video" : "Play hero video";
-  const shouldRenderMobilePlayOverlay = showMobilePlayOverlay && isPosterVisible && !hasVideoError;
-
-  useEffect(() => {
-    if (typeof window === "undefined") {
-      return;
-    }
-
-    const mobileMedia = window.matchMedia("(max-width: 767px)");
-
-    if (!mobileMedia.matches || hasVideoError || !isPosterVisible) {
-      return;
-    }
-
-    const timeoutId = window.setTimeout(() => {
-      setShowMobilePlayOverlay(true);
-    }, 1400);
-
-    return () => {
-      window.clearTimeout(timeoutId);
-    };
-  }, [hasVideoError, isPosterVisible]);
-
-  const handleManualHeroPlayback = () => {
-    const node = videoRef.current;
-
-    if (!node) {
-      return;
-    }
-
-    node.muted = true;
-    node.playsInline = true;
-    void node.play().then(() => {
-      setShowMobilePlayOverlay(false);
-      setHasVideoError(false);
-    }).catch(() => {
-      setShowMobilePlayOverlay(true);
-    });
-  };
 
   return (
     <section className="relative isolate overflow-hidden bg-[#05070a] text-white">
@@ -199,45 +159,45 @@ export function HeroSection() {
           muted
           loop
           playsInline
+          poster={heroVideo.poster}
           preload="auto"
           disablePictureInPicture
           disableRemotePlayback
           aria-hidden="true"
+          onLoadedMetadata={(event) => {
+            const node = event.currentTarget;
+
+            node.defaultMuted = true;
+            node.muted = true;
+            node.playsInline = true;
+            node.setAttribute("muted", "");
+            node.setAttribute("playsinline", "");
+            node.setAttribute("webkit-playsinline", "");
+            void node.play().catch(() => undefined);
+          }}
+          onLoadedData={(event) => {
+            if (event.currentTarget.readyState >= 2) {
+              setHasVideoError(false);
+              setIsPosterVisible(false);
+            }
+          }}
+          onCanPlay={(event) => {
+            void event.currentTarget.play().catch(() => undefined);
+          }}
           onPlaying={() => {
             setHasVideoError(false);
             setIsPosterVisible(false);
-            setShowMobilePlayOverlay(false);
           }}
           onTimeUpdate={(event) => {
             if (event.currentTarget.currentTime > 0) {
               setIsPosterVisible(false);
-              setShowMobilePlayOverlay(false);
             }
           }}
           onError={() => {
             setHasVideoError(true);
             setIsPosterVisible(true);
-            setShowMobilePlayOverlay(false);
           }}
         />
-        {shouldRenderMobilePlayOverlay ? (
-          <div className="pointer-events-none absolute inset-0 z-[2] flex items-center justify-center sm:hidden">
-            <button
-              type="button"
-              aria-label={mobilePlayLabel}
-              onClick={handleManualHeroPlayback}
-              className="pointer-events-auto inline-flex h-20 w-20 items-center justify-center rounded-full border border-white/18 bg-black/38 text-white shadow-[0_18px_48px_rgba(0,0,0,0.26)] backdrop-blur-md transition hover:bg-black/46"
-            >
-              <svg
-                aria-hidden="true"
-                viewBox="0 0 24 24"
-                className="h-7 w-7 translate-x-[0.08rem] fill-current"
-              >
-                <path d="M8.25 6.72c0-1.02 1.12-1.65 2-.99l8.24 5.78a1.2 1.2 0 0 1 0 1.96l-8.24 5.78c-.88.62-2-.01-2-.99V6.72Z" />
-              </svg>
-            </button>
-          </div>
-        ) : null}
         <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(5,7,10,0.18)_0%,rgba(5,7,10,0.08)_24%,rgba(5,7,10,0.16)_56%,rgba(5,7,10,0.45)_100%)]" />
         <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(5,7,10,0.44)_0%,rgba(5,7,10,0.3)_22%,rgba(5,7,10,0.11)_56%,rgba(5,7,10,0.05)_100%)]" />
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(210,173,116,0.14),transparent_30%),radial-gradient(circle_at_82%_14%,rgba(112,143,216,0.08),transparent_22%)]" />
@@ -256,7 +216,7 @@ export function HeroSection() {
                 <HeroTypewriterTitle title={heroTitle} className="hero-typewriter--gold" />
               </h1>
             </div>
-            <p className="mt-3.5 max-w-[31rem] text-[0.94rem] leading-6 text-white/80 sm:mt-5 sm:text-[1.05rem] sm:leading-7">
+            <p className="mt-5 hidden max-w-[31rem] text-[1.05rem] leading-7 text-white/86 sm:block">
               {resolveLocalizedValue(homeHeroContent.description, language)}
             </p>
 
