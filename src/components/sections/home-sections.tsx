@@ -175,7 +175,7 @@ export function HeroSection() {
         <video
           ref={videoRef}
           className={cn(
-            "pointer-events-none absolute inset-0 z-0 h-full w-full object-cover brightness-[0.88] saturate-[1.04] contrast-[1.04] transition-opacity duration-300",
+            "pointer-events-none absolute inset-0 z-0 h-full w-full object-cover brightness-[0.94] saturate-[1.03] contrast-[1.02] transition-opacity duration-300",
             hasVideoError ? "opacity-0" : "opacity-100",
           )}
           autoPlay
@@ -231,8 +231,8 @@ export function HeroSection() {
             </button>
           </div>
         ) : null}
-        <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(5,7,10,0.28)_0%,rgba(5,7,10,0.14)_24%,rgba(5,7,10,0.26)_56%,rgba(5,7,10,0.62)_100%)]" />
-        <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(5,7,10,0.66)_0%,rgba(5,7,10,0.5)_22%,rgba(5,7,10,0.16)_56%,rgba(5,7,10,0.08)_100%)]" />
+        <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(5,7,10,0.24)_0%,rgba(5,7,10,0.12)_24%,rgba(5,7,10,0.22)_56%,rgba(5,7,10,0.56)_100%)]" />
+        <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(5,7,10,0.58)_0%,rgba(5,7,10,0.42)_22%,rgba(5,7,10,0.14)_56%,rgba(5,7,10,0.07)_100%)]" />
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(210,173,116,0.18),transparent_30%),radial-gradient(circle_at_82%_14%,rgba(112,143,216,0.1),transparent_22%)]" />
       </div>
 
