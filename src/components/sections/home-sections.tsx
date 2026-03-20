@@ -114,6 +114,93 @@ export function HeroSection() {
       : "Oslo / Commercial Film / Production";
   const secondaryCta = language === "no" ? "Se arbeid" : "View work";
   const heroTitle = resolveLocalizedValue(homeHeroContent.title, language);
+  const revealVideoFrame = () => {
+    setHasVideoError(false);
+    setIsPosterVisible(false);
+  };
+
+  useEffect(() => {
+    const node = videoRef.current;
+
+    if (!node) {
+      return;
+    }
+
+    let cancelled = false;
+    const timers: number[] = [];
+
+    const syncPlaybackFlags = () => {
+      node.defaultMuted = true;
+      node.muted = true;
+      node.playsInline = true;
+      node.setAttribute("muted", "");
+      node.setAttribute("playsinline", "");
+      node.setAttribute("webkit-playsinline", "");
+      node.preload = "auto";
+    };
+
+    const revealIfReady = () => {
+      if (cancelled) {
+        return false;
+      }
+
+      if (node.readyState >= HTMLMediaElement.HAVE_CURRENT_DATA) {
+        revealVideoFrame();
+        return true;
+      }
+
+      return false;
+    };
+
+    const tryPlay = () => {
+      if (cancelled) {
+        return;
+      }
+
+      syncPlaybackFlags();
+
+      if (node.networkState === HTMLMediaElement.NETWORK_EMPTY) {
+        node.load();
+      }
+
+      revealIfReady();
+      void node.play().then(() => {
+        revealIfReady();
+      }).catch(() => undefined);
+    };
+
+    tryPlay();
+
+    [180, 650, 1400, 2600].forEach((delay) => {
+      timers.push(
+        window.setTimeout(() => {
+          if (!revealIfReady() && node.paused) {
+            tryPlay();
+          }
+        }, delay),
+      );
+    });
+
+    const handleVisibility = () => {
+      if (document.visibilityState === "visible") {
+        tryPlay();
+      }
+    };
+
+    const handlePageShow = () => {
+      tryPlay();
+    };
+
+    document.addEventListener("visibilitychange", handleVisibility);
+    window.addEventListener("pageshow", handlePageShow);
+
+    return () => {
+      cancelled = true;
+      timers.forEach((timer) => window.clearTimeout(timer));
+      document.removeEventListener("visibilitychange", handleVisibility);
+      window.removeEventListener("pageshow", handlePageShow);
+    };
+  }, [heroVideo.src]);
 
   return (
     <section className="relative isolate overflow-hidden bg-[#05070a] text-white">
@@ -161,20 +248,27 @@ export function HeroSection() {
           }}
           onLoadedData={(event) => {
             if (event.currentTarget.readyState >= 2) {
-              setHasVideoError(false);
-              setIsPosterVisible(false);
+              revealVideoFrame();
             }
           }}
           onCanPlay={(event) => {
+            if (event.currentTarget.readyState >= 2) {
+              revealVideoFrame();
+            }
             void event.currentTarget.play().catch(() => undefined);
           }}
+          onCanPlayThrough={() => {
+            revealVideoFrame();
+          }}
+          onPlay={() => {
+            revealVideoFrame();
+          }}
           onPlaying={() => {
-            setHasVideoError(false);
-            setIsPosterVisible(false);
+            revealVideoFrame();
           }}
           onTimeUpdate={(event) => {
             if (event.currentTarget.currentTime > 0) {
-              setIsPosterVisible(false);
+              revealVideoFrame();
             }
           }}
           onError={() => {
