@@ -101,7 +101,7 @@ function HeroTypewriterTitle({
       ? ["Film som faktisk", "selger!"]
       : trimmedTitle === "Film that actually sells!"
         ? ["Film that actually", "sells!"]
-        : null;
+      : null;
 
   return (
     <span className={cn("hero-typewriter", className)}>
@@ -205,22 +205,21 @@ export function HeroSection() {
 
       <div className="site-container relative z-[1] flex min-h-[72svh] items-end pb-7 pt-[5.35rem] sm:min-h-[92svh] sm:pb-14 sm:pt-[8.8rem] lg:min-h-[96vh] lg:pb-16 lg:pt-[10.5rem]">
         <div className="w-full">
-          <div className="max-w-[42rem] lg:max-w-[56rem] xl:max-w-[61rem]">
-            <div className="hero-heading-row">
-              <div className="hero-label-chip hero-label-chip--headline">
-              <span className="hero-label-chip__segment">
-                <span className="hero-label-chip__item">{eyebrow}</span>
-              </span>
-              </div>
-              <h1 className="hero-title text-white lg:whitespace-nowrap">
-                <HeroTypewriterTitle title={heroTitle} className="hero-typewriter--gold" />
+          <div className="max-w-[42rem] lg:max-w-[29rem] xl:max-w-[31rem]">
+            <div className="hero-editorial-block">
+              <p className="hero-editorial-kicker">{eyebrow}</p>
+              <h1 className="hero-title hero-title--editorial text-white">
+                <span className="hero-title__lead">
+                  {language === "no" ? "Strategisk videoinnhold" : "Strategic video content"}
+                </span>
+                <HeroTypewriterTitle title={heroTitle} className="hero-typewriter--gold hero-typewriter--editorial" />
               </h1>
             </div>
-            <p className="mt-5 hidden max-w-[31rem] text-[1.05rem] leading-7 text-white/86 sm:block">
+            <p className="hero-editorial-support mt-4 max-w-[28rem] text-[0.98rem] leading-6 text-white/88 sm:mt-5 sm:text-[1.02rem] sm:leading-7">
               {resolveLocalizedValue(homeHeroContent.description, language)}
             </p>
 
-            <div className="hidden sm:mt-8 sm:flex sm:flex-row sm:gap-3">
+            <div className="hidden sm:mt-7 sm:flex sm:flex-row sm:gap-3">
               <ButtonLink
                 href={siteConfig.bookingHref}
                 className="hero-cta-primary w-full sm:w-auto"
