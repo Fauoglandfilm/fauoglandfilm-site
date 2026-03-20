@@ -8,6 +8,7 @@ import { EmbeddedVideoPlayer } from "@/components/media/embedded-video-player";
 import { useSitePreferences } from "@/components/providers/site-preferences";
 import { CtaBanner, PageHero } from "@/components/sections/site-sections";
 import { ButtonLink } from "@/components/ui/button-link";
+import { CloseIcon } from "@/components/ui/icons";
 import type { CaseStudy } from "@/data/site-content";
 import { uiCopy } from "@/data/ui-copy";
 import { resolveLocalizedValue } from "@/lib/i18n";
@@ -82,9 +83,9 @@ function CaseVideoModal({
           type="button"
           onClick={onClose}
           aria-label={language === "no" ? "Lukk video" : "Close video"}
-          className="absolute right-3 top-3 z-[3] flex h-9 w-9 items-center justify-center rounded-full border border-white/12 bg-black/48 p-0 text-white backdrop-blur-md transition hover:bg-black/58 lg:right-5 lg:top-5 lg:h-10 lg:w-10"
+          className="absolute left-4 top-4 z-[4] flex h-10 w-10 items-center justify-center rounded-full border p-0 shadow-[0_16px_34px_rgba(0,0,0,0.18)] backdrop-blur-md transition [html[data-theme='light']_&]:border-black/10 [html[data-theme='light']_&]:bg-white/96 [html[data-theme='light']_&]:text-black [html[data-theme='light']_&]:hover:bg-white [html[data-theme='dark']_&]:border-white/12 [html[data-theme='dark']_&]:bg-black/82 [html[data-theme='dark']_&]:text-white [html[data-theme='dark']_&]:hover:bg-black sm:h-11 sm:w-11 lg:left-5 lg:top-5"
         >
-          <span className="text-base leading-none">×</span>
+          <CloseIcon className="h-3 w-3 shrink-0" />
         </button>
 
         <div className="grid min-h-0 gap-0 lg:grid-cols-[minmax(0,1.18fr)_minmax(20rem,0.82fr)]">
