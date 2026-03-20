@@ -947,7 +947,6 @@ function HomeCaseCard({
   delay?: number;
 }) {
   const { language } = useSitePreferences();
-  const shouldForcePreview = caseStudy.slug === "treningshuset";
   const metric = caseStudy.metrics[0]
     ? `${caseStudy.metrics[0].value} ${resolveLocalizedValue(caseStudy.metrics[0].label, language)}`
     : resolveLocalizedValue(caseStudy.category, language);
@@ -970,14 +969,12 @@ function HomeCaseCard({
             mediaFit={caseStudy.mediaFit}
             previewBehavior={
               caseStudy.video || caseStudy.externalVideo
-                ? shouldForcePreview
-                  ? "always"
-                  : "viewport"
+                ? "viewport"
                 : "static"
             }
             className="absolute inset-0"
             sizes={featured ? "(min-width: 1024px) 58vw, 100vw" : "(min-width: 1024px) 36vw, 100vw"}
-            priority={shouldForcePreview}
+            priority={false}
             rootMargin="160px 0px -8% 0px"
             inViewThreshold={0.18}
             posterClassName="transition duration-700 group-hover:scale-[1.035]"

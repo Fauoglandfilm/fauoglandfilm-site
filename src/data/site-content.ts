@@ -39,7 +39,7 @@ export type VideoVariant = {
   image?: string;
   imageAlt?: LocalizedText;
   mediaFit?: "cover" | "contain";
-  frame?: "landscape" | "portrait";
+  frame?: "landscape" | "portrait" | "portrait4x5";
 };
 
 export type NavItem = {
@@ -920,25 +920,25 @@ export const caseStudies: CaseStudy[] = [
       en: "Film production for ads and social media, built to turn attention into more memberships for Treningshuset.",
     },
     goal: {
-      no: "Treningshuset trengte flere filmer i ulike formater, lengder og budskap som kunne brukes både i kampanjer og løpende annonsering.",
-      en: "Treningshuset needed multiple films across formats, lengths and messages that could work both in campaigns and ongoing paid distribution.",
+      no: "Treningshuset trengte flere tydelige portrettfilmer som kunne brukes direkte i annonser og sosiale medier uten ekstra tilpasning.",
+      en: "Treningshuset needed multiple clear portrait-led films that could be used directly in ads and social placements without extra adaptation.",
     },
     solution: {
-      no: "Vi produserte ti filmer i flere formater, med både brede og mobile uttak, slik at materialet kunne tilpasses ulike flater og kampanjebehov uten å miste tempo eller tydelighet.",
-      en: "We produced ten films across multiple formats, including wider and mobile-first cutdowns, so the material could fit different placements and campaign needs without losing pace or clarity.",
+      no: "Vi bygget en portrettbasert serie med tre tydelige uttak som holder tempoet oppe i feeden og fungerer direkte i mobilannonser og sosiale formater.",
+      en: "We built a portrait-led set of three focused cutdowns that keep the pace up in-feed and work directly across mobile ads and social formats.",
     },
     deliverables: [
-      { no: "10 filmer i ulike lengder og formater", en: "10 films across multiple lengths and formats" },
-      { no: "Versjoner for annonser og sosiale medier", en: "Versions for ads and social media" },
-      { no: "Budskap tilpasset ulike kampanjer", en: "Messaging adapted to different campaigns" },
+      { no: "3 portrettfilmer for annonser og sosiale medier", en: "3 portrait films for ads and social media" },
+      { no: "9:16 og 4:5 uttak til mobilflater", en: "9:16 and 4:5 cutdowns for mobile placements" },
+      { no: "Budskap tilpasset ulike kampanjevinkler", en: "Messaging adapted to different campaign angles" },
     ],
     impact: {
-      no: "Ga Treningshuset et fleksibelt videobibliotek som kan brukes på tvers av kampanjer, plasseringer og målgrupper for å drive flere innmeldinger.",
-      en: "Gave Treningshuset a flexible film library that can be used across campaigns, placements and audiences to drive more memberships.",
+      no: "Ga Treningshuset tre tydelige annonsefilmer som kan brukes direkte i mobilflater for å drive flere innmeldinger.",
+      en: "Gave Treningshuset three clear ad films that can be used directly in mobile placements to drive more memberships.",
     },
     metrics: [
-      { value: "10", label: { no: "filmer", en: "films" } },
-      { value: "2", label: { no: "hovedformater", en: "core formats" } },
+      { value: "3", label: { no: "filmer", en: "films" } },
+      { value: "2", label: { no: "portrettformater", en: "portrait formats" } },
       { value: "Annonser + SoMe", label: { no: "bruk", en: "use" } },
     ],
     tags: [
@@ -946,66 +946,79 @@ export const caseStudies: CaseStudy[] = [
       { no: "Sosiale medier", en: "Social media" },
       { no: "Medlemsvekst", en: "Membership growth" },
     ],
-    image: "/assets/portfolio/treningshuset/posters/treningshuset-landscape-poster.png",
+    image: "/assets/portfolio/treningshuset/posters/treningshuset-musikk-2-45-poster.png",
     imageAlt: {
-      no: "Still fra Treningshuset-kampanje",
-      en: "Still from the Treningshuset campaign",
+      no: "Still fra Treningshuset-kampanje i portrettformat",
+      en: "Still from the Treningshuset campaign in portrait format",
     },
-    mediaFit: "cover",
-    video: {
-      videoType: "direct",
-      src: "/assets/portfolio/treningshuset/videos/web/treningshuset-desktop-16x9-web.mp4",
-      mobileSrc: "/assets/portfolio/treningshuset/videos/alternates/mobile-9x16/Kort_Reel.mp4",
-      poster: "/assets/portfolio/treningshuset/posters/treningshuset-landscape-poster.png",
-      label: {
-        no: "Treningshuset - annonser og sosiale medier",
-        en: "Treningshuset - ads and social media",
-      },
-    },
+    mediaFit: "contain",
     videoVariants: [
       {
-        slug: "liggende",
+        slug: "velkommen-sindre",
         label: {
-          no: "Liggende versjon",
-          en: "Landscape version",
+          no: "Velkommen Sindre",
+          en: "Welcome Sindre",
         },
-        image: "/assets/portfolio/treningshuset/posters/treningshuset-landscape-poster.png",
+        image: "/assets/portfolio/treningshuset/posters/treningshuset-velkommen-sindre-poster.png",
         imageAlt: {
-          no: "Liggende versjon av Treningshuset-filmen",
-          en: "Landscape version of the Treningshuset film",
-        },
-        mediaFit: "contain",
-        frame: "landscape",
-        video: {
-          videoType: "direct",
-          src: "/assets/portfolio/treningshuset/videos/web/treningshuset-desktop-16x9-web.mp4",
-          poster: "/assets/portfolio/treningshuset/posters/treningshuset-landscape-poster.png",
-          label: {
-            no: "Treningshuset - liggende versjon",
-            en: "Treningshuset - landscape version",
-          },
-        },
-      },
-      {
-        slug: "staende",
-        label: {
-          no: "Stående versjon",
-          en: "Portrait version",
-        },
-        image: "/assets/portfolio/treningshuset/posters/treningshuset-mobil-poster.png",
-        imageAlt: {
-          no: "Stående versjon av Treningshuset-filmen",
-          en: "Portrait version of the Treningshuset film",
+          no: "Portrettfilm for Treningshuset med Velkommen Sindre",
+          en: "Portrait film for Treningshuset with Welcome Sindre",
         },
         mediaFit: "cover",
         frame: "portrait",
         video: {
           videoType: "direct",
-          src: "/assets/portfolio/treningshuset/videos/alternates/mobile-9x16/Kort_Reel.mp4",
-          poster: "/assets/portfolio/treningshuset/posters/treningshuset-mobil-poster.png",
+          src: "/assets/portfolio/treningshuset/videos/portrait/treningshuset-velkommen-sindre-web.mp4",
+          poster: "/assets/portfolio/treningshuset/posters/treningshuset-velkommen-sindre-poster.png",
           label: {
-            no: "Treningshuset - stående versjon",
-            en: "Treningshuset - portrait version",
+            no: "Treningshuset - Velkommen Sindre",
+            en: "Treningshuset - Welcome Sindre",
+          },
+        },
+      },
+      {
+        slug: "musikk-1",
+        label: {
+          no: "Musikk 1",
+          en: "Music 1",
+        },
+        image: "/assets/portfolio/treningshuset/posters/treningshuset-musikk-1-poster.png",
+        imageAlt: {
+          no: "Portrettfilm for Treningshuset med Musikk 1",
+          en: "Portrait film for Treningshuset with Music 1",
+        },
+        mediaFit: "cover",
+        frame: "portrait",
+        video: {
+          videoType: "direct",
+          src: "/assets/portfolio/treningshuset/videos/portrait/treningshuset-musikk-1-web.mp4",
+          poster: "/assets/portfolio/treningshuset/posters/treningshuset-musikk-1-poster.png",
+          label: {
+            no: "Treningshuset - Musikk 1",
+            en: "Treningshuset - Music 1",
+          },
+        },
+      },
+      {
+        slug: "musikk-2-45",
+        label: {
+          no: "Musikk 2",
+          en: "Music 2",
+        },
+        image: "/assets/portfolio/treningshuset/posters/treningshuset-musikk-2-45-poster.png",
+        imageAlt: {
+          no: "4:5-film for Treningshuset med Musikk 2",
+          en: "4:5 film for Treningshuset with Music 2",
+        },
+        mediaFit: "cover",
+        frame: "portrait4x5",
+        video: {
+          videoType: "direct",
+          src: "/assets/portfolio/treningshuset/videos/portrait/treningshuset-musikk-2-45-web.mp4",
+          poster: "/assets/portfolio/treningshuset/posters/treningshuset-musikk-2-45-poster.png",
+          label: {
+            no: "Treningshuset - Musikk 2",
+            en: "Treningshuset - Music 2",
           },
         },
       },
@@ -1651,30 +1664,20 @@ export const portfolioProjects: PortfolioProject[] = [
       en: "Films for ads and social media",
     },
     summary: {
-      no: "Vi har lagd 10 filmer for Treningshuset i forskjellige formater, med ulike budskap og kampanjetilpasninger for å få flere til å melde seg inn.",
-      en: "We created 10 films for Treningshuset across multiple formats, messages and campaign versions designed to drive more memberships.",
+      no: "Tre portrettfilmer bygget for annonser og sosiale medier, med tydelige kampanjevinkler som gjør innholdet raskt å bruke i mobilflater.",
+      en: "Three portrait films built for ads and social media, with clear campaign angles that are easy to deploy across mobile placements.",
     },
     result: {
-      no: "Den liggende versjonen brukes i brede flater, mens den stående versjonen er klar for mobilannonser og sosiale medier.",
-      en: "The landscape version is used in wider placements, while the portrait version is ready for mobile ads and social media.",
+      no: "Et ryddig sett med 9:16- og 4:5-filmer som er klare for mobilannonser og sosiale medier uten ekstra reformattering.",
+      en: "A clean set of 9:16 and 4:5 films ready for mobile ads and social media without extra reformatting.",
     },
     detailHref: "/case/treningshuset",
     ctaLabel: viewCaseCta,
-    mediaFit: "cover",
-    image: "/assets/portfolio/treningshuset/posters/treningshuset-landscape-poster.png",
+    mediaFit: "contain",
+    image: "/assets/portfolio/treningshuset/posters/treningshuset-musikk-2-45-poster.png",
     imageAlt: {
-      no: "Still fra Treningshuset-filmen",
-      en: "Still from the Treningshuset film",
-    },
-    video: {
-      videoType: "direct",
-      src: "/assets/portfolio/treningshuset/videos/web/treningshuset-desktop-16x9-web.mp4",
-      mobileSrc: "/assets/portfolio/treningshuset/videos/alternates/mobile-9x16/Kort_Reel.mp4",
-      poster: "/assets/portfolio/treningshuset/posters/treningshuset-landscape-poster.png",
-      label: {
-        no: "Treningshuset - filmer for annonser og sosiale medier",
-        en: "Treningshuset - films for ads and social media",
-      },
+      no: "Still fra Treningshuset-portrettfilm",
+      en: "Still from the Treningshuset portrait film",
     },
     palette: "from-[#15171c] via-[#2d3746] to-[#647c9b]",
   },

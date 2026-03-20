@@ -155,7 +155,7 @@ export function CaseDetailContent({
   const localizedTags = caseStudy.tags.map((tag) => resolveLocalizedValue(tag, language));
   const isTreningshuset = caseStudy.slug === "treningshuset";
   const isVilleGleder = caseStudy.slug === "ville-gleder";
-  const hasMixedVideoVariants = isTreningshuset && caseStudy.videoVariants?.length === 2;
+  const usesInteractiveVideoGrid = isVilleGleder || isTreningshuset;
   const playableVideoVariants = useMemo(
     () =>
       (caseStudy.videoVariants ?? []).filter(
@@ -186,7 +186,7 @@ export function CaseDetailContent({
 
       <section className="section-space">
         <div className="site-container space-y-5">
-          {!isTreningshuset && !isVilleGleder ? (
+          {!usesInteractiveVideoGrid ? (
             <article className="-mx-4 overflow-hidden sm:mx-0 sm:rounded-[2rem] sm:border sm:border-[color:var(--line)] sm:bg-[color:var(--surface)]">
               {caseStudy.video || caseStudy.externalVideo ? (
                 <div className="relative aspect-video w-full bg-[#111111]">
@@ -243,7 +243,7 @@ export function CaseDetailContent({
             <section
               className={cn(
                 "grid gap-4",
-                hasMixedVideoVariants ? "md:grid-cols-[minmax(0,1.28fr)_minmax(16rem,0.72fr)]" : "md:grid-cols-2",
+                caseStudy.videoVariants.length >= 3 ? "md:grid-cols-2 xl:grid-cols-3" : "md:grid-cols-2",
               )}
             >
               {caseStudy.videoVariants.map((variant) => (
@@ -251,11 +251,7 @@ export function CaseDetailContent({
                   key={variant.slug}
                   className={cn(
                     "card-surface rounded-[1.8rem]",
-                    !(
-                      variant.frame === "landscape" &&
-                      (variant.mediaFit ?? caseStudy.mediaFit) === "contain"
-                    ) && "overflow-hidden",
-                    variant.frame === "portrait" && hasMixedVideoVariants && "md:justify-self-end md:w-full md:max-w-[22rem]",
+                    "overflow-hidden",
                   )}
                 >
                   <button
@@ -268,12 +264,14 @@ export function CaseDetailContent({
                         "relative bg-[#0b0d12]",
                         variant.frame === "portrait"
                           ? "aspect-[9/16]"
+                          : variant.frame === "portrait4x5"
+                            ? "aspect-[4/5]"
                           : variant.frame === "landscape"
                             ? "aspect-video"
-                          : "min-h-[14.5rem] sm:min-h-[18rem] md:min-h-[24rem]",
+                            : "min-h-[14.5rem] sm:min-h-[18rem] md:min-h-[24rem]",
                       )}
                     >
-                      {isVilleGleder && variant.video?.videoType === "direct" ? (
+                      {usesInteractiveVideoGrid && variant.video?.videoType === "direct" ? (
                         <video
                           className={cn(
                             "absolute inset-0 h-full w-full bg-[#05070b]",
@@ -306,7 +304,7 @@ export function CaseDetailContent({
                       <div className="absolute left-4 top-4 z-[2] rounded-full border border-[color:var(--line-strong)] bg-[color:var(--surface)]/84 px-3.5 py-1.5 text-[0.68rem] font-semibold uppercase tracking-[0.18em] text-[color:var(--foreground)] shadow-[0_12px_32px_rgba(0,0,0,0.18)] backdrop-blur-md">
                         {resolveLocalizedValue(variant.label, language)}
                       </div>
-                      {isVilleGleder ? (
+                      {usesInteractiveVideoGrid ? (
                         <div className="absolute bottom-4 right-4 z-[2] rounded-full border border-white/16 bg-black/52 px-3.5 py-1.5 text-[0.68rem] font-semibold uppercase tracking-[0.18em] text-white shadow-[0_14px_36px_rgba(0,0,0,0.24)] backdrop-blur-md">
                           {language === "no" ? "Spill med lyd" : "Play with sound"}
                         </div>
