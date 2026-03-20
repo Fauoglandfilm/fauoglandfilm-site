@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { useReducedMotion } from "framer-motion";
 
 import { PreviewMedia } from "@/components/media/preview-media";
@@ -94,73 +94,7 @@ function HeroTypewriterTitle({
   title: string;
   className?: string;
 }) {
-  const titleRef = useRef<HTMLSpanElement | null>(null);
-  const shouldReduceMotion = useReducedMotion();
-  const words = useMemo(() => title.split(" "), [title]);
-
-  useLayoutEffect(() => {
-    const node = titleRef.current;
-
-    if (!node || shouldReduceMotion) {
-      return;
-    }
-
-    const animation = node.animate(
-      [
-        {
-          opacity: 0,
-          transform: "translate3d(0, 0.5rem, 0)",
-        },
-        {
-          opacity: 1,
-          transform: "translate3d(0, 0, 0)",
-        },
-      ],
-      {
-        duration: 820,
-        delay: 120,
-        easing: "cubic-bezier(0.22, 1, 0.36, 1)",
-        fill: "both",
-      },
-    );
-
-    return () => {
-      animation.cancel();
-      node.style.opacity = "1";
-      node.style.transform = "none";
-    };
-  }, [shouldReduceMotion, title]);
-
-  return (
-    <span
-      ref={titleRef}
-      aria-label={title}
-      role="text"
-      className={cn("hero-typewriter", className)}
-    >
-      <span aria-hidden="true" className="hero-typewriter__line">
-        {words.map((word, wordIndex) => {
-          return (
-            <span key={`${word}-${wordIndex}`} className="hero-typewriter__word">
-              {Array.from(word).map((character, index) => (
-                <span
-                  key={`${character}-${wordIndex}-${index}`}
-                  className="hero-typewriter__char hero-typewriter__char--visible"
-                >
-                  {character}
-                </span>
-              ))}
-              {wordIndex < words.length - 1 ? (
-                <span className="hero-typewriter__char hero-typewriter__char--visible hero-typewriter__space">
-                  {"\u00A0"}
-                </span>
-              ) : null}
-            </span>
-          );
-        })}
-      </span>
-    </span>
-  );
+  return <span className={cn("hero-typewriter", className)}>{title}</span>;
 }
 
 export function HeroSection() {
