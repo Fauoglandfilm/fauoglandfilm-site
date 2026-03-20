@@ -2,6 +2,7 @@
 
 /* eslint-disable @next/next/no-img-element */
 
+import Image from "next/image";
 import type { ReactNode } from "react";
 import { useMemo, useState } from "react";
 
@@ -48,9 +49,29 @@ export function MediaImage({
   const sources = useMemo(() => uniqueSources([src, ...fallbackSrcs]), [fallbackSrcs, src]);
   const [failedSources, setFailedSources] = useState<string[]>([]);
   const activeSrc = sources.find((candidate) => !failedSources.includes(candidate));
+  const isLocalAsset = Boolean(activeSrc?.startsWith("/"));
 
   if (!activeSrc) {
     return fallbackContent ?? null;
+  }
+
+  if (isLocalAsset) {
+    return (
+      <Image
+        src={activeSrc}
+        alt={alt}
+        fill
+        quality={100}
+        priority={priority}
+        sizes={sizes ?? "100vw"}
+        placeholder="empty"
+        className={cn("absolute inset-0 h-full w-full", className)}
+        onLoad={onLoad}
+        onError={() => {
+          setFailedSources((current) => (current.includes(activeSrc) ? current : [...current, activeSrc]));
+        }}
+      />
+    );
   }
 
   return (

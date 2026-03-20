@@ -73,6 +73,8 @@ export function CaseDetailContent({
                     src={caseStudy.image}
                     alt={caseStudy.imageAlt ? resolveLocalizedValue(caseStudy.imageAlt, language) : `${caseStudy.client} case`}
                     fill
+                    quality={100}
+                    sizes="100vw"
                     className="object-cover"
                     priority
                   />
