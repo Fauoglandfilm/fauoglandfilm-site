@@ -802,6 +802,15 @@ export const caseStudies: CaseStudy[] = [
       no: "Mattis Thørud og Jan Monsen ved vannet under opptak for Ville Gleder",
       en: "Mattis Thorud and Jan Monsen by the lake during the Ville Gleder production",
     },
+    video: {
+      videoType: "direct",
+      src: "/assets/portfolio/ville-gleder/videos/ville-gleder-villmarksforedrag-web.mp4",
+      poster: "/assets/portfolio/ville-gleder/stills/villmarksforedrag-photo.jpg",
+      label: {
+        no: "Ville Gleder - Villmarksforedrag",
+        en: "Ville Gleder - wilderness talks",
+      },
+    },
     videoVariants: [
       {
         slug: "villmarksforedrag",
@@ -952,6 +961,15 @@ export const caseStudies: CaseStudy[] = [
       en: "Still from the Treningshuset campaign in portrait format",
     },
     mediaFit: "contain",
+    video: {
+      videoType: "direct",
+      src: "/assets/portfolio/treningshuset/videos/portrait/treningshuset-musikk-2-45-web.mp4",
+      poster: "/assets/portfolio/treningshuset/posters/treningshuset-musikk-2-45-poster.png",
+      label: {
+        no: "Treningshuset - Musikk 2",
+        en: "Treningshuset - Music 2",
+      },
+    },
     videoVariants: [
       {
         slug: "velkommen-sindre",
