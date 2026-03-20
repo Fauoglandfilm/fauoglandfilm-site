@@ -1697,6 +1697,15 @@ export const portfolioProjects: PortfolioProject[] = [
       no: "Still fra Treningshuset-portrettfilm",
       en: "Still from the Treningshuset portrait film",
     },
+    video: {
+      videoType: "direct",
+      src: "/assets/portfolio/treningshuset/videos/portrait/treningshuset-musikk-2-45-web.mp4",
+      poster: "/assets/portfolio/treningshuset/posters/treningshuset-musikk-2-45-poster.png",
+      label: {
+        no: "Treningshuset - Musikk 2",
+        en: "Treningshuset - Music 2",
+      },
+    },
     palette: "from-[#15171c] via-[#2d3746] to-[#647c9b]",
   },
   {

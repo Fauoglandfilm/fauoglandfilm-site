@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 import { EmbeddedVideoPlayer } from "@/components/media/embedded-video-player";
 import { PreviewMedia } from "@/components/media/preview-media";
@@ -443,6 +443,7 @@ function PortfolioVideoModal({
   const { language } = useSitePreferences();
   const title = resolveLocalizedValue(project.title, language);
   const format = resolveLocalizedValue(project.format, language);
+  const videoRef = useRef<HTMLVideoElement | null>(null);
   const copyOverride =
     project.slug in portfolioModalCopyOverrides
       ? portfolioModalCopyOverrides[project.slug as keyof typeof portfolioModalCopyOverrides][language]
@@ -450,8 +451,23 @@ function PortfolioVideoModal({
   const summary = copyOverride?.summary ?? resolveLocalizedValue(project.summary, language);
   const result = copyOverride?.result ?? (project.result ? resolveLocalizedValue(project.result, language) : null);
   const modalLabel = language === "no" ? "Lukk video" : "Close video";
+  const directVideo = project.video?.videoType === "direct" ? project.video : null;
+  const isDirectVideo = Boolean(directVideo);
   const modalActionClassName =
     "inline-flex items-center justify-center gap-2 rounded-full border px-5 py-3 text-sm font-semibold transition [html[data-theme='light']_&]:border-black/12 [html[data-theme='light']_&]:bg-white [html[data-theme='light']_&]:text-black [html[data-theme='light']_&]:hover:bg-[#f7f7f8] [html[data-theme='light']_&]:hover:text-black [html[data-theme='dark']_&]:border-white/14 [html[data-theme='dark']_&]:bg-black [html[data-theme='dark']_&]:text-white [html[data-theme='dark']_&]:hover:bg-[#202022] [html[data-theme='dark']_&]:hover:text-white";
+
+  useEffect(() => {
+    const node = videoRef.current;
+
+    if (!node || !isDirectVideo) {
+      return;
+    }
+
+    node.currentTime = 0;
+    node.defaultMuted = false;
+    node.muted = false;
+    void node.play().catch(() => undefined);
+  }, [isDirectVideo, project.slug]);
 
   return (
     <div
@@ -469,22 +485,38 @@ function PortfolioVideoModal({
           type="button"
           onClick={onClose}
           aria-label={modalLabel}
-          className="absolute left-3 top-3 z-[4] flex h-11 w-11 items-center justify-center rounded-full border p-0 shadow-[0_16px_34px_rgba(0,0,0,0.18)] backdrop-blur-md transition [html[data-theme='light']_&]:border-black/10 [html[data-theme='light']_&]:bg-white/96 [html[data-theme='light']_&]:text-black [html[data-theme='light']_&]:hover:bg-white [html[data-theme='dark']_&]:border-white/12 [html[data-theme='dark']_&]:bg-black/82 [html[data-theme='dark']_&]:text-white [html[data-theme='dark']_&]:hover:bg-black lg:left-5 lg:top-5 lg:h-11 lg:w-11"
+          className="absolute left-4 top-4 z-[4] flex h-10 w-10 items-center justify-center rounded-full border p-0 shadow-[0_16px_34px_rgba(0,0,0,0.18)] backdrop-blur-md transition [html[data-theme='light']_&]:border-black/10 [html[data-theme='light']_&]:bg-white/96 [html[data-theme='light']_&]:text-black [html[data-theme='light']_&]:hover:bg-white [html[data-theme='dark']_&]:border-white/12 [html[data-theme='dark']_&]:bg-black/82 [html[data-theme='dark']_&]:text-white [html[data-theme='dark']_&]:hover:bg-black sm:h-11 sm:w-11 lg:left-5 lg:top-5"
         >
           <CloseIcon className="h-3 w-3 shrink-0" />
         </button>
 
         <div className="grid min-h-0 gap-0 lg:grid-cols-[minmax(0,1.15fr)_minmax(20rem,0.85fr)]">
           <div className="relative min-h-[14rem] bg-[#05070b] sm:min-h-[18rem] lg:min-h-[36rem]">
-            {project.video || project.externalVideo ? (
+            {isDirectVideo ? (
+              <video
+                ref={videoRef}
+                className={cn(
+                  "absolute inset-0 h-full w-full bg-[#05070b]",
+                  (project.mediaFit ?? "cover") === "contain" ? "object-contain p-5 sm:p-6" : "object-cover",
+                )}
+                src={directVideo!.src}
+                poster={directVideo!.poster ?? project.image}
+                controls
+                playsInline
+                preload="auto"
+                autoPlay
+                controlsList="nodownload noplaybackrate"
+                disablePictureInPicture
+                disableRemotePlayback
+              />
+            ) : project.externalVideo ? (
               <EmbeddedVideoPlayer
                 title={project.title}
-                video={project.video}
                 externalVideo={project.externalVideo}
                 image={project.image}
                 imageAlt={project.imageAlt}
                 mediaFit={project.mediaFit}
-                autoplay
+                autoplay={false}
                 showControls
                 className="absolute inset-0"
                 sizes="(min-width: 1280px) 62vw, (min-width: 1024px) 58vw, 100vw"
