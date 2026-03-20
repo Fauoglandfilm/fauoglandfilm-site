@@ -12,6 +12,7 @@ import {
   segmentedControlOptionClassName,
   segmentedControlShellClassName,
 } from "@/components/ui/button-styles";
+import { OverlayCloseButton } from "@/components/ui/overlay-close-button";
 import { CloseIcon, MenuIcon, MoonIcon, SearchIcon, SunIcon } from "@/components/ui/icons";
 import { caseStudies, navItems, serviceAreas, teamMembers } from "@/data/site-content";
 import { uiCopy } from "@/data/ui-copy";
@@ -511,6 +512,7 @@ export function Header() {
             transition={{ duration: 0.22, ease: [0.22, 1, 0.36, 1] }}
             onClick={closeSearch}
           >
+            <OverlayCloseButton label={copy.searchClose} onClick={closeSearch} />
             <motion.div
               role="dialog"
               aria-modal="true"
@@ -547,14 +549,6 @@ export function Header() {
                         className="w-full bg-transparent text-[1.02rem] font-medium tracking-[-0.02em] text-white outline-none placeholder:text-white/42 sm:text-[1.08rem]"
                       />
                     </div>
-                    <button
-                      type="button"
-                      onClick={closeSearch}
-                      className="inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-white/12 bg-white/8 text-white transition hover:bg-white/12"
-                      aria-label={copy.searchClose}
-                    >
-                      <CloseIcon className="h-4 w-4" />
-                    </button>
                   </div>
                 </div>
 
@@ -605,6 +599,7 @@ export function Header() {
             exit={{ opacity: 0 }}
             transition={{ duration: 0.24, ease: [0.22, 1, 0.36, 1] }}
           >
+            <OverlayCloseButton label={copy.menuClose} onClick={() => setOpen(false)} />
             <motion.div
               id="site-menu"
               role="dialog"
@@ -646,16 +641,6 @@ export function Header() {
                       </p>
                     </div>
                   </Link>
-
-                  <Button
-                    variant="icon"
-                    size="icon"
-                    className="h-11 w-11 rounded-full border border-[color:var(--line)] bg-[color:var(--surface)]/82 text-[color:var(--foreground)] shadow-none"
-                    aria-label={copy.menuClose}
-                    onClick={() => setOpen(false)}
-                  >
-                    <CloseIcon className="h-4 w-4" />
-                  </Button>
                 </div>
 
                 <nav className="flex flex-1 flex-col justify-center" aria-label={menuLabel}>
