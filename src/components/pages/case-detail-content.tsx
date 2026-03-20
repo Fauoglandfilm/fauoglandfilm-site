@@ -110,7 +110,11 @@ export function CaseDetailContent({
                 <article
                   key={variant.slug}
                   className={cn(
-                    "card-surface overflow-hidden rounded-[1.8rem]",
+                    "card-surface rounded-[1.8rem]",
+                    !(
+                      variant.frame === "landscape" &&
+                      (variant.mediaFit ?? caseStudy.mediaFit) === "contain"
+                    ) && "overflow-hidden",
                     variant.frame === "portrait" && hasMixedVideoVariants && "md:justify-self-end md:w-full md:max-w-[22rem]",
                   )}
                 >
@@ -247,10 +251,17 @@ export function CaseDetailContent({
                 ) : null}
 
                 <div className="flex flex-col gap-2.5 sm:flex-row sm:flex-wrap sm:justify-center xl:justify-end">
-                  <ButtonLink href="/kontakt">
+                  <ButtonLink
+                    href="/kontakt"
+                    className="[--button-bg-current:#ffffff] [--button-border-current:rgba(17,17,17,0.12)] [--button-text-current:#111111] hover:[--button-bg-current:#f7f7f8] hover:[--button-text-current:#111111] active:[--button-bg-current:#f0f0f2] active:[--button-text-current:#111111] [html[data-theme='dark']_&]:[--button-bg-current:#111111] [html[data-theme='dark']_&]:[--button-border-current:rgba(255,255,255,0.14)] [html[data-theme='dark']_&]:[--button-text-current:#ffffff] [html[data-theme='dark']_&]:hover:[--button-bg-current:#202022] [html[data-theme='dark']_&]:hover:[--button-text-current:#ffffff] [html[data-theme='dark']_&]:active:[--button-bg-current:#252528] [html[data-theme='dark']_&]:active:[--button-text-current:#ffffff]"
+                  >
                     {language === "no" ? "Book møte" : "Book a meeting"}
                   </ButtonLink>
-                  <ButtonLink href="/priser" variant="secondary">
+                  <ButtonLink
+                    href="/priser"
+                    variant="secondary"
+                    className="[--button-bg-current:#ffffff] [--button-border-current:rgba(17,17,17,0.12)] [--button-text-current:#111111] hover:[--button-bg-current:#f7f7f8] hover:[--button-text-current:#111111] active:[--button-bg-current:#f0f0f2] active:[--button-text-current:#111111] [html[data-theme='dark']_&]:[--button-bg-current:#111111] [html[data-theme='dark']_&]:[--button-border-current:rgba(255,255,255,0.14)] [html[data-theme='dark']_&]:[--button-text-current:#ffffff] [html[data-theme='dark']_&]:hover:[--button-bg-current:#202022] [html[data-theme='dark']_&]:hover:[--button-text-current:#ffffff] [html[data-theme='dark']_&]:active:[--button-bg-current:#252528] [html[data-theme='dark']_&]:active:[--button-text-current:#ffffff]"
+                  >
                     {language === "no" ? "Be om estimat" : "Request an estimate"}
                   </ButtonLink>
                 </div>

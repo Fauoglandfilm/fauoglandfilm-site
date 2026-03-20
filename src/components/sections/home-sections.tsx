@@ -446,12 +446,14 @@ export function ServicesSection() {
 
 function CountUpValue({
   target,
+  prefix = "",
   suffix,
   trigger,
   locale,
   durationMs,
 }: {
   target: number;
+  prefix?: string;
   suffix: string;
   trigger: boolean;
   locale: string;
@@ -482,7 +484,7 @@ function CountUpValue({
 
     const startValue = 0;
     const endValue = target;
-    const effectiveDuration = Math.max(durationMs, 3000);
+    const effectiveDuration = durationMs;
 
     const easeOutCubic = (t: number) => 1 - Math.pow(1 - t, 3);
 
@@ -515,6 +517,7 @@ function CountUpValue({
 
   return (
     <>
+      {prefix}
       {displayValue.toLocaleString(locale)}
       {suffix}
     </>
@@ -605,6 +608,51 @@ export function ResultsSection() {
             },
           ],
     [language],
+  );
+  const animatedRoiPoints = useMemo(
+    () => [
+      {
+        value: (
+          <CountUpValue
+            target={93}
+            suffix="%"
+            trigger={animationReady}
+            locale={language === "no" ? "nb-NO" : "en-US"}
+            durationMs={2200}
+          />
+        ),
+        label: roiPoints[0]?.label ?? "",
+        detail: roiPoints[0]?.detail ?? "",
+      },
+      {
+        value: (
+          <CountUpValue
+            target={80}
+            prefix={language === "no" ? "Opptil " : "Up to "}
+            suffix="%"
+            trigger={animationReady}
+            locale={language === "no" ? "nb-NO" : "en-US"}
+            durationMs={2200}
+          />
+        ),
+        label: roiPoints[1]?.label ?? "",
+        detail: roiPoints[1]?.detail ?? "",
+      },
+      {
+        value: (
+          <CountUpValue
+            target={87}
+            suffix="%"
+            trigger={animationReady}
+            locale={language === "no" ? "nb-NO" : "en-US"}
+            durationMs={2200}
+          />
+        ),
+        label: roiPoints[2]?.label ?? "",
+        detail: roiPoints[2]?.detail ?? "",
+      },
+    ],
+    [animationReady, language, roiPoints],
   );
   const animatedMetrics = useMemo(
     () => [
@@ -800,8 +848,8 @@ export function ResultsSection() {
                       : "Proof that supports the investment earlier in the process."}
                   </h3>
                   <div className="mt-6 grid gap-6">
-                    {roiPoints.map((item) => (
-                      <div key={item.value} className="roi-proof-card__item">
+                    {animatedRoiPoints.map((item, index) => (
+                      <div key={index} className="roi-proof-card__item">
                         <p className="text-[2.15rem] font-semibold leading-none tracking-[-0.075em] text-[color:var(--foreground)] sm:text-[2.55rem]">
                           {item.value}
                         </p>
