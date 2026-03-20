@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect, useMemo, useRef, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -17,6 +18,131 @@ type CaseDetailContentProps = {
   relatedCases: CaseStudy[];
 };
 
+type CaseVideoVariant = NonNullable<CaseStudy["videoVariants"]>[number];
+
+function CaseVideoModal({
+  variant,
+  onClose,
+}: {
+  variant: CaseVideoVariant;
+  onClose: () => void;
+}) {
+  const { language } = useSitePreferences();
+  const videoRef = useRef<HTMLVideoElement | null>(null);
+  const title = resolveLocalizedValue(variant.label, language);
+  const imageAlt = variant.imageAlt ? resolveLocalizedValue(variant.imageAlt, language) : title;
+
+  useEffect(() => {
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        onClose();
+      }
+    };
+
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    window.addEventListener("keydown", handleKeyDown);
+
+    return () => {
+      document.body.style.overflow = previousOverflow;
+      window.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [onClose]);
+
+  useEffect(() => {
+    const node = videoRef.current;
+
+    if (!node) {
+      return;
+    }
+
+    node.currentTime = 0;
+    node.muted = false;
+    node.defaultMuted = false;
+    void node.play().catch(() => undefined);
+  }, [variant.slug]);
+
+  if (!variant.video || variant.video.videoType !== "direct") {
+    return null;
+  }
+
+  return (
+    <div
+      className="fixed inset-0 z-[90] flex items-end justify-center bg-[#040507]/76 p-3 backdrop-blur-md sm:p-5 lg:items-center lg:p-8"
+      role="dialog"
+      aria-modal="true"
+      aria-label={title}
+      onClick={onClose}
+    >
+      <div
+        className="card-surface relative flex max-h-[92svh] w-full max-w-6xl flex-col overflow-hidden rounded-[2rem] border border-[color:var(--line-strong)] bg-[color:var(--surface-strong)] shadow-[0_32px_120px_rgba(0,0,0,0.34)]"
+        onClick={(event) => event.stopPropagation()}
+      >
+        <button
+          type="button"
+          onClick={onClose}
+          aria-label={language === "no" ? "Lukk video" : "Close video"}
+          className="absolute right-3 top-3 z-[3] flex h-9 w-9 items-center justify-center rounded-full border border-white/12 bg-black/48 p-0 text-white backdrop-blur-md transition hover:bg-black/58 lg:right-5 lg:top-5 lg:h-10 lg:w-10"
+        >
+          <span className="text-base leading-none">×</span>
+        </button>
+
+        <div className="grid min-h-0 gap-0 lg:grid-cols-[minmax(0,1.18fr)_minmax(20rem,0.82fr)]">
+          <div className="relative min-h-[14rem] bg-[#05070b] sm:min-h-[18rem] lg:min-h-[36rem]">
+            <video
+              ref={videoRef}
+              className={cn(
+                "absolute inset-0 h-full w-full bg-[#05070b]",
+                (variant.mediaFit ?? "cover") === "contain" ? "object-contain p-5 sm:p-6" : "object-cover",
+              )}
+              src={variant.video.src}
+              poster={variant.video.poster ?? variant.image}
+              controls
+              playsInline
+              preload="auto"
+              autoPlay
+              controlsList="nodownload noplaybackrate"
+              disablePictureInPicture
+              disableRemotePlayback
+            />
+          </div>
+
+          <div className="flex min-h-0 flex-col p-5 sm:p-6 lg:p-8">
+            <div className="space-y-4">
+              <div className="flex flex-wrap items-center gap-2 text-[0.68rem] font-semibold uppercase tracking-[0.2em] text-[var(--muted)]">
+                <span>{title}</span>
+              </div>
+
+              <div>
+                <h2 className="section-title text-[color:var(--foreground)]">{title}</h2>
+                <p className="mt-4 text-sm leading-7 text-[var(--foreground)]/88 sm:text-[0.98rem]">
+                  {language === "no"
+                    ? "Klikk for å spille av med lyd."
+                    : "Tap to play back with sound."}
+                </p>
+              </div>
+            </div>
+
+            {variant.image ? (
+              <div className="mt-auto pt-6">
+                <div className="relative h-36 overflow-hidden rounded-[1.25rem] border border-[color:var(--line)] bg-[color:var(--surface)]/78">
+                  <Image
+                    src={variant.image}
+                    alt={imageAlt}
+                    fill
+                    sizes="(min-width: 1024px) 24rem, 100vw"
+                    className="object-cover"
+                  />
+                </div>
+              </div>
+            ) : null}
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 export function CaseDetailContent({
   caseStudy,
   relatedCases,
@@ -28,7 +154,19 @@ export function CaseDetailContent({
   );
   const localizedTags = caseStudy.tags.map((tag) => resolveLocalizedValue(tag, language));
   const isTreningshuset = caseStudy.slug === "treningshuset";
+  const isVilleGleder = caseStudy.slug === "ville-gleder";
   const hasMixedVideoVariants = isTreningshuset && caseStudy.videoVariants?.length === 2;
+  const playableVideoVariants = useMemo(
+    () =>
+      (caseStudy.videoVariants ?? []).filter(
+        (variant): variant is CaseVideoVariant =>
+          Boolean(variant.video && variant.video.videoType === "direct"),
+      ),
+    [caseStudy.videoVariants],
+  );
+  const [activeVideoVariantSlug, setActiveVideoVariantSlug] = useState<string | null>(null);
+  const activeVideoVariant =
+    playableVideoVariants.find((variant) => variant.slug === activeVideoVariantSlug) ?? null;
 
   return (
     <main>
@@ -48,7 +186,7 @@ export function CaseDetailContent({
 
       <section className="section-space">
         <div className="site-container space-y-5">
-          {!isTreningshuset ? (
+          {!isTreningshuset && !isVilleGleder ? (
             <article className="-mx-4 overflow-hidden sm:mx-0 sm:rounded-[2rem] sm:border sm:border-[color:var(--line)] sm:bg-[color:var(--surface)]">
               {caseStudy.video || caseStudy.externalVideo ? (
                 <div className="relative aspect-video w-full bg-[#111111]">
@@ -120,31 +258,61 @@ export function CaseDetailContent({
                     variant.frame === "portrait" && hasMixedVideoVariants && "md:justify-self-end md:w-full md:max-w-[22rem]",
                   )}
                 >
-                  <div
-                    className={cn(
-                      "relative bg-[#0b0d12]",
-                      variant.frame === "portrait"
-                        ? "aspect-[9/16]"
-                        : variant.frame === "landscape"
-                          ? "aspect-video"
-                          : "min-h-[14.5rem] sm:min-h-[18rem] md:min-h-[24rem]",
-                    )}
+                  <button
+                    type="button"
+                    onClick={() => setActiveVideoVariantSlug(variant.slug)}
+                    className="group block h-full w-full text-left"
                   >
-                    <EmbeddedVideoPlayer
-                      title={variant.label}
-                      video={variant.video}
-                      image={variant.image}
-                      imageAlt={variant.imageAlt}
-                      mediaFit={variant.mediaFit ?? caseStudy.mediaFit}
-                      autoplay
-                      className="absolute inset-0 h-full w-full"
-                      sizes="(min-width: 768px) 50vw, 100vw"
-                    />
-                    <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,rgba(17,17,17,0.03),rgba(17,17,17,0.18)_48%,rgba(17,17,17,0.54)_100%)]" />
-                    <div className="absolute left-4 top-4 z-[2] rounded-full border border-[color:var(--line-strong)] bg-[color:var(--surface)]/84 px-3.5 py-1.5 text-[0.68rem] font-semibold uppercase tracking-[0.18em] text-[color:var(--foreground)] shadow-[0_12px_32px_rgba(0,0,0,0.18)] backdrop-blur-md">
-                      {resolveLocalizedValue(variant.label, language)}
+                    <div
+                      className={cn(
+                        "relative bg-[#0b0d12]",
+                        variant.frame === "portrait"
+                          ? "aspect-[9/16]"
+                          : variant.frame === "landscape"
+                            ? "aspect-video"
+                          : "min-h-[14.5rem] sm:min-h-[18rem] md:min-h-[24rem]",
+                      )}
+                    >
+                      {isVilleGleder && variant.video?.videoType === "direct" ? (
+                        <video
+                          className={cn(
+                            "absolute inset-0 h-full w-full bg-[#05070b]",
+                            (variant.mediaFit ?? caseStudy.mediaFit ?? "cover") === "contain"
+                              ? "object-contain p-5 sm:p-6"
+                              : "object-cover",
+                          )}
+                          src={variant.video.src}
+                          poster={variant.video.poster ?? variant.image}
+                          autoPlay
+                          muted
+                          loop
+                          playsInline
+                          preload="metadata"
+                          aria-hidden="true"
+                        />
+                      ) : (
+                        <EmbeddedVideoPlayer
+                          title={variant.label}
+                          video={variant.video}
+                          image={variant.image}
+                          imageAlt={variant.imageAlt}
+                          mediaFit={variant.mediaFit ?? caseStudy.mediaFit}
+                          autoplay
+                          className="absolute inset-0 h-full w-full"
+                          sizes="(min-width: 768px) 50vw, 100vw"
+                        />
+                      )}
+                      <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,rgba(17,17,17,0.03),rgba(17,17,17,0.18)_48%,rgba(17,17,17,0.54)_100%)]" />
+                      <div className="absolute left-4 top-4 z-[2] rounded-full border border-[color:var(--line-strong)] bg-[color:var(--surface)]/84 px-3.5 py-1.5 text-[0.68rem] font-semibold uppercase tracking-[0.18em] text-[color:var(--foreground)] shadow-[0_12px_32px_rgba(0,0,0,0.18)] backdrop-blur-md">
+                        {resolveLocalizedValue(variant.label, language)}
+                      </div>
+                      {isVilleGleder ? (
+                        <div className="absolute bottom-4 right-4 z-[2] rounded-full border border-white/16 bg-black/52 px-3.5 py-1.5 text-[0.68rem] font-semibold uppercase tracking-[0.18em] text-white shadow-[0_14px_36px_rgba(0,0,0,0.24)] backdrop-blur-md">
+                          {language === "no" ? "Spill med lyd" : "Play with sound"}
+                        </div>
+                      ) : null}
                     </div>
-                  </div>
+                  </button>
                 </article>
               ))}
             </section>
@@ -318,6 +486,12 @@ export function CaseDetailContent({
         secondaryLabel={null}
         align="center"
       />
+      {activeVideoVariant ? (
+        <CaseVideoModal
+          variant={activeVideoVariant}
+          onClose={() => setActiveVideoVariantSlug(null)}
+        />
+      ) : null}
     </main>
   );
 }
