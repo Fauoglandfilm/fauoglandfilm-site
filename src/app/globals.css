@@ -434,9 +434,9 @@ summary::-webkit-details-marker {
 
   .hero-typewriter--gold {
     color: #dfaf37;
-    opacity: 0;
-    transform: translate3d(0, 0.5rem, 0);
-    animation: hero-title-fade-in 0.82s cubic-bezier(0.22, 1, 0.36, 1) 120ms forwards;
+    opacity: 1;
+    transform: none;
+    will-change: opacity, transform;
   }
 
   .hero-typewriter__line {
@@ -463,7 +463,6 @@ summary::-webkit-details-marker {
 
   @media (prefers-reduced-motion: reduce) {
     .hero-typewriter--gold {
-      animation: none;
       opacity: 1;
       transform: none;
     }
