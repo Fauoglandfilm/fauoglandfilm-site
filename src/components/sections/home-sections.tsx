@@ -194,7 +194,7 @@ export function HeroSection() {
         <video
           ref={videoRef}
           className={cn(
-            "pointer-events-none absolute inset-0 z-0 h-full w-full object-cover brightness-[0.94] saturate-[1.03] contrast-[1.02] transition-opacity duration-300",
+            "pointer-events-none absolute inset-0 z-0 h-full w-full object-cover brightness-[1.08] saturate-[1.02] contrast-[1.01] transition-opacity duration-300 sm:brightness-[1.03] sm:saturate-[1.03] sm:contrast-[1.02]",
             hasVideoError ? "opacity-0" : "opacity-100",
           )}
           autoPlay
@@ -202,7 +202,6 @@ export function HeroSection() {
           loop
           playsInline
           preload="auto"
-          poster={heroVideo.poster}
           disablePictureInPicture
           disableRemotePlayback
           aria-hidden="true"
@@ -250,9 +249,9 @@ export function HeroSection() {
             </button>
           </div>
         ) : null}
-        <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(5,7,10,0.24)_0%,rgba(5,7,10,0.12)_24%,rgba(5,7,10,0.22)_56%,rgba(5,7,10,0.56)_100%)]" />
-        <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(5,7,10,0.58)_0%,rgba(5,7,10,0.42)_22%,rgba(5,7,10,0.14)_56%,rgba(5,7,10,0.07)_100%)]" />
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(210,173,116,0.18),transparent_30%),radial-gradient(circle_at_82%_14%,rgba(112,143,216,0.1),transparent_22%)]" />
+        <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(5,7,10,0.18)_0%,rgba(5,7,10,0.08)_24%,rgba(5,7,10,0.16)_56%,rgba(5,7,10,0.45)_100%)]" />
+        <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(5,7,10,0.44)_0%,rgba(5,7,10,0.3)_22%,rgba(5,7,10,0.11)_56%,rgba(5,7,10,0.05)_100%)]" />
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(210,173,116,0.14),transparent_30%),radial-gradient(circle_at_82%_14%,rgba(112,143,216,0.08),transparent_22%)]" />
       </div>
 
       <div className="site-container relative z-[1] flex min-h-[72svh] items-end pb-7 pt-[5.35rem] sm:min-h-[92svh] sm:pb-14 sm:pt-[8.8rem] lg:min-h-[96vh] lg:pb-16 lg:pt-[10.5rem]">
