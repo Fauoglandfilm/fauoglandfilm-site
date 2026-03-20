@@ -280,8 +280,8 @@ const projectGroups: GardProjectGroup[] = [
           en: "No to Nuclear Weapons - campaign, conference and Workers' Day",
         },
         format: {
-          no: "Kampanje og eventfilm",
-          en: "Campaign and event film",
+          no: "Kampanje og aftermovie",
+          en: "Campaign and aftermovie",
         },
         role: {
           no: "Produsent, regi og klipp",
@@ -306,12 +306,12 @@ const projectGroups: GardProjectGroup[] = [
             slug: "nta-1-mai",
             title: {
               no: "1. mai - stemningsfilm",
-              en: "Workers' Day - event film",
+              en: "Workers' Day - aftermovie",
             },
             year: "2025",
             format: {
-              no: "Eventfilm",
-              en: "Event film",
+              no: "Aftermovie",
+              en: "Aftermovie",
             },
             image: "/assets/portfolio/nei-til-atomvapen/posters/internasjonal-arbeiderdag-poster.png",
             imageAlt: {

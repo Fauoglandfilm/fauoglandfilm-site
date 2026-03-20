@@ -236,8 +236,8 @@ export const siteVisuals = {
       en: "Still from event coverage at Youngstorget",
     },
     usage: {
-      no: "Eventfilm, live og kontaktflater",
-      en: "Event film, live and contact surfaces",
+      no: "Aftermovie, live og kontaktflater",
+      en: "Aftermovie, live and contact surfaces",
     },
     subject: {
       no: "Et levende eventstill som gir energi og menneskelig nærvær.",

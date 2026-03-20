@@ -14,7 +14,7 @@ import { buildMetadata } from "@/lib/seo";
 export const metadata = buildMetadata({
   title: "Priser | Veiledende prisnivåer for videoproduksjon i Oslo",
   description:
-    "Se Fau&Land Films veiledende prisnivåer for reklamefilm, bedriftsfilm, SoMe-innhold, eventfilm og vanlige spørsmål om omfang og levering.",
+    "Se Fau&Land Films veiledende prisnivåer for reklamefilm, bedriftsfilm, SoMe-innhold, aftermovie og vanlige spørsmål om omfang og levering.",
   path: "/priser",
 });
 
