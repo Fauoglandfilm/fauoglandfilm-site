@@ -432,6 +432,23 @@ summary::-webkit-details-marker {
     max-width: 100%;
   }
 
+  .hero-typewriter__line {
+    display: block;
+    white-space: nowrap;
+  }
+
+  .hero-typewriter__line + .hero-typewriter__line {
+    margin-top: -0.06em;
+  }
+
+  @media (min-width: 1024px) {
+    .hero-title {
+      font-size: clamp(3.9rem, 5.2vw, 4.6rem);
+      line-height: 0.95;
+      letter-spacing: -0.046em;
+    }
+  }
+
   .hero-typewriter--gold {
     color: #dfaf37;
     opacity: 1;
