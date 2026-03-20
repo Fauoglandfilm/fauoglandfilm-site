@@ -957,7 +957,7 @@ export const caseStudies: CaseStudy[] = [
       { no: "Sosiale medier", en: "Social media" },
       { no: "Medlemsvekst", en: "Membership growth" },
     ],
-    image: "/assets/portfolio/treningshuset/posters/treningshuset-bred-poster.png",
+    image: "/assets/portfolio/treningshuset/posters/treningshuset-landscape-poster.png",
     imageAlt: {
       no: "Still fra Treningshuset-kampanje",
       en: "Still from the Treningshuset campaign",
@@ -967,7 +967,7 @@ export const caseStudies: CaseStudy[] = [
       videoType: "direct",
       src: "/assets/portfolio/treningshuset/videos/web/treningshuset-desktop-16x9-web.mp4",
       mobileSrc: "/assets/portfolio/treningshuset/videos/alternates/mobile-9x16/Kort_Reel.mp4",
-      poster: "/assets/portfolio/treningshuset/posters/treningshuset-bred-poster.png",
+      poster: "/assets/portfolio/treningshuset/posters/treningshuset-landscape-poster.png",
       label: {
         no: "Treningshuset - annonser og sosiale medier",
         en: "Treningshuset - ads and social media",
@@ -980,7 +980,7 @@ export const caseStudies: CaseStudy[] = [
           no: "Liggende versjon",
           en: "Landscape version",
         },
-        image: "/assets/portfolio/treningshuset/posters/treningshuset-bred-poster.png",
+        image: "/assets/portfolio/treningshuset/posters/treningshuset-landscape-poster.png",
         imageAlt: {
           no: "Liggende versjon av Treningshuset-filmen",
           en: "Landscape version of the Treningshuset film",
@@ -990,7 +990,7 @@ export const caseStudies: CaseStudy[] = [
         video: {
           videoType: "direct",
           src: "/assets/portfolio/treningshuset/videos/web/treningshuset-desktop-16x9-web.mp4",
-          poster: "/assets/portfolio/treningshuset/posters/treningshuset-bred-poster.png",
+          poster: "/assets/portfolio/treningshuset/posters/treningshuset-landscape-poster.png",
           label: {
             no: "Treningshuset - liggende versjon",
             en: "Treningshuset - landscape version",
@@ -1672,7 +1672,7 @@ export const portfolioProjects: PortfolioProject[] = [
     detailHref: "/case/treningshuset",
     ctaLabel: viewCaseCta,
     mediaFit: "cover",
-    image: "/assets/portfolio/treningshuset/posters/treningshuset-bred-poster.png",
+    image: "/assets/portfolio/treningshuset/posters/treningshuset-landscape-poster.png",
     imageAlt: {
       no: "Still fra Treningshuset-filmen",
       en: "Still from the Treningshuset film",
@@ -1681,7 +1681,7 @@ export const portfolioProjects: PortfolioProject[] = [
       videoType: "direct",
       src: "/assets/portfolio/treningshuset/videos/web/treningshuset-desktop-16x9-web.mp4",
       mobileSrc: "/assets/portfolio/treningshuset/videos/alternates/mobile-9x16/Kort_Reel.mp4",
-      poster: "/assets/portfolio/treningshuset/posters/treningshuset-bred-poster.png",
+      poster: "/assets/portfolio/treningshuset/posters/treningshuset-landscape-poster.png",
       label: {
         no: "Treningshuset - filmer for annonser og sosiale medier",
         en: "Treningshuset - films for ads and social media",
