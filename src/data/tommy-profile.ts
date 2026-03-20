@@ -587,10 +587,6 @@ export const tommyPortfolioPage = {
         {
           slug: "the-actors-hub-oslo",
           title: sameText("THE ACTORS HUB: \"DON'T ACT\""),
-          summary: {
-            no: "An intensive acting workshop with top instructors from Los Angeles. Showreels and production by Fau&Land Film. Executive Producer: David Nutter. Instructors: Natassia Malthe & David Nutter.",
-            en: "An intensive acting workshop with top instructors from Los Angeles. Showreels and production by Fau&Land Film. Executive Producer: David Nutter. Instructors: Natassia Malthe & David Nutter.",
-          },
           poster: poster(
             "/assets/team/tommy/portfolio/other-roles/the-actors-hub-dont-act-poster.png",
             "Poster for The Actors Hub: Don't Act",
