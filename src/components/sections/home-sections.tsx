@@ -198,18 +198,6 @@ export function HeroSection() {
             setIsPosterVisible(true);
           }}
         />
-        <div className="pointer-events-none absolute inset-0 z-[1] flex items-center justify-center px-8 pt-10 sm:px-12 sm:pt-16 lg:px-16 lg:pt-20">
-          <div className="relative h-[7rem] w-[18rem] opacity-[0.34] sm:h-[9.5rem] sm:w-[25rem] sm:opacity-[0.4] lg:h-[12rem] lg:w-[33rem] lg:opacity-[0.46] xl:h-[13rem] xl:w-[36rem]">
-            <Image
-              src="/media/logos/brand/brand-logo-full.png"
-              alt=""
-              fill
-              priority
-              sizes="(min-width: 1280px) 36rem, (min-width: 1024px) 33rem, (min-width: 640px) 25rem, 18rem"
-              className="object-contain"
-            />
-          </div>
-        </div>
         <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(5,7,10,0.13)_0%,rgba(5,7,10,0.055)_24%,rgba(5,7,10,0.115)_56%,rgba(5,7,10,0.315)_100%)]" />
         <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(5,7,10,0.31)_0%,rgba(5,7,10,0.21)_22%,rgba(5,7,10,0.075)_56%,rgba(5,7,10,0.035)_100%)]" />
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(210,173,116,0.11),transparent_30%),radial-gradient(circle_at_82%_14%,rgba(112,143,216,0.06),transparent_22%)]" />
