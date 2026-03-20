@@ -437,32 +437,12 @@ summary::-webkit-details-marker {
     opacity: 1;
     transform: none;
     will-change: opacity, transform;
-  }
-
-  .hero-typewriter__line {
-    display: inline;
-  }
-
-  .hero-typewriter__word {
-    display: inline;
-    white-space: nowrap;
-  }
-
-  .hero-typewriter__char {
-    display: inline-block;
-    color: inherit;
-  }
-
-  .hero-typewriter__space {
-    width: 0.32em;
-  }
-
-  .hero-typewriter__char--visible {
-    color: inherit;
+    animation: hero-title-fade-in 0.82s cubic-bezier(0.22, 1, 0.36, 1) 1 both;
   }
 
   @media (prefers-reduced-motion: reduce) {
     .hero-typewriter--gold {
+      animation: none;
       opacity: 1;
       transform: none;
     }
@@ -2598,15 +2578,7 @@ summary::-webkit-details-marker {
     animation: none;
   }
 
-  .hero-typewriter__char {
-    color: inherit;
-    animation: none;
-    opacity: 1;
-    transform: none;
-  }
-
-  .hero-typewriter--gold,
-  .hero-typewriter__char--visible {
+  .hero-typewriter--gold {
     animation: none;
     opacity: 1;
     transform: none;
