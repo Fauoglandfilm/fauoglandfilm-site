@@ -975,6 +975,14 @@ summary::-webkit-details-marker {
     text-shadow: 0 10px 24px rgba(0, 0, 0, 0.26);
   }
 
+  .header-segmented-shell {
+    border-color: transparent;
+    background: transparent;
+    box-shadow: none;
+    backdrop-filter: none;
+    padding: 0;
+  }
+
   .hero-heading-row {
     display: flex;
     flex-direction: column;

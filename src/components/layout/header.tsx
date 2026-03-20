@@ -31,6 +31,7 @@ type SegmentedToggleProps<T extends string> = {
   onChange: (value: T) => void;
   compact?: boolean;
   iconOnly?: boolean;
+  shellClassName?: string;
 };
 
 type SearchEntry = {
@@ -48,9 +49,10 @@ function SegmentedToggle<T extends string>({
   onChange,
   compact = false,
   iconOnly = false,
+  shellClassName,
 }: SegmentedToggleProps<T>) {
   return (
-    <div className={segmentedControlShellClassName({ className: compact ? "text-[0.76rem]" : undefined })} role="group" aria-label={ariaLabel}>
+    <div className={segmentedControlShellClassName({ className: cn(compact ? "text-[0.76rem]" : undefined, shellClassName) })} role="group" aria-label={ariaLabel}>
       {options.map((option) => {
         const active = option.value === value;
 
@@ -361,10 +363,7 @@ export function Header() {
             </Link>
 
             <nav
-              className={cn(
-                "relative z-[1] hidden lg:flex lg:min-w-0 lg:items-center lg:justify-center lg:rounded-full lg:px-2 lg:py-1",
-                darkOverlayMode ? "lg:bg-black/20" : overlayMode ? "lg:bg-white/6" : "lg:bg-[color:var(--surface)]/78",
-              )}
+              className="relative z-[1] hidden lg:flex lg:min-w-0 lg:items-center lg:justify-center"
               aria-label={menuLabel}
             >
               {navItems.map((item) => {
@@ -418,6 +417,7 @@ export function Header() {
                     ]}
                     onChange={setLanguage}
                     compact
+                    shellClassName="header-segmented-shell"
                   />
                 </div>
                 <div className="origin-right scale-[0.98]">
@@ -426,10 +426,11 @@ export function Header() {
                     value={theme}
                     options={[
                       { value: "light", label: language === "no" ? "Dag" : "Day", icon: <SunIcon /> },
-                      { value: "dark", label: language === "no" ? "Natt" : "Night", icon: <MoonIcon /> },
+                        { value: "dark", label: language === "no" ? "Natt" : "Night", icon: <MoonIcon /> },
                     ]}
                     onChange={setTheme}
                     compact
+                    shellClassName="header-segmented-shell"
                   />
                 </div>
               </div>
