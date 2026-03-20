@@ -195,25 +195,25 @@ export const siteVisuals = {
     ...internalAssetMeta,
   },
   treningshusetWide: {
-    filename: "portfolio-treningshuset-landscape-poster.png",
-    src: "/assets/portfolio/treningshuset/posters/treningshuset-landscape-poster.png",
+    filename: "portfolio-treningshuset-musikk-2-45-poster.png",
+    src: "/assets/portfolio/treningshuset/posters/treningshuset-musikk-2-45-poster.png",
     alt: {
-      no: "Still fra annonsefilm for Treningshuset",
-      en: "Still from an ad film for Treningshuset",
+      no: "Still fra Treningshuset-kampanje i 4:5-format",
+      en: "Still from the Treningshuset campaign in 4:5 format",
     },
     usage: {
-      no: "Reklamefilm og resultatorienterte tjenestekort",
-      en: "Commercial film and result-led service cards",
+      no: "Reklamefilm og resultatorienterte tjenestekort i portrettformat",
+      en: "Commercial film and result-led service cards in portrait format",
     },
     subject: {
-      no: "Et ekte kampanjestill som viser ferdig annonseoutput i stedet for produksjonsutstyr.",
-      en: "A real campaign still that shows finished ad output instead of production gear.",
+      no: "Et ferdig kampanjestill i portrettformat som viser hvordan annonseoutputen ser ut i feeden.",
+      en: "A finished portrait campaign still showing how the ad output appears in-feed.",
     },
     ...internalAssetMeta,
   },
   treningshusetMobile: {
-    filename: "portfolio-treningshuset-mobil-poster.png",
-    src: "/assets/portfolio/treningshuset/posters/treningshuset-mobil-poster.png",
+    filename: "portfolio-treningshuset-velkommen-sindre-poster.png",
+    src: "/assets/portfolio/treningshuset/posters/treningshuset-velkommen-sindre-poster.png",
     alt: {
       no: "Vertikal annonsepreview for Treningshuset",
       en: "Vertical ad preview for Treningshuset",
