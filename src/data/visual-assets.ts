@@ -195,8 +195,8 @@ export const siteVisuals = {
     ...internalAssetMeta,
   },
   treningshusetWide: {
-    filename: "portfolio-treningshuset-bred-poster.png",
-    src: "/assets/portfolio/treningshuset/posters/treningshuset-bred-poster.png",
+    filename: "portfolio-treningshuset-landscape-poster.png",
+    src: "/assets/portfolio/treningshuset/posters/treningshuset-landscape-poster.png",
     alt: {
       no: "Still fra annonsefilm for Treningshuset",
       en: "Still from an ad film for Treningshuset",

@@ -316,7 +316,7 @@ export const tommyPortfolioPage = {
         internalLink("Åpne case", "Open case", "/case/treningshuset"),
       ],
       poster: poster(
-        "/assets/portfolio/treningshuset/posters/treningshuset-bred-poster.png",
+        "/assets/portfolio/treningshuset/posters/treningshuset-landscape-poster.png",
         "Still fra Treningshuset-kampanje",
         "Still from the Treningshuset campaign",
         "cover",
