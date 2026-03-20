@@ -173,15 +173,12 @@ export function HeroSection() {
   return (
     <section className="relative isolate overflow-hidden bg-[#05070a] text-white">
       <div className="absolute inset-0">
-        <picture
+        <div
           className={cn(
             "absolute inset-0 z-[1] block overflow-hidden transition-opacity duration-300 pointer-events-none",
             hasVideoError || isPosterVisible ? "opacity-100" : "opacity-0",
           )}
         >
-          {heroVideo.mobilePoster ? (
-            <source media="(max-width: 767px)" srcSet={heroVideo.mobilePoster} />
-          ) : null}
           <img
             src={heroVideo.poster}
             alt=""
@@ -190,13 +187,14 @@ export function HeroSection() {
             fetchPriority="high"
             decoding="async"
           />
-        </picture>
+        </div>
         <video
           ref={videoRef}
           className={cn(
             "pointer-events-none absolute inset-0 z-0 h-full w-full object-cover brightness-[1.08] saturate-[1.02] contrast-[1.01] transition-opacity duration-300 sm:brightness-[1.03] sm:saturate-[1.03] sm:contrast-[1.02]",
             hasVideoError ? "opacity-0" : "opacity-100",
           )}
+          src={heroVideo.src}
           autoPlay
           muted
           loop
@@ -221,16 +219,7 @@ export function HeroSection() {
             setIsPosterVisible(true);
             setShowMobilePlayOverlay(false);
           }}
-        >
-          {heroVideo.mobileSrc ? (
-            <source
-              src={heroVideo.mobileSrc}
-              media="(max-width: 767px)"
-              type="video/mp4"
-            />
-          ) : null}
-          <source src={heroVideo.src} media="(min-width: 768px)" type="video/mp4" />
-        </video>
+        />
         {shouldRenderMobilePlayOverlay ? (
           <div className="pointer-events-none absolute inset-0 z-[2] flex items-center justify-center sm:hidden">
             <button
