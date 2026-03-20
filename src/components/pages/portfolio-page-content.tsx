@@ -13,7 +13,7 @@ import {
   segmentedControlOptionClassName,
   segmentedControlShellClassName,
 } from "@/components/ui/button-styles";
-import { CloseIcon } from "@/components/ui/icons";
+import { OverlayCloseButton } from "@/components/ui/overlay-close-button";
 import {
   portfolioGroups,
   portfolioPageContent,
@@ -486,15 +486,10 @@ function PortfolioVideoModal({
         className="card-surface relative flex h-[100svh] max-h-[100svh] w-full max-w-6xl flex-col overflow-hidden rounded-none border-0 bg-[color:var(--surface-strong)] shadow-[0_32px_120px_rgba(0,0,0,0.34)] sm:h-auto sm:max-h-[calc(100svh-2.5rem)] sm:rounded-[2rem] sm:border sm:border-[color:var(--line-strong)]"
         onClick={(event) => event.stopPropagation()}
       >
-        <button
-          type="button"
+        <OverlayCloseButton
           onClick={onClose}
-          aria-label={modalLabel}
-          className="absolute left-3 z-[6] flex h-11 w-11 items-center justify-center rounded-full border p-0 shadow-[0_16px_34px_rgba(0,0,0,0.18)] backdrop-blur-md transition [html[data-theme='light']_&]:border-black/10 [html[data-theme='light']_&]:bg-white/96 [html[data-theme='light']_&]:text-black [html[data-theme='light']_&]:hover:bg-white [html[data-theme='dark']_&]:border-white/12 [html[data-theme='dark']_&]:bg-black/82 [html[data-theme='dark']_&]:text-white [html[data-theme='dark']_&]:hover:bg-black sm:left-4 lg:left-5"
-          style={{ top: "max(env(safe-area-inset-top), 0.75rem)" }}
-        >
-          <CloseIcon className="h-3 w-3 shrink-0" />
-        </button>
+          label={modalLabel}
+        />
 
         <div className="flex min-h-0 flex-1 flex-col lg:grid lg:grid-cols-[minmax(0,1.06fr)_minmax(19rem,0.94fr)]">
           <div className="relative flex min-h-[15rem] flex-none items-center justify-center bg-[#05070b] px-3 pb-4 pt-16 sm:min-h-[20rem] sm:px-5 sm:pb-5 sm:pt-16 lg:min-h-[36rem] lg:px-8 lg:py-8">
