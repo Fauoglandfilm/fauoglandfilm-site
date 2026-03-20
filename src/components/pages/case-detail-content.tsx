@@ -77,31 +77,32 @@ function CaseVideoModal({
 
   return (
     <div
-      className="fixed inset-0 z-[90] flex items-start justify-center bg-[#040507]/76 px-2 pb-2 pt-3 backdrop-blur-md sm:p-5 lg:items-center lg:p-8"
+      className="fixed inset-0 z-[90] flex items-start justify-center bg-[#040507]/76 p-0 backdrop-blur-md sm:p-5 lg:items-center lg:p-8"
       role="dialog"
       aria-modal="true"
       aria-label={title}
       onClick={onClose}
       style={{
-        paddingTop: "max(env(safe-area-inset-top), 0.75rem)",
-        paddingBottom: "max(env(safe-area-inset-bottom), 0.5rem)",
+        paddingTop: "env(safe-area-inset-top)",
+        paddingBottom: "env(safe-area-inset-bottom)",
       }}
     >
       <div
-        className="card-surface relative flex max-h-[calc(100svh-0.5rem)] w-full max-w-6xl flex-col overflow-hidden rounded-[1.6rem] border border-[color:var(--line-strong)] bg-[color:var(--surface-strong)] shadow-[0_32px_120px_rgba(0,0,0,0.34)] sm:max-h-[calc(100svh-2.5rem)] sm:rounded-[2rem]"
+        className="card-surface relative flex h-[100svh] max-h-[100svh] w-full max-w-6xl flex-col overflow-hidden rounded-none border-0 bg-[color:var(--surface-strong)] shadow-[0_32px_120px_rgba(0,0,0,0.34)] sm:h-auto sm:max-h-[calc(100svh-2.5rem)] sm:rounded-[2rem] sm:border sm:border-[color:var(--line-strong)]"
         onClick={(event) => event.stopPropagation()}
       >
         <button
           type="button"
           onClick={onClose}
           aria-label={language === "no" ? "Lukk video" : "Close video"}
-          className="absolute left-3 top-3 z-[4] flex h-10 w-10 items-center justify-center rounded-full border p-0 shadow-[0_16px_34px_rgba(0,0,0,0.18)] backdrop-blur-md transition [html[data-theme='light']_&]:border-black/10 [html[data-theme='light']_&]:bg-white/96 [html[data-theme='light']_&]:text-black [html[data-theme='light']_&]:hover:bg-white [html[data-theme='dark']_&]:border-white/12 [html[data-theme='dark']_&]:bg-black/82 [html[data-theme='dark']_&]:text-white [html[data-theme='dark']_&]:hover:bg-black sm:left-4 sm:top-4 sm:h-11 sm:w-11 lg:left-5 lg:top-5"
+          className="absolute left-3 z-[6] flex h-11 w-11 items-center justify-center rounded-full border p-0 shadow-[0_16px_34px_rgba(0,0,0,0.18)] backdrop-blur-md transition [html[data-theme='light']_&]:border-black/10 [html[data-theme='light']_&]:bg-white/96 [html[data-theme='light']_&]:text-black [html[data-theme='light']_&]:hover:bg-white [html[data-theme='dark']_&]:border-white/12 [html[data-theme='dark']_&]:bg-black/82 [html[data-theme='dark']_&]:text-white [html[data-theme='dark']_&]:hover:bg-black sm:left-4 lg:left-5"
+          style={{ top: "max(env(safe-area-inset-top), 0.75rem)" }}
         >
           <CloseIcon className="h-3 w-3 shrink-0" />
         </button>
 
-        <div className="flex min-h-0 flex-col overflow-y-auto lg:grid lg:grid-cols-[minmax(0,1fr)_minmax(20rem,0.82fr)] lg:overflow-hidden">
-          <div className="relative flex min-h-[16rem] flex-none items-center justify-center bg-[#05070b] px-3 pb-4 pt-14 sm:min-h-[20rem] sm:px-6 sm:pb-6 sm:pt-16 lg:min-h-[36rem] lg:px-8 lg:py-8">
+        <div className="flex min-h-0 flex-1 flex-col lg:grid lg:grid-cols-[minmax(0,1fr)_minmax(20rem,0.82fr)]">
+          <div className="relative flex min-h-[15rem] flex-none items-center justify-center bg-[#05070b] px-3 pb-4 pt-16 sm:min-h-[20rem] sm:px-6 sm:pb-6 sm:pt-16 lg:min-h-[36rem] lg:px-8 lg:py-8">
             <div className={cn("relative w-full", modalFrameClassName)}>
               <video
                 ref={videoRef}
@@ -119,7 +120,7 @@ function CaseVideoModal({
             </div>
           </div>
 
-          <div className="flex min-h-0 flex-col border-t border-[color:var(--line)]/75 p-4 sm:p-6 lg:border-l lg:border-t-0 lg:p-8">
+          <div className="flex min-h-0 flex-1 flex-col overflow-y-auto border-t border-[color:var(--line)]/75 p-4 pb-[max(1rem,env(safe-area-inset-bottom))] sm:p-6 lg:border-l lg:border-t-0 lg:p-8">
             <div className="space-y-4">
               <div className="flex flex-wrap items-center gap-2 text-[0.68rem] font-semibold uppercase tracking-[0.2em] text-[var(--muted)]">
                 <span>{title}</span>
