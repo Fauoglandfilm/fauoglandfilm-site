@@ -420,9 +420,9 @@ summary::-webkit-details-marker {
 
   .hero-title {
     font-family: var(--font-hero), var(--font-sora), serif;
-    font-size: clamp(1.95rem, 5.9vw, 4rem);
-    line-height: 0.96;
-    letter-spacing: -0.046em;
+    font-size: clamp(1.42rem, 6.2vw, 4rem);
+    line-height: 0.94;
+    letter-spacing: -0.052em;
     text-wrap: balance;
     font-weight: 800;
   }
@@ -444,7 +444,7 @@ summary::-webkit-details-marker {
 
   .hero-typewriter__line {
     display: block;
-    white-space: normal;
+    white-space: nowrap;
   }
 
   @media (min-width: 1024px) {
@@ -972,6 +972,10 @@ summary::-webkit-details-marker {
   .hero-editorial-support {
     margin: 0;
     max-width: 26rem;
+    white-space: nowrap;
+    font-size: clamp(0.53rem, 2.15vw, 0.74rem);
+    line-height: 1.25;
+    letter-spacing: -0.018em;
     text-shadow: 0 10px 24px rgba(0, 0, 0, 0.26);
   }
 
@@ -1024,6 +1028,8 @@ summary::-webkit-details-marker {
       max-width: 29rem;
       font-size: 0.95rem;
       line-height: 1.58;
+      letter-spacing: normal;
+      white-space: normal;
     }
   }
 
