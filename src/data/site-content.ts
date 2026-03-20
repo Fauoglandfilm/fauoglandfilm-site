@@ -204,7 +204,7 @@ export const siteConfig = {
     "reklamefilm Oslo",
     "innholdsproduksjon Oslo",
     "bedriftsfilm Oslo",
-    "eventfilm Oslo",
+    "aftermovie Oslo",
     "employer branding video Oslo",
     "live streaming Oslo",
     "videobyrå Oslo",
@@ -338,8 +338,8 @@ export const homeServiceVideoLibrary = {
     src: "/assets/services/videos/konsert.mp4",
     poster: "/assets/services/posters/konsert-poster.png",
     label: {
-      no: "Eventfilm og live",
-      en: "Event film and live",
+      no: "Aftermovie og live",
+      en: "Aftermovie and live",
     },
   },
 } satisfies Record<string, VideoAsset>;
@@ -490,8 +490,8 @@ export const servicePillars: ServicePillar[] = [
   {
     eyebrow: "04",
     title: {
-      no: "Eventfilm og live",
-      en: "Event film and live",
+      no: "Aftermovie og live",
+      en: "Aftermovie and live",
     },
     summary: {
       no: "Dekning og uttak som gir arrangementet lengre levetid.",
@@ -620,7 +620,7 @@ export const serviceAreas: ServiceArea[] = [
   },
   {
     slug: "event-live",
-    title: { no: "Eventfilm og live", en: "Event film and live" },
+    title: { no: "Aftermovie og live", en: "Aftermovie and live" },
     summary: {
       no: "Aftermovies, reels, intervjuer og livesendinger med gjenbruk i fokus.",
       en: "Aftermovies, reels, interviews and livestreams built for reuse.",
@@ -695,7 +695,7 @@ export const priceGuides: PriceGuide[] = [
     },
   },
   {
-    title: { no: "Eventfilm og livestream", en: "Event film and livestream" },
+    title: { no: "Aftermovie og livestream", en: "Aftermovie and livestream" },
     range: { no: "Fra 15 000-60 000 kr+", en: "From NOK 15,000-60,000+" },
     detail: {
       no: "Typisk for konferanser, høydepunktfilmer, intervjuer og streaming.",
@@ -1031,7 +1031,7 @@ export const caseStudies: CaseStudy[] = [
       no: "Konferansefilm for medlemskampanje",
       en: "Conference film for a membership campaign",
     },
-    category: { no: "Eventfilm", en: "Event film" },
+    category: { no: "Aftermovie", en: "Aftermovie" },
     industry: { no: "Organisasjon", en: "Organisation" },
     summary: {
       no: "En stemningsfilm fra medlemskonferansen til Nei til Atomvåpen, produsert som del av den løpende rekrutteringskampanjen.",
@@ -1060,7 +1060,7 @@ export const caseStudies: CaseStudy[] = [
       { value: "Vervekampanje", label: { no: "bruk", en: "use" } },
     ],
     tags: [
-      { no: "Eventfilm", en: "Event film" },
+      { no: "Aftermovie", en: "Aftermovie" },
       { no: "Organisasjon", en: "Organisation" },
       { no: "Medlemsarbeid", en: "Membership outreach" },
     ],
@@ -1077,7 +1077,7 @@ export const caseStudies: CaseStudy[] = [
       no: "1. mai-dekning fra Youngstorget",
       en: "1 May coverage from Youngstorget",
     },
-    category: { no: "Eventfilm og SoMe", en: "Event film and social content" },
+    category: { no: "Aftermovie og SoMe", en: "Aftermovie and social content" },
     industry: { no: "Organisasjon", en: "Organisation" },
     summary: {
       no: "Film, foto og vertikale uttak fra Nei til Atomvåpens markering på Youngstorget.",
@@ -1106,7 +1106,7 @@ export const caseStudies: CaseStudy[] = [
       { value: "Reels", label: { no: "uttak", en: "cutdowns" } },
     ],
     tags: [
-      { no: "Eventfilm", en: "Event film" },
+      { no: "Aftermovie", en: "Aftermovie" },
       { no: "Sosiale medier", en: "Social media" },
       { no: "Stillbilder", en: "Stills" },
     ],
@@ -1421,8 +1421,8 @@ export const portfolioProjects: PortfolioProject[] = [
       en: "No to Nuclear Weapons - International Workers' Day",
     },
     format: {
-      no: "Eventfilm og reels",
-      en: "Event film and reels",
+      no: "Aftermovie og reels",
+      en: "Aftermovie and reels",
     },
     summary: {
       no: "Vi filmet og fotograferte markeringen på Youngstorget og leverte stemningsfilm, fullt opptak av tale og flere reels til sosiale medier.",
@@ -1454,8 +1454,8 @@ export const portfolioProjects: PortfolioProject[] = [
       en: "No to Nuclear Weapons - conference",
     },
     format: {
-      no: "Eventfilm",
-      en: "Event film",
+      no: "Aftermovie",
+      en: "Aftermovie",
     },
     summary: {
       no: "Stemningsfilm produsert fra konferansen som en del av organisasjonens løpende rekrutteringskampanje.",
@@ -1945,8 +1945,8 @@ export const pricingFaq: FaqItem[] = [
   {
     question: { no: "Hva koster et videoprosjekt?", en: "What does a video project cost?" },
     answer: {
-      no: "Pris avhenger av omfang. Typiske nivåer er 5 000-20 000 kr for kort SoMe-innhold, 20 000-100 000 kr+ for reklamefilm og 15 000-60 000 kr+ for eventfilm.",
-      en: "Pricing depends on scope. Typical levels are NOK 5,000-20,000 for short-form social content, NOK 20,000-100,000+ for commercials and NOK 15,000-60,000+ for event films.",
+      no: "Pris avhenger av omfang. Typiske nivåer er 5 000-20 000 kr for kort SoMe-innhold, 20 000-100 000 kr+ for reklamefilm og 15 000-60 000 kr+ for aftermovie.",
+      en: "Pricing depends on scope. Typical levels are NOK 5,000-20,000 for short-form social content, NOK 20,000-100,000+ for commercials and NOK 15,000-60,000+ for aftermovies.",
     },
   },
   {
@@ -1979,8 +1979,8 @@ export const contactFaq: FaqItem[] = [
   {
     question: { no: "Hva lager Fau&Land Film?", en: "What does Fau&Land Film create?" },
     answer: {
-      no: "Vi lager reklamefilm, bedriftsfilm, innhold for sosiale medier og eventfilm for bedrifter og organisasjoner som trenger tydeligere kommunikasjon.",
-      en: "We create commercials, company films, social content and event films for companies and organisations that need clearer communication.",
+      no: "Vi lager reklamefilm, bedriftsfilm, innhold for sosiale medier og aftermovie for bedrifter og organisasjoner som trenger tydeligere kommunikasjon.",
+      en: "We create commercials, company films, social content and aftermovies for companies and organisations that need clearer communication.",
     },
   },
   {

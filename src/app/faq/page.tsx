@@ -12,7 +12,7 @@ import { buildMetadata } from "@/lib/seo";
 export const metadata = buildMetadata({
   title: "Vanlige spørsmål | Fau&Land Film",
   description:
-    "Vanlige spørsmål om pris, tidslinje, leveranse og hvordan Fau&Land Film jobber med reklamefilm, bedriftsfilm, SoMe-innhold og eventfilm.",
+    "Vanlige spørsmål om pris, tidslinje, leveranse og hvordan Fau&Land Film jobber med reklamefilm, bedriftsfilm, SoMe-innhold og aftermovie.",
   path: "/faq",
 });
 

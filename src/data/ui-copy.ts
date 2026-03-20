@@ -46,7 +46,7 @@ export const uiCopy = {
       heroPanelEyebrow: "Hvorfor Fau&Land",
       heroPanelTitle: "Historier som kjennes. Resultater som merkes.",
       heroPanelDescription:
-        "Reklamefilm, bedriftsfilm, innhold for sosiale medier og eventfilm med kort vei fra idé til ferdig leveranse.",
+        "Reklamefilm, bedriftsfilm, innhold for sosiale medier og aftermovie med kort vei fra idé til ferdig leveranse.",
       selectedWorkEyebrow: "Utvalgte case",
       selectedWorkTitle: "Utvalgte produksjoner",
       selectedWorkDescription:
@@ -81,7 +81,7 @@ export const uiCopy = {
       heroPanelEyebrow: "Why Fau&Land",
       heroPanelTitle: "Stories you feel. Results you notice.",
       heroPanelDescription:
-        "Commercials, company films, social content and event films with a short path from idea to delivery.",
+        "Commercials, company films, social content and aftermovies with a short path from idea to delivery.",
       selectedWorkEyebrow: "Selected work",
       selectedWorkTitle: "Selected productions",
       selectedWorkDescription:
@@ -413,7 +413,7 @@ export const uiCopy = {
         "Reklamefilm",
         "Bedriftsfilm",
         "SoMe-innhold",
-        "Eventfilm / live",
+        "Aftermovie / live",
         "Usikker ennå",
       ],
       budgets: [
@@ -440,7 +440,7 @@ export const uiCopy = {
         "Commercial film",
         "Company film",
         "Social content",
-        "Event film / live",
+        "Aftermovie / live",
         "Not sure yet",
       ],
       budgets: [
