@@ -293,7 +293,7 @@ export const videoLibrary = {
   hero: {
     videoType: "direct",
     src: "/media/hero/fau-land-hero-single-source-20260328-final.mp4", // previous hero video backup: /media/hero/fau-land-hero-single-source-20260328-final.mp4
-    mobileSrc: "/media/hero/fau-land-hero-single-source-20260328-final.mp4",
+    mobileSrc: "/media/hero/fau-land-hero-single-source-20260328-final.mp4", // previous mobile hero video backup: /media/hero/fau-land-hero-single-source-20260328-final.mp4
     poster: "/media/hero/hero-nature-desktop-poster.png",
     mobilePoster: "/media/hero/hero-nature-desktop-poster.png",
     label: {
