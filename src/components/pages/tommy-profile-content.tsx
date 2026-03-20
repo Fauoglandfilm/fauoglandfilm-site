@@ -210,7 +210,7 @@ function ShowcaseCard({
 
   return (
     <Reveal delay={0.05 * index}>
-      <article className="card-surface overflow-hidden rounded-[2rem]">
+      <article className="card-surface flex h-full flex-col overflow-hidden rounded-[2rem]">
         {project.poster ? (
           <PosterButton
             image={project.poster}
@@ -219,23 +219,25 @@ function ShowcaseCard({
           />
         ) : null}
 
-        <div className="p-5 sm:p-6">
+        <div className="flex flex-1 flex-col p-5 sm:p-6">
           <div className="text-[0.68rem] font-semibold uppercase tracking-[0.18em] text-[var(--muted)]">{project.client}</div>
 
-          <h3 className="mt-3 text-[1.28rem] font-semibold tracking-[-0.03em] text-[color:var(--foreground)]">
+          <h3 className="mt-3 min-h-[3.2rem] text-[1.28rem] font-semibold tracking-[-0.03em] text-[color:var(--foreground)]">
             {title}
           </h3>
 
-          <p className="mt-3 text-[0.94rem] font-medium leading-7 text-[color:var(--foreground)]/92">
-            {resolveLocalizedValue(project.impact, language)}
-          </p>
+          <div className="mt-3 flex flex-1 flex-col">
+            <p className="min-h-[4.25rem] text-[0.94rem] font-medium leading-7 text-[color:var(--foreground)]/92">
+              {resolveLocalizedValue(project.impact, language)}
+            </p>
 
-          <p className="mt-2.5 text-sm leading-6 text-[var(--muted-2)]">
-            {resolveLocalizedValue(project.summary, language)}
-          </p>
+            <p className="mt-2.5 min-h-[4.5rem] text-sm leading-6 text-[var(--muted-2)]">
+              {resolveLocalizedValue(project.summary, language)}
+            </p>
+          </div>
 
           {project.links.length ? (
-            <div className="mt-5 flex flex-wrap gap-2">
+            <div className="mt-5 flex flex-wrap gap-2 pt-1">
               {project.links.map((link) => (
                 <ProjectLinkPill key={`${project.slug}-${link.href}`} link={link} />
               ))}
@@ -424,7 +426,7 @@ export function TommyProfileContent() {
         description={resolveLocalizedValue(tommyPortfolioPage.commercialDescription, language)}
         className="pt-0"
       >
-        <div className="grid gap-5 lg:grid-cols-2 xl:grid-cols-3">
+        <div className="grid items-stretch gap-5 md:grid-cols-2 xl:gap-6">
           {tommyPortfolioPage.commercialProjects.map((project, index) => (
             <ShowcaseCard
               key={project.slug}
