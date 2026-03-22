@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 
 import { useSitePreferences } from "@/components/providers/site-preferences";
 import type { ExternalVideoAsset, VideoAsset } from "@/data/site-content";
@@ -154,6 +154,36 @@ function isPlayableDirectVideo(video: Extract<VideoAsset, { videoType: "direct" 
   });
 }
 
+function prepareInlineMutedVideo(node: HTMLVideoElement, prioritizeFetch = false) {
+  node.defaultMuted = true;
+  node.muted = true;
+  node.playsInline = true;
+  node.autoplay = true;
+  node.loop = true;
+  node.preload = "auto";
+  node.setAttribute("muted", "");
+  node.setAttribute("playsinline", "");
+  node.setAttribute("webkit-playsinline", "");
+
+  if (prioritizeFetch) {
+    node.setAttribute("fetchpriority", "high");
+  }
+}
+
+function attemptInlineAutoplay(node: HTMLVideoElement, shouldPrimeLoad = false) {
+  prepareInlineMutedVideo(node, true);
+
+  if (shouldPrimeLoad && node.readyState === 0) {
+    try {
+      node.load();
+    } catch {
+      // Ignore browsers that reject repeated load nudges.
+    }
+  }
+
+  void node.play().catch(() => undefined);
+}
+
 function ManagedExternalFrame({
   fallbackSrc,
   fallbackSrcs,
@@ -247,9 +277,57 @@ function ManagedDirectVideo({
 }: ManagedDirectVideoProps) {
   const [hasFailed, setHasFailed] = useState(false);
   const [hasStartedPlayback, setHasStartedPlayback] = useState(false);
+  const videoRef = useRef<HTMLVideoElement | null>(null);
+  const retryTimeoutsRef = useRef<number[]>([]);
   const shouldAutoplay = autoplay || previewMode;
   const controlsEnabled = !shouldAutoplay && showControls;
   const posterVisible = hasFailed || !hasStartedPlayback;
+  const primeAutoplay = useCallback(
+    (shouldPrimeLoad = false) => {
+      const node = videoRef.current;
+
+      if (!node || !shouldAutoplay || hasFailed || hasStartedPlayback) {
+        return;
+      }
+
+      attemptInlineAutoplay(node, shouldPrimeLoad);
+    },
+    [hasFailed, hasStartedPlayback, shouldAutoplay],
+  );
+
+  useEffect(() => {
+    return () => {
+      retryTimeoutsRef.current.forEach((timeoutId) => window.clearTimeout(timeoutId));
+      retryTimeoutsRef.current = [];
+    };
+  }, []);
+
+  useEffect(() => {
+    if (!shouldAutoplay || hasFailed || hasStartedPlayback) {
+      return;
+    }
+
+    primeAutoplay(true);
+
+    const animationFrameId = window.requestAnimationFrame(() => {
+      primeAutoplay();
+    });
+
+    const retryDelays = previewMode ? [100, 260, 520, 960] : [160, 420];
+
+    retryTimeoutsRef.current.forEach((timeoutId) => window.clearTimeout(timeoutId));
+    retryTimeoutsRef.current = retryDelays.map((delay) =>
+      window.setTimeout(() => {
+        primeAutoplay(true);
+      }, delay),
+    );
+
+    return () => {
+      window.cancelAnimationFrame(animationFrameId);
+      retryTimeoutsRef.current.forEach((timeoutId) => window.clearTimeout(timeoutId));
+      retryTimeoutsRef.current = [];
+    };
+  }, [hasFailed, hasStartedPlayback, previewMode, primeAutoplay, shouldAutoplay]);
 
   return (
     <div className="relative h-full w-full overflow-hidden bg-[#05070b]">
@@ -273,6 +351,7 @@ function ManagedDirectVideo({
 
       {!hasFailed ? (
         <video
+          ref={videoRef}
           className={cn(
             "absolute inset-0 z-0 h-full w-full transition duration-500",
             mediaObjectClass,
@@ -281,7 +360,7 @@ function ManagedDirectVideo({
           controls={controlsEnabled}
           controlsList="nodownload noplaybackrate nofullscreen"
           playsInline
-          preload="auto"
+          preload={shouldAutoplay ? "auto" : "metadata"}
           autoPlay={shouldAutoplay}
           muted
           loop
@@ -291,20 +370,16 @@ function ManagedDirectVideo({
           onLoadedMetadata={(event) => {
             const node = event.currentTarget;
 
-            node.defaultMuted = true;
-            node.muted = true;
-            node.playsInline = true;
-            node.setAttribute("muted", "");
-            node.setAttribute("playsinline", "");
-            node.setAttribute("webkit-playsinline", "");
-
-            if (shouldAutoplay) {
-              node.play().catch(() => undefined);
-            }
+            prepareInlineMutedVideo(node, shouldAutoplay);
+            primeAutoplay();
+          }}
+          onLoadedData={() => {
+            primeAutoplay();
           }}
           onCanPlay={(event) => {
             if (shouldAutoplay) {
-              event.currentTarget.play().catch(() => undefined);
+              prepareInlineMutedVideo(event.currentTarget, true);
+              primeAutoplay();
             }
           }}
           onPlay={() => setHasStartedPlayback(true)}
@@ -312,6 +387,16 @@ function ManagedDirectVideo({
           onTimeUpdate={(event) => {
             if (event.currentTarget.currentTime > 0) {
               setHasStartedPlayback(true);
+            }
+          }}
+          onSuspend={() => {
+            if (shouldAutoplay) {
+              primeAutoplay(true);
+            }
+          }}
+          onStalled={() => {
+            if (shouldAutoplay) {
+              primeAutoplay(true);
             }
           }}
           onError={() => setHasFailed(true)}
