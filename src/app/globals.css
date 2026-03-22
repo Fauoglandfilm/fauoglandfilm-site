@@ -450,24 +450,27 @@ summary::-webkit-details-marker {
 
   @media (max-width: 639px) {
     .hero-title {
-      font-size: clamp(2rem, 8vw, 2.45rem);
-      line-height: 0.94;
-      letter-spacing: -0.058em;
+      max-width: calc(100vw - max(env(safe-area-inset-left), 0px) - max(env(safe-area-inset-right), 0px) - 3.4rem);
+      font-size: clamp(1.55rem, 6.8vw, 1.96rem);
+      line-height: 0.98;
+      letter-spacing: -0.05em;
+      white-space: nowrap;
+      text-wrap: nowrap;
     }
 
     .hero-title--editorial {
-      width: 100%;
+      width: auto;
       max-width: 100%;
     }
 
     .hero-typewriter {
-      width: 100%;
+      width: auto;
       max-width: 100%;
     }
 
     .hero-typewriter__line {
-      white-space: normal;
-      text-wrap: balance;
+      white-space: nowrap;
+      text-wrap: nowrap;
     }
 
     .hero-editorial-block {
@@ -2619,17 +2622,21 @@ summary::-webkit-details-marker {
     }
 
     .hero-copy .hero-title {
-      max-width: 9.5ch;
-      font-size: clamp(2.15rem, 8.6vw, 2.75rem);
-      line-height: 0.96;
-      letter-spacing: -0.056em;
+      max-width: calc(100vw - max(env(safe-area-inset-left), 0px) - max(env(safe-area-inset-right), 0px) - 3.4rem);
+      font-size: clamp(1.55rem, 6.8vw, 1.96rem);
+      line-height: 0.98;
+      letter-spacing: -0.05em;
+      white-space: nowrap;
+      text-wrap: nowrap;
     }
 
     .hero-title {
-      max-width: 9.5ch;
-      font-size: clamp(2.15rem, 8.6vw, 2.75rem);
-      line-height: 0.96;
-      letter-spacing: -0.056em;
+      max-width: calc(100vw - max(env(safe-area-inset-left), 0px) - max(env(safe-area-inset-right), 0px) - 3.4rem);
+      font-size: clamp(1.55rem, 6.8vw, 1.96rem);
+      line-height: 0.98;
+      letter-spacing: -0.05em;
+      white-space: nowrap;
+      text-wrap: nowrap;
     }
 
     .hero-body {
