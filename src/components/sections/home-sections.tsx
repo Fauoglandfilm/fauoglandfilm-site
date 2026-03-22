@@ -1017,6 +1017,7 @@ function HomeCaseCard({
     ? `${caseStudy.metrics[0].value} ${resolveLocalizedValue(caseStudy.metrics[0].label, language)}`
     : resolveLocalizedValue(caseStudy.category, language);
   const videoRef = useRef<HTMLVideoElement | null>(null);
+  const videoRetryTimeoutsRef = useRef<number[]>([]);
   const [hasVideoError, setHasVideoError] = useState(false);
   const [isPosterVisible, setIsPosterVisible] = useState(true);
   const [isMobileViewport, setIsMobileViewport] = useState(false);
@@ -1057,6 +1058,67 @@ function HomeCaseCard({
     mediaQuery.addListener(updateViewport);
     return () => mediaQuery.removeListener(updateViewport);
   }, []);
+
+  useEffect(() => {
+    return () => {
+      videoRetryTimeoutsRef.current.forEach((timeoutId) => window.clearTimeout(timeoutId));
+      videoRetryTimeoutsRef.current = [];
+    };
+  }, []);
+
+  useEffect(() => {
+    if (!previewVideo || !previewVideoSrc || hasVideoError) {
+      return;
+    }
+
+    const primeInlinePreview = (shouldPrimeLoad = false) => {
+      const node = videoRef.current;
+
+      if (!node) {
+        return;
+      }
+
+      node.defaultMuted = true;
+      node.muted = true;
+      node.playsInline = true;
+      node.autoplay = true;
+      node.loop = true;
+      node.preload = "auto";
+      node.setAttribute("muted", "");
+      node.setAttribute("playsinline", "");
+      node.setAttribute("webkit-playsinline", "");
+      node.setAttribute("fetchpriority", "high");
+
+      if (shouldPrimeLoad && node.readyState === 0) {
+        try {
+          node.load();
+        } catch {
+          // Ignore repeated load nudges on browsers that reject them.
+        }
+      }
+
+      void node.play().catch(() => undefined);
+    };
+
+    primeInlinePreview(true);
+
+    const animationFrameId = window.requestAnimationFrame(() => {
+      primeInlinePreview();
+    });
+
+    videoRetryTimeoutsRef.current.forEach((timeoutId) => window.clearTimeout(timeoutId));
+    videoRetryTimeoutsRef.current = [100, 260, 520, 960].map((delay) =>
+      window.setTimeout(() => {
+        primeInlinePreview(true);
+      }, delay),
+    );
+
+    return () => {
+      window.cancelAnimationFrame(animationFrameId);
+      videoRetryTimeoutsRef.current.forEach((timeoutId) => window.clearTimeout(timeoutId));
+      videoRetryTimeoutsRef.current = [];
+    };
+  }, [hasVideoError, previewVideo, previewVideoSrc]);
 
   return (
     <Reveal delay={delay} y={16}>
@@ -1145,7 +1207,7 @@ function HomeCaseCard({
               image={caseStudy.image}
               imageAlt={caseStudy.imageAlt}
               mediaFit={caseStudy.mediaFit}
-              previewBehavior={caseStudy.video || caseStudy.externalVideo ? "always" : "static"}
+              previewBehavior={caseStudy.video || caseStudy.externalVideo ? "viewport" : "static"}
               className="absolute inset-0"
               sizes={previewSizes}
               priority={false}

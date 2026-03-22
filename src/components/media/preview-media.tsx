@@ -1,5 +1,7 @@
 "use client";
 
+import { useEffect, useRef, useState } from "react";
+
 import { useSitePreferences } from "@/components/providers/site-preferences";
 import type { ExternalVideoAsset, VideoAsset } from "@/data/site-content";
 import type { LocalizedText } from "@/lib/i18n";
@@ -35,6 +37,30 @@ type PreviewMediaProps = {
 
 function hasExplicitPositionClass(value?: string) {
   return Boolean(value && /\b(relative|absolute|fixed|sticky)\b/.test(value));
+}
+
+function parseRootMarginValue(value: string, viewportHeight: number) {
+  const trimmedValue = value.trim();
+
+  if (trimmedValue.endsWith("px")) {
+    return Number.parseFloat(trimmedValue) || 0;
+  }
+
+  if (trimmedValue.endsWith("%")) {
+    return ((Number.parseFloat(trimmedValue) || 0) / 100) * viewportHeight;
+  }
+
+  return Number.parseFloat(trimmedValue) || 0;
+}
+
+function isWithinBufferedViewport(node: HTMLElement, rootMargin: string) {
+  const rect = node.getBoundingClientRect();
+  const viewportHeight = window.innerHeight || document.documentElement.clientHeight || 0;
+  const marginValues = rootMargin.trim().split(/\s+/);
+  const topMargin = parseRootMarginValue(marginValues[0] ?? "0px", viewportHeight);
+  const bottomMargin = parseRootMarginValue(marginValues[2] ?? marginValues[0] ?? "0px", viewportHeight);
+
+  return rect.bottom >= -topMargin && rect.top <= viewportHeight + bottomMargin;
 }
 
 function resolvePosterSrc(
@@ -113,8 +139,13 @@ export function PreviewMedia({
   priority = false,
   posterClassName,
   previewClassName,
+  rootMargin = "180px 0px -8% 0px",
+  inViewThreshold = 0.16,
 }: PreviewMediaProps) {
   const { language } = useSitePreferences();
+  const wrapperRef = useRef<HTMLDivElement | null>(null);
+  const [isHovered, setIsHovered] = useState(false);
+  const [isViewportReady, setIsViewportReady] = useState(previewBehavior === "always" || priority);
 
   const resolvedTitle = resolveLocalizedValue(title, language);
   const resolvedAlt = imageAlt ? resolveLocalizedValue(imageAlt, language) : resolvedTitle;
@@ -126,14 +157,81 @@ export function PreviewMedia({
   const fallbackContent = <PreviewFallbackState title={resolvedTitle} />;
 
   const shouldPlay = previewBehavior !== "static";
-  const shouldRenderPreview = shouldPlay && hasPlayableMedia;
+  const usesViewportActivation =
+    previewBehavior === "viewport" || previewBehavior === "hover-or-viewport";
+  const usesHoverActivation =
+    previewBehavior === "hover" || previewBehavior === "hover-or-viewport";
+  const shouldRenderPreview =
+    shouldPlay &&
+    hasPlayableMedia &&
+    (previewBehavior === "always" || (usesViewportActivation && isViewportReady) || (usesHoverActivation && isHovered));
   const mediaObjectClass =
     mediaFit === "contain" ? "object-contain p-5 sm:p-6" : "object-cover";
 
+  useEffect(() => {
+    if (!usesViewportActivation || isViewportReady) {
+      return;
+    }
+
+    const node = wrapperRef.current;
+
+    if (!node) {
+      return;
+    }
+
+    let animationFrameId: number | null = null;
+
+    if (isWithinBufferedViewport(node, rootMargin)) {
+      animationFrameId = window.requestAnimationFrame(() => {
+        setIsViewportReady(true);
+      });
+
+      return () => {
+        if (animationFrameId !== null) {
+          window.cancelAnimationFrame(animationFrameId);
+        }
+      };
+    }
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries.some((entry) => entry.isIntersecting || entry.intersectionRatio > 0)) {
+          setIsViewportReady(true);
+          observer.disconnect();
+        }
+      },
+      {
+        root: null,
+        rootMargin,
+        threshold: inViewThreshold,
+      },
+    );
+
+    animationFrameId = window.requestAnimationFrame(() => {
+      if (isWithinBufferedViewport(node, rootMargin)) {
+        setIsViewportReady(true);
+        observer.disconnect();
+      }
+    });
+
+    observer.observe(node);
+
+    return () => {
+      if (animationFrameId !== null) {
+        window.cancelAnimationFrame(animationFrameId);
+      }
+
+      observer.disconnect();
+    };
+  }, [inViewThreshold, isViewportReady, rootMargin, usesViewportActivation]);
+
   return (
     <div
+      ref={wrapperRef}
       className={cn("h-full w-full overflow-hidden", !hasExplicitPositionClass(className) && "relative", className)}
       aria-label={resolvedTitle}
+      onMouseEnter={usesHoverActivation ? () => setIsHovered(true) : undefined}
+      onMouseLeave={usesHoverActivation ? () => setIsHovered(false) : undefined}
     >
       {posterSrc || fallbackSources.length ? (
         <MediaImage
