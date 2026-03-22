@@ -450,9 +450,9 @@ summary::-webkit-details-marker {
 
   @media (max-width: 639px) {
     .hero-title {
-      font-size: clamp(0.88rem, 3.7vw, 1.04rem);
-      line-height: 0.9;
-      letter-spacing: -0.07em;
+      font-size: clamp(2rem, 8vw, 2.45rem);
+      line-height: 0.94;
+      letter-spacing: -0.058em;
     }
 
     .hero-title--editorial {
@@ -465,6 +465,11 @@ summary::-webkit-details-marker {
       max-width: 100%;
     }
 
+    .hero-typewriter__line {
+      white-space: normal;
+      text-wrap: balance;
+    }
+
     .hero-editorial-block {
       width: calc(100vw - max(env(safe-area-inset-left), 0px) - max(env(safe-area-inset-right), 0px) - 2rem);
       max-width: calc(100vw - max(env(safe-area-inset-left), 0px) - max(env(safe-area-inset-right), 0px) - 2rem);
@@ -474,8 +479,9 @@ summary::-webkit-details-marker {
 
     .hero-editorial-support {
       max-width: 100%;
-      font-size: clamp(0.48rem, 1.95vw, 0.62rem);
-      line-height: 1.18;
+      white-space: normal;
+      font-size: clamp(0.74rem, 3vw, 0.88rem);
+      line-height: 1.35;
       letter-spacing: -0.022em;
     }
   }
@@ -2613,17 +2619,17 @@ summary::-webkit-details-marker {
     }
 
     .hero-copy .hero-title {
-      max-width: 8.75ch;
-      font-size: clamp(3.05rem, 12.8vw, 3.55rem);
-      line-height: 0.92;
-      letter-spacing: -0.062em;
+      max-width: 9.5ch;
+      font-size: clamp(2.15rem, 8.6vw, 2.75rem);
+      line-height: 0.96;
+      letter-spacing: -0.056em;
     }
 
     .hero-title {
-      max-width: 8.75ch;
-      font-size: clamp(3.05rem, 12.8vw, 3.55rem);
-      line-height: 0.92;
-      letter-spacing: -0.062em;
+      max-width: 9.5ch;
+      font-size: clamp(2.15rem, 8.6vw, 2.75rem);
+      line-height: 0.96;
+      letter-spacing: -0.056em;
     }
 
     .hero-body {
