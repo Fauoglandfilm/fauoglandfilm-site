@@ -144,7 +144,10 @@ export function HeroSection() {
         return false;
       }
 
-      if (node.readyState >= HTMLMediaElement.HAVE_CURRENT_DATA) {
+      if (
+        node.readyState >= HTMLMediaElement.HAVE_CURRENT_DATA &&
+        (node.currentTime > 0 || !node.paused)
+      ) {
         revealVideoFrame();
         return true;
       }
@@ -163,7 +166,6 @@ export function HeroSection() {
         node.load();
       }
 
-      revealIfReady();
       void node.play().then(() => {
         revealIfReady();
       }).catch(() => undefined);
@@ -246,22 +248,11 @@ export function HeroSection() {
             node.setAttribute("webkit-playsinline", "");
             void node.play().catch(() => undefined);
           }}
-          onLoadedData={(event) => {
-            if (event.currentTarget.readyState >= 2) {
-              revealVideoFrame();
-            }
+          onLoadedData={() => {
+            setHasVideoError(false);
           }}
           onCanPlay={(event) => {
-            if (event.currentTarget.readyState >= 2) {
-              revealVideoFrame();
-            }
             void event.currentTarget.play().catch(() => undefined);
-          }}
-          onCanPlayThrough={() => {
-            revealVideoFrame();
-          }}
-          onPlay={() => {
-            revealVideoFrame();
           }}
           onPlaying={() => {
             revealVideoFrame();
