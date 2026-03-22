@@ -965,7 +965,9 @@ export const caseStudies: CaseStudy[] = [
     video: {
       videoType: "direct",
       src: "/assets/portfolio/treningshuset/videos/portrait/treningshuset-musikk-2-45-web.mp4",
+      mobileSrc: "/assets/portfolio/treningshuset/videos/portrait/treningshuset-velkommen-sindre-web.mp4",
       poster: "/assets/portfolio/treningshuset/posters/treningshuset-musikk-2-45-poster.png",
+      mobilePoster: "/assets/portfolio/treningshuset/posters/treningshuset-velkommen-sindre-poster.png",
       label: {
         no: "Treningshuset - Musikk 2",
         en: "Treningshuset - Music 2",

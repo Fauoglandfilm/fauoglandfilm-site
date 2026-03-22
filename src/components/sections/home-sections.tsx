@@ -1019,11 +1019,44 @@ function HomeCaseCard({
   const videoRef = useRef<HTMLVideoElement | null>(null);
   const [hasVideoError, setHasVideoError] = useState(false);
   const [isPosterVisible, setIsPosterVisible] = useState(true);
+  const [isMobileViewport, setIsMobileViewport] = useState(false);
   const previewVideo = caseStudy.video?.videoType === "direct" ? caseStudy.video : null;
-  const previewMediaFit = caseStudy.slug === "treningshuset" ? "contain" : caseStudy.mediaFit ?? "cover";
-  const previewImage = caseStudy.image ?? previewVideo?.poster;
+  const isTreningshuset = caseStudy.slug === "treningshuset";
+  const hasMobilePreview = Boolean(previewVideo?.mobileSrc || previewVideo?.mobilePoster);
+  const useMobilePreview = isTreningshuset && isMobileViewport && hasMobilePreview;
+  const previewMediaFit = isTreningshuset ? "contain" : caseStudy.mediaFit ?? "cover";
+  const previewImage = useMobilePreview
+    ? previewVideo?.mobilePoster ?? caseStudy.image ?? previewVideo?.poster
+    : caseStudy.image ?? previewVideo?.poster;
   const previewImageAlt = caseStudy.imageAlt ?? caseStudy.title;
   const previewSizes = featured ? "(min-width: 1024px) 58vw, 100vw" : "(min-width: 1024px) 36vw, 100vw";
+  const previewVideoSrc = useMobilePreview ? previewVideo?.mobileSrc ?? previewVideo?.src : previewVideo?.src;
+  const previewVideoPoster = useMobilePreview
+    ? previewVideo?.mobilePoster ?? previewVideo?.poster ?? previewImage
+    : previewVideo?.poster ?? previewImage;
+  const previewMediaClassName = cn(
+    previewMediaFit === "contain" ? "object-contain p-4 sm:p-5" : "object-cover",
+    "transition duration-700",
+    isTreningshuset ? "" : "group-hover:scale-[1.035]",
+  );
+  const previewMediaStyle = isTreningshuset
+    ? { objectPosition: useMobilePreview ? "center top" : "center center" }
+    : undefined;
+
+  useEffect(() => {
+    const mediaQuery = window.matchMedia("(max-width: 639px)");
+    const updateViewport = () => setIsMobileViewport(mediaQuery.matches);
+
+    updateViewport();
+
+    if (typeof mediaQuery.addEventListener === "function") {
+      mediaQuery.addEventListener("change", updateViewport);
+      return () => mediaQuery.removeEventListener("change", updateViewport);
+    }
+
+    mediaQuery.addListener(updateViewport);
+    return () => mediaQuery.removeListener(updateViewport);
+  }, []);
 
   return (
     <Reveal delay={delay} y={16}>
@@ -1038,6 +1071,7 @@ function HomeCaseCard({
             <div className="absolute inset-0 bg-[#05070b]">
               {previewImage ? (
                 <div
+                  key={`${caseStudy.slug}-${useMobilePreview ? "mobile" : "desktop"}-poster`}
                   className={cn(
                     "absolute inset-0 z-[1] transition-opacity duration-300",
                     hasVideoError || isPosterVisible ? "opacity-100" : "opacity-0",
@@ -1048,27 +1082,22 @@ function HomeCaseCard({
                     alt={resolveLocalizedValue(previewImageAlt, language)}
                     fill
                     sizes={previewSizes}
-                    className={cn(
-                      previewMediaFit === "contain" ? "object-contain p-4 sm:p-5" : "object-cover",
-                      "transition duration-700",
-                      caseStudy.slug === "treningshuset" ? "" : "group-hover:scale-[1.035]",
-                    )}
+                    className={previewMediaClassName}
+                    style={previewMediaStyle}
                   />
                 </div>
               ) : null}
               <video
+                key={`${caseStudy.slug}-${useMobilePreview ? "mobile" : "desktop"}-video`}
                 ref={videoRef}
-                className={cn(
-                  "absolute inset-0 z-0 h-full w-full transition-opacity duration-300",
-                  previewMediaFit === "contain" ? "object-contain p-4 sm:p-5" : "object-cover",
-                  hasVideoError ? "opacity-0" : "opacity-100",
-                )}
-                src={previewVideo.src}
+                className={cn("absolute inset-0 z-0 h-full w-full transition-opacity duration-300", previewMediaClassName, hasVideoError ? "opacity-0" : "opacity-100")}
+                style={previewMediaStyle}
+                src={previewVideoSrc}
                 autoPlay
                 muted
                 loop
                 playsInline
-                poster={previewVideo.poster ?? previewImage}
+                poster={previewVideoPoster}
                 preload="auto"
                 disablePictureInPicture
                 disableRemotePlayback
