@@ -233,8 +233,9 @@ export function Header() {
     const body = document.body;
     const previousHtmlOverflow = html.style.overflow;
     const previousBodyOverflow = body.style.overflow;
+    const isOverlayOpen = open || searchOpen;
 
-    if (open) {
+    if (isOverlayOpen) {
       html.style.overflow = "hidden";
       body.style.overflow = "hidden";
     } else {
@@ -505,7 +506,7 @@ export function Header() {
       <AnimatePresence>
         {searchOpen ? (
           <motion.div
-            className="fixed inset-0 z-[60] bg-[rgba(6,7,10,0.36)] backdrop-blur-md"
+            className="fixed inset-0 z-[60] overflow-hidden overscroll-none bg-[rgba(6,7,10,0.36)] backdrop-blur-md touch-none"
             initial={shouldReduceMotion ? { opacity: 1 } : { opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
@@ -517,7 +518,7 @@ export function Header() {
               role="dialog"
               aria-modal="true"
               aria-label={copy.searchLabel}
-              className="site-container flex min-h-screen items-start justify-center px-4 pt-[max(6.5rem,calc(env(safe-area-inset-top,0px)+5.25rem))] sm:px-6 lg:pt-[8.5rem]"
+              className="site-container pointer-events-none flex h-[100dvh] min-h-0 items-start justify-center overflow-hidden px-4 pb-4 pt-[max(6.5rem,calc(env(safe-area-inset-top,0px)+5.25rem))] sm:px-6 sm:pb-6 lg:pt-[8.5rem]"
               initial={
                 shouldReduceMotion
                   ? { opacity: 1 }
@@ -532,7 +533,7 @@ export function Header() {
               transition={{ duration: 0.28, ease: [0.22, 1, 0.36, 1] }}
               onClick={(event) => event.stopPropagation()}
             >
-              <div className="relative w-full max-w-[56rem] overflow-hidden rounded-[2rem] border border-white/14 bg-[rgba(16,18,22,0.76)] text-white shadow-[0_34px_80px_rgba(0,0,0,0.34)] backdrop-blur-[26px]">
+              <div className="pointer-events-auto relative flex max-h-full min-h-0 w-full max-w-[56rem] flex-col overflow-hidden rounded-[2rem] border border-white/14 bg-[rgba(16,18,22,0.76)] text-white shadow-[0_34px_80px_rgba(0,0,0,0.34)] backdrop-blur-[26px]">
                 <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,rgba(255,255,255,0.12),rgba(255,255,255,0.04))]" />
                 <div className="relative border-b border-white/10 px-5 py-4 sm:px-6 sm:py-5">
                   <div className="flex items-center gap-3">
@@ -552,7 +553,10 @@ export function Header() {
                   </div>
                 </div>
 
-                <div className="relative px-3 py-3 sm:px-4 sm:py-4">
+                <div
+                  className="relative min-h-0 flex-1 overflow-y-auto overscroll-contain px-3 py-3 touch-pan-y sm:px-4 sm:py-4"
+                  style={{ WebkitOverflowScrolling: "touch" }}
+                >
                   {searchResults.length ? (
                     <div className="grid gap-2">
                       {searchResults.map((result) => (
