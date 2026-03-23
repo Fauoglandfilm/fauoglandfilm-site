@@ -140,6 +140,7 @@ export function Header() {
   const copy = uiCopy.header[language];
   const overlayMode = pathname === "/" && !scrolled && !open;
   const darkOverlayMode = overlayMode && theme === "dark";
+  const hidesGlobalChrome = pathname?.startsWith("/pitch");
   const menuLabel = language === "no" ? "Meny" : "Menu";
   const menuFooterCopy =
     language === "no"
@@ -318,6 +319,10 @@ export function Header() {
     setSearchQuery("");
     setSearchOpen(false);
   };
+
+  if (hidesGlobalChrome) {
+    return null;
+  }
 
   return (
     <>

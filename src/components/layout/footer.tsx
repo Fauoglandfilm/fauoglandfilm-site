@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 import { useSitePreferences } from "@/components/providers/site-preferences";
 import { BrandLogo } from "@/components/ui/brand-logo";
@@ -24,11 +25,17 @@ function getSocialIcon(name: string) {
 }
 
 export function Footer() {
+  const pathname = usePathname();
   const { language, theme } = useSitePreferences();
   const copy = uiCopy.footer[language];
+  const hidesGlobalChrome = pathname?.startsWith("/pitch");
   const footerNavItems = footerNavOrder
     .map((href) => navItems.find((item) => item.href === href))
     .filter((item): item is (typeof navItems)[number] => Boolean(item));
+
+  if (hidesGlobalChrome) {
+    return null;
+  }
 
   return (
     <footer id="site-footer" className="relative overflow-hidden text-[color:var(--foreground)]">
