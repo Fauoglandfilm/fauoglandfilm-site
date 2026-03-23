@@ -1,7 +1,6 @@
 "use client";
 
 import Image from "next/image";
-import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 
 import { PreviewMedia } from "@/components/media/preview-media";
@@ -34,37 +33,6 @@ const FEATURED_PROJECT_SLUGS = [
   "a-message-from-martha",
   "ville-gleder-villmarksforedrag",
 ] as const;
-
-const portfolioModalCopyOverrides = {
-  "ville-gleder-villmarksforedrag": {
-    no: {
-      summary:
-        "Promofilmen løfter fram Mattis Thørud og Jan Monsen i naturen, og gjør villmarksforedraget lettere å forstå, huske og booke.",
-      result:
-        "Bygget for å skape nysgjerrighet rundt foredraget og gi arrangører en tydelig følelse av stemning, innhold og målgruppe.",
-    },
-    en: {
-      summary:
-        "This promo film places Mattis Thørud and Jan Monsen in the outdoors and makes the wilderness talk easier to understand, remember and book.",
-      result:
-        "Built to spark curiosity around the talk and give organisers a clear sense of the tone, content and audience fit.",
-    },
-  },
-  "ville-gleder-vat-kald-sulten": {
-    no: {
-      summary:
-        "Filmen setter foredraget \"Våt, kald og sulten\" opp mot en vanlig arbeidshverdag, og gjør konseptet tydeligere og mer salgbart.",
-      result:
-        "Bygget for å gjøre innholdet lettere å formidle raskt, og for å hjelpe Ville Gleder med flere relevante bookinger.",
-    },
-    en: {
-      summary:
-        "This film contrasts the talk “Wet, cold and hungry” with everyday working life, making the concept clearer and easier to sell.",
-      result:
-        "Built to communicate the idea faster and help Ville Gleder convert more relevant bookings.",
-    },
-  },
-} as const;
 
 type PortfolioModalMedia =
   | {
@@ -423,7 +391,6 @@ export function PortfolioPageContent({
       {activeProject ? (
         <PortfolioVideoModal
           project={activeProject}
-          group={getPortfolioGroup(activeProject.group)}
           onClose={() => setActiveProject(null)}
         />
       ) : null}
@@ -513,28 +480,17 @@ function PortfolioProjectCard({
 
 function PortfolioVideoModal({
   project,
-  group,
   onClose,
 }: {
   project: PortfolioProject;
-  group?: PortfolioGroup;
   onClose: () => void;
 }) {
   const { language } = useSitePreferences();
   const title = resolveLocalizedValue(project.title, language);
-  const format = resolveLocalizedValue(project.format, language);
   const videoRef = useRef<HTMLVideoElement | null>(null);
-  const copyOverride =
-    project.slug in portfolioModalCopyOverrides
-      ? portfolioModalCopyOverrides[project.slug as keyof typeof portfolioModalCopyOverrides][language]
-      : null;
-  const summary = copyOverride?.summary ?? resolveLocalizedValue(project.summary, language);
-  const result = copyOverride?.result ?? (project.result ? resolveLocalizedValue(project.result, language) : null);
   const modalLabel = language === "no" ? "Lukk video" : "Close video";
   const modalMedia = resolvePortfolioModalMedia(project);
   const isDirectVideo = modalMedia?.kind === "direct";
-  const modalActionClassName =
-    "inline-flex items-center justify-center gap-2 rounded-full border px-5 py-3 text-sm font-semibold transition [html[data-theme='light']_&]:border-black/12 [html[data-theme='light']_&]:bg-white [html[data-theme='light']_&]:text-black [html[data-theme='light']_&]:hover:bg-[#f7f7f8] [html[data-theme='light']_&]:hover:text-black [html[data-theme='dark']_&]:border-white/14 [html[data-theme='dark']_&]:bg-black [html[data-theme='dark']_&]:text-white [html[data-theme='dark']_&]:hover:bg-[#202022] [html[data-theme='dark']_&]:hover:text-white";
 
   useEffect(() => {
     const node = videoRef.current;
@@ -570,109 +526,54 @@ function PortfolioVideoModal({
           label={modalLabel}
         />
 
-        <div className="flex min-h-0 flex-1 flex-col lg:grid lg:grid-cols-[minmax(0,1.06fr)_minmax(19rem,0.94fr)]">
-          <div className="relative flex min-h-[15rem] flex-none items-center justify-center bg-[#05070b] px-3 pb-4 pt-16 sm:min-h-[20rem] sm:px-5 sm:pb-5 sm:pt-16 lg:min-h-[36rem] lg:px-8 lg:py-8">
-            {modalMedia?.kind === "direct" ? (
-              <video
-                ref={videoRef}
-                className="block max-h-[46svh] w-auto max-w-full rounded-[1.3rem] bg-[#05070b] object-contain sm:max-h-[52svh] lg:max-h-[72svh]"
-                src={modalMedia.src}
-                poster={modalMedia.poster}
-                controls
-                playsInline
-                preload="auto"
-                autoPlay
-                controlsList="nodownload noplaybackrate"
-                disablePictureInPicture
-                disableRemotePlayback
+        <div className="relative flex min-h-0 flex-1 items-center justify-center bg-[#05070b] px-3 pb-4 pt-16 sm:px-5 sm:pb-5 sm:pt-16 lg:px-8 lg:py-8">
+          {modalMedia?.kind === "direct" ? (
+            <video
+              ref={videoRef}
+              className="block max-h-[46svh] w-auto max-w-full rounded-[1.3rem] bg-[#05070b] object-contain sm:max-h-[52svh] lg:max-h-[72svh]"
+              src={modalMedia.src}
+              poster={modalMedia.poster}
+              controls
+              playsInline
+              preload="auto"
+              autoPlay
+              controlsList="nodownload noplaybackrate"
+              disablePictureInPicture
+              disableRemotePlayback
+            />
+          ) : modalMedia?.kind === "external" ? (
+            <div className="relative aspect-video max-h-[46svh] w-full max-w-[min(100%,48rem)] overflow-hidden rounded-[1.3rem] sm:max-h-[52svh] lg:max-h-none">
+              <iframe
+                src={modalMedia.iframeSrc}
+                title={title}
+                className="absolute inset-0 h-full w-full"
+                allow="autoplay; encrypted-media; picture-in-picture; fullscreen; clipboard-write"
+                referrerPolicy="strict-origin-when-cross-origin"
+                allowFullScreen
               />
-            ) : modalMedia?.kind === "external" ? (
-              <div className="relative w-full max-w-[min(100%,48rem)] overflow-hidden rounded-[1.3rem] aspect-video max-h-[46svh] sm:max-h-[52svh] lg:max-h-none">
-                <iframe
-                  src={modalMedia.iframeSrc}
-                  title={title}
-                  className="absolute inset-0 h-full w-full"
-                  allow="autoplay; encrypted-media; picture-in-picture; fullscreen; clipboard-write"
-                  referrerPolicy="strict-origin-when-cross-origin"
-                  allowFullScreen
-                />
-              </div>
-            ) : project.image ? (
-              <div
+            </div>
+          ) : project.image ? (
+            <div
+              className={cn(
+                "relative max-h-[46svh] w-full max-w-[min(100%,42rem)] overflow-hidden rounded-[1.3rem] sm:max-h-[52svh] lg:max-h-none",
+                project.mediaFit === "contain" ? "aspect-[4/5]" : "aspect-video",
+              )}
+            >
+              <Image
+                src={project.image}
+                alt={project.imageAlt ? resolveLocalizedValue(project.imageAlt, language) : title}
+                fill
+                priority
+                sizes="(min-width: 1280px) 62vw, (min-width: 1024px) 58vw, 100vw"
                 className={cn(
-                  "relative w-full max-w-[min(100%,42rem)] overflow-hidden rounded-[1.3rem] max-h-[46svh] sm:max-h-[52svh] lg:max-h-none",
-                  project.mediaFit === "contain" ? "aspect-[4/5]" : "aspect-video",
+                  "object-cover",
+                  project.mediaFit === "contain" && "object-contain p-4 sm:p-6",
                 )}
-              >
-                <Image
-                  src={project.image}
-                  alt={project.imageAlt ? resolveLocalizedValue(project.imageAlt, language) : title}
-                  fill
-                  priority
-                  sizes="(min-width: 1280px) 62vw, (min-width: 1024px) 58vw, 100vw"
-                  className={cn(
-                    "object-cover",
-                    project.mediaFit === "contain" && "object-contain p-4 sm:p-6",
-                  )}
-                />
-              </div>
-            ) : (
-              <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(255,255,255,0.14),transparent_24%),linear-gradient(135deg,rgba(120,164,255,0.18),rgba(10,12,18,0.94))]" />
-            )}
-          </div>
-
-          <div className="flex min-h-0 flex-1 flex-col overflow-y-auto border-t border-[color:var(--line)]/75 p-4 pb-[max(1rem,env(safe-area-inset-bottom))] sm:p-6 lg:border-l lg:border-t-0 lg:p-8">
-            <div className="space-y-4">
-              <div className="flex flex-wrap items-center gap-2 text-[0.68rem] font-semibold uppercase tracking-[0.2em] text-[var(--muted)]">
-                {group ? <span>{resolveLocalizedValue(group.title, language)}</span> : null}
-                {group ? <span className="h-1 w-1 rounded-full bg-[color:var(--muted)]/50" /> : null}
-                <span>{project.client}</span>
-                {project.year ? (
-                  <>
-                    <span className="h-1 w-1 rounded-full bg-[color:var(--muted)]/50" />
-                    <span>{project.year}</span>
-                  </>
-                ) : null}
-              </div>
-
-              <div>
-                <h2 className="section-title text-[color:var(--foreground)]">{title}</h2>
-                <p className="mt-3 text-[0.78rem] font-semibold uppercase tracking-[0.18em] text-[var(--muted)]">
-                  {format}
-                </p>
-                <p className="mt-4 text-sm leading-7 text-[var(--muted-2)] sm:text-[0.98rem]">
-                  {summary}
-                </p>
-                {result ? (
-                  <p className="mt-4 text-sm leading-7 text-[color:var(--foreground)]/88 sm:text-[0.98rem]">
-                    {result}
-                  </p>
-                ) : null}
-              </div>
+              />
             </div>
-
-            <div className="mt-auto flex flex-col gap-2.5 pt-6 sm:flex-row sm:flex-wrap">
-              {project.detailHref ? (
-                <Link
-                  href={project.detailHref}
-                  className={modalActionClassName}
-                >
-                  <span>{language === "no" ? "Se case" : "View case"}</span>
-                </Link>
-              ) : null}
-
-              {project.externalVideo?.sourceUrl ? (
-                <a
-                  href={project.externalVideo.sourceUrl}
-                  target="_blank"
-                  rel="noreferrer"
-                  className={modalActionClassName}
-                >
-                  <span>{language === "no" ? "Åpne kilde" : "Open source"}</span>
-                </a>
-              ) : null}
-            </div>
-          </div>
+          ) : (
+            <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(255,255,255,0.14),transparent_24%),linear-gradient(135deg,rgba(120,164,255,0.18),rgba(10,12,18,0.94))]" />
+          )}
         </div>
       </div>
     </div>

@@ -32,7 +32,6 @@ function CaseVideoModal({
   const videoRef = useRef<HTMLVideoElement | null>(null);
   const directVideo = variant.video?.videoType === "direct" ? variant.video : null;
   const title = resolveLocalizedValue(variant.label, language);
-  const imageAlt = variant.imageAlt ? resolveLocalizedValue(variant.imageAlt, language) : title;
   const modalVideoSrc = directVideo?.fullSrc ?? directVideo?.src;
   const modalFrameClassName =
     variant.frame === "portrait"
@@ -96,54 +95,21 @@ function CaseVideoModal({
           label={language === "no" ? "Lukk video" : "Close video"}
         />
 
-        <div className="flex min-h-0 flex-1 flex-col lg:grid lg:grid-cols-[minmax(0,1fr)_minmax(20rem,0.82fr)]">
-          <div className="relative flex min-h-[15rem] flex-none items-center justify-center bg-[#05070b] px-3 pb-4 pt-16 sm:min-h-[20rem] sm:px-6 sm:pb-6 sm:pt-16 lg:min-h-[36rem] lg:px-8 lg:py-8">
-            <div className={cn("relative w-full", modalFrameClassName)}>
-              <video
-                ref={videoRef}
-                className="absolute inset-0 h-full w-full rounded-[1.3rem] bg-[#05070b] object-contain"
-                src={modalVideoSrc}
-                poster={directVideo.poster ?? variant.image}
-                controls
-                playsInline
-                preload="auto"
-                autoPlay
-                controlsList="nodownload noplaybackrate"
-                disablePictureInPicture
-                disableRemotePlayback
-              />
-            </div>
-          </div>
-
-          <div className="flex min-h-0 flex-1 flex-col overflow-y-auto border-t border-[color:var(--line)]/75 p-4 pb-[max(1rem,env(safe-area-inset-bottom))] sm:p-6 lg:border-l lg:border-t-0 lg:p-8">
-            <div className="space-y-4">
-              <div className="flex flex-wrap items-center gap-2 text-[0.68rem] font-semibold uppercase tracking-[0.2em] text-[var(--muted)]">
-                <span>{title}</span>
-              </div>
-
-              <div>
-                <h2 className="section-title text-[color:var(--foreground)]">{title}</h2>
-                <p className="mt-4 text-sm leading-7 text-[var(--foreground)]/88 sm:text-[0.98rem]">
-                  {language === "no"
-                    ? "Klikk for å spille av med lyd."
-                    : "Tap to play back with sound."}
-                </p>
-              </div>
-            </div>
-
-            {variant.image ? (
-              <div className="mt-auto pt-6">
-                <div className="relative h-36 overflow-hidden rounded-[1.25rem] border border-[color:var(--line)] bg-[color:var(--surface)]/78">
-                  <Image
-                    src={variant.image}
-                    alt={imageAlt}
-                    fill
-                    sizes="(min-width: 1024px) 24rem, 100vw"
-                    className="object-cover"
-                  />
-                </div>
-              </div>
-            ) : null}
+        <div className="relative flex min-h-0 flex-1 items-center justify-center bg-[#05070b] px-3 pb-4 pt-16 sm:px-6 sm:pb-6 sm:pt-16 lg:px-8 lg:py-8">
+          <div className={cn("relative w-full", modalFrameClassName)}>
+            <video
+              ref={videoRef}
+              className="absolute inset-0 h-full w-full rounded-[1.3rem] bg-[#05070b] object-contain"
+              src={modalVideoSrc}
+              poster={directVideo.poster ?? variant.image}
+              controls
+              playsInline
+              preload="auto"
+              autoPlay
+              controlsList="nodownload noplaybackrate"
+              disablePictureInPicture
+              disableRemotePlayback
+            />
           </div>
         </div>
       </div>
