@@ -1,9 +1,11 @@
 "use client";
 
+import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 
 import { BrandLogo } from "@/components/ui/brand-logo";
 import { Button } from "@/components/ui/button";
+import { ArrowUpRightIcon } from "@/components/ui/icons";
 import { cn } from "@/lib/utils";
 
 const PITCH_PASSWORD = "Pitch2025";
@@ -62,6 +64,16 @@ export function PitchPageContent() {
     } catch {}
   };
 
+  const backHomeControl = (
+    <Link
+      href="/"
+      className="inline-flex items-center gap-2 rounded-full border border-white/14 bg-[rgba(255,255,255,0.08)] px-4 py-2.5 text-[0.76rem] font-semibold uppercase tracking-[0.16em] text-white shadow-[0_18px_34px_rgba(0,0,0,0.22)] backdrop-blur-[18px] transition hover:border-white/22 hover:bg-[rgba(255,255,255,0.12)]"
+    >
+      <span>Back to home</span>
+      <ArrowUpRightIcon className="h-3.5 w-3.5 shrink-0 rotate-180" />
+    </Link>
+  );
+
   if (isUnlocked) {
     return (
       <main className="relative min-h-screen overflow-hidden bg-[#08111b] text-white">
@@ -72,6 +84,10 @@ export function PitchPageContent() {
         </div>
 
         <section className="relative z-[1] p-2.5 sm:p-4">
+          <div className="mb-2.5 flex justify-start sm:mb-4">
+            {backHomeControl}
+          </div>
+
           <div className="relative flex h-[calc(100dvh-1.25rem)] min-h-[34rem] flex-col overflow-hidden rounded-[1.8rem] border border-white/12 bg-[rgba(9,14,22,0.72)] shadow-[0_36px_110px_rgba(0,0,0,0.4)] backdrop-blur-[24px] sm:h-[calc(100dvh-2rem)] sm:rounded-[2rem]">
             <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,rgba(255,255,255,0.14),rgba(255,255,255,0.02)_22%,rgba(255,255,255,0)_52%)]" />
 
@@ -126,70 +142,76 @@ export function PitchPageContent() {
       </div>
 
       <section className="relative z-[1] flex min-h-screen items-center justify-center px-4 py-6 sm:px-6 sm:py-10">
-        <div className="relative w-full max-w-[30rem] overflow-hidden rounded-[2rem] border border-white/14 bg-[rgba(11,16,25,0.72)] shadow-[0_34px_100px_rgba(0,0,0,0.4)] backdrop-blur-[28px]">
-          <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,rgba(255,255,255,0.14),rgba(255,255,255,0.04)_26%,rgba(255,255,255,0)_56%)]" />
+        <div className="w-full max-w-[30rem]">
+          <div className="mb-3 flex justify-start sm:mb-4">
+            {backHomeControl}
+          </div>
 
-          <div className="relative px-5 py-6 sm:px-7 sm:py-8">
-            <div className="mx-auto flex w-[10.4rem] max-w-full justify-center sm:w-[11.8rem]">
-              <BrandLogo
-                variant="full"
-                priority
-                className="brightness-[1.92] contrast-[1.08] saturate-[1.04] drop-shadow-[0_14px_30px_rgba(0,0,0,0.24)]"
-              />
-            </div>
+          <div className="relative overflow-hidden rounded-[2rem] border border-white/14 bg-[rgba(11,16,25,0.72)] shadow-[0_34px_100px_rgba(0,0,0,0.4)] backdrop-blur-[28px]">
+            <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,rgba(255,255,255,0.14),rgba(255,255,255,0.04)_26%,rgba(255,255,255,0)_56%)]" />
 
-            <div className="mt-7 space-y-3 text-center sm:mt-8">
-              <p className="text-[0.7rem] font-semibold uppercase tracking-[0.24em] text-white/56">
-                PRIVATE ACCESS
-              </p>
-              <h1 className="font-display text-[clamp(2rem,7vw,3rem)] leading-[0.96] tracking-[-0.055em] text-white">
-                Gain privileged access to the Fau&amp;Land Film investor deck.
-              </h1>
-              <p className="mx-auto max-w-[24rem] text-[0.95rem] leading-7 text-white/68 sm:text-base">
-                Enter your personal passcode to open the full-screen presentation experience.
-              </p>
-            </div>
-
-            <form className="mt-7 space-y-4 sm:mt-8" onSubmit={handleSubmit}>
-              <label className="block">
-                <span className="mb-2.5 block text-[0.7rem] font-semibold uppercase tracking-[0.2em] text-white/54">
-                  PASSWORD
-                </span>
-                <input
-                  ref={inputRef}
-                  type="password"
-                  value={password}
-                  onChange={(event) => {
-                    setPassword(event.target.value);
-                    if (errorMessage) {
-                      setErrorMessage("");
-                    }
-                  }}
-                  placeholder="Enter passcode"
-                  autoComplete="current-password"
-                  className={cn(
-                    "w-full rounded-[1.1rem] border bg-[rgba(255,255,255,0.04)] px-4 py-3.5 text-[0.98rem] font-medium tracking-[-0.02em] text-white outline-none transition placeholder:text-white/28",
-                    errorMessage
-                      ? "border-[#ff7f7f]/58 focus:border-[#ff9a9a]"
-                      : "border-white/12 focus:border-white/26",
-                  )}
+            <div className="relative px-5 py-6 sm:px-7 sm:py-8">
+              <div className="mx-auto flex w-[10.4rem] max-w-full justify-center sm:w-[11.8rem]">
+                <BrandLogo
+                  variant="full"
+                  priority
+                  className="brightness-[1.92] contrast-[1.08] saturate-[1.04] drop-shadow-[0_14px_30px_rgba(0,0,0,0.24)]"
                 />
-              </label>
+              </div>
 
-              {errorMessage ? (
-                <p className="rounded-[1rem] border border-[#ff8a8a]/22 bg-[#ff8a8a]/10 px-3.5 py-2.5 text-sm text-[#ffd4d4]">
-                  {errorMessage}
+              <div className="mt-7 space-y-3 text-center sm:mt-8">
+                <p className="text-[0.7rem] font-semibold uppercase tracking-[0.24em] text-white/56">
+                  PRIVATE ACCESS
                 </p>
-              ) : null}
+                <h1 className="font-display text-[clamp(2rem,7vw,3rem)] leading-[0.96] tracking-[-0.055em] text-white">
+                  Gain privileged access to the Fau&amp;Land Film investor deck.
+                </h1>
+                <p className="mx-auto max-w-[24rem] text-[0.95rem] leading-7 text-white/68 sm:text-base">
+                  Enter your personal passcode to open the full-screen presentation experience.
+                </p>
+              </div>
 
-              <Button
-                type="submit"
-                fullWidth
-                className="justify-center rounded-[1.15rem] bg-[linear-gradient(135deg,#d7b068,#f0cb86)] text-[#111111] shadow-[0_20px_36px_rgba(215,176,104,0.24)] hover:brightness-[1.02]"
-              >
-                Open presentation
-              </Button>
-            </form>
+              <form className="mt-7 space-y-4 sm:mt-8" onSubmit={handleSubmit}>
+                <label className="block">
+                  <span className="mb-2.5 block text-[0.7rem] font-semibold uppercase tracking-[0.2em] text-white/54">
+                    PASSWORD
+                  </span>
+                  <input
+                    ref={inputRef}
+                    type="password"
+                    value={password}
+                    onChange={(event) => {
+                      setPassword(event.target.value);
+                      if (errorMessage) {
+                        setErrorMessage("");
+                      }
+                    }}
+                    placeholder="Enter passcode"
+                    autoComplete="current-password"
+                    className={cn(
+                      "w-full rounded-[1.1rem] border bg-[rgba(255,255,255,0.04)] px-4 py-3.5 text-[0.98rem] font-medium tracking-[-0.02em] text-white outline-none transition placeholder:text-white/28",
+                      errorMessage
+                        ? "border-[#ff7f7f]/58 focus:border-[#ff9a9a]"
+                        : "border-white/12 focus:border-white/26",
+                    )}
+                  />
+                </label>
+
+                {errorMessage ? (
+                  <p className="rounded-[1rem] border border-[#ff8a8a]/22 bg-[#ff8a8a]/10 px-3.5 py-2.5 text-sm text-[#ffd4d4]">
+                    {errorMessage}
+                  </p>
+                ) : null}
+
+                <Button
+                  type="submit"
+                  fullWidth
+                  className="justify-center rounded-[1.15rem] bg-[linear-gradient(135deg,#d7b068,#f0cb86)] text-[#111111] shadow-[0_20px_36px_rgba(215,176,104,0.24)] hover:brightness-[1.02]"
+                >
+                  Open presentation
+                </Button>
+              </form>
+            </div>
           </div>
         </div>
       </section>
