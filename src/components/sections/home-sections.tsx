@@ -112,7 +112,7 @@ export function HeroSection() {
     language === "no"
       ? "Oslo / Reklamefilm / Produksjon"
       : "Oslo / Commercial Film / Production";
-  const secondaryCta = language === "no" ? "Se arbeid" : "View work";
+  const secondaryCta = language === "no" ? "Portefølje" : "Portfolio";
   const heroTitle = resolveLocalizedValue(homeHeroContent.title, language);
   const revealVideoFrame = () => {
     setHasVideoError(false);
@@ -293,7 +293,7 @@ export function HeroSection() {
                 {resolveLocalizedValue(homeHeroContent.ctaLabel, language)}
               </ButtonLink>
               <ButtonLink
-                href="#selected-work"
+                href="/case"
                 variant="secondary"
                 className="hero-cta-secondary w-full sm:w-auto"
               >
