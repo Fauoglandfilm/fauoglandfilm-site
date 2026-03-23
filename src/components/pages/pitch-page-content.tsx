@@ -140,20 +140,20 @@ export function PitchPageContent() {
 
             <div className="mt-7 space-y-3 text-center sm:mt-8">
               <p className="text-[0.7rem] font-semibold uppercase tracking-[0.24em] text-white/56">
-                Private access
+                PRIVATE ACCESS
               </p>
               <h1 className="font-display text-[clamp(2rem,7vw,3rem)] leading-[0.96] tracking-[-0.055em] text-white">
-                Unlock the pitch deck
+                Gain privileged access to the Fau&amp;Land Film investor deck.
               </h1>
               <p className="mx-auto max-w-[24rem] text-[0.95rem] leading-7 text-white/68 sm:text-base">
-                Enter the password to open the embedded Fau&amp;Land Film presentation in a fullscreen-style viewer.
+                Enter your personal passcode to open the full-screen presentation experience.
               </p>
             </div>
 
             <form className="mt-7 space-y-4 sm:mt-8" onSubmit={handleSubmit}>
               <label className="block">
                 <span className="mb-2.5 block text-[0.7rem] font-semibold uppercase tracking-[0.2em] text-white/54">
-                  Password
+                  PASSWORD
                 </span>
                 <input
                   ref={inputRef}
@@ -165,7 +165,7 @@ export function PitchPageContent() {
                       setErrorMessage("");
                     }
                   }}
-                  placeholder="Enter password"
+                  placeholder="Enter passcode"
                   autoComplete="current-password"
                   className={cn(
                     "w-full rounded-[1.1rem] border bg-[rgba(255,255,255,0.04)] px-4 py-3.5 text-[0.98rem] font-medium tracking-[-0.02em] text-white outline-none transition placeholder:text-white/28",
