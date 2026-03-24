@@ -24,6 +24,7 @@ import { cn } from "@/lib/utils";
 
 import { Reveal } from "../motion/reveal";
 import { ButtonLink } from "../ui/button-link";
+import { InteractiveHoverButton } from "../ui/interactive-hover-button";
 import { ArrowUpRightIcon } from "../ui/icons";
 import { ClientLogoMarquee } from "./client-logo-marquee";
 
@@ -286,19 +287,16 @@ export function HeroSection() {
             </div>
 
             <div className="hidden sm:mt-7 sm:flex sm:flex-row sm:gap-3">
-              <ButtonLink
+              <InteractiveHoverButton
                 href={siteConfig.bookingHref}
-                className="hero-cta-primary w-full sm:w-auto"
-              >
-                {resolveLocalizedValue(homeHeroContent.ctaLabel, language)}
-              </ButtonLink>
-              <ButtonLink
+                text={resolveLocalizedValue(homeHeroContent.ctaLabel, language)}
+                className="w-full sm:w-[11.5rem]"
+              />
+              <InteractiveHoverButton
                 href="/case"
-                variant="secondary"
-                className="hero-cta-secondary w-full sm:w-auto"
-              >
-                {secondaryCta}
-              </ButtonLink>
+                text={secondaryCta}
+                className="w-full sm:w-[11.5rem]"
+              />
             </div>
           </div>
         </div>
