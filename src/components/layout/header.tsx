@@ -53,7 +53,13 @@ function SegmentedToggle<T extends string>({
   shellClassName,
 }: SegmentedToggleProps<T>) {
   return (
-    <div className={segmentedControlShellClassName({ className: cn(compact ? "text-[0.76rem]" : undefined, shellClassName) })} role="group" aria-label={ariaLabel}>
+    <div
+      className={segmentedControlShellClassName({
+        className: cn(compact ? "text-[0.76rem]" : undefined, shellClassName, "segmented-toggle-premium"),
+      })}
+      role="group"
+      aria-label={ariaLabel}
+    >
       {options.map((option) => {
         const active = option.value === value;
 
@@ -61,17 +67,30 @@ function SegmentedToggle<T extends string>({
           <button
             key={option.value}
             type="button"
-            className={segmentedControlOptionClassName({ active, compact, iconOnly })}
+            className={cn(
+              segmentedControlOptionClassName({ active, compact, iconOnly }),
+              "segmented-toggle-option group relative isolate overflow-hidden",
+            )}
             onClick={() => onChange(option.value)}
             aria-pressed={active}
             aria-label={option.label ?? option.value}
           >
-            {option.icon ? <span className="flex h-3.5 w-3.5 items-center justify-center">{option.icon}</span> : null}
-            {!iconOnly && option.label ? (
-              <span className="text-[0.62rem] font-semibold uppercase tracking-[0.16em]">
-                {option.label}
-              </span>
+            {active ? (
+              <motion.span
+                layoutId={`segmented-active-${ariaLabel}`}
+                className="segmented-toggle-active-pill absolute inset-0 rounded-full"
+                transition={{ duration: 0.28, ease: [0.22, 1, 0.36, 1] }}
+              />
             ) : null}
+            <span className="segmented-toggle-shimmer absolute inset-0 rounded-full" aria-hidden="true" />
+            <span className="relative z-[2] inline-flex items-center justify-center gap-1.5">
+              {option.icon ? <span className="flex h-3.5 w-3.5 items-center justify-center">{option.icon}</span> : null}
+              {!iconOnly && option.label ? (
+                <span className="text-[0.62rem] font-semibold uppercase tracking-[0.16em]">
+                  {option.label}
+                </span>
+              ) : null}
+            </span>
           </button>
         );
       })}
