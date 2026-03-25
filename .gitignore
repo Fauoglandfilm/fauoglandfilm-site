@@ -28,3 +28,4 @@ public/assets/**/*.webm
 public/assets/_legacy-import/
 public/assets/unmatched/
 public/assets/unverified-downloads/
+.vercel
