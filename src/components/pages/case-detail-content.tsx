@@ -87,19 +87,21 @@ function CaseVideoModal({
       }}
     >
       <div
-        className="card-surface relative flex h-[100svh] max-h-[100svh] w-full max-w-6xl flex-col overflow-hidden rounded-none border-0 bg-[color:var(--surface-strong)] shadow-[0_32px_120px_rgba(0,0,0,0.34)] sm:h-auto sm:max-h-[calc(100svh-2.5rem)] sm:rounded-[2rem] sm:border sm:border-[color:var(--line-strong)]"
+        className="relative flex h-[100svh] w-full items-center justify-center overflow-hidden bg-transparent"
         onClick={(event) => event.stopPropagation()}
       >
         <OverlayCloseButton
           onClick={onClose}
           label={language === "no" ? "Lukk video" : "Close video"}
+          side="right"
+          className="top-[max(env(safe-area-inset-top),0.85rem)] right-[max(env(safe-area-inset-right),0.85rem)] h-12 w-12 sm:top-[max(env(safe-area-inset-top),1rem)] sm:right-[max(env(safe-area-inset-right),1rem)] sm:h-11 sm:w-11"
         />
 
-        <div className="relative flex min-h-0 flex-1 items-center justify-center bg-[#05070b] px-3 pb-4 pt-16 sm:px-6 sm:pb-6 sm:pt-16 lg:px-8 lg:py-8">
+        <div className="relative flex h-full w-full items-center justify-center px-0 pt-16 sm:px-6 sm:pt-16 lg:px-10 lg:pt-10">
           <div className={cn("relative w-full", modalFrameClassName)}>
             <video
               ref={videoRef}
-              className="absolute inset-0 h-full w-full rounded-[1.3rem] bg-[#05070b] object-contain"
+              className="absolute inset-0 h-full w-full bg-[#05070b] object-contain sm:rounded-[1.4rem]"
               src={modalVideoSrc}
               poster={directVideo.poster ?? variant.image}
               controls

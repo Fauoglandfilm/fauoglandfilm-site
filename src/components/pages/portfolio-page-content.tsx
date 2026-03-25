@@ -518,19 +518,21 @@ function PortfolioVideoModal({
       }}
     >
       <div
-        className="card-surface relative flex h-[100svh] max-h-[100svh] w-full max-w-6xl flex-col overflow-hidden rounded-none border-0 bg-[color:var(--surface-strong)] shadow-[0_32px_120px_rgba(0,0,0,0.34)] sm:h-auto sm:max-h-[calc(100svh-2.5rem)] sm:rounded-[2rem] sm:border sm:border-[color:var(--line-strong)]"
+        className="relative flex h-[100svh] w-full items-center justify-center overflow-hidden bg-transparent"
         onClick={(event) => event.stopPropagation()}
       >
         <OverlayCloseButton
           onClick={onClose}
           label={modalLabel}
+          side="right"
+          className="top-[max(env(safe-area-inset-top),0.85rem)] right-[max(env(safe-area-inset-right),0.85rem)] h-12 w-12 sm:top-[max(env(safe-area-inset-top),1rem)] sm:right-[max(env(safe-area-inset-right),1rem)] sm:h-11 sm:w-11"
         />
 
-        <div className="relative flex min-h-0 flex-1 items-center justify-center bg-[#05070b] px-3 pb-4 pt-16 sm:px-5 sm:pb-5 sm:pt-16 lg:px-8 lg:py-8">
+        <div className="relative flex h-full w-full items-center justify-center px-0 pt-16 sm:px-6 sm:pt-16 lg:px-10 lg:pt-10">
           {modalMedia?.kind === "direct" ? (
             <video
               ref={videoRef}
-              className="block max-h-[46svh] w-auto max-w-full rounded-[1.3rem] bg-[#05070b] object-contain sm:max-h-[52svh] lg:max-h-[72svh]"
+              className="block max-h-[calc(100svh-4.75rem)] w-auto max-w-full bg-[#05070b] object-contain sm:max-h-[calc(100svh-6rem)] sm:rounded-[1.4rem] lg:max-h-[88svh]"
               src={modalMedia.src}
               poster={modalMedia.poster}
               controls
@@ -542,7 +544,7 @@ function PortfolioVideoModal({
               disableRemotePlayback
             />
           ) : modalMedia?.kind === "external" ? (
-            <div className="relative aspect-video max-h-[46svh] w-full max-w-[min(100%,48rem)] overflow-hidden rounded-[1.3rem] sm:max-h-[52svh] lg:max-h-none">
+            <div className="relative aspect-video h-auto w-full max-w-[min(100%,78rem)] overflow-hidden bg-[#05070b] sm:max-h-[calc(100svh-6rem)] sm:rounded-[1.4rem]">
               <iframe
                 src={modalMedia.iframeSrc}
                 title={title}
@@ -555,7 +557,7 @@ function PortfolioVideoModal({
           ) : project.image ? (
             <div
               className={cn(
-                "relative max-h-[46svh] w-full max-w-[min(100%,42rem)] overflow-hidden rounded-[1.3rem] sm:max-h-[52svh] lg:max-h-none",
+                "relative w-full max-w-[min(100%,42rem)] overflow-hidden bg-[#05070b] sm:rounded-[1.4rem]",
                 project.mediaFit === "contain" ? "aspect-[4/5]" : "aspect-video",
               )}
             >

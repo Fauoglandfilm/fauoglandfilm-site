@@ -7,11 +7,13 @@ import { cn } from "@/lib/utils";
 
 type OverlayCloseButtonProps = {
   label: string;
+  side?: "left" | "right";
 } & Omit<ButtonHTMLAttributes<HTMLButtonElement>, "aria-label">;
 
 export function OverlayCloseButton({
   label,
   className,
+  side = "left",
   type = "button",
   ...props
 }: OverlayCloseButtonProps) {
@@ -25,7 +27,8 @@ export function OverlayCloseButton({
       )}
       style={{
         top: "max(env(safe-area-inset-top), 16px)",
-        left: "max(env(safe-area-inset-left), 16px)",
+        left: side === "left" ? "max(env(safe-area-inset-left), 16px)" : undefined,
+        right: side === "right" ? "max(env(safe-area-inset-right), 16px)" : undefined,
       }}
       {...props}
     >
