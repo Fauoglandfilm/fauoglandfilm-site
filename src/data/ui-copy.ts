@@ -261,7 +261,7 @@ export const uiCopy = {
       aboutHeroEyebrow: "Om oss",
       aboutHeroTitle: "To seniorer. Hvert prosjekt. Alltid.",
       aboutHeroDescription:
-        "Fau&Land Film er et Oslo-basert produksjonsselskap ledet av Gard og Tommy.",
+        "Fau&Land Film er et produksjonsselskap i Oslo, bygget videre fra arbeid under Sentinel Film rundt 2022 og etablert som Fau&Land fra 2024. Tommy R.A. Garland og Gard Ruben Fauske leder reklamefilm, innhold og skalerbar produksjon tett selv.",
       aboutPrimaryCta: "Snakk med oss om prosjektet",
       aboutCtaTitle: "Trenger dere et lite team med tydelig ansvar?",
       aboutCtaDescription:
@@ -347,7 +347,7 @@ export const uiCopy = {
       aboutHeroEyebrow: "About",
       aboutHeroTitle: "Two senior creatives. Every project. Always.",
       aboutHeroDescription:
-        "Fau&Land Film is an Oslo-based production company led by Gard and Tommy.",
+        "Fau&Land Film is an Oslo-based production company, evolving from earlier work under Sentinel Film around 2022 and operating as Fau&Land from 2024. Tommy R.A. Garland and Gard Ruben Fauske lead commercial film, content and scalable production themselves.",
       aboutPrimaryCta: "Talk to us about the project",
       aboutCtaTitle: "Need a small team with clear ownership?",
       aboutCtaDescription:

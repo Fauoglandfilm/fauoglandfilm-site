@@ -272,9 +272,11 @@ export function AboutPreviewSection({
 export function TeamSection({
   team,
   bullets,
+  compact = false,
 }: {
   team: TeamMember[];
   bullets: Array<MaybeLocalizedText>;
+  compact?: boolean;
 }) {
   const { language } = useSitePreferences();
   const copy = uiCopy.siteSections[language];
@@ -284,20 +286,21 @@ export function TeamSection({
       eyebrow={copy.teamEyebrow}
       title={copy.teamTitle}
       description={copy.teamDescription}
+      className={compact ? "pt-0 pb-8 lg:pb-10" : undefined}
     >
       <div className="team-editorial-grid">
         <FloatingLayer className="team-editorial-rail">
-          <article className="glass-panel h-full rounded-[2rem] p-5 sm:p-6 lg:p-7">
+          <article className={cn("glass-panel h-full rounded-[2rem]", compact ? "p-4 sm:p-5 lg:p-5.5" : "p-5 sm:p-6 lg:p-7")}>
             <p className="text-[0.68rem] font-semibold uppercase tracking-[0.22em] text-[var(--muted)]">
               {language === "no" ? "To ulike styrker" : "Two complementary strengths"}
             </p>
-            <h3 className="feature-title mt-3 max-w-2xl text-[color:var(--foreground)]">
+            <h3 className={cn("mt-3 max-w-2xl text-[color:var(--foreground)]", compact ? "font-display text-[1.65rem] leading-[1.02] tracking-[-0.055em] sm:text-[2rem]" : "feature-title")}>
               {language === "no"
                 ? "Tommy holder produsentsporet tett, mens Gard leder regi, fortelling og klipp."
                 : "Tommy keeps the producing track tight, while Gard leads direction, story and edit."}
             </h3>
 
-            <ul className="mt-6 grid gap-3 text-sm leading-6 text-[var(--muted-2)] sm:text-base">
+            <ul className={cn("grid text-sm leading-6 text-[var(--muted-2)]", compact ? "mt-4 gap-2 sm:text-[0.95rem]" : "mt-6 gap-3 sm:text-base")}>
               {bullets.map((bullet, index) => (
                 <li
                   key={`team-bullet-${index}`}
@@ -317,6 +320,7 @@ export function TeamSection({
                 className={cn(
                   "team-portrait-card group",
                   index === 0 ? "team-portrait-card-primary" : "team-portrait-card-secondary",
+                  compact && "team-portrait-card-compact",
                 )}
               >
                 <Link
@@ -328,7 +332,7 @@ export function TeamSection({
                       : `View more about ${member.name}`
                   }
                 >
-                  <div className="team-portrait-scene">
+                  <div className={cn("team-portrait-scene", compact && "team-portrait-scene-compact")}>
                     {member.image ? (
                       <Image
                         src={member.image}
@@ -343,18 +347,19 @@ export function TeamSection({
                         className={cn(
                           "team-portrait-image",
                           index === 0 ? "team-portrait-image-left" : "team-portrait-image-right",
+                          compact && "team-portrait-image-compact",
                         )}
                       />
                     ) : null}
                   </div>
 
-                  <div className="team-portrait-copy">
+                  <div className={cn("team-portrait-copy", compact && "team-portrait-copy-compact")}>
                     <span className="founder-profile-chip">
                       {resolveLocalizedValue(member.role, language)}
                     </span>
                     <div>
                       <h3 className="card-title text-[color:var(--foreground)]">{member.name}</h3>
-                      <p className="body-copy mt-3 text-[var(--muted-2)]">
+                      <p className={cn("mt-3 text-[var(--muted-2)]", compact ? "text-sm leading-6" : "body-copy")}>
                         {resolveLocalizedValue(member.summary, language)}
                       </p>
                     </div>
@@ -637,6 +642,7 @@ export function PageHero(props: {
   secondaryCta?: { label: MaybeLocalizedText; href: string };
   video?: CaseStudy["video"];
   visualKey?: string;
+  compact?: boolean;
 }) {
   const {
     eyebrow,
@@ -644,25 +650,26 @@ export function PageHero(props: {
     description,
     primaryCta,
     secondaryCta,
+    compact = false,
   } = props;
   const { language } = useSitePreferences();
 
   return (
-    <section className="bg-[#111111] pt-20 text-white sm:pt-28">
+    <section className={cn("bg-[#111111] text-white", compact ? "pt-16 sm:pt-20" : "pt-20 sm:pt-28")}>
       <div className="site-container">
-        <Reveal className="w-full py-10 sm:py-14 lg:py-16" delay={0.04} y={18}>
-          <div className="max-w-[44rem]">
+        <Reveal className={cn("w-full", compact ? "py-7 sm:py-9 lg:py-8" : "py-10 sm:py-14 lg:py-16")} delay={0.04} y={18}>
+          <div className={cn(compact ? "max-w-[52rem]" : "max-w-[44rem]")}>
             <span className="hero-badge text-white/62">
               {resolveLocalizedValue(eyebrow, language)}
             </span>
-            <h1 className="page-title mt-3 max-w-[13ch] text-white">
+            <h1 className={cn("mt-3 text-white", compact ? "max-w-[10ch] font-display text-[2.85rem] leading-[0.92] tracking-[-0.065em] sm:text-[3.5rem] lg:text-[4.25rem]" : "page-title max-w-[13ch]")}>
               {resolveLocalizedValue(title, language)}
             </h1>
-            <p className="body-copy mt-3.5 max-w-2xl text-white/76 sm:mt-4 sm:text-base sm:leading-7">
+            <p className={cn("mt-3.5 text-white/76", compact ? "max-w-[48rem] text-sm leading-6 sm:mt-3 sm:text-[0.98rem] sm:leading-6" : "body-copy max-w-2xl sm:mt-4 sm:text-base sm:leading-7")}>
               {resolveLocalizedValue(description, language)}
             </p>
             {primaryCta || secondaryCta ? (
-              <div className="mt-5 flex flex-col gap-2.5 sm:mt-6 sm:flex-row sm:flex-wrap sm:gap-3">
+              <div className={cn("flex flex-col gap-2.5 sm:flex-row sm:flex-wrap sm:gap-3", compact ? "mt-4 sm:mt-5" : "mt-5 sm:mt-6")}>
                 {primaryCta ? (
                   <ButtonLink href={primaryCta.href} className="w-full sm:w-auto">
                     {resolveLocalizedValue(primaryCta.label, language)}
