@@ -1991,9 +1991,8 @@ summary::-webkit-details-marker {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    gap: 0.55rem;
+    gap: 0.5rem;
     white-space: nowrap;
-    padding-inline-start: 0.1rem;
     transform: translateX(0);
     transition:
       transform 300ms ease,
@@ -2045,6 +2044,7 @@ summary::-webkit-details-marker {
     border-radius: 999px;
     background: var(--button-orb-bg);
     box-shadow: 0 0 28px color-mix(in srgb, var(--button-orb-bg) 42%, transparent);
+    opacity: 0;
     transform: translateY(-50%);
     transition:
       left 300ms ease,
@@ -2052,6 +2052,7 @@ summary::-webkit-details-marker {
       width 300ms ease,
       height 300ms ease,
       transform 300ms ease,
+      opacity 300ms ease,
       background-color 300ms ease;
   }
 
@@ -2073,6 +2074,7 @@ summary::-webkit-details-marker {
     top: 0;
     height: 100%;
     width: 100%;
+    opacity: 1;
     transform: scale(1.8);
   }
 
