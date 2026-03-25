@@ -1034,21 +1034,35 @@ summary::-webkit-details-marker {
     position: relative;
     gap: 0.18rem;
     padding: 0.18rem;
-    border-color: rgba(255, 255, 255, 0.12);
-    background: #111111;
+    border-color: color-mix(in srgb, var(--glass-border) 92%, transparent);
+    background:
+      linear-gradient(
+        180deg,
+        color-mix(in srgb, var(--glass-tint-top) 28%, transparent),
+        color-mix(in srgb, var(--glass-tint-bottom) 18%, transparent)
+      );
     box-shadow:
-      0 18px 44px rgba(0, 0, 0, 0.22),
-      inset 0 1px 0 rgba(255, 255, 255, 0.08);
+      0 20px 48px color-mix(in srgb, var(--glass-shadow-deep) 34%, transparent),
+      0 8px 22px color-mix(in srgb, var(--glass-shadow-soft) 44%, transparent),
+      inset 0 1px 0 color-mix(in srgb, var(--glass-top-highlight) 88%, transparent),
+      inset 0 14px 26px color-mix(in srgb, var(--glass-inner-top) 34%, transparent);
     backdrop-filter: blur(18px) saturate(165%);
     -webkit-backdrop-filter: blur(18px) saturate(165%);
   }
 
   html[data-theme="light"] .segmented-toggle-premium {
-    border-color: rgba(17, 17, 17, 0.92);
-    background: #111111;
+    border-color: color-mix(in srgb, var(--glass-border) 88%, transparent);
+    background:
+      linear-gradient(
+        180deg,
+        color-mix(in srgb, #ffffff 74%, transparent),
+        color-mix(in srgb, #f3efe7 58%, transparent)
+      );
     box-shadow:
-      0 16px 34px rgba(0, 0, 0, 0.18),
-      inset 0 1px 0 rgba(255, 255, 255, 0.08);
+      0 18px 38px rgba(17, 17, 17, 0.12),
+      0 8px 20px rgba(17, 17, 17, 0.08),
+      inset 0 1px 0 rgba(255, 255, 255, 0.74),
+      inset 0 14px 24px rgba(255, 255, 255, 0.32);
   }
 
   .segmented-toggle-option {
@@ -1070,16 +1084,25 @@ summary::-webkit-details-marker {
   }
 
   .segmented-toggle-active-pill {
-    background: #1d1d1d;
+    background:
+      linear-gradient(
+        180deg,
+        color-mix(in srgb, var(--glass-tint-top) 46%, transparent),
+        color-mix(in srgb, var(--glass-tint-bottom) 30%, transparent)
+      );
     box-shadow:
-      0 12px 24px rgba(0, 0, 0, 0.24),
-      inset 0 1px 0 rgba(255, 255, 255, 0.08);
+      0 12px 28px color-mix(in srgb, var(--glass-shadow-deep) 26%, transparent),
+      inset 0 1px 0 color-mix(in srgb, var(--glass-top-highlight) 92%, transparent),
+      inset 0 12px 22px color-mix(in srgb, var(--glass-inner-top) 30%, transparent),
+      0 0 0 1px color-mix(in srgb, var(--glass-border-soft) 86%, transparent);
   }
 
   html[data-theme="light"] .segmented-toggle-active-pill {
     box-shadow:
-      0 12px 24px rgba(0, 0, 0, 0.18),
-      inset 0 1px 0 rgba(255, 255, 255, 0.08);
+      0 12px 24px rgba(17, 17, 17, 0.12),
+      inset 0 1px 0 rgba(255, 255, 255, 0.82),
+      inset 0 12px 20px rgba(255, 255, 255, 0.28),
+      0 0 0 1px rgba(17, 17, 17, 0.06);
   }
 
   .segmented-toggle-shimmer {
@@ -1939,7 +1962,12 @@ summary::-webkit-details-marker {
     --button-bg-current: transparent;
     --button-border-current: transparent;
     --button-text-current: var(--foreground);
+    --button-hover-overlay-text: #111111;
+    --button-orb-bg: #d2ad74;
     display: inline-flex;
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
     align-items: center;
     justify-content: center;
     border-radius: 999px;
@@ -1956,13 +1984,16 @@ summary::-webkit-details-marker {
     text-align: center;
     white-space: normal;
     -webkit-tap-highlight-color: transparent;
+    box-shadow:
+      0 18px 40px rgba(0, 0, 0, 0.16),
+      inset 0 1px 0 rgba(255, 255, 255, 0.08);
     transition:
-      transform 200ms ease,
-      background-color 200ms ease,
-      border-color 200ms ease,
-      color 200ms ease,
-      box-shadow 200ms ease,
-      backdrop-filter 200ms ease;
+      transform 220ms ease,
+      background-color 220ms ease,
+      border-color 220ms ease,
+      color 220ms ease,
+      box-shadow 220ms ease,
+      backdrop-filter 220ms ease;
   }
 
   .button-base > span,
@@ -1971,15 +2002,94 @@ summary::-webkit-details-marker {
     -webkit-text-fill-color: var(--button-text-current) !important;
   }
 
+  .button-label-base {
+    position: relative;
+    z-index: 2;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    white-space: nowrap;
+    transform: translateX(0.24rem);
+    transition:
+      transform 300ms ease,
+      opacity 300ms ease;
+  }
+
+  .button-label-hover {
+    position: absolute;
+    inset: 0;
+    z-index: 3;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    white-space: nowrap;
+    color: var(--button-hover-overlay-text) !important;
+    -webkit-text-fill-color: var(--button-hover-overlay-text) !important;
+    opacity: 0;
+    transform: translateX(3rem);
+    transition:
+      transform 300ms ease,
+      opacity 300ms ease;
+    pointer-events: none;
+  }
+
+  .button-label-hover > span,
+  .button-label-hover svg {
+    color: var(--button-hover-overlay-text) !important;
+    -webkit-text-fill-color: var(--button-hover-overlay-text) !important;
+  }
+
+  .button-hover-orb {
+    position: absolute;
+    left: 20%;
+    top: 40%;
+    z-index: 1;
+    height: 0.55rem;
+    width: 0.55rem;
+    border-radius: 999px;
+    background: var(--button-orb-bg);
+    box-shadow: 0 0 28px color-mix(in srgb, var(--button-orb-bg) 42%, transparent);
+    transition:
+      left 300ms ease,
+      top 300ms ease,
+      width 300ms ease,
+      height 300ms ease,
+      transform 300ms ease,
+      background-color 300ms ease;
+  }
+
+  .button-base:hover .button-label-base,
+  .button-base:focus-visible .button-label-base {
+    transform: translateX(3rem);
+    opacity: 0;
+  }
+
+  .button-base:hover .button-label-hover,
+  .button-base:focus-visible .button-label-hover {
+    transform: translateX(0);
+    opacity: 1;
+  }
+
+  .button-base:hover .button-hover-orb,
+  .button-base:focus-visible .button-hover-orb {
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: 100%;
+    transform: scale(1.8);
+  }
+
   .button-base:hover {
-    transform: translateY(-2px);
+    transform: translateY(-3px);
     box-shadow:
-      0 18px 42px rgba(6, 6, 6, 0.2),
-      0 0 0 1px color-mix(in srgb, var(--accent) 14%, transparent);
+      0 24px 52px rgba(6, 6, 6, 0.22),
+      0 0 0 1px color-mix(in srgb, var(--button-border-current) 64%, transparent),
+      inset 0 1px 0 rgba(255, 255, 255, 0.12);
   }
 
   .button-base:active {
-    transform: translateY(0);
+    transform: translateY(-1px);
   }
 
   .button-base:focus-visible {
@@ -2020,6 +2130,7 @@ summary::-webkit-details-marker {
     --button-bg-current: var(--btn-primary-bg);
     --button-border-current: var(--btn-primary-border);
     --button-text-current: var(--btn-primary-text);
+    background-image: linear-gradient(180deg, rgba(255, 255, 255, 0.14), rgba(255, 255, 255, 0.04));
     backdrop-filter: blur(20px) saturate(165%);
     box-shadow:
       0 18px 38px rgba(0, 0, 0, 0.18),
@@ -2057,6 +2168,7 @@ summary::-webkit-details-marker {
     --button-bg-current: var(--btn-secondary-bg);
     --button-border-current: var(--btn-secondary-border);
     --button-text-current: var(--btn-secondary-text);
+    background-image: linear-gradient(180deg, rgba(255, 255, 255, 0.12), rgba(255, 255, 255, 0.03));
     backdrop-filter: blur(18px) saturate(165%);
     box-shadow:
       0 18px 38px rgba(0, 0, 0, 0.18),
@@ -2094,7 +2206,11 @@ summary::-webkit-details-marker {
     --button-bg-current: var(--btn-ghost-bg);
     --button-border-current: var(--btn-ghost-border);
     --button-text-current: var(--btn-ghost-text);
+    background-image: linear-gradient(180deg, rgba(255, 255, 255, 0.12), rgba(255, 255, 255, 0.03));
     backdrop-filter: blur(16px) saturate(150%);
+    box-shadow:
+      0 16px 34px rgba(0, 0, 0, 0.12),
+      inset 0 1px 0 rgba(255, 255, 255, 0.08);
   }
 
   .button-ghost:hover,
