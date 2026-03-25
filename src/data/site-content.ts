@@ -926,25 +926,24 @@ export const caseStudies: CaseStudy[] = [
       en: "Fitness centre",
     },
     summary: {
-      no: "Filmproduksjon for annonser og sosiale medier, bygget for å få flere til å melde seg inn hos Treningshuset.",
-      en: "Film production for ads and social media, built to turn attention into more memberships for Treningshuset.",
+      no: "Tre korte filmer for annonser og sosiale medier, laget for å drive flere innmeldinger.",
+      en: "Three short films for ads and social media, built to drive more memberships.",
     },
     goal: {
-      no: "Treningshuset trengte flere tydelige portrettfilmer som kunne brukes direkte i annonser og sosiale medier uten ekstra tilpasning.",
-      en: "Treningshuset needed multiple clear portrait-led films that could be used directly in ads and social placements without extra adaptation.",
+      no: "Tre korte filmer klare for annonser og sosiale medier fra dag en.",
+      en: "Three short films ready for ads and social from day one.",
     },
     solution: {
-      no: "Vi bygget en portrettbasert serie med tre tydelige uttak som holder tempoet oppe i feeden og fungerer direkte i mobilannonser og sosiale formater.",
-      en: "We built a portrait-led set of three focused cutdowns that keep the pace up in-feed and work directly across mobile ads and social formats.",
+      no: "Portrettfilmer med rask pacing, tydelig budskap og format tilpasset mobil og feed.",
+      en: "Portrait films with fast pacing, clear messaging and formats tailored for mobile and in-feed use.",
     },
     deliverables: [
-      { no: "3 portrettfilmer for annonser og sosiale medier", en: "3 portrait films for ads and social media" },
-      { no: "9:16 og 4:5 uttak til mobilflater", en: "9:16 and 4:5 cutdowns for mobile placements" },
-      { no: "Budskap tilpasset ulike kampanjevinkler", en: "Messaging adapted to different campaign angles" },
+      { no: "3 korte filmer for annonser og sosiale medier", en: "3 short films for ads and social media" },
+      { no: "9:16 og 4:5 klare til bruk", en: "9:16 and 4:5 assets ready to launch" },
     ],
     impact: {
-      no: "Ga Treningshuset tre tydelige annonsefilmer som kan brukes direkte i mobilflater for å drive flere innmeldinger.",
-      en: "Gave Treningshuset three clear ad films that can be used directly in mobile placements to drive more memberships.",
+      no: "Ga Treningshuset tre tydelige filmer som gjør det raskt å teste budskap og drive innmeldinger.",
+      en: "Gave Treningshuset three clear films that make it faster to test messaging and drive memberships.",
     },
     metrics: [
       { value: "3", label: { no: "filmer", en: "films" } },
@@ -977,8 +976,8 @@ export const caseStudies: CaseStudy[] = [
       {
         slug: "velkommen-sindre",
         label: {
-          no: "Velkommen Sindre",
-          en: "Welcome Sindre",
+          no: "Film 1",
+          en: "Film 1",
         },
         image: "/assets/portfolio/treningshuset/posters/treningshuset-velkommen-sindre-poster.png",
         imageAlt: {
@@ -993,16 +992,16 @@ export const caseStudies: CaseStudy[] = [
           fullSrc: "/assets/portfolio/treningshuset/videos/portrait/treningshuset-velkommen-sindre-full.mp4",
           poster: "/assets/portfolio/treningshuset/posters/treningshuset-velkommen-sindre-poster.png",
           label: {
-            no: "Treningshuset - Velkommen Sindre",
-            en: "Treningshuset - Welcome Sindre",
+            no: "Film 1",
+            en: "Film 1",
           },
         },
       },
       {
         slug: "musikk-1",
         label: {
-          no: "Musikk 1",
-          en: "Music 1",
+          no: "Film 2",
+          en: "Film 2",
         },
         image: "/assets/portfolio/treningshuset/posters/treningshuset-musikk-1-poster.png",
         imageAlt: {
@@ -1017,16 +1016,16 @@ export const caseStudies: CaseStudy[] = [
           fullSrc: "/assets/portfolio/treningshuset/videos/portrait/treningshuset-musikk-1-full.mp4",
           poster: "/assets/portfolio/treningshuset/posters/treningshuset-musikk-1-poster.png",
           label: {
-            no: "Treningshuset - Musikk 1",
-            en: "Treningshuset - Music 1",
+            no: "Film 2",
+            en: "Film 2",
           },
         },
       },
       {
         slug: "musikk-2-45",
         label: {
-          no: "Musikk 2",
-          en: "Music 2",
+          no: "Film 3",
+          en: "Film 3",
         },
         image: "/assets/portfolio/treningshuset/posters/treningshuset-musikk-2-45-poster.png",
         imageAlt: {
@@ -1041,8 +1040,8 @@ export const caseStudies: CaseStudy[] = [
           fullSrc: "/assets/portfolio/treningshuset/videos/portrait/treningshuset-musikk-2-45-full.mp4",
           poster: "/assets/portfolio/treningshuset/posters/treningshuset-musikk-2-45-poster.png",
           label: {
-            no: "Treningshuset - Musikk 2",
-            en: "Treningshuset - Music 2",
+            no: "Film 3",
+            en: "Film 3",
           },
         },
       },

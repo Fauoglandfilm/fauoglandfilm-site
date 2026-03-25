@@ -316,71 +316,124 @@ export function CaseDetailContent({
                 </div>
               </div>
 
-              <div className="grid gap-5 border-t border-[color:var(--line)]/80 pt-6 sm:grid-cols-3">
-                <div className="space-y-2">
-                  <p className="text-[0.7rem] font-semibold uppercase tracking-[0.18em] text-[var(--muted)]">
-                    {copy.caseGoalEyebrow}
-                  </p>
-                  <p className="text-sm leading-6 text-[var(--muted-2)] sm:text-base sm:leading-7">
-                    {resolveLocalizedValue(caseStudy.goal, language)}
-                  </p>
-                </div>
-
-                <div className="space-y-2">
-                  <p className="text-[0.7rem] font-semibold uppercase tracking-[0.18em] text-[var(--muted)]">
-                    {copy.caseDeliverables}
-                  </p>
-                  <p className="text-sm leading-6 text-[var(--muted-2)] sm:text-base sm:leading-7">
-                    {localizedDeliverables.join(", ")}
-                  </p>
-                </div>
-
-                <div className="space-y-2">
-                  <p className="text-[0.7rem] font-semibold uppercase tracking-[0.18em] text-[var(--muted)]">
-                    {copy.caseImpact}
-                  </p>
-                  <p className="text-sm leading-6 text-[var(--muted-2)] sm:text-base sm:leading-7">
-                    {resolveLocalizedValue(caseStudy.impact, language)}
-                  </p>
-                </div>
-              </div>
-
-              <div className="grid gap-6 border-t border-[color:var(--line)]/80 pt-6 lg:grid-cols-[minmax(0,1.08fr)_minmax(17rem,0.92fr)]">
-                <div className="space-y-3">
-                  <p className="text-[0.72rem] font-semibold uppercase tracking-[0.22em] text-[var(--muted)]">
-                    {copy.caseSolutionEyebrow}
-                  </p>
-                  <p className="text-sm leading-6 text-[var(--muted-2)] sm:text-base sm:leading-7">
-                    {resolveLocalizedValue(caseStudy.solution, language)}
-                  </p>
-
-                  {localizedTags.length ? (
-                    <p className="text-sm leading-6 text-[var(--muted)] sm:text-[0.97rem] sm:leading-7">
-                      {localizedTags.join(" • ")}
+              {isTreningshuset ? (
+                <div className="grid gap-4 border-t border-[color:var(--line)]/80 pt-6 md:grid-cols-2">
+                  <div className="rounded-[1.35rem] border border-[color:var(--line)] bg-[color:var(--surface)]/78 px-4 py-4">
+                    <p className="text-[0.72rem] font-semibold uppercase tracking-[0.22em] text-[var(--muted)]">
+                      {language === "no" ? "Leveranse" : "Delivery"}
                     </p>
+                    <p className="mt-3 text-sm leading-6 text-[var(--muted-2)] sm:text-base sm:leading-7">
+                      {localizedDeliverables.join(", ")}
+                    </p>
+                  </div>
+
+                  <div className="rounded-[1.35rem] border border-[color:var(--line)] bg-[color:var(--surface)]/78 px-4 py-4">
+                    <p className="text-[0.72rem] font-semibold uppercase tracking-[0.22em] text-[var(--muted)]">
+                      {language === "no" ? "Effekt" : "Impact"}
+                    </p>
+                    <p className="mt-3 text-sm leading-6 text-[var(--muted-2)] sm:text-base sm:leading-7">
+                      {resolveLocalizedValue(caseStudy.impact, language)}
+                    </p>
+                  </div>
+
+                  <div className="rounded-[1.35rem] border border-[color:var(--line)] bg-[color:var(--surface)]/78 px-4 py-4">
+                    <p className="text-[0.72rem] font-semibold uppercase tracking-[0.22em] text-[var(--muted)]">
+                      {language === "no" ? "Løsning" : "Solution"}
+                    </p>
+                    <p className="mt-3 text-sm leading-6 text-[var(--muted-2)] sm:text-base sm:leading-7">
+                      {resolveLocalizedValue(caseStudy.solution, language)}
+                    </p>
+                  </div>
+
+                  {caseStudy.metrics.length ? (
+                    <div className="rounded-[1.35rem] border border-[color:var(--line)] bg-[color:var(--surface)]/78 px-4 py-4">
+                      <p className="text-[0.72rem] font-semibold uppercase tracking-[0.22em] text-[var(--muted)]">
+                        {language === "no" ? "Nøkkeltall" : "Key figures"}
+                      </p>
+                      <div className="mt-3 grid gap-3 sm:grid-cols-3 md:grid-cols-1">
+                        {caseStudy.metrics.map((metric, index) => (
+                          <div key={`${metric.value}-${index}`} className="flex items-baseline justify-between gap-3 border-b border-[color:var(--line)]/70 pb-2 last:border-b-0 last:pb-0">
+                            <p className="text-[0.72rem] font-semibold uppercase tracking-[0.18em] text-[var(--muted)]">
+                              {resolveLocalizedValue(metric.label, language)}
+                            </p>
+                            <p className="font-display text-[1.4rem] leading-none text-[color:var(--foreground)] sm:text-[1.6rem]">
+                              {metric.value}
+                            </p>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
                   ) : null}
                 </div>
+              ) : (
+                <>
+                  <div className="grid gap-5 border-t border-[color:var(--line)]/80 pt-6 sm:grid-cols-3">
+                    <div className="space-y-2">
+                      <p className="text-[0.7rem] font-semibold uppercase tracking-[0.18em] text-[var(--muted)]">
+                        {copy.caseGoalEyebrow}
+                      </p>
+                      <p className="text-sm leading-6 text-[var(--muted-2)] sm:text-base sm:leading-7">
+                        {resolveLocalizedValue(caseStudy.goal, language)}
+                      </p>
+                    </div>
 
-                {caseStudy.metrics.length ? (
-                  <div className="rounded-[1.5rem] border border-[color:var(--line)] bg-[color:var(--surface)]/78 px-4 py-4 sm:px-5 sm:py-5">
-                    <p className="text-[0.72rem] font-semibold uppercase tracking-[0.22em] text-[var(--muted)]">
-                      {language === "no" ? "Nøkkeltall" : "Key figures"}
-                    </p>
-                    <div className="mt-4 grid gap-4 sm:grid-cols-3 lg:grid-cols-1">
-                      {caseStudy.metrics.map((metric, index) => (
-                        <div key={`${metric.value}-${index}`} className="space-y-2">
-                          <p className="text-[0.7rem] font-semibold uppercase tracking-[0.18em] text-[var(--muted)]">
-                            {resolveLocalizedValue(metric.label, language)}
-                          </p>
-                          <p className="font-display text-[1.7rem] leading-none text-[color:var(--foreground)] sm:text-[2rem]">
-                            {metric.value}
-                          </p>
-                        </div>
-                      ))}
+                    <div className="space-y-2">
+                      <p className="text-[0.7rem] font-semibold uppercase tracking-[0.18em] text-[var(--muted)]">
+                        {copy.caseDeliverables}
+                      </p>
+                      <p className="text-sm leading-6 text-[var(--muted-2)] sm:text-base sm:leading-7">
+                        {localizedDeliverables.join(", ")}
+                      </p>
+                    </div>
+
+                    <div className="space-y-2">
+                      <p className="text-[0.7rem] font-semibold uppercase tracking-[0.18em] text-[var(--muted)]">
+                        {copy.caseImpact}
+                      </p>
+                      <p className="text-sm leading-6 text-[var(--muted-2)] sm:text-base sm:leading-7">
+                        {resolveLocalizedValue(caseStudy.impact, language)}
+                      </p>
                     </div>
                   </div>
-                ) : null}
-              </div>
+
+                  <div className="grid gap-6 border-t border-[color:var(--line)]/80 pt-6 lg:grid-cols-[minmax(0,1.08fr)_minmax(17rem,0.92fr)]">
+                    <div className="space-y-3">
+                      <p className="text-[0.72rem] font-semibold uppercase tracking-[0.22em] text-[var(--muted)]">
+                        {copy.caseSolutionEyebrow}
+                      </p>
+                      <p className="text-sm leading-6 text-[var(--muted-2)] sm:text-base sm:leading-7">
+                        {resolveLocalizedValue(caseStudy.solution, language)}
+                      </p>
+
+                      {localizedTags.length ? (
+                        <p className="text-sm leading-6 text-[var(--muted)] sm:text-[0.97rem] sm:leading-7">
+                          {localizedTags.join(" • ")}
+                        </p>
+                      ) : null}
+                    </div>
+
+                    {caseStudy.metrics.length ? (
+                      <div className="rounded-[1.5rem] border border-[color:var(--line)] bg-[color:var(--surface)]/78 px-4 py-4 sm:px-5 sm:py-5">
+                        <p className="text-[0.72rem] font-semibold uppercase tracking-[0.22em] text-[var(--muted)]">
+                          {language === "no" ? "Nøkkeltall" : "Key figures"}
+                        </p>
+                        <div className="mt-4 grid gap-4 sm:grid-cols-3 lg:grid-cols-1">
+                          {caseStudy.metrics.map((metric, index) => (
+                            <div key={`${metric.value}-${index}`} className="space-y-2">
+                              <p className="text-[0.7rem] font-semibold uppercase tracking-[0.18em] text-[var(--muted)]">
+                                {resolveLocalizedValue(metric.label, language)}
+                              </p>
+                              <p className="font-display text-[1.7rem] leading-none text-[color:var(--foreground)] sm:text-[2rem]">
+                                {metric.value}
+                              </p>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    ) : null}
+                  </div>
+                </>
+              )}
 
               <div
                 className={cn(
