@@ -25,7 +25,7 @@ export function ButtonLink({
       children
     ) : children ? (
       <>
-        <span className="button-label-base">{children}</span>
+        <span className="button-label-base"><span className="button-label-dot" aria-hidden="true" /><span>{children}</span></span>
         <span className="button-label-hover" aria-hidden="true">
           <span>{children}</span>
           <ArrowRight className="h-4 w-4 shrink-0" />

@@ -1991,11 +1991,23 @@ summary::-webkit-details-marker {
     display: inline-flex;
     align-items: center;
     justify-content: center;
+    gap: 0.55rem;
     white-space: nowrap;
-    transform: translateX(0.24rem);
+    padding-inline-start: 0.1rem;
+    transform: translateX(0);
     transition:
       transform 300ms ease,
       opacity 300ms ease;
+  }
+
+  .button-label-dot {
+    display: inline-flex;
+    height: 0.5rem;
+    width: 0.5rem;
+    flex: 0 0 auto;
+    border-radius: 999px;
+    background: #d2ad74;
+    box-shadow: 0 0 18px rgba(210, 173, 116, 0.32);
   }
 
   .button-label-hover {
@@ -2025,14 +2037,15 @@ summary::-webkit-details-marker {
 
   .button-hover-orb {
     position: absolute;
-    left: 20%;
-    top: 40%;
+    left: 1rem;
+    top: 50%;
     z-index: 1;
     height: 0.55rem;
     width: 0.55rem;
     border-radius: 999px;
     background: var(--button-orb-bg);
     box-shadow: 0 0 28px color-mix(in srgb, var(--button-orb-bg) 42%, transparent);
+    transform: translateY(-50%);
     transition:
       left 300ms ease,
       top 300ms ease,
