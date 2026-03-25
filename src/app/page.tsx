@@ -1,12 +1,8 @@
 import {
-  ClientSlider,
   ClosingCtaSection,
   HeroSection,
-  ResultsSection,
   SelectedWorkSection,
-  ServicesSection,
   WhyUsProofSection,
-  WhyChooseUsSection,
 } from "@/components/sections/home-sections";
 import { caseStudies, siteConfig } from "@/data/site-content";
 import { buildMetadata } from "@/lib/seo";
@@ -25,12 +21,8 @@ export default function HomePage() {
   return (
     <main>
       <HeroSection />
-      <ClientSlider />
-      <SelectedWorkSection items={homepageCaseStudies} />
-      <ResultsSection />
       <WhyUsProofSection />
-      <WhyChooseUsSection />
-      <ServicesSection />
+      <SelectedWorkSection items={homepageCaseStudies} />
       <ClosingCtaSection />
     </main>
   );
