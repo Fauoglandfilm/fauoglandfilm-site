@@ -940,7 +940,7 @@ export const caseStudies: CaseStudy[] = [
       en: "Portrait films with fast pacing, clear messaging and formats tailored for mobile and in-feed use.",
     },
     deliverables: [
-      { no: "3 korte filmer for annonser og sosiale medier", en: "3 short films for ads and social media" },
+      { no: "10 filmer levert for annonser og sosiale medier", en: "10 films delivered for ads and social media" },
       { no: "9:16 og 4:5 klare til bruk", en: "9:16 and 4:5 assets ready to launch" },
     ],
     impact: {
@@ -948,7 +948,7 @@ export const caseStudies: CaseStudy[] = [
       en: "Gave Treningshuset three clear films that make it faster to test messaging and drive memberships.",
     },
     metrics: [
-      { value: "3", label: { no: "filmer", en: "films" } },
+      { value: "10", label: { no: "filmer", en: "films" } },
       { value: "2", label: { no: "portrettformater", en: "portrait formats" } },
       { value: "Annonser + SoMe", label: { no: "bruk", en: "use" } },
     ],
