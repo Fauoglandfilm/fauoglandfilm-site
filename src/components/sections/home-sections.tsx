@@ -105,9 +105,11 @@ function HeroTypewriterTitle({
 export function HeroSection() {
   const heroVideo = videoLibrary.hero;
   const { language } = useSitePreferences();
+  const shouldReduceMotion = useReducedMotion();
   const videoRef = useRef<HTMLVideoElement | null>(null);
   const [hasVideoError, setHasVideoError] = useState(false);
   const [isPosterVisible, setIsPosterVisible] = useState(true);
+  const [shouldRenderHeroVideo, setShouldRenderHeroVideo] = useState(false);
 
   const eyebrow =
     language === "no"
@@ -121,6 +123,41 @@ export function HeroSection() {
   };
 
   useEffect(() => {
+    if (shouldRenderHeroVideo) {
+      return;
+    }
+
+    const viewport = window.matchMedia("(max-width: 767px)");
+    const connection = (navigator as Navigator & {
+      connection?: {
+        saveData?: boolean;
+        effectiveType?: string;
+      };
+    }).connection;
+    const shouldSkipHeroVideo =
+      viewport.matches ||
+      shouldReduceMotion ||
+      connection?.saveData === true ||
+      (typeof connection?.effectiveType === "string" && /^(slow-2g|2g|3g)$/i.test(connection.effectiveType));
+
+    if (shouldSkipHeroVideo) {
+      return;
+    }
+
+    const timeoutId = window.setTimeout(() => {
+      setShouldRenderHeroVideo(true);
+    }, 900);
+
+    return () => {
+      window.clearTimeout(timeoutId);
+    };
+  }, [shouldReduceMotion, shouldRenderHeroVideo]);
+
+  useEffect(() => {
+    if (!shouldRenderHeroVideo) {
+      return;
+    }
+
     const node = videoRef.current;
 
     if (!node) {
@@ -137,7 +174,7 @@ export function HeroSection() {
       node.setAttribute("muted", "");
       node.setAttribute("playsinline", "");
       node.setAttribute("webkit-playsinline", "");
-      node.preload = "auto";
+      node.preload = "metadata";
     };
 
     const revealIfReady = () => {
@@ -203,7 +240,7 @@ export function HeroSection() {
       document.removeEventListener("visibilitychange", handleVisibility);
       window.removeEventListener("pageshow", handlePageShow);
     };
-  }, [heroVideo.src]);
+  }, [heroVideo.src, shouldRenderHeroVideo]);
 
   return (
     <section className="relative isolate overflow-hidden bg-[#05070a] text-white">
@@ -223,51 +260,53 @@ export function HeroSection() {
             className="object-cover"
           />
         </div>
-        <video
-          ref={videoRef}
-          className={cn(
-            "pointer-events-none absolute inset-0 z-0 h-full w-full object-cover brightness-[1.16] saturate-[1.02] contrast-[1.01] transition-opacity duration-300 sm:brightness-[1.16] sm:saturate-[1.03] sm:contrast-[1.02]",
-            hasVideoError ? "opacity-0" : "opacity-100",
-          )}
-          src={heroVideo.src}
-          autoPlay
-          muted
-          loop
-          playsInline
-          preload="auto"
-          disablePictureInPicture
-          disableRemotePlayback
-          aria-hidden="true"
-          onLoadedMetadata={(event) => {
-            const node = event.currentTarget;
+        {shouldRenderHeroVideo ? (
+          <video
+            ref={videoRef}
+            className={cn(
+              "pointer-events-none absolute inset-0 z-0 h-full w-full object-cover brightness-[1.16] saturate-[1.02] contrast-[1.01] transition-opacity duration-300 sm:brightness-[1.16] sm:saturate-[1.03] sm:contrast-[1.02]",
+              hasVideoError ? "opacity-0" : "opacity-100",
+            )}
+            src={heroVideo.src}
+            autoPlay
+            muted
+            loop
+            playsInline
+            preload="metadata"
+            disablePictureInPicture
+            disableRemotePlayback
+            aria-hidden="true"
+            onLoadedMetadata={(event) => {
+              const node = event.currentTarget;
 
-            node.defaultMuted = true;
-            node.muted = true;
-            node.playsInline = true;
-            node.setAttribute("muted", "");
-            node.setAttribute("playsinline", "");
-            node.setAttribute("webkit-playsinline", "");
-            void node.play().catch(() => undefined);
-          }}
-          onLoadedData={() => {
-            setHasVideoError(false);
-          }}
-          onCanPlay={(event) => {
-            void event.currentTarget.play().catch(() => undefined);
-          }}
-          onPlaying={() => {
-            revealVideoFrame();
-          }}
+              node.defaultMuted = true;
+              node.muted = true;
+              node.playsInline = true;
+              node.setAttribute("muted", "");
+              node.setAttribute("playsinline", "");
+              node.setAttribute("webkit-playsinline", "");
+              void node.play().catch(() => undefined);
+            }}
+            onLoadedData={() => {
+              setHasVideoError(false);
+            }}
+            onCanPlay={(event) => {
+              void event.currentTarget.play().catch(() => undefined);
+            }}
+            onPlaying={() => {
+              revealVideoFrame();
+            }}
           onTimeUpdate={(event) => {
             if (event.currentTarget.currentTime > 0) {
               revealVideoFrame();
             }
           }}
-          onError={() => {
-            setHasVideoError(true);
-            setIsPosterVisible(true);
-          }}
-        />
+            onError={() => {
+              setHasVideoError(true);
+              setIsPosterVisible(true);
+            }}
+          />
+        ) : null}
         <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(5,7,10,0.13)_0%,rgba(5,7,10,0.055)_24%,rgba(5,7,10,0.115)_56%,rgba(5,7,10,0.315)_100%)]" />
         <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(5,7,10,0.31)_0%,rgba(5,7,10,0.21)_22%,rgba(5,7,10,0.075)_56%,rgba(5,7,10,0.035)_100%)]" />
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(210,173,116,0.11),transparent_30%),radial-gradient(circle_at_82%_14%,rgba(112,143,216,0.06),transparent_22%)]" />
@@ -1014,11 +1053,13 @@ function HomeCaseCard({
   const metric = caseStudy.metrics[0]
     ? `${caseStudy.metrics[0].value} ${resolveLocalizedValue(caseStudy.metrics[0].label, language)}`
     : resolveLocalizedValue(caseStudy.category, language);
+  const cardRef = useRef<HTMLElement | null>(null);
   const videoRef = useRef<HTMLVideoElement | null>(null);
   const videoRetryTimeoutsRef = useRef<number[]>([]);
   const [hasVideoError, setHasVideoError] = useState(false);
   const [isPosterVisible, setIsPosterVisible] = useState(true);
   const [isMobileViewport, setIsMobileViewport] = useState(false);
+  const [shouldRenderPreviewVideo, setShouldRenderPreviewVideo] = useState(false);
   const previewVideo = caseStudy.video?.videoType === "direct" ? caseStudy.video : null;
   const isTreningshuset = caseStudy.slug === "treningshuset";
   const hasMobilePreview = Boolean(previewVideo?.mobileSrc || previewVideo?.mobilePoster);
@@ -1065,7 +1106,39 @@ function HomeCaseCard({
   }, []);
 
   useEffect(() => {
-    if (!previewVideo || !previewVideoSrc || hasVideoError) {
+    if (!previewVideo || !previewVideoSrc || shouldRenderPreviewVideo) {
+      return;
+    }
+
+    const node = cardRef.current;
+
+    if (!node) {
+      return;
+    }
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries.some((entry) => entry.isIntersecting || entry.intersectionRatio > 0)) {
+          setShouldRenderPreviewVideo(true);
+          observer.disconnect();
+        }
+      },
+      {
+        root: null,
+        rootMargin: "80px 0px",
+        threshold: 0.2,
+      },
+    );
+
+    observer.observe(node);
+
+    return () => {
+      observer.disconnect();
+    };
+  }, [previewVideo, previewVideoSrc, shouldRenderPreviewVideo]);
+
+  useEffect(() => {
+    if (!previewVideo || !previewVideoSrc || hasVideoError || !shouldRenderPreviewVideo) {
       return;
     }
 
@@ -1081,11 +1154,11 @@ function HomeCaseCard({
       node.playsInline = true;
       node.autoplay = true;
       node.loop = true;
-      node.preload = "auto";
+      node.preload = "metadata";
       node.setAttribute("muted", "");
       node.setAttribute("playsinline", "");
       node.setAttribute("webkit-playsinline", "");
-      node.setAttribute("fetchpriority", "high");
+      node.removeAttribute("fetchpriority");
 
       if (shouldPrimeLoad && node.readyState === 0) {
         try {
@@ -1116,12 +1189,13 @@ function HomeCaseCard({
       videoRetryTimeoutsRef.current.forEach((timeoutId) => window.clearTimeout(timeoutId));
       videoRetryTimeoutsRef.current = [];
     };
-  }, [hasVideoError, previewVideo, previewVideoSrc]);
+  }, [hasVideoError, previewVideo, previewVideoSrc, shouldRenderPreviewVideo]);
 
   return (
     <Reveal delay={delay} y={16}>
       <Link href={`/case/${caseStudy.slug}`} className="group block h-full">
         <article
+          ref={cardRef}
           className={cn(
             "relative h-full overflow-hidden rounded-[1.9rem] bg-[#0c1016] text-white shadow-[0_28px_90px_rgba(0,0,0,0.18)]",
             featured ? "min-h-[24rem] sm:min-h-[29rem] lg:min-h-[34rem]" : "min-h-[18rem] sm:min-h-[20rem]",
@@ -1147,42 +1221,43 @@ function HomeCaseCard({
                   />
                 </div>
               ) : null}
-              <video
-                key={`${caseStudy.slug}-${useMobilePreview ? "mobile" : "desktop"}-video`}
-                ref={videoRef}
-                className={cn("absolute inset-0 z-0 h-full w-full transition-opacity duration-300", previewMediaClassName, hasVideoError ? "opacity-0" : "opacity-100")}
-                style={previewMediaStyle}
-                src={previewVideoSrc}
-                autoPlay
-                muted
-                loop
-                playsInline
-                poster={previewVideoPoster}
-                preload="auto"
-                disablePictureInPicture
-                disableRemotePlayback
-                aria-hidden="true"
-                onLoadedMetadata={(event) => {
-                  const node = event.currentTarget;
+              {shouldRenderPreviewVideo ? (
+                <video
+                  key={`${caseStudy.slug}-${useMobilePreview ? "mobile" : "desktop"}-video`}
+                  ref={videoRef}
+                  className={cn("absolute inset-0 z-0 h-full w-full transition-opacity duration-300", previewMediaClassName, hasVideoError ? "opacity-0" : "opacity-100")}
+                  style={previewMediaStyle}
+                  src={previewVideoSrc}
+                  autoPlay
+                  muted
+                  loop
+                  playsInline
+                  poster={previewVideoPoster}
+                  preload="metadata"
+                  disablePictureInPicture
+                  disableRemotePlayback
+                  aria-hidden="true"
+                  onLoadedMetadata={(event) => {
+                    const node = event.currentTarget;
 
-                  node.defaultMuted = true;
-                  node.muted = true;
-                  node.playsInline = true;
-                  node.setAttribute("muted", "");
-                  node.setAttribute("playsinline", "");
-                  node.setAttribute("webkit-playsinline", "");
-                  void node.play().catch(() => undefined);
-                }}
-                onLoadedData={(event) => {
-                  if (event.currentTarget.readyState >= 2) {
-                    setHasVideoError(false);
-                    setIsPosterVisible(false);
-                  }
-                }}
-                onCanPlay={(event) => {
-                  void event.currentTarget.play().catch(() => undefined);
-                }}
-                onPlaying={() => {
+                    node.defaultMuted = true;
+                    node.muted = true;
+                    node.playsInline = true;
+                    node.setAttribute("muted", "");
+                    node.setAttribute("playsinline", "");
+                    node.setAttribute("webkit-playsinline", "");
+                    void node.play().catch(() => undefined);
+                  }}
+                  onLoadedData={(event) => {
+                    if (event.currentTarget.readyState >= 2) {
+                      setHasVideoError(false);
+                      setIsPosterVisible(false);
+                    }
+                  }}
+                  onCanPlay={(event) => {
+                    void event.currentTarget.play().catch(() => undefined);
+                  }}
+                  onPlaying={() => {
                   setHasVideoError(false);
                   setIsPosterVisible(false);
                 }}
@@ -1191,11 +1266,12 @@ function HomeCaseCard({
                     setIsPosterVisible(false);
                   }
                 }}
-                onError={() => {
-                  setHasVideoError(true);
-                  setIsPosterVisible(true);
-                }}
-              />
+                  onError={() => {
+                    setHasVideoError(true);
+                    setIsPosterVisible(true);
+                  }}
+                />
+              ) : null}
             </div>
           ) : (
             <PreviewMedia

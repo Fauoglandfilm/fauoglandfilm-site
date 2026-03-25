@@ -160,13 +160,13 @@ function prepareInlineMutedVideo(node: HTMLVideoElement, prioritizeFetch = false
   node.playsInline = true;
   node.autoplay = true;
   node.loop = true;
-  node.preload = "auto";
+  node.preload = "metadata";
   node.setAttribute("muted", "");
   node.setAttribute("playsinline", "");
   node.setAttribute("webkit-playsinline", "");
 
   if (prioritizeFetch) {
-    node.setAttribute("fetchpriority", "high");
+    node.removeAttribute("fetchpriority");
   }
 }
 
@@ -360,7 +360,7 @@ function ManagedDirectVideo({
           controls={controlsEnabled}
           controlsList="nodownload noplaybackrate nofullscreen"
           playsInline
-          preload={shouldAutoplay ? "auto" : "metadata"}
+          preload="metadata"
           autoPlay={shouldAutoplay}
           muted
           loop
