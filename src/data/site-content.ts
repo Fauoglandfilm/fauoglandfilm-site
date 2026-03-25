@@ -727,7 +727,7 @@ export const caseStudies: CaseStudy[] = [
       en: "A documentary-style information film built as part of a wider membership campaign for Nei til Atomvåpen.",
     },
     goal: {
-      no: "De trengte en film som gjorde saken tydelig, skapte nærhet og senket terskelen for å bli med.",
+      no: "De trengte en film som gjørde saken tydelig, skapte nærhet og senket terskelen for å bli med.",
       en: "They needed a film that made the cause clear, created closeness and lowered the barrier to getting involved.",
     },
     solution: {
@@ -944,8 +944,8 @@ export const caseStudies: CaseStudy[] = [
       { no: "9:16 og 4:5 klare til bruk", en: "9:16 and 4:5 assets ready to launch" },
     ],
     impact: {
-      no: "Ga Treningshuset tre tydelige filmer som gjør det raskt å teste budskap og drive innmeldinger.",
-      en: "Gave Treningshuset three clear films that make it faster to test messaging and drive memberships.",
+      no: "Ga Treningshuset 10 tydelige filmer som gjør det raskt å teste budskap og drive innmeldinger.",
+      en: "Gave Treningshuset ten clear films that make it faster to test messaging and drive memberships.",
     },
     metrics: [
       { value: "10", label: { no: "filmer", en: "films" } },
