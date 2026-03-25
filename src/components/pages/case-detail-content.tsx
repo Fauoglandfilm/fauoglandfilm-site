@@ -9,7 +9,7 @@ import { useSitePreferences } from "@/components/providers/site-preferences";
 import { CtaBanner, PageHero } from "@/components/sections/site-sections";
 import { ButtonLink } from "@/components/ui/button-link";
 import { OverlayCloseButton } from "@/components/ui/overlay-close-button";
-import type { CaseStudy } from "@/data/site-content";
+import { testimonials, type CaseStudy } from "@/data/site-content";
 import { uiCopy } from "@/data/ui-copy";
 import { resolveLocalizedValue } from "@/lib/i18n";
 import { cn } from "@/lib/utils";
@@ -132,6 +132,7 @@ export function CaseDetailContent({
   const isTreningshuset = caseStudy.slug === "treningshuset";
   const isVilleGleder = caseStudy.slug === "ville-gleder";
   const usesInteractiveVideoGrid = isVilleGleder || isTreningshuset;
+  const villeGlederTestimonial = testimonials.find((entry) => entry.company === "Ville Gleder") ?? null;
   const playableVideoVariants = useMemo(
     () =>
       (caseStudy.videoVariants ?? []).filter(
@@ -467,6 +468,30 @@ export function CaseDetailContent({
           </article>
         </div>
       </section>
+
+      {isVilleGleder && villeGlederTestimonial ? (
+        <section className="section-space pt-0">
+          <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+            <div className="overflow-hidden rounded-[2rem] border border-white/10 bg-[#111111] px-5 py-6 text-white shadow-[0_28px_90px_rgba(0,0,0,0.24)] sm:px-8 sm:py-8 lg:px-10">
+              <p className="text-[0.72rem] font-semibold uppercase tracking-[0.24em] text-white/56">
+                {language === "no" ? "Kundeuttalelse" : "Client quote"}
+              </p>
+              <blockquote className="mt-4 max-w-4xl font-display text-[1.55rem] leading-[1.16] tracking-[-0.04em] text-white sm:text-[2rem] lg:text-[2.35rem]">
+                “{resolveLocalizedValue(villeGlederTestimonial.quote, language)}”
+              </blockquote>
+              <div className="mt-5 flex flex-col gap-1 text-white/72 sm:flex-row sm:items-center sm:gap-3">
+                <p className="text-[0.82rem] font-semibold uppercase tracking-[0.16em] text-white">
+                  {villeGlederTestimonial.name}
+                </p>
+                <span className="hidden h-1 w-1 rounded-full bg-white/28 sm:block" />
+                <p className="text-sm text-white/68">
+                  {villeGlederTestimonial.company}
+                </p>
+              </div>
+            </div>
+          </div>
+        </section>
+      ) : null}
 
       <section className="section-space pt-0">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
