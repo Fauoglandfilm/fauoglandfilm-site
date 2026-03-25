@@ -1,6 +1,7 @@
 import {
   ClosingCtaSection,
   HeroSection,
+  ResultsSection,
   SelectedWorkSection,
   WhyUsProofSection,
 } from "@/components/sections/home-sections";
@@ -23,6 +24,7 @@ export default function HomePage() {
       <HeroSection />
       <WhyUsProofSection />
       <SelectedWorkSection items={homepageCaseStudies} />
+      <ResultsSection />
       <ClosingCtaSection />
     </main>
   );
