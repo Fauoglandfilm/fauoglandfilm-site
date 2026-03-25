@@ -1034,35 +1034,25 @@ summary::-webkit-details-marker {
     position: relative;
     gap: 0.18rem;
     padding: 0.18rem;
-    border-color: color-mix(in srgb, var(--glass-border) 92%, transparent);
-    background:
-      linear-gradient(
-        180deg,
-        color-mix(in srgb, var(--glass-tint-top) 28%, transparent),
-        color-mix(in srgb, var(--glass-tint-bottom) 18%, transparent)
-      );
+    border-color: rgba(255, 255, 255, 0.1);
+    background: linear-gradient(180deg, rgba(17, 17, 17, 0.78), rgba(17, 17, 17, 0.62));
     box-shadow:
-      0 20px 48px color-mix(in srgb, var(--glass-shadow-deep) 34%, transparent),
-      0 8px 22px color-mix(in srgb, var(--glass-shadow-soft) 44%, transparent),
-      inset 0 1px 0 color-mix(in srgb, var(--glass-top-highlight) 88%, transparent),
-      inset 0 14px 26px color-mix(in srgb, var(--glass-inner-top) 34%, transparent);
+      0 20px 48px rgba(0, 0, 0, 0.24),
+      0 8px 22px rgba(0, 0, 0, 0.16),
+      inset 0 1px 0 rgba(255, 255, 255, 0.08),
+      inset 0 14px 26px rgba(255, 255, 255, 0.02);
     backdrop-filter: blur(18px) saturate(165%);
     -webkit-backdrop-filter: blur(18px) saturate(165%);
   }
 
   html[data-theme="light"] .segmented-toggle-premium {
-    border-color: color-mix(in srgb, var(--glass-border) 88%, transparent);
-    background:
-      linear-gradient(
-        180deg,
-        color-mix(in srgb, #ffffff 74%, transparent),
-        color-mix(in srgb, #f3efe7 58%, transparent)
-      );
+    border-color: rgba(255, 255, 255, 0.08);
+    background: linear-gradient(180deg, rgba(17, 17, 17, 0.84), rgba(17, 17, 17, 0.68));
     box-shadow:
-      0 18px 38px rgba(17, 17, 17, 0.12),
-      0 8px 20px rgba(17, 17, 17, 0.08),
-      inset 0 1px 0 rgba(255, 255, 255, 0.74),
-      inset 0 14px 24px rgba(255, 255, 255, 0.32);
+      0 18px 38px rgba(17, 17, 17, 0.2),
+      0 8px 20px rgba(17, 17, 17, 0.12),
+      inset 0 1px 0 rgba(255, 255, 255, 0.08),
+      inset 0 14px 24px rgba(255, 255, 255, 0.02);
   }
 
   .segmented-toggle-option {
@@ -1084,25 +1074,18 @@ summary::-webkit-details-marker {
   }
 
   .segmented-toggle-active-pill {
-    background:
-      linear-gradient(
-        180deg,
-        color-mix(in srgb, var(--glass-tint-top) 46%, transparent),
-        color-mix(in srgb, var(--glass-tint-bottom) 30%, transparent)
-      );
+    background: linear-gradient(180deg, rgba(29, 29, 29, 0.96), rgba(22, 22, 22, 0.92));
     box-shadow:
-      0 12px 28px color-mix(in srgb, var(--glass-shadow-deep) 26%, transparent),
-      inset 0 1px 0 color-mix(in srgb, var(--glass-top-highlight) 92%, transparent),
-      inset 0 12px 22px color-mix(in srgb, var(--glass-inner-top) 30%, transparent),
-      0 0 0 1px color-mix(in srgb, var(--glass-border-soft) 86%, transparent);
+      0 12px 28px rgba(0, 0, 0, 0.26),
+      inset 0 1px 0 rgba(255, 255, 255, 0.1),
+      inset 0 12px 22px rgba(255, 255, 255, 0.03);
   }
 
   html[data-theme="light"] .segmented-toggle-active-pill {
     box-shadow:
-      0 12px 24px rgba(17, 17, 17, 0.12),
-      inset 0 1px 0 rgba(255, 255, 255, 0.82),
-      inset 0 12px 20px rgba(255, 255, 255, 0.28),
-      0 0 0 1px rgba(17, 17, 17, 0.06);
+      0 12px 24px rgba(17, 17, 17, 0.18),
+      inset 0 1px 0 rgba(255, 255, 255, 0.1),
+      inset 0 12px 20px rgba(255, 255, 255, 0.03);
   }
 
   .segmented-toggle-shimmer {
