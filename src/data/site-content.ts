@@ -1279,6 +1279,11 @@ export const portfolioProjectInfoContent: Partial<Record<string, PortfolioProjec
       no: "Kombinasjon av tidligere materiale og nytt innhold, inkludert animasjon levert av oss.",
       en: "A combination of earlier footage and new material, including animation delivered by us.",
     },
+    deliverables: [
+      { no: "Tidligere opptak", en: "Earlier footage" },
+      { no: "Nytt kundemateriale", en: "New client material" },
+      { no: "Animasjon fra Fau&Land", en: "Animation by Fau&Land" },
+    ],
   },
   "nei-til-atomvapen-arbeiderdagen": {
     shortDescription: {
@@ -1289,6 +1294,11 @@ export const portfolioProjectInfoContent: Partial<Record<string, PortfolioProjec
       no: "Leveranse inkluderte stemningsfilm, fullt opptak av tale og flere korte klipp til sosiale medier.",
       en: "The delivery included a mood film, a full speech recording and multiple short clips for social media.",
     },
+    deliverables: [
+      { no: "Stemningsfilm", en: "Mood film" },
+      { no: "Fullt taleopptak", en: "Full speech recording" },
+      { no: "SoMe reels", en: "Social reels" },
+    ],
   },
   "nei-til-atomvapen-konferanse": {
     shortDescription: {
@@ -1298,6 +1308,10 @@ export const portfolioProjectInfoContent: Partial<Record<string, PortfolioProjec
     extendedDescription: {
       no: "En stemningsfull film brukt i deres pågående kampanjearbeid.",
       en: "A mood-driven film used in their ongoing campaign work.",
+    },
+    result: {
+      no: "Brukt videre i organisasjonens lopende rekrutterings- og synlighetsarbeid.",
+      en: "Used across the organisation's ongoing recruitment and awareness work.",
     },
   },
   "foreningen-norden-debatt": {
@@ -1359,6 +1373,11 @@ export const portfolioProjectInfoContent: Partial<Record<string, PortfolioProjec
       no: "1.5 times leveranse med dokumentasjon av arrangement med kongehus.",
       en: "A 1.5-hour delivery documenting an event involving royalty.",
     },
+    deliverables: [
+      { no: "1,5 time leveranse", en: "1.5-hour delivery" },
+      { no: "Foreningen Norden", en: "Foreningen Norden" },
+      { no: "Dronning Margrethe II", en: "Queen Margrethe II" },
+    ],
   },
   "the-voice-within": {
     shortDescription: {
@@ -1369,6 +1388,10 @@ export const portfolioProjectInfoContent: Partial<Record<string, PortfolioProjec
       no: "Eneste ferdigstilte film i klassen, fikk Honourable Mention.",
       en: "The only completed film in its class, and it received an Honourable Mention.",
     },
+    deliverables: [
+      { no: "NTNU BA-film", en: "NTNU BA film" },
+      { no: "Produsert under covid", en: "Produced under COVID restrictions" },
+    ],
     awards: [{ no: "Honourable Mention", en: "Honourable Mention" }],
   },
   "steins-hytte": {
@@ -1390,8 +1413,11 @@ export const portfolioProjectInfoContent: Partial<Record<string, PortfolioProjec
       no: "Utforsker sorg og norsk folketro med internasjonale priser.",
       en: "Explores grief and Norwegian folklore, backed by international awards.",
     },
-    awards: [{ no: "Internasjonale priser", en: "International awards" }],
-    credits: [{ role: "Genre", name: "Mystery / drama" }],
+    awards: [{ no: "Internasjonale priser og nominasjoner", en: "International awards and nominations" }],
+    credits: [
+      { role: "Genre", name: "Mystery / drama" },
+      { role: "Theme", name: "Grief and folklore" },
+    ],
   },
   "takk-for-at-du-er-min-venn": {
     shortDescription: {
@@ -1422,7 +1448,10 @@ export const portfolioProjectInfoContent: Partial<Record<string, PortfolioProjec
       { no: "Nordic Docs", en: "Nordic Docs" },
       { no: "Den norske dokumentarfilmfestivalen", en: "The Norwegian Documentary Film Festival" },
     ],
-    credits: [{ role: "Subject", name: "Martin" }],
+    credits: [
+      { role: "Subject", name: "Martin" },
+      { role: "Type", name: "Artist portrait documentary" },
+    ],
   },
   "the-actors-hub-dont-act": {
     shortDescription: {

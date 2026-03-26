@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { Info } from "lucide-react";
+import { ChevronDown, ChevronUp, Info } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 
 import { PreviewMedia } from "@/components/media/preview-media";
@@ -129,6 +129,21 @@ function getPortfolioProjectInfoPoints(
   ].filter((value, index, array): value is string => Boolean(value) && array.indexOf(value) === index);
 
   return points.slice(0, 2);
+}
+
+function getPortfolioProjectDetailPoints(
+  project: PortfolioProject,
+  group: PortfolioGroup | undefined,
+  language: "no" | "en",
+) {
+  return [
+    ...(project.deliverables?.map((item) => resolveLocalizedValue(item, language)) ?? []),
+    ...(project.awards?.map((item) => resolveLocalizedValue(item, language)) ?? []),
+    ...(project.festivals?.map((item) => resolveLocalizedValue(item, language)) ?? []),
+    resolveLocalizedValue(project.format, language),
+    project.year,
+    group ? resolveLocalizedValue(group.title, language) : null,
+  ].filter((value, index, array): value is string => Boolean(value) && array.indexOf(value) === index);
 }
 
 function getPortfolioShortDescription(project: PortfolioProject, language: "no" | "en") {
@@ -625,12 +640,29 @@ function PortfolioVideoModal({
     ? resolveLocalizedValue(project.quote.attribution, language)
     : null;
   const modalGroup = getPortfolioGroup(project.group);
-  const modalInfoPoints = getPortfolioProjectInfoPoints(project, modalGroup, language);
+  const modalInfoPoints = getPortfolioProjectDetailPoints(project, modalGroup, language);
+  const productionContext = [
+    { label: language === "no" ? "Kunde" : "Client", value: project.client },
+    { label: language === "no" ? "Format" : "Format", value: resolveLocalizedValue(project.format, language) },
+    {
+      label: language === "no" ? "Kategori" : "Category",
+      value: modalGroup ? resolveLocalizedValue(modalGroup.title, language) : null,
+    },
+    { label: language === "no" ? "Ar" : "Year", value: project.year ?? null },
+  ].filter((item): item is { label: string; value: string } => Boolean(item.value));
   const videoRef = useRef<HTMLVideoElement | null>(null);
   const [isInfoOpen, setIsInfoOpen] = useState(false);
   const modalLabel = language === "no" ? "Lukk video" : "Close video";
   const modalMedia = resolvePortfolioModalMedia(project);
   const isDirectVideo = modalMedia?.kind === "direct";
+  const infoButtonLabel = language === "no" ? "Prosjektinfo" : "Project info";
+  const infoButtonHint = isInfoOpen
+    ? language === "no"
+      ? "Skjul detaljer"
+      : "Hide details"
+    : language === "no"
+      ? "Se festivaler, crew og leveranse"
+      : "See festivals, crew and deliverables";
 
 
   useEffect(() => {
@@ -668,12 +700,24 @@ function PortfolioVideoModal({
             event.stopPropagation();
             setIsInfoOpen((current) => !current);
           }}
-          className="absolute left-[max(env(safe-area-inset-left),0.85rem)] top-[max(env(safe-area-inset-top),0.85rem)] z-[3] inline-flex h-11 items-center gap-2 rounded-full border border-white/14 bg-white/10 px-3.5 text-[0.72rem] font-semibold uppercase tracking-[0.16em] text-white shadow-[0_18px_42px_rgba(0,0,0,0.2)] backdrop-blur-xl transition duration-300 hover:border-white/22 hover:bg-white/14 sm:left-[max(env(safe-area-inset-left),1rem)] sm:top-[max(env(safe-area-inset-top),1rem)]"
+          className="absolute left-[max(env(safe-area-inset-left),0.85rem)] top-[max(env(safe-area-inset-top),0.85rem)] z-[3] inline-flex min-w-[12.25rem] items-center gap-3 rounded-[1.2rem] border border-white/14 bg-[linear-gradient(180deg,rgba(255,255,255,0.18),rgba(255,255,255,0.08))] px-3.5 py-3 text-left text-white shadow-[0_18px_42px_rgba(0,0,0,0.2)] backdrop-blur-xl transition duration-300 hover:border-white/22 hover:bg-[linear-gradient(180deg,rgba(255,255,255,0.22),rgba(255,255,255,0.1))] sm:left-[max(env(safe-area-inset-left),1rem)] sm:top-[max(env(safe-area-inset-top),1rem)] sm:min-w-[13.5rem]"
           aria-expanded={isInfoOpen}
           aria-label={language === "no" ? "Vis prosjektinfo" : "Show project info"}
         >
-          <Info className="h-4 w-4" />
-          <span>{language === "no" ? "Info" : "Info"}</span>
+          <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-white/12 bg-black/22">
+            <Info className="h-4 w-4" />
+          </span>
+          <span className="min-w-0 flex-1">
+            <span className="block text-[0.62rem] font-semibold uppercase tracking-[0.16em] text-white/54">
+              {infoButtonLabel}
+            </span>
+            <span className="mt-1 block text-[0.8rem] font-semibold tracking-[-0.02em] text-white">
+              {infoButtonHint}
+            </span>
+          </span>
+          <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full border border-white/10 bg-white/8">
+            {isInfoOpen ? <ChevronUp className="h-4 w-4" /> : <ChevronDown className="h-4 w-4" />}
+          </span>
         </button>
 
         <OverlayCloseButton
@@ -685,7 +729,7 @@ function PortfolioVideoModal({
 
         <div
           className={cn(
-            "pointer-events-none absolute inset-x-3 bottom-[max(env(safe-area-inset-bottom),0.85rem)] z-[2] max-h-[min(32rem,calc(100svh-8.5rem))] overflow-y-auto rounded-[1.45rem] border border-white/12 bg-[linear-gradient(180deg,rgba(255,255,255,0.14),rgba(255,255,255,0.05))] p-4 text-white shadow-[0_24px_60px_rgba(0,0,0,0.24)] backdrop-blur-xl transition duration-300 sm:inset-x-auto sm:left-[max(env(safe-area-inset-left),1rem)] sm:top-[calc(max(env(safe-area-inset-top),1rem)+3.4rem)] sm:bottom-auto sm:w-[24rem] sm:max-h-[calc(100svh-7rem)]",
+            "pointer-events-none absolute inset-x-3 bottom-[max(env(safe-area-inset-bottom),0.85rem)] z-[2] max-h-[min(35rem,calc(100svh-8.5rem))] overflow-y-auto rounded-[1.45rem] border border-white/12 bg-[linear-gradient(180deg,rgba(255,255,255,0.14),rgba(255,255,255,0.05))] p-4 text-white shadow-[0_24px_60px_rgba(0,0,0,0.24)] backdrop-blur-xl transition duration-300 sm:inset-x-auto sm:left-[max(env(safe-area-inset-left),1rem)] sm:top-[calc(max(env(safe-area-inset-top),1rem)+4.75rem)] sm:bottom-auto sm:w-[27rem] sm:max-h-[calc(100svh-8rem)]",
             isInfoOpen ? "translate-y-0 opacity-100" : "translate-y-4 opacity-0 sm:-translate-x-3 sm:translate-y-0",
             isInfoOpen && "pointer-events-auto",
           )}
@@ -695,6 +739,24 @@ function PortfolioVideoModal({
           <h2 className="mt-2 text-[1.2rem] font-semibold tracking-[-0.04em] text-white sm:text-[1.34rem]">{title}</h2>
           <p className="mt-3 text-[0.98rem] leading-6 text-white/82">{summary}</p>
           <p className="mt-3 text-[0.92rem] leading-6 text-white/74">{extendedDescription}</p>
+          {productionContext.length ? (
+            <div className="mt-4 rounded-[1rem] border border-white/10 bg-black/18 px-3.5 py-3">
+              <p className="text-[0.62rem] font-semibold uppercase tracking-[0.16em] text-white/54">
+                {language === "no" ? "Produksjon" : "Production"}
+              </p>
+              <div className="mt-3 space-y-2.5">
+                {productionContext.map((item) => (
+                  <div
+                    key={`${project.slug}-context-${item.label}`}
+                    className="flex items-start justify-between gap-4 text-[0.78rem] leading-5"
+                  >
+                    <span className="text-white/52">{item.label}</span>
+                    <span className="text-right text-white/82">{item.value}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          ) : null}
           {modalInfoPoints.length ? (
             <div className="mt-4 flex flex-wrap gap-2">
               {modalInfoPoints.map((point) => (
