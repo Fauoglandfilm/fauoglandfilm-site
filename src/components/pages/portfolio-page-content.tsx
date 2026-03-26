@@ -210,7 +210,11 @@ export function PortfolioPageContent({
       return;
     }
 
+    const scrollY = window.scrollY;
     const previousOverflow = document.body.style.overflow;
+    const previousPosition = document.body.style.position;
+    const previousTop = document.body.style.top;
+    const previousWidth = document.body.style.width;
     const handleKeyDown = (event: KeyboardEvent) => {
       if (event.key === "Escape") {
         setActiveProject(null);
@@ -218,10 +222,17 @@ export function PortfolioPageContent({
     };
 
     document.body.style.overflow = "hidden";
+    document.body.style.position = "fixed";
+    document.body.style.top = `-${scrollY}px`;
+    document.body.style.width = "100%";
     window.addEventListener("keydown", handleKeyDown);
 
     return () => {
       document.body.style.overflow = previousOverflow;
+      document.body.style.position = previousPosition;
+      document.body.style.top = previousTop;
+      document.body.style.width = previousWidth;
+      window.scrollTo(0, scrollY);
       window.removeEventListener("keydown", handleKeyDown);
     };
   }, [activeProject]);
@@ -663,6 +674,8 @@ function PortfolioVideoModal({
     : language === "no"
       ? "Se festivaler, crew og leveranse"
       : "See festivals, crew and deliverables";
+  const infoPanelTopOffset = "calc(max(env(safe-area-inset-top),0.85rem) + 4.75rem)";
+  const infoPanelBottomOffset = "max(env(safe-area-inset-bottom),0.85rem)";
 
 
   useEffect(() => {
@@ -680,7 +693,7 @@ function PortfolioVideoModal({
 
   return (
     <div
-      className="fixed inset-0 z-[80] flex items-start justify-center overflow-hidden overscroll-none bg-[#040507]/72 p-0 backdrop-blur-md sm:p-5 lg:items-center lg:p-8"
+      className="fixed inset-0 z-[80] flex h-[100dvh] max-h-[100dvh] items-start justify-center overflow-hidden overscroll-none bg-[#040507]/72 p-0 backdrop-blur-md sm:p-5 lg:items-center lg:p-8"
       role="dialog"
       aria-modal="true"
       aria-label={title}
@@ -691,7 +704,7 @@ function PortfolioVideoModal({
       }}
     >
       <div
-        className="relative flex h-[100svh] w-full items-center justify-center overflow-hidden bg-transparent"
+        className="relative flex h-full max-h-full w-full items-center justify-center overflow-hidden bg-transparent"
         onClick={(event) => event.stopPropagation()}
       >
         <button
@@ -729,133 +742,142 @@ function PortfolioVideoModal({
 
         <div
           className={cn(
-            "portfolio-modal-scroll pointer-events-none absolute inset-x-3 bottom-[max(env(safe-area-inset-bottom),0.85rem)] z-[2] max-h-[min(35rem,calc(100svh-8.5rem))] overflow-y-auto overscroll-contain rounded-[1.45rem] border border-white/12 bg-[linear-gradient(180deg,rgba(255,255,255,0.14),rgba(255,255,255,0.05))] p-4 pb-[calc(1rem+env(safe-area-inset-bottom))] text-white shadow-[0_24px_60px_rgba(0,0,0,0.24)] backdrop-blur-xl transition duration-300 touch-pan-y sm:inset-x-auto sm:left-[max(env(safe-area-inset-left),1rem)] sm:top-[calc(max(env(safe-area-inset-top),1rem)+4.75rem)] sm:bottom-auto sm:w-[27rem] sm:max-h-[calc(100svh-8rem)] sm:pb-4",
+            "pointer-events-none absolute inset-x-3 z-[2] flex min-h-0 max-h-[calc(100dvh-7rem)] flex-col overflow-hidden rounded-[1.45rem] border border-white/12 bg-[linear-gradient(180deg,rgba(255,255,255,0.14),rgba(255,255,255,0.05))] text-white shadow-[0_24px_60px_rgba(0,0,0,0.24)] backdrop-blur-xl transition duration-300 sm:inset-x-auto sm:left-[max(env(safe-area-inset-left),1rem)] sm:w-[27rem] sm:max-h-[calc(100dvh-7.25rem)]",
             isInfoOpen ? "translate-y-0 opacity-100" : "translate-y-4 opacity-0 sm:-translate-x-3 sm:translate-y-0",
             isInfoOpen && "pointer-events-auto",
           )}
           onClick={(event) => event.stopPropagation()}
           style={{
-            WebkitOverflowScrolling: "touch",
+            top: infoPanelTopOffset,
+            bottom: infoPanelBottomOffset,
           }}
         >
-          <p className="text-[0.64rem] font-semibold uppercase tracking-[0.18em] text-white/54">{project.client}</p>
-          <h2 className="mt-2 text-[1.2rem] font-semibold tracking-[-0.04em] text-white sm:text-[1.34rem]">{title}</h2>
-          <p className="mt-3 text-[0.98rem] leading-6 text-white/82">{summary}</p>
-          <p className="mt-3 text-[0.92rem] leading-6 text-white/74">{extendedDescription}</p>
-          {productionContext.length ? (
-            <div className="mt-4 rounded-[1rem] border border-white/10 bg-black/18 px-3.5 py-3">
-              <p className="text-[0.62rem] font-semibold uppercase tracking-[0.16em] text-white/54">
-                {language === "no" ? "Produksjon" : "Production"}
-              </p>
-              <div className="mt-3 space-y-2.5">
-                {productionContext.map((item) => (
-                  <div
-                    key={`${project.slug}-context-${item.label}`}
-                    className="flex items-start justify-between gap-4 text-[0.78rem] leading-5"
-                  >
-                    <span className="text-white/52">{item.label}</span>
-                    <span className="text-right text-white/82">{item.value}</span>
-                  </div>
-                ))}
-              </div>
-            </div>
-          ) : null}
-          {modalInfoPoints.length ? (
-            <div className="mt-4 flex flex-wrap gap-2">
-              {modalInfoPoints.map((point) => (
-                <span
-                  key={`${project.slug}-modal-${point}`}
-                  className="rounded-full border border-white/12 bg-black/20 px-2.5 py-1 text-[0.62rem] font-semibold uppercase tracking-[0.16em] text-white/74"
-                >
-                  {point}
-                </span>
-              ))}
-            </div>
-          ) : null}
-          {deliverables.length ? (
-            <div className="mt-4 rounded-[1rem] border border-white/10 bg-black/18 px-3.5 py-3">
-              <p className="text-[0.62rem] font-semibold uppercase tracking-[0.16em] text-white/54">
-                {language === "no" ? "Leveranse" : "Deliverables"}
-              </p>
-              <div className="mt-2 flex flex-wrap gap-2">
-                {deliverables.map((item) => (
-                  <span
-                    key={`${project.slug}-deliverable-${item}`}
-                    className="rounded-full border border-white/10 bg-white/8 px-2.5 py-1 text-[0.72rem] font-medium text-white/78"
-                  >
-                    {item}
-                  </span>
-                ))}
-              </div>
-            </div>
-          ) : null}
-          {result ? (
-            <div className="mt-4 rounded-[1rem] border border-white/10 bg-black/18 px-3.5 py-3">
-              <p className="text-[0.62rem] font-semibold uppercase tracking-[0.16em] text-white/54">
-                {language === "no" ? "Resultat" : "Result"}
-              </p>
-              <p className="mt-2 text-[0.88rem] leading-6 text-white/74">{result}</p>
-            </div>
-          ) : null}
-          {awards.length ? (
-            <div className="mt-4 rounded-[1rem] border border-white/10 bg-black/18 px-3.5 py-3">
-              <p className="text-[0.62rem] font-semibold uppercase tracking-[0.16em] text-white/54">
-                {language === "no" ? "Priser" : "Awards"}
-              </p>
-              <div className="mt-2 flex flex-wrap gap-2">
-                {awards.map((item) => (
-                  <span
-                    key={`${project.slug}-award-${item}`}
-                    className="rounded-full border border-white/10 bg-white/8 px-2.5 py-1 text-[0.72rem] font-medium text-white/78"
-                  >
-                    {item}
-                  </span>
-                ))}
-              </div>
-            </div>
-          ) : null}
-          {festivals.length ? (
-            <div className="mt-4 rounded-[1rem] border border-white/10 bg-black/18 px-3.5 py-3">
-              <p className="text-[0.62rem] font-semibold uppercase tracking-[0.16em] text-white/54">
-                {language === "no" ? "Festivaler" : "Festivals"}
-              </p>
-              <div className="mt-2 flex flex-wrap gap-2">
-                {festivals.map((item) => (
-                  <span
-                    key={`${project.slug}-festival-${item}`}
-                    className="rounded-full border border-white/10 bg-white/8 px-2.5 py-1 text-[0.72rem] font-medium text-white/78"
-                  >
-                    {item}
-                  </span>
-                ))}
-              </div>
-            </div>
-          ) : null}
-          {credits.length ? (
-            <div className="mt-4 rounded-[1rem] border border-white/10 bg-black/18 px-3.5 py-3">
-              <p className="text-[0.62rem] font-semibold uppercase tracking-[0.16em] text-white/54">
-                {language === "no" ? "Credits" : "Credits"}
-              </p>
-              <div className="mt-2 space-y-2">
-                {credits.map((credit) => (
-                  <div key={`${project.slug}-credit-${credit.role}-${credit.name}`} className="flex items-start justify-between gap-4 text-[0.8rem] leading-5">
-                    <span className="text-white/52">{credit.role}</span>
-                    <span className="text-right text-white/82">{credit.name}</span>
-                  </div>
-                ))}
-              </div>
-            </div>
-          ) : null}
-          {quoteText ? (
-            <div className="mt-4 rounded-[1rem] border border-white/10 bg-[linear-gradient(180deg,rgba(255,255,255,0.08),rgba(255,255,255,0.03))] px-3.5 py-3">
-              <p className="text-[0.9rem] leading-6 text-white/78">&ldquo;{quoteText}&rdquo;</p>
-              {quoteAttribution ? (
-                <p className="mt-2 text-[0.68rem] font-semibold uppercase tracking-[0.16em] text-white/48">
-                  {quoteAttribution}
+          <div
+            className="portfolio-modal-scroll min-h-0 flex-1 overflow-y-auto overscroll-contain px-4 py-4 pr-3.5 touch-pan-y sm:px-4 sm:py-4 sm:pr-3"
+            style={{
+              WebkitOverflowScrolling: "touch",
+              paddingBottom: "calc(1rem + env(safe-area-inset-bottom))",
+            }}
+          >
+            <p className="text-[0.64rem] font-semibold uppercase tracking-[0.18em] text-white/54">{project.client}</p>
+            <h2 className="mt-2 text-[1.2rem] font-semibold tracking-[-0.04em] text-white sm:text-[1.34rem]">{title}</h2>
+            <p className="mt-3 text-[0.98rem] leading-6 text-white/82">{summary}</p>
+            <p className="mt-3 text-[0.92rem] leading-6 text-white/74">{extendedDescription}</p>
+            {productionContext.length ? (
+              <div className="mt-4 rounded-[1rem] border border-white/10 bg-black/18 px-3.5 py-3">
+                <p className="text-[0.62rem] font-semibold uppercase tracking-[0.16em] text-white/54">
+                  {language === "no" ? "Produksjon" : "Production"}
                 </p>
-              ) : null}
-            </div>
-          ) : null}
+                <div className="mt-3 space-y-2.5">
+                  {productionContext.map((item) => (
+                    <div
+                      key={`${project.slug}-context-${item.label}`}
+                      className="flex items-start justify-between gap-4 text-[0.78rem] leading-5"
+                    >
+                      <span className="text-white/52">{item.label}</span>
+                      <span className="text-right text-white/82">{item.value}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            ) : null}
+            {modalInfoPoints.length ? (
+              <div className="mt-4 flex flex-wrap gap-2">
+                {modalInfoPoints.map((point) => (
+                  <span
+                    key={`${project.slug}-modal-${point}`}
+                    className="rounded-full border border-white/12 bg-black/20 px-2.5 py-1 text-[0.62rem] font-semibold uppercase tracking-[0.16em] text-white/74"
+                  >
+                    {point}
+                  </span>
+                ))}
+              </div>
+            ) : null}
+            {deliverables.length ? (
+              <div className="mt-4 rounded-[1rem] border border-white/10 bg-black/18 px-3.5 py-3">
+                <p className="text-[0.62rem] font-semibold uppercase tracking-[0.16em] text-white/54">
+                  {language === "no" ? "Leveranse" : "Deliverables"}
+                </p>
+                <div className="mt-2 flex flex-wrap gap-2">
+                  {deliverables.map((item) => (
+                    <span
+                      key={`${project.slug}-deliverable-${item}`}
+                      className="rounded-full border border-white/10 bg-white/8 px-2.5 py-1 text-[0.72rem] font-medium text-white/78"
+                    >
+                      {item}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            ) : null}
+            {result ? (
+              <div className="mt-4 rounded-[1rem] border border-white/10 bg-black/18 px-3.5 py-3">
+                <p className="text-[0.62rem] font-semibold uppercase tracking-[0.16em] text-white/54">
+                  {language === "no" ? "Resultat" : "Result"}
+                </p>
+                <p className="mt-2 text-[0.88rem] leading-6 text-white/74">{result}</p>
+              </div>
+            ) : null}
+            {awards.length ? (
+              <div className="mt-4 rounded-[1rem] border border-white/10 bg-black/18 px-3.5 py-3">
+                <p className="text-[0.62rem] font-semibold uppercase tracking-[0.16em] text-white/54">
+                  {language === "no" ? "Priser" : "Awards"}
+                </p>
+                <div className="mt-2 flex flex-wrap gap-2">
+                  {awards.map((item) => (
+                    <span
+                      key={`${project.slug}-award-${item}`}
+                      className="rounded-full border border-white/10 bg-white/8 px-2.5 py-1 text-[0.72rem] font-medium text-white/78"
+                    >
+                      {item}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            ) : null}
+            {festivals.length ? (
+              <div className="mt-4 rounded-[1rem] border border-white/10 bg-black/18 px-3.5 py-3">
+                <p className="text-[0.62rem] font-semibold uppercase tracking-[0.16em] text-white/54">
+                  {language === "no" ? "Festivaler" : "Festivals"}
+                </p>
+                <div className="mt-2 flex flex-wrap gap-2">
+                  {festivals.map((item) => (
+                    <span
+                      key={`${project.slug}-festival-${item}`}
+                      className="rounded-full border border-white/10 bg-white/8 px-2.5 py-1 text-[0.72rem] font-medium text-white/78"
+                    >
+                      {item}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            ) : null}
+            {credits.length ? (
+              <div className="mt-4 rounded-[1rem] border border-white/10 bg-black/18 px-3.5 py-3">
+                <p className="text-[0.62rem] font-semibold uppercase tracking-[0.16em] text-white/54">
+                  {language === "no" ? "Credits" : "Credits"}
+                </p>
+                <div className="mt-2 space-y-2">
+                  {credits.map((credit) => (
+                    <div key={`${project.slug}-credit-${credit.role}-${credit.name}`} className="flex items-start justify-between gap-4 text-[0.8rem] leading-5">
+                      <span className="text-white/52">{credit.role}</span>
+                      <span className="text-right text-white/82">{credit.name}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            ) : null}
+            {quoteText ? (
+              <div className="mt-4 rounded-[1rem] border border-white/10 bg-[linear-gradient(180deg,rgba(255,255,255,0.08),rgba(255,255,255,0.03))] px-3.5 py-3">
+                <p className="text-[0.9rem] leading-6 text-white/78">&ldquo;{quoteText}&rdquo;</p>
+                {quoteAttribution ? (
+                  <p className="mt-2 text-[0.68rem] font-semibold uppercase tracking-[0.16em] text-white/48">
+                    {quoteAttribution}
+                  </p>
+                ) : null}
+              </div>
+            ) : null}
+          </div>
         </div>
 
         <div className="relative flex h-full w-full items-center justify-center px-0 pt-16 sm:px-6 sm:pt-16 lg:px-10 lg:pt-10">
