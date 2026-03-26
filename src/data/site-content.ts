@@ -119,6 +119,27 @@ export type PortfolioGroup = {
   description: LocalizedText;
 };
 
+export type PortfolioProjectCredit = {
+  role: string;
+  name: string;
+};
+
+export type PortfolioProjectQuote = {
+  text: LocalizedText;
+  attribution?: LocalizedText;
+};
+
+export type PortfolioProjectInfo = {
+  shortDescription?: LocalizedText;
+  extendedDescription?: LocalizedText;
+  deliverables?: LocalizedText[];
+  result?: LocalizedText;
+  quote?: PortfolioProjectQuote;
+  awards?: LocalizedText[];
+  festivals?: LocalizedText[];
+  credits?: PortfolioProjectCredit[];
+};
+
 export type PortfolioProject = {
   slug: string;
   group: string;
@@ -126,7 +147,14 @@ export type PortfolioProject = {
   title: LocalizedText;
   format: LocalizedText;
   summary: LocalizedText;
+  shortDescription?: LocalizedText;
+  extendedDescription?: LocalizedText;
+  deliverables?: LocalizedText[];
   result?: LocalizedText;
+  quote?: PortfolioProjectQuote;
+  awards?: LocalizedText[];
+  festivals?: LocalizedText[];
+  credits?: PortfolioProjectCredit[];
   year?: string;
   detailHref?: string;
   sourceUrl?: string;
@@ -1144,6 +1172,275 @@ export const caseStudies: CaseStudy[] = [
   },
 ];
 
+export const portfolioProjectInfoContent: Partial<Record<string, PortfolioProjectInfo>> = {
+  "treningshuset": {
+    shortDescription: {
+      no: "Vi produserte 10 filmer for annonser og sosiale medier for å øke medlemsvekst.",
+      en: "We produced 10 films for ads and social media to drive membership growth.",
+    },
+    extendedDescription: {
+      no: "Filmene ble levert i flere formater og lengder, med ulike budskap tilpasset spesifikke kampanjer.",
+      en: "The films were delivered in multiple formats and lengths, with different messages tailored to specific campaigns.",
+    },
+    deliverables: [
+      { no: "10 filmer", en: "10 films" },
+      { no: "Flere formater", en: "Multiple formats" },
+      { no: "Annonse og SoMe bruk", en: "Ad and social use" },
+    ],
+    result: {
+      no: "Økt synlighet og bedre konvertering mot nye medlemmer.",
+      en: "Increased visibility and stronger conversion toward new members.",
+    },
+  },
+  "nei-til-atomvapen": {
+    shortDescription: {
+      no: "Kampanjefilm for å rekruttere flere medlemmer.",
+      en: "Campaign film built to recruit more members.",
+    },
+    extendedDescription: {
+      no: "En dokumentarisk film som skal få publikum til å kjenne alvoret og forstå hvorfor vi må handle nå.",
+      en: "A documentary-led film designed to make the audience feel the urgency and understand why we need to act now.",
+    },
+  },
+  "ville-gleder-villmarksforedrag": {
+    shortDescription: {
+      no: "Promofilm for foredrag med fokus på natur og opplevelser.",
+      en: "Promo film for a talk focused on nature and outdoor experiences.",
+    },
+    extendedDescription: {
+      no: "Filmen inspirerer publikum til å tilbringe mer tid ute, med Mattis Thørud og Jan Monsen.",
+      en: "The film inspires the audience to spend more time outdoors, featuring Mattis Thørud and Jan Monsen.",
+    },
+    quote: {
+      text: {
+        no: "Det er tøff konkurranse i foredragsbransjen... vi opplever økt oppdragsmengde etter Fau&Land.",
+        en: "There is tough competition in the speaking market... and we have seen more incoming work after Fau&Land.",
+      },
+      attribution: {
+        no: "Mattis Thørud, Ville Gleder",
+        en: "Mattis Thørud, Ville Gleder",
+      },
+    },
+  },
+  "ville-gleder-vat-kald-sulten": {
+    shortDescription: {
+      no: "Promofilm med sterk fortelling.",
+      en: "Promo film with a strong narrative concept.",
+    },
+    extendedDescription: {
+      no: "Setter vanlig arbeidshverdag opp mot ekstreme forhold i naturen.",
+      en: "Sets ordinary work life against extreme conditions in the wilderness.",
+    },
+    quote: {
+      text: {
+        no: "Det er tøff konkurranse i foredragsbransjen... vi opplever økt oppdragsmengde etter Fau&Land.",
+        en: "There is tough competition in the speaking market... and we have seen more incoming work after Fau&Land.",
+      },
+      attribution: {
+        no: "Mattis Thørud, Ville Gleder",
+        en: "Mattis Thørud, Ville Gleder",
+      },
+    },
+  },
+  "a-message-from-martha": {
+    shortDescription: {
+      no: "Drama kortfilm produsert i samarbeid med DeBlonde Production.",
+      en: "Drama short produced in collaboration with DeBlonde Production.",
+    },
+    extendedDescription: {
+      no: "Internasjonalt samarbeid med tydelig visuell stil.",
+      en: "An international collaboration with a clearly defined visual style.",
+    },
+    credits: [
+      { role: "Producer", name: "Tommy Garland" },
+      { role: "Director", name: "Elia Biondi" },
+      { role: "DOP", name: "Justin Bellucci" },
+      { role: "Music", name: "Lisa Braathen" },
+      { role: "Editor", name: "Svein Olav Sandem" },
+      { role: "Production Design", name: "Mille Gran" },
+    ],
+  },
+  "kommer-hjem-musikkvideo": {
+    shortDescription: {
+      no: "Narrativ musikkvideo for Klaus Perry.",
+      en: "Narrative music video for Klaus Perry.",
+    },
+    extendedDescription: {
+      no: "En historie om å finne veien hjem, med en leken og surrealistisk vri.",
+      en: "A story about finding the way home, told with a playful and surreal twist.",
+    },
+  },
+  "foreningen-norden-nettsideinnhold": {
+    shortDescription: {
+      no: "Film for nettside og kommunikasjon.",
+      en: "Film made for website and communications.",
+    },
+    extendedDescription: {
+      no: "Kombinasjon av tidligere materiale og nytt innhold, inkludert animasjon levert av oss.",
+      en: "A combination of earlier footage and new material, including animation delivered by us.",
+    },
+  },
+  "nei-til-atomvapen-arbeiderdagen": {
+    shortDescription: {
+      no: "Eventfilm og SoMe reels fra Youngstorget.",
+      en: "Event film and social reels from Youngstorget.",
+    },
+    extendedDescription: {
+      no: "Leveranse inkluderte stemningsfilm, fullt opptak av tale og flere korte klipp til sosiale medier.",
+      en: "The delivery included a mood film, a full speech recording and multiple short clips for social media.",
+    },
+  },
+  "nei-til-atomvapen-konferanse": {
+    shortDescription: {
+      no: "Eventfilm for rekrutteringskampanje.",
+      en: "Event film for a recruitment campaign.",
+    },
+    extendedDescription: {
+      no: "En stemningsfull film brukt i deres pågående kampanjearbeid.",
+      en: "A mood-driven film used in their ongoing campaign work.",
+    },
+  },
+  "foreningen-norden-debatt": {
+    shortDescription: {
+      no: "Flerkamera produksjon av debatt.",
+      en: "Multi-camera debate production.",
+    },
+    extendedDescription: {
+      no: "3 kameraer, dedikert lydtekniker og rask levering av teaser til SoMe.",
+      en: "3 cameras, a dedicated sound technician and a fast teaser delivery for social media.",
+    },
+    deliverables: [
+      { no: "3 kameraer", en: "3 cameras" },
+      { no: "Dedikert lydtekniker", en: "Dedicated sound technician" },
+      { no: "Rask teaser til SoMe", en: "Fast teaser for social media" },
+    ],
+  },
+  "liten-bedrift": {
+    shortDescription: {
+      no: "Kort reklamefilm for sosiale medier.",
+      en: "Short ad film for social media.",
+    },
+    extendedDescription: {
+      no: "Leken og direkte kommunikasjon, produsert in house.",
+      en: "Playful and direct communication, produced in house.",
+    },
+  },
+  "eventfotografering-kinesiske-ambassaden": {
+    shortDescription: {
+      no: "Eventfotografering for kinesisk nyttår.",
+      en: "Event photography for Chinese New Year.",
+    },
+    extendedDescription: {
+      no: "Dokumentasjon av arrangement med fokus på kvalitet og stemning.",
+      en: "Event documentation with a focus on quality and atmosphere.",
+    },
+  },
+  "en-midnatts-vuggesang": {
+    shortDescription: {
+      no: "Drama kortfilm distribuert internasjonalt.",
+      en: "Drama short distributed internationally.",
+    },
+    extendedDescription: {
+      no: "Co-produsert med Snowfall Cinema og nominert i Grimstad.",
+      en: "Co-produced with Snowfall Cinema and nominated in Grimstad.",
+    },
+    festivals: [
+      { no: "Internasjonal distribusjon", en: "International distribution" },
+      { no: "Grimstad", en: "Grimstad" },
+    ],
+    credits: [{ role: "Producer", name: "Tommy Garland m.fl." }],
+  },
+  "sprakprisen-2022-aftermovie": {
+    shortDescription: {
+      no: "Aftermovie fra prisutdeling.",
+      en: "Aftermovie from an award ceremony.",
+    },
+    extendedDescription: {
+      no: "1.5 times leveranse med dokumentasjon av arrangement med kongehus.",
+      en: "A 1.5-hour delivery documenting an event involving royalty.",
+    },
+  },
+  "the-voice-within": {
+    shortDescription: {
+      no: "BA kortfilm produsert under covid.",
+      en: "BA short produced under COVID restrictions.",
+    },
+    extendedDescription: {
+      no: "Eneste ferdigstilte film i klassen, fikk Honourable Mention.",
+      en: "The only completed film in its class, and it received an Honourable Mention.",
+    },
+    awards: [{ no: "Honourable Mention", en: "Honourable Mention" }],
+  },
+  "steins-hytte": {
+    shortDescription: {
+      no: "Eiendomsfilm og foto.",
+      en: "Property film and photography.",
+    },
+    extendedDescription: {
+      no: "Bidro til sterkere salgsprosess gjennom visuelt uttrykk.",
+      en: "Contributed to a stronger sales process through a more visual presentation.",
+    },
+  },
+  "huldredans": {
+    shortDescription: {
+      no: "Prisvinnende kortfilm.",
+      en: "Award-winning short film.",
+    },
+    extendedDescription: {
+      no: "Utforsker sorg og norsk folketro med internasjonale priser.",
+      en: "Explores grief and Norwegian folklore, backed by international awards.",
+    },
+    awards: [{ no: "Internasjonale priser", en: "International awards" }],
+    credits: [{ role: "Genre", name: "Mystery / drama" }],
+  },
+  "takk-for-at-du-er-min-venn": {
+    shortDescription: {
+      no: "Musikkvideo med NRK distribusjon.",
+      en: "Music video with NRK distribution.",
+    },
+    extendedDescription: {
+      no: "Kombinerer live action og animasjon.",
+      en: "Combines live action and animation.",
+    },
+    credits: [
+      { role: "Featuring", name: "Bjarte Hjelmeland" },
+      { role: "Universe", name: "Elleville Elfrid" },
+      { role: "Distribution", name: "NRK" },
+    ],
+  },
+  "the-giant-artist": {
+    shortDescription: {
+      no: "Dokumentar om kunstner.",
+      en: "Documentary about an artist.",
+    },
+    extendedDescription: {
+      no: "Vist på flere norske festivaler.",
+      en: "Screened at several Norwegian festivals.",
+    },
+    festivals: [
+      { no: "Minimalen", en: "Minimalen" },
+      { no: "Nordic Docs", en: "Nordic Docs" },
+      { no: "Den norske dokumentarfilmfestivalen", en: "The Norwegian Documentary Film Festival" },
+    ],
+    credits: [{ role: "Subject", name: "Martin" }],
+  },
+  "the-actors-hub-dont-act": {
+    shortDescription: {
+      no: "Showreels og workshop produksjon.",
+      en: "Showreels and workshop production.",
+    },
+    extendedDescription: {
+      no: "Samarbeid med internasjonale instruktører fra LA.",
+      en: "A collaboration with international instructors from Los Angeles.",
+    },
+    credits: [
+      { role: "Executive Producer", name: "David Nutter" },
+      { role: "Instructor", name: "Natassia Malthe" },
+      { role: "Instructor", name: "David Nutter" },
+    ],
+  },
+};
+
 export const portfolioGroups: PortfolioGroup[] = [
   {
     slug: "showreel",
@@ -1213,7 +1510,7 @@ export const portfolioGroups: PortfolioGroup[] = [
   },
 ];
 
-export const portfolioProjects: PortfolioProject[] = [
+const portfolioProjectsBase: PortfolioProject[] = [
   {
     slug: "showreel-2025",
     group: "showreel",
@@ -1888,6 +2185,27 @@ export const portfolioProjects: PortfolioProject[] = [
     palette: "from-[#151414] via-[#3e3e40] to-[#8b6d58]",
   },
 ];
+
+export const portfolioProjects: PortfolioProject[] = portfolioProjectsBase.map((project) => {
+  const structuredInfo = portfolioProjectInfoContent[project.slug];
+
+  if (!structuredInfo) {
+    return {
+      ...project,
+      shortDescription: project.shortDescription ?? project.summary,
+      extendedDescription: project.extendedDescription ?? project.result ?? project.summary,
+    };
+  }
+
+  return {
+    ...project,
+    ...structuredInfo,
+    shortDescription: structuredInfo.shortDescription ?? project.shortDescription ?? project.summary,
+    extendedDescription:
+      structuredInfo.extendedDescription ?? project.extendedDescription ?? project.result ?? project.summary,
+    result: structuredInfo.result ?? project.result,
+  };
+});
 
 export const processSteps: ProcessStep[] = [
   {

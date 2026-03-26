@@ -120,12 +120,23 @@ function getPortfolioProjectInfoPoints(
   language: "no" | "en",
 ) {
   const points = [
+    ...(project.deliverables?.map((item) => resolveLocalizedValue(item, language)) ?? []),
+    ...(project.awards?.map((item) => resolveLocalizedValue(item, language)) ?? []),
+    ...(project.festivals?.map((item) => resolveLocalizedValue(item, language)) ?? []),
     resolveLocalizedValue(project.format, language),
     project.year,
     group ? resolveLocalizedValue(group.title, language) : null,
-  ].filter((value): value is string => Boolean(value));
+  ].filter((value, index, array): value is string => Boolean(value) && array.indexOf(value) === index);
 
   return points.slice(0, 2);
+}
+
+function getPortfolioShortDescription(project: PortfolioProject, language: "no" | "en") {
+  return resolveLocalizedValue(project.shortDescription ?? project.summary, language);
+}
+
+function getPortfolioExtendedDescription(project: PortfolioProject, language: "no" | "en") {
+  return resolveLocalizedValue(project.extendedDescription ?? project.result ?? project.summary, language);
 }
 
 export function PortfolioPageContent({
@@ -429,7 +440,7 @@ function PortfolioProjectCard({
   const isWide = layout === "wide";
   const canOpen = Boolean(project.video || project.externalVideo || project.image);
   const title = resolveLocalizedValue(project.title, language);
-  const summary = resolveLocalizedValue(project.summary, language);
+  const summary = getPortfolioShortDescription(project, language);
   const infoPoints = getPortfolioProjectInfoPoints(project, group, language);
   const [prefersTapReveal, setPrefersTapReveal] = useState(false);
   const [isTapInfoVisible, setIsTapInfoVisible] = useState(false);
@@ -513,7 +524,7 @@ function PortfolioProjectCard({
 
         <div
           className={cn(
-            "pointer-events-none absolute inset-x-3 bottom-3 z-[2] rounded-[1.35rem] border border-white/12 bg-[linear-gradient(180deg,rgba(255,255,255,0.14),rgba(255,255,255,0.05))] p-4 text-white shadow-[0_18px_42px_rgba(0,0,0,0.22)] backdrop-blur-xl transition duration-300",
+            "pointer-events-none absolute inset-x-3 bottom-3 z-[2] rounded-[1.35rem] border border-white/12 bg-[linear-gradient(180deg,rgba(255,255,255,0.14),rgba(255,255,255,0.05))] p-4 text-white shadow-[0_18px_42px_rgba(0,0,0,0.22)] backdrop-blur-xl transition duration-300 sm:p-5",
             prefersTapReveal
               ? isTapInfoVisible
                 ? "translate-y-0 opacity-100"
@@ -521,21 +532,21 @@ function PortfolioProjectCard({
               : "translate-y-3 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 group-focus-within:translate-y-0 group-focus-within:opacity-100",
           )}
         >
-          <p className="text-[0.64rem] font-semibold uppercase tracking-[0.18em] text-white/56">
+          <p className="text-[0.66rem] font-semibold uppercase tracking-[0.18em] text-white/56">
             {project.client}
           </p>
-          <h3 className="mt-2 text-[1rem] font-semibold leading-[1.06] tracking-[-0.03em] text-white sm:text-[1.08rem]">
+          <h3 className="mt-2 text-[1.08rem] font-semibold leading-[1.06] tracking-[-0.03em] text-white sm:text-[1.16rem]">
             {title}
           </h3>
-          <p className="mt-2 truncate text-[0.88rem] text-white/76 sm:text-[0.92rem]">
+          <p className="mt-2 line-clamp-2 text-[0.95rem] leading-6 text-white/80 sm:text-[1rem]">
             {summary}
           </p>
           {infoPoints.length ? (
-            <div className="mt-3 flex flex-wrap gap-2">
+            <div className="mt-3 flex flex-wrap gap-2.5">
               {infoPoints.map((point) => (
                 <span
                   key={`${project.slug}-${point}`}
-                  className="rounded-full border border-white/12 bg-black/20 px-2.5 py-1 text-[0.62rem] font-semibold uppercase tracking-[0.16em] text-white/72"
+                  className="rounded-full border border-white/12 bg-black/20 px-3 py-1.5 text-[0.64rem] font-semibold uppercase tracking-[0.15em] text-white/76"
                 >
                   {point}
                 </span>
@@ -581,8 +592,17 @@ function PortfolioVideoModal({
 }) {
   const { language } = useSitePreferences();
   const title = resolveLocalizedValue(project.title, language);
-  const summary = resolveLocalizedValue(project.summary, language);
+  const summary = getPortfolioShortDescription(project, language);
+  const extendedDescription = getPortfolioExtendedDescription(project, language);
   const result = project.result ? resolveLocalizedValue(project.result, language) : null;
+  const deliverables = project.deliverables?.map((item) => resolveLocalizedValue(item, language)) ?? [];
+  const awards = project.awards?.map((item) => resolveLocalizedValue(item, language)) ?? [];
+  const festivals = project.festivals?.map((item) => resolveLocalizedValue(item, language)) ?? [];
+  const credits = project.credits ?? [];
+  const quoteText = project.quote ? resolveLocalizedValue(project.quote.text, language) : null;
+  const quoteAttribution = project.quote?.attribution
+    ? resolveLocalizedValue(project.quote.attribution, language)
+    : null;
   const modalGroup = getPortfolioGroup(project.group);
   const modalInfoPoints = getPortfolioProjectInfoPoints(project, modalGroup, language);
   const videoRef = useRef<HTMLVideoElement | null>(null);
@@ -644,7 +664,7 @@ function PortfolioVideoModal({
 
         <div
           className={cn(
-            "pointer-events-none absolute inset-x-3 bottom-[max(env(safe-area-inset-bottom),0.85rem)] z-[2] rounded-[1.45rem] border border-white/12 bg-[linear-gradient(180deg,rgba(255,255,255,0.14),rgba(255,255,255,0.05))] p-4 text-white shadow-[0_24px_60px_rgba(0,0,0,0.24)] backdrop-blur-xl transition duration-300 sm:inset-x-auto sm:left-[max(env(safe-area-inset-left),1rem)] sm:top-[calc(max(env(safe-area-inset-top),1rem)+3.4rem)] sm:bottom-auto sm:w-[22rem]",
+            "pointer-events-none absolute inset-x-3 bottom-[max(env(safe-area-inset-bottom),0.85rem)] z-[2] max-h-[min(32rem,calc(100svh-8.5rem))] overflow-y-auto rounded-[1.45rem] border border-white/12 bg-[linear-gradient(180deg,rgba(255,255,255,0.14),rgba(255,255,255,0.05))] p-4 text-white shadow-[0_24px_60px_rgba(0,0,0,0.24)] backdrop-blur-xl transition duration-300 sm:inset-x-auto sm:left-[max(env(safe-area-inset-left),1rem)] sm:top-[calc(max(env(safe-area-inset-top),1rem)+3.4rem)] sm:bottom-auto sm:w-[24rem] sm:max-h-[calc(100svh-7rem)]",
             isInfoOpen ? "translate-y-0 opacity-100" : "translate-y-4 opacity-0 sm:-translate-x-3 sm:translate-y-0",
             isInfoOpen && "pointer-events-auto",
           )}
@@ -652,7 +672,8 @@ function PortfolioVideoModal({
         >
           <p className="text-[0.64rem] font-semibold uppercase tracking-[0.18em] text-white/54">{project.client}</p>
           <h2 className="mt-2 text-[1.2rem] font-semibold tracking-[-0.04em] text-white sm:text-[1.34rem]">{title}</h2>
-          <p className="mt-3 text-[0.92rem] leading-6 text-white/76">{summary}</p>
+          <p className="mt-3 text-[0.98rem] leading-6 text-white/82">{summary}</p>
+          <p className="mt-3 text-[0.92rem] leading-6 text-white/74">{extendedDescription}</p>
           {modalInfoPoints.length ? (
             <div className="mt-4 flex flex-wrap gap-2">
               {modalInfoPoints.map((point) => (
@@ -665,12 +686,88 @@ function PortfolioVideoModal({
               ))}
             </div>
           ) : null}
+          {deliverables.length ? (
+            <div className="mt-4 rounded-[1rem] border border-white/10 bg-black/18 px-3.5 py-3">
+              <p className="text-[0.62rem] font-semibold uppercase tracking-[0.16em] text-white/54">
+                {language === "no" ? "Leveranse" : "Deliverables"}
+              </p>
+              <div className="mt-2 flex flex-wrap gap-2">
+                {deliverables.map((item) => (
+                  <span
+                    key={`${project.slug}-deliverable-${item}`}
+                    className="rounded-full border border-white/10 bg-white/8 px-2.5 py-1 text-[0.72rem] font-medium text-white/78"
+                  >
+                    {item}
+                  </span>
+                ))}
+              </div>
+            </div>
+          ) : null}
           {result ? (
             <div className="mt-4 rounded-[1rem] border border-white/10 bg-black/18 px-3.5 py-3">
               <p className="text-[0.62rem] font-semibold uppercase tracking-[0.16em] text-white/54">
-                {language === "no" ? "Nøkkelinfo" : "Key info"}
+                {language === "no" ? "Resultat" : "Result"}
               </p>
               <p className="mt-2 text-[0.88rem] leading-6 text-white/74">{result}</p>
+            </div>
+          ) : null}
+          {awards.length ? (
+            <div className="mt-4 rounded-[1rem] border border-white/10 bg-black/18 px-3.5 py-3">
+              <p className="text-[0.62rem] font-semibold uppercase tracking-[0.16em] text-white/54">
+                {language === "no" ? "Priser" : "Awards"}
+              </p>
+              <div className="mt-2 flex flex-wrap gap-2">
+                {awards.map((item) => (
+                  <span
+                    key={`${project.slug}-award-${item}`}
+                    className="rounded-full border border-white/10 bg-white/8 px-2.5 py-1 text-[0.72rem] font-medium text-white/78"
+                  >
+                    {item}
+                  </span>
+                ))}
+              </div>
+            </div>
+          ) : null}
+          {festivals.length ? (
+            <div className="mt-4 rounded-[1rem] border border-white/10 bg-black/18 px-3.5 py-3">
+              <p className="text-[0.62rem] font-semibold uppercase tracking-[0.16em] text-white/54">
+                {language === "no" ? "Festivaler" : "Festivals"}
+              </p>
+              <div className="mt-2 flex flex-wrap gap-2">
+                {festivals.map((item) => (
+                  <span
+                    key={`${project.slug}-festival-${item}`}
+                    className="rounded-full border border-white/10 bg-white/8 px-2.5 py-1 text-[0.72rem] font-medium text-white/78"
+                  >
+                    {item}
+                  </span>
+                ))}
+              </div>
+            </div>
+          ) : null}
+          {credits.length ? (
+            <div className="mt-4 rounded-[1rem] border border-white/10 bg-black/18 px-3.5 py-3">
+              <p className="text-[0.62rem] font-semibold uppercase tracking-[0.16em] text-white/54">
+                {language === "no" ? "Credits" : "Credits"}
+              </p>
+              <div className="mt-2 space-y-2">
+                {credits.map((credit) => (
+                  <div key={`${project.slug}-credit-${credit.role}-${credit.name}`} className="flex items-start justify-between gap-4 text-[0.8rem] leading-5">
+                    <span className="text-white/52">{credit.role}</span>
+                    <span className="text-right text-white/82">{credit.name}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          ) : null}
+          {quoteText ? (
+            <div className="mt-4 rounded-[1rem] border border-white/10 bg-[linear-gradient(180deg,rgba(255,255,255,0.08),rgba(255,255,255,0.03))] px-3.5 py-3">
+              <p className="text-[0.9rem] leading-6 text-white/78">&ldquo;{quoteText}&rdquo;</p>
+              {quoteAttribution ? (
+                <p className="mt-2 text-[0.68rem] font-semibold uppercase tracking-[0.16em] text-white/48">
+                  {quoteAttribution}
+                </p>
+              ) : null}
             </div>
           ) : null}
         </div>
