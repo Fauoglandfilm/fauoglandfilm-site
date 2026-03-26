@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { usePathname } from "next/navigation";
 import Script from "next/script";
 
@@ -23,6 +23,7 @@ declare global {
 
 function GoogleAnalyticsPageTracker() {
   const pathname = usePathname();
+  const lastTrackedPathRef = useRef<string | null>(null);
 
   useEffect(() => {
     if (!isProduction || typeof window === "undefined" || !pathname) {
@@ -31,9 +32,14 @@ function GoogleAnalyticsPageTracker() {
 
     const query = window.location.search;
     const pagePath = query ? `${pathname}${query}` : pathname;
+
     const sendPageView = () => {
       if (typeof window.gtag !== "function") {
         return false;
+      }
+
+      if (lastTrackedPathRef.current === pagePath) {
+        return true;
       }
 
       window.gtag("event", "page_view", {
@@ -43,11 +49,20 @@ function GoogleAnalyticsPageTracker() {
         page_referrer: document.referrer,
       });
 
+      lastTrackedPathRef.current = pagePath;
       return true;
     };
 
+    const handleGaReady = () => {
+      sendPageView();
+    };
+
     if (sendPageView()) {
-      return;
+      window.addEventListener("ga4-ready", handleGaReady);
+
+      return () => {
+        window.removeEventListener("ga4-ready", handleGaReady);
+      };
     }
 
     const retryTimeouts = [150, 500, 1200, 2500].map((delay) =>
@@ -56,8 +71,11 @@ function GoogleAnalyticsPageTracker() {
       }, delay),
     );
 
+    window.addEventListener("ga4-ready", handleGaReady);
+
     return () => {
       retryTimeouts.forEach((timeoutId) => window.clearTimeout(timeoutId));
+      window.removeEventListener("ga4-ready", handleGaReady);
     };
   }, [pathname]);
 
@@ -73,6 +91,9 @@ export function TrackingScripts() {
             id="ga4-script"
             src={`https://www.googletagmanager.com/gtag/js?id=${GA4_ID}`}
             strategy="afterInteractive"
+            onReady={() => {
+              window.dispatchEvent(new Event("ga4-ready"));
+            }}
           />
           <Script id="ga4" strategy="afterInteractive">
             {`
