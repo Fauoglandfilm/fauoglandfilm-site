@@ -979,7 +979,7 @@ export function WhyUsProofSection() {
                               height={logo.height}
                               className={cn(
                                 "block w-auto object-contain",
-                                useExpandedLogoSize ? "h-[3.3rem] max-w-[17rem]" : "h-[1.65rem] max-w-[8.5rem]",
+                                useExpandedLogoSize ? "h-[4.8rem] max-w-[22rem]" : "h-[1.65rem] max-w-[8.5rem]",
                               )}
                             />
                           ) : (
