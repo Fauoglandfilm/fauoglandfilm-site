@@ -960,6 +960,7 @@ export function WhyUsProofSection() {
           <div className="grid gap-4">
             {testimonials.map((testimonial, index) => {
               const logo = testimonialLogos.get(testimonial.company);
+              const useExpandedLogoSize = testimonial.company !== "Vikingmaxtrading";
 
               return (
                 <Reveal key={`${testimonial.company}-${testimonial.name}`} delay={0.04 * index} y={12}>
@@ -976,7 +977,10 @@ export function WhyUsProofSection() {
                               alt={testimonial.company}
                               width={logo.width}
                               height={logo.height}
-                              className="block h-[1.65rem] w-auto max-w-[8.5rem] object-contain"
+                              className={cn(
+                                "block w-auto object-contain",
+                                useExpandedLogoSize ? "h-[3.3rem] max-w-[17rem]" : "h-[1.65rem] max-w-[8.5rem]",
+                              )}
                             />
                           ) : (
                             <span className="text-[0.72rem] font-semibold uppercase tracking-[0.18em] text-[var(--muted)]">

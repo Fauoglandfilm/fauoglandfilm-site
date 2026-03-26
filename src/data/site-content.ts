@@ -928,12 +928,12 @@ export const caseStudies: CaseStudy[] = [
       en: "Fitness centre",
     },
     summary: {
-      no: "Tre korte filmer for annonser og sosiale medier, laget for å drive flere innmeldinger.",
-      en: "Three short films for ads and social media, built to drive more memberships.",
+      no: "10 filmer for annonser og sosiale medier, laget for å drive flere innmeldinger.",
+      en: "10 films for ads and social media, built to drive more memberships.",
     },
     goal: {
-      no: "Tre korte filmer klare for annonser og sosiale medier fra dag en.",
-      en: "Three short films ready for ads and social from day one.",
+      no: "10 filmer klare for annonser og sosiale medier fra dag en.",
+      en: "10 films ready for ads and social from day one.",
     },
     solution: {
       no: "Portrettfilmer med rask pacing, tydelig budskap og format tilpasset mobil og feed.",
