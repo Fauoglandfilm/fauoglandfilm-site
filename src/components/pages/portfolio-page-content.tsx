@@ -674,8 +674,6 @@ function PortfolioVideoModal({
     : language === "no"
       ? "Se festivaler, crew og leveranse"
       : "See festivals, crew and deliverables";
-  const infoPanelTopOffset = "calc(max(env(safe-area-inset-top),0.85rem) + 4.75rem)";
-  const infoPanelBottomOffset = "max(env(safe-area-inset-bottom),0.85rem)";
 
 
   useEffect(() => {
@@ -704,7 +702,7 @@ function PortfolioVideoModal({
       }}
     >
       <div
-        className="relative flex h-full max-h-full w-full items-center justify-center overflow-hidden bg-transparent"
+        className="relative flex h-full max-h-full w-full items-center justify-center bg-transparent"
         onClick={(event) => event.stopPropagation()}
       >
         <button
@@ -742,18 +740,14 @@ function PortfolioVideoModal({
 
         <div
           className={cn(
-            "pointer-events-none absolute inset-x-3 z-[2] flex min-h-0 max-h-[calc(100dvh-7rem)] flex-col overflow-hidden rounded-[1.45rem] border border-white/12 bg-[linear-gradient(180deg,rgba(255,255,255,0.14),rgba(255,255,255,0.05))] text-white shadow-[0_24px_60px_rgba(0,0,0,0.24)] backdrop-blur-xl transition duration-300 sm:inset-x-auto sm:left-[max(env(safe-area-inset-left),1rem)] sm:w-[27rem] sm:max-h-[calc(100dvh-7.25rem)]",
+            "pointer-events-none absolute inset-x-3 bottom-[max(env(safe-area-inset-bottom),0.85rem)] z-[2] flex h-[min(34rem,calc(100dvh-7rem))] min-h-0 max-h-[calc(100dvh-7rem)] flex-col overflow-hidden rounded-[1.45rem] border border-white/12 bg-[linear-gradient(180deg,rgba(255,255,255,0.14),rgba(255,255,255,0.05))] text-white shadow-[0_24px_60px_rgba(0,0,0,0.24)] backdrop-blur-xl transition duration-300 sm:inset-x-auto sm:bottom-auto sm:left-[max(env(safe-area-inset-left),1rem)] sm:top-[calc(max(env(safe-area-inset-top),1rem)+4.75rem)] sm:h-[min(42rem,calc(100dvh-7.25rem))] sm:w-[27rem] sm:max-h-[calc(100dvh-7.25rem)]",
             isInfoOpen ? "translate-y-0 opacity-100" : "translate-y-4 opacity-0 sm:-translate-x-3 sm:translate-y-0",
             isInfoOpen && "pointer-events-auto",
           )}
           onClick={(event) => event.stopPropagation()}
-          style={{
-            top: infoPanelTopOffset,
-            bottom: infoPanelBottomOffset,
-          }}
         >
           <div
-            className="portfolio-modal-scroll min-h-0 flex-1 overflow-y-auto overscroll-contain px-4 py-4 pr-3.5 touch-pan-y sm:px-4 sm:py-4 sm:pr-3"
+            className="portfolio-modal-scroll h-full min-h-0 flex-1 overflow-y-auto overscroll-contain px-4 py-4 pr-3.5 touch-pan-y sm:px-4 sm:py-4 sm:pr-3"
             style={{
               WebkitOverflowScrolling: "touch",
               paddingBottom: "calc(1rem + env(safe-area-inset-bottom))",
