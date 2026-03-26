@@ -680,7 +680,7 @@ function PortfolioVideoModal({
 
   return (
     <div
-      className="fixed inset-0 z-[80] flex items-start justify-center bg-[#040507]/72 p-0 backdrop-blur-md sm:p-5 lg:items-center lg:p-8"
+      className="fixed inset-0 z-[80] flex items-start justify-center overflow-hidden overscroll-none bg-[#040507]/72 p-0 backdrop-blur-md sm:p-5 lg:items-center lg:p-8"
       role="dialog"
       aria-modal="true"
       aria-label={title}
@@ -729,11 +729,14 @@ function PortfolioVideoModal({
 
         <div
           className={cn(
-            "pointer-events-none absolute inset-x-3 bottom-[max(env(safe-area-inset-bottom),0.85rem)] z-[2] max-h-[min(35rem,calc(100svh-8.5rem))] overflow-y-auto rounded-[1.45rem] border border-white/12 bg-[linear-gradient(180deg,rgba(255,255,255,0.14),rgba(255,255,255,0.05))] p-4 text-white shadow-[0_24px_60px_rgba(0,0,0,0.24)] backdrop-blur-xl transition duration-300 sm:inset-x-auto sm:left-[max(env(safe-area-inset-left),1rem)] sm:top-[calc(max(env(safe-area-inset-top),1rem)+4.75rem)] sm:bottom-auto sm:w-[27rem] sm:max-h-[calc(100svh-8rem)]",
+            "portfolio-modal-scroll pointer-events-none absolute inset-x-3 bottom-[max(env(safe-area-inset-bottom),0.85rem)] z-[2] max-h-[min(35rem,calc(100svh-8.5rem))] overflow-y-auto overscroll-contain rounded-[1.45rem] border border-white/12 bg-[linear-gradient(180deg,rgba(255,255,255,0.14),rgba(255,255,255,0.05))] p-4 pb-[calc(1rem+env(safe-area-inset-bottom))] text-white shadow-[0_24px_60px_rgba(0,0,0,0.24)] backdrop-blur-xl transition duration-300 touch-pan-y sm:inset-x-auto sm:left-[max(env(safe-area-inset-left),1rem)] sm:top-[calc(max(env(safe-area-inset-top),1rem)+4.75rem)] sm:bottom-auto sm:w-[27rem] sm:max-h-[calc(100svh-8rem)] sm:pb-4",
             isInfoOpen ? "translate-y-0 opacity-100" : "translate-y-4 opacity-0 sm:-translate-x-3 sm:translate-y-0",
             isInfoOpen && "pointer-events-auto",
           )}
           onClick={(event) => event.stopPropagation()}
+          style={{
+            WebkitOverflowScrolling: "touch",
+          }}
         >
           <p className="text-[0.64rem] font-semibold uppercase tracking-[0.18em] text-white/54">{project.client}</p>
           <h2 className="mt-2 text-[1.2rem] font-semibold tracking-[-0.04em] text-white sm:text-[1.34rem]">{title}</h2>
