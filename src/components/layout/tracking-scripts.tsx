@@ -25,18 +25,40 @@ function GoogleAnalyticsPageTracker() {
   const pathname = usePathname();
 
   useEffect(() => {
-    if (!isProduction || typeof window === "undefined" || typeof window.gtag !== "function") {
+    if (!isProduction || typeof window === "undefined" || !pathname) {
       return;
     }
 
     const query = window.location.search;
     const pagePath = query ? `${pathname}${query}` : pathname;
+    const sendPageView = () => {
+      if (typeof window.gtag !== "function") {
+        return false;
+      }
 
-    window.gtag("event", "page_view", {
-      page_title: document.title,
-      page_path: pagePath,
-      page_location: window.location.href,
-    });
+      window.gtag("event", "page_view", {
+        page_title: document.title,
+        page_path: pagePath,
+        page_location: window.location.href,
+        page_referrer: document.referrer,
+      });
+
+      return true;
+    };
+
+    if (sendPageView()) {
+      return;
+    }
+
+    const retryTimeouts = [150, 500, 1200, 2500].map((delay) =>
+      window.setTimeout(() => {
+        sendPageView();
+      }, delay),
+    );
+
+    return () => {
+      retryTimeouts.forEach((timeoutId) => window.clearTimeout(timeoutId));
+    };
   }, [pathname]);
 
   return null;
@@ -47,11 +69,15 @@ export function TrackingScripts() {
     <>
       {isProduction ? (
         <>
-          <Script src={`https://www.googletagmanager.com/gtag/js?id=${GA4_ID}`} strategy="afterInteractive" />
+          <Script
+            id="ga4-script"
+            src={`https://www.googletagmanager.com/gtag/js?id=${GA4_ID}`}
+            strategy="afterInteractive"
+          />
           <Script id="ga4" strategy="afterInteractive">
             {`
               window.dataLayer = window.dataLayer || [];
-              function gtag(){dataLayer.push(arguments);}
+              function gtag(){window.dataLayer.push(arguments);}
               window.gtag = gtag;
               gtag('js', new Date());
               gtag('config', '${GA4_ID}', { send_page_view: false });
