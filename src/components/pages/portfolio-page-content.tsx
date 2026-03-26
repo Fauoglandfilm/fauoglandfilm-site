@@ -444,6 +444,13 @@ function PortfolioProjectCard({
   const infoPoints = getPortfolioProjectInfoPoints(project, group, language);
   const [prefersTapReveal, setPrefersTapReveal] = useState(false);
   const [isTapInfoVisible, setIsTapInfoVisible] = useState(false);
+  const overlayInstruction = prefersTapReveal
+    ? language === "no"
+      ? "Trykk igjen for å åpne"
+      : "Tap again to open"
+    : language === "no"
+      ? "Hold over for info"
+      : "Hover for info";
 
   useEffect(() => {
     const mediaQuery = window.matchMedia("(hover: none), (pointer: coarse)");
@@ -497,7 +504,7 @@ function PortfolioProjectCard({
           <button
             type="button"
             onClick={handleCardOpen}
-            className="card-trigger absolute inset-0 z-[3]"
+            className="card-trigger absolute inset-0 z-[5]"
             aria-label={title}
           />
         ) : null}
@@ -517,55 +524,68 @@ function PortfolioProjectCard({
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(255,255,255,0.06),transparent_32%),linear-gradient(180deg,rgba(8,8,8,0.01),rgba(8,8,8,0.08)_46%,rgba(8,8,8,0.52)_100%)]" />
 
         {group ? (
-          <span className="absolute left-4 top-4 z-[2] rounded-full border border-white/12 bg-black/24 px-3 py-1.5 text-[0.62rem] font-semibold uppercase tracking-[0.2em] text-white/78">
+          <span
+            className={cn(
+              "absolute left-4 top-4 z-[2] rounded-full border border-white/12 bg-black/24 px-3 py-1.5 text-[0.62rem] font-semibold uppercase tracking-[0.2em] text-white/78 transition-opacity duration-300",
+              prefersTapReveal
+                ? isTapInfoVisible
+                  ? "opacity-0"
+                  : "opacity-100"
+                : "opacity-100 group-hover:opacity-0 group-focus-within:opacity-0",
+            )}
+          >
             {resolveLocalizedValue(group.title, language)}
           </span>
         ) : null}
 
         <div
           className={cn(
-            "pointer-events-none absolute inset-x-3 bottom-3 z-[2] rounded-[1.35rem] border border-white/12 bg-[linear-gradient(180deg,rgba(255,255,255,0.14),rgba(255,255,255,0.05))] p-4 text-white shadow-[0_18px_42px_rgba(0,0,0,0.22)] backdrop-blur-xl transition duration-300 sm:p-5",
+            "pointer-events-none absolute inset-0 z-[4] flex items-end p-3 sm:p-4",
             prefersTapReveal
               ? isTapInfoVisible
-                ? "translate-y-0 opacity-100"
-                : "translate-y-3 opacity-0"
-              : "translate-y-3 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 group-focus-within:translate-y-0 group-focus-within:opacity-100",
+                ? "opacity-100"
+                : "opacity-0"
+              : "opacity-0 group-hover:opacity-100 group-focus-within:opacity-100",
           )}
         >
-          <p className="text-[0.66rem] font-semibold uppercase tracking-[0.18em] text-white/56">
-            {project.client}
-          </p>
-          <h3 className="mt-2 text-[1.08rem] font-semibold leading-[1.06] tracking-[-0.03em] text-white sm:text-[1.16rem]">
-            {title}
-          </h3>
-          <p className="mt-2 line-clamp-2 text-[0.95rem] leading-6 text-white/80 sm:text-[1rem]">
-            {summary}
-          </p>
-          {infoPoints.length ? (
-            <div className="mt-3 flex flex-wrap gap-2.5">
-              {infoPoints.map((point) => (
-                <span
-                  key={`${project.slug}-${point}`}
-                  className="rounded-full border border-white/12 bg-black/20 px-3 py-1.5 text-[0.64rem] font-semibold uppercase tracking-[0.15em] text-white/76"
-                >
-                  {point}
-                </span>
-              ))}
-            </div>
-          ) : null}
-          <p className="mt-3 text-[0.68rem] font-semibold uppercase tracking-[0.18em] text-white/52">
-            {prefersTapReveal
-              ? language === "no"
-                ? "Trykk igjen for å åpne"
-                : "Tap again to open"
-              : language === "no"
-                ? "Hold over for info"
-                : "Hover for info"}
-          </p>
+          <div className="absolute inset-0 rounded-[1.5rem] bg-[linear-gradient(180deg,rgba(6,7,10,0.04),rgba(6,7,10,0.28)_46%,rgba(6,7,10,0.72)_100%)]" />
+          <div className="relative w-full rounded-[1.35rem] border border-white/12 bg-[linear-gradient(180deg,rgba(255,255,255,0.14),rgba(255,255,255,0.05))] p-4 text-white shadow-[0_18px_42px_rgba(0,0,0,0.22)] backdrop-blur-xl sm:p-5">
+            <h3 className="text-[1.08rem] font-semibold leading-[1.08] tracking-[-0.03em] text-white sm:text-[1.16rem]">
+              {title}
+            </h3>
+            <p className="mt-2 line-clamp-2 text-[0.94rem] leading-6 text-white/82 sm:text-[0.98rem]">
+              {summary}
+            </p>
+            {infoPoints.length ? (
+              <div className="mt-3 flex flex-wrap gap-2">
+                {infoPoints.map((point) => (
+                  <span
+                    key={`${project.slug}-${point}`}
+                    className="rounded-full border border-white/12 bg-black/20 px-2.5 py-1 text-[0.62rem] font-semibold uppercase tracking-[0.15em] text-white/76"
+                  >
+                    {point}
+                  </span>
+                ))}
+              </div>
+            ) : null}
+            <p className="mt-3 text-[0.68rem] font-semibold uppercase tracking-[0.18em] text-white/52">
+              {overlayInstruction}
+            </p>
+          </div>
         </div>
 
         <div className="absolute inset-x-0 bottom-0 z-[2] p-4 text-white sm:p-5">
-          <div className="flex flex-wrap items-center gap-2 text-[0.64rem] font-semibold uppercase tracking-[0.2em] text-white/60">
+          <div
+            className={cn(
+              "transition-opacity duration-300",
+              prefersTapReveal
+                ? isTapInfoVisible
+                  ? "opacity-0"
+                  : "opacity-100"
+                : "opacity-100 group-hover:opacity-0 group-focus-within:opacity-0",
+            )}
+          >
+            <div className="flex flex-wrap items-center gap-2 text-[0.64rem] font-semibold uppercase tracking-[0.2em] text-white/60">
             <span>{project.client}</span>
             {project.year ? (
               <>
@@ -573,10 +593,11 @@ function PortfolioProjectCard({
                 <span>{project.year}</span>
               </>
             ) : null}
+            </div>
+            <h3 className="mt-3 max-w-[18ch] text-[1.34rem] font-semibold tracking-[-0.04em] text-white sm:text-[1.56rem]">
+              {title}
+            </h3>
           </div>
-          <h3 className="mt-3 max-w-[18ch] text-[1.34rem] font-semibold tracking-[-0.04em] text-white sm:text-[1.56rem]">
-            {title}
-          </h3>
         </div>
       </div>
     </article>
