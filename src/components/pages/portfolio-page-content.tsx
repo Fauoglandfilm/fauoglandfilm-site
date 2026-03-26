@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import { Info } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 
 import { PreviewMedia } from "@/components/media/preview-media";
@@ -111,6 +112,20 @@ function resolvePortfolioModalMedia(project: PortfolioProject): PortfolioModalMe
   }
 
   return null;
+}
+
+function getPortfolioProjectInfoPoints(
+  project: PortfolioProject,
+  group: PortfolioGroup | undefined,
+  language: "no" | "en",
+) {
+  const points = [
+    resolveLocalizedValue(project.format, language),
+    project.year,
+    group ? resolveLocalizedValue(group.title, language) : null,
+  ].filter((value): value is string => Boolean(value));
+
+  return points.slice(0, 2);
 }
 
 export function PortfolioPageContent({
@@ -390,6 +405,7 @@ export function PortfolioPageContent({
 
       {activeProject ? (
         <PortfolioVideoModal
+          key={activeProject.slug}
           project={activeProject}
           onClose={() => setActiveProject(null)}
         />
@@ -412,6 +428,41 @@ function PortfolioProjectCard({
   const { language } = useSitePreferences();
   const isWide = layout === "wide";
   const canOpen = Boolean(project.video || project.externalVideo || project.image);
+  const title = resolveLocalizedValue(project.title, language);
+  const summary = resolveLocalizedValue(project.summary, language);
+  const infoPoints = getPortfolioProjectInfoPoints(project, group, language);
+  const [prefersTapReveal, setPrefersTapReveal] = useState(false);
+  const [isTapInfoVisible, setIsTapInfoVisible] = useState(false);
+
+  useEffect(() => {
+    const mediaQuery = window.matchMedia("(hover: none), (pointer: coarse)");
+    const syncPreference = () => setPrefersTapReveal(mediaQuery.matches);
+
+    syncPreference();
+
+    if (typeof mediaQuery.addEventListener === "function") {
+      mediaQuery.addEventListener("change", syncPreference);
+      return () => mediaQuery.removeEventListener("change", syncPreference);
+    }
+
+    mediaQuery.addListener(syncPreference);
+    return () => mediaQuery.removeListener(syncPreference);
+  }, []);
+
+
+  const handleCardOpen = () => {
+    if (!canOpen) {
+      return;
+    }
+
+    if (prefersTapReveal && !isTapInfoVisible) {
+      setIsTapInfoVisible(true);
+      return;
+    }
+
+    setIsTapInfoVisible(false);
+    onOpen(project);
+  };
 
   return (
     <article
@@ -419,6 +470,7 @@ function PortfolioProjectCard({
         "card-surface group overflow-hidden rounded-[1.95rem] shadow-[0_28px_90px_rgba(0,0,0,0.18)]",
         isWide && "md:col-span-2",
       )}
+      onMouseLeave={prefersTapReveal ? undefined : () => setIsTapInfoVisible(false)}
     >
       <div
         className={cn(
@@ -433,9 +485,9 @@ function PortfolioProjectCard({
         {canOpen ? (
           <button
             type="button"
-            onClick={() => onOpen(project)}
+            onClick={handleCardOpen}
             className="card-trigger absolute inset-0 z-[3]"
-            aria-label={resolveLocalizedValue(project.title, language)}
+            aria-label={title}
           />
         ) : null}
 
@@ -459,6 +511,48 @@ function PortfolioProjectCard({
           </span>
         ) : null}
 
+        <div
+          className={cn(
+            "pointer-events-none absolute inset-x-3 bottom-3 z-[2] rounded-[1.35rem] border border-white/12 bg-[linear-gradient(180deg,rgba(255,255,255,0.14),rgba(255,255,255,0.05))] p-4 text-white shadow-[0_18px_42px_rgba(0,0,0,0.22)] backdrop-blur-xl transition duration-300",
+            prefersTapReveal
+              ? isTapInfoVisible
+                ? "translate-y-0 opacity-100"
+                : "translate-y-3 opacity-0"
+              : "translate-y-3 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 group-focus-within:translate-y-0 group-focus-within:opacity-100",
+          )}
+        >
+          <p className="text-[0.64rem] font-semibold uppercase tracking-[0.18em] text-white/56">
+            {project.client}
+          </p>
+          <h3 className="mt-2 text-[1rem] font-semibold leading-[1.06] tracking-[-0.03em] text-white sm:text-[1.08rem]">
+            {title}
+          </h3>
+          <p className="mt-2 truncate text-[0.88rem] text-white/76 sm:text-[0.92rem]">
+            {summary}
+          </p>
+          {infoPoints.length ? (
+            <div className="mt-3 flex flex-wrap gap-2">
+              {infoPoints.map((point) => (
+                <span
+                  key={`${project.slug}-${point}`}
+                  className="rounded-full border border-white/12 bg-black/20 px-2.5 py-1 text-[0.62rem] font-semibold uppercase tracking-[0.16em] text-white/72"
+                >
+                  {point}
+                </span>
+              ))}
+            </div>
+          ) : null}
+          <p className="mt-3 text-[0.68rem] font-semibold uppercase tracking-[0.18em] text-white/52">
+            {prefersTapReveal
+              ? language === "no"
+                ? "Trykk igjen for å åpne"
+                : "Tap again to open"
+              : language === "no"
+                ? "Hold over for info"
+                : "Hover for info"}
+          </p>
+        </div>
+
         <div className="absolute inset-x-0 bottom-0 z-[2] p-4 text-white sm:p-5">
           <div className="flex flex-wrap items-center gap-2 text-[0.64rem] font-semibold uppercase tracking-[0.2em] text-white/60">
             <span>{project.client}</span>
@@ -470,7 +564,7 @@ function PortfolioProjectCard({
             ) : null}
           </div>
           <h3 className="mt-3 max-w-[18ch] text-[1.34rem] font-semibold tracking-[-0.04em] text-white sm:text-[1.56rem]">
-            {resolveLocalizedValue(project.title, language)}
+            {title}
           </h3>
         </div>
       </div>
@@ -487,10 +581,16 @@ function PortfolioVideoModal({
 }) {
   const { language } = useSitePreferences();
   const title = resolveLocalizedValue(project.title, language);
+  const summary = resolveLocalizedValue(project.summary, language);
+  const result = project.result ? resolveLocalizedValue(project.result, language) : null;
+  const modalGroup = getPortfolioGroup(project.group);
+  const modalInfoPoints = getPortfolioProjectInfoPoints(project, modalGroup, language);
   const videoRef = useRef<HTMLVideoElement | null>(null);
+  const [isInfoOpen, setIsInfoOpen] = useState(false);
   const modalLabel = language === "no" ? "Lukk video" : "Close video";
   const modalMedia = resolvePortfolioModalMedia(project);
   const isDirectVideo = modalMedia?.kind === "direct";
+
 
   useEffect(() => {
     const node = videoRef.current;
@@ -521,12 +621,59 @@ function PortfolioVideoModal({
         className="relative flex h-[100svh] w-full items-center justify-center overflow-hidden bg-transparent"
         onClick={(event) => event.stopPropagation()}
       >
+        <button
+          type="button"
+          onClick={(event) => {
+            event.stopPropagation();
+            setIsInfoOpen((current) => !current);
+          }}
+          className="absolute left-[max(env(safe-area-inset-left),0.85rem)] top-[max(env(safe-area-inset-top),0.85rem)] z-[3] inline-flex h-11 items-center gap-2 rounded-full border border-white/14 bg-white/10 px-3.5 text-[0.72rem] font-semibold uppercase tracking-[0.16em] text-white shadow-[0_18px_42px_rgba(0,0,0,0.2)] backdrop-blur-xl transition duration-300 hover:border-white/22 hover:bg-white/14 sm:left-[max(env(safe-area-inset-left),1rem)] sm:top-[max(env(safe-area-inset-top),1rem)]"
+          aria-expanded={isInfoOpen}
+          aria-label={language === "no" ? "Vis prosjektinfo" : "Show project info"}
+        >
+          <Info className="h-4 w-4" />
+          <span>{language === "no" ? "Info" : "Info"}</span>
+        </button>
+
         <OverlayCloseButton
           onClick={onClose}
           label={modalLabel}
           side="right"
           className="top-[max(env(safe-area-inset-top),0.85rem)] right-[max(env(safe-area-inset-right),0.85rem)] h-12 w-12 sm:top-[max(env(safe-area-inset-top),1rem)] sm:right-[max(env(safe-area-inset-right),1rem)] sm:h-11 sm:w-11"
         />
+
+        <div
+          className={cn(
+            "pointer-events-none absolute inset-x-3 bottom-[max(env(safe-area-inset-bottom),0.85rem)] z-[2] rounded-[1.45rem] border border-white/12 bg-[linear-gradient(180deg,rgba(255,255,255,0.14),rgba(255,255,255,0.05))] p-4 text-white shadow-[0_24px_60px_rgba(0,0,0,0.24)] backdrop-blur-xl transition duration-300 sm:inset-x-auto sm:left-[max(env(safe-area-inset-left),1rem)] sm:top-[calc(max(env(safe-area-inset-top),1rem)+3.4rem)] sm:bottom-auto sm:w-[22rem]",
+            isInfoOpen ? "translate-y-0 opacity-100" : "translate-y-4 opacity-0 sm:-translate-x-3 sm:translate-y-0",
+            isInfoOpen && "pointer-events-auto",
+          )}
+          onClick={(event) => event.stopPropagation()}
+        >
+          <p className="text-[0.64rem] font-semibold uppercase tracking-[0.18em] text-white/54">{project.client}</p>
+          <h2 className="mt-2 text-[1.2rem] font-semibold tracking-[-0.04em] text-white sm:text-[1.34rem]">{title}</h2>
+          <p className="mt-3 text-[0.92rem] leading-6 text-white/76">{summary}</p>
+          {modalInfoPoints.length ? (
+            <div className="mt-4 flex flex-wrap gap-2">
+              {modalInfoPoints.map((point) => (
+                <span
+                  key={`${project.slug}-modal-${point}`}
+                  className="rounded-full border border-white/12 bg-black/20 px-2.5 py-1 text-[0.62rem] font-semibold uppercase tracking-[0.16em] text-white/74"
+                >
+                  {point}
+                </span>
+              ))}
+            </div>
+          ) : null}
+          {result ? (
+            <div className="mt-4 rounded-[1rem] border border-white/10 bg-black/18 px-3.5 py-3">
+              <p className="text-[0.62rem] font-semibold uppercase tracking-[0.16em] text-white/54">
+                {language === "no" ? "Nøkkelinfo" : "Key info"}
+              </p>
+              <p className="mt-2 text-[0.88rem] leading-6 text-white/74">{result}</p>
+            </div>
+          ) : null}
+        </div>
 
         <div className="relative flex h-full w-full items-center justify-center px-0 pt-16 sm:px-6 sm:pt-16 lg:px-10 lg:pt-10">
           {modalMedia?.kind === "direct" ? (
