@@ -1,27 +1,67 @@
+"use client";
+
+import { useEffect } from "react";
+import { usePathname } from "next/navigation";
 import Script from "next/script";
 
-const GA4_ID = process.env.NEXT_PUBLIC_GA4_ID;
+const GA4_ID = "G-D813C0VRPC";
 const META_PIXEL_ID = process.env.NEXT_PUBLIC_META_PIXEL_ID;
 const LINKEDIN_PARTNER_ID = process.env.NEXT_PUBLIC_LINKEDIN_PARTNER_ID;
+const isProduction = process.env.NODE_ENV === "production";
+
+declare global {
+  interface Window {
+    dataLayer: unknown[];
+    gtag?: (...args: unknown[]) => void;
+    lintrk?: ((event: string, payload?: Record<string, unknown>) => void) & {
+      q?: unknown[];
+    };
+    _linkedin_data_partner_ids?: string[];
+    _linkedin_partner_id?: string;
+  }
+}
+
+function GoogleAnalyticsPageTracker() {
+  const pathname = usePathname();
+
+  useEffect(() => {
+    if (!isProduction || typeof window === "undefined" || typeof window.gtag !== "function") {
+      return;
+    }
+
+    const query = window.location.search;
+    const pagePath = query ? `${pathname}${query}` : pathname;
+
+    window.gtag("event", "page_view", {
+      page_title: document.title,
+      page_path: pagePath,
+      page_location: window.location.href,
+    });
+  }, [pathname]);
+
+  return null;
+}
 
 export function TrackingScripts() {
   return (
     <>
-      {GA4_ID ? (
+      {isProduction ? (
         <>
           <Script src={`https://www.googletagmanager.com/gtag/js?id=${GA4_ID}`} strategy="afterInteractive" />
           <Script id="ga4" strategy="afterInteractive">
             {`
               window.dataLayer = window.dataLayer || [];
               function gtag(){dataLayer.push(arguments);}
+              window.gtag = gtag;
               gtag('js', new Date());
-              gtag('config', '${GA4_ID}');
+              gtag('config', '${GA4_ID}', { send_page_view: false });
             `}
           </Script>
+          <GoogleAnalyticsPageTracker />
         </>
       ) : null}
 
-      {META_PIXEL_ID ? (
+      {isProduction && META_PIXEL_ID ? (
         <Script id="meta-pixel" strategy="afterInteractive">
           {`
             !function(f,b,e,v,n,t,s)
@@ -38,12 +78,12 @@ export function TrackingScripts() {
         </Script>
       ) : null}
 
-      {LINKEDIN_PARTNER_ID ? (
+      {isProduction && LINKEDIN_PARTNER_ID ? (
         <Script id="linkedin-insight" strategy="afterInteractive">
           {`
-            _linkedin_partner_id = "${LINKEDIN_PARTNER_ID}";
+            window._linkedin_partner_id = "${LINKEDIN_PARTNER_ID}";
             window._linkedin_data_partner_ids = window._linkedin_data_partner_ids || [];
-            window._linkedin_data_partner_ids.push(_linkedin_partner_id);
+            window._linkedin_data_partner_ids.push(window._linkedin_partner_id);
             (function(l) {
               if (!l) {
                 window.lintrk = function(a,b){window.lintrk.q.push([a,b])};
