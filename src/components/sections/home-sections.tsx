@@ -110,7 +110,6 @@ export function HeroSection() {
   const [hasVideoError, setHasVideoError] = useState(false);
   const [isPosterVisible, setIsPosterVisible] = useState(true);
   const [shouldRenderHeroVideo, setShouldRenderHeroVideo] = useState(false);
-  const [isMobileViewport, setIsMobileViewport] = useState(false);
 
   const eyebrow =
     language === "no"
@@ -118,32 +117,12 @@ export function HeroSection() {
       : "Oslo / Commercial Film / Production";
   const secondaryCta = language === "no" ? "Portefølje" : "Portfolio";
   const heroTitle = resolveLocalizedValue(homeHeroContent.title, language);
-  const heroVideoSrc =
-    isMobileViewport && heroVideo.videoType === "direct"
-      ? heroVideo.mobileSrc ?? heroVideo.src
-      : heroVideo.src;
-  const heroPosterSrc =
-    isMobileViewport && heroVideo.videoType === "direct"
-      ? heroVideo.mobilePoster ?? heroVideo.poster ?? ""
-      : heroVideo.poster ?? "";
+  const heroVideoSrc = heroVideo.src;
+  const heroPosterSrc = heroVideo.poster ?? "";
   const revealVideoFrame = () => {
     setHasVideoError(false);
     setIsPosterVisible(false);
   };
-
-  useEffect(() => {
-    const mediaQuery = window.matchMedia("(max-width: 767px)");
-    const syncViewport = () => {
-      setIsMobileViewport(mediaQuery.matches);
-    };
-
-    syncViewport();
-    mediaQuery.addEventListener("change", syncViewport);
-
-    return () => {
-      mediaQuery.removeEventListener("change", syncViewport);
-    };
-  }, []);
 
   useEffect(() => {
     if (shouldRenderHeroVideo) {
@@ -328,9 +307,6 @@ export function HeroSection() {
               setIsPosterVisible(true);
             }}
           >
-            {heroVideo.videoType === "direct" && heroVideo.mobileSrc ? (
-              <source media="(max-width: 767px)" src={heroVideo.mobileSrc} type="video/mp4" />
-            ) : null}
             <source src={heroVideoSrc} type="video/mp4" />
           </video>
         ) : null}
