@@ -249,7 +249,7 @@ function ServiceMenuCard({ service, index }: { service: ServiceArea; index: numb
       style={cardStyle}
     >
       <motion.div
-        className="relative flex h-full w-[85vw] min-w-[21.5rem] max-w-[26.25rem] flex-col overflow-hidden rounded-[1.35rem] border border-white/12 bg-[linear-gradient(180deg,rgba(255,255,255,0.12),rgba(255,255,255,0.035)_48%,rgba(255,255,255,0.05)_100%)] shadow-[inset_0_1px_0_rgba(255,255,255,0.12),0_28px_72px_rgba(2,6,12,0.34)] backdrop-blur-[30px] will-change-transform sm:w-[26.25rem] sm:min-w-[26.25rem] sm:max-w-[26.25rem] xl:w-[32.5rem] xl:min-w-[32.5rem] xl:max-w-[32.5rem]"
+        className="relative flex h-full w-[85vw] min-w-[19rem] max-w-[23rem] flex-col overflow-hidden rounded-[1.2rem] border border-white/12 bg-[linear-gradient(180deg,rgba(255,255,255,0.12),rgba(255,255,255,0.035)_48%,rgba(255,255,255,0.05)_100%)] shadow-[inset_0_1px_0_rgba(255,255,255,0.12),0_24px_56px_rgba(2,6,12,0.3)] backdrop-blur-[30px] will-change-transform sm:w-[23rem] sm:min-w-[23rem] sm:max-w-[23rem] xl:w-[28rem] xl:min-w-[28rem] xl:max-w-[28rem]"
         whileHover={
           shouldReduceMotion
             ? undefined
@@ -283,16 +283,16 @@ function ServiceMenuCard({ service, index }: { service: ServiceArea; index: numb
                 }
           }
         />
-        <div className="relative flex h-full flex-col p-4 sm:p-5">
-          <div className="relative overflow-hidden rounded-[1.15rem] border border-white/10 bg-[radial-gradient(circle_at_top,rgba(255,255,255,0.08),transparent_35%),linear-gradient(180deg,rgba(5,8,14,0.68),rgba(7,11,18,0.94))]">
-            <div className="pointer-events-none absolute left-4 top-4 z-[3] inline-flex items-center gap-2 rounded-full border border-white/12 bg-black/18 px-3 py-1.5 backdrop-blur-2xl">
+        <div className="relative flex h-full flex-col p-3 sm:p-3.5">
+          <div className="relative overflow-hidden rounded-[1rem] bg-white/[0.035] shadow-[inset_0_1px_0_rgba(255,255,255,0.08),0_18px_36px_rgba(0,0,0,0.12)]">
+            <div className="pointer-events-none absolute left-2.5 top-2.5 z-[3] inline-flex items-center gap-1.75 rounded-full border border-white/12 bg-black/14 px-2.5 py-1.1 backdrop-blur-2xl">
               <Icon className="h-3.5 w-3.5 text-[color:var(--accent)]" />
-              <span className="text-[0.64rem] font-semibold uppercase tracking-[0.18em] text-white/66">
+              <span className="text-[0.58rem] font-semibold uppercase tracking-[0.16em] text-white/66">
                 {eyebrow}
               </span>
             </div>
             <motion.div
-              className="relative aspect-[4/3] w-full"
+              className="relative aspect-[1.28/1] w-full"
               style={
                 shouldReduceMotion
                   ? undefined
@@ -310,51 +310,51 @@ function ServiceMenuCard({ service, index }: { service: ServiceArea; index: numb
                 mediaFit={mediaConfig.mediaFit}
                 previewBehavior={usesDronePreview ? "always" : video ? "hover-or-viewport" : "static"}
                 className="absolute inset-0"
-                sizes="(min-width: 1536px) 32.5rem, (min-width: 640px) 26.25rem, 85vw"
+                sizes="(min-width: 1536px) 28rem, (min-width: 640px) 23rem, 85vw"
                 rootMargin="180px 0px -12% 0px"
                 inViewThreshold={0.22}
                 priority={usesDronePreview}
-                posterClassName="transition duration-500 ease-out group-hover:scale-[1.03]"
+                posterClassName="transition duration-500 ease-out group-hover:scale-[1.02]"
                 previewClassName="transition duration-500 ease-out"
               />
             </motion.div>
-            <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(4,6,10,0.02),rgba(4,6,10,0.18)_38%,rgba(4,6,10,0.62)_100%)]" />
+            <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(255,255,255,0.02),rgba(4,6,10,0.03)_30%,rgba(4,6,10,0.16)_100%)]" />
           </div>
 
-          <div className="relative mt-4 flex flex-1 flex-col">
-            <div className="space-y-3">
+          <div className="relative mt-2.75 flex flex-1 flex-col">
+            <div className="space-y-2">
               <div className="flex items-start justify-between gap-3">
-                <h3 className="max-w-[10ch] text-[1.55rem] font-semibold tracking-[-0.05em] text-white sm:text-[1.7rem]">
+                <h3 className="max-w-[10ch] text-[1.28rem] font-semibold leading-[0.95] tracking-[-0.05em] text-white sm:text-[1.42rem]">
                   {title}
                 </h3>
-                <ArrowUpRight className="mt-1 h-4.5 w-4.5 shrink-0 text-white/34 transition duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-[color:var(--accent)]" />
+                <ArrowUpRight className="mt-0.5 h-4 w-4 shrink-0 text-white/34 transition duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-[color:var(--accent)]" />
               </div>
-              <p className="max-w-[28ch] text-[0.95rem] leading-6 text-white/78">
+              <p className="max-w-[24ch] text-[0.84rem] leading-5.25 text-white/78">
                 {subline}
               </p>
             </div>
 
-            <div className="mt-4 flex flex-wrap gap-2">
+            <div className="mt-2.75 flex flex-wrap gap-1.25">
               {[purposeChip, budgetChip, timelineChip].map((chip) => (
                 <span
                   key={`${service.slug}-${chip}`}
-                  className="rounded-full border border-white/10 bg-white/[0.05] px-3 py-1.5 text-[0.68rem] font-medium tracking-[0.01em] text-white/74 backdrop-blur-xl"
+                  className="rounded-full border border-white/10 bg-white/[0.05] px-2.25 py-1 text-[0.58rem] font-medium tracking-[0.01em] text-white/74 backdrop-blur-xl"
                 >
                   {chip}
                 </span>
               ))}
             </div>
 
-            <ul className="mt-5 space-y-2.5 text-sm leading-6 text-white/70">
+            <ul className="mt-3 space-y-1.25 text-[0.84rem] leading-5 text-white/70">
               {deliverables.map((item) => (
-                <li key={`${service.slug}-${item}`} className="flex items-start gap-2.5">
-                  <span className="mt-2 h-1.5 w-1.5 rounded-full bg-[color:var(--accent)]/86" />
+                <li key={`${service.slug}-${item}`} className="flex items-start gap-2">
+                  <span className="mt-1.5 h-1.25 w-1.25 rounded-full bg-[color:var(--accent)]/86" />
                   <span>{item}</span>
                 </li>
               ))}
             </ul>
 
-            <div className="mt-auto flex flex-col gap-2.5 pt-6">
+            <div className="mt-auto flex flex-col gap-1.75 pt-3.5">
               <ButtonLink
                 href={service.href}
                 size="compact"
@@ -364,10 +364,10 @@ function ServiceMenuCard({ service, index }: { service: ServiceArea; index: numb
               </ButtonLink>
               <Link
                 href={secondaryHref}
-                className="inline-flex min-h-11 items-center justify-between rounded-[0.95rem] border border-white/10 bg-white/[0.03] px-4 py-2.5 text-sm font-medium text-white/72 transition duration-200 hover:border-white/16 hover:bg-white/[0.05] hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--accent)]/62 focus-visible:ring-offset-2 focus-visible:ring-offset-[#070b12]"
+                className="inline-flex min-h-10 items-center justify-between rounded-[0.95rem] border border-white/10 bg-white/[0.03] px-3.5 py-2 text-[0.84rem] font-medium text-white/72 transition duration-200 hover:border-white/16 hover:bg-white/[0.05] hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--accent)]/62 focus-visible:ring-offset-2 focus-visible:ring-offset-[#070b12]"
               >
                 <span>{secondaryLabel}</span>
-                <ArrowUpRight className="h-4 w-4" />
+                <ArrowUpRight className="h-3.5 w-3.5" />
               </Link>
             </div>
           </div>
@@ -394,7 +394,7 @@ export default function ServicesSection() {
         <div className="grain-overlay absolute inset-0 opacity-25" />
         <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-white/8" />
 
-        <div className="relative mx-auto max-w-[1320px] px-4 py-[clamp(6rem,10vw,9rem)] sm:px-6 lg:px-8 xl:px-10">
+        <div className="relative mx-auto max-w-[1320px] px-4 py-[clamp(3.2rem,6.2vw,5rem)] sm:px-6 lg:px-8 xl:px-10">
           <motion.div
             className="mx-auto max-w-3xl text-center"
             initial={shouldReduceMotion ? false : { opacity: 0, y: 28, filter: "blur(14px)" }}
@@ -405,24 +405,24 @@ export default function ServicesSection() {
             <p className="text-[0.7rem] font-semibold uppercase tracking-[0.26em] text-[color:var(--accent)]/88">
               {language === "no" ? "Tjenester" : "Services"}
             </p>
-            <h2 className="mt-4 text-balance text-[clamp(2.5rem,6vw,4.75rem)] font-semibold tracking-[-0.06em] text-white">
+            <h2 className="mt-2.5 text-balance text-[clamp(2rem,4.8vw,3.7rem)] font-semibold leading-[0.92] tracking-[-0.06em] text-white">
               {language === "no"
                 ? "Velg tjenesten som matcher målet dere faktisk har"
                 : "Choose the service that matches the outcome you actually need."}
             </h2>
-            <p className="mx-auto mt-5 max-w-2xl text-balance text-[1rem] leading-7 text-white/62 sm:text-[1.08rem]">
+            <p className="mx-auto mt-2.5 max-w-[35rem] text-balance text-[0.92rem] leading-6 text-white/62 sm:text-[0.98rem]">
               {language === "no"
                 ? "Hver tjeneste viser hva den er best til, typisk budsjett, leveringstid og hva dere sitter igjen med."
                 : "A premium service menu with clear purpose, typical budget, timeline and what you walk away with."}
             </p>
           </motion.div>
 
-          <div className="relative mt-10 sm:mt-12 lg:mt-14">
+          <div className="relative mt-5 sm:mt-6 lg:mt-7">
             <div className="pointer-events-none absolute inset-y-0 left-0 z-[2] hidden w-16 bg-[linear-gradient(90deg,#05070b_0%,rgba(5,7,11,0.78)_55%,transparent)] lg:block" />
             <div className="pointer-events-none absolute inset-y-0 right-0 z-[2] hidden w-16 bg-[linear-gradient(270deg,#05070b_0%,rgba(5,7,11,0.78)_55%,transparent)] lg:block" />
 
             <div
-              className="portfolio-service-track -mx-4 flex snap-x snap-mandatory gap-5 overflow-x-auto overflow-y-visible px-4 pb-4 pr-[18vw] touch-pan-x sm:gap-6 sm:pr-12 lg:mx-0 lg:gap-7 lg:px-0 lg:pr-10"
+              className="portfolio-service-track -mx-4 flex snap-x snap-mandatory gap-3.5 overflow-x-auto overflow-y-visible px-4 pb-2 pr-[14vw] touch-pan-x sm:gap-4 sm:pr-8 lg:mx-0 lg:gap-5 lg:px-0 lg:pr-6"
               style={{ WebkitOverflowScrolling: "touch" }}
               aria-label={language === "no" ? "Tjenestemeny" : "Service menu"}
               tabIndex={0}

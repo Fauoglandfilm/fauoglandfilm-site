@@ -203,11 +203,11 @@ export function ServiceCard({ service, index = 0 }: ServiceCardProps) {
     ? "bg-[linear-gradient(90deg,transparent,rgba(255,255,255,0.16),transparent)] opacity-[0.16]"
     : "bg-[linear-gradient(90deg,transparent,rgba(255,255,255,0.54),transparent)] opacity-[0.24]";
   const mediaSurfaceClassName = isDarkTheme
-    ? "border-white/4 bg-white/[0.028] shadow-[inset_0_1px_0_rgba(255,255,255,0.06),0_8px_18px_rgba(0,0,0,0.06)]"
-    : "border-white/28 bg-white/42 shadow-[inset_0_1px_0_rgba(255,255,255,0.66),0_8px_18px_rgba(154,173,200,0.09)]";
+    ? "bg-white/[0.035] shadow-[inset_0_1px_0_rgba(255,255,255,0.08),0_18px_34px_rgba(0,0,0,0.14)]"
+    : "bg-white/52 shadow-[inset_0_1px_0_rgba(255,255,255,0.76),0_18px_34px_rgba(154,173,200,0.14)]";
   const mediaOverlayClassName = isDarkTheme
-    ? "bg-[linear-gradient(180deg,rgba(255,255,255,0.005),rgba(8,10,14,0.025)_44%,rgba(8,10,14,0.08)_100%)]"
-    : "bg-[linear-gradient(180deg,rgba(255,255,255,0.005),rgba(232,238,246,0.035)_44%,rgba(210,222,236,0.08)_100%)]";
+    ? "bg-[linear-gradient(180deg,rgba(255,255,255,0.02),rgba(9,12,18,0.02)_30%,rgba(9,12,18,0.12)_100%)]"
+    : "bg-[linear-gradient(180deg,rgba(255,255,255,0.02),rgba(232,238,246,0.02)_30%,rgba(210,222,236,0.1)_100%)]";
   const badgeClassName = isDarkTheme
     ? "border-white/12 bg-black/18 text-white/66"
     : "border-white/70 bg-white/58 text-[var(--muted)] shadow-[0_8px_20px_rgba(154,173,200,0.18)]";
@@ -287,7 +287,7 @@ export function ServiceCard({ service, index = 0 }: ServiceCardProps) {
       style={cardStyle}
     >
       <motion.div
-        className={`relative flex h-full w-[68vw] min-w-[17.25rem] max-w-[19.25rem] flex-col overflow-hidden rounded-[1.25rem] border backdrop-blur-[30px] will-change-transform sm:w-[18.75rem] sm:min-w-[18.75rem] sm:max-w-[18.75rem] xl:w-[20.5rem] xl:min-w-[20.5rem] xl:max-w-[20.5rem] ${shellClassName}`}
+        className={`relative flex h-full w-[68vw] min-w-[16rem] max-w-[18rem] flex-col overflow-hidden rounded-[1.15rem] border backdrop-blur-[30px] will-change-transform sm:w-[17.25rem] sm:min-w-[17.25rem] sm:max-w-[17.25rem] xl:w-[18.6rem] xl:min-w-[18.6rem] xl:max-w-[18.6rem] ${shellClassName}`}
         whileHover={
           shouldReduceMotion
             ? undefined
@@ -321,18 +321,18 @@ export function ServiceCard({ service, index = 0 }: ServiceCardProps) {
           }
         />
 
-        <div className="relative flex h-full flex-col p-3 sm:p-3.25">
-          <div className={`relative overflow-hidden rounded-[1rem] border ${mediaSurfaceClassName}`}>
+        <div className="relative flex h-full flex-col p-2.5 sm:p-2.75">
+          <div className={`relative overflow-hidden rounded-[0.95rem] ${mediaSurfaceClassName}`}>
             <div
-              className={`pointer-events-none absolute left-2.5 top-2.5 z-[3] inline-flex items-center gap-2 rounded-full border px-2.5 py-1.25 backdrop-blur-2xl ${badgeClassName}`}
+              className={`pointer-events-none absolute left-2 top-2 z-[3] inline-flex items-center gap-1.5 rounded-full border px-2.25 py-1 backdrop-blur-2xl ${badgeClassName}`}
             >
-              <Icon className="h-3.5 w-3.5 text-[color:var(--accent)]" />
-              <span className="text-[0.64rem] font-semibold uppercase tracking-[0.18em]">
+              <Icon className="h-3.25 w-3.25 text-[color:var(--accent)]" />
+              <span className="text-[0.58rem] font-semibold uppercase tracking-[0.16em]">
                 {eyebrow}
               </span>
             </div>
             <motion.div
-              className="relative aspect-[1.42/1] w-full"
+              className="relative aspect-[1.3/1] w-full"
               style={
                 shouldReduceMotion
                   ? undefined
@@ -350,55 +350,55 @@ export function ServiceCard({ service, index = 0 }: ServiceCardProps) {
                 mediaFit={mediaConfig.mediaFit}
                 previewBehavior={usesDronePreview ? "always" : video ? "hover-or-viewport" : "static"}
                 className="absolute inset-0"
-                sizes="(min-width: 1536px) 20.5rem, (min-width: 640px) 18.75rem, 68vw"
+                sizes="(min-width: 1536px) 18.6rem, (min-width: 640px) 17.25rem, 68vw"
                 rootMargin="180px 0px -12% 0px"
                 inViewThreshold={0.22}
                 priority={usesDronePreview}
-                posterClassName="transition duration-500 ease-out group-hover:scale-[1.03]"
+                posterClassName="transition duration-500 ease-out group-hover:scale-[1.02]"
                 previewClassName="transition duration-500 ease-out"
               />
             </motion.div>
             <div className={`absolute inset-0 ${mediaOverlayClassName}`} />
           </div>
 
-          <div className="relative mt-2.5 flex flex-1 flex-col">
-            <div className="space-y-2">
+          <div className="relative mt-2 flex flex-1 flex-col">
+            <div className="space-y-1.5">
               <div className="flex items-start justify-between gap-3">
                 <h3
-                  className={`max-w-[10ch] text-[1.18rem] font-semibold tracking-[-0.05em] sm:text-[1.32rem] ${titleClassName}`}
+                  className={`max-w-[10ch] text-[1.08rem] font-semibold leading-[0.95] tracking-[-0.05em] sm:text-[1.2rem] ${titleClassName}`}
                 >
                   {title}
                 </h3>
                 <ArrowUpRight
-                  className={`mt-1 h-4 w-4 shrink-0 transition duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-[color:var(--accent)] ${arrowClassName}`}
+                  className={`mt-0.5 h-3.5 w-3.5 shrink-0 transition duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-[color:var(--accent)] ${arrowClassName}`}
                 />
               </div>
-              <p className={`max-w-[25ch] text-[0.82rem] leading-5 sm:text-[0.86rem] ${sublineClassName}`}>
+              <p className={`max-w-[24ch] text-[0.78rem] leading-4.75 sm:text-[0.82rem] ${sublineClassName}`}>
                 {subline}
               </p>
             </div>
 
-            <div className="mt-2.5 flex flex-wrap gap-1.25">
+            <div className="mt-2 flex flex-wrap gap-1">
               {[purposeChip, budgetChip, timelineChip].map((chip) => (
                 <span
                   key={`${service.slug}-${chip}`}
-                  className={`rounded-full border px-2.25 py-1 text-[0.62rem] font-medium tracking-[0.01em] backdrop-blur-xl ${chipClassName}`}
+                  className={`rounded-full border px-2 py-0.9 text-[0.58rem] font-medium tracking-[0.01em] backdrop-blur-xl ${chipClassName}`}
                 >
                   {chip}
                 </span>
               ))}
             </div>
 
-            <ul className={`mt-3 space-y-1.25 text-[0.88rem] leading-5.25 ${listClassName}`}>
+            <ul className={`mt-2.5 space-y-1 text-[0.8rem] leading-4.75 ${listClassName}`}>
               {deliverables.map((item) => (
-                <li key={`${service.slug}-${item}`} className="flex items-start gap-2.5">
-                  <span className="mt-2 h-1.5 w-1.5 rounded-full bg-[color:var(--accent)]/86" />
+                <li key={`${service.slug}-${item}`} className="flex items-start gap-2">
+                  <span className="mt-1.5 h-1.25 w-1.25 rounded-full bg-[color:var(--accent)]/86" />
                   <span>{item}</span>
                 </li>
               ))}
             </ul>
 
-            <div className="mt-auto flex flex-col gap-1.75 pt-3.5">
+            <div className="mt-auto flex flex-col gap-1.5 pt-2.75">
               <ButtonLink
                 href={service.href}
                 size="compact"
@@ -408,10 +408,10 @@ export function ServiceCard({ service, index = 0 }: ServiceCardProps) {
               </ButtonLink>
               <Link
                 href={secondaryHref}
-                className={`inline-flex min-h-11 items-center justify-between rounded-[0.95rem] border px-4 py-2.5 text-sm font-medium transition duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--accent)]/62 focus-visible:ring-offset-2 ${secondaryLinkClassName}`}
+                className={`inline-flex min-h-10 items-center justify-between rounded-[0.95rem] border px-3.5 py-2 text-[0.82rem] font-medium transition duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--accent)]/62 focus-visible:ring-offset-2 ${secondaryLinkClassName}`}
               >
                 <span>{secondaryLabel}</span>
-                <ArrowUpRight className="h-4 w-4" />
+                <ArrowUpRight className="h-3.5 w-3.5" />
               </Link>
             </div>
           </div>

@@ -329,7 +329,7 @@ export function ServicesSection({
   };
 
   return (
-    <section id="tjenester" className="section-space pt-[clamp(0.25rem,0.9vw,0.75rem)] pb-[clamp(0.05rem,0.2vw,0.18rem)]">
+    <section id="tjenester" className="section-space pt-[clamp(0.1rem,0.4vw,0.35rem)] pb-0">
       <div className="relative left-1/2 w-screen -translate-x-1/2 overflow-hidden">
         <motion.div
           aria-hidden="true"
@@ -341,36 +341,36 @@ export function ServicesSection({
         <div className="grain-overlay absolute inset-0 opacity-24" />
         <div className={`pointer-events-none absolute inset-x-0 top-0 h-px ${topBorderClassName}`} />
 
-        <div className="relative mx-auto max-w-[1320px] px-4 py-[clamp(1.2rem,2.2vw,1.8rem)] sm:px-6 lg:px-8 xl:px-10">
+        <div className="relative mx-auto max-w-[1320px] px-4 py-[clamp(0.7rem,1.4vw,1.1rem)] sm:px-6 lg:px-8 xl:px-10">
           <motion.div
-            className="mx-auto max-w-[38rem] text-center"
+            className="mx-auto max-w-[34rem] text-center"
             initial={shouldReduceMotion ? false : { opacity: 0, y: 26, filter: "blur(14px)" }}
             whileInView={shouldReduceMotion ? undefined : { opacity: 1, y: 0, filter: "blur(0px)" }}
             viewport={{ once: true, amount: 0.35 }}
             transition={{ duration: 0.88, ease: [0.22, 1, 0.36, 1] }}
           >
-            <p className={`text-[0.68rem] font-semibold uppercase tracking-[0.26em] ${eyebrowClassName}`}>
+            <p className={`text-[0.62rem] font-semibold uppercase tracking-[0.24em] ${eyebrowClassName}`}>
               {copy.servicesEyebrow}
             </p>
             <h2
-              className={`mt-2 text-balance text-[clamp(1.72rem,3.7vw,2.85rem)] font-semibold leading-[0.88] tracking-[-0.06em] ${titleClassName}`}
+              className={`mt-1.5 text-balance text-[clamp(1.5rem,3.2vw,2.4rem)] font-semibold leading-[0.88] tracking-[-0.062em] ${titleClassName}`}
             >
               {resolvedTitle}
             </h2>
             <p
-              className={`mx-auto mt-1.25 max-w-[28rem] text-balance text-[0.86rem] leading-5.25 sm:text-[0.92rem] sm:leading-5.5 ${descriptionClassName}`}
+              className={`mx-auto mt-1 max-w-[25rem] text-balance text-[0.8rem] leading-4.9 sm:text-[0.86rem] sm:leading-5.1 ${descriptionClassName}`}
             >
               {resolvedDescription}
             </p>
           </motion.div>
 
-          <div className="relative mt-2.5 sm:mt-3 lg:mt-3.5">
+          <div className="relative mt-2 sm:mt-2.5 lg:mt-2.75">
             <div className={`pointer-events-none absolute inset-y-0 left-0 z-[2] hidden w-16 ${leftFadeClassName} lg:block`} />
             <div className={`pointer-events-none absolute inset-y-0 right-0 z-[2] hidden w-16 ${rightFadeClassName} lg:block`} />
 
             <div
               ref={trackRef}
-              className="portfolio-service-track -mx-4 flex gap-3.5 overflow-x-auto overflow-y-visible px-4 pb-0.5 pr-[16vw] touch-pan-x sm:gap-4 sm:pr-8 lg:mx-0 lg:gap-4.5 lg:px-0 lg:pr-6"
+              className="portfolio-service-track -mx-4 flex gap-3 overflow-x-auto overflow-y-visible px-4 pb-0 pr-[12vw] touch-pan-x sm:gap-3.5 sm:pr-6 lg:mx-0 lg:gap-4 lg:px-0 lg:pr-4"
               style={{ WebkitOverflowScrolling: "touch" }}
               aria-label={language === "no" ? "Tjenestekarusell" : "Service carousel"}
               tabIndex={0}
@@ -481,23 +481,23 @@ export function ProcessSection({ steps }: { steps: ProcessStep[] }) {
       title={copy.processTitle}
       description={copy.processDescription}
       align="center"
-      className="pt-0 pb-[clamp(0.6rem,1vw,1rem)]"
+      className="pt-0 pb-[clamp(0.35rem,0.7vw,0.65rem)]"
     >
       <Reveal>
-        <article className="glass-panel overflow-hidden rounded-[1.9rem]">
+        <article className="glass-panel overflow-hidden rounded-[1.55rem]">
           <div className="grid gap-px bg-[color:var(--line)]/80 md:grid-cols-2 xl:grid-cols-4">
             {steps.map((step) => (
               <div
                 key={step.step}
-                className="bg-[color:var(--surface)] px-4 py-3 text-left sm:px-5 sm:py-4.5"
+                className="bg-[color:var(--surface)] px-3.5 py-2.75 text-left sm:px-4 sm:py-3.25"
               >
-                <span className="font-display text-[1.35rem] leading-none text-[var(--accent)]">
+                <span className="font-display text-[1.12rem] leading-none text-[var(--accent)]">
                   {step.step}
                 </span>
-                <h3 className="mt-2.5 text-[1rem] font-semibold tracking-[-0.04em] text-[color:var(--foreground)]">
+                <h3 className="mt-1.75 text-[0.92rem] font-semibold tracking-[-0.04em] text-[color:var(--foreground)]">
                   {resolveLocalizedValue(step.title, language)}
                 </h3>
-                <p className="mt-1.5 text-[0.92rem] leading-5.5 text-[var(--muted-2)]">
+                <p className="mt-1 text-[0.82rem] leading-5 text-[var(--muted-2)]">
                   {resolveLocalizedValue(step.description, language)}
                 </p>
               </div>
@@ -895,30 +895,30 @@ export function CtaBanner({
   const copy = uiCopy.siteSections[language];
 
   return (
-    <section className="pt-[clamp(0.5rem,1vw,0.9rem)] pb-[clamp(1rem,1.6vw,1.6rem)]">
+    <section className="pt-[clamp(0.2rem,0.5vw,0.45rem)] pb-[clamp(0.55rem,1vw,0.9rem)]">
       <div className="site-container">
-        <div className="overflow-hidden rounded-[1.45rem] border border-black/8 bg-[#111111] px-4 py-4 text-white shadow-[0_18px_44px_rgba(15,15,15,0.1)] sm:rounded-[1.6rem] sm:px-5 sm:py-5 lg:px-6 lg:py-5.5">
+        <div className="overflow-hidden rounded-[1.2rem] border border-black/8 bg-[#111111] px-3.5 py-3.5 text-white shadow-[0_16px_36px_rgba(15,15,15,0.1)] sm:rounded-[1.35rem] sm:px-4 sm:py-4 lg:px-5 lg:py-4.5">
           <div
             className={
               align === "center"
                 ? "mx-auto max-w-2xl text-center"
-                : "grid gap-4 xl:grid-cols-[1.1fr_0.9fr] xl:items-end"
+                : "grid gap-3 xl:grid-cols-[1.1fr_0.9fr] xl:items-end"
             }
           >
-            <div className="space-y-2">
-              <p className="text-[0.72rem] font-semibold uppercase tracking-[0.24em] text-white/44">
+            <div className="space-y-1.5">
+              <p className="text-[0.64rem] font-semibold uppercase tracking-[0.22em] text-white/44">
                 {copy.ctaEyebrow}
               </p>
-              <h2 className="text-balance font-sans text-[clamp(1.55rem,3.4vw,2.6rem)] font-semibold leading-[1.02] tracking-[-0.055em] text-white">
+              <h2 className="text-balance font-sans text-[clamp(1.35rem,2.8vw,2.15rem)] font-semibold leading-[1.01] tracking-[-0.055em] text-white">
                 {resolveLocalizedValue(title, language)}
               </h2>
-              <p className="mx-auto max-w-[34rem] text-[0.92rem] leading-5.5 text-white/68 sm:text-[0.96rem] sm:leading-6">
+              <p className="mx-auto max-w-[31rem] text-[0.82rem] leading-5 text-white/68 sm:text-[0.88rem] sm:leading-5.4">
                 {resolveLocalizedValue(description, language)}
               </p>
             </div>
             <div
-              className={`flex flex-col gap-2 sm:flex-row sm:flex-wrap sm:gap-2.5 ${
-                align === "center" ? "justify-center pt-2.5" : "xl:justify-end"
+              className={`flex flex-col gap-1.75 sm:flex-row sm:flex-wrap sm:gap-2 ${
+                align === "center" ? "justify-center pt-1.75" : "xl:justify-end"
               }`}
             >
               <ButtonLink href={primaryHref} className="w-full sm:w-auto">
@@ -986,12 +986,12 @@ export function PageHero(props: {
     : [resolvedTitle];
 
   return (
-    <section className={cn("bg-[#111111] text-white", compact ? "pt-15 sm:pt-18" : "pt-20 sm:pt-28")}>
+    <section className={cn("bg-[#111111] text-white", compact ? "pt-12 sm:pt-14" : "pt-20 sm:pt-28")}>
       <div className="site-container">
-        <Reveal className={cn("w-full", compact ? "py-5.5 sm:py-6.5 lg:py-6.5" : "py-10 sm:py-14 lg:py-16")} delay={0.04} y={18}>
-          <div className={cn(compact ? "max-w-[34rem]" : "max-w-[44rem]")}>
+        <Reveal className={cn("w-full", compact ? "py-3.5 sm:py-4.5 lg:py-4.5" : "py-10 sm:py-14 lg:py-16")} delay={0.04} y={18}>
+          <div className={cn(compact ? "max-w-[29rem]" : "max-w-[44rem]")}>
             <span className="hero-badge text-white/62">{resolvedEyebrow}</span>
-            <h1 className={cn("text-white", compact ? "mt-2.5 max-w-[12.2ch] font-display text-[2.05rem] leading-[0.9] tracking-[-0.066em] sm:text-[2.65rem] lg:text-[3.2rem]" : "mt-3 page-title max-w-[13ch]")}>
+            <h1 className={cn("text-white", compact ? "mt-1.75 max-w-[11.5ch] font-display text-[1.82rem] leading-[0.88] tracking-[-0.068em] sm:text-[2.2rem] lg:text-[2.7rem]" : "mt-3 page-title max-w-[13ch]")}>
               {compact && compactTitleLines.length > 1 ? (
                 compactTitleLines.map((line) => (
                   <span key={line} className="block whitespace-nowrap">
@@ -1002,11 +1002,11 @@ export function PageHero(props: {
                 resolvedTitle
               )}
             </h1>
-            <p className={cn("text-white/76", compact ? "mt-2 max-w-[30rem] text-[0.92rem] leading-5.5 sm:text-[0.96rem] sm:leading-6" : "mt-3.5 body-copy max-w-2xl sm:mt-4 sm:text-base sm:leading-7")}>
+            <p className={cn("text-white/76", compact ? "mt-1.5 max-w-[25rem] text-[0.84rem] leading-5 sm:text-[0.9rem] sm:leading-5.5" : "mt-3.5 body-copy max-w-2xl sm:mt-4 sm:text-base sm:leading-7")}>
               {resolvedDescription}
             </p>
             {primaryCta || secondaryCta ? (
-              <div className={cn("flex flex-col gap-2.5 sm:flex-row sm:flex-wrap sm:gap-3", compact ? "mt-3 sm:mt-3.5" : "mt-5 sm:mt-6")}>
+              <div className={cn("flex flex-col gap-2 sm:flex-row sm:flex-wrap sm:gap-2.5", compact ? "mt-2.5 sm:mt-3" : "mt-5 sm:mt-6")}>
                 {primaryCta ? (
                   <ButtonLink href={primaryCta.href} className="w-full sm:w-auto">
                     {resolveLocalizedValue(primaryCta.label, language)}
