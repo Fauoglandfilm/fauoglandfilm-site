@@ -2943,6 +2943,29 @@ summary::-webkit-details-marker {
   background: rgba(255, 255, 255, 0.26);
 }
 
+.portfolio-service-track {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255, 255, 255, 0.18) transparent;
+}
+
+.portfolio-service-track::-webkit-scrollbar {
+  height: 0.42rem;
+}
+
+.portfolio-service-track::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.portfolio-service-track::-webkit-scrollbar-thumb {
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.16);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.portfolio-service-track::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.24);
+}
+
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
