@@ -155,6 +155,32 @@ function getPortfolioExtendedDescription(project: PortfolioProject, language: "n
   return resolveLocalizedValue(project.extendedDescription ?? project.result ?? project.summary, language);
 }
 
+function shortenPortfolioText(value: string, maxLength: number) {
+  if (value.length <= maxLength) {
+    return value;
+  }
+
+  const shortened = value.slice(0, maxLength).trimEnd();
+  const boundary = Math.max(shortened.lastIndexOf(" "), maxLength * 0.6);
+
+  return `${shortened.slice(0, boundary).trimEnd()}...`;
+}
+
+function getPortfolioTeaserLine(project: PortfolioProject, language: "no" | "en") {
+  return shortenPortfolioText(getPortfolioShortDescription(project, language), 68);
+}
+
+function getPortfolioCardAspectClass(index: number) {
+  const compactAspectCycle = [
+    "aspect-[1.24/0.86]",
+    "aspect-[1.06/0.98]",
+    "aspect-[1.18/0.9]",
+    "aspect-[1.08/1]",
+  ] as const;
+
+  return compactAspectCycle[index % compactAspectCycle.length];
+}
+
 export function PortfolioPageContent({
   projects = portfolioProjects,
   groups = portfolioGroups,
@@ -269,10 +295,10 @@ export function PortfolioPageContent({
 
       <section className="section-space pt-0">
         <div className="site-container">
-          <div className="grid gap-4 lg:grid-cols-[1.16fr_0.84fr]">
+          <div className="grid gap-3 lg:grid-cols-[1.2fr_0.8fr]">
             <Reveal>
-              <article className="card-surface group overflow-hidden rounded-[2rem] shadow-[0_20px_56px_rgba(18,14,10,0.1)]">
-                <div className="media-frame relative aspect-video min-h-[13rem] overflow-hidden sm:min-h-[18rem] lg:min-h-[28rem]">
+              <article className="card-surface group overflow-hidden rounded-[1.6rem] shadow-[0_16px_40px_rgba(18,14,10,0.08)]">
+                <div className="media-frame relative aspect-[1.3/0.92] min-h-[11rem] overflow-hidden sm:min-h-[13rem] lg:min-h-[15.5rem]">
                   {getPortfolioCardHref(showreelProject) ? (
                     <button
                       type="button"
@@ -285,19 +311,20 @@ export function PortfolioPageContent({
                     project={showreelProject}
                     priority
                     playMode="featured"
+                    cropToFrame
                     inViewThreshold={0.14}
                     rootMargin="300px 0px -4% 0px"
                     sizes="(min-width: 1280px) 48vw, (min-width: 1024px) 60vw, 100vw"
                     className="object-cover transition duration-700 group-hover:scale-[1.03]"
                   />
                   <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(255,255,255,0.06),transparent_30%),linear-gradient(180deg,rgba(8,8,8,0.02),rgba(8,8,8,0.12)_44%,rgba(8,8,8,0.56)_100%)]" />
-                  <div className="absolute inset-x-0 bottom-0 z-[2] p-5 text-white sm:p-7 lg:p-8">
+                  <div className="absolute inset-x-0 bottom-0 z-[2] p-4 text-white sm:p-5 lg:p-5.5">
                     <div className="flex flex-wrap items-center gap-2 text-[0.68rem] font-semibold uppercase tracking-[0.22em] text-white/54">
                       <span>{showreelProject.client}</span>
                       <span className="h-1 w-1 rounded-full bg-white/24" />
                       <span>{resolveLocalizedValue(showreelProject.format, language)}</span>
                     </div>
-                    <h2 className="feature-title mt-3 max-w-2xl">
+                    <h2 className="mt-2 max-w-[12ch] text-[1.7rem] font-semibold leading-[0.92] tracking-[-0.05em] sm:text-[2rem]">
                       {resolveLocalizedValue(showreelProject.title, language)}
                     </h2>
                   </div>
@@ -306,15 +333,15 @@ export function PortfolioPageContent({
             </Reveal>
 
             <Reveal delay={0.06}>
-              <article className="card-surface relative flex h-full flex-col overflow-hidden rounded-[2rem] p-5 shadow-[0_18px_48px_rgba(18,14,10,0.08)] sm:p-6 lg:p-7">
-                <div className="space-y-3">
+              <article className="card-surface relative flex h-full flex-col overflow-hidden rounded-[1.6rem] p-4 shadow-[0_16px_40px_rgba(18,14,10,0.07)] sm:p-5 lg:p-5.5">
+                <div className="space-y-2">
                   <span className="eyebrow">
                     {resolveLocalizedValue(portfolioPageContent.showreelEyebrow, language)}
                   </span>
-                  <h2 className="section-title text-[color:var(--foreground)]">
+                  <h2 className="text-[1.6rem] font-semibold leading-[0.94] tracking-[-0.05em] text-[color:var(--foreground)] sm:text-[2rem]">
                     {resolveLocalizedValue(portfolioPageContent.showreelTitle, language)}
                   </h2>
-                  <p className="body-copy max-w-xl text-[var(--muted-2)] sm:text-base sm:leading-7">
+                  <p className="max-w-xl text-[0.92rem] leading-6 text-[var(--muted-2)] sm:text-[0.96rem]">
                     {resolveLocalizedValue(portfolioPageContent.showreelDescription, language)}
                   </p>
                 </div>
@@ -327,40 +354,25 @@ export function PortfolioPageContent({
       <section className="pb-1 pt-0 sm:pb-2">
         <div className="site-container">
           <Reveal>
-            <div className="max-w-3xl space-y-3">
+            <div className="max-w-3xl space-y-2">
               <span className="eyebrow">{copy.featuredEyebrow}</span>
               <h2 className="section-title text-[color:var(--foreground)]">{copy.featuredTitle}</h2>
             </div>
           </Reveal>
 
-          <div className="mt-6 grid gap-4 sm:mt-8">
-            {visibleFeaturedProjects[0] ? (
-              <Reveal>
-                <PortfolioProjectCard
-                  project={visibleFeaturedProjects[0]}
-                  group={getPortfolioGroup(visibleFeaturedProjects[0].group)}
-                  layout="wide"
-                  index={0}
-                  onOpen={setActiveProject}
-                />
-              </Reveal>
-            ) : null}
-
-            {visibleFeaturedProjects.length > 1 ? (
-              <div className="grid gap-5 sm:gap-6">
-                {visibleFeaturedProjects.slice(1).map((project, index) => (
-                  <Reveal key={project.slug} delay={0.05 * (index + 1)}>
-                    <PortfolioProjectCard
-                      project={project}
-                      group={getPortfolioGroup(project.group)}
-                      layout="default"
-                      index={index + 1}
-                      onOpen={setActiveProject}
-                    />
-                  </Reveal>
-                ))}
+          <div className="mt-4 columns-1 gap-4 xl:columns-2 xl:gap-4 [column-fill:_balance]">
+            {visibleFeaturedProjects.map((project, index) => (
+              <div key={project.slug} className="mb-4 break-inside-avoid">
+                <Reveal delay={0.04 * index}>
+                  <PortfolioProjectCard
+                    project={project}
+                    group={getPortfolioGroup(project.group)}
+                    index={index}
+                    onOpen={setActiveProject}
+                  />
+                </Reveal>
               </div>
-            ) : null}
+            ))}
           </div>
         </div>
       </section>
@@ -368,16 +380,16 @@ export function PortfolioPageContent({
       <section id="portfolio-grid" className="section-space pt-0">
         <div className="site-container">
           <Reveal>
-            <div className="card-surface relative overflow-hidden rounded-[2rem] p-5 shadow-[0_18px_48px_rgba(18,14,10,0.08)] sm:p-6 lg:p-7">
-              <div className="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
-                <div className="max-w-3xl space-y-3">
+            <div className="card-surface relative overflow-hidden rounded-[1.6rem] p-4 shadow-[0_16px_40px_rgba(18,14,10,0.07)] sm:p-5 lg:p-5.5">
+              <div className="flex flex-col gap-3 lg:flex-row lg:items-end lg:justify-between">
+                <div className="max-w-3xl space-y-2">
                   <span className="eyebrow">{copy.catalogEyebrow}</span>
                   <h2 className="section-title text-[color:var(--foreground)]">
                     {activeGroup
                       ? resolveLocalizedValue(activeGroup.title, language)
                       : copy.catalogTitle}
                   </h2>
-                  <p className="body-copy max-w-2xl text-[var(--muted-2)] sm:text-base sm:leading-7">
+                  <p className="max-w-2xl text-[0.92rem] leading-6 text-[var(--muted-2)] sm:text-[0.96rem]">
                     {activeGroup
                       ? resolveLocalizedValue(activeGroup.description, language)
                       : copy.catalogDescription}
@@ -390,7 +402,7 @@ export function PortfolioPageContent({
                 </div>
               </div>
 
-              <div className="mt-5">
+              <div className="mt-4">
                 <div className={segmentedControlShellClassName({ className: "flex flex-wrap gap-2 p-1.5" })}>
                   <button
                     type="button"
@@ -417,17 +429,18 @@ export function PortfolioPageContent({
             </div>
           </Reveal>
 
-          <div className="mt-6 grid gap-5 sm:mt-8 sm:gap-6">
+          <div className="mt-4 columns-1 gap-4 xl:columns-2 xl:gap-4 [column-fill:_balance]">
             {filteredProjects.map((project, index) => (
-              <Reveal key={project.slug} delay={0.03 * index}>
-                <PortfolioProjectCard
-                  project={project}
-                  group={getPortfolioGroup(project.group)}
-                  layout={index % 6 === 0 ? "wide" : "default"}
-                  index={index}
-                  onOpen={setActiveProject}
-                />
-              </Reveal>
+              <div key={project.slug} className="mb-4 break-inside-avoid">
+                <Reveal delay={0.02 * index}>
+                  <PortfolioProjectCard
+                    project={project}
+                    group={getPortfolioGroup(project.group)}
+                    index={index}
+                    onOpen={setActiveProject}
+                  />
+                </Reveal>
+              </div>
             ))}
           </div>
         </div>
@@ -460,32 +473,31 @@ export function PortfolioPageContent({
 function PortfolioProjectCard({
   project,
   group,
-  layout,
   index,
   onOpen,
 }: {
   project: PortfolioProject;
   group?: PortfolioGroup;
-  layout: "default" | "wide";
   index: number;
   onOpen: (project: PortfolioProject) => void;
 }) {
   const { language } = useSitePreferences();
-  const isWide = layout === "wide";
   const canOpen = Boolean(project.video || project.externalVideo || project.image);
   const title = resolveLocalizedValue(project.title, language);
-  const summary = getPortfolioShortDescription(project, language);
+  const summary = getPortfolioTeaserLine(project, language);
   const infoPoints = getPortfolioProjectInfoPoints(project, group, language);
   const formatLabel = resolveLocalizedValue(project.format, language);
   const groupTitle = group ? resolveLocalizedValue(group.title, language) : null;
   const detailLabel = language === "no" ? "Åpne prosjekt" : "Open project";
   const detailHint =
     language === "no" ? "Se video, beskrivelser og leveranser" : "View video, description and deliverables";
-  const reverseOnDesktop = index % 2 === 1;
+  const visibleInfoPoints = infoPoints.slice(0, 1);
+  const hoverInfoPoints = infoPoints.slice(1, 3);
+  const mediaAspectClass = getPortfolioCardAspectClass(index);
 
   return (
     <article
-      className="group relative overflow-hidden rounded-[2rem] border border-[color:var(--line)]/75 bg-[linear-gradient(180deg,rgba(255,255,255,0.1),rgba(255,255,255,0.04))] shadow-[0_14px_42px_rgba(18,14,10,0.07)] backdrop-blur-[18px]"
+      className="group relative overflow-hidden rounded-[1.45rem] border border-[color:var(--line)]/75 bg-[linear-gradient(180deg,rgba(255,255,255,0.1),rgba(255,255,255,0.04))] shadow-[0_12px_30px_rgba(18,14,10,0.06)] backdrop-blur-[18px]"
     >
       {canOpen ? (
         <button
@@ -496,42 +508,28 @@ function PortfolioProjectCard({
         />
       ) : null}
 
-      <div
-        className={cn(
-          "grid min-h-[20rem] lg:grid-cols-[minmax(0,1.08fr)_minmax(19rem,0.92fr)]",
-          isWide && "lg:grid-cols-[minmax(0,1.18fr)_minmax(21rem,0.82fr)]",
-        )}
-      >
-        <div
-          className={cn(
-            "relative min-h-[18.5rem] overflow-hidden bg-[#0a0d12] sm:min-h-[22rem]",
-            isWide && "lg:min-h-[27rem]",
-            reverseOnDesktop && "lg:order-2",
-          )}
-        >
+      <div className="flex min-h-0 flex-col">
+        <div className={cn("relative overflow-hidden bg-[#0a0d12]", mediaAspectClass)}>
           <PortfolioMedia
             project={project}
             playMode="viewport"
-            inViewThreshold={isWide ? 0.22 : 0.28}
-            rootMargin={isWide ? "240px 0px -8% 0px" : "220px 0px -10% 0px"}
-            sizes={
-              isWide
-                ? "(min-width: 1280px) 58vw, (min-width: 1024px) 54vw, 100vw"
-                : "(min-width: 1280px) 56vw, (min-width: 1024px) 50vw, 100vw"
-            }
+            cropToFrame
+            inViewThreshold={0.22}
+            rootMargin="180px 0px -10% 0px"
+            sizes="(min-width: 1280px) 46vw, (min-width: 1024px) 50vw, 100vw"
           />
 
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(255,255,255,0.08),transparent_34%),linear-gradient(180deg,rgba(8,8,8,0.02),rgba(8,8,8,0.12)_44%,rgba(8,8,8,0.38)_100%)]" />
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(255,255,255,0.08),transparent_34%),linear-gradient(180deg,rgba(8,8,8,0.02),rgba(8,8,8,0.1)_40%,rgba(8,8,8,0.3)_100%)]" />
 
           {groupTitle ? (
-            <span className="absolute left-5 top-5 z-[2] rounded-full border border-white/12 bg-black/16 px-3 py-1.5 text-[0.62rem] font-semibold uppercase tracking-[0.2em] text-white/76 sm:left-6 sm:top-6">
+            <span className="absolute left-3 top-3 z-[2] rounded-full border border-white/12 bg-black/16 px-2.5 py-1 text-[0.58rem] font-semibold uppercase tracking-[0.16em] text-white/76">
               {groupTitle}
             </span>
           ) : null}
 
-          <div className="absolute inset-x-0 bottom-0 z-[2] flex items-end justify-between gap-4 p-5 text-white sm:p-6">
+          <div className="absolute inset-x-0 bottom-0 z-[2] flex items-end justify-between gap-4 p-3.5 text-white sm:p-4">
             <div className="min-w-0">
-              <div className="flex flex-wrap items-center gap-2 text-[0.64rem] font-semibold uppercase tracking-[0.2em] text-white/58">
+              <div className="flex flex-wrap items-center gap-2 text-[0.56rem] font-semibold uppercase tracking-[0.16em] text-white/58">
                 <span>{project.client}</span>
                 {project.year ? (
                   <>
@@ -542,56 +540,25 @@ function PortfolioProjectCard({
               </div>
             </div>
             {canOpen ? (
-              <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-white/12 bg-[rgba(255,255,255,0.08)] shadow-[0_12px_28px_rgba(0,0,0,0.18)] backdrop-blur-xl">
-                <ArrowUpRight className="h-4 w-4" />
+              <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-white/12 bg-[rgba(255,255,255,0.08)] shadow-[0_10px_22px_rgba(0,0,0,0.16)] backdrop-blur-xl">
+                <ArrowUpRight className="h-3.5 w-3.5" />
               </span>
             ) : null}
           </div>
-        </div>
 
-        <div
-          className={cn(
-            "relative flex min-h-0 flex-col justify-between gap-6 px-5 py-5 sm:px-6 sm:py-6 lg:px-8 lg:py-8",
-            reverseOnDesktop && "lg:order-1",
-          )}
-        >
-          <div className="space-y-5">
-            <div className="flex flex-wrap items-center gap-2 text-[0.66rem] font-semibold uppercase tracking-[0.2em] text-[var(--muted)]">
-              <span>{project.client}</span>
-              {formatLabel ? (
-                <>
-                  <span className="h-1 w-1 rounded-full bg-[color:var(--line-strong)]" />
-                  <span>{formatLabel}</span>
-                </>
-              ) : null}
-              {project.year ? (
-                <>
-                  <span className="h-1 w-1 rounded-full bg-[color:var(--line-strong)]" />
-                  <span>{project.year}</span>
-                </>
-              ) : null}
-            </div>
-
-            <div className="space-y-3">
-              <h3
-                className={cn(
-                  "max-w-[14ch] font-semibold leading-[0.96] tracking-[-0.05em] text-[color:var(--foreground)]",
-                  isWide ? "text-[1.95rem] sm:text-[2.3rem]" : "text-[1.55rem] sm:text-[1.85rem]",
-                )}
-              >
-                {title}
-              </h3>
-              <p className="max-w-[36rem] text-[0.96rem] leading-7 text-[var(--muted-2)] sm:text-[1rem]">
-                {summary}
-              </p>
-            </div>
-
-            {infoPoints.length ? (
-              <div className="flex flex-wrap gap-2">
-                {infoPoints.map((point) => (
+          <div className="pointer-events-none absolute inset-x-3 bottom-3 z-[3] hidden translate-y-2 rounded-[1rem] border border-white/12 bg-[linear-gradient(180deg,rgba(0,0,0,0.42),rgba(0,0,0,0.22))] px-3 py-2.5 text-white opacity-0 shadow-[0_16px_34px_rgba(0,0,0,0.18)] backdrop-blur-xl transition duration-300 group-hover:translate-y-0 group-hover:opacity-100 group-focus-within:translate-y-0 group-focus-within:opacity-100 lg:block">
+            <p className="text-[0.56rem] font-semibold uppercase tracking-[0.16em] text-white/54">
+              {detailLabel}
+            </p>
+            <p className="mt-1 text-[0.74rem] leading-5 text-white/82">
+              {detailHint}
+            </p>
+            {hoverInfoPoints.length ? (
+              <div className="mt-2 flex flex-wrap gap-1.5">
+                {hoverInfoPoints.map((point) => (
                   <span
-                    key={`${project.slug}-${point}`}
-                    className="rounded-full border border-[color:var(--line)]/80 bg-white/[0.04] px-3 py-1.5 text-[0.64rem] font-semibold uppercase tracking-[0.16em] text-[var(--muted-2)]"
+                    key={`${project.slug}-hover-${point}`}
+                    className="rounded-full border border-white/10 bg-white/8 px-2 py-0.75 text-[0.54rem] font-semibold uppercase tracking-[0.12em] text-white/74"
                   >
                     {point}
                   </span>
@@ -599,20 +566,48 @@ function PortfolioProjectCard({
               </div>
             ) : null}
           </div>
+        </div>
 
-          <div className="flex items-end justify-between gap-4 border-t border-[color:var(--line)]/75 pt-5">
-            <div className="space-y-1.5">
-              <p className="text-[0.62rem] font-semibold uppercase tracking-[0.18em] text-[var(--muted)]">
-                {detailLabel}
-              </p>
-              <p className="text-sm leading-6 text-[var(--muted-2)]">
-                {detailHint}
-              </p>
-            </div>
-            <span className="hidden h-11 w-11 shrink-0 items-center justify-center rounded-full border border-[color:var(--line)]/80 bg-white/[0.05] text-[color:var(--foreground)] shadow-[0_10px_24px_rgba(18,14,10,0.05)] sm:flex">
-              <ArrowUpRight className="h-4 w-4" />
-            </span>
+        <div className="relative flex min-h-0 flex-col gap-3 px-3.5 py-3.5 sm:px-4 sm:py-4">
+          <div className="flex flex-wrap items-center gap-2 text-[0.58rem] font-semibold uppercase tracking-[0.16em] text-[var(--muted)]">
+            {formatLabel ? (
+              <span>{formatLabel}</span>
+            ) : null}
+            {formatLabel && groupTitle ? (
+              <>
+                <span className="h-1 w-1 rounded-full bg-[color:var(--line-strong)]" />
+                <span>{groupTitle}</span>
+              </>
+            ) : null}
+            {project.year ? (
+              <>
+                {(formatLabel || groupTitle) ? <span className="h-1 w-1 rounded-full bg-[color:var(--line-strong)]" /> : null}
+                <span>{project.year}</span>
+              </>
+            ) : null}
           </div>
+
+          <div className="space-y-1.5">
+            <h3 className="max-w-[12ch] text-[1.3rem] font-semibold leading-[0.94] tracking-[-0.05em] text-[color:var(--foreground)] sm:text-[1.45rem]">
+              {title}
+            </h3>
+            <p className="max-w-[34rem] text-[0.84rem] leading-5 text-[var(--muted-2)]">
+              {summary}
+            </p>
+          </div>
+
+          {visibleInfoPoints.length ? (
+            <div className="flex flex-wrap gap-1.5">
+              {visibleInfoPoints.map((point) => (
+                <span
+                  key={`${project.slug}-${point}`}
+                  className="rounded-full border border-[color:var(--line)]/80 bg-white/[0.04] px-2.25 py-1 text-[0.54rem] font-semibold uppercase tracking-[0.12em] text-[var(--muted-2)]"
+                >
+                  {point}
+                </span>
+              ))}
+            </div>
+          ) : null}
         </div>
       </div>
     </article>
@@ -925,6 +920,7 @@ function PortfolioMedia({
   className,
   rootMargin,
   inViewThreshold,
+  cropToFrame = false,
 }: {
   project: PortfolioProject;
   priority?: boolean;
@@ -933,17 +929,19 @@ function PortfolioMedia({
   className?: string;
   rootMargin?: string;
   inViewThreshold?: number;
+  cropToFrame?: boolean;
 }) {
   const { language } = useSitePreferences();
   const fallbackVisual = getPortfolioFallbackVisual(project.group);
   const altText = project.imageAlt
     ? resolveLocalizedValue(project.imageAlt, language)
     : resolveLocalizedValue(project.title, language);
+  const resolvedMediaFit = cropToFrame ? "cover" : project.mediaFit;
   const imageClassName = cn(
     "object-cover",
     "transition duration-700",
     playMode !== "static" && "group-hover:scale-[1.03]",
-    project.mediaFit === "contain" && "object-contain p-5 sm:p-6",
+    resolvedMediaFit === "contain" && "object-contain p-5 sm:p-6",
     className,
   );
 
@@ -960,7 +958,7 @@ function PortfolioMedia({
         externalVideo={project.externalVideo}
         image={project.image}
         imageAlt={project.imageAlt}
-        mediaFit={project.mediaFit}
+        mediaFit={resolvedMediaFit}
         previewBehavior={previewBehavior}
         className="absolute inset-0"
         sizes={sizes}
@@ -968,7 +966,7 @@ function PortfolioMedia({
         rootMargin={rootMargin}
         inViewThreshold={inViewThreshold}
         posterClassName={imageClassName}
-        previewClassName={cn("scale-[1.01]", project.mediaFit === "contain" && "object-contain p-5 sm:p-6")}
+        previewClassName={cn("scale-[1.01]", resolvedMediaFit === "contain" && "object-contain p-5 sm:p-6")}
       />
     );
   }
