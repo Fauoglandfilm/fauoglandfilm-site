@@ -2,7 +2,12 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import type { ReactNode } from "react";
+import {
+  useRef,
+  type PointerEvent as ReactPointerEvent,
+  type ReactNode,
+  type WheelEvent as ReactWheelEvent,
+} from "react";
 import { motion, useReducedMotion } from "framer-motion";
 
 import {
@@ -44,24 +49,130 @@ export function ServicesSection({
   title?: MaybeLocalizedText;
   description?: MaybeLocalizedText;
 }) {
-  const { language } = useSitePreferences();
+  const { language, theme } = useSitePreferences();
   const copy = uiCopy.siteSections[language];
   const shouldReduceMotion = useReducedMotion();
+  const isDarkTheme = theme === "dark";
+  const trackRef = useRef<HTMLDivElement | null>(null);
+  const dragStateRef = useRef<{
+    pointerId: number | null;
+    startX: number;
+    startScrollLeft: number;
+    moved: boolean;
+  }>({
+    pointerId: null,
+    startX: 0,
+    startScrollLeft: 0,
+    moved: false,
+  });
   const resolvedTitle = title ? resolveLocalizedValue(title, language) : copy.servicesTitle;
   const resolvedDescription = description ? resolveLocalizedValue(description, language) : copy.servicesDescription;
+  const surfaceClassName = isDarkTheme
+    ? "bg-[radial-gradient(circle_at_top,rgba(11,23,42,0.92),transparent_30%),radial-gradient(circle_at_82%_8%,rgba(210,173,116,0.14),transparent_24%),linear-gradient(180deg,#030407_0%,#070b12_42%,#081320_100%)]"
+    : "bg-[radial-gradient(circle_at_top,rgba(255,255,255,0.86),transparent_34%),radial-gradient(circle_at_84%_10%,rgba(115,164,255,0.18),transparent_24%),linear-gradient(180deg,rgba(244,247,252,0.98)_0%,rgba(229,236,246,0.94)_48%,rgba(221,231,244,0.98)_100%)]";
+  const topBorderClassName = isDarkTheme ? "bg-white/8" : "bg-black/7";
+  const eyebrowClassName = isDarkTheme ? "text-[color:var(--accent)]/88" : "text-[color:var(--accent)]/92";
+  const titleClassName = isDarkTheme ? "text-white" : "text-[color:var(--foreground)]";
+  const descriptionClassName = isDarkTheme ? "text-white/62" : "text-[var(--muted-2)]";
+  const leftFadeClassName = isDarkTheme
+    ? "bg-[linear-gradient(90deg,#030407_0%,rgba(3,4,7,0.82)_52%,transparent)]"
+    : "bg-[linear-gradient(90deg,rgba(244,247,252,0.98)_0%,rgba(244,247,252,0.82)_52%,transparent)]";
+  const rightFadeClassName = isDarkTheme
+    ? "bg-[linear-gradient(270deg,#081320_0%,rgba(8,19,32,0.82)_52%,transparent)]"
+    : "bg-[linear-gradient(270deg,rgba(221,231,244,0.98)_0%,rgba(221,231,244,0.82)_52%,transparent)]";
+
+  const handleWheel = (event: ReactWheelEvent<HTMLDivElement>) => {
+    const track = trackRef.current;
+
+    if (!track) {
+      return;
+    }
+
+    const maxScrollLeft = track.scrollWidth - track.clientWidth;
+
+    if (maxScrollLeft <= 0) {
+      return;
+    }
+
+    const delta = Math.abs(event.deltaX) > Math.abs(event.deltaY) ? event.deltaX : event.deltaY;
+
+    if (delta === 0) {
+      return;
+    }
+
+    event.preventDefault();
+    track.scrollLeft = Math.max(0, Math.min(maxScrollLeft, track.scrollLeft + delta));
+  };
+
+  const handlePointerDown = (event: ReactPointerEvent<HTMLDivElement>) => {
+    const track = trackRef.current;
+
+    if (!track || event.pointerType === "touch") {
+      return;
+    }
+
+    dragStateRef.current = {
+      pointerId: event.pointerId,
+      startX: event.clientX,
+      startScrollLeft: track.scrollLeft,
+      moved: false,
+    };
+
+    track.setPointerCapture(event.pointerId);
+  };
+
+  const handlePointerMove = (event: ReactPointerEvent<HTMLDivElement>) => {
+    const track = trackRef.current;
+    const dragState = dragStateRef.current;
+
+    if (!track || dragState.pointerId !== event.pointerId) {
+      return;
+    }
+
+    const delta = event.clientX - dragState.startX;
+
+    if (Math.abs(delta) > 2) {
+      dragState.moved = true;
+    }
+
+    track.scrollLeft = dragState.startScrollLeft - delta;
+  };
+
+  const endDrag = (event: ReactPointerEvent<HTMLDivElement>) => {
+    const track = trackRef.current;
+    const dragState = dragStateRef.current;
+
+    if (!track || dragState.pointerId !== event.pointerId) {
+      return;
+    }
+
+    if (track.hasPointerCapture(event.pointerId)) {
+      track.releasePointerCapture(event.pointerId);
+    }
+
+    dragState.pointerId = null;
+  };
+
+  const handleClickCapture = (event: ReactPointerEvent<HTMLDivElement>) => {
+    if (dragStateRef.current.moved) {
+      event.preventDefault();
+      event.stopPropagation();
+      dragStateRef.current.moved = false;
+    }
+  };
 
   return (
     <section id="tjenester" className="section-space pt-[clamp(2.5rem,5vw,4.5rem)] pb-[clamp(2.75rem,5vw,4.75rem)]">
       <div className="relative left-1/2 w-screen -translate-x-1/2 overflow-hidden">
         <motion.div
           aria-hidden="true"
-          className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(11,23,42,0.92),transparent_30%),radial-gradient(circle_at_82%_8%,rgba(210,173,116,0.14),transparent_24%),linear-gradient(180deg,#030407_0%,#070b12_42%,#081320_100%)]"
+          className={`absolute inset-0 ${surfaceClassName}`}
           initial={shouldReduceMotion ? false : { opacity: 0 }}
           animate={shouldReduceMotion ? undefined : { opacity: 1 }}
           transition={{ duration: 0.32, ease: "easeOut" }}
         />
         <div className="grain-overlay absolute inset-0 opacity-24" />
-        <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-white/8" />
+        <div className={`pointer-events-none absolute inset-x-0 top-0 h-px ${topBorderClassName}`} />
 
         <div className="relative mx-auto max-w-[1320px] px-4 py-[clamp(4.1rem,6.6vw,6.25rem)] sm:px-6 lg:px-8 xl:px-10">
           <motion.div
@@ -71,26 +182,37 @@ export function ServicesSection({
             viewport={{ once: true, amount: 0.35 }}
             transition={{ duration: 0.88, ease: [0.22, 1, 0.36, 1] }}
           >
-            <p className="text-[0.68rem] font-semibold uppercase tracking-[0.26em] text-[color:var(--accent)]/88">
+            <p className={`text-[0.68rem] font-semibold uppercase tracking-[0.26em] ${eyebrowClassName}`}>
               {copy.servicesEyebrow}
             </p>
-            <h2 className="mt-3 text-balance text-[clamp(2.15rem,4.9vw,4.05rem)] font-semibold leading-[0.94] tracking-[-0.06em] text-white">
+            <h2
+              className={`mt-3 text-balance text-[clamp(2.15rem,4.9vw,4.05rem)] font-semibold leading-[0.94] tracking-[-0.06em] ${titleClassName}`}
+            >
               {resolvedTitle}
             </h2>
-            <p className="mx-auto mt-3.5 max-w-[40rem] text-balance text-[0.96rem] leading-6 text-white/62 sm:text-[1.02rem] sm:leading-7">
+            <p
+              className={`mx-auto mt-3.5 max-w-[40rem] text-balance text-[0.96rem] leading-6 sm:text-[1.02rem] sm:leading-7 ${descriptionClassName}`}
+            >
               {resolvedDescription}
             </p>
           </motion.div>
 
           <div className="relative mt-8 sm:mt-10 lg:mt-11">
-            <div className="pointer-events-none absolute inset-y-0 left-0 z-[2] hidden w-16 bg-[linear-gradient(90deg,#030407_0%,rgba(3,4,7,0.82)_52%,transparent)] lg:block" />
-            <div className="pointer-events-none absolute inset-y-0 right-0 z-[2] hidden w-16 bg-[linear-gradient(270deg,#081320_0%,rgba(8,19,32,0.82)_52%,transparent)] lg:block" />
+            <div className={`pointer-events-none absolute inset-y-0 left-0 z-[2] hidden w-16 ${leftFadeClassName} lg:block`} />
+            <div className={`pointer-events-none absolute inset-y-0 right-0 z-[2] hidden w-16 ${rightFadeClassName} lg:block`} />
 
             <div
+              ref={trackRef}
               className="portfolio-service-track -mx-4 flex snap-x snap-mandatory gap-5 overflow-x-auto overflow-y-visible px-4 pb-5 pr-[18vw] touch-pan-x sm:gap-6 sm:pr-12 lg:mx-0 lg:gap-7 lg:px-0 lg:pr-10"
               style={{ WebkitOverflowScrolling: "touch" }}
               aria-label={language === "no" ? "Tjenestekarusell" : "Service carousel"}
               tabIndex={0}
+              onWheel={handleWheel}
+              onPointerDown={handlePointerDown}
+              onPointerMove={handlePointerMove}
+              onPointerUp={endDrag}
+              onPointerCancel={endDrag}
+              onClickCapture={handleClickCapture}
             >
               {services.map((service, index) => (
                 <ServiceCard key={service.slug} service={service} index={index} />

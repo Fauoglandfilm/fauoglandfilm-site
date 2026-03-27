@@ -154,8 +154,9 @@ const serviceIconBySlug = {
 } as const;
 
 export function ServiceCard({ service, index = 0 }: ServiceCardProps) {
-  const { language } = useSitePreferences();
+  const { language, theme } = useSitePreferences();
   const shouldReduceMotion = useReducedMotion();
+  const isDarkTheme = theme === "dark";
   const visual = serviceAreaVisuals[service.slug];
   const videoKey = serviceVideoKeyBySlug[service.slug as keyof typeof serviceVideoKeyBySlug];
   const video = videoKey ? homeServiceVideoLibrary[videoKey] : undefined;
@@ -188,6 +189,41 @@ export function ServiceCard({ service, index = 0 }: ServiceCardProps) {
     language,
   );
   const Icon = serviceIconBySlug[service.slug as keyof typeof serviceIconBySlug] ?? Sparkles;
+  const shellClassName = isDarkTheme
+    ? "border-white/12 bg-[linear-gradient(180deg,rgba(255,255,255,0.12),rgba(255,255,255,0.035)_48%,rgba(255,255,255,0.05)_100%)] shadow-[inset_0_1px_0_rgba(255,255,255,0.12),0_30px_76px_rgba(2,6,12,0.38)]"
+    : "border-white/55 bg-[linear-gradient(180deg,rgba(255,255,255,0.78),rgba(243,247,252,0.68)_48%,rgba(236,243,251,0.58)_100%)] shadow-[inset_0_1px_0_rgba(255,255,255,0.82),0_28px_60px_rgba(122,140,168,0.22)]";
+  const shellHoverShadow = isDarkTheme
+    ? "inset 0 1px 0 rgba(255,255,255,0.18), 0 38px 90px rgba(2,6,12,0.46), 0 0 0 1px rgba(255,255,255,0.08)"
+    : "inset 0 1px 0 rgba(255,255,255,0.92), 0 34px 78px rgba(122,140,168,0.26), 0 0 0 1px rgba(255,255,255,0.62)";
+  const overlayClassName = isDarkTheme
+    ? "bg-[radial-gradient(circle_at_top_left,rgba(255,255,255,0.18),transparent_28%),linear-gradient(160deg,rgba(255,255,255,0.05),transparent_42%,rgba(255,255,255,0.03)_100%)]"
+    : "bg-[radial-gradient(circle_at_top_left,rgba(255,255,255,0.96),transparent_28%),linear-gradient(160deg,rgba(255,255,255,0.42),transparent_42%,rgba(255,255,255,0.18)_100%)]";
+  const glowClassName = isDarkTheme ? "bg-[color:var(--accent)]/18" : "bg-[color:var(--accent)]/15";
+  const sheenClassName = isDarkTheme
+    ? "bg-[linear-gradient(90deg,transparent,rgba(255,255,255,0.16),transparent)] opacity-[0.16]"
+    : "bg-[linear-gradient(90deg,transparent,rgba(255,255,255,0.54),transparent)] opacity-[0.24]";
+  const mediaSurfaceClassName = isDarkTheme
+    ? "border-white/10 bg-[radial-gradient(circle_at_top,rgba(255,255,255,0.14),transparent_42%),linear-gradient(180deg,rgba(255,255,255,0.08),rgba(255,255,255,0.02)_100%)] shadow-[inset_0_1px_0_rgba(255,255,255,0.1),inset_0_-20px_40px_rgba(0,0,0,0.12),0_18px_34px_rgba(0,0,0,0.14)]"
+    : "border-white/60 bg-[radial-gradient(circle_at_top,rgba(255,255,255,0.92),transparent_44%),linear-gradient(180deg,rgba(255,255,255,0.76),rgba(238,244,250,0.66)_100%)] shadow-[inset_0_1px_0_rgba(255,255,255,0.84),inset_0_-18px_34px_rgba(154,173,200,0.12),0_18px_34px_rgba(154,173,200,0.16)]";
+  const mediaOverlayClassName = isDarkTheme
+    ? "bg-[linear-gradient(180deg,rgba(4,6,10,0.02),rgba(4,6,10,0.18)_38%,rgba(4,6,10,0.48)_100%)]"
+    : "bg-[linear-gradient(180deg,rgba(255,255,255,0.02),rgba(230,236,244,0.12)_38%,rgba(205,217,233,0.26)_100%)]";
+  const badgeClassName = isDarkTheme
+    ? "border-white/12 bg-black/18 text-white/66"
+    : "border-white/70 bg-white/58 text-[var(--muted)] shadow-[0_8px_20px_rgba(154,173,200,0.18)]";
+  const titleClassName = isDarkTheme ? "text-white" : "text-[color:var(--foreground)]";
+  const sublineClassName = isDarkTheme ? "text-white/78" : "text-[var(--muted-2)]";
+  const chipClassName = isDarkTheme
+    ? "border-white/10 bg-white/[0.05] text-white/74"
+    : "border-black/8 bg-white/54 text-[var(--muted)] shadow-[0_8px_18px_rgba(154,173,200,0.12)]";
+  const listClassName = isDarkTheme ? "text-white/70" : "text-[var(--muted-2)]";
+  const secondaryLinkClassName = isDarkTheme
+    ? "border-white/10 bg-white/[0.03] text-white/72 hover:border-white/16 hover:bg-white/[0.05] hover:text-white focus-visible:ring-offset-[#070b12]"
+    : "border-black/8 bg-white/48 text-[color:var(--foreground)] hover:border-black/12 hover:bg-white/64 hover:text-[color:var(--foreground)] focus-visible:ring-offset-[#eef3f9]";
+  const arrowClassName = isDarkTheme ? "text-white/34" : "text-[var(--muted)]";
+  const primaryButtonClassName = isDarkTheme
+    ? "border-[color:var(--accent)]/24 bg-[linear-gradient(135deg,color-mix(in_srgb,var(--accent)_28%,rgba(255,255,255,0.12)),rgba(255,255,255,0.05)_58%,rgba(255,255,255,0.03)_100%)] text-white shadow-[0_12px_30px_color-mix(in_srgb,var(--accent)_18%,transparent)] hover:border-[color:var(--accent)]/42 hover:shadow-[0_16px_38px_color-mix(in_srgb,var(--accent)_22%,transparent)]"
+    : "border-[color:var(--accent)]/26 bg-[linear-gradient(135deg,color-mix(in_srgb,var(--accent)_22%,white),rgba(255,255,255,0.94)_58%,rgba(255,255,255,0.86)_100%)] text-[color:var(--foreground)] shadow-[0_12px_28px_color-mix(in_srgb,var(--accent)_14%,transparent)] hover:border-[color:var(--accent)]/42 hover:shadow-[0_16px_34px_color-mix(in_srgb,var(--accent)_18%,transparent)]";
 
   const pointerX = useMotionValue(0);
   const pointerY = useMotionValue(0);
@@ -251,28 +287,27 @@ export function ServiceCard({ service, index = 0 }: ServiceCardProps) {
       style={cardStyle}
     >
       <motion.div
-        className="relative flex h-full w-[78vw] min-w-[19.5rem] max-w-[23rem] flex-col overflow-hidden rounded-[1.35rem] border border-white/12 bg-[linear-gradient(180deg,rgba(255,255,255,0.12),rgba(255,255,255,0.035)_48%,rgba(255,255,255,0.05)_100%)] shadow-[inset_0_1px_0_rgba(255,255,255,0.12),0_30px_76px_rgba(2,6,12,0.38)] backdrop-blur-[30px] will-change-transform sm:w-[22.5rem] sm:min-w-[22.5rem] sm:max-w-[22.5rem] xl:w-[24.5rem] xl:min-w-[24.5rem] xl:max-w-[24.5rem]"
+        className={`relative flex h-full w-[78vw] min-w-[19.5rem] max-w-[23rem] flex-col overflow-hidden rounded-[1.35rem] border backdrop-blur-[30px] will-change-transform sm:w-[22.5rem] sm:min-w-[22.5rem] sm:max-w-[22.5rem] xl:w-[24.5rem] xl:min-w-[24.5rem] xl:max-w-[24.5rem] ${shellClassName}`}
         whileHover={
           shouldReduceMotion
             ? undefined
             : {
-                boxShadow:
-                  "inset 0 1px 0 rgba(255,255,255,0.18), 0 38px 90px rgba(2,6,12,0.46), 0 0 0 1px rgba(255,255,255,0.08)",
+                boxShadow: shellHoverShadow,
               }
         }
         transition={{ duration: 0.24, ease: [0.22, 1, 0.36, 1] }}
       >
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(255,255,255,0.18),transparent_28%),linear-gradient(160deg,rgba(255,255,255,0.05),transparent_42%,rgba(255,255,255,0.03)_100%)]" />
+        <div className={`absolute inset-0 ${overlayClassName}`} />
         <div className="grain-overlay absolute inset-0 opacity-20" />
         <motion.div
           aria-hidden="true"
-          className="pointer-events-none absolute -bottom-8 left-1/2 h-20 w-[74%] -translate-x-1/2 rounded-full bg-[color:var(--accent)]/18 blur-3xl"
+          className={`pointer-events-none absolute -bottom-8 left-1/2 h-20 w-[74%] -translate-x-1/2 rounded-full blur-3xl ${glowClassName}`}
           animate={shouldReduceMotion ? undefined : { opacity: [0.16, 0.24, 0.16], scale: [0.98, 1.04, 0.98] }}
           transition={shouldReduceMotion ? undefined : { duration: 8, repeat: Infinity, ease: "easeInOut" }}
         />
         <motion.div
           aria-hidden="true"
-          className="pointer-events-none absolute inset-y-[-15%] left-[-45%] w-[48%] rotate-[14deg] bg-[linear-gradient(90deg,transparent,rgba(255,255,255,0.16),transparent)] opacity-[0.16] blur-xl"
+          className={`pointer-events-none absolute inset-y-[-15%] left-[-45%] w-[48%] rotate-[14deg] blur-xl ${sheenClassName}`}
           animate={shouldReduceMotion ? undefined : { x: ["-10%", "320%"] }}
           transition={
             shouldReduceMotion
@@ -287,10 +322,12 @@ export function ServiceCard({ service, index = 0 }: ServiceCardProps) {
         />
 
         <div className="relative flex h-full flex-col p-4 sm:p-5">
-          <div className="relative overflow-hidden rounded-[1.15rem] border border-white/10 bg-[radial-gradient(circle_at_top,rgba(255,255,255,0.08),transparent_35%),linear-gradient(180deg,rgba(5,8,14,0.68),rgba(7,11,18,0.94))]">
-            <div className="pointer-events-none absolute left-4 top-4 z-[3] inline-flex items-center gap-2 rounded-full border border-white/12 bg-black/18 px-3 py-1.5 backdrop-blur-2xl">
+          <div className={`relative overflow-hidden rounded-[1.15rem] border ${mediaSurfaceClassName}`}>
+            <div
+              className={`pointer-events-none absolute left-4 top-4 z-[3] inline-flex items-center gap-2 rounded-full border px-3 py-1.5 backdrop-blur-2xl ${badgeClassName}`}
+            >
               <Icon className="h-3.5 w-3.5 text-[color:var(--accent)]" />
-              <span className="text-[0.64rem] font-semibold uppercase tracking-[0.18em] text-white/66">
+              <span className="text-[0.64rem] font-semibold uppercase tracking-[0.18em]">
                 {eyebrow}
               </span>
             </div>
@@ -321,18 +358,22 @@ export function ServiceCard({ service, index = 0 }: ServiceCardProps) {
                 previewClassName="transition duration-500 ease-out"
               />
             </motion.div>
-            <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(4,6,10,0.02),rgba(4,6,10,0.18)_38%,rgba(4,6,10,0.62)_100%)]" />
+            <div className={`absolute inset-0 ${mediaOverlayClassName}`} />
           </div>
 
           <div className="relative mt-3.5 flex flex-1 flex-col">
             <div className="space-y-3">
               <div className="flex items-start justify-between gap-3">
-                <h3 className="max-w-[10ch] text-[1.42rem] font-semibold tracking-[-0.05em] text-white sm:text-[1.56rem]">
+                <h3
+                  className={`max-w-[10ch] text-[1.42rem] font-semibold tracking-[-0.05em] sm:text-[1.56rem] ${titleClassName}`}
+                >
                   {title}
                 </h3>
-                <ArrowUpRight className="mt-1 h-4 w-4 shrink-0 text-white/34 transition duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-[color:var(--accent)]" />
+                <ArrowUpRight
+                  className={`mt-1 h-4 w-4 shrink-0 transition duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-[color:var(--accent)] ${arrowClassName}`}
+                />
               </div>
-              <p className="max-w-[28ch] text-[0.9rem] leading-5.5 text-white/78 sm:text-[0.94rem]">
+              <p className={`max-w-[28ch] text-[0.9rem] leading-5.5 sm:text-[0.94rem] ${sublineClassName}`}>
                 {subline}
               </p>
             </div>
@@ -341,14 +382,14 @@ export function ServiceCard({ service, index = 0 }: ServiceCardProps) {
               {[purposeChip, budgetChip, timelineChip].map((chip) => (
                 <span
                   key={`${service.slug}-${chip}`}
-                  className="rounded-full border border-white/10 bg-white/[0.05] px-3 py-1.5 text-[0.68rem] font-medium tracking-[0.01em] text-white/74 backdrop-blur-xl"
+                  className={`rounded-full border px-3 py-1.5 text-[0.68rem] font-medium tracking-[0.01em] backdrop-blur-xl ${chipClassName}`}
                 >
                   {chip}
                 </span>
               ))}
             </div>
 
-            <ul className="mt-4 space-y-2 text-sm leading-6 text-white/70">
+            <ul className={`mt-4 space-y-2 text-sm leading-6 ${listClassName}`}>
               {deliverables.map((item) => (
                 <li key={`${service.slug}-${item}`} className="flex items-start gap-2.5">
                   <span className="mt-2 h-1.5 w-1.5 rounded-full bg-[color:var(--accent)]/86" />
@@ -361,13 +402,13 @@ export function ServiceCard({ service, index = 0 }: ServiceCardProps) {
               <ButtonLink
                 href={service.href}
                 size="compact"
-                className="w-full border-[color:var(--accent)]/24 bg-[linear-gradient(135deg,color-mix(in_srgb,var(--accent)_28%,rgba(255,255,255,0.12)),rgba(255,255,255,0.05)_58%,rgba(255,255,255,0.03)_100%)] text-white shadow-[0_12px_30px_color-mix(in_srgb,var(--accent)_18%,transparent)] transition duration-200 hover:border-[color:var(--accent)]/42 hover:shadow-[0_16px_38px_color-mix(in_srgb,var(--accent)_22%,transparent)]"
+                className={`w-full transition duration-200 ${primaryButtonClassName}`}
               >
                 {primaryLabel}
               </ButtonLink>
               <Link
                 href={secondaryHref}
-                className="inline-flex min-h-11 items-center justify-between rounded-[0.95rem] border border-white/10 bg-white/[0.03] px-4 py-2.5 text-sm font-medium text-white/72 transition duration-200 hover:border-white/16 hover:bg-white/[0.05] hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--accent)]/62 focus-visible:ring-offset-2 focus-visible:ring-offset-[#070b12]"
+                className={`inline-flex min-h-11 items-center justify-between rounded-[0.95rem] border px-4 py-2.5 text-sm font-medium transition duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--accent)]/62 focus-visible:ring-offset-2 ${secondaryLinkClassName}`}
               >
                 <span>{secondaryLabel}</span>
                 <ArrowUpRight className="h-4 w-4" />

@@ -2944,8 +2944,12 @@ summary::-webkit-details-marker {
 }
 
 .portfolio-service-track {
+  overscroll-behavior-x: contain;
+  overscroll-behavior-y: none;
+  touch-action: pan-x;
+  -webkit-overflow-scrolling: touch;
   scrollbar-width: thin;
-  scrollbar-color: rgba(255, 255, 255, 0.18) transparent;
+  scrollbar-color: color-mix(in srgb, var(--foreground) 18%, transparent) transparent;
 }
 
 .portfolio-service-track::-webkit-scrollbar {
@@ -2958,12 +2962,12 @@ summary::-webkit-details-marker {
 
 .portfolio-service-track::-webkit-scrollbar-thumb {
   border-radius: 999px;
-  background: rgba(255, 255, 255, 0.16);
-  border: 1px solid rgba(255, 255, 255, 0.06);
+  background: color-mix(in srgb, var(--foreground) 16%, transparent);
+  border: 1px solid color-mix(in srgb, var(--foreground) 8%, transparent);
 }
 
 .portfolio-service-track::-webkit-scrollbar-thumb:hover {
-  background: rgba(255, 255, 255, 0.24);
+  background: color-mix(in srgb, var(--foreground) 24%, transparent);
 }
 
 @media (prefers-reduced-motion: reduce) {
