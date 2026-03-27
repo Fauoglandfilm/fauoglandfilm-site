@@ -18,11 +18,34 @@ const serviceVideoKeyBySlug = {
   "event-live": "04",
 } as const;
 
+const serviceMediaConfigBySlug = {
+  reklamefilm: {
+    mediaFit: "contain",
+    frameClassName: "aspect-square",
+  },
+  "bedriftsfilm-intervjuer": {
+    mediaFit: "contain",
+    frameClassName: "aspect-square",
+  },
+  "some-innhold": {
+    mediaFit: "contain",
+    frameClassName: "aspect-square",
+  },
+  "event-live": {
+    mediaFit: "contain",
+    frameClassName: "aspect-square",
+  },
+} as const;
+
 export function ServiceCard({ service }: ServiceCardProps) {
   const { language } = useSitePreferences();
   const visual = serviceAreaVisuals[service.slug];
   const videoKey = serviceVideoKeyBySlug[service.slug as keyof typeof serviceVideoKeyBySlug];
   const video = videoKey ? homeServiceVideoLibrary[videoKey] : undefined;
+  const mediaConfig = serviceMediaConfigBySlug[service.slug as keyof typeof serviceMediaConfigBySlug] ?? {
+    mediaFit: "contain" as const,
+    frameClassName: "aspect-square",
+  };
   const metaItems = [
     {
       label: language === "no" ? "Budsjett" : "Budget",
@@ -40,23 +63,27 @@ export function ServiceCard({ service }: ServiceCardProps) {
 
   return (
     <article className="group grid gap-3.5 lg:grid-cols-[minmax(0,0.43fr)_minmax(0,0.57fr)] lg:items-start lg:gap-6">
-      <div className="media-frame relative overflow-hidden rounded-[1.45rem]">
-        <div className="relative aspect-[1.18/0.72] overflow-hidden bg-[#0b0d12] lg:min-h-[14rem] lg:aspect-auto">
-          <PreviewMedia
-            title={service.title}
-            video={video}
-            image={video?.poster ?? visual?.src}
-            imageAlt={mediaAlt}
-            previewBehavior={video ? "viewport" : "static"}
-            className="absolute inset-0"
-            sizes="(min-width: 1280px) 28vw, (min-width: 1024px) 36vw, 100vw"
-            rootMargin="180px 0px -8% 0px"
-            inViewThreshold={0.16}
-            posterClassName="transition duration-700 group-hover:scale-[1.035]"
-            previewClassName="scale-[1.02]"
-          />
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(255,255,255,0.08),transparent_36%),linear-gradient(180deg,rgba(9,9,9,0.02),rgba(9,9,9,0.16)_36%,rgba(9,9,9,0.58)_100%)]" />
-          <div className="grain-overlay absolute inset-0 opacity-36" />
+      <div className="media-frame relative overflow-hidden rounded-[1.45rem] border border-white/10 bg-[linear-gradient(180deg,rgba(255,255,255,0.08),rgba(255,255,255,0.03))] p-2 shadow-[inset_0_1px_0_rgba(255,255,255,0.05)] sm:p-3">
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(255,255,255,0.1),transparent_40%)] opacity-70" />
+        <div className="relative rounded-[1.15rem] border border-white/8 bg-[#0b0d12]/90 p-2 shadow-[0_18px_42px_rgba(0,0,0,0.22)] sm:p-3">
+          <div className={`relative ${mediaConfig.frameClassName} overflow-hidden rounded-[0.95rem] bg-[#05070b]`}>
+            <PreviewMedia
+              title={service.title}
+              video={video}
+              image={video?.poster ?? visual?.src}
+              imageAlt={mediaAlt}
+              mediaFit={mediaConfig.mediaFit}
+              previewBehavior={video ? "viewport" : "static"}
+              className="absolute inset-0"
+              sizes="(min-width: 1280px) 28vw, (min-width: 1024px) 36vw, 100vw"
+              rootMargin="180px 0px -8% 0px"
+              inViewThreshold={0.16}
+              posterClassName="transition duration-700 group-hover:scale-[1.01]"
+              previewClassName="transition duration-700"
+            />
+            <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(255,255,255,0.08),transparent_36%),linear-gradient(180deg,rgba(9,9,9,0.02),rgba(9,9,9,0.16)_36%,rgba(9,9,9,0.5)_100%)]" />
+            <div className="grain-overlay absolute inset-0 opacity-36" />
+          </div>
         </div>
       </div>
 
