@@ -249,7 +249,7 @@ function ServiceMenuCard({ service, index }: { service: ServiceArea; index: numb
       style={cardStyle}
     >
       <motion.div
-        className="relative flex h-full w-[clamp(20.5rem,82vw,25rem)] flex-col overflow-hidden rounded-[1.35rem] border border-white/12 bg-[linear-gradient(180deg,rgba(255,255,255,0.12),rgba(255,255,255,0.035)_48%,rgba(255,255,255,0.05)_100%)] shadow-[inset_0_1px_0_rgba(255,255,255,0.12),0_28px_72px_rgba(2,6,12,0.34)] backdrop-blur-[30px] will-change-transform sm:w-[23rem] lg:w-[clamp(24rem,30vw,27rem)]"
+        className="relative flex h-full w-[85vw] min-w-[21.5rem] max-w-[26.25rem] flex-col overflow-hidden rounded-[1.35rem] border border-white/12 bg-[linear-gradient(180deg,rgba(255,255,255,0.12),rgba(255,255,255,0.035)_48%,rgba(255,255,255,0.05)_100%)] shadow-[inset_0_1px_0_rgba(255,255,255,0.12),0_28px_72px_rgba(2,6,12,0.34)] backdrop-blur-[30px] will-change-transform sm:w-[26.25rem] sm:min-w-[26.25rem] sm:max-w-[26.25rem] xl:w-[32.5rem] xl:min-w-[32.5rem] xl:max-w-[32.5rem]"
         whileHover={
           shouldReduceMotion
             ? undefined
@@ -310,7 +310,7 @@ function ServiceMenuCard({ service, index }: { service: ServiceArea; index: numb
                 mediaFit={mediaConfig.mediaFit}
                 previewBehavior={usesDronePreview ? "always" : video ? "hover-or-viewport" : "static"}
                 className="absolute inset-0"
-                sizes="(min-width: 1280px) 24rem, (min-width: 768px) 22rem, 78vw"
+                sizes="(min-width: 1536px) 32.5rem, (min-width: 640px) 26.25rem, 85vw"
                 rootMargin="180px 0px -12% 0px"
                 inViewThreshold={0.22}
                 priority={usesDronePreview}
