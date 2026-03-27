@@ -281,7 +281,7 @@ function RoleGroupCard({
                       {isActorsHub ? (
                         <div className="absolute inset-0 flex items-center justify-center bg-black p-5 sm:p-6">
                           <Image
-                            src="/media/logos/clients/COLOR/actorshub_logo_white_NY-kopi.png"
+                            src="/media/logos/clients/COLOR/actorshub_logo_white_NY-kopi.webp"
                             alt={resolveLocalizedValue(item.poster.alt, language)}
                             fill
                             sizes="(min-width: 1280px) 14rem, (min-width: 1024px) 18vw, (min-width: 640px) 40vw, 100vw"

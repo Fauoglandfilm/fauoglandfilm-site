@@ -322,7 +322,7 @@ export const videoLibrary = {
   hero: {
     videoType: "direct",
     src: "/media/hero/fau-land-hero-single-source-20260328-final.mp4",
-    poster: "/media/hero/hero-nature-desktop-poster.png",
+    poster: "/media/hero/fau-land-hero-single-source-20260328-final-poster.webp",
     label: {
       no: "Naturfilm for Fau&Land Film",
       en: "Nature film for Fau&Land Film",
@@ -353,7 +353,7 @@ export const homeServiceVideoLibrary = {
   "03": {
     videoType: "direct",
     src: "/assets/services/videos/sosiale-medier.mp4",
-    poster: "/assets/services/posters/sosiale-medier-poster.png",
+    poster: "/assets/services/posters/sosiale-medier-poster.webp",
     label: {
       no: "Innhold for sosiale medier",
       en: "Social media content",
@@ -362,7 +362,7 @@ export const homeServiceVideoLibrary = {
   "04": {
     videoType: "direct",
     src: "/assets/services/videos/konsert.mp4",
-    poster: "/assets/services/posters/konsert-poster.png",
+    poster: "/assets/services/posters/konsert-poster.webp",
     label: {
       no: "Aftermovie",
       en: "Aftermovie",
@@ -371,7 +371,7 @@ export const homeServiceVideoLibrary = {
   "05": {
     videoType: "direct",
     src: "/assets/services/videos/marketing.mp4",
-    poster: "/assets/services/posters/marketing-poster.png",
+    poster: "/assets/services/posters/marketing-poster.webp",
     label: {
       no: "Marketing og distribusjon",
       en: "Marketing and distribution",
@@ -380,7 +380,7 @@ export const homeServiceVideoLibrary = {
   "06": {
     videoType: "direct",
     src: "/assets/services/videos/drone.mp4",
-    poster: "/assets/services/posters/drone-poster.jpg",
+    poster: "/assets/services/posters/drone-poster.webp",
     label: {
       no: "Dronefilm og luftfoto",
       en: "Drone film and aerial photography",
@@ -436,50 +436,50 @@ export const navItems: NavItem[] = [
 export const clientLogos: ClientLogo[] = [
   {
     name: "Ville Gleder",
-    src: "/media/logos/clients/COLOR/Ville gleder.png",
-    darkSrc: "/media/logos/clients/COLOR/ville-gleder-dark.png",
+    src: "/media/logos/clients/COLOR/Ville%20gleder.webp",
+    darkSrc: "/media/logos/clients/COLOR/ville-gleder-dark.webp",
     width: 1466,
     height: 476,
   },
   {
     name: "Treningshuset",
-    src: "/media/logos/clients/COLOR/Treningshuset.png",
-    darkSrc: "/media/logos/clients/COLOR/Treningshuset.png",
+    src: "/media/logos/clients/COLOR/Treningshuset.webp",
+    darkSrc: "/media/logos/clients/COLOR/Treningshuset.webp",
     width: 726,
     height: 146,
   },
   {
     name: "STUA",
-    src: "/media/logos/clients/COLOR/STUA.png",
-    darkSrc: "/media/logos/clients/COLOR/stua-dark.png",
+    src: "/media/logos/clients/COLOR/STUA.webp",
+    darkSrc: "/media/logos/clients/COLOR/stua-dark.webp",
     width: 1563,
     height: 1563,
   },
   {
     name: "Norske Bunader",
     src: "/media/logos/clients/COLOR/Norske%20Bunader.webp",
-    darkSrc: "/media/logos/clients/COLOR/norske-bunader-dark.png",
+    darkSrc: "/media/logos/clients/COLOR/norske-bunader-dark.webp",
     width: 500,
     height: 200,
   },
   {
     name: "Actors Hub",
-    src: "/media/logos/clients/COLOR/actorshub-logo-dark-text.png",
-    darkSrc: "/media/logos/clients/COLOR/actorshub_logo_white_NY-kopi.png",
+    src: "/media/logos/clients/COLOR/actorshub-logo-dark-text.webp",
+    darkSrc: "/media/logos/clients/COLOR/actorshub_logo_white_NY-kopi.webp",
     width: 1500,
     height: 844,
   },
   {
     name: "Gina",
     src: "/media/logos/clients/COLOR/GinaLiggende-01.webp",
-    darkSrc: "/media/logos/clients/COLOR/gina-dark.png",
+    darkSrc: "/media/logos/clients/COLOR/gina-dark.webp",
     width: 1500,
     height: 341,
   },
   {
     name: "The International Stunt Academy",
-    src: "/media/logos/clients/COLOR/ISA.png",
-    darkSrc: "/media/logos/clients/COLOR/isa-dark.png",
+    src: "/media/logos/clients/COLOR/ISA.webp",
+    darkSrc: "/media/logos/clients/COLOR/isa-dark.webp",
     width: 1483,
     height: 660,
   },
@@ -492,8 +492,8 @@ export const clientLogos: ClientLogo[] = [
   },
   {
     name: "Foreningen Norden",
-    src: "/media/logos/clients/COLOR/Foreningen norden.png",
-    darkSrc: "/media/logos/clients/COLOR/foreningen-norden-dark.png",
+    src: "/media/logos/clients/COLOR/Foreningen%20norden.webp",
+    darkSrc: "/media/logos/clients/COLOR/foreningen-norden-dark.webp",
     width: 1282,
     height: 508,
   },
@@ -947,7 +947,7 @@ export const caseStudies: CaseStudy[] = [
           no: "Våt, kald & sulten",
           en: "Wet, cold and hungry",
         },
-        image: "/assets/portfolio/ville-gleder/stills/vat-kald-sulten-still010.jpg",
+        image: "/assets/portfolio/ville-gleder/stills/vat-kald-sulten-still010.webp",
         imageAlt: {
           no: "Jan Monsen og Mattis Thørud i promofilm for Våt, kald & sulten",
           en: "Jan Monsen and Mattis Thorud in the Wet, cold and hungry promo film",
@@ -955,7 +955,7 @@ export const caseStudies: CaseStudy[] = [
         video: {
           videoType: "direct",
           src: "/assets/portfolio/ville-gleder/videos/ville-gleder-vat-kald-sulten-web.mp4",
-          poster: "/assets/portfolio/ville-gleder/stills/vat-kald-sulten-still010.jpg",
+          poster: "/assets/portfolio/ville-gleder/stills/vat-kald-sulten-still010.webp",
           label: {
             no: "Ville Gleder - Våt, kald og sulten",
             en: "Ville Gleder - wet, cold and hungry",
@@ -1062,7 +1062,7 @@ export const caseStudies: CaseStudy[] = [
       { no: "Sosiale medier", en: "Social media" },
       { no: "Medlemsvekst", en: "Membership growth" },
     ],
-    image: "/assets/portfolio/treningshuset/posters/treningshuset-musikk-2-45-poster.png",
+    image: "/assets/portfolio/treningshuset/posters/treningshuset-musikk-2-45-poster.webp",
     imageAlt: {
       no: "Still fra Treningshuset-kampanje i portrettformat",
       en: "Still from the Treningshuset campaign in portrait format",
@@ -1072,8 +1072,8 @@ export const caseStudies: CaseStudy[] = [
       videoType: "direct",
       src: "/assets/portfolio/treningshuset/videos/portrait/treningshuset-musikk-2-45-web.mp4",
       mobileSrc: "/assets/portfolio/treningshuset/videos/portrait/treningshuset-velkommen-sindre-web.mp4",
-      poster: "/assets/portfolio/treningshuset/posters/treningshuset-musikk-2-45-poster.png",
-      mobilePoster: "/assets/portfolio/treningshuset/posters/treningshuset-velkommen-sindre-poster.png",
+      poster: "/assets/portfolio/treningshuset/posters/treningshuset-musikk-2-45-poster.webp",
+      mobilePoster: "/assets/portfolio/treningshuset/posters/treningshuset-velkommen-sindre-poster.webp",
       label: {
         no: "Treningshuset - Musikk 2",
         en: "Treningshuset - Music 2",
@@ -1086,7 +1086,7 @@ export const caseStudies: CaseStudy[] = [
           no: "Film 1",
           en: "Film 1",
         },
-        image: "/assets/portfolio/treningshuset/posters/treningshuset-velkommen-sindre-poster.png",
+        image: "/assets/portfolio/treningshuset/posters/treningshuset-velkommen-sindre-poster.webp",
         imageAlt: {
           no: "Portrettfilm for Treningshuset med Velkommen Sindre",
           en: "Portrait film for Treningshuset with Welcome Sindre",
@@ -1096,7 +1096,7 @@ export const caseStudies: CaseStudy[] = [
         video: {
           videoType: "direct",
           src: "/assets/portfolio/treningshuset/videos/portrait/treningshuset-velkommen-sindre-web.mp4",
-          poster: "/assets/portfolio/treningshuset/posters/treningshuset-velkommen-sindre-poster.png",
+          poster: "/assets/portfolio/treningshuset/posters/treningshuset-velkommen-sindre-poster.webp",
           label: {
             no: "Film 1",
             en: "Film 1",
@@ -1109,7 +1109,7 @@ export const caseStudies: CaseStudy[] = [
           no: "Film 2",
           en: "Film 2",
         },
-        image: "/assets/portfolio/treningshuset/posters/treningshuset-musikk-1-poster.png",
+        image: "/assets/portfolio/treningshuset/posters/treningshuset-musikk-1-poster.webp",
         imageAlt: {
           no: "Portrettfilm for Treningshuset med Musikk 1",
           en: "Portrait film for Treningshuset with Music 1",
@@ -1119,7 +1119,7 @@ export const caseStudies: CaseStudy[] = [
         video: {
           videoType: "direct",
           src: "/assets/portfolio/treningshuset/videos/portrait/treningshuset-musikk-1-web.mp4",
-          poster: "/assets/portfolio/treningshuset/posters/treningshuset-musikk-1-poster.png",
+          poster: "/assets/portfolio/treningshuset/posters/treningshuset-musikk-1-poster.webp",
           label: {
             no: "Film 2",
             en: "Film 2",
@@ -1132,7 +1132,7 @@ export const caseStudies: CaseStudy[] = [
           no: "Film 3",
           en: "Film 3",
         },
-        image: "/assets/portfolio/treningshuset/posters/treningshuset-musikk-2-45-poster.png",
+        image: "/assets/portfolio/treningshuset/posters/treningshuset-musikk-2-45-poster.webp",
         imageAlt: {
           no: "4:5-film for Treningshuset med Musikk 2",
           en: "4:5 film for Treningshuset with Music 2",
@@ -1142,7 +1142,7 @@ export const caseStudies: CaseStudy[] = [
         video: {
           videoType: "direct",
           src: "/assets/portfolio/treningshuset/videos/portrait/treningshuset-musikk-2-45-web.mp4",
-          poster: "/assets/portfolio/treningshuset/posters/treningshuset-musikk-2-45-poster.png",
+          poster: "/assets/portfolio/treningshuset/posters/treningshuset-musikk-2-45-poster.webp",
           label: {
             no: "Film 3",
             en: "Film 3",
@@ -1771,7 +1771,7 @@ const portfolioProjectsBase: PortfolioProject[] = [
       en: "Producer: Tommy Garland. Director: Elia Biondi. DOP: Justin Bellucci.",
     },
     ctaLabel: openFilmCta,
-    image: "/assets/portfolio/a-message-from-martha/posters/a-message-from-martha-poster.jpeg",
+    image: "/assets/portfolio/a-message-from-martha/posters/a-message-from-martha-poster.webp",
     imageAlt: {
       no: "Plakat for A Message From Martha",
       en: "Poster for A Message From Martha",
@@ -2041,7 +2041,7 @@ const portfolioProjectsBase: PortfolioProject[] = [
       en: "Has won multiple awards for film, directing, acting, cinematography and original score.",
     },
     ctaLabel: viewReferenceCta,
-    image: "/assets/portfolio/huldredans/posters/huldredans-poster.jpg",
+    image: "/assets/portfolio/huldredans/posters/huldredans-poster.webp",
     imageAlt: {
       no: "Plakat for Huldredans",
       en: "Poster for Huldredans",
@@ -2099,7 +2099,7 @@ const portfolioProjectsBase: PortfolioProject[] = [
     detailHref: "/case/treningshuset",
     ctaLabel: viewCaseCta,
     mediaFit: "contain",
-    image: "/assets/portfolio/treningshuset/posters/treningshuset-musikk-2-45-poster.png",
+    image: "/assets/portfolio/treningshuset/posters/treningshuset-musikk-2-45-poster.webp",
     imageAlt: {
       no: "Still fra Treningshuset-portrettfilm",
       en: "Still from the Treningshuset portrait film",
@@ -2107,7 +2107,7 @@ const portfolioProjectsBase: PortfolioProject[] = [
     video: {
       videoType: "direct",
       src: "/assets/portfolio/treningshuset/videos/portrait/treningshuset-musikk-2-45-web.mp4",
-      poster: "/assets/portfolio/treningshuset/posters/treningshuset-musikk-2-45-poster.png",
+      poster: "/assets/portfolio/treningshuset/posters/treningshuset-musikk-2-45-poster.webp",
       label: {
         no: "Treningshuset - Musikk 2",
         en: "Treningshuset - Music 2",
@@ -2175,7 +2175,7 @@ const portfolioProjectsBase: PortfolioProject[] = [
     },
     detailHref: "/case/ville-gleder",
     ctaLabel: viewCaseCta,
-    image: "/assets/portfolio/ville-gleder/stills/vat-kald-sulten-still010.jpg",
+    image: "/assets/portfolio/ville-gleder/stills/vat-kald-sulten-still010.webp",
     imageAlt: {
       no: "Jan Monsen og Mattis Thørud i promofilm for Våt, kald & sulten",
       en: "Jan Monsen and Mattis Thorud in the Wet, cold and hungry promo film",
@@ -2183,7 +2183,7 @@ const portfolioProjectsBase: PortfolioProject[] = [
     video: {
       videoType: "direct",
       src: "/assets/portfolio/ville-gleder/videos/ville-gleder-vat-kald-sulten-web.mp4",
-      poster: "/assets/portfolio/ville-gleder/stills/vat-kald-sulten-still010.jpg",
+      poster: "/assets/portfolio/ville-gleder/stills/vat-kald-sulten-still010.webp",
       label: {
         no: "Ville Gleder - Våt, kald og sulten",
         en: "Ville Gleder - Wet, cold and hungry",

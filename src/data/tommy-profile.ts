@@ -162,7 +162,7 @@ export const tommyPortfolioPage = {
         externalLink("FilmFreeway", "https://filmfreeway.com/AmessagefromMartha"),
       ],
       poster: poster(
-        "/assets/team/tommy/portfolio/shortfilms/a-message-from-martha-poster.jpg",
+        "/assets/team/tommy/portfolio/shortfilms/a-message-from-martha-poster.webp",
         "Plakat for A Message from Martha",
         "Poster for A Message from Martha",
       ),
@@ -191,7 +191,7 @@ export const tommyPortfolioPage = {
         externalLink("Festival page", "https://kortfilmfestivalen.no/film/en-midnatts-vuggesang/"),
       ],
       poster: poster(
-        "/assets/team/tommy/portfolio/shortfilms/a-midnight-lullaby-poster.png",
+        "/assets/team/tommy/portfolio/shortfilms/a-midnight-lullaby-poster.webp",
         "Plakat for En Midnatts Vuggesang",
         "Poster for A Midnight Lullaby",
       ),
@@ -278,7 +278,7 @@ export const tommyPortfolioPage = {
       ],
       links: [externalLink("FilmFreeway", "https://filmfreeway.com/TitleMirrorEffect")],
       poster: poster(
-        "/assets/team/tommy/portfolio/shortfilms/mirror-effect-poster.jpg",
+        "/assets/team/tommy/portfolio/shortfilms/mirror-effect-poster.webp",
         "Plakat for Mirror Effect",
         "Poster for Mirror Effect",
       ),
@@ -316,7 +316,7 @@ export const tommyPortfolioPage = {
         internalLink("Åpne case", "Open case", "/case/treningshuset"),
       ],
       poster: poster(
-        "/assets/portfolio/treningshuset/posters/treningshuset-musikk-2-45-poster.png",
+        "/assets/portfolio/treningshuset/posters/treningshuset-musikk-2-45-poster.webp",
         "Still fra Treningshuset-kampanje i portrettformat",
         "Still from the Treningshuset campaign in portrait format",
         "cover",
@@ -432,7 +432,7 @@ export const tommyPortfolioPage = {
       },
       links: [],
       poster: poster(
-        "/assets/team/tommy/portfolio/event/kulturarena-poster.png",
+        "/assets/team/tommy/portfolio/event/kulturarena-poster.webp",
         "Logo for Kulturarena",
         "Kulturarena logotype",
         "contain",
@@ -456,7 +456,7 @@ export const tommyPortfolioPage = {
       },
       links: [],
       poster: poster(
-        "/assets/team/tommy/portfolio/event/the-key-collection-poster.png",
+        "/assets/team/tommy/portfolio/event/the-key-collection-poster.webp",
         "Visual for The Key Collection",
         "Visual for The Key Collection",
         "contain",
@@ -479,7 +479,7 @@ export const tommyPortfolioPage = {
       },
       links: [],
       poster: poster(
-        "/assets/team/tommy/portfolio/event/tm51-poster.png",
+        "/assets/team/tommy/portfolio/event/tm51-poster.webp",
         "Visual for TM51",
         "Visual for TM51",
         "contain",
@@ -515,7 +515,7 @@ export const tommyPortfolioPage = {
           slug: "skjonnheten-skal-frelse-verden",
           title: sameText("Skjønnheten skal frelse verden"),
           poster: poster(
-            "/assets/team/tommy/portfolio/other-roles/skjonnheten-skal-frelse-verden-poster.png",
+            "/assets/team/tommy/portfolio/other-roles/skjonnheten-skal-frelse-verden-poster.webp",
             "Poster for Skjønnheten skal frelse verden",
             "Poster for Skjønnheten skal frelse verden",
             "cover",
@@ -526,7 +526,7 @@ export const tommyPortfolioPage = {
           slug: "royalteen",
           title: sameText("Royalteen"),
           poster: poster(
-            "/assets/team/tommy/portfolio/other-roles/royalteen-poster.png",
+            "/assets/team/tommy/portfolio/other-roles/royalteen-poster.webp",
             "Poster for Royalteen",
             "Poster for Royalteen",
             "cover",
@@ -537,7 +537,7 @@ export const tommyPortfolioPage = {
           slug: "royalteen-princesse-margrethe",
           title: sameText("Royalteen: Princess Margrethe"),
           poster: poster(
-            "/assets/team/tommy/portfolio/other-roles/royalteen-princesse-margrethe-poster.png",
+            "/assets/team/tommy/portfolio/other-roles/royalteen-princesse-margrethe-poster.webp",
             "Poster for Royalteen: Princess Margrethe",
             "Poster for Royalteen: Princess Margrethe",
             "cover",
@@ -551,7 +551,7 @@ export const tommyPortfolioPage = {
             en: "On the Wrong Track",
           },
           poster: poster(
-            "/assets/team/tommy/portfolio/other-roles/pa-vill-spor-poster.jpg",
+            "/assets/team/tommy/portfolio/other-roles/pa-vill-spor-poster.webp",
             "Poster for På vill spor",
             "Poster for On the Wrong Track",
             "cover",
@@ -562,7 +562,7 @@ export const tommyPortfolioPage = {
           slug: "a-storm-for-christmas",
           title: sameText("A Storm for Christmas"),
           poster: poster(
-            "/assets/team/tommy/portfolio/other-roles/storm-for-christmas-poster.png",
+            "/assets/team/tommy/portfolio/other-roles/storm-for-christmas-poster.webp",
             "Poster for A Storm for Christmas",
             "Poster for A Storm for Christmas",
             "cover",
@@ -573,7 +573,7 @@ export const tommyPortfolioPage = {
           slug: "affeksjonsverdi",
           title: sameText("Affeksjonsverdi"),
           poster: poster(
-            "/assets/team/tommy/portfolio/other-roles/affeksjonsverdi-poster.png",
+            "/assets/team/tommy/portfolio/other-roles/affeksjonsverdi-poster.webp",
             "Poster for Affeksjonsverdi",
             "Poster for Affeksjonsverdi",
             "cover",
@@ -588,7 +588,7 @@ export const tommyPortfolioPage = {
           slug: "the-actors-hub-oslo",
           title: sameText("THE ACTORS HUB: \"DON'T ACT\""),
           poster: poster(
-            "/assets/team/tommy/portfolio/other-roles/the-actors-hub-dont-act-poster.png",
+            "/assets/team/tommy/portfolio/other-roles/the-actors-hub-dont-act-poster.webp",
             "Poster for The Actors Hub: Don't Act",
             "Poster for The Actors Hub: Don't Act",
             "cover",
@@ -599,7 +599,7 @@ export const tommyPortfolioPage = {
           slug: "mitt-skeive-oslo",
           title: sameText("Mitt skeive Oslo"),
           poster: poster(
-            "/assets/team/tommy/portfolio/other-roles/mitt-skeive-oslo-poster.png",
+            "/assets/team/tommy/portfolio/other-roles/mitt-skeive-oslo-poster.webp",
             "Still fra Mitt skeive Oslo",
             "Still from Mitt skeive Oslo",
             "cover",

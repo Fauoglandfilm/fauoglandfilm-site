@@ -68,7 +68,7 @@ Viser et mørkt nærbilde av en kameralinse med røde lysstriper.
 Kilde: Markus Spiske, CC0 1.0, Openverse / rawpixel  
 Lenke: <https://images.rawpixel.com/editor_1024/cHJpdmF0ZS9sci9pbWFnZXMvd2Vic2l0ZS8yMDIyLTA2L2EwMTAtbWFya3Vzc3Bpc2tlLW1hcjE5LTE5MDItNDkxMS5qcGc.jpg>
 
-`film-grain.png`  
+`film-grain.avif`  
 Brukes som subtil overlay over hele siden.  
 Viser transparent grain som bryter opp store flater og gir en mer analog filmfølelse.  
 Kilde: generert lokalt i workspace.

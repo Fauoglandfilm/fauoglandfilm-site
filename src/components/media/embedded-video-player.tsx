@@ -11,8 +11,8 @@ import { cn } from "@/lib/utils";
 import { MediaImage } from "./media-image";
 
 const GLOBAL_MEDIA_FALLBACKS = [
-  "/assets/visuals/cinematic/cinematic-video-camera-closeup.jpg",
-  "/assets/visuals/section-images/section-film-studio-cyclorama.jpg",
+  "/assets/visuals/cinematic/cinematic-video-camera-closeup.webp",
+  "/assets/visuals/section-images/section-film-studio-cyclorama.webp",
 ] as const;
 
 type EmbeddedVideoPlayerProps = {

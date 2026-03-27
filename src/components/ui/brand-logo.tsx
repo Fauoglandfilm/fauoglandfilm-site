@@ -16,7 +16,7 @@ export function BrandLogo({
   if (variant === "mark") {
     return (
       <Image
-        src="/media/logos/brand/brand-logo-mark.png"
+        src="/media/logos/brand/brand-logo-mark.webp"
         alt="Fau&Land Film logo"
         width={5000}
         height={2817}
@@ -28,7 +28,7 @@ export function BrandLogo({
 
   return (
     <Image
-      src="/media/logos/brand/brand-logo-full.png"
+      src="/media/logos/brand/brand-logo-full.webp"
       alt="Fau&Land Film"
       width={5000}
       height={1225}

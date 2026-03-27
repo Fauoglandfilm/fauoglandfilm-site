@@ -47,8 +47,8 @@ export const siteVisuals = {
     sourceUrl: "https://unsplash.com/photos/Dw681UwPYOY",
   },
   filmStudioCyclorama: {
-    filename: "section-film-studio-cyclorama.jpg",
-    src: "/assets/visuals/section-images/section-film-studio-cyclorama.jpg",
+    filename: "section-film-studio-cyclorama.webp",
+    src: "/assets/visuals/section-images/section-film-studio-cyclorama.webp",
     alt: {
       no: "Stort studioppsett med lys og crew",
       en: "Large studio setup with lights and crew",
@@ -87,8 +87,8 @@ export const siteVisuals = {
     sourceUrl: "https://unsplash.com/photos/VZvzaDsrpWI",
   },
   studioLightBackdrop: {
-    filename: "bg-studio-light.jpg",
-    src: "/assets/visuals/backgrounds/bg-studio-light.jpg",
+    filename: "bg-studio-light.webp",
+    src: "/assets/visuals/backgrounds/bg-studio-light.webp",
     alt: {
       no: "Studiolys og produksjonsutstyr i mørk scene",
       en: "Studio lighting and production equipment in a dark scene",
@@ -107,8 +107,8 @@ export const siteVisuals = {
     sourceUrl: "https://unsplash.com/photos/J4hxSsDZ8Lc",
   },
   cameraCloseup: {
-    filename: "cinematic-video-camera-closeup.jpg",
-    src: "/assets/visuals/cinematic/cinematic-video-camera-closeup.jpg",
+    filename: "cinematic-video-camera-closeup.webp",
+    src: "/assets/visuals/cinematic/cinematic-video-camera-closeup.webp",
     alt: {
       no: "Nærbilde av profesjonelt videokamera",
       en: "Close-up of a professional video camera",
@@ -195,8 +195,8 @@ export const siteVisuals = {
     ...internalAssetMeta,
   },
   treningshusetWide: {
-    filename: "portfolio-treningshuset-musikk-2-45-poster.png",
-    src: "/assets/portfolio/treningshuset/posters/treningshuset-musikk-2-45-poster.png",
+    filename: "portfolio-treningshuset-musikk-2-45-poster.webp",
+    src: "/assets/portfolio/treningshuset/posters/treningshuset-musikk-2-45-poster.webp",
     alt: {
       no: "Still fra Treningshuset-kampanje i 4:5-format",
       en: "Still from the Treningshuset campaign in 4:5 format",
@@ -212,8 +212,8 @@ export const siteVisuals = {
     ...internalAssetMeta,
   },
   treningshusetMobile: {
-    filename: "portfolio-treningshuset-velkommen-sindre-poster.png",
-    src: "/assets/portfolio/treningshuset/posters/treningshuset-velkommen-sindre-poster.png",
+    filename: "portfolio-treningshuset-velkommen-sindre-poster.webp",
+    src: "/assets/portfolio/treningshuset/posters/treningshuset-velkommen-sindre-poster.webp",
     alt: {
       no: "Vertikal annonsepreview for Treningshuset",
       en: "Vertical ad preview for Treningshuset",
@@ -246,8 +246,8 @@ export const siteVisuals = {
     ...internalAssetMeta,
   },
   narrativePoster: {
-    filename: "portfolio-martha-film-poster.jpeg",
-    src: "/assets/portfolio/a-message-from-martha/posters/a-message-from-martha-poster.jpeg",
+    filename: "portfolio-martha-film-poster.webp",
+    src: "/assets/portfolio/a-message-from-martha/posters/a-message-from-martha-poster.webp",
     alt: {
       no: "Poster for A Message From Martha",
       en: "Poster for A Message From Martha",
@@ -280,8 +280,8 @@ export const siteVisuals = {
     ...internalAssetMeta,
   },
   folkPoster: {
-    filename: "portfolio-huldredans-poster.jpg",
-    src: "/assets/portfolio/huldredans/posters/huldredans-poster.jpg",
+    filename: "portfolio-huldredans-poster.webp",
+    src: "/assets/portfolio/huldredans/posters/huldredans-poster.webp",
     alt: {
       no: "Poster for Huldredans",
       en: "Poster for Huldredans",

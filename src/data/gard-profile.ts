@@ -449,7 +449,7 @@ const projectGroups: GardProjectGroup[] = [
               no: "Promofilm",
               en: "Promo film",
             },
-            image: "/assets/portfolio/ville-gleder/stills/vat-kald-sulten-still010.jpg",
+            image: "/assets/portfolio/ville-gleder/stills/vat-kald-sulten-still010.webp",
             imageAlt: {
               no: "Jan Monsen og Mattis Thørud i promofilm for Våt, kald & sulten",
               en: "Jan Monsen and Mattis Thorud in the Wet, cold and hungry promo film",
