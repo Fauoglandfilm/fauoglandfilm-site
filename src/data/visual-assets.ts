@@ -27,8 +27,8 @@ const internalAssetMeta = {
 
 export const siteVisuals = {
   filmCrewOutdoors: {
-    filename: "section-film-crew-outdoors.jpg",
-    src: "/assets/visuals/section-images/section-film-crew-outdoors.jpg",
+    filename: "section-film-crew-outdoors.avif",
+    src: "/assets/visuals/section-images/section-film-crew-outdoors.avif",
     alt: {
       no: "Filmcrew på opptak utendørs",
       en: "Film crew shooting outdoors",
@@ -67,8 +67,8 @@ export const siteVisuals = {
     sourceUrl: "https://unsplash.com/photos/XvDPxyBIN78",
   },
   cameraDarkroom: {
-    filename: "cinematic-camera-darkroom.jpg",
-    src: "/assets/visuals/cinematic/cinematic-camera-darkroom.jpg",
+    filename: "cinematic-camera-darkroom.avif",
+    src: "/assets/visuals/cinematic/cinematic-camera-darkroom.avif",
     alt: {
       no: "Mørk kamerarigg i et kontrollert produksjonsmiljø",
       en: "Dark camera rig in a controlled production environment",
@@ -127,8 +127,8 @@ export const siteVisuals = {
     sourceUrl: "https://unsplash.com/photos/p4484NzaEII",
   },
   introShowcase: {
-    filename: "portfolio-ville-gleder-wilderness-poster.jpg",
-    src: "/assets/portfolio/ville-gleder/stills/villmarksforedrag-photo.jpg",
+    filename: "portfolio-ville-gleder-wilderness-poster.avif",
+    src: "/assets/portfolio/ville-gleder/stills/villmarksforedrag-photo.avif",
     alt: {
       no: "Cinematic still fra Ville Gleder-produksjon",
       en: "Cinematic still from the Ville Gleder production",
@@ -144,8 +144,8 @@ export const siteVisuals = {
     ...internalAssetMeta,
   },
   commercialCampaign: {
-    filename: "portfolio-atomvapen-campaign-still.png",
-    src: "/assets/portfolio/nei-til-atomvapen/posters/bli-med-i-kampen-poster.png",
+    filename: "portfolio-atomvapen-campaign-still.avif",
+    src: "/assets/portfolio/nei-til-atomvapen/posters/bli-med-i-kampen-poster.avif",
     alt: {
       no: "Still fra kampanjefilm for Nei til Atomvåpen",
       en: "Still from the campaign film for No to Nuclear Weapons",
@@ -161,8 +161,8 @@ export const siteVisuals = {
     ...internalAssetMeta,
   },
   companyStory: {
-    filename: "portfolio-foreningen-norden-film-still.png",
-    src: "/assets/portfolio/foreningen-norden/posters/foreningen-norden-nettsideinnhold-poster.png",
+    filename: "portfolio-foreningen-norden-film-still.avif",
+    src: "/assets/portfolio/foreningen-norden/posters/foreningen-norden-nettsideinnhold-poster.avif",
     alt: {
       no: "Still fra nettsidefilm for Foreningen Norden",
       en: "Still from website film for Foreningen Norden",
@@ -178,8 +178,8 @@ export const siteVisuals = {
     ...internalAssetMeta,
   },
   socialCutdown: {
-    filename: "portfolio-inhouse-social-ad-poster.png",
-    src: "/assets/portfolio/inhouse/posters/liten-bedrift-poster.png",
+    filename: "portfolio-inhouse-social-ad-poster.avif",
+    src: "/assets/portfolio/inhouse/posters/liten-bedrift-poster.avif",
     alt: {
       no: "Still fra in-house SoMe-reklame",
       en: "Still from the in-house social ad",
@@ -229,8 +229,8 @@ export const siteVisuals = {
     ...internalAssetMeta,
   },
   eventCoverage: {
-    filename: "portfolio-event-youngstorget-poster.png",
-    src: "/assets/portfolio/nei-til-atomvapen/posters/internasjonal-arbeiderdag-poster.png",
+    filename: "portfolio-event-youngstorget-poster.avif",
+    src: "/assets/portfolio/nei-til-atomvapen/posters/internasjonal-arbeiderdag-poster.avif",
     alt: {
       no: "Still fra eventdekning på Youngstorget",
       en: "Still from event coverage at Youngstorget",
@@ -263,8 +263,8 @@ export const siteVisuals = {
     ...internalAssetMeta,
   },
   documentaryPoster: {
-    filename: "portfolio-midnatts-vuggesang-poster.jpg",
-    src: "/assets/portfolio/midnatts-vuggesang/posters/en-midnatts-vuggesang-poster.jpg",
+    filename: "portfolio-midnatts-vuggesang-poster.avif",
+    src: "/assets/portfolio/midnatts-vuggesang/posters/en-midnatts-vuggesang-poster.avif",
     alt: {
       no: "Still fra En Midnatts Vuggesang",
       en: "Still from En Midnatts Vuggesang",
@@ -297,8 +297,8 @@ export const siteVisuals = {
     ...internalAssetMeta,
   },
   teamTommy: {
-    filename: "team-tommy-garland-profile.png",
-    src: "/assets/team/tommy/images/tommy-garland-profile.png",
+    filename: "team-tommy-garland-profile.avif",
+    src: "/assets/team/tommy/images/tommy-garland-profile.avif",
     alt: {
       no: "Portrett av Tommy R.A. Garland",
       en: "Portrait of Tommy R.A. Garland",
@@ -314,8 +314,8 @@ export const siteVisuals = {
     ...internalAssetMeta,
   },
   teamGard: {
-    filename: "team-gard-fauske-profile.png",
-    src: "/assets/team/gard/images/gard-profile.png",
+    filename: "team-gard-fauske-profile.avif",
+    src: "/assets/team/gard/images/gard-profile.avif",
     alt: {
       no: "Portrett av Gard Ruben Fauske",
       en: "Portrait of Gard Ruben Fauske",
@@ -331,8 +331,8 @@ export const siteVisuals = {
     ...internalAssetMeta,
   },
   grainTexture: {
-    filename: "film-grain.png",
-    src: "/assets/visuals/textures/film-grain.png",
+    filename: "film-grain.avif",
+    src: "/assets/visuals/textures/film-grain.avif",
     alt: {
       no: "Transparent film grain-tekstur",
       en: "Transparent film grain texture",

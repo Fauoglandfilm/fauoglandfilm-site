@@ -291,7 +291,7 @@ const projectGroups: GardProjectGroup[] = [
           no: "Et lengre samarbeid der Gard har formet både informasjonsfilm, konferansefilm og eventdekning til bruk i verving, dokumentasjon og videre kampanjeuttak.",
           en: "A longer collaboration where Gard has shaped information films, conference coverage and event output for recruitment, documentation and ongoing campaign use.",
         },
-        image: "/assets/portfolio/nei-til-atomvapen/posters/bli-med-i-kampen-poster.png",
+        image: "/assets/portfolio/nei-til-atomvapen/posters/bli-med-i-kampen-poster.avif",
         imageAlt: {
           no: "Still fra Nei til Atomvåpen",
           en: "Still from No to Nuclear Weapons",
@@ -313,7 +313,7 @@ const projectGroups: GardProjectGroup[] = [
               no: "Aftermovie",
               en: "Aftermovie",
             },
-            image: "/assets/portfolio/nei-til-atomvapen/posters/internasjonal-arbeiderdag-poster.png",
+            image: "/assets/portfolio/nei-til-atomvapen/posters/internasjonal-arbeiderdag-poster.avif",
             imageAlt: {
               no: "Still fra 1. mai-filmen",
               en: "Still from the Workers' Day film",
@@ -334,7 +334,7 @@ const projectGroups: GardProjectGroup[] = [
               no: "Fullt opptak",
               en: "Full recording",
             },
-            image: "/assets/portfolio/nei-til-atomvapen/posters/internasjonal-arbeiderdag-reel-poster.png",
+            image: "/assets/portfolio/nei-til-atomvapen/posters/internasjonal-arbeiderdag-reel-poster.avif",
             imageAlt: {
               no: "Still fra talen på Youngstorget",
               en: "Still from the speech at Youngstorget",
@@ -366,7 +366,7 @@ const projectGroups: GardProjectGroup[] = [
           no: "Arbeid som spenner fra nettsidefilm og animasjon til debattoppsett med flere kameraer og raske teaserleveranser for publisering samme dag.",
           en: "Work spanning website film and animation to multicam debate setups and fast teaser deliveries ready for same-day publishing.",
         },
-        image: "/assets/portfolio/foreningen-norden/posters/foreningen-norden-nettsideinnhold-poster.png",
+        image: "/assets/portfolio/foreningen-norden/posters/foreningen-norden-nettsideinnhold-poster.avif",
         imageAlt: {
           no: "Still fra Foreningen Norden-produksjon",
           en: "Still from a Nordic Association production",
@@ -402,7 +402,7 @@ const projectGroups: GardProjectGroup[] = [
               no: "Organisasjonsfilm",
               en: "Organisation film",
             },
-            image: "/assets/portfolio/foreningen-norden/posters/foreningen-norden-nettsideinnhold-poster.png",
+            image: "/assets/portfolio/foreningen-norden/posters/foreningen-norden-nettsideinnhold-poster.avif",
             imageAlt: {
               no: "Still fra nettsidefilm for Foreningen Norden",
               en: "Still from the website film for the Nordic Association",
@@ -431,7 +431,7 @@ const projectGroups: GardProjectGroup[] = [
           no: "Et foredragskonsept oversatt til tydelige promofilmer med natur, personlighet og en klarere kommersiell vinkel rundt booking.",
           en: "A speaking concept translated into promo films with landscape, personality and a clearer commercial angle around bookings.",
         },
-        image: "/assets/portfolio/ville-gleder/stills/villmarksforedrag-photo.jpg",
+        image: "/assets/portfolio/ville-gleder/stills/villmarksforedrag-photo.avif",
         imageAlt: {
           no: "Mattis Thørud og Jan Monsen ved vannet under opptak for Ville Gleder",
           en: "Mattis Thorud and Jan Monsen by the lake during the Ville Gleder production",
@@ -534,7 +534,7 @@ const projectGroups: GardProjectGroup[] = [
               no: "Dramakortfilm",
               en: "Drama short",
             },
-            image: "/assets/portfolio/midnatts-vuggesang/posters/en-midnatts-vuggesang-poster.jpg",
+            image: "/assets/portfolio/midnatts-vuggesang/posters/en-midnatts-vuggesang-poster.avif",
             imageAlt: {
               no: "Poster for En Midnatts Vuggesang",
               en: "Poster for A Midnight Lullaby",
@@ -656,7 +656,7 @@ const projectGroups: GardProjectGroup[] = [
           no: "To ulike musikkvideoprosjekter som viser Gard sin evne til å holde både leken tone, fortelling og gjennomføring samlet.",
           en: "Two different music video productions that show Gard's ability to hold tone, story and execution together.",
         },
-        image: "/assets/portfolio/kommer-hjem/posters/kommer-hjem-poster.png",
+        image: "/assets/portfolio/kommer-hjem/posters/kommer-hjem-poster.avif",
         imageAlt: {
           no: "Still fra Kommer Hjem",
           en: "Still from Kommer Hjem",

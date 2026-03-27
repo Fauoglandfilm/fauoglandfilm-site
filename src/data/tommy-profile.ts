@@ -222,7 +222,7 @@ export const tommyPortfolioPage = {
         externalLink("IMDb", "https://www.imdb.com/title/tt32215748/"),
       ],
       poster: poster(
-        "/assets/team/tommy/portfolio/shortfilms/maura-poster.png",
+        "/assets/team/tommy/portfolio/shortfilms/maura-poster.avif",
         "Plakat for Maura",
         "Poster for Maura",
       ),
@@ -250,7 +250,7 @@ export const tommyPortfolioPage = {
       ],
       links: [externalLink("FilmFreeway", "https://filmfreeway.com/HuldredansSHORT")],
       poster: poster(
-        "/assets/team/tommy/portfolio/shortfilms/huldredans-poster.png",
+        "/assets/team/tommy/portfolio/shortfilms/huldredans-poster.avif",
         "Plakat for Huldredans",
         "Poster for Huldredans",
       ),
@@ -342,7 +342,7 @@ export const tommyPortfolioPage = {
         internalLink("Åpne case", "Open case", "/case/ville-gleder"),
       ],
       poster: poster(
-        "/assets/portfolio/ville-gleder/stills/villmarksforedrag-photo.jpg",
+        "/assets/portfolio/ville-gleder/stills/villmarksforedrag-photo.avif",
         "Still fra Ville Gleder",
         "Still from Ville Gleder",
         "cover",
@@ -368,7 +368,7 @@ export const tommyPortfolioPage = {
         internalLink("Åpne case", "Open case", "/case/foreningen-norden"),
       ],
       poster: poster(
-        "/assets/portfolio/foreningen-norden/posters/foreningen-norden-nettsideinnhold-poster.png",
+        "/assets/portfolio/foreningen-norden/posters/foreningen-norden-nettsideinnhold-poster.avif",
         "Still fra Foreningen Norden",
         "Still from Foreningen Norden",
         "cover",
@@ -394,7 +394,7 @@ export const tommyPortfolioPage = {
         internalLink("Åpne case", "Open case", "/case/nei-til-atomvapen"),
       ],
       poster: poster(
-        "/assets/portfolio/nei-til-atomvapen/posters/bli-med-i-kampen-poster.png",
+        "/assets/portfolio/nei-til-atomvapen/posters/bli-med-i-kampen-poster.avif",
         "Still fra kampanje for Nei til Atomvåpen",
         "Still from campaign film for No to Nuclear Weapons",
         "cover",

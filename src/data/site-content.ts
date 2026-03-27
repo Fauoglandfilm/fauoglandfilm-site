@@ -335,7 +335,7 @@ export const homeServiceVideoLibrary = {
   "01": {
     videoType: "direct",
     src: "/assets/services/videos/reklamefilm.mp4",
-    poster: "/assets/services/posters/reklamefilm-poster.png",
+    poster: "/assets/services/posters/reklamefilm-poster.avif",
     label: {
       no: "Reklamefilm",
       en: "Commercial film",
@@ -344,7 +344,7 @@ export const homeServiceVideoLibrary = {
   "02": {
     videoType: "direct",
     src: "/assets/services/videos/bedriftfilm.mp4",
-    poster: "/assets/services/posters/bedriftfilm-poster.png",
+    poster: "/assets/services/posters/bedriftfilm-poster.avif",
     label: {
       no: "Bedriftsfilm",
       en: "Company film",
@@ -905,7 +905,7 @@ export const caseStudies: CaseStudy[] = [
       { no: "Foredrag", en: "Talks" },
       { no: "Sosiale medier", en: "Social media" },
     ],
-    image: "/assets/portfolio/ville-gleder/stills/villmarksforedrag-photo.jpg",
+    image: "/assets/portfolio/ville-gleder/stills/villmarksforedrag-photo.avif",
     imageAlt: {
       no: "Mattis Thørud og Jan Monsen ved vannet under opptak for Ville Gleder",
       en: "Mattis Thorud and Jan Monsen by the lake during the Ville Gleder production",
@@ -913,7 +913,7 @@ export const caseStudies: CaseStudy[] = [
     video: {
       videoType: "direct",
       src: "/assets/portfolio/ville-gleder/videos/ville-gleder-villmarksforedrag-web.mp4",
-      poster: "/assets/portfolio/ville-gleder/stills/villmarksforedrag-photo.jpg",
+      poster: "/assets/portfolio/ville-gleder/stills/villmarksforedrag-photo.avif",
       label: {
         no: "Ville Gleder - Villmarksforedrag",
         en: "Ville Gleder - wilderness talks",
@@ -926,7 +926,7 @@ export const caseStudies: CaseStudy[] = [
           no: "Villmarksforedrag",
           en: "Wilderness talks",
         },
-        image: "/assets/portfolio/ville-gleder/stills/villmarksforedrag-photo.jpg",
+        image: "/assets/portfolio/ville-gleder/stills/villmarksforedrag-photo.avif",
         imageAlt: {
           no: "Mattis Thørud og Jan Monsen ved vannet under opptak for Ville Gleder",
           en: "Mattis Thorud and Jan Monsen by the lake during the Ville Gleder production",
@@ -934,7 +934,7 @@ export const caseStudies: CaseStudy[] = [
         video: {
           videoType: "direct",
           src: "/assets/portfolio/ville-gleder/videos/ville-gleder-villmarksforedrag-web.mp4",
-          poster: "/assets/portfolio/ville-gleder/stills/villmarksforedrag-photo.jpg",
+          poster: "/assets/portfolio/ville-gleder/stills/villmarksforedrag-photo.avif",
           label: {
             no: "Ville Gleder - Villmarksforedrag",
             en: "Ville Gleder - wilderness talks",
@@ -1009,7 +1009,7 @@ export const caseStudies: CaseStudy[] = [
     video: {
       videoType: "direct",
       src: "/assets/portfolio/foreningen-norden/videos/foreningen-norden-nettsideinnhold.mp4",
-      poster: "/assets/portfolio/foreningen-norden/posters/foreningen-norden-nettsideinnhold-poster.png",
+      poster: "/assets/portfolio/foreningen-norden/posters/foreningen-norden-nettsideinnhold-poster.avif",
       label: {
         no: "Foreningen Norden - nettsideinnhold",
         en: "Foreningen Norden website content",
@@ -1096,7 +1096,6 @@ export const caseStudies: CaseStudy[] = [
         video: {
           videoType: "direct",
           src: "/assets/portfolio/treningshuset/videos/portrait/treningshuset-velkommen-sindre-web.mp4",
-          fullSrc: "/assets/portfolio/treningshuset/videos/portrait/treningshuset-velkommen-sindre-full.mp4",
           poster: "/assets/portfolio/treningshuset/posters/treningshuset-velkommen-sindre-poster.png",
           label: {
             no: "Film 1",
@@ -1120,7 +1119,6 @@ export const caseStudies: CaseStudy[] = [
         video: {
           videoType: "direct",
           src: "/assets/portfolio/treningshuset/videos/portrait/treningshuset-musikk-1-web.mp4",
-          fullSrc: "/assets/portfolio/treningshuset/videos/portrait/treningshuset-musikk-1-full.mp4",
           poster: "/assets/portfolio/treningshuset/posters/treningshuset-musikk-1-poster.png",
           label: {
             no: "Film 2",
@@ -1144,7 +1142,6 @@ export const caseStudies: CaseStudy[] = [
         video: {
           videoType: "direct",
           src: "/assets/portfolio/treningshuset/videos/portrait/treningshuset-musikk-2-45-web.mp4",
-          fullSrc: "/assets/portfolio/treningshuset/videos/portrait/treningshuset-musikk-2-45-full.mp4",
           poster: "/assets/portfolio/treningshuset/posters/treningshuset-musikk-2-45-poster.png",
           label: {
             no: "Film 3",
@@ -1675,7 +1672,7 @@ const portfolioProjectsBase: PortfolioProject[] = [
       no: "Bli med i kampen mot atomvåpen",
       en: "Join the fight against nuclear weapons",
     }),
-    image: "/assets/portfolio/nei-til-atomvapen/posters/bli-med-i-kampen-poster.png",
+    image: "/assets/portfolio/nei-til-atomvapen/posters/bli-med-i-kampen-poster.avif",
     imageAlt: {
       no: "Still fra kampanjefilm for Nei til Atomvåpen",
       en: "Still from campaign film for No to Nuclear Weapons",
@@ -1704,7 +1701,7 @@ const portfolioProjectsBase: PortfolioProject[] = [
     },
     detailHref: "/case/foreningen-norden",
     ctaLabel: viewCaseCta,
-    image: "/assets/portfolio/foreningen-norden/posters/foreningen-norden-nettsideinnhold-poster.png",
+    image: "/assets/portfolio/foreningen-norden/posters/foreningen-norden-nettsideinnhold-poster.avif",
     imageAlt: {
       no: "Still fra Foreningen Norden - nettsideinnhold",
       en: "Still from Foreningen Norden website content",
@@ -1712,7 +1709,7 @@ const portfolioProjectsBase: PortfolioProject[] = [
     video: {
       videoType: "direct",
       src: "/assets/portfolio/foreningen-norden/videos/foreningen-norden-nettsideinnhold.mp4",
-      poster: "/assets/portfolio/foreningen-norden/posters/foreningen-norden-nettsideinnhold-poster.png",
+      poster: "/assets/portfolio/foreningen-norden/posters/foreningen-norden-nettsideinnhold-poster.avif",
       label: {
         no: "Foreningen Norden - nettsideinnhold",
         en: "Foreningen Norden website content",
@@ -1741,7 +1738,7 @@ const portfolioProjectsBase: PortfolioProject[] = [
       en: "A narrative video that captures a journey many people can recognise.",
     },
     ctaLabel: openFilmCta,
-    image: "/assets/portfolio/kommer-hjem/posters/kommer-hjem-poster.png",
+    image: "/assets/portfolio/kommer-hjem/posters/kommer-hjem-poster.avif",
     imageAlt: {
       no: "Still fra Kommer Hjem",
       en: "Still from Kommer Hjem",
@@ -1863,7 +1860,7 @@ const portfolioProjectsBase: PortfolioProject[] = [
     },
     detailHref: "/case/nei-til-atomvapen-arbeiderdagen",
     ctaLabel: viewCaseCta,
-    image: "/assets/portfolio/nei-til-atomvapen/posters/internasjonal-arbeiderdag-poster.png",
+    image: "/assets/portfolio/nei-til-atomvapen/posters/internasjonal-arbeiderdag-poster.avif",
     imageAlt: {
       no: "Still fra Internasjonal arbeiderdag for Nei til Atomvåpen",
       en: "Still from International Workers' Day for No to Nuclear Weapons",
@@ -1983,7 +1980,7 @@ const portfolioProjectsBase: PortfolioProject[] = [
       en: "Co-produced with Snowfall Cinema and nominated at the Norwegian Short Film Festival in Grimstad.",
     },
     ctaLabel: viewReferenceCta,
-    image: "/assets/portfolio/midnatts-vuggesang/posters/en-midnatts-vuggesang-poster.jpg",
+    image: "/assets/portfolio/midnatts-vuggesang/posters/en-midnatts-vuggesang-poster.avif",
     imageAlt: {
       no: "Still fra En Midnatts Vuggesang",
       en: "Still from En Midnatts Vuggesang",
@@ -2140,7 +2137,7 @@ const portfolioProjectsBase: PortfolioProject[] = [
     },
     detailHref: "/case/ville-gleder",
     ctaLabel: viewCaseCta,
-    image: "/assets/portfolio/ville-gleder/stills/villmarksforedrag-photo.jpg",
+    image: "/assets/portfolio/ville-gleder/stills/villmarksforedrag-photo.avif",
     imageAlt: {
       no: "Mattis Thørud og Jan Monsen ved vannet under opptak for Ville Gleder",
       en: "Mattis Thorud and Jan Monsen by the lake during the Ville Gleder production",
@@ -2148,7 +2145,7 @@ const portfolioProjectsBase: PortfolioProject[] = [
     video: {
       videoType: "direct",
       src: "/assets/portfolio/ville-gleder/videos/ville-gleder-villmarksforedrag-web.mp4",
-      poster: "/assets/portfolio/ville-gleder/stills/villmarksforedrag-photo.jpg",
+      poster: "/assets/portfolio/ville-gleder/stills/villmarksforedrag-photo.avif",
       label: {
         no: "Ville Gleder - Villmarksforedrag",
         en: "Ville Gleder wilderness talks",
@@ -2215,14 +2212,14 @@ const portfolioProjectsBase: PortfolioProject[] = [
       en: "An in-house example of how we like commercial messages delivered: clear, quick and simple.",
     },
     ctaLabel: viewReferenceCta,
-    image: "/assets/portfolio/inhouse/posters/liten-bedrift-poster.png",
+    image: "/assets/portfolio/inhouse/posters/liten-bedrift-poster.avif",
     imageAlt: {
       no: "Still fra in-house promoen Liten bedrift",
       en: "Still from the in-house promo Small business",
     },
     video: {
       videoType: "request",
-      poster: "/assets/portfolio/inhouse/posters/liten-bedrift-poster.png",
+      poster: "/assets/portfolio/inhouse/posters/liten-bedrift-poster.avif",
       label: {
         no: "In-house promo: Liten bedrift",
         en: "In-house promo: Small business",
@@ -2356,7 +2353,7 @@ export const teamMembers: TeamMember[] = [
       no: "Tommy holder produsentsporet samlet gjennom brief, budsjett, kundedialog og leveranse, med erfaring fra reklame, TV, event og kortfilm.",
       en: "Tommy keeps producing, budget, client dialogue and delivery aligned, with experience across advertising, TV, events and short film.",
     },
-    image: "/assets/team/tommy/images/tommy-garland-profile.png",
+    image: "/assets/team/tommy/images/tommy-garland-profile.avif",
     imageAlt: {
       no: "Portrett av Tommy R.A. Garland",
       en: "Portrait of Tommy R.A. Garland",
@@ -2370,7 +2367,7 @@ export const teamMembers: TeamMember[] = [
       no: "Gard leder regi, fortelling og klipp med erfaring fra reklameproduksjon, kortfilm og produksjonsledelse i både byrå og filmselskap.",
       en: "Gard leads direction, story and edit with experience from commercial production, short film and production leadership across both agency and film-company work.",
     },
-    image: "/assets/team/gard/images/gard-profile.png",
+    image: "/assets/team/gard/images/gard-profile.avif",
     imageAlt: {
       no: "Portrett av Gard Ruben Fauske",
       en: "Portrait of Gard Ruben Fauske",

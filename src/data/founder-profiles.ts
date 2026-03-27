@@ -65,12 +65,12 @@ export const founderProfiles: FounderProfile[] = [
       no: "Tommy kombinerer produsentansvar, kundedialog og prosjektledelse med erfaring fra reklame, event, TV og festivalnære kortfilmer.",
       en: "Tommy combines producing, client dialogue and project leadership with experience across advertising, events, TV and festival-bound short films.",
     },
-    portrait: "/assets/team/tommy/images/tommy-garland-profile.png",
+    portrait: "/assets/team/tommy/images/tommy-garland-profile.avif",
     portraitAlt: {
       no: "Portrett av Tommy R.A. Garland",
       en: "Portrait of Tommy R.A. Garland",
     },
-    heroBackground: "/assets/team/tommy/images/tommy-garland-profile.png",
+    heroBackground: "/assets/team/tommy/images/tommy-garland-profile.avif",
     heroBackgroundAlt: {
       no: "Portrett av Tommy R.A. Garland brukt som bakgrunnsflate",
       en: "Portrait of Tommy R.A. Garland used as the background layer",
@@ -262,12 +262,12 @@ export const founderProfiles: FounderProfile[] = [
       no: "Gard leder regi, fortelling og klipp med erfaring fra reklameproduksjoner, kortfilm, TV-serier og komplette produksjonsløp.",
       en: "Gard leads direction, story and edit with experience across commercial productions, short film, series work and full production pipelines.",
     },
-    portrait: "/assets/team/gard/images/gard-profile.png",
+    portrait: "/assets/team/gard/images/gard-profile.avif",
     portraitAlt: {
       no: "Portrett av Gard Ruben Fauske",
       en: "Portrait of Gard Ruben Fauske",
     },
-    heroBackground: "/assets/team/gard/images/gard-profile.png",
+    heroBackground: "/assets/team/gard/images/gard-profile.avif",
     heroBackgroundAlt: {
       no: "Portrett av Gard Ruben Fauske brukt som bakgrunnsflate",
       en: "Portrait of Gard Ruben Fauske used as the background layer",

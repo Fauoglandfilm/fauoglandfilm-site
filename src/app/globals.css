@@ -2442,7 +2442,7 @@ summary::-webkit-details-marker {
   }
 
   .grain-overlay {
-    background-image: url("/assets/visuals/textures/film-grain.png");
+    background-image: url("/assets/visuals/textures/film-grain.avif");
     background-repeat: repeat;
     mix-blend-mode: soft-light;
     pointer-events: none;
