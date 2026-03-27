@@ -3,7 +3,9 @@
 import Image from "next/image";
 import Link from "next/link";
 import {
+  useEffect,
   useRef,
+  type FocusEvent as ReactFocusEvent,
   type PointerEvent as ReactPointerEvent,
   type ReactNode,
   type WheelEvent as ReactWheelEvent,
@@ -53,7 +55,22 @@ export function ServicesSection({
   const copy = uiCopy.siteSections[language];
   const shouldReduceMotion = useReducedMotion();
   const isDarkTheme = theme === "dark";
+  const carouselServices = [0, 1, 2].flatMap((copyIndex) =>
+    services.map((service) => ({
+      service,
+      copyIndex,
+    })),
+  );
   const trackRef = useRef<HTMLDivElement | null>(null);
+  const segmentWidthRef = useRef(0);
+  const wrapLockRef = useRef(false);
+  const animationFrameRef = useRef<number | null>(null);
+  const userResumeAtRef = useRef(0);
+  const interactionStateRef = useRef({
+    hovering: false,
+    focused: false,
+    pointerActive: false,
+  });
   const dragStateRef = useRef<{
     pointerId: number | null;
     startX: number;
@@ -81,6 +98,126 @@ export function ServicesSection({
     ? "bg-[linear-gradient(270deg,#081320_0%,rgba(8,19,32,0.82)_52%,transparent)]"
     : "bg-[linear-gradient(270deg,rgba(221,231,244,0.98)_0%,rgba(221,231,244,0.82)_52%,transparent)]";
 
+  const scheduleResume = (delay = 900) => {
+    userResumeAtRef.current = performance.now() + delay;
+  };
+
+  const measureTrack = () => {
+    const track = trackRef.current;
+
+    if (!track) {
+      return;
+    }
+
+    const nextSegmentWidth = track.scrollWidth / 3;
+
+    if (!Number.isFinite(nextSegmentWidth) || nextSegmentWidth <= 0) {
+      return;
+    }
+
+    segmentWidthRef.current = nextSegmentWidth;
+
+    if (track.scrollLeft === 0) {
+      track.scrollLeft = nextSegmentWidth;
+    }
+  };
+
+  const normalizeTrackPosition = () => {
+    const track = trackRef.current;
+    const segmentWidth = segmentWidthRef.current;
+
+    if (!track || !segmentWidth || wrapLockRef.current) {
+      return;
+    }
+
+    if (track.scrollLeft <= segmentWidth * 0.5) {
+      wrapLockRef.current = true;
+      track.scrollLeft += segmentWidth;
+      requestAnimationFrame(() => {
+        wrapLockRef.current = false;
+      });
+      return;
+    }
+
+    if (track.scrollLeft >= segmentWidth * 1.5) {
+      wrapLockRef.current = true;
+      track.scrollLeft -= segmentWidth;
+      requestAnimationFrame(() => {
+        wrapLockRef.current = false;
+      });
+    }
+  };
+
+  useEffect(() => {
+    measureTrack();
+
+    const handleResize = () => {
+      const track = trackRef.current;
+
+      if (!track) {
+        return;
+      }
+
+      const previousSegmentWidth = segmentWidthRef.current || track.scrollWidth / 3 || 1;
+      const relativeOffset = (track.scrollLeft - previousSegmentWidth) / previousSegmentWidth;
+
+      measureTrack();
+
+      if (segmentWidthRef.current > 0) {
+        track.scrollLeft = segmentWidthRef.current + relativeOffset * segmentWidthRef.current;
+        normalizeTrackPosition();
+      }
+    };
+
+    window.addEventListener("resize", handleResize);
+
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, [services.length]);
+
+  useEffect(() => {
+    const track = trackRef.current;
+
+    if (!track || shouldReduceMotion) {
+      return;
+    }
+
+    let previousTimestamp = performance.now();
+
+    const tick = (timestamp: number) => {
+      const currentTrack = trackRef.current;
+
+      if (!currentTrack) {
+        return;
+      }
+
+      const delta = timestamp - previousTimestamp;
+      previousTimestamp = timestamp;
+
+      const hasUserIntent =
+        interactionStateRef.current.hovering ||
+        interactionStateRef.current.focused ||
+        interactionStateRef.current.pointerActive ||
+        timestamp < userResumeAtRef.current;
+
+      if (!hasUserIntent && segmentWidthRef.current > 0) {
+        currentTrack.scrollLeft += delta * 0.02;
+        normalizeTrackPosition();
+      }
+
+      animationFrameRef.current = window.requestAnimationFrame(tick);
+    };
+
+    animationFrameRef.current = window.requestAnimationFrame(tick);
+
+    return () => {
+      if (animationFrameRef.current !== null) {
+        window.cancelAnimationFrame(animationFrameRef.current);
+      }
+    };
+  }, [shouldReduceMotion, services.length]);
+
   const handleWheel = (event: ReactWheelEvent<HTMLDivElement>) => {
     const track = trackRef.current;
 
@@ -100,12 +237,15 @@ export function ServicesSection({
       return;
     }
 
+    scheduleResume(1400);
     event.preventDefault();
     track.scrollLeft = Math.max(0, Math.min(maxScrollLeft, track.scrollLeft + delta));
+    normalizeTrackPosition();
   };
 
   const handlePointerDown = (event: ReactPointerEvent<HTMLDivElement>) => {
     const track = trackRef.current;
+    interactionStateRef.current.pointerActive = true;
 
     if (!track || event.pointerType === "touch") {
       return;
@@ -136,11 +276,14 @@ export function ServicesSection({
     }
 
     track.scrollLeft = dragState.startScrollLeft - delta;
+    normalizeTrackPosition();
   };
 
   const endDrag = (event: ReactPointerEvent<HTMLDivElement>) => {
     const track = trackRef.current;
     const dragState = dragStateRef.current;
+    interactionStateRef.current.pointerActive = false;
+    scheduleResume(event.pointerType === "touch" ? 1700 : 1200);
 
     if (!track || dragState.pointerId !== event.pointerId) {
       return;
@@ -161,8 +304,32 @@ export function ServicesSection({
     }
   };
 
+  const handleTrackScroll = () => {
+    normalizeTrackPosition();
+  };
+
+  const handleMouseEnter = () => {
+    interactionStateRef.current.hovering = true;
+  };
+
+  const handleMouseLeave = () => {
+    interactionStateRef.current.hovering = false;
+    scheduleResume(850);
+  };
+
+  const handleFocusCapture = () => {
+    interactionStateRef.current.focused = true;
+  };
+
+  const handleBlurCapture = (event: ReactFocusEvent<HTMLDivElement>) => {
+    if (!event.currentTarget.contains(event.relatedTarget as Node | null)) {
+      interactionStateRef.current.focused = false;
+      scheduleResume(850);
+    }
+  };
+
   return (
-    <section id="tjenester" className="section-space pt-[clamp(2.5rem,5vw,4.5rem)] pb-[clamp(2.75rem,5vw,4.75rem)]">
+    <section id="tjenester" className="section-space pt-[clamp(1.4rem,3vw,2.6rem)] pb-[clamp(1rem,2.2vw,1.85rem)]">
       <div className="relative left-1/2 w-screen -translate-x-1/2 overflow-hidden">
         <motion.div
           aria-hidden="true"
@@ -174,7 +341,7 @@ export function ServicesSection({
         <div className="grain-overlay absolute inset-0 opacity-24" />
         <div className={`pointer-events-none absolute inset-x-0 top-0 h-px ${topBorderClassName}`} />
 
-        <div className="relative mx-auto max-w-[1320px] px-4 py-[clamp(4.1rem,6.6vw,6.25rem)] sm:px-6 lg:px-8 xl:px-10">
+        <div className="relative mx-auto max-w-[1320px] px-4 py-[clamp(2.8rem,4.8vw,4.4rem)] sm:px-6 lg:px-8 xl:px-10">
           <motion.div
             className="mx-auto max-w-[56rem] text-center"
             initial={shouldReduceMotion ? false : { opacity: 0, y: 26, filter: "blur(14px)" }}
@@ -191,31 +358,36 @@ export function ServicesSection({
               {resolvedTitle}
             </h2>
             <p
-              className={`mx-auto mt-3.5 max-w-[40rem] text-balance text-[0.96rem] leading-6 sm:text-[1.02rem] sm:leading-7 ${descriptionClassName}`}
+              className={`mx-auto mt-2.5 max-w-[40rem] text-balance text-[0.96rem] leading-6 sm:text-[1.02rem] sm:leading-7 ${descriptionClassName}`}
             >
               {resolvedDescription}
             </p>
           </motion.div>
 
-          <div className="relative mt-8 sm:mt-10 lg:mt-11">
+          <div className="relative mt-5 sm:mt-6 lg:mt-7">
             <div className={`pointer-events-none absolute inset-y-0 left-0 z-[2] hidden w-16 ${leftFadeClassName} lg:block`} />
             <div className={`pointer-events-none absolute inset-y-0 right-0 z-[2] hidden w-16 ${rightFadeClassName} lg:block`} />
 
             <div
               ref={trackRef}
-              className="portfolio-service-track -mx-4 flex snap-x snap-mandatory gap-5 overflow-x-auto overflow-y-visible px-4 pb-5 pr-[18vw] touch-pan-x sm:gap-6 sm:pr-12 lg:mx-0 lg:gap-7 lg:px-0 lg:pr-10"
+              className="portfolio-service-track -mx-4 flex gap-5 overflow-x-auto overflow-y-visible px-4 pb-3 pr-[18vw] touch-pan-x sm:gap-6 sm:pr-12 lg:mx-0 lg:gap-7 lg:px-0 lg:pr-10"
               style={{ WebkitOverflowScrolling: "touch" }}
               aria-label={language === "no" ? "Tjenestekarusell" : "Service carousel"}
               tabIndex={0}
+              onScroll={handleTrackScroll}
               onWheel={handleWheel}
               onPointerDown={handlePointerDown}
               onPointerMove={handlePointerMove}
               onPointerUp={endDrag}
               onPointerCancel={endDrag}
               onClickCapture={handleClickCapture}
+              onMouseEnter={handleMouseEnter}
+              onMouseLeave={handleMouseLeave}
+              onFocusCapture={handleFocusCapture}
+              onBlurCapture={handleBlurCapture}
             >
-              {services.map((service, index) => (
-                <ServiceCard key={service.slug} service={service} index={index} />
+              {carouselServices.map(({ service, copyIndex }, index) => (
+                <ServiceCard key={`${service.slug}-${copyIndex}-${index}`} service={service} index={index % services.length} />
               ))}
             </div>
           </div>
