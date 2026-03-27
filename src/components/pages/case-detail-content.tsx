@@ -106,7 +106,7 @@ function CaseVideoModal({
               poster={directVideo.poster ?? variant.image}
               controls
               playsInline
-              preload="auto"
+              preload="metadata"
               autoPlay
               controlsList="nodownload noplaybackrate"
               disablePictureInPicture
@@ -188,7 +188,7 @@ export function CaseDetailContent({
                     src={caseStudy.image}
                     alt={caseStudy.imageAlt ? resolveLocalizedValue(caseStudy.imageAlt, language) : `${caseStudy.client} case`}
                     fill
-                    quality={100}
+                    quality={88}
                     sizes="100vw"
                     className="object-cover"
                     priority

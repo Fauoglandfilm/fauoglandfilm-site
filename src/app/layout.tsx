@@ -15,17 +15,20 @@ import "./globals.css";
 const manrope = Manrope({
   variable: "--font-manrope",
   subsets: ["latin"],
+  display: "swap",
 });
 
 const sora = Sora({
   variable: "--font-sora",
   subsets: ["latin"],
+  display: "swap",
 });
 
 const playfairDisplay = Playfair_Display({
   variable: "--font-hero",
   subsets: ["latin", "latin-ext"],
   weight: ["700", "800"],
+  display: "swap",
 });
 
 export const metadata: Metadata = buildMetadata({

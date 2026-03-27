@@ -90,12 +90,12 @@ export function TrackingScripts() {
           <Script
             id="ga4-script"
             src={`https://www.googletagmanager.com/gtag/js?id=${GA4_ID}`}
-            strategy="afterInteractive"
+            strategy="lazyOnload"
             onReady={() => {
               window.dispatchEvent(new Event("ga4-ready"));
             }}
           />
-          <Script id="ga4" strategy="afterInteractive">
+          <Script id="ga4" strategy="lazyOnload">
             {`
               window.dataLayer = window.dataLayer || [];
               function gtag(){window.dataLayer.push(arguments);}
@@ -109,7 +109,7 @@ export function TrackingScripts() {
       ) : null}
 
       {isProduction && META_PIXEL_ID ? (
-        <Script id="meta-pixel" strategy="afterInteractive">
+        <Script id="meta-pixel" strategy="lazyOnload">
           {`
             !function(f,b,e,v,n,t,s)
             {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
@@ -126,7 +126,7 @@ export function TrackingScripts() {
       ) : null}
 
       {isProduction && LINKEDIN_PARTNER_ID ? (
-        <Script id="linkedin-insight" strategy="afterInteractive">
+        <Script id="linkedin-insight" strategy="lazyOnload">
           {`
             window._linkedin_partner_id = "${LINKEDIN_PARTNER_ID}";
             window._linkedin_data_partner_ids = window._linkedin_data_partner_ids || [];

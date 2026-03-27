@@ -41,7 +41,7 @@ import { ServiceCard } from "./service-card";
 import { TestimonialCard } from "./testimonial-card";
 
 type MaybeLocalizedText = string | LocalizedText;
-const SERVICE_CAROUSEL_COPY_COUNT = 5;
+const SERVICE_CAROUSEL_COPY_COUNT = 3;
 const SERVICE_CAROUSEL_CENTER_INDEX = Math.floor(SERVICE_CAROUSEL_COPY_COUNT / 2);
 
 export function ServicesSection({

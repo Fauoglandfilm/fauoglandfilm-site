@@ -167,7 +167,6 @@ export function ServiceCard({ service, index = 0 }: ServiceCardProps) {
   const visual = serviceAreaVisuals[service.slug];
   const videoKey = serviceVideoKeyBySlug[service.slug as keyof typeof serviceVideoKeyBySlug];
   const video = videoKey ? homeServiceVideoLibrary[videoKey] : undefined;
-  const usesDronePreview = service.slug === "dronefilm-luftfoto";
   const mediaConfig = serviceMediaConfigBySlug[service.slug as keyof typeof serviceMediaConfigBySlug] ?? {
     mediaFit: "cover" as const,
     mediaObjectClassName: "object-center",
@@ -357,12 +356,12 @@ export function ServiceCard({ service, index = 0 }: ServiceCardProps) {
                 imageAlt={mediaAlt}
                 mediaFit={mediaConfig.mediaFit}
                 mediaObjectClassName={mediaConfig.mediaObjectClassName}
-                previewBehavior={usesDronePreview ? "always" : video ? "hover-or-viewport" : "static"}
+                previewBehavior={video ? "hover-or-viewport" : "static"}
                 className="absolute inset-0"
                 sizes="(min-width: 1536px) 16.75rem, (min-width: 640px) 15.5rem, 78vw"
-                rootMargin="180px 0px -12% 0px"
+                rootMargin="120px 20px -12% 20px"
                 inViewThreshold={0.22}
-                priority={usesDronePreview}
+                priority={false}
                 posterClassName={cn(mediaConfig.mediaObjectClassName, "transition duration-500 ease-out group-hover:scale-[1.02]")}
                 previewClassName="transition duration-500 ease-out"
               />

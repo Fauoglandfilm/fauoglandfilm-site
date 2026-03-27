@@ -110,6 +110,7 @@ export function HeroSection() {
   const [hasVideoError, setHasVideoError] = useState(false);
   const [isPosterVisible, setIsPosterVisible] = useState(true);
   const [shouldRenderHeroVideo, setShouldRenderHeroVideo] = useState(false);
+  const [isMobileViewport, setIsMobileViewport] = useState(false);
 
   const eyebrow =
     language === "no"
@@ -123,6 +124,23 @@ export function HeroSection() {
     setHasVideoError(false);
     setIsPosterVisible(false);
   };
+
+  useEffect(() => {
+    const mediaQuery = window.matchMedia("(max-width: 767px)");
+    const updateViewport = () => {
+      setIsMobileViewport(mediaQuery.matches);
+    };
+
+    updateViewport();
+
+    if (typeof mediaQuery.addEventListener === "function") {
+      mediaQuery.addEventListener("change", updateViewport);
+      return () => mediaQuery.removeEventListener("change", updateViewport);
+    }
+
+    mediaQuery.addListener(updateViewport);
+    return () => mediaQuery.removeListener(updateViewport);
+  }, []);
 
   useEffect(() => {
     if (shouldRenderHeroVideo) {
@@ -144,14 +162,32 @@ export function HeroSection() {
       return;
     }
 
-    const timeoutId = window.setTimeout(() => {
-      setShouldRenderHeroVideo(true);
-    }, 900);
+    let timeoutId: number | null = null;
+    let idleId: number | null = null;
+    const deferHeroVideo = () => {
+      timeoutId = window.setTimeout(() => {
+        setShouldRenderHeroVideo(true);
+      }, isMobileViewport ? 1800 : 1100);
+    };
+
+    if (typeof window.requestIdleCallback === "function") {
+      idleId = window.requestIdleCallback(() => {
+        deferHeroVideo();
+      }, { timeout: isMobileViewport ? 2200 : 1400 });
+    } else {
+      deferHeroVideo();
+    }
 
     return () => {
-      window.clearTimeout(timeoutId);
+      if (idleId !== null && typeof window.cancelIdleCallback === "function") {
+        window.cancelIdleCallback(idleId);
+      }
+
+      if (timeoutId !== null) {
+        window.clearTimeout(timeoutId);
+      }
     };
-  }, [shouldReduceMotion, shouldRenderHeroVideo]);
+  }, [isMobileViewport, shouldReduceMotion, shouldRenderHeroVideo]);
 
   useEffect(() => {
     if (!shouldRenderHeroVideo) {
@@ -199,10 +235,6 @@ export function HeroSection() {
       }
 
       syncPlaybackFlags();
-
-      if (node.networkState === HTMLMediaElement.NETWORK_EMPTY) {
-        node.load();
-      }
 
       void node.play().then(() => {
         revealIfReady();
@@ -257,7 +289,7 @@ export function HeroSection() {
             fill
             priority
             sizes="100vw"
-            quality={100}
+            quality={88}
             className="object-cover"
           />
         </div>
@@ -272,7 +304,7 @@ export function HeroSection() {
             muted
             loop
             playsInline
-            preload="auto"
+            preload="metadata"
             disablePictureInPicture
             disableRemotePlayback
             aria-hidden="true"
@@ -1089,6 +1121,7 @@ function HomeCaseCard({
   const previewMediaStyle = isTreningshuset
     ? { objectPosition: useMobilePreview ? "center top" : "center center" }
     : undefined;
+  const shouldUseInlinePreview = shouldRenderPreviewVideo && (!isMobileViewport || featured);
 
   useEffect(() => {
     const mediaQuery = window.matchMedia("(max-width: 639px)");
@@ -1132,7 +1165,7 @@ function HomeCaseCard({
       },
       {
         root: null,
-        rootMargin: "80px 0px",
+        rootMargin: "0px",
         threshold: 0.2,
       },
     );
@@ -1149,7 +1182,7 @@ function HomeCaseCard({
       return;
     }
 
-    const primeInlinePreview = (shouldPrimeLoad = false) => {
+    const primeInlinePreview = () => {
       const node = videoRef.current;
 
       if (!node) {
@@ -1167,18 +1200,10 @@ function HomeCaseCard({
       node.setAttribute("webkit-playsinline", "");
       node.removeAttribute("fetchpriority");
 
-      if (shouldPrimeLoad && node.readyState === 0) {
-        try {
-          node.load();
-        } catch {
-          // Ignore repeated load nudges on browsers that reject them.
-        }
-      }
-
       void node.play().catch(() => undefined);
     };
 
-    primeInlinePreview(true);
+      primeInlinePreview();
 
     const animationFrameId = window.requestAnimationFrame(() => {
       primeInlinePreview();
@@ -1187,7 +1212,7 @@ function HomeCaseCard({
     videoRetryTimeoutsRef.current.forEach((timeoutId) => window.clearTimeout(timeoutId));
     videoRetryTimeoutsRef.current = [100, 260, 520, 960].map((delay) =>
       window.setTimeout(() => {
-        primeInlinePreview(true);
+        primeInlinePreview();
       }, delay),
     );
 
@@ -1228,7 +1253,7 @@ function HomeCaseCard({
                   />
                 </div>
               ) : null}
-              {shouldRenderPreviewVideo ? (
+              {shouldUseInlinePreview ? (
                 <video
                   key={`${caseStudy.slug}-${useMobilePreview ? "mobile" : "desktop"}-video`}
                   ref={videoRef}
@@ -1240,7 +1265,7 @@ function HomeCaseCard({
                   loop
                   playsInline
                   poster={previewVideoPoster}
-                  preload="metadata"
+                  preload={featured ? "metadata" : "none"}
                   disablePictureInPicture
                   disableRemotePlayback
                   aria-hidden="true"

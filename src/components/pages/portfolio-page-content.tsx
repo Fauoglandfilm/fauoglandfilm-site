@@ -877,7 +877,7 @@ function PortfolioVideoModal({
               poster={modalMedia.poster}
               controls
               playsInline
-              preload="auto"
+              preload="metadata"
               autoPlay
               controlsList="nodownload noplaybackrate"
               disablePictureInPicture

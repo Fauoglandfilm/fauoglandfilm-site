@@ -61,7 +61,7 @@ export function MediaImage({
         src={activeSrc}
         alt={alt}
         fill
-        quality={100}
+        quality={priority ? 88 : 82}
         priority={priority}
         sizes={sizes ?? "100vw"}
         placeholder="empty"

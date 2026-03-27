@@ -40,7 +40,7 @@ function hasExplicitPositionClass(value?: string) {
   return Boolean(value && /\b(relative|absolute|fixed|sticky)\b/.test(value));
 }
 
-function parseRootMarginValue(value: string, viewportHeight: number) {
+function parseRootMarginValue(value: string, viewportExtent: number) {
   const trimmedValue = value.trim();
 
   if (trimmedValue.endsWith("px")) {
@@ -48,20 +48,38 @@ function parseRootMarginValue(value: string, viewportHeight: number) {
   }
 
   if (trimmedValue.endsWith("%")) {
-    return ((Number.parseFloat(trimmedValue) || 0) / 100) * viewportHeight;
+    return ((Number.parseFloat(trimmedValue) || 0) / 100) * viewportExtent;
   }
 
   return Number.parseFloat(trimmedValue) || 0;
 }
 
+function expandRootMargin(rootMargin: string) {
+  const values = rootMargin.trim().split(/\s+/);
+  const top = values[0] ?? "0px";
+  const right = values[1] ?? top;
+  const bottom = values[2] ?? top;
+  const left = values[3] ?? right;
+
+  return { top, right, bottom, left };
+}
+
 function isWithinBufferedViewport(node: HTMLElement, rootMargin: string) {
   const rect = node.getBoundingClientRect();
   const viewportHeight = window.innerHeight || document.documentElement.clientHeight || 0;
-  const marginValues = rootMargin.trim().split(/\s+/);
-  const topMargin = parseRootMarginValue(marginValues[0] ?? "0px", viewportHeight);
-  const bottomMargin = parseRootMarginValue(marginValues[2] ?? marginValues[0] ?? "0px", viewportHeight);
+  const viewportWidth = window.innerWidth || document.documentElement.clientWidth || 0;
+  const { top, right, bottom, left } = expandRootMargin(rootMargin);
+  const topMargin = parseRootMarginValue(top, viewportHeight);
+  const rightMargin = parseRootMarginValue(right, viewportWidth);
+  const bottomMargin = parseRootMarginValue(bottom, viewportHeight);
+  const leftMargin = parseRootMarginValue(left, viewportWidth);
 
-  return rect.bottom >= -topMargin && rect.top <= viewportHeight + bottomMargin;
+  return (
+    rect.bottom >= -topMargin &&
+    rect.top <= viewportHeight + bottomMargin &&
+    rect.right >= -leftMargin &&
+    rect.left <= viewportWidth + rightMargin
+  );
 }
 
 function resolvePosterSrc(

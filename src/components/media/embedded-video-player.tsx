@@ -161,7 +161,6 @@ function prepareInlineMutedVideo(node: HTMLVideoElement, prioritizeFetch = false
   node.playsInline = true;
   node.autoplay = true;
   node.loop = true;
-  node.preload = "metadata";
   node.setAttribute("muted", "");
   node.setAttribute("playsinline", "");
   node.setAttribute("webkit-playsinline", "");
@@ -171,16 +170,8 @@ function prepareInlineMutedVideo(node: HTMLVideoElement, prioritizeFetch = false
   }
 }
 
-function attemptInlineAutoplay(node: HTMLVideoElement, shouldPrimeLoad = false) {
+function attemptInlineAutoplay(node: HTMLVideoElement) {
   prepareInlineMutedVideo(node, true);
-
-  if (shouldPrimeLoad && node.readyState === 0) {
-    try {
-      node.load();
-    } catch {
-      // Ignore browsers that reject repeated load nudges.
-    }
-  }
 
   void node.play().catch(() => undefined);
 }
@@ -284,14 +275,14 @@ function ManagedDirectVideo({
   const controlsEnabled = !shouldAutoplay && showControls;
   const posterVisible = hasFailed || !hasStartedPlayback;
   const primeAutoplay = useCallback(
-    (shouldPrimeLoad = false) => {
+    () => {
       const node = videoRef.current;
 
       if (!node || !shouldAutoplay || hasFailed || hasStartedPlayback) {
         return;
       }
 
-      attemptInlineAutoplay(node, shouldPrimeLoad);
+      attemptInlineAutoplay(node);
     },
     [hasFailed, hasStartedPlayback, shouldAutoplay],
   );
@@ -308,7 +299,7 @@ function ManagedDirectVideo({
       return;
     }
 
-    primeAutoplay(true);
+    primeAutoplay();
 
     const animationFrameId = window.requestAnimationFrame(() => {
       primeAutoplay();
@@ -319,7 +310,7 @@ function ManagedDirectVideo({
     retryTimeoutsRef.current.forEach((timeoutId) => window.clearTimeout(timeoutId));
     retryTimeoutsRef.current = retryDelays.map((delay) =>
       window.setTimeout(() => {
-        primeAutoplay(true);
+        primeAutoplay();
       }, delay),
     );
 
@@ -361,7 +352,7 @@ function ManagedDirectVideo({
           controls={controlsEnabled}
           controlsList="nodownload noplaybackrate nofullscreen"
           playsInline
-          preload="metadata"
+          preload={priority && !previewMode ? "metadata" : "none"}
           autoPlay={shouldAutoplay}
           muted
           loop
@@ -392,12 +383,12 @@ function ManagedDirectVideo({
           }}
           onSuspend={() => {
             if (shouldAutoplay) {
-              primeAutoplay(true);
+              primeAutoplay();
             }
           }}
           onStalled={() => {
             if (shouldAutoplay) {
-              primeAutoplay(true);
+              primeAutoplay();
             }
           }}
           onError={() => setHasFailed(true)}
@@ -456,6 +447,22 @@ export function EmbeddedVideoPlayer({
   );
 
   if (externalVideo) {
+    if (previewMode) {
+      return (
+        <div className={wrapperClassName} aria-label={resolvedTitle}>
+          <MediaImage
+            src={fallbackSrc}
+            fallbackSrcs={fallbackSrcs}
+            alt={resolvedImageAlt}
+            priority={priority}
+            sizes={sizes}
+            fallbackContent={<FallbackSurface />}
+            className={mediaObjectClass}
+          />
+        </div>
+      );
+    }
+
     const shouldRenderFrame = true;
 
     return (

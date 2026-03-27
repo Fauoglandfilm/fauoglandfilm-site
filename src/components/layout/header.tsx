@@ -14,7 +14,7 @@ import {
 } from "@/components/ui/button-styles";
 import { OverlayCloseButton } from "@/components/ui/overlay-close-button";
 import { CloseIcon, MenuIcon, MoonIcon, SearchIcon, SunIcon } from "@/components/ui/icons";
-import { caseStudies, navItems, serviceAreas, teamMembers } from "@/data/site-content";
+import { navItems } from "@/data/site-content";
 import { uiCopy } from "@/data/ui-copy";
 import { resolveLocalizedValue } from "@/lib/i18n";
 import { cn } from "@/lib/utils";
@@ -152,6 +152,8 @@ export function Header() {
   const [open, setOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
+  const [searchEntries, setSearchEntries] = useState<SearchEntry[]>([]);
+  const [isSearchIndexLoading, setIsSearchIndexLoading] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const searchInputRef = useRef<HTMLInputElement | null>(null);
   const shouldReduceMotion = useReducedMotion();
@@ -165,47 +167,6 @@ export function Header() {
     language === "no"
       ? "Oslo / Reklamefilm / Produksjon"
       : "Oslo / Commercial film / Production";
-  const searchEntries = useMemo<SearchEntry[]>(
-    () => [
-      ...serviceAreas.map((service) => ({
-        href: service.exampleHref ?? service.href,
-        title: resolveLocalizedValue(service.title, language),
-        category: language === "no" ? "Tjeneste" : "Service",
-        description: resolveLocalizedValue(service.summary, language),
-        keywords: [
-          service.slug,
-          resolveLocalizedValue(service.eyebrow, language),
-          resolveLocalizedValue(service.value, language),
-        ],
-      })),
-      ...caseStudies.map((entry) => ({
-        href: `/case/${entry.slug}`,
-        title: resolveLocalizedValue(entry.title, language),
-        category: language === "no" ? "Case" : "Case study",
-        description: resolveLocalizedValue(entry.summary, language),
-        keywords: [
-          entry.client,
-          entry.slug,
-          resolveLocalizedValue(entry.category, language),
-          resolveLocalizedValue(entry.industry, language),
-          ...entry.tags.map((tag) => resolveLocalizedValue(tag, language)),
-        ],
-      })),
-      ...teamMembers
-        .filter((member) => member.href)
-        .map((member) => ({
-          href: member.href!,
-          title: member.name,
-          category: language === "no" ? "Profil" : "Profile",
-          description: resolveLocalizedValue(member.summary, language),
-          keywords: [
-            member.name,
-            resolveLocalizedValue(member.role, language),
-          ],
-        })),
-    ],
-    [language],
-  );
   const normalizedSearchQuery = searchQuery.trim().toLocaleLowerCase(language === "no" ? "nb-NO" : "en-US");
   const searchResults = useMemo(() => {
     if (!normalizedSearchQuery) {
@@ -236,6 +197,70 @@ export function Header() {
       .slice(0, 8)
       .map(({ entry }) => entry);
   }, [language, normalizedSearchQuery, searchEntries]);
+
+  useEffect(() => {
+    if (!searchOpen) {
+      return;
+    }
+
+    let cancelled = false;
+    setIsSearchIndexLoading(true);
+
+    void import("@/data/site-content")
+      .then(({ caseStudies, serviceAreas, teamMembers }) => {
+        if (cancelled) {
+          return;
+        }
+
+        setSearchEntries([
+          ...serviceAreas.map((service) => ({
+            href: service.exampleHref ?? service.href,
+            title: resolveLocalizedValue(service.title, language),
+            category: language === "no" ? "Tjeneste" : "Service",
+            description: resolveLocalizedValue(service.summary, language),
+            keywords: [
+              service.slug,
+              resolveLocalizedValue(service.eyebrow, language),
+              resolveLocalizedValue(service.value, language),
+            ],
+          })),
+          ...caseStudies.map((entry) => ({
+            href: `/case/${entry.slug}`,
+            title: resolveLocalizedValue(entry.title, language),
+            category: language === "no" ? "Case" : "Case study",
+            description: resolveLocalizedValue(entry.summary, language),
+            keywords: [
+              entry.client,
+              entry.slug,
+              resolveLocalizedValue(entry.category, language),
+              resolveLocalizedValue(entry.industry, language),
+              ...entry.tags.map((tag) => resolveLocalizedValue(tag, language)),
+            ],
+          })),
+          ...teamMembers
+            .filter((member) => member.href)
+            .map((member) => ({
+              href: member.href!,
+              title: member.name,
+              category: language === "no" ? "Profil" : "Profile",
+              description: resolveLocalizedValue(member.summary, language),
+              keywords: [
+                member.name,
+                resolveLocalizedValue(member.role, language),
+              ],
+            })),
+        ]);
+      })
+      .finally(() => {
+        if (!cancelled) {
+          setIsSearchIndexLoading(false);
+        }
+      });
+
+    return () => {
+      cancelled = true;
+    };
+  }, [language, searchOpen]);
 
   useEffect(() => {
     const onScroll = () => {
@@ -581,7 +606,11 @@ export function Header() {
                   className="relative min-h-0 flex-1 overflow-y-auto overscroll-contain px-3 py-3 touch-pan-y sm:px-4 sm:py-4"
                   style={{ WebkitOverflowScrolling: "touch" }}
                 >
-                  {searchResults.length ? (
+                  {isSearchIndexLoading && !searchEntries.length ? (
+                    <div className="rounded-[1.5rem] border border-white/8 bg-white/[0.035] px-5 py-7 text-sm leading-6 text-white/62">
+                      {language === "no" ? "Laster sokesnarveier..." : "Loading search index..."}
+                    </div>
+                  ) : searchResults.length ? (
                     <div className="grid gap-2">
                       {searchResults.map((result) => (
                         <Link
