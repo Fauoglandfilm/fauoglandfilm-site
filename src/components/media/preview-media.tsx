@@ -166,7 +166,7 @@ export function PreviewMedia({
     hasPlayableMedia &&
     (previewBehavior === "always" || (usesViewportActivation && isViewportReady) || (usesHoverActivation && isHovered));
   const mediaObjectClass =
-    mediaFit === "contain" ? "object-contain p-2.5 sm:p-3.5" : "object-cover";
+    mediaFit === "contain" ? "object-contain p-1.5 sm:p-2" : "object-cover";
 
   useEffect(() => {
     if (!usesViewportActivation || isViewportReady) {
