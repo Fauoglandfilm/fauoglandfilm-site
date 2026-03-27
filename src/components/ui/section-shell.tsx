@@ -11,6 +11,8 @@ type SectionShellProps = {
   align?: "left" | "center";
   className?: string;
   innerClassName?: string;
+  headerClassName?: string;
+  childrenClassName?: string;
   children?: ReactNode;
 };
 
@@ -23,6 +25,8 @@ export function SectionShell({
   align = "left",
   className,
   innerClassName,
+  headerClassName,
+  childrenClassName,
   children,
 }: SectionShellProps) {
   const isCentered = align === "center";
@@ -36,6 +40,7 @@ export function SectionShell({
             isCentered
               ? "mx-auto max-w-3xl items-center text-center"
               : "lg:flex-row lg:items-end lg:justify-between",
+            headerClassName,
           )}
         >
           <div className={cn("space-y-2 sm:space-y-3", !isCentered && "max-w-3xl")}>
@@ -56,7 +61,7 @@ export function SectionShell({
           {!isCentered && action ? <div className="shrink-0 pt-1 max-sm:w-full">{action}</div> : null}
           {isCentered && action ? <div className="pt-1 max-sm:w-full">{action}</div> : null}
         </div>
-        {children ? <div className="mt-[clamp(1.15rem,2.6vw,2.1rem)]">{children}</div> : null}
+        {children ? <div className={cn("mt-[clamp(1.15rem,2.6vw,2.1rem)]", childrenClassName)}>{children}</div> : null}
       </div>
     </section>
   );

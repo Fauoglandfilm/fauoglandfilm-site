@@ -329,7 +329,7 @@ export function ServicesSection({
   };
 
   return (
-    <section id="tjenester" className="section-space pt-[clamp(0.1rem,0.4vw,0.35rem)] pb-0">
+    <section id="tjenester" className="section-space pt-[clamp(0.45rem,0.9vw,0.8rem)] pb-0">
       <div className="relative left-1/2 w-screen -translate-x-1/2 overflow-hidden">
         <motion.div
           aria-hidden="true"
@@ -341,7 +341,7 @@ export function ServicesSection({
         <div className="grain-overlay absolute inset-0 opacity-24" />
         <div className={`pointer-events-none absolute inset-x-0 top-0 h-px ${topBorderClassName}`} />
 
-        <div className="relative mx-auto max-w-[1320px] px-4 py-[clamp(0.7rem,1.4vw,1.1rem)] sm:px-6 lg:px-8 xl:px-10">
+        <div className="relative mx-auto max-w-[1320px] px-4 py-[clamp(1rem,1.8vw,1.45rem)] sm:px-6 lg:px-8 xl:px-10">
           <motion.div
             className="mx-auto max-w-[34rem] text-center"
             initial={shouldReduceMotion ? false : { opacity: 0, y: 26, filter: "blur(14px)" }}
@@ -481,7 +481,9 @@ export function ProcessSection({ steps }: { steps: ProcessStep[] }) {
       title={copy.processTitle}
       description={copy.processDescription}
       align="center"
-      className="pt-0 pb-[clamp(0.35rem,0.7vw,0.65rem)]"
+      className="-mt-[clamp(2.4rem,5vw,4rem)] pt-0 pb-[clamp(0.35rem,0.7vw,0.65rem)]"
+      headerClassName="gap-1.5 sm:gap-2"
+      childrenClassName="mt-[clamp(0.65rem,1.2vw,1rem)]"
     >
       <Reveal>
         <article className="glass-panel overflow-hidden rounded-[1.55rem]">
