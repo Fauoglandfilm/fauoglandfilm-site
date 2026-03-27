@@ -363,15 +363,17 @@ export function ServicesSection({
               {resolvedDescription}
             </p>
           </motion.div>
+        </div>
 
-          <div className="relative mt-2 sm:mt-2.5 lg:mt-2.75">
-            <div className={`pointer-events-none absolute inset-y-0 left-0 z-[2] hidden w-16 ${leftFadeClassName} lg:block`} />
-            <div className={`pointer-events-none absolute inset-y-0 right-0 z-[2] hidden w-16 ${rightFadeClassName} lg:block`} />
+        <div className="relative mt-2 sm:mt-2.5 lg:mt-2.75">
+          <div className={`pointer-events-none absolute inset-y-0 left-0 z-[2] hidden w-16 ${leftFadeClassName} lg:block`} />
+          <div className={`pointer-events-none absolute inset-y-0 right-0 z-[2] hidden w-16 ${rightFadeClassName} lg:block`} />
 
+          <div className="relative left-1/2 w-screen -translate-x-1/2">
             <div
               ref={trackRef}
-              className="portfolio-service-track -mx-4 flex gap-3 overflow-x-auto overflow-y-visible px-4 pb-0 pr-[12vw] touch-pan-x sm:gap-3.5 sm:pr-6 lg:mx-0 lg:gap-4 lg:px-0 lg:pr-4"
-              style={{ WebkitOverflowScrolling: "touch" }}
+              className="portfolio-service-track flex w-screen gap-3 overflow-x-auto overflow-y-hidden overscroll-x-contain overscroll-y-none px-0 pb-0 pr-[12vw] touch-pan-x sm:gap-3.5 sm:pr-6 lg:gap-4 lg:pr-4"
+              style={{ WebkitOverflowScrolling: "touch", overscrollBehaviorY: "none" }}
               aria-label={language === "no" ? "Tjenestekarusell" : "Service carousel"}
               tabIndex={0}
               onScroll={handleTrackScroll}
