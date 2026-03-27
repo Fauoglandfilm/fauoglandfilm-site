@@ -377,6 +377,15 @@ export const homeServiceVideoLibrary = {
       en: "Marketing and distribution",
     },
   },
+  "06": {
+    videoType: "direct",
+    src: "/assets/services/videos/drone.mp4",
+    poster: "/assets/services/posters/drone-poster.jpg",
+    label: {
+      no: "Dronefilm og luftfoto",
+      en: "Drone film and aerial photography",
+    },
+  },
 } satisfies Record<string, VideoAsset>;
 
 const youtubeWatchUrl = (videoId: string) => `https://www.youtube.com/watch?v=${videoId}`;
@@ -566,8 +575,8 @@ export const serviceAreas: ServiceArea[] = [
     slug: "reklamefilm",
     title: { no: "Reklamefilm", en: "Commercial film" },
     summary: {
-      no: "Kampanjefilm og annonseuttak for landingsside, annonser og sosiale medier.",
-      en: "Campaign films and cutdowns for landing pages, paid media and social channels.",
+      no: "Reklamefilm og annonseuttak for landingsside, annonser og sosiale medier. Perfekt når dere skal lansere noe nytt eller stramme inn kommunikasjonen rundt et eksisterende tilbud.",
+      en: "Commercial films and ad cutdowns for landing pages, paid campaigns and social channels. Ideal when you are launching something new or tightening the message around an existing offer.",
     },
     eyebrow: { no: "Kampanjer og lanseringer", en: "Campaigns and launches" },
     value: {
@@ -575,11 +584,11 @@ export const serviceAreas: ServiceArea[] = [
       en: "Generate more leads from the same campaign budget.",
     },
     budget: {
-      no: "Typisk 30 000-150 000 kr+",
-      en: "Typically NOK 30,000-150,000+",
+      no: "Typisk 40 000–180 000 kr+",
+      en: "Typically NOK 40,000-180,000+",
     },
     timeline: {
-      no: "Vanligvis 2-5 uker",
+      no: "Vanligvis 2–5 uker",
       en: "Usually 2-5 weeks",
     },
     deliverables: [
@@ -596,8 +605,8 @@ export const serviceAreas: ServiceArea[] = [
     slug: "marketing-distribusjon",
     title: { no: "Marketing og distribusjon", en: "Marketing and distribution" },
     summary: {
-      no: "Plan, annonseuttak og publisering som kobler film med annonser, sosiale medier og distribusjon.",
-      en: "Planning, ad cutdowns and publishing that connect film with paid media, social channels and distribution.",
+      no: "Plan, annonseuttak og publisering som kobler film med betalt annonsering og organisk innhold. Vi setter opp struktur, tester varianter og rapporterer på hva som faktisk fungerer.",
+      en: "Planning, ad cutdowns and publishing that connect film with paid distribution and organic content. We set up the structure, test variations and report on what actually performs.",
     },
     eyebrow: { no: "Annonser og distribusjon", en: "Ads and distribution" },
     value: {
@@ -605,11 +614,11 @@ export const serviceAreas: ServiceArea[] = [
       en: "Make sure the film is actually seen, used and measured.",
     },
     budget: {
-      no: "Typisk 10 000-45 000 kr",
-      en: "Typically NOK 10,000-45,000",
+      no: "Typisk 15 000–60 000 kr",
+      en: "Typically NOK 15,000-60,000",
     },
     timeline: {
-      no: "Vanligvis 3-10 dager",
+      no: "Vanligvis 3–10 dager",
       en: "Usually 3-10 days",
     },
     deliverables: [
@@ -626,8 +635,8 @@ export const serviceAreas: ServiceArea[] = [
     slug: "bedriftsfilm-intervjuer",
     title: { no: "Bedriftsfilm og intervjuer", en: "Company film and interviews" },
     summary: {
-      no: "Bedriftsfilm og intervjuer for nettside, salg og presentasjoner.",
-      en: "Company films and interviews for websites, sales and presentations.",
+      no: "Bedriftsfilm og intervjuer for nettside, salg og presentasjoner. Vi hjelper dere å forklare hvem dere er og hvorfor dere er et trygt valg – uten at det blir stivt eller internt.",
+      en: "Company films and interviews for websites, sales and presentations. We help you explain who you are and why you are a safe choice without making it feel stiff or internal.",
     },
     eyebrow: { no: "Tillit og tydelighet", en: "Trust and clarity" },
     value: {
@@ -635,17 +644,17 @@ export const serviceAreas: ServiceArea[] = [
       en: "Build trust before the first meeting.",
     },
     budget: {
-      no: "Typisk 20 000-90 000 kr",
-      en: "Typically NOK 20,000-90,000",
+      no: "Typisk 35 000–120 000 kr",
+      en: "Typically NOK 35,000-120,000",
     },
     timeline: {
-      no: "Vanligvis 1-3 uker",
+      no: "Vanligvis 1–3 uker",
       en: "Usually 1-3 weeks",
     },
     deliverables: [
       { no: "Profilfilm", en: "Brand / company film" },
       { no: "Intervjuklipp", en: "Interview edits" },
-      { no: "Salg- og nettsideversjoner", en: "Sales and website versions" },
+      { no: "Salgs- og nettsideversjoner", en: "Sales and website versions" },
     ],
     ctaLabel: { no: "Få anbefalt oppsett", en: "Get a recommended setup" },
     href: "/kontakt",
@@ -659,8 +668,8 @@ export const serviceAreas: ServiceArea[] = [
       en: "Social media content",
     },
     summary: {
-      no: "Korte videoer og varianter som holder publiseringen i gang.",
-      en: "Short videos and cutdowns that keep publishing moving.",
+      no: "Korte videoer og varianter som holder publiseringen i gang. Vi planlegger én eller flere opptaksdager som gir nok innhold til en hel periode med jevn publisering.",
+      en: "Short videos and content variations that keep publishing moving. We plan one or more shoot days that give you enough material for a full period of consistent publishing.",
     },
     eyebrow: { no: "Publisering over tid", en: "Ongoing publishing" },
     value: {
@@ -668,11 +677,11 @@ export const serviceAreas: ServiceArea[] = [
       en: "Stay visible without starting from scratch every time.",
     },
     budget: {
-      no: "Typisk 5 000-35 000 kr",
-      en: "Typically NOK 5,000-35,000",
+      no: "Typisk 20 000–80 000 kr (avhengig av antall videoer og opptaksdager)",
+      en: "Typically NOK 20,000-80,000 depending on the number of videos and shoot days",
     },
     timeline: {
-      no: "Vanligvis 3-10 dager",
+      no: "Vanligvis 3–10 dager",
       en: "Usually 3-10 days",
     },
     deliverables: [
@@ -689,8 +698,8 @@ export const serviceAreas: ServiceArea[] = [
     slug: "event-live",
     title: { no: "Aftermovie", en: "Aftermovie" },
     summary: {
-      no: "Aftermovies, reels og intervjuer som lever videre etter eventet.",
-      en: "Aftermovies, reels and interviews designed to keep working after the event.",
+      no: "Aftermovies, reels og intervjuer som lever videre etter eventet. Vi kan både levere raskt etter arrangementet og bygge et bibliotek som brukes i rekruttering, salg og neste års kampanjer.",
+      en: "Aftermovies, reels and interviews that keep working after the event. We can deliver quickly after the event and build a library you can use in recruitment, sales and next year's campaigns.",
     },
     eyebrow: { no: "Arrangement og etterbruk", en: "Events and reuse" },
     value: {
@@ -698,8 +707,8 @@ export const serviceAreas: ServiceArea[] = [
       en: "Extend the impact of every event.",
     },
     budget: {
-      no: "Typisk 15 000-60 000 kr+",
-      en: "Typically NOK 15,000-60,000+",
+      no: "Typisk 30 000–120 000 kr+",
+      en: "Typically NOK 30,000-120,000+",
     },
     timeline: {
       no: "Fra samme dag til 2 uker",
@@ -708,12 +717,41 @@ export const serviceAreas: ServiceArea[] = [
     deliverables: [
       { no: "Aftermovie / stemningsfilm", en: "Aftermovie / mood film" },
       { no: "Reels og korte uttak", en: "Reels and short cutdowns" },
-      { no: "Flerkameraopptak", en: "Multicam capture" },
+      { no: "Flerkameraopptak ved behov", en: "Multicam capture when needed" },
     ],
     ctaLabel: { no: "Få anbefalt oppsett", en: "Get a recommended setup" },
     href: "/kontakt",
     exampleHref: "/case/nei-til-atomvapen-arbeiderdagen",
     exampleLabel: { no: "Se hva dette gir i praksis", en: "See what this looks like in practice" },
+  },
+  {
+    slug: "dronefilm-luftfoto",
+    title: { no: "Dronefilm og luftfoto", en: "Drone film and aerial photography" },
+    summary: {
+      no: "Droneopptak som kan stå alene eller brukes som del av større produksjoner. Typisk brukt til eiendom, industri, infrastruktur, arrangement og reklame der dere vil vise omfang og kontekst på en måte som ikke er mulig fra bakken.",
+      en: "Drone footage that can stand alone or work as part of a larger production. Commonly used for real estate, industry, infrastructure, events and commercials where you need to show scale and context in a way that is not possible from the ground.",
+    },
+    eyebrow: { no: "Oversikt og omfang", en: "Scale and overview" },
+    value: {
+      no: "Gi oversikt og tyngde med luftperspektiv.",
+      en: "Add scale and weight with an aerial perspective.",
+    },
+    budget: {
+      no: "Typisk 10 000–40 000 kr alene, eller som tillegg 5 000–20 000 kr inn i større produksjon (avhengig av lokasjon og omfattende tillatelser)",
+      en: "Typically NOK 10,000-40,000 on its own, or NOK 5,000-20,000 as an add-on to a larger production depending on location and permit requirements",
+    },
+    timeline: {
+      no: "Vanligvis 1–7 dager (avhengig av vær og eventuelle tillatelser)",
+      en: "Usually 1-7 days depending on weather and any required permits",
+    },
+    deliverables: [
+      { no: "Droneklipp til bruk i film", en: "Drone footage for larger films" },
+      { no: "Rene dronefilmer", en: "Standalone drone films" },
+      { no: "Stillbilder fra drone", en: "Drone stills" },
+      { no: "Klargjorte klipp til SoMe og nettside", en: "Prepared cuts for social media and web" },
+    ],
+    ctaLabel: { no: "Få anbefalt oppsett", en: "Get a recommended setup" },
+    href: "/kontakt",
   },
 ];
 

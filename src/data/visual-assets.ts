@@ -399,6 +399,7 @@ export const serviceAreaVisuals: Record<string, VisualAsset> = {
   "bedriftsfilm-intervjuer": siteVisuals.companyStory,
   "some-innhold": siteVisuals.treningshusetMobile,
   "event-live": siteVisuals.eventCoverage,
+  "dronefilm-luftfoto": siteVisuals.filmCrewOutdoors,
 };
 
 export function getPortfolioFallbackVisual(group: string): VisualAsset {
