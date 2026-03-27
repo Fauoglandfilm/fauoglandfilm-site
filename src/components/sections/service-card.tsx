@@ -251,7 +251,7 @@ export function ServiceCard({ service, index = 0 }: ServiceCardProps) {
       style={cardStyle}
     >
       <motion.div
-        className="relative flex h-full w-[85vw] min-w-[21.5rem] max-w-[26.25rem] flex-col overflow-hidden rounded-[1.35rem] border border-white/12 bg-[linear-gradient(180deg,rgba(255,255,255,0.12),rgba(255,255,255,0.035)_48%,rgba(255,255,255,0.05)_100%)] shadow-[inset_0_1px_0_rgba(255,255,255,0.12),0_30px_76px_rgba(2,6,12,0.38)] backdrop-blur-[30px] will-change-transform sm:w-[26.25rem] sm:min-w-[26.25rem] sm:max-w-[26.25rem] xl:w-[32.5rem] xl:min-w-[32.5rem] xl:max-w-[32.5rem]"
+        className="relative flex h-full w-[78vw] min-w-[19.5rem] max-w-[23rem] flex-col overflow-hidden rounded-[1.35rem] border border-white/12 bg-[linear-gradient(180deg,rgba(255,255,255,0.12),rgba(255,255,255,0.035)_48%,rgba(255,255,255,0.05)_100%)] shadow-[inset_0_1px_0_rgba(255,255,255,0.12),0_30px_76px_rgba(2,6,12,0.38)] backdrop-blur-[30px] will-change-transform sm:w-[22.5rem] sm:min-w-[22.5rem] sm:max-w-[22.5rem] xl:w-[24.5rem] xl:min-w-[24.5rem] xl:max-w-[24.5rem]"
         whileHover={
           shouldReduceMotion
             ? undefined
@@ -295,7 +295,7 @@ export function ServiceCard({ service, index = 0 }: ServiceCardProps) {
               </span>
             </div>
             <motion.div
-              className="relative aspect-[4/3] w-full"
+              className="relative aspect-[1.18/1] w-full"
               style={
                 shouldReduceMotion
                   ? undefined
@@ -313,7 +313,7 @@ export function ServiceCard({ service, index = 0 }: ServiceCardProps) {
                 mediaFit={mediaConfig.mediaFit}
                 previewBehavior={usesDronePreview ? "always" : video ? "hover-or-viewport" : "static"}
                 className="absolute inset-0"
-                sizes="(min-width: 1536px) 32.5rem, (min-width: 640px) 26.25rem, 85vw"
+                sizes="(min-width: 1536px) 24.5rem, (min-width: 640px) 22.5rem, 78vw"
                 rootMargin="180px 0px -12% 0px"
                 inViewThreshold={0.22}
                 priority={usesDronePreview}
@@ -324,20 +324,20 @@ export function ServiceCard({ service, index = 0 }: ServiceCardProps) {
             <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(4,6,10,0.02),rgba(4,6,10,0.18)_38%,rgba(4,6,10,0.62)_100%)]" />
           </div>
 
-          <div className="relative mt-4 flex flex-1 flex-col">
+          <div className="relative mt-3.5 flex flex-1 flex-col">
             <div className="space-y-3">
               <div className="flex items-start justify-between gap-3">
-                <h3 className="max-w-[10ch] text-[1.55rem] font-semibold tracking-[-0.05em] text-white sm:text-[1.72rem]">
+                <h3 className="max-w-[10ch] text-[1.42rem] font-semibold tracking-[-0.05em] text-white sm:text-[1.56rem]">
                   {title}
                 </h3>
                 <ArrowUpRight className="mt-1 h-4 w-4 shrink-0 text-white/34 transition duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-[color:var(--accent)]" />
               </div>
-              <p className="max-w-[28ch] text-[0.95rem] leading-6 text-white/78">
+              <p className="max-w-[28ch] text-[0.9rem] leading-5.5 text-white/78 sm:text-[0.94rem]">
                 {subline}
               </p>
             </div>
 
-            <div className="mt-4 flex flex-wrap gap-2">
+            <div className="mt-3.5 flex flex-wrap gap-2">
               {[purposeChip, budgetChip, timelineChip].map((chip) => (
                 <span
                   key={`${service.slug}-${chip}`}
@@ -348,7 +348,7 @@ export function ServiceCard({ service, index = 0 }: ServiceCardProps) {
               ))}
             </div>
 
-            <ul className="mt-5 space-y-2.5 text-sm leading-6 text-white/70">
+            <ul className="mt-4 space-y-2 text-sm leading-6 text-white/70">
               {deliverables.map((item) => (
                 <li key={`${service.slug}-${item}`} className="flex items-start gap-2.5">
                   <span className="mt-2 h-1.5 w-1.5 rounded-full bg-[color:var(--accent)]/86" />
@@ -357,7 +357,7 @@ export function ServiceCard({ service, index = 0 }: ServiceCardProps) {
               ))}
             </ul>
 
-            <div className="mt-auto flex flex-col gap-2.5 pt-6">
+            <div className="mt-auto flex flex-col gap-2.5 pt-5">
               <ButtonLink
                 href={service.href}
                 size="compact"

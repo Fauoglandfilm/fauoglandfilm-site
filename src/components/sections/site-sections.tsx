@@ -63,9 +63,9 @@ export function ServicesSection({
         <div className="grain-overlay absolute inset-0 opacity-24" />
         <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-white/8" />
 
-        <div className="relative mx-auto max-w-[1320px] px-4 py-[clamp(5.25rem,8vw,8rem)] sm:px-6 lg:px-8 xl:px-10">
+        <div className="relative mx-auto max-w-[1320px] px-4 py-[clamp(4.1rem,6.6vw,6.25rem)] sm:px-6 lg:px-8 xl:px-10">
           <motion.div
-            className="mx-auto max-w-3xl text-center"
+            className="mx-auto max-w-[56rem] text-center"
             initial={shouldReduceMotion ? false : { opacity: 0, y: 26, filter: "blur(14px)" }}
             whileInView={shouldReduceMotion ? undefined : { opacity: 1, y: 0, filter: "blur(0px)" }}
             viewport={{ once: true, amount: 0.35 }}
@@ -74,15 +74,15 @@ export function ServicesSection({
             <p className="text-[0.68rem] font-semibold uppercase tracking-[0.26em] text-[color:var(--accent)]/88">
               {copy.servicesEyebrow}
             </p>
-            <h2 className="mt-4 text-balance text-[clamp(2.4rem,6vw,4.7rem)] font-semibold tracking-[-0.06em] text-white">
+            <h2 className="mt-3 text-balance text-[clamp(2.15rem,4.9vw,4.05rem)] font-semibold leading-[0.94] tracking-[-0.06em] text-white">
               {resolvedTitle}
             </h2>
-            <p className="mx-auto mt-5 max-w-2xl text-balance text-[1rem] leading-7 text-white/62 sm:text-[1.08rem]">
+            <p className="mx-auto mt-3.5 max-w-[40rem] text-balance text-[0.96rem] leading-6 text-white/62 sm:text-[1.02rem] sm:leading-7">
               {resolvedDescription}
             </p>
           </motion.div>
 
-          <div className="relative mt-10 sm:mt-12 lg:mt-14">
+          <div className="relative mt-8 sm:mt-10 lg:mt-11">
             <div className="pointer-events-none absolute inset-y-0 left-0 z-[2] hidden w-16 bg-[linear-gradient(90deg,#030407_0%,rgba(3,4,7,0.82)_52%,transparent)] lg:block" />
             <div className="pointer-events-none absolute inset-y-0 right-0 z-[2] hidden w-16 bg-[linear-gradient(270deg,#081320_0%,rgba(8,19,32,0.82)_52%,transparent)] lg:block" />
 
