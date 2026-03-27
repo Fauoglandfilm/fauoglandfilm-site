@@ -329,7 +329,7 @@ export function ServicesSection({
   };
 
   return (
-    <section id="tjenester" className="section-space pt-[clamp(1.4rem,3vw,2.6rem)] pb-[clamp(1rem,2.2vw,1.85rem)]">
+    <section id="tjenester" className="section-space pt-[clamp(0.6rem,1.6vw,1.2rem)] pb-[clamp(0.15rem,0.5vw,0.45rem)]">
       <div className="relative left-1/2 w-screen -translate-x-1/2 overflow-hidden">
         <motion.div
           aria-hidden="true"
@@ -341,9 +341,9 @@ export function ServicesSection({
         <div className="grain-overlay absolute inset-0 opacity-24" />
         <div className={`pointer-events-none absolute inset-x-0 top-0 h-px ${topBorderClassName}`} />
 
-        <div className="relative mx-auto max-w-[1320px] px-4 py-[clamp(2.8rem,4.8vw,4.4rem)] sm:px-6 lg:px-8 xl:px-10">
+        <div className="relative mx-auto max-w-[1320px] px-4 py-[clamp(1.8rem,3vw,2.5rem)] sm:px-6 lg:px-8 xl:px-10">
           <motion.div
-            className="mx-auto max-w-[56rem] text-center"
+            className="mx-auto max-w-[42rem] text-center"
             initial={shouldReduceMotion ? false : { opacity: 0, y: 26, filter: "blur(14px)" }}
             whileInView={shouldReduceMotion ? undefined : { opacity: 1, y: 0, filter: "blur(0px)" }}
             viewport={{ once: true, amount: 0.35 }}
@@ -353,24 +353,24 @@ export function ServicesSection({
               {copy.servicesEyebrow}
             </p>
             <h2
-              className={`mt-3 text-balance text-[clamp(2.15rem,4.9vw,4.05rem)] font-semibold leading-[0.94] tracking-[-0.06em] ${titleClassName}`}
+              className={`mt-2.5 text-balance text-[clamp(1.9rem,4.2vw,3.35rem)] font-semibold leading-[0.9] tracking-[-0.06em] ${titleClassName}`}
             >
               {resolvedTitle}
             </h2>
             <p
-              className={`mx-auto mt-2.5 max-w-[40rem] text-balance text-[0.96rem] leading-6 sm:text-[1.02rem] sm:leading-7 ${descriptionClassName}`}
+              className={`mx-auto mt-1.5 max-w-[31rem] text-balance text-[0.9rem] leading-5.5 sm:text-[0.96rem] sm:leading-6 ${descriptionClassName}`}
             >
               {resolvedDescription}
             </p>
           </motion.div>
 
-          <div className="relative mt-5 sm:mt-6 lg:mt-7">
+          <div className="relative mt-3 sm:mt-3.5 lg:mt-4">
             <div className={`pointer-events-none absolute inset-y-0 left-0 z-[2] hidden w-16 ${leftFadeClassName} lg:block`} />
             <div className={`pointer-events-none absolute inset-y-0 right-0 z-[2] hidden w-16 ${rightFadeClassName} lg:block`} />
 
             <div
               ref={trackRef}
-              className="portfolio-service-track -mx-4 flex gap-5 overflow-x-auto overflow-y-visible px-4 pb-3 pr-[18vw] touch-pan-x sm:gap-6 sm:pr-12 lg:mx-0 lg:gap-7 lg:px-0 lg:pr-10"
+              className="portfolio-service-track -mx-4 flex gap-4 overflow-x-auto overflow-y-visible px-4 pb-1.5 pr-[18vw] touch-pan-x sm:gap-4.5 sm:pr-10 lg:mx-0 lg:gap-5 lg:px-0 lg:pr-8"
               style={{ WebkitOverflowScrolling: "touch" }}
               aria-label={language === "no" ? "Tjenestekarusell" : "Service carousel"}
               tabIndex={0}
@@ -481,7 +481,7 @@ export function ProcessSection({ steps }: { steps: ProcessStep[] }) {
       title={copy.processTitle}
       description={copy.processDescription}
       align="center"
-      className="pt-0"
+      className="pt-0 pb-[clamp(1rem,1.7vw,1.8rem)]"
     >
       <Reveal>
         <article className="glass-panel overflow-hidden rounded-[1.9rem]">
@@ -980,21 +980,21 @@ export function PageHero(props: {
   const { language } = useSitePreferences();
 
   return (
-    <section className={cn("bg-[#111111] text-white", compact ? "pt-16 sm:pt-20" : "pt-20 sm:pt-28")}>
+    <section className={cn("bg-[#111111] text-white", compact ? "pt-11 sm:pt-13" : "pt-20 sm:pt-28")}>
       <div className="site-container">
-        <Reveal className={cn("w-full", compact ? "py-7 sm:py-9 lg:py-8" : "py-10 sm:py-14 lg:py-16")} delay={0.04} y={18}>
-          <div className={cn(compact ? "max-w-[52rem]" : "max-w-[44rem]")}>
+        <Reveal className={cn("w-full", compact ? "py-4.5 sm:py-5.5 lg:py-5.5" : "py-10 sm:py-14 lg:py-16")} delay={0.04} y={18}>
+          <div className={cn(compact ? "max-w-[37rem]" : "max-w-[44rem]")}>
             <span className="hero-badge text-white/62">
               {resolveLocalizedValue(eyebrow, language)}
             </span>
-            <h1 className={cn("mt-3 text-white", compact ? "max-w-[10ch] font-display text-[2.85rem] leading-[0.92] tracking-[-0.065em] sm:text-[3.5rem] lg:text-[4.25rem]" : "page-title max-w-[13ch]")}>
+            <h1 className={cn("text-white", compact ? "mt-2 max-w-[9.2ch] font-display text-[2.35rem] leading-[0.87] tracking-[-0.068em] sm:text-[2.95rem] lg:text-[3.55rem]" : "mt-3 page-title max-w-[13ch]")}>
               {resolveLocalizedValue(title, language)}
             </h1>
-            <p className={cn("mt-3.5 text-white/76", compact ? "max-w-[48rem] text-sm leading-6 sm:mt-3 sm:text-[0.98rem] sm:leading-6" : "body-copy max-w-2xl sm:mt-4 sm:text-base sm:leading-7")}>
+            <p className={cn("text-white/76", compact ? "mt-2 max-w-[30rem] text-[0.92rem] leading-5.5 sm:text-[0.96rem] sm:leading-6" : "mt-3.5 body-copy max-w-2xl sm:mt-4 sm:text-base sm:leading-7")}>
               {resolveLocalizedValue(description, language)}
             </p>
             {primaryCta || secondaryCta ? (
-              <div className={cn("flex flex-col gap-2.5 sm:flex-row sm:flex-wrap sm:gap-3", compact ? "mt-4 sm:mt-5" : "mt-5 sm:mt-6")}>
+              <div className={cn("flex flex-col gap-2.5 sm:flex-row sm:flex-wrap sm:gap-3", compact ? "mt-3 sm:mt-3.5" : "mt-5 sm:mt-6")}>
                 {primaryCta ? (
                   <ButtonLink href={primaryCta.href} className="w-full sm:w-auto">
                     {resolveLocalizedValue(primaryCta.label, language)}

@@ -32,6 +32,7 @@ export default async function ServicesPage() {
           label: { no: copy.no.servicesPrimaryCta, en: copy.en.servicesPrimaryCta },
           href: "/kontakt",
         }}
+        compact
       />
       <ServicesSection
         services={services}
