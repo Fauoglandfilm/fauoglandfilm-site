@@ -110,6 +110,7 @@ export function HeroSection() {
   const [hasVideoError, setHasVideoError] = useState(false);
   const [isPosterVisible, setIsPosterVisible] = useState(true);
   const [shouldRenderHeroVideo, setShouldRenderHeroVideo] = useState(false);
+  const [isMobileViewport, setIsMobileViewport] = useState(false);
 
   const eyebrow =
     language === "no"
@@ -117,17 +118,38 @@ export function HeroSection() {
       : "Oslo / Commercial Film / Production";
   const secondaryCta = language === "no" ? "Portefølje" : "Portfolio";
   const heroTitle = resolveLocalizedValue(homeHeroContent.title, language);
+  const heroVideoSrc =
+    isMobileViewport && heroVideo.videoType === "direct"
+      ? heroVideo.mobileSrc ?? heroVideo.src
+      : heroVideo.src;
+  const heroPosterSrc =
+    isMobileViewport && heroVideo.videoType === "direct"
+      ? heroVideo.mobilePoster ?? heroVideo.poster ?? ""
+      : heroVideo.poster ?? "";
   const revealVideoFrame = () => {
     setHasVideoError(false);
     setIsPosterVisible(false);
   };
 
   useEffect(() => {
+    const mediaQuery = window.matchMedia("(max-width: 767px)");
+    const syncViewport = () => {
+      setIsMobileViewport(mediaQuery.matches);
+    };
+
+    syncViewport();
+    mediaQuery.addEventListener("change", syncViewport);
+
+    return () => {
+      mediaQuery.removeEventListener("change", syncViewport);
+    };
+  }, []);
+
+  useEffect(() => {
     if (shouldRenderHeroVideo) {
       return;
     }
 
-    const viewport = window.matchMedia("(max-width: 767px)");
     const connection = (navigator as Navigator & {
       connection?: {
         saveData?: boolean;
@@ -135,7 +157,6 @@ export function HeroSection() {
       };
     }).connection;
     const shouldSkipHeroVideo =
-      viewport.matches ||
       shouldReduceMotion ||
       connection?.saveData === true ||
       (typeof connection?.effectiveType === "string" && /^(slow-2g|2g|3g)$/i.test(connection.effectiveType));
@@ -240,7 +261,7 @@ export function HeroSection() {
       document.removeEventListener("visibilitychange", handleVisibility);
       window.removeEventListener("pageshow", handlePageShow);
     };
-  }, [heroVideo.src, shouldRenderHeroVideo]);
+  }, [heroVideoSrc, shouldRenderHeroVideo]);
 
   return (
     <section className="relative isolate overflow-hidden bg-[#05070a] text-white">
@@ -252,11 +273,12 @@ export function HeroSection() {
           )}
         >
           <Image
-            src={heroVideo.poster ?? ""}
+            src={heroPosterSrc}
             alt=""
             fill
             priority
             sizes="100vw"
+            quality={100}
             className="object-cover"
           />
         </div>
@@ -267,15 +289,15 @@ export function HeroSection() {
               "pointer-events-none absolute inset-0 z-0 h-full w-full object-cover brightness-[1.16] saturate-[1.02] contrast-[1.01] transition-opacity duration-300 sm:brightness-[1.16] sm:saturate-[1.03] sm:contrast-[1.02]",
               hasVideoError ? "opacity-0" : "opacity-100",
             )}
-            src={heroVideo.src}
             autoPlay
             muted
             loop
             playsInline
-            preload="metadata"
+            preload="auto"
             disablePictureInPicture
             disableRemotePlayback
             aria-hidden="true"
+            poster={heroPosterSrc}
             onLoadedMetadata={(event) => {
               const node = event.currentTarget;
 
@@ -305,7 +327,12 @@ export function HeroSection() {
               setHasVideoError(true);
               setIsPosterVisible(true);
             }}
-          />
+          >
+            {heroVideo.videoType === "direct" && heroVideo.mobileSrc ? (
+              <source media="(max-width: 767px)" src={heroVideo.mobileSrc} type="video/mp4" />
+            ) : null}
+            <source src={heroVideoSrc} type="video/mp4" />
+          </video>
         ) : null}
         <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(5,7,10,0.13)_0%,rgba(5,7,10,0.055)_24%,rgba(5,7,10,0.115)_56%,rgba(5,7,10,0.315)_100%)]" />
         <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(5,7,10,0.31)_0%,rgba(5,7,10,0.21)_22%,rgba(5,7,10,0.075)_56%,rgba(5,7,10,0.035)_100%)]" />
