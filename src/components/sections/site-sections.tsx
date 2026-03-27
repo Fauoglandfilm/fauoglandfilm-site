@@ -3,6 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import type { ReactNode } from "react";
+import { motion, useReducedMotion } from "framer-motion";
 
 import {
   useSitePreferences,
@@ -45,30 +46,60 @@ export function ServicesSection({
 }) {
   const { language } = useSitePreferences();
   const copy = uiCopy.siteSections[language];
+  const shouldReduceMotion = useReducedMotion();
+  const resolvedTitle = title ? resolveLocalizedValue(title, language) : copy.servicesTitle;
+  const resolvedDescription = description ? resolveLocalizedValue(description, language) : copy.servicesDescription;
 
   return (
-    <SectionShell
-      eyebrow={copy.servicesEyebrow}
-      title={title ? resolveLocalizedValue(title, language) : copy.servicesTitle}
-      description={description ? resolveLocalizedValue(description, language) : copy.servicesDescription}
-      id="tjenester"
-      className="pt-[clamp(2.5rem,5vw,4.5rem)] pb-[clamp(2.75rem,5vw,4.75rem)]"
-    >
-      <Reveal>
-        <article className="glass-panel overflow-hidden rounded-[1.9rem] sm:rounded-[2rem]">
-          <div className="divide-y divide-[color:var(--line)]/80">
-            {services.map((service) => (
-              <div
-                key={service.slug}
-                className="px-3.5 py-3.5 sm:px-6 sm:py-6 lg:px-7 lg:py-7"
-              >
-                <ServiceCard service={service} />
-              </div>
-            ))}
+    <section id="tjenester" className="section-space pt-[clamp(2.5rem,5vw,4.5rem)] pb-[clamp(2.75rem,5vw,4.75rem)]">
+      <div className="relative left-1/2 w-screen -translate-x-1/2 overflow-hidden">
+        <motion.div
+          aria-hidden="true"
+          className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(11,23,42,0.92),transparent_30%),radial-gradient(circle_at_82%_8%,rgba(210,173,116,0.14),transparent_24%),linear-gradient(180deg,#030407_0%,#070b12_42%,#081320_100%)]"
+          initial={shouldReduceMotion ? false : { opacity: 0 }}
+          animate={shouldReduceMotion ? undefined : { opacity: 1 }}
+          transition={{ duration: 0.32, ease: "easeOut" }}
+        />
+        <div className="grain-overlay absolute inset-0 opacity-24" />
+        <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-white/8" />
+
+        <div className="relative mx-auto max-w-[1320px] px-4 py-[clamp(5.25rem,8vw,8rem)] sm:px-6 lg:px-8 xl:px-10">
+          <motion.div
+            className="mx-auto max-w-3xl text-center"
+            initial={shouldReduceMotion ? false : { opacity: 0, y: 26, filter: "blur(14px)" }}
+            whileInView={shouldReduceMotion ? undefined : { opacity: 1, y: 0, filter: "blur(0px)" }}
+            viewport={{ once: true, amount: 0.35 }}
+            transition={{ duration: 0.88, ease: [0.22, 1, 0.36, 1] }}
+          >
+            <p className="text-[0.68rem] font-semibold uppercase tracking-[0.26em] text-[color:var(--accent)]/88">
+              {copy.servicesEyebrow}
+            </p>
+            <h2 className="mt-4 text-balance text-[clamp(2.4rem,6vw,4.7rem)] font-semibold tracking-[-0.06em] text-white">
+              {resolvedTitle}
+            </h2>
+            <p className="mx-auto mt-5 max-w-2xl text-balance text-[1rem] leading-7 text-white/62 sm:text-[1.08rem]">
+              {resolvedDescription}
+            </p>
+          </motion.div>
+
+          <div className="relative mt-10 sm:mt-12 lg:mt-14">
+            <div className="pointer-events-none absolute inset-y-0 left-0 z-[2] hidden w-16 bg-[linear-gradient(90deg,#030407_0%,rgba(3,4,7,0.82)_52%,transparent)] lg:block" />
+            <div className="pointer-events-none absolute inset-y-0 right-0 z-[2] hidden w-16 bg-[linear-gradient(270deg,#081320_0%,rgba(8,19,32,0.82)_52%,transparent)] lg:block" />
+
+            <div
+              className="portfolio-service-track -mx-4 flex snap-x snap-mandatory gap-5 overflow-x-auto overflow-y-visible px-4 pb-5 pr-[18vw] touch-pan-x sm:gap-6 sm:pr-12 lg:mx-0 lg:gap-7 lg:px-0 lg:pr-10"
+              style={{ WebkitOverflowScrolling: "touch" }}
+              aria-label={language === "no" ? "Tjenestekarusell" : "Service carousel"}
+              tabIndex={0}
+            >
+              {services.map((service, index) => (
+                <ServiceCard key={service.slug} service={service} index={index} />
+              ))}
+            </div>
           </div>
-        </article>
-      </Reveal>
-    </SectionShell>
+        </div>
+      </div>
+    </section>
   );
 }
 

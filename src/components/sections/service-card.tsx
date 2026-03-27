@@ -1,5 +1,26 @@
 "use client";
 
+import Link from "next/link";
+import type { PointerEvent as ReactPointerEvent } from "react";
+
+import {
+  motion,
+  useMotionValue,
+  useReducedMotion,
+  useSpring,
+  useTransform,
+  type MotionStyle,
+} from "framer-motion";
+import {
+  ArrowUpRight,
+  BriefcaseBusiness,
+  Clapperboard,
+  Megaphone,
+  Radar,
+  Send,
+  Sparkles,
+} from "lucide-react";
+
 import { PreviewMedia } from "@/components/media/preview-media";
 import { useSitePreferences } from "@/components/providers/site-preferences";
 import { ButtonLink } from "@/components/ui/button-link";
@@ -9,6 +30,7 @@ import { resolveLocalizedValue } from "@/lib/i18n";
 
 type ServiceCardProps = {
   service: ServiceArea;
+  index?: number;
 };
 
 const serviceVideoKeyBySlug = {
@@ -17,139 +39,343 @@ const serviceVideoKeyBySlug = {
   "bedriftsfilm-intervjuer": "02",
   "some-innhold": "03",
   "event-live": "04",
+  "dronefilm-luftfoto": "06",
 } as const;
 
 const serviceMediaConfigBySlug = {
   reklamefilm: {
     mediaFit: "contain",
-    frameClassName: "aspect-square",
   },
   "marketing-distribusjon": {
     mediaFit: "contain",
-    frameClassName: "aspect-square",
   },
   "bedriftsfilm-intervjuer": {
     mediaFit: "contain",
-    frameClassName: "aspect-square",
   },
   "some-innhold": {
     mediaFit: "contain",
-    frameClassName: "aspect-square",
   },
   "event-live": {
     mediaFit: "contain",
-    frameClassName: "aspect-square",
+  },
+  "dronefilm-luftfoto": {
+    mediaFit: "cover",
   },
 } as const;
 
-export function ServiceCard({ service }: ServiceCardProps) {
+const servicePurposeChipBySlug = {
+  reklamefilm: {
+    no: "Flere henvendelser",
+    en: "More leads",
+  },
+  "marketing-distribusjon": {
+    no: "Sett, brukt, målt",
+    en: "Seen, used, measured",
+  },
+  "bedriftsfilm-intervjuer": {
+    no: "Bygg tillit",
+    en: "Build trust",
+  },
+  "some-innhold": {
+    no: "Hold dere synlige",
+    en: "Stay visible",
+  },
+  "event-live": {
+    no: "Forleng effekten",
+    en: "Extend the impact",
+  },
+  "dronefilm-luftfoto": {
+    no: "Oversikt og tyngde",
+    en: "Scale and overview",
+  },
+} as const;
+
+const serviceBudgetChipBySlug = {
+  reklamefilm: {
+    no: "40–180k+",
+    en: "40–180k+",
+  },
+  "marketing-distribusjon": {
+    no: "15–60k",
+    en: "15–60k",
+  },
+  "bedriftsfilm-intervjuer": {
+    no: "35–120k",
+    en: "35–120k",
+  },
+  "some-innhold": {
+    no: "20–80k",
+    en: "20–80k",
+  },
+  "event-live": {
+    no: "30–120k+",
+    en: "30–120k+",
+  },
+  "dronefilm-luftfoto": {
+    no: "10–40k",
+    en: "10–40k",
+  },
+} as const;
+
+const serviceTimelineChipBySlug = {
+  reklamefilm: {
+    no: "2–5 uker",
+    en: "2–5 weeks",
+  },
+  "marketing-distribusjon": {
+    no: "3–10 dager",
+    en: "3–10 days",
+  },
+  "bedriftsfilm-intervjuer": {
+    no: "1–3 uker",
+    en: "1–3 weeks",
+  },
+  "some-innhold": {
+    no: "3–10 dager",
+    en: "3–10 days",
+  },
+  "event-live": {
+    no: "Samme dag–2 uker",
+    en: "Same day–2 weeks",
+  },
+  "dronefilm-luftfoto": {
+    no: "1–7 dager",
+    en: "1–7 days",
+  },
+} as const;
+
+const serviceIconBySlug = {
+  reklamefilm: Megaphone,
+  "marketing-distribusjon": Send,
+  "bedriftsfilm-intervjuer": BriefcaseBusiness,
+  "some-innhold": Sparkles,
+  "event-live": Clapperboard,
+  "dronefilm-luftfoto": Radar,
+} as const;
+
+export function ServiceCard({ service, index = 0 }: ServiceCardProps) {
   const { language } = useSitePreferences();
+  const shouldReduceMotion = useReducedMotion();
   const visual = serviceAreaVisuals[service.slug];
   const videoKey = serviceVideoKeyBySlug[service.slug as keyof typeof serviceVideoKeyBySlug];
   const video = videoKey ? homeServiceVideoLibrary[videoKey] : undefined;
+  const usesDronePreview = service.slug === "dronefilm-luftfoto";
   const mediaConfig = serviceMediaConfigBySlug[service.slug as keyof typeof serviceMediaConfigBySlug] ?? {
-    mediaFit: "contain" as const,
-    frameClassName: "aspect-square",
+    mediaFit: "cover" as const,
   };
-  const metaItems = [
-    {
-      label: language === "no" ? "Budsjett" : "Budget",
-      value: resolveLocalizedValue(service.budget, language),
-    },
-    {
-      label: language === "no" ? "Tidslinje" : "Timeline",
-      value: resolveLocalizedValue(service.timeline, language),
-    },
-  ];
-  const deliverables = service.deliverables.map((item) => resolveLocalizedValue(item, language));
-  const exampleLabel = service.exampleLabel ? resolveLocalizedValue(service.exampleLabel, language) : null;
-  const mediaAlt = visual ? resolveLocalizedValue(visual.alt, language) : resolveLocalizedValue(service.title, language);
+  const title = resolveLocalizedValue(service.title, language);
+  const eyebrow = resolveLocalizedValue(service.eyebrow, language);
+  const subline = resolveLocalizedValue(service.value, language);
+  const deliverables = service.deliverables.slice(0, 3).map((item) => resolveLocalizedValue(item, language));
+  const primaryLabel = resolveLocalizedValue(service.ctaLabel, language);
+  const secondaryHref = service.exampleHref ?? "/case";
+  const secondaryLabel = service.exampleLabel
+    ? resolveLocalizedValue(service.exampleLabel, language)
+    : language === "no"
+      ? "Se eksempel"
+      : "See example";
+  const mediaAlt = visual ? resolveLocalizedValue(visual.alt, language) : title;
+  const purposeChip = resolveLocalizedValue(
+    servicePurposeChipBySlug[service.slug as keyof typeof servicePurposeChipBySlug],
+    language,
+  );
+  const budgetChip = resolveLocalizedValue(
+    serviceBudgetChipBySlug[service.slug as keyof typeof serviceBudgetChipBySlug],
+    language,
+  );
+  const timelineChip = resolveLocalizedValue(
+    serviceTimelineChipBySlug[service.slug as keyof typeof serviceTimelineChipBySlug],
+    language,
+  );
+  const Icon = serviceIconBySlug[service.slug as keyof typeof serviceIconBySlug] ?? Sparkles;
+
+  const pointerX = useMotionValue(0);
+  const pointerY = useMotionValue(0);
+  const rotateX = useSpring(useTransform(pointerY, [-0.5, 0.5], [4.5, -4.5]), {
+    stiffness: 180,
+    damping: 20,
+    mass: 0.75,
+  });
+  const rotateY = useSpring(useTransform(pointerX, [-0.5, 0.5], [-4.5, 4.5]), {
+    stiffness: 180,
+    damping: 20,
+    mass: 0.75,
+  });
+  const mediaX = useSpring(useTransform(pointerX, [-0.5, 0.5], [-9, 9]), {
+    stiffness: 160,
+    damping: 22,
+  });
+  const mediaY = useSpring(useTransform(pointerY, [-0.5, 0.5], [-7, 7]), {
+    stiffness: 160,
+    damping: 22,
+  });
+
+  const handlePointerMove = (event: ReactPointerEvent<HTMLElement>) => {
+    if (shouldReduceMotion) {
+      return;
+    }
+
+    const rect = event.currentTarget.getBoundingClientRect();
+    pointerX.set((event.clientX - rect.left) / rect.width - 0.5);
+    pointerY.set((event.clientY - rect.top) / rect.height - 0.5);
+  };
+
+  const handlePointerLeave = () => {
+    pointerX.set(0);
+    pointerY.set(0);
+  };
+
+  const cardStyle: MotionStyle | undefined = shouldReduceMotion
+    ? undefined
+    : {
+        rotateX,
+        rotateY,
+        transformPerspective: 1400,
+        transformStyle: "preserve-3d",
+      };
 
   return (
-    <article className="group grid gap-3.5 lg:grid-cols-[minmax(0,0.43fr)_minmax(0,0.57fr)] lg:items-start lg:gap-6">
-      <div className="media-frame relative overflow-hidden rounded-[1.45rem] border border-white/10 bg-[linear-gradient(180deg,rgba(255,255,255,0.08),rgba(255,255,255,0.03))] p-2 shadow-[inset_0_1px_0_rgba(255,255,255,0.05)] sm:p-3">
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(255,255,255,0.1),transparent_40%)] opacity-70" />
-        <div className="relative rounded-[1.15rem] border border-white/8 bg-[#0b0d12]/90 p-2 shadow-[0_18px_42px_rgba(0,0,0,0.22)] sm:p-3">
-          <div className={`relative ${mediaConfig.frameClassName} overflow-hidden rounded-[0.95rem] bg-[#05070b]`}>
-            <PreviewMedia
-              title={service.title}
-              video={video}
-              image={video?.poster ?? visual?.src}
-              imageAlt={mediaAlt}
-              mediaFit={mediaConfig.mediaFit}
-              previewBehavior={video ? "viewport" : "static"}
-              className="absolute inset-0"
-              sizes="(min-width: 1280px) 28vw, (min-width: 1024px) 36vw, 100vw"
-              rootMargin="180px 0px -8% 0px"
-              inViewThreshold={0.16}
-              posterClassName="transition duration-700 group-hover:scale-[1.01]"
-              previewClassName="transition duration-700"
-            />
-            <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(255,255,255,0.08),transparent_36%),linear-gradient(180deg,rgba(9,9,9,0.02),rgba(9,9,9,0.16)_36%,rgba(9,9,9,0.5)_100%)]" />
-            <div className="grain-overlay absolute inset-0 opacity-36" />
-          </div>
-        </div>
-      </div>
+    <motion.article
+      className="group relative snap-start"
+      initial={shouldReduceMotion ? false : { opacity: 0, y: 40, filter: "blur(18px)" }}
+      whileInView={shouldReduceMotion ? undefined : { opacity: 1, y: 0, filter: "blur(0px)" }}
+      whileHover={shouldReduceMotion ? undefined : { y: -8 }}
+      viewport={{ once: true, amount: 0.2 }}
+      transition={{
+        duration: 0.9,
+        delay: shouldReduceMotion ? 0 : index * 0.05,
+        ease: [0.22, 1, 0.36, 1],
+      }}
+      onPointerMove={handlePointerMove}
+      onPointerLeave={handlePointerLeave}
+      style={cardStyle}
+    >
+      <motion.div
+        className="relative flex h-full w-[85vw] min-w-[21.5rem] max-w-[26.25rem] flex-col overflow-hidden rounded-[1.35rem] border border-white/12 bg-[linear-gradient(180deg,rgba(255,255,255,0.12),rgba(255,255,255,0.035)_48%,rgba(255,255,255,0.05)_100%)] shadow-[inset_0_1px_0_rgba(255,255,255,0.12),0_30px_76px_rgba(2,6,12,0.38)] backdrop-blur-[30px] will-change-transform sm:w-[26.25rem] sm:min-w-[26.25rem] sm:max-w-[26.25rem] xl:w-[32.5rem] xl:min-w-[32.5rem] xl:max-w-[32.5rem]"
+        whileHover={
+          shouldReduceMotion
+            ? undefined
+            : {
+                boxShadow:
+                  "inset 0 1px 0 rgba(255,255,255,0.18), 0 38px 90px rgba(2,6,12,0.46), 0 0 0 1px rgba(255,255,255,0.08)",
+              }
+        }
+        transition={{ duration: 0.24, ease: [0.22, 1, 0.36, 1] }}
+      >
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(255,255,255,0.18),transparent_28%),linear-gradient(160deg,rgba(255,255,255,0.05),transparent_42%,rgba(255,255,255,0.03)_100%)]" />
+        <div className="grain-overlay absolute inset-0 opacity-20" />
+        <motion.div
+          aria-hidden="true"
+          className="pointer-events-none absolute -bottom-8 left-1/2 h-20 w-[74%] -translate-x-1/2 rounded-full bg-[color:var(--accent)]/18 blur-3xl"
+          animate={shouldReduceMotion ? undefined : { opacity: [0.16, 0.24, 0.16], scale: [0.98, 1.04, 0.98] }}
+          transition={shouldReduceMotion ? undefined : { duration: 8, repeat: Infinity, ease: "easeInOut" }}
+        />
+        <motion.div
+          aria-hidden="true"
+          className="pointer-events-none absolute inset-y-[-15%] left-[-45%] w-[48%] rotate-[14deg] bg-[linear-gradient(90deg,transparent,rgba(255,255,255,0.16),transparent)] opacity-[0.16] blur-xl"
+          animate={shouldReduceMotion ? undefined : { x: ["-10%", "320%"] }}
+          transition={
+            shouldReduceMotion
+              ? undefined
+              : {
+                  duration: 4.2,
+                  ease: [0.4, 0, 0.2, 1],
+                  repeat: Infinity,
+                  repeatDelay: 14,
+                }
+          }
+        />
 
-      <div className="flex min-w-0 flex-col justify-between gap-4">
-        <div className="space-y-4">
-          <div className="space-y-2">
-            <p className="text-[0.64rem] font-semibold uppercase tracking-[0.2em] text-[var(--muted)]">
-              {resolveLocalizedValue(service.eyebrow, language)}
-            </p>
-            <h3 className="card-title text-[color:var(--foreground)]">
-              {resolveLocalizedValue(service.title, language)}
-            </h3>
-            <p className="rounded-[1rem] border border-[color:var(--line)]/70 bg-white/[0.04] px-3.5 py-3 text-[0.96rem] font-semibold leading-6 text-[color:var(--foreground)]/84 sm:text-[1rem]">
-              {resolveLocalizedValue(service.value, language)}
-            </p>
-            <p className="max-w-[58ch] text-sm leading-6 text-[var(--muted-2)] sm:text-[0.96rem] sm:leading-7">
-              {resolveLocalizedValue(service.summary, language)}
-            </p>
+        <div className="relative flex h-full flex-col p-4 sm:p-5">
+          <div className="relative overflow-hidden rounded-[1.15rem] border border-white/10 bg-[radial-gradient(circle_at_top,rgba(255,255,255,0.08),transparent_35%),linear-gradient(180deg,rgba(5,8,14,0.68),rgba(7,11,18,0.94))]">
+            <div className="pointer-events-none absolute left-4 top-4 z-[3] inline-flex items-center gap-2 rounded-full border border-white/12 bg-black/18 px-3 py-1.5 backdrop-blur-2xl">
+              <Icon className="h-3.5 w-3.5 text-[color:var(--accent)]" />
+              <span className="text-[0.64rem] font-semibold uppercase tracking-[0.18em] text-white/66">
+                {eyebrow}
+              </span>
+            </div>
+            <motion.div
+              className="relative aspect-[4/3] w-full"
+              style={
+                shouldReduceMotion
+                  ? undefined
+                  : {
+                      x: mediaX,
+                      y: mediaY,
+                    }
+              }
+            >
+              <PreviewMedia
+                title={service.title}
+                video={video}
+                image={video?.poster ?? visual?.src}
+                imageAlt={mediaAlt}
+                mediaFit={mediaConfig.mediaFit}
+                previewBehavior={usesDronePreview ? "always" : video ? "hover-or-viewport" : "static"}
+                className="absolute inset-0"
+                sizes="(min-width: 1536px) 32.5rem, (min-width: 640px) 26.25rem, 85vw"
+                rootMargin="180px 0px -12% 0px"
+                inViewThreshold={0.22}
+                priority={usesDronePreview}
+                posterClassName="transition duration-500 ease-out group-hover:scale-[1.03]"
+                previewClassName="transition duration-500 ease-out"
+              />
+            </motion.div>
+            <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(4,6,10,0.02),rgba(4,6,10,0.18)_38%,rgba(4,6,10,0.62)_100%)]" />
           </div>
 
-          <div className="grid gap-2.5 border-t border-[color:var(--line)]/80 pt-4 sm:grid-cols-2">
-            {metaItems.map((item) => (
-              <div
-                key={item.label}
-                className="rounded-[1rem] border border-[color:var(--line)]/70 bg-white/[0.035] px-3.5 py-3"
-              >
-                <p className="text-[0.62rem] font-semibold uppercase tracking-[0.18em] text-[var(--muted)]">
-                  {item.label}
-                </p>
-                <p className="mt-1.5 text-sm leading-6 text-[color:var(--foreground)]/78">{item.value}</p>
+          <div className="relative mt-4 flex flex-1 flex-col">
+            <div className="space-y-3">
+              <div className="flex items-start justify-between gap-3">
+                <h3 className="max-w-[10ch] text-[1.55rem] font-semibold tracking-[-0.05em] text-white sm:text-[1.72rem]">
+                  {title}
+                </h3>
+                <ArrowUpRight className="mt-1 h-4 w-4 shrink-0 text-white/34 transition duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-[color:var(--accent)]" />
               </div>
-            ))}
-          </div>
+              <p className="max-w-[28ch] text-[0.95rem] leading-6 text-white/78">
+                {subline}
+              </p>
+            </div>
 
-          <div className="border-t border-[color:var(--line)]/80 pt-4">
-            <p className="text-[0.62rem] font-semibold uppercase tracking-[0.18em] text-[var(--muted)]">
-              {language === "no" ? "Typiske leveranser" : "Typical deliverables"}
-            </p>
-            <div className="mt-2.5 flex flex-wrap gap-2">
-              {deliverables.map((item) => (
+            <div className="mt-4 flex flex-wrap gap-2">
+              {[purposeChip, budgetChip, timelineChip].map((chip) => (
                 <span
-                  key={`${service.slug}-${item}`}
-                  className="rounded-full border border-[color:var(--line)]/80 bg-white/[0.04] px-3 py-1.5 text-[0.72rem] font-medium text-[color:var(--foreground)]/76"
+                  key={`${service.slug}-${chip}`}
+                  className="rounded-full border border-white/10 bg-white/[0.05] px-3 py-1.5 text-[0.68rem] font-medium tracking-[0.01em] text-white/74 backdrop-blur-xl"
                 >
-                  {item}
+                  {chip}
                 </span>
               ))}
             </div>
+
+            <ul className="mt-5 space-y-2.5 text-sm leading-6 text-white/70">
+              {deliverables.map((item) => (
+                <li key={`${service.slug}-${item}`} className="flex items-start gap-2.5">
+                  <span className="mt-2 h-1.5 w-1.5 rounded-full bg-[color:var(--accent)]/86" />
+                  <span>{item}</span>
+                </li>
+              ))}
+            </ul>
+
+            <div className="mt-auto flex flex-col gap-2.5 pt-6">
+              <ButtonLink
+                href={service.href}
+                size="compact"
+                className="w-full border-[color:var(--accent)]/24 bg-[linear-gradient(135deg,color-mix(in_srgb,var(--accent)_28%,rgba(255,255,255,0.12)),rgba(255,255,255,0.05)_58%,rgba(255,255,255,0.03)_100%)] text-white shadow-[0_12px_30px_color-mix(in_srgb,var(--accent)_18%,transparent)] transition duration-200 hover:border-[color:var(--accent)]/42 hover:shadow-[0_16px_38px_color-mix(in_srgb,var(--accent)_22%,transparent)]"
+              >
+                {primaryLabel}
+              </ButtonLink>
+              <Link
+                href={secondaryHref}
+                className="inline-flex min-h-11 items-center justify-between rounded-[0.95rem] border border-white/10 bg-white/[0.03] px-4 py-2.5 text-sm font-medium text-white/72 transition duration-200 hover:border-white/16 hover:bg-white/[0.05] hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--accent)]/62 focus-visible:ring-offset-2 focus-visible:ring-offset-[#070b12]"
+              >
+                <span>{secondaryLabel}</span>
+                <ArrowUpRight className="h-4 w-4" />
+              </Link>
+            </div>
           </div>
         </div>
-
-        <div className="flex flex-col gap-2.5 pt-0.5 sm:flex-row sm:flex-wrap">
-          <ButtonLink href={service.href} size="compact" fullWidth className="sm:w-auto">
-            {resolveLocalizedValue(service.ctaLabel, language)}
-          </ButtonLink>
-          {service.exampleHref && exampleLabel ? (
-            <ButtonLink href={service.exampleHref} variant="secondary" size="compact" fullWidth className="sm:w-auto">
-              {exampleLabel}
-            </ButtonLink>
-          ) : null}
-        </div>
-      </div>
-    </article>
+      </motion.div>
+    </motion.article>
   );
 }
