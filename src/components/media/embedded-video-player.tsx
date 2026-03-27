@@ -22,6 +22,7 @@ type EmbeddedVideoPlayerProps = {
   image?: string;
   imageAlt?: string | LocalizedText;
   mediaFit?: "cover" | "contain";
+  mediaObjectClassName?: string;
   autoplay?: boolean;
   className?: string;
   sizes?: string;
@@ -418,6 +419,7 @@ export function EmbeddedVideoPlayer({
   image,
   imageAlt,
   mediaFit = "cover",
+  mediaObjectClassName,
   autoplay = false,
   className,
   sizes = "(min-width: 1024px) 72vw, 100vw",
@@ -433,7 +435,7 @@ export function EmbeddedVideoPlayer({
     : resolvedTitle;
   const fallbackSrc = image ?? video?.poster ?? externalVideo?.thumbnailSrc;
   const fallbackSrcs = buildFallbackSources(video, externalVideo, image);
-  const mediaObjectClass = mediaFit === "contain" ? "object-contain p-6" : "object-cover";
+  const mediaObjectClass = cn(mediaFit === "contain" ? "object-contain p-6" : "object-cover", mediaObjectClassName);
   const resolvedShowControls = showControls ?? false;
   const mediaKey = [
     video?.videoType,

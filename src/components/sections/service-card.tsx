@@ -27,6 +27,7 @@ import { ButtonLink } from "@/components/ui/button-link";
 import { homeServiceVideoLibrary, type ServiceArea } from "@/data/site-content";
 import { serviceAreaVisuals } from "@/data/visual-assets";
 import { resolveLocalizedValue } from "@/lib/i18n";
+import { cn } from "@/lib/utils";
 
 type ServiceCardProps = {
   service: ServiceArea;
@@ -44,22 +45,28 @@ const serviceVideoKeyBySlug = {
 
 const serviceMediaConfigBySlug = {
   reklamefilm: {
-    mediaFit: "contain",
+    mediaFit: "cover",
+    mediaObjectClassName: "object-[52%_50%]",
   },
   "marketing-distribusjon": {
-    mediaFit: "contain",
+    mediaFit: "cover",
+    mediaObjectClassName: "object-center",
   },
   "bedriftsfilm-intervjuer": {
-    mediaFit: "contain",
+    mediaFit: "cover",
+    mediaObjectClassName: "object-[50%_42%]",
   },
   "some-innhold": {
-    mediaFit: "contain",
+    mediaFit: "cover",
+    mediaObjectClassName: "object-[50%_28%]",
   },
   "event-live": {
-    mediaFit: "contain",
+    mediaFit: "cover",
+    mediaObjectClassName: "object-[50%_38%]",
   },
   "dronefilm-luftfoto": {
     mediaFit: "cover",
+    mediaObjectClassName: "object-center",
   },
 } as const;
 
@@ -163,6 +170,7 @@ export function ServiceCard({ service, index = 0 }: ServiceCardProps) {
   const usesDronePreview = service.slug === "dronefilm-luftfoto";
   const mediaConfig = serviceMediaConfigBySlug[service.slug as keyof typeof serviceMediaConfigBySlug] ?? {
     mediaFit: "cover" as const,
+    mediaObjectClassName: "object-center",
   };
   const title = resolveLocalizedValue(service.title, language);
   const eyebrow = resolveLocalizedValue(service.eyebrow, language);
@@ -348,13 +356,14 @@ export function ServiceCard({ service, index = 0 }: ServiceCardProps) {
                 image={video?.poster ?? visual?.src}
                 imageAlt={mediaAlt}
                 mediaFit={mediaConfig.mediaFit}
+                mediaObjectClassName={mediaConfig.mediaObjectClassName}
                 previewBehavior={usesDronePreview ? "always" : video ? "hover-or-viewport" : "static"}
                 className="absolute inset-0"
                 sizes="(min-width: 1536px) 18.6rem, (min-width: 640px) 17.25rem, 68vw"
                 rootMargin="180px 0px -12% 0px"
                 inViewThreshold={0.22}
                 priority={usesDronePreview}
-                posterClassName="transition duration-500 ease-out group-hover:scale-[1.02]"
+                posterClassName={cn(mediaConfig.mediaObjectClassName, "transition duration-500 ease-out group-hover:scale-[1.02]")}
                 previewClassName="transition duration-500 ease-out"
               />
             </motion.div>

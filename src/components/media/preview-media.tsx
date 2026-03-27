@@ -25,6 +25,7 @@ type PreviewMediaProps = {
   image?: string;
   imageAlt?: string | LocalizedText;
   mediaFit?: "cover" | "contain";
+  mediaObjectClassName?: string;
   previewBehavior?: PreviewBehavior;
   className?: string;
   sizes?: string;
@@ -133,6 +134,7 @@ export function PreviewMedia({
   image,
   imageAlt,
   mediaFit = "cover",
+  mediaObjectClassName,
   previewBehavior = "static",
   className,
   sizes = "(min-width: 1024px) 72vw, 100vw",
@@ -165,8 +167,10 @@ export function PreviewMedia({
     shouldPlay &&
     hasPlayableMedia &&
     (previewBehavior === "always" || (usesViewportActivation && isViewportReady) || (usesHoverActivation && isHovered));
-  const mediaObjectClass =
-    mediaFit === "contain" ? "object-contain p-1.5 sm:p-2" : "object-cover";
+  const mediaObjectClass = cn(
+    mediaFit === "contain" ? "object-contain p-1.5 sm:p-2" : "object-cover",
+    mediaObjectClassName,
+  );
 
   useEffect(() => {
     if (!usesViewportActivation || isViewportReady) {
@@ -264,6 +268,7 @@ export function PreviewMedia({
           image={image}
           imageAlt={imageAlt}
           mediaFit={mediaFit}
+          mediaObjectClassName={mediaObjectClassName}
           autoplay
           previewMode
           className={cn("absolute inset-0 h-full w-full", previewClassName)}
