@@ -12,9 +12,9 @@ import { getServiceAreas } from "@/lib/content";
 import { buildMetadata } from "@/lib/seo";
 
 export const metadata = buildMetadata({
-  title: "Tjenester | Reklamefilm, bedriftsfilm og innhold i Oslo",
+  title: "Tjenester | Reklamefilm, marketing og innhold i Oslo",
   description:
-    "Se Fau&Land Films tjenester innen reklamefilm, bedriftsfilm, innhold for sosiale medier og eventproduksjon for bedrifter og organisasjoner.",
+    "Se Fau&Land Films tjenester innen reklamefilm, marketing, bedriftsfilm, innhold for sosiale medier og eventproduksjon for bedrifter og organisasjoner.",
   path: "/tjenester",
 });
 

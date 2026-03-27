@@ -430,7 +430,16 @@ export async function getServiceAreas() {
 
   const mapped = cmsServices?.map(mapServiceArea).filter((item): item is ServiceArea => Boolean(item));
 
-  return mapped?.length ? mapped : serviceAreas;
+  if (!mapped?.length) {
+    return serviceAreas;
+  }
+
+  const cmsBySlug = new Map(mapped.map((item) => [item.slug, item]));
+  const merged = serviceAreas.map((item) => cmsBySlug.get(item.slug) ?? item);
+  const fallbackSlugs = new Set(serviceAreas.map((item) => item.slug));
+  const extraCmsItems = mapped.filter((item) => !fallbackSlugs.has(item.slug));
+
+  return [...merged, ...extraCmsItems];
 }
 
 export async function getTeamMembers() {

@@ -395,6 +395,7 @@ export const servicePillarVisuals: Record<string, VisualAsset> = {
 
 export const serviceAreaVisuals: Record<string, VisualAsset> = {
   reklamefilm: siteVisuals.treningshusetWide,
+  "marketing-distribusjon": siteVisuals.socialCutdown,
   "bedriftsfilm-intervjuer": siteVisuals.companyStory,
   "some-innhold": siteVisuals.treningshusetMobile,
   "event-live": siteVisuals.eventCoverage,

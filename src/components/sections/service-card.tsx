@@ -13,6 +13,7 @@ type ServiceCardProps = {
 
 const serviceVideoKeyBySlug = {
   reklamefilm: "01",
+  "marketing-distribusjon": "05",
   "bedriftsfilm-intervjuer": "02",
   "some-innhold": "03",
   "event-live": "04",
@@ -20,6 +21,10 @@ const serviceVideoKeyBySlug = {
 
 const serviceMediaConfigBySlug = {
   reklamefilm: {
+    mediaFit: "contain",
+    frameClassName: "aspect-square",
+  },
+  "marketing-distribusjon": {
     mediaFit: "contain",
     frameClassName: "aspect-square",
   },

@@ -242,7 +242,7 @@ export const uiCopy = {
       servicesHeroEyebrow: "Tjenester",
       servicesHeroTitle: "Film som gjør tilbudet tydeligere og salget enklere",
       servicesHeroDescription:
-        "Reklamefilm, bedriftsfilm, SoMe-innhold og aftermovies med tydelig verdi, prisnivå og neste steg.",
+        "Reklamefilm, marketing, bedriftsfilm, SoMe-innhold og aftermovies med tydelig verdi, prisnivå og neste steg.",
       servicesPrimaryCta: "Få et estimat",
       servicesSectionTitle: "Velg tjenesten som matcher målet dere faktisk har",
       servicesSectionDescription:
@@ -328,7 +328,7 @@ export const uiCopy = {
       servicesHeroEyebrow: "Services",
       servicesHeroTitle: "Film that clarifies the offer and makes sales easier",
       servicesHeroDescription:
-        "Commercial film, company film, social content and aftermovies with clear value, budget range and next step.",
+        "Commercial film, marketing, company film, social content and aftermovies with clear value, budget range and next step.",
       servicesPrimaryCta: "Get an estimate",
       servicesSectionTitle: "Choose the service that matches the outcome you need",
       servicesSectionDescription:

@@ -368,6 +368,15 @@ export const homeServiceVideoLibrary = {
       en: "Aftermovie",
     },
   },
+  "05": {
+    videoType: "direct",
+    src: "/assets/services/videos/marketing.mp4",
+    poster: "/assets/services/posters/marketing-poster.png",
+    label: {
+      no: "Marketing og distribusjon",
+      en: "Marketing and distribution",
+    },
+  },
 } satisfies Record<string, VideoAsset>;
 
 const youtubeWatchUrl = (videoId: string) => `https://www.youtube.com/watch?v=${videoId}`;
@@ -582,6 +591,36 @@ export const serviceAreas: ServiceArea[] = [
     href: "/kontakt",
     exampleHref: "/case/treningshuset",
     exampleLabel: { no: "Se resultat", en: "See results" },
+  },
+  {
+    slug: "marketing-distribusjon",
+    title: { no: "Marketing og distribusjon", en: "Marketing and distribution" },
+    summary: {
+      no: "Plan, annonseuttak og publisering som kobler film med annonser, sosiale medier og distribusjon.",
+      en: "Planning, ad cutdowns and publishing that connect film with paid media, social channels and distribution.",
+    },
+    eyebrow: { no: "Annonser og distribusjon", en: "Ads and distribution" },
+    value: {
+      no: "Sørg for at filmen faktisk blir sett, brukt og målt.",
+      en: "Make sure the film is actually seen, used and measured.",
+    },
+    budget: {
+      no: "Typisk 10 000-45 000 kr",
+      en: "Typically NOK 10,000-45,000",
+    },
+    timeline: {
+      no: "Vanligvis 3-10 dager",
+      en: "Usually 3-10 days",
+    },
+    deliverables: [
+      { no: "Distribusjonsplan", en: "Distribution plan" },
+      { no: "Annonseuttak og kanaltilpasninger", en: "Ad cutdowns and channel adaptations" },
+      { no: "Publiseringsløp for SoMe", en: "Social publishing rollout" },
+    ],
+    ctaLabel: { no: "Få anbefalt oppsett", en: "Get a recommended setup" },
+    href: "/kontakt",
+    exampleHref: "/case/nei-til-atomvapen",
+    exampleLabel: { no: "Se kampanjeeksempel", en: "See campaign example" },
   },
   {
     slug: "bedriftsfilm-intervjuer",
