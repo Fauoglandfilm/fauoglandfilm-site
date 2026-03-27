@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { ChevronDown, ChevronUp, Info } from "lucide-react";
+import { ArrowUpRight, ChevronDown, ChevronUp, Info } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 
 import { PreviewMedia } from "@/components/media/preview-media";
@@ -340,19 +340,21 @@ export function PortfolioPageContent({
                   project={visibleFeaturedProjects[0]}
                   group={getPortfolioGroup(visibleFeaturedProjects[0].group)}
                   layout="wide"
+                  index={0}
                   onOpen={setActiveProject}
                 />
               </Reveal>
             ) : null}
 
             {visibleFeaturedProjects.length > 1 ? (
-              <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
+              <div className="grid gap-5 sm:gap-6">
                 {visibleFeaturedProjects.slice(1).map((project, index) => (
                   <Reveal key={project.slug} delay={0.05 * (index + 1)}>
                     <PortfolioProjectCard
                       project={project}
                       group={getPortfolioGroup(project.group)}
                       layout="default"
+                      index={index + 1}
                       onOpen={setActiveProject}
                     />
                   </Reveal>
@@ -415,13 +417,14 @@ export function PortfolioPageContent({
             </div>
           </Reveal>
 
-          <div className="mt-6 grid gap-4 md:grid-cols-2 xl:grid-cols-3">
+          <div className="mt-6 grid gap-5 sm:mt-8 sm:gap-6">
             {filteredProjects.map((project, index) => (
               <Reveal key={project.slug} delay={0.03 * index}>
                 <PortfolioProjectCard
                   project={project}
                   group={getPortfolioGroup(project.group)}
                   layout={index % 6 === 0 ? "wide" : "default"}
+                  index={index}
                   onOpen={setActiveProject}
                 />
               </Reveal>
@@ -458,11 +461,13 @@ function PortfolioProjectCard({
   project,
   group,
   layout,
+  index,
   onOpen,
 }: {
   project: PortfolioProject;
   group?: PortfolioGroup;
   layout: "default" | "wide";
+  index: number;
   onOpen: (project: PortfolioProject) => void;
 }) {
   const { language } = useSitePreferences();
@@ -471,161 +476,142 @@ function PortfolioProjectCard({
   const title = resolveLocalizedValue(project.title, language);
   const summary = getPortfolioShortDescription(project, language);
   const infoPoints = getPortfolioProjectInfoPoints(project, group, language);
-  const [prefersTapReveal, setPrefersTapReveal] = useState(false);
-  const [isTapInfoVisible, setIsTapInfoVisible] = useState(false);
-  const overlayInstruction = prefersTapReveal
-    ? language === "no"
-      ? "Trykk igjen for å åpne"
-      : "Tap again to open"
-    : language === "no"
-      ? "Hold over for info"
-      : "Hover for info";
-
-  useEffect(() => {
-    const mediaQuery = window.matchMedia("(hover: none), (pointer: coarse)");
-    const syncPreference = () => setPrefersTapReveal(mediaQuery.matches);
-
-    syncPreference();
-
-    if (typeof mediaQuery.addEventListener === "function") {
-      mediaQuery.addEventListener("change", syncPreference);
-      return () => mediaQuery.removeEventListener("change", syncPreference);
-    }
-
-    mediaQuery.addListener(syncPreference);
-    return () => mediaQuery.removeListener(syncPreference);
-  }, []);
-
-
-  const handleCardOpen = () => {
-    if (!canOpen) {
-      return;
-    }
-
-    if (prefersTapReveal && !isTapInfoVisible) {
-      setIsTapInfoVisible(true);
-      return;
-    }
-
-    setIsTapInfoVisible(false);
-    onOpen(project);
-  };
+  const formatLabel = resolveLocalizedValue(project.format, language);
+  const groupTitle = group ? resolveLocalizedValue(group.title, language) : null;
+  const detailLabel = language === "no" ? "Åpne prosjekt" : "Open project";
+  const detailHint =
+    language === "no" ? "Se video, beskrivelser og leveranser" : "View video, description and deliverables";
+  const reverseOnDesktop = index % 2 === 1;
 
   return (
     <article
-      className={cn(
-        "card-surface group overflow-hidden rounded-[1.95rem] shadow-[0_28px_90px_rgba(0,0,0,0.18)]",
-        isWide && "md:col-span-2",
-      )}
-      onMouseLeave={prefersTapReveal ? undefined : () => setIsTapInfoVisible(false)}
+      className="group relative overflow-hidden rounded-[2rem] border border-[color:var(--line)]/75 bg-[linear-gradient(180deg,rgba(255,255,255,0.1),rgba(255,255,255,0.04))] shadow-[0_14px_42px_rgba(18,14,10,0.07)] backdrop-blur-[18px]"
     >
+      {canOpen ? (
+        <button
+          type="button"
+          onClick={() => onOpen(project)}
+          className="card-trigger absolute inset-0 z-[5]"
+          aria-label={title}
+        />
+      ) : null}
+
       <div
         className={cn(
-          "media-frame relative overflow-hidden",
-          isWide
-            ? "min-h-[20rem] sm:min-h-[23rem] xl:min-h-[27rem]"
-            : project.mediaFit === "contain"
-              ? "aspect-[1.08/1.02] sm:aspect-[1.1/0.96]"
-              : "aspect-[1.08/0.94] sm:aspect-[1.14/0.98]",
+          "grid min-h-[20rem] lg:grid-cols-[minmax(0,1.08fr)_minmax(19rem,0.92fr)]",
+          isWide && "lg:grid-cols-[minmax(0,1.18fr)_minmax(21rem,0.82fr)]",
         )}
       >
-        {canOpen ? (
-          <button
-            type="button"
-            onClick={handleCardOpen}
-            className="card-trigger absolute inset-0 z-[5]"
-            aria-label={title}
+        <div
+          className={cn(
+            "relative min-h-[18.5rem] overflow-hidden bg-[#0a0d12] sm:min-h-[22rem]",
+            isWide && "lg:min-h-[27rem]",
+            reverseOnDesktop && "lg:order-2",
+          )}
+        >
+          <PortfolioMedia
+            project={project}
+            playMode="viewport"
+            inViewThreshold={isWide ? 0.22 : 0.28}
+            rootMargin={isWide ? "240px 0px -8% 0px" : "220px 0px -10% 0px"}
+            sizes={
+              isWide
+                ? "(min-width: 1280px) 58vw, (min-width: 1024px) 54vw, 100vw"
+                : "(min-width: 1280px) 56vw, (min-width: 1024px) 50vw, 100vw"
+            }
           />
-        ) : null}
 
-        <PortfolioMedia
-          project={project}
-          playMode="viewport"
-          inViewThreshold={isWide ? 0.26 : 0.38}
-          rootMargin={isWide ? "220px 0px -10% 0px" : "160px 0px -14% 0px"}
-          sizes={
-            isWide
-              ? "(min-width: 1280px) 64vw, (min-width: 768px) 72vw, 100vw"
-              : "(min-width: 1280px) 31vw, (min-width: 768px) 46vw, 100vw"
-          }
-        />
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(255,255,255,0.08),transparent_34%),linear-gradient(180deg,rgba(8,8,8,0.02),rgba(8,8,8,0.12)_44%,rgba(8,8,8,0.38)_100%)]" />
 
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(255,255,255,0.06),transparent_32%),linear-gradient(180deg,rgba(8,8,8,0.01),rgba(8,8,8,0.08)_46%,rgba(8,8,8,0.52)_100%)]" />
+          {groupTitle ? (
+            <span className="absolute left-5 top-5 z-[2] rounded-full border border-white/12 bg-black/16 px-3 py-1.5 text-[0.62rem] font-semibold uppercase tracking-[0.2em] text-white/76 sm:left-6 sm:top-6">
+              {groupTitle}
+            </span>
+          ) : null}
 
-        {group ? (
-          <span
-            className={cn(
-              "absolute left-4 top-4 z-[2] rounded-full border border-white/12 bg-black/24 px-3 py-1.5 text-[0.62rem] font-semibold uppercase tracking-[0.2em] text-white/78 transition-opacity duration-300",
-              prefersTapReveal
-                ? isTapInfoVisible
-                  ? "opacity-0"
-                  : "opacity-100"
-                : "opacity-100 group-hover:opacity-0 group-focus-within:opacity-0",
-            )}
-          >
-            {resolveLocalizedValue(group.title, language)}
-          </span>
-        ) : null}
+          <div className="absolute inset-x-0 bottom-0 z-[2] flex items-end justify-between gap-4 p-5 text-white sm:p-6">
+            <div className="min-w-0">
+              <div className="flex flex-wrap items-center gap-2 text-[0.64rem] font-semibold uppercase tracking-[0.2em] text-white/58">
+                <span>{project.client}</span>
+                {project.year ? (
+                  <>
+                    <span className="h-1 w-1 rounded-full bg-white/24" />
+                    <span>{project.year}</span>
+                  </>
+                ) : null}
+              </div>
+            </div>
+            {canOpen ? (
+              <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-white/12 bg-[rgba(255,255,255,0.08)] shadow-[0_12px_28px_rgba(0,0,0,0.18)] backdrop-blur-xl">
+                <ArrowUpRight className="h-4 w-4" />
+              </span>
+            ) : null}
+          </div>
+        </div>
 
         <div
           className={cn(
-            "pointer-events-none absolute inset-0 z-[4] flex items-end p-3 sm:p-4",
-            prefersTapReveal
-              ? isTapInfoVisible
-                ? "opacity-100"
-                : "opacity-0"
-              : "opacity-0 group-hover:opacity-100 group-focus-within:opacity-100",
+            "relative flex min-h-0 flex-col justify-between gap-6 px-5 py-5 sm:px-6 sm:py-6 lg:px-8 lg:py-8",
+            reverseOnDesktop && "lg:order-1",
           )}
         >
-          <div className="absolute inset-0 rounded-[1.5rem] bg-[linear-gradient(180deg,rgba(6,7,10,0.04),rgba(6,7,10,0.28)_46%,rgba(6,7,10,0.72)_100%)]" />
-          <div className="relative w-full rounded-[1.35rem] border border-white/12 bg-[linear-gradient(180deg,rgba(255,255,255,0.14),rgba(255,255,255,0.05))] p-4 text-white shadow-[0_18px_42px_rgba(0,0,0,0.22)] backdrop-blur-xl sm:p-5">
-            <h3 className="text-[1.08rem] font-semibold leading-[1.08] tracking-[-0.03em] text-white sm:text-[1.16rem]">
-              {title}
-            </h3>
-            <p className="mt-2 line-clamp-2 text-[0.94rem] leading-6 text-white/82 sm:text-[0.98rem]">
-              {summary}
-            </p>
+          <div className="space-y-5">
+            <div className="flex flex-wrap items-center gap-2 text-[0.66rem] font-semibold uppercase tracking-[0.2em] text-[var(--muted)]">
+              <span>{project.client}</span>
+              {formatLabel ? (
+                <>
+                  <span className="h-1 w-1 rounded-full bg-[color:var(--line-strong)]" />
+                  <span>{formatLabel}</span>
+                </>
+              ) : null}
+              {project.year ? (
+                <>
+                  <span className="h-1 w-1 rounded-full bg-[color:var(--line-strong)]" />
+                  <span>{project.year}</span>
+                </>
+              ) : null}
+            </div>
+
+            <div className="space-y-3">
+              <h3
+                className={cn(
+                  "max-w-[14ch] font-semibold leading-[0.96] tracking-[-0.05em] text-[color:var(--foreground)]",
+                  isWide ? "text-[1.95rem] sm:text-[2.3rem]" : "text-[1.55rem] sm:text-[1.85rem]",
+                )}
+              >
+                {title}
+              </h3>
+              <p className="max-w-[36rem] text-[0.96rem] leading-7 text-[var(--muted-2)] sm:text-[1rem]">
+                {summary}
+              </p>
+            </div>
+
             {infoPoints.length ? (
-              <div className="mt-3 flex flex-wrap gap-2">
+              <div className="flex flex-wrap gap-2">
                 {infoPoints.map((point) => (
                   <span
                     key={`${project.slug}-${point}`}
-                    className="rounded-full border border-white/12 bg-black/20 px-2.5 py-1 text-[0.62rem] font-semibold uppercase tracking-[0.15em] text-white/76"
+                    className="rounded-full border border-[color:var(--line)]/80 bg-white/[0.04] px-3 py-1.5 text-[0.64rem] font-semibold uppercase tracking-[0.16em] text-[var(--muted-2)]"
                   >
                     {point}
                   </span>
                 ))}
               </div>
             ) : null}
-            <p className="mt-3 text-[0.68rem] font-semibold uppercase tracking-[0.18em] text-white/52">
-              {overlayInstruction}
-            </p>
           </div>
-        </div>
 
-        <div className="absolute inset-x-0 bottom-0 z-[2] p-4 text-white sm:p-5">
-          <div
-            className={cn(
-              "transition-opacity duration-300",
-              prefersTapReveal
-                ? isTapInfoVisible
-                  ? "opacity-0"
-                  : "opacity-100"
-                : "opacity-100 group-hover:opacity-0 group-focus-within:opacity-0",
-            )}
-          >
-            <div className="flex flex-wrap items-center gap-2 text-[0.64rem] font-semibold uppercase tracking-[0.2em] text-white/60">
-            <span>{project.client}</span>
-            {project.year ? (
-              <>
-                <span className="h-1 w-1 rounded-full bg-white/24" />
-                <span>{project.year}</span>
-              </>
-            ) : null}
+          <div className="flex items-end justify-between gap-4 border-t border-[color:var(--line)]/75 pt-5">
+            <div className="space-y-1.5">
+              <p className="text-[0.62rem] font-semibold uppercase tracking-[0.18em] text-[var(--muted)]">
+                {detailLabel}
+              </p>
+              <p className="text-sm leading-6 text-[var(--muted-2)]">
+                {detailHint}
+              </p>
             </div>
-            <h3 className="mt-3 max-w-[18ch] text-[1.34rem] font-semibold tracking-[-0.04em] text-white sm:text-[1.56rem]">
-              {title}
-            </h3>
+            <span className="hidden h-11 w-11 shrink-0 items-center justify-center rounded-full border border-[color:var(--line)]/80 bg-white/[0.05] text-[color:var(--foreground)] shadow-[0_10px_24px_rgba(18,14,10,0.05)] sm:flex">
+              <ArrowUpRight className="h-4 w-4" />
+            </span>
           </div>
         </div>
       </div>
