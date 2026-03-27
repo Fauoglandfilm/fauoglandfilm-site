@@ -148,11 +148,6 @@ const serviceIconBySlug = {
   "dronefilm-luftfoto": Radar,
 } as const;
 
-function getFirstSentence(value: string) {
-  const match = value.match(/^.+?[.!?](?:\s|$)/u);
-  return match?.[0].trim() ?? value;
-}
-
 function ServiceMenuCard({ service, index }: { service: ServiceArea; index: number }) {
   const { language } = useSitePreferences();
   const shouldReduceMotion = useReducedMotion();
@@ -165,8 +160,7 @@ function ServiceMenuCard({ service, index }: { service: ServiceArea; index: numb
   };
   const title = resolveLocalizedValue(service.title, language);
   const eyebrow = resolveLocalizedValue(service.eyebrow, language);
-  const ingress = resolveLocalizedValue(service.value, language);
-  const blurb = getFirstSentence(resolveLocalizedValue(service.summary, language));
+  const subline = resolveLocalizedValue(service.value, language);
   const deliverables = service.deliverables.slice(0, 3).map((item) => resolveLocalizedValue(item, language));
   const primaryLabel = resolveLocalizedValue(service.ctaLabel, language);
   const secondaryHref = service.exampleHref ?? "/case";
@@ -255,7 +249,7 @@ function ServiceMenuCard({ service, index }: { service: ServiceArea; index: numb
       style={cardStyle}
     >
       <motion.div
-        className="relative flex h-full w-[clamp(19.75rem,78vw,24rem)] flex-col overflow-hidden rounded-[1.35rem] border border-white/12 bg-[linear-gradient(180deg,rgba(255,255,255,0.12),rgba(255,255,255,0.035)_48%,rgba(255,255,255,0.05)_100%)] shadow-[inset_0_1px_0_rgba(255,255,255,0.12),0_28px_72px_rgba(2,6,12,0.34)] backdrop-blur-[30px] will-change-transform sm:w-[22rem] lg:w-[clamp(23rem,31vw,25.5rem)]"
+        className="relative flex h-full w-[clamp(20.5rem,82vw,25rem)] flex-col overflow-hidden rounded-[1.35rem] border border-white/12 bg-[linear-gradient(180deg,rgba(255,255,255,0.12),rgba(255,255,255,0.035)_48%,rgba(255,255,255,0.05)_100%)] shadow-[inset_0_1px_0_rgba(255,255,255,0.12),0_28px_72px_rgba(2,6,12,0.34)] backdrop-blur-[30px] will-change-transform sm:w-[23rem] lg:w-[clamp(24rem,30vw,27rem)]"
         whileHover={
           shouldReduceMotion
             ? undefined
@@ -336,10 +330,7 @@ function ServiceMenuCard({ service, index }: { service: ServiceArea; index: numb
                 <ArrowUpRight className="mt-1 h-4.5 w-4.5 shrink-0 text-white/34 transition duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-[color:var(--accent)]" />
               </div>
               <p className="max-w-[28ch] text-[0.95rem] leading-6 text-white/78">
-                {ingress}
-              </p>
-              <p className="max-w-[32ch] text-sm leading-6 text-white/54">
-                {blurb}
+                {subline}
               </p>
             </div>
 
@@ -412,16 +403,16 @@ export default function ServicesSection() {
             transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
           >
             <p className="text-[0.7rem] font-semibold uppercase tracking-[0.26em] text-[color:var(--accent)]/88">
-              {language === "no" ? "Studio menu" : "Studio menu"}
+              {language === "no" ? "Tjenester" : "Services"}
             </p>
             <h2 className="mt-4 text-balance text-[clamp(2.5rem,6vw,4.75rem)] font-semibold tracking-[-0.06em] text-white">
               {language === "no"
-                ? "Velg tjenesten som matcher målet dere faktisk har."
+                ? "Velg tjenesten som matcher målet dere faktisk har"
                 : "Choose the service that matches the outcome you actually need."}
             </h2>
             <p className="mx-auto mt-5 max-w-2xl text-balance text-[1rem] leading-7 text-white/62 sm:text-[1.08rem]">
               {language === "no"
-                ? "En premium servicemeny med tydelig formål, typisk budsjett, leveringstid og hva dere sitter igjen med."
+                ? "Hver tjeneste viser hva den er best til, typisk budsjett, leveringstid og hva dere sitter igjen med."
                 : "A premium service menu with clear purpose, typical budget, timeline and what you walk away with."}
             </p>
           </motion.div>
@@ -431,7 +422,7 @@ export default function ServicesSection() {
             <div className="pointer-events-none absolute inset-y-0 right-0 z-[2] hidden w-16 bg-[linear-gradient(270deg,#05070b_0%,rgba(5,7,11,0.78)_55%,transparent)] lg:block" />
 
             <div
-              className="portfolio-service-track flex snap-x snap-mandatory gap-4 overflow-x-auto pb-4 pr-4 touch-pan-x sm:gap-5 lg:gap-6"
+              className="portfolio-service-track -mx-4 flex snap-x snap-mandatory gap-5 overflow-x-auto overflow-y-visible px-4 pb-4 pr-[18vw] touch-pan-x sm:gap-6 sm:pr-12 lg:mx-0 lg:gap-7 lg:px-0 lg:pr-10"
               style={{ WebkitOverflowScrolling: "touch" }}
               aria-label={language === "no" ? "Tjenestemeny" : "Service menu"}
               tabIndex={0}
