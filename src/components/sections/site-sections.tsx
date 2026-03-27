@@ -329,7 +329,7 @@ export function ServicesSection({
   };
 
   return (
-    <section id="tjenester" className="section-space pt-[clamp(0.45rem,0.9vw,0.8rem)] pb-0">
+    <section id="tjenester" className="section-space pt-0 pb-0">
       <div className="relative left-1/2 w-screen -translate-x-1/2 overflow-hidden">
         <motion.div
           aria-hidden="true"
@@ -988,9 +988,9 @@ export function PageHero(props: {
     : [resolvedTitle];
 
   return (
-    <section className={cn("bg-[#111111] text-white", compact ? "pt-12 sm:pt-14" : "pt-20 sm:pt-28")}>
+    <section className={cn("bg-[#111111] text-white", compact ? "pt-[max(6.6rem,calc(env(safe-area-inset-top,0px)+5.9rem))] sm:pt-[max(7.25rem,calc(env(safe-area-inset-top,0px)+6.4rem))]" : "pt-20 sm:pt-28")}>
       <div className="site-container">
-        <Reveal className={cn("w-full", compact ? "py-3.5 sm:py-4.5 lg:py-4.5" : "py-10 sm:py-14 lg:py-16")} delay={0.04} y={18}>
+        <Reveal className={cn("w-full", compact ? "pb-4.5 sm:pb-5.5 lg:pb-5.5" : "py-10 sm:py-14 lg:py-16")} delay={0.04} y={18}>
           <div className={cn(compact ? "max-w-[29rem]" : "max-w-[44rem]")}>
             <span className="hero-badge text-white/62">{resolvedEyebrow}</span>
             <h1 className={cn("text-white", compact ? "mt-1.75 max-w-[11.5ch] font-display text-[1.82rem] leading-[0.88] tracking-[-0.068em] sm:text-[2.2rem] lg:text-[2.7rem]" : "mt-3 page-title max-w-[13ch]")}>
