@@ -685,7 +685,7 @@ function PortfolioVideoModal({
 
   return (
     <div
-      className="fixed inset-0 z-[80] flex h-[100dvh] max-h-[100dvh] items-start justify-center overflow-hidden overscroll-none bg-[#040507]/72 p-0 backdrop-blur-md sm:p-5 lg:items-center lg:p-8"
+      className="fixed inset-0 z-[80] flex h-[100dvh] max-h-[100dvh] items-start justify-center overflow-hidden overscroll-y-none bg-[#040507]/72 p-0 backdrop-blur-md sm:p-5 lg:items-center lg:p-8"
       role="dialog"
       aria-modal="true"
       aria-label={title}
@@ -696,7 +696,7 @@ function PortfolioVideoModal({
       }}
     >
       <div
-        className="relative flex h-full max-h-full w-full items-center justify-center bg-transparent"
+        className="relative flex h-full min-h-0 max-h-full w-full items-stretch justify-center overflow-hidden bg-transparent lg:items-center"
         onClick={(event) => event.stopPropagation()}
       >
         <button
@@ -734,16 +734,15 @@ function PortfolioVideoModal({
 
         <div
           className={cn(
-            "pointer-events-none absolute inset-x-3 bottom-[max(env(safe-area-inset-bottom),0.85rem)] z-[2] flex h-[min(34rem,calc(100dvh-7rem))] min-h-0 max-h-[calc(100dvh-7rem)] flex-col overflow-hidden rounded-[1.45rem] border border-white/12 bg-[linear-gradient(180deg,rgba(255,255,255,0.14),rgba(255,255,255,0.05))] text-white shadow-[0_24px_60px_rgba(0,0,0,0.24)] backdrop-blur-xl transition duration-300 sm:inset-x-auto sm:bottom-auto sm:left-[max(env(safe-area-inset-left),1rem)] sm:top-[calc(max(env(safe-area-inset-top),1rem)+4.75rem)] sm:h-[min(42rem,calc(100dvh-7.25rem))] sm:w-[27rem] sm:max-h-[calc(100dvh-7.25rem)]",
+            "pointer-events-none absolute inset-x-3 bottom-[max(env(safe-area-inset-bottom),0.85rem)] z-[2] flex h-auto min-h-0 max-h-[calc(100dvh-7rem)] flex-col overflow-hidden overscroll-contain rounded-[1.45rem] border border-white/12 bg-[linear-gradient(180deg,rgba(255,255,255,0.14),rgba(255,255,255,0.05))] text-white shadow-[0_24px_60px_rgba(0,0,0,0.24)] backdrop-blur-xl transition duration-300 supports-[height:100svh]:max-h-[calc(100svh-7rem)] sm:inset-x-auto sm:bottom-auto sm:left-[max(env(safe-area-inset-left),1rem)] sm:top-[calc(max(env(safe-area-inset-top),1rem)+4.75rem)] sm:w-[27rem] sm:max-h-[calc(100dvh-7.25rem)] supports-[height:100svh]:sm:max-h-[calc(100svh-7.25rem)]",
             isInfoOpen ? "translate-y-0 opacity-100" : "translate-y-4 opacity-0 sm:-translate-x-3 sm:translate-y-0",
             isInfoOpen && "pointer-events-auto",
           )}
           onClick={(event) => event.stopPropagation()}
         >
           <div
-            className="portfolio-modal-scroll h-full min-h-0 flex-1 overflow-y-auto overscroll-contain px-4 py-4 pr-3.5 touch-pan-y sm:px-4 sm:py-4 sm:pr-3"
+            className="portfolio-modal-scroll h-full min-h-0 flex-1 overflow-x-hidden overflow-y-auto px-4 py-4 pr-3.5 sm:px-4 sm:py-4 sm:pr-3"
             style={{
-              WebkitOverflowScrolling: "touch",
               paddingBottom: "calc(1rem + env(safe-area-inset-bottom))",
             }}
           >
