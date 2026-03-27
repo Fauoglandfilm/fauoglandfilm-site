@@ -345,7 +345,7 @@ function ManagedDirectVideo({
         <video
           ref={videoRef}
           className={cn(
-            "absolute inset-0 z-0 h-full w-full transition duration-500",
+            "video-preview-surface absolute inset-0 z-0 h-full w-full transition duration-500",
             mediaObjectClass,
             hasFailed ? "opacity-0" : "opacity-100",
           )}

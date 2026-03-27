@@ -9,7 +9,7 @@ import { ProfileImageCard } from "@/components/pages/profile-image-card";
 import { useSitePreferences } from "@/components/providers/site-preferences";
 import { Button } from "@/components/ui/button";
 import { ButtonLink } from "@/components/ui/button-link";
-import { ArrowUpRightIcon, PlayIcon } from "@/components/ui/icons";
+import { ArrowUpRightIcon } from "@/components/ui/icons";
 import {
   gardProfilePage,
   type GardProject,
@@ -109,11 +109,6 @@ function GardEditorialCase({
             ) : null}
           </div>
 
-          {hasPlayableMedia(activeProject) ? (
-            <span className="absolute right-4 top-4 z-[4] inline-flex h-11 w-11 items-center justify-center rounded-full border border-[color:var(--line-strong)] bg-[color:var(--surface)]/82 text-[color:var(--foreground)] shadow-[0_16px_40px_rgba(0,0,0,0.22)] backdrop-blur-md transition duration-300 group-hover:scale-[1.03] sm:right-5 sm:top-5">
-              <PlayIcon className="h-4 w-4 translate-x-[1px]" />
-            </span>
-          ) : null}
         </div>
       </div>
 
@@ -146,13 +141,12 @@ function GardEditorialCase({
                   <button
                     key={companion.slug}
                     type="button"
-                    onClick={() => focusInlineProject(toPreviewProject(project, companion))}
-                    className="inline-flex items-center gap-2 rounded-full border border-[color:var(--line-strong)] bg-[color:var(--surface)]/78 px-3.5 py-2 text-left text-sm font-medium text-[color:var(--foreground)] transition duration-300 hover:border-[color:var(--accent)]/38 hover:bg-[color:var(--surface-2)]"
-                  >
-                    <span>{resolveLocalizedValue(companion.title, language)}</span>
-                    {hasPlayableMedia(companion) ? <PlayIcon className="h-3.5 w-3.5" /> : null}
-                  </button>
-                ))}
+                  onClick={() => focusInlineProject(toPreviewProject(project, companion))}
+                  className="inline-flex items-center gap-2 rounded-full border border-[color:var(--line-strong)] bg-[color:var(--surface)]/78 px-3.5 py-2 text-left text-sm font-medium text-[color:var(--foreground)] transition duration-300 hover:border-[color:var(--accent)]/38 hover:bg-[color:var(--surface-2)]"
+                >
+                  <span>{resolveLocalizedValue(companion.title, language)}</span>
+                </button>
+              ))}
               </div>
             </div>
           ) : null}

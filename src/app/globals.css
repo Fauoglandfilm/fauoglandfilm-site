@@ -2402,6 +2402,16 @@ summary::-webkit-details-marker {
     pointer-events: none;
   }
 
+  .video-preview-surface::-webkit-media-controls,
+  .video-preview-surface::-webkit-media-controls-enclosure,
+  .video-preview-surface::-webkit-media-controls-panel,
+  .video-preview-surface::-webkit-media-controls-play-button,
+  .video-preview-surface::-webkit-media-controls-start-playback-button {
+    display: none !important;
+    -webkit-appearance: none;
+    opacity: 0 !important;
+  }
+
   .social-link {
     display: inline-flex;
     align-items: center;

@@ -251,7 +251,7 @@ export function CaseDetailContent({
                       {usesInteractiveVideoGrid && variant.video?.videoType === "direct" ? (
                         <video
                           className={cn(
-                            "absolute inset-0 h-full w-full bg-[#05070b]",
+                            "video-preview-surface absolute inset-0 h-full w-full bg-[#05070b]",
                             (variant.mediaFit ?? caseStudy.mediaFit ?? "cover") === "contain"
                               ? "object-contain p-5 sm:p-6"
                               : "object-cover",
@@ -282,7 +282,7 @@ export function CaseDetailContent({
                         {resolveLocalizedValue(variant.label, language)}
                       </div>
                       {usesInteractiveVideoGrid ? (
-                        <div className="absolute bottom-4 right-4 z-[2] rounded-full border border-white/16 bg-black/52 px-3.5 py-1.5 text-[0.68rem] font-semibold uppercase tracking-[0.18em] text-white shadow-[0_14px_36px_rgba(0,0,0,0.24)] backdrop-blur-md">
+                        <div className="absolute bottom-4 right-4 z-[2] hidden rounded-full border border-white/16 bg-black/52 px-3.5 py-1.5 text-[0.68rem] font-semibold uppercase tracking-[0.18em] text-white shadow-[0_14px_36px_rgba(0,0,0,0.24)] backdrop-blur-md sm:block">
                           {language === "no" ? "Spill med lyd" : "Play with sound"}
                         </div>
                       ) : null}

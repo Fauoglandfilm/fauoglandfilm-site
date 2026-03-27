@@ -297,7 +297,7 @@ export function HeroSection() {
           <video
             ref={videoRef}
             className={cn(
-              "pointer-events-none absolute inset-0 z-0 h-full w-full object-cover brightness-[1.16] saturate-[1.02] contrast-[1.01] transition-opacity duration-300 sm:brightness-[1.16] sm:saturate-[1.03] sm:contrast-[1.02]",
+              "video-preview-surface pointer-events-none absolute inset-0 z-0 h-full w-full object-cover brightness-[1.16] saturate-[1.02] contrast-[1.01] transition-opacity duration-300 sm:brightness-[1.16] sm:saturate-[1.03] sm:contrast-[1.02]",
               hasVideoError ? "opacity-0" : "opacity-100",
             )}
             autoPlay
@@ -1257,7 +1257,7 @@ function HomeCaseCard({
                 <video
                   key={`${caseStudy.slug}-${useMobilePreview ? "mobile" : "desktop"}-video`}
                   ref={videoRef}
-                  className={cn("absolute inset-0 z-0 h-full w-full transition-opacity duration-300", previewMediaClassName, hasVideoError ? "opacity-0" : "opacity-100")}
+                  className={cn("video-preview-surface absolute inset-0 z-0 h-full w-full transition-opacity duration-300", previewMediaClassName, hasVideoError ? "opacity-0" : "opacity-100")}
                   style={previewMediaStyle}
                   src={previewVideoSrc}
                   autoPlay
