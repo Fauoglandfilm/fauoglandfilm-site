@@ -41,6 +41,8 @@ import { ServiceCard } from "./service-card";
 import { TestimonialCard } from "./testimonial-card";
 
 type MaybeLocalizedText = string | LocalizedText;
+const SERVICE_CAROUSEL_COPY_COUNT = 5;
+const SERVICE_CAROUSEL_CENTER_INDEX = Math.floor(SERVICE_CAROUSEL_COPY_COUNT / 2);
 
 export function ServicesSection({
   services,
@@ -55,12 +57,12 @@ export function ServicesSection({
   const copy = uiCopy.siteSections[language];
   const shouldReduceMotion = useReducedMotion();
   const isDarkTheme = theme === "dark";
-  const carouselServices = [0, 1, 2].flatMap((copyIndex) =>
+  const carouselServices = Array.from({ length: SERVICE_CAROUSEL_COPY_COUNT }, (_, copyIndex) =>
     services.map((service) => ({
       service,
       copyIndex,
     })),
-  );
+  ).flat();
   const trackRef = useRef<HTMLDivElement | null>(null);
   const segmentWidthRef = useRef(0);
   const wrapLockRef = useRef(false);
@@ -85,18 +87,18 @@ export function ServicesSection({
   const resolvedTitle = title ? resolveLocalizedValue(title, language) : copy.servicesTitle;
   const resolvedDescription = description ? resolveLocalizedValue(description, language) : copy.servicesDescription;
   const surfaceClassName = isDarkTheme
-    ? "bg-[radial-gradient(circle_at_top,rgba(11,23,42,0.92),transparent_30%),radial-gradient(circle_at_82%_8%,rgba(210,173,116,0.14),transparent_24%),linear-gradient(180deg,#030407_0%,#070b12_42%,#081320_100%)]"
-    : "bg-[radial-gradient(circle_at_top,rgba(255,255,255,0.86),transparent_34%),radial-gradient(circle_at_84%_10%,rgba(115,164,255,0.18),transparent_24%),linear-gradient(180deg,rgba(244,247,252,0.98)_0%,rgba(229,236,246,0.94)_48%,rgba(221,231,244,0.98)_100%)]";
-  const topBorderClassName = isDarkTheme ? "bg-white/8" : "bg-black/7";
+    ? "bg-[radial-gradient(circle_at_top,rgba(255,255,255,0.05),transparent_28%),radial-gradient(circle_at_82%_8%,color-mix(in_srgb,var(--accent)_16%,transparent),transparent_24%),linear-gradient(180deg,color-mix(in_srgb,var(--background)_94%,#030407)_0%,color-mix(in_srgb,var(--background)_82%,#08111b)_100%)]"
+    : "bg-[radial-gradient(circle_at_top,rgba(255,255,255,0.82),transparent_32%),radial-gradient(circle_at_84%_10%,color-mix(in_srgb,var(--accent)_14%,transparent),transparent_24%),linear-gradient(180deg,color-mix(in_srgb,var(--surface)_94%,white)_0%,color-mix(in_srgb,var(--surface)_98%,#eef3f9)_100%)]";
+  const topBorderClassName = isDarkTheme ? "bg-white/8" : "bg-[color:var(--line)]/80";
   const eyebrowClassName = isDarkTheme ? "text-[color:var(--accent)]/88" : "text-[color:var(--accent)]/92";
   const titleClassName = isDarkTheme ? "text-white" : "text-[color:var(--foreground)]";
   const descriptionClassName = isDarkTheme ? "text-white/62" : "text-[var(--muted-2)]";
   const leftFadeClassName = isDarkTheme
-    ? "bg-[linear-gradient(90deg,#030407_0%,rgba(3,4,7,0.82)_52%,transparent)]"
-    : "bg-[linear-gradient(90deg,rgba(244,247,252,0.98)_0%,rgba(244,247,252,0.82)_52%,transparent)]";
+    ? "bg-[linear-gradient(90deg,color-mix(in_srgb,var(--background)_96%,#030407)_0%,rgba(3,4,7,0.84)_52%,transparent)]"
+    : "bg-[linear-gradient(90deg,color-mix(in_srgb,var(--surface)_98%,white)_0%,rgba(244,247,252,0.84)_52%,transparent)]";
   const rightFadeClassName = isDarkTheme
-    ? "bg-[linear-gradient(270deg,#081320_0%,rgba(8,19,32,0.82)_52%,transparent)]"
-    : "bg-[linear-gradient(270deg,rgba(221,231,244,0.98)_0%,rgba(221,231,244,0.82)_52%,transparent)]";
+    ? "bg-[linear-gradient(270deg,color-mix(in_srgb,var(--background)_88%,#081320)_0%,rgba(8,19,32,0.84)_52%,transparent)]"
+    : "bg-[linear-gradient(270deg,color-mix(in_srgb,var(--surface)_98%,#e4edf8)_0%,rgba(221,231,244,0.84)_52%,transparent)]";
 
   const scheduleResume = (delay = 900) => {
     userResumeAtRef.current = performance.now() + delay;
@@ -109,7 +111,7 @@ export function ServicesSection({
       return;
     }
 
-    const nextSegmentWidth = track.scrollWidth / 3;
+    const nextSegmentWidth = track.scrollWidth / SERVICE_CAROUSEL_COPY_COUNT;
 
     if (!Number.isFinite(nextSegmentWidth) || nextSegmentWidth <= 0) {
       return;
@@ -118,7 +120,7 @@ export function ServicesSection({
     segmentWidthRef.current = nextSegmentWidth;
 
     if (track.scrollLeft === 0) {
-      track.scrollLeft = nextSegmentWidth;
+      track.scrollLeft = nextSegmentWidth * SERVICE_CAROUSEL_CENTER_INDEX;
     }
   };
 
@@ -130,7 +132,7 @@ export function ServicesSection({
       return;
     }
 
-    if (track.scrollLeft <= segmentWidth * 0.5) {
+    if (track.scrollLeft <= segmentWidth * (SERVICE_CAROUSEL_CENTER_INDEX - 0.5)) {
       wrapLockRef.current = true;
       track.scrollLeft += segmentWidth;
       requestAnimationFrame(() => {
@@ -139,7 +141,7 @@ export function ServicesSection({
       return;
     }
 
-    if (track.scrollLeft >= segmentWidth * 1.5) {
+    if (track.scrollLeft >= segmentWidth * (SERVICE_CAROUSEL_CENTER_INDEX + 0.5)) {
       wrapLockRef.current = true;
       track.scrollLeft -= segmentWidth;
       requestAnimationFrame(() => {
@@ -158,13 +160,15 @@ export function ServicesSection({
         return;
       }
 
-      const previousSegmentWidth = segmentWidthRef.current || track.scrollWidth / 3 || 1;
-      const relativeOffset = (track.scrollLeft - previousSegmentWidth) / previousSegmentWidth;
+      const previousSegmentWidth = segmentWidthRef.current || track.scrollWidth / SERVICE_CAROUSEL_COPY_COUNT || 1;
+      const relativeOffset =
+        (track.scrollLeft - previousSegmentWidth * SERVICE_CAROUSEL_CENTER_INDEX) / previousSegmentWidth;
 
       measureTrack();
 
       if (segmentWidthRef.current > 0) {
-        track.scrollLeft = segmentWidthRef.current + relativeOffset * segmentWidthRef.current;
+        track.scrollLeft =
+          segmentWidthRef.current * SERVICE_CAROUSEL_CENTER_INDEX + relativeOffset * segmentWidthRef.current;
         normalizeTrackPosition();
       }
     };
@@ -202,7 +206,7 @@ export function ServicesSection({
         timestamp < userResumeAtRef.current;
 
       if (!hasUserIntent && segmentWidthRef.current > 0) {
-        currentTrack.scrollLeft += delta * 0.02;
+        currentTrack.scrollLeft += delta * 0.016;
         normalizeTrackPosition();
       }
 
@@ -225,9 +229,7 @@ export function ServicesSection({
       return;
     }
 
-    const maxScrollLeft = track.scrollWidth - track.clientWidth;
-
-    if (maxScrollLeft <= 0) {
+    if (track.scrollWidth <= track.clientWidth) {
       return;
     }
 
@@ -239,7 +241,7 @@ export function ServicesSection({
 
     scheduleResume(1400);
     event.preventDefault();
-    track.scrollLeft = Math.max(0, Math.min(maxScrollLeft, track.scrollLeft + delta));
+    track.scrollLeft += delta;
     normalizeTrackPosition();
   };
 
@@ -341,38 +343,38 @@ export function ServicesSection({
         <div className="grain-overlay absolute inset-0 opacity-24" />
         <div className={`pointer-events-none absolute inset-x-0 top-0 h-px ${topBorderClassName}`} />
 
-        <div className="relative mx-auto max-w-[1320px] px-4 py-[clamp(1rem,1.8vw,1.45rem)] sm:px-6 lg:px-8 xl:px-10">
+        <div className="relative mx-auto max-w-[1320px] px-4 py-[clamp(0.85rem,1.4vw,1.15rem)] sm:px-6 lg:px-8 xl:px-10">
           <motion.div
-            className="mx-auto max-w-[34rem] text-center"
+            className="mx-auto max-w-[32rem] text-center"
             initial={shouldReduceMotion ? false : { opacity: 0, y: 26, filter: "blur(14px)" }}
             whileInView={shouldReduceMotion ? undefined : { opacity: 1, y: 0, filter: "blur(0px)" }}
             viewport={{ once: true, amount: 0.35 }}
             transition={{ duration: 0.88, ease: [0.22, 1, 0.36, 1] }}
           >
-            <p className={`text-[0.62rem] font-semibold uppercase tracking-[0.24em] ${eyebrowClassName}`}>
+            <p className={`text-[0.58rem] font-semibold uppercase tracking-[0.22em] ${eyebrowClassName}`}>
               {copy.servicesEyebrow}
             </p>
             <h2
-              className={`mt-1.5 text-balance text-[clamp(1.5rem,3.2vw,2.4rem)] font-semibold leading-[0.88] tracking-[-0.062em] ${titleClassName}`}
+              className={`mt-1.25 text-balance text-[clamp(1.36rem,2.8vw,2.16rem)] font-semibold leading-[0.88] tracking-[-0.062em] ${titleClassName}`}
             >
               {resolvedTitle}
             </h2>
             <p
-              className={`mx-auto mt-1 max-w-[25rem] text-balance text-[0.8rem] leading-4.9 sm:text-[0.86rem] sm:leading-5.1 ${descriptionClassName}`}
+              className={`mx-auto mt-1 max-w-[23rem] text-balance text-[0.76rem] leading-4.7 sm:text-[0.82rem] sm:leading-4.9 ${descriptionClassName}`}
             >
               {resolvedDescription}
             </p>
           </motion.div>
         </div>
 
-        <div className="relative mt-2 sm:mt-2.5 lg:mt-2.75">
+        <div className="relative mt-1.75 sm:mt-2 lg:mt-2.25">
           <div className={`pointer-events-none absolute inset-y-0 left-0 z-[2] hidden w-16 ${leftFadeClassName} lg:block`} />
           <div className={`pointer-events-none absolute inset-y-0 right-0 z-[2] hidden w-16 ${rightFadeClassName} lg:block`} />
 
           <div className="relative left-1/2 w-screen -translate-x-1/2">
             <div
               ref={trackRef}
-              className="portfolio-service-track flex w-screen gap-3 overflow-x-auto overflow-y-hidden overscroll-x-contain overscroll-y-none px-0 pb-0 pr-[12vw] touch-pan-x sm:gap-3.5 sm:pr-6 lg:gap-4 lg:pr-4"
+              className="portfolio-service-track flex w-screen gap-2.25 overflow-x-auto overflow-y-hidden overscroll-x-contain overscroll-y-none px-0 pb-0 pr-0 touch-pan-x [scrollbar-width:none] [&::-webkit-scrollbar]:hidden sm:gap-2.5 lg:gap-3"
               style={{ WebkitOverflowScrolling: "touch", overscrollBehaviorY: "none" }}
               aria-label={language === "no" ? "Tjenestekarusell" : "Service carousel"}
               tabIndex={0}
