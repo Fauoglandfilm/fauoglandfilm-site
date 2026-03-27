@@ -240,16 +240,16 @@ export const uiCopy = {
   pages: {
     no: {
       servicesHeroEyebrow: "Tjenester",
-      servicesHeroTitle: "Film som gir flere kunder, økt salg og sterkere relasjoner",
+      servicesHeroTitle: "Film som gjør tilbudet tydeligere og salget enklere",
       servicesHeroDescription:
-        "Reklamefilm, bedriftsfilm, SoMe-innhold og eventproduksjon.",
+        "Reklamefilm, bedriftsfilm, SoMe-innhold og aftermovies med tydelig verdi, prisnivå og neste steg.",
       servicesPrimaryCta: "Få et estimat",
-      servicesSectionTitle: "Tjenester bygget rundt tydelig effekt",
+      servicesSectionTitle: "Velg tjenesten som matcher målet dere faktisk har",
       servicesSectionDescription:
-        "Alt vi lager tar utgangspunkt i resultatet dere trenger.",
-      servicesCtaTitle: "Usikre på hva dere trenger?",
+        "Hver tjeneste viser hva den er best til, typisk budsjett, leveringstid og hva dere sitter igjen med.",
+      servicesCtaTitle: "Usikre på hvilket oppsett som vil fungere best?",
       servicesCtaDescription:
-        "Vi hjelper dere å velge riktig format, omfang og budsjett.",
+        "Send en kort brief, så anbefaler vi riktig format, omfang og neste steg uten at dere må spesifisere alt selv.",
       caseHeroEyebrow: "Portefølje",
       caseHeroTitle: "Portefølje",
       caseHeroDescription:
@@ -326,16 +326,16 @@ export const uiCopy = {
     },
     en: {
       servicesHeroEyebrow: "Services",
-      servicesHeroTitle: "Film that drives stronger sales, trust and relationships",
+      servicesHeroTitle: "Film that clarifies the offer and makes sales easier",
       servicesHeroDescription:
-        "Commercial film, company film, social content and event production.",
+        "Commercial film, company film, social content and aftermovies with clear value, budget range and next step.",
       servicesPrimaryCta: "Get an estimate",
-      servicesSectionTitle: "Services built around clear business value",
+      servicesSectionTitle: "Choose the service that matches the outcome you need",
       servicesSectionDescription:
-        "Everything starts with the result you need.",
-      servicesCtaTitle: "Not sure what you need?",
+        "Each service shows what it is best for, the typical budget, the timeline and what you actually get back.",
+      servicesCtaTitle: "Not sure which setup will work best?",
       servicesCtaDescription:
-        "We help you choose the right format, scope and budget.",
+        "Send a short brief and we will recommend the right format, scope and next step without you having to define everything first.",
       caseHeroEyebrow: "Portfolio",
       caseHeroTitle: "Portfolio",
       caseHeroDescription:

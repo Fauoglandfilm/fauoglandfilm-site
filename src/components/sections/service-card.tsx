@@ -56,9 +56,8 @@ export function ServiceCard({ service }: ServiceCardProps) {
       value: resolveLocalizedValue(service.timeline, language),
     },
   ];
-  const deliverablesSummary = service.deliverables
-    .map((item) => resolveLocalizedValue(item, language))
-    .join(" · ");
+  const deliverables = service.deliverables.map((item) => resolveLocalizedValue(item, language));
+  const exampleLabel = service.exampleLabel ? resolveLocalizedValue(service.exampleLabel, language) : null;
   const mediaAlt = visual ? resolveLocalizedValue(visual.alt, language) : resolveLocalizedValue(service.title, language);
 
   return (
@@ -87,8 +86,8 @@ export function ServiceCard({ service }: ServiceCardProps) {
         </div>
       </div>
 
-      <div className="flex min-w-0 flex-col justify-between gap-3.5">
-        <div className="space-y-3.5">
+      <div className="flex min-w-0 flex-col justify-between gap-4">
+        <div className="space-y-4">
           <div className="space-y-2">
             <p className="text-[0.64rem] font-semibold uppercase tracking-[0.2em] text-[var(--muted)]">
               {resolveLocalizedValue(service.eyebrow, language)}
@@ -96,17 +95,20 @@ export function ServiceCard({ service }: ServiceCardProps) {
             <h3 className="card-title text-[color:var(--foreground)]">
               {resolveLocalizedValue(service.title, language)}
             </h3>
-            <p className="text-[0.98rem] font-medium leading-6 text-[color:var(--foreground)]/82 sm:text-[1.02rem]">
+            <p className="rounded-[1rem] border border-[color:var(--line)]/70 bg-white/[0.04] px-3.5 py-3 text-[0.96rem] font-semibold leading-6 text-[color:var(--foreground)]/84 sm:text-[1rem]">
               {resolveLocalizedValue(service.value, language)}
             </p>
-            <p className="text-sm leading-6 text-[var(--muted-2)] sm:text-[0.98rem] sm:leading-7">
+            <p className="max-w-[58ch] text-sm leading-6 text-[var(--muted-2)] sm:text-[0.96rem] sm:leading-7">
               {resolveLocalizedValue(service.summary, language)}
             </p>
           </div>
 
-          <div className="hidden gap-3 border-t border-[color:var(--line)]/80 pt-4 md:grid md:grid-cols-2">
+          <div className="grid gap-2.5 border-t border-[color:var(--line)]/80 pt-4 sm:grid-cols-2">
             {metaItems.map((item) => (
-              <div key={item.label}>
+              <div
+                key={item.label}
+                className="rounded-[1rem] border border-[color:var(--line)]/70 bg-white/[0.035] px-3.5 py-3"
+              >
                 <p className="text-[0.62rem] font-semibold uppercase tracking-[0.18em] text-[var(--muted)]">
                   {item.label}
                 </p>
@@ -115,20 +117,32 @@ export function ServiceCard({ service }: ServiceCardProps) {
             ))}
           </div>
 
-          <div className="hidden border-t border-[color:var(--line)]/80 pt-4 md:block">
+          <div className="border-t border-[color:var(--line)]/80 pt-4">
             <p className="text-[0.62rem] font-semibold uppercase tracking-[0.18em] text-[var(--muted)]">
               {language === "no" ? "Typiske leveranser" : "Typical deliverables"}
             </p>
-            <p className="mt-2.5 text-sm leading-6 text-[var(--muted-2)]">
-              {deliverablesSummary}
-            </p>
+            <div className="mt-2.5 flex flex-wrap gap-2">
+              {deliverables.map((item) => (
+                <span
+                  key={`${service.slug}-${item}`}
+                  className="rounded-full border border-[color:var(--line)]/80 bg-white/[0.04] px-3 py-1.5 text-[0.72rem] font-medium text-[color:var(--foreground)]/76"
+                >
+                  {item}
+                </span>
+              ))}
+            </div>
           </div>
         </div>
 
-        <div className="pt-0.5">
-          <ButtonLink href={service.href} variant="ghost" size="compact" fullWidth className="sm:w-auto">
+        <div className="flex flex-col gap-2.5 pt-0.5 sm:flex-row sm:flex-wrap">
+          <ButtonLink href={service.href} size="compact" fullWidth className="sm:w-auto">
             {resolveLocalizedValue(service.ctaLabel, language)}
           </ButtonLink>
+          {service.exampleHref && exampleLabel ? (
+            <ButtonLink href={service.exampleHref} variant="secondary" size="compact" fullWidth className="sm:w-auto">
+              {exampleLabel}
+            </ButtonLink>
+          ) : null}
         </div>
       </div>
     </article>
