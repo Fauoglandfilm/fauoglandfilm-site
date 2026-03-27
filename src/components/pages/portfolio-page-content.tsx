@@ -7,17 +7,17 @@ import { useEffect, useRef, useState } from "react";
 import { PreviewMedia } from "@/components/media/preview-media";
 import { Reveal } from "@/components/motion/reveal";
 import { useSitePreferences } from "@/components/providers/site-preferences";
-import { CtaBanner, PageHero } from "@/components/sections/site-sections";
+import { CtaBanner, PageHero, ServicesSection } from "@/components/sections/site-sections";
 import {
   segmentedControlOptionClassName,
   segmentedControlShellClassName,
 } from "@/components/ui/button-styles";
 import { OverlayCloseButton } from "@/components/ui/overlay-close-button";
-import PortfolioServicesSection from "@/components/ui/services";
 import {
   portfolioGroups,
   portfolioPageContent,
   portfolioProjects,
+  serviceAreas,
   type ExternalVideoAsset,
   type PortfolioGroup,
   type PortfolioProject,
@@ -446,7 +446,17 @@ export function PortfolioPageContent({
         </div>
       </section>
 
-      <PortfolioServicesSection />
+      <ServicesSection
+        services={serviceAreas}
+        title={{
+          no: uiCopy.pages.no.servicesSectionTitle,
+          en: uiCopy.pages.en.servicesSectionTitle,
+        }}
+        description={{
+          no: uiCopy.pages.no.servicesSectionDescription,
+          en: uiCopy.pages.en.servicesSectionDescription,
+        }}
+      />
 
       <CtaBanner
         title={portfolioPageContent.footerTitle}
