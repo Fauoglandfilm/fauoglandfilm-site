@@ -13,6 +13,7 @@ import {
   segmentedControlShellClassName,
 } from "@/components/ui/button-styles";
 import { OverlayCloseButton } from "@/components/ui/overlay-close-button";
+import PortfolioServicesSection from "@/components/ui/services";
 import {
   portfolioGroups,
   portfolioPageContent,
@@ -428,6 +429,8 @@ export function PortfolioPageContent({
           </div>
         </div>
       </section>
+
+      <PortfolioServicesSection />
 
       <CtaBanner
         title={portfolioPageContent.footerTitle}
