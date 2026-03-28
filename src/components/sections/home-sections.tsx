@@ -239,7 +239,6 @@ export function HeroSection() {
             disablePictureInPicture
             disableRemotePlayback
             aria-hidden="true"
-            poster={heroPosterSrc}
             onLoadedMetadata={(event) => {
               const node = event.currentTarget;
 
