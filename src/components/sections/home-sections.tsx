@@ -107,10 +107,11 @@ export function HeroSection() {
   const { language } = useSitePreferences();
   const shouldReduceMotion = useReducedMotion();
   const videoRef = useRef<HTMLVideoElement | null>(null);
-  const [hasVideoError, setHasVideoError] = useState(false);
-  const [isPosterVisible, setIsPosterVisible] = useState(true);
+  const heroVideoSrc = heroVideo.src;
+  const heroPosterSrc = heroVideo.poster ?? "";
   const [shouldRenderHeroVideo, setShouldRenderHeroVideo] = useState(false);
-  const [isMobileViewport, setIsMobileViewport] = useState(false);
+  const [isVideoReady, setIsVideoReady] = useState(false);
+  const [hasVideoError, setHasVideoError] = useState(false);
 
   const eyebrow =
     language === "no"
@@ -118,79 +119,37 @@ export function HeroSection() {
       : "Oslo / Commercial Film / Production";
   const secondaryCta = language === "no" ? "Portefølje" : "Portfolio";
   const heroTitle = resolveLocalizedValue(homeHeroContent.title, language);
-  const heroVideoSrc = heroVideo.src;
-  const heroPosterSrc = heroVideo.poster ?? "";
-  const revealVideoFrame = () => {
-    setHasVideoError(false);
-    setIsPosterVisible(false);
-  };
+  const connection =
+    typeof navigator === "undefined"
+      ? undefined
+      : (navigator as Navigator & {
+          connection?: {
+            saveData?: boolean;
+            effectiveType?: string;
+          };
+        }).connection;
+  const shouldSkipHeroVideo =
+    shouldReduceMotion ||
+    connection?.saveData === true ||
+    (typeof connection?.effectiveType === "string" && /^(slow-2g|2g|3g)$/i.test(connection.effectiveType));
+  const shouldMountHeroVideo = shouldRenderHeroVideo && !shouldSkipHeroVideo;
 
   useEffect(() => {
-    const mediaQuery = window.matchMedia("(max-width: 767px)");
-    const updateViewport = () => {
-      setIsMobileViewport(mediaQuery.matches);
-    };
-
-    updateViewport();
-
-    if (typeof mediaQuery.addEventListener === "function") {
-      mediaQuery.addEventListener("change", updateViewport);
-      return () => mediaQuery.removeEventListener("change", updateViewport);
-    }
-
-    mediaQuery.addListener(updateViewport);
-    return () => mediaQuery.removeListener(updateViewport);
-  }, []);
-
-  useEffect(() => {
-    if (shouldRenderHeroVideo) {
+    if (shouldSkipHeroVideo || shouldRenderHeroVideo) {
       return;
     }
 
-    const connection = (navigator as Navigator & {
-      connection?: {
-        saveData?: boolean;
-        effectiveType?: string;
-      };
-    }).connection;
-    const shouldSkipHeroVideo =
-      shouldReduceMotion ||
-      connection?.saveData === true ||
-      (typeof connection?.effectiveType === "string" && /^(slow-2g|2g|3g)$/i.test(connection.effectiveType));
-
-    if (shouldSkipHeroVideo) {
-      return;
-    }
-
-    let timeoutId: number | null = null;
-    let idleId: number | null = null;
-    const deferHeroVideo = () => {
-      timeoutId = window.setTimeout(() => {
-        setShouldRenderHeroVideo(true);
-      }, isMobileViewport ? 1800 : 1100);
-    };
-
-    if (typeof window.requestIdleCallback === "function") {
-      idleId = window.requestIdleCallback(() => {
-        deferHeroVideo();
-      }, { timeout: isMobileViewport ? 2200 : 1400 });
-    } else {
-      deferHeroVideo();
-    }
+    const animationFrameId = window.requestAnimationFrame(() => {
+      setShouldRenderHeroVideo(true);
+    });
 
     return () => {
-      if (idleId !== null && typeof window.cancelIdleCallback === "function") {
-        window.cancelIdleCallback(idleId);
-      }
-
-      if (timeoutId !== null) {
-        window.clearTimeout(timeoutId);
-      }
+      window.cancelAnimationFrame(animationFrameId);
     };
-  }, [isMobileViewport, shouldReduceMotion, shouldRenderHeroVideo]);
+  }, [shouldRenderHeroVideo, shouldSkipHeroVideo]);
 
   useEffect(() => {
-    if (!shouldRenderHeroVideo) {
+    if (!shouldMountHeroVideo || !heroVideoSrc) {
       return;
     }
 
@@ -201,32 +160,16 @@ export function HeroSection() {
     }
 
     let cancelled = false;
-    const timers: number[] = [];
-
     const syncPlaybackFlags = () => {
       node.defaultMuted = true;
       node.muted = true;
       node.playsInline = true;
+      node.autoplay = true;
+      node.loop = true;
       node.setAttribute("muted", "");
       node.setAttribute("playsinline", "");
       node.setAttribute("webkit-playsinline", "");
-      node.preload = "metadata";
-    };
-
-    const revealIfReady = () => {
-      if (cancelled) {
-        return false;
-      }
-
-      if (
-        node.readyState >= HTMLMediaElement.HAVE_CURRENT_DATA &&
-        (node.currentTime > 0 || !node.paused)
-      ) {
-        revealVideoFrame();
-        return true;
-      }
-
-      return false;
+      node.preload = "auto";
     };
 
     const tryPlay = () => {
@@ -236,22 +179,10 @@ export function HeroSection() {
 
       syncPlaybackFlags();
 
-      void node.play().then(() => {
-        revealIfReady();
-      }).catch(() => undefined);
+      void node.play().catch(() => undefined);
     };
 
     tryPlay();
-
-    [180, 650, 1400, 2600].forEach((delay) => {
-      timers.push(
-        window.setTimeout(() => {
-          if (!revealIfReady() && node.paused) {
-            tryPlay();
-          }
-        }, delay),
-      );
-    });
 
     const handleVisibility = () => {
       if (document.visibilityState === "visible") {
@@ -268,11 +199,10 @@ export function HeroSection() {
 
     return () => {
       cancelled = true;
-      timers.forEach((timer) => window.clearTimeout(timer));
       document.removeEventListener("visibilitychange", handleVisibility);
       window.removeEventListener("pageshow", handlePageShow);
     };
-  }, [heroVideoSrc, shouldRenderHeroVideo]);
+  }, [heroVideoSrc, shouldMountHeroVideo]);
 
   return (
     <section className="relative isolate overflow-hidden bg-[#05070a] text-white">
@@ -280,7 +210,7 @@ export function HeroSection() {
         <div
           className={cn(
             "absolute inset-0 z-[1] block overflow-hidden transition-opacity duration-300 pointer-events-none",
-            hasVideoError || isPosterVisible ? "opacity-100" : "opacity-0",
+            hasVideoError || !isVideoReady ? "opacity-100" : "opacity-0",
           )}
         >
           <Image
@@ -293,18 +223,19 @@ export function HeroSection() {
             className="object-cover"
           />
         </div>
-        {shouldRenderHeroVideo ? (
+        {shouldMountHeroVideo ? (
           <video
+            key={heroVideoSrc}
             ref={videoRef}
             className={cn(
               "video-preview-surface pointer-events-none absolute inset-0 z-0 h-full w-full object-cover brightness-[1.16] saturate-[1.02] contrast-[1.01] transition-opacity duration-300 sm:brightness-[1.16] sm:saturate-[1.03] sm:contrast-[1.02]",
-              hasVideoError ? "opacity-0" : "opacity-100",
+              hasVideoError || !isVideoReady ? "opacity-0" : "opacity-100",
             )}
             autoPlay
             muted
             loop
             playsInline
-            preload="metadata"
+            preload="auto"
             disablePictureInPicture
             disableRemotePlayback
             aria-hidden="true"
@@ -322,21 +253,18 @@ export function HeroSection() {
             }}
             onLoadedData={() => {
               setHasVideoError(false);
+              setIsVideoReady(true);
             }}
             onCanPlay={(event) => {
               void event.currentTarget.play().catch(() => undefined);
             }}
             onPlaying={() => {
-              revealVideoFrame();
+              setHasVideoError(false);
+              setIsVideoReady(true);
             }}
-          onTimeUpdate={(event) => {
-            if (event.currentTarget.currentTime > 0) {
-              revealVideoFrame();
-            }
-          }}
             onError={() => {
               setHasVideoError(true);
-              setIsPosterVisible(true);
+              setIsVideoReady(false);
             }}
           >
             <source src={heroVideoSrc} type="video/mp4" />
