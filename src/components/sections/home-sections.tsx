@@ -109,7 +109,6 @@ export function HeroSection() {
   const videoRef = useRef<HTMLVideoElement | null>(null);
   const heroVideoSrc = heroVideo.src;
   const heroPosterSrc = heroVideo.poster ?? "";
-  const [shouldRenderHeroVideo, setShouldRenderHeroVideo] = useState(false);
   const [isVideoReady, setIsVideoReady] = useState(false);
   const [hasVideoError, setHasVideoError] = useState(false);
 
@@ -119,34 +118,7 @@ export function HeroSection() {
       : "Oslo / Commercial Film / Production";
   const secondaryCta = language === "no" ? "Portefølje" : "Portfolio";
   const heroTitle = resolveLocalizedValue(homeHeroContent.title, language);
-  const connection =
-    typeof navigator === "undefined"
-      ? undefined
-      : (navigator as Navigator & {
-          connection?: {
-            saveData?: boolean;
-            effectiveType?: string;
-          };
-        }).connection;
-  const shouldSkipHeroVideo =
-    shouldReduceMotion ||
-    connection?.saveData === true ||
-    (typeof connection?.effectiveType === "string" && /^(slow-2g|2g|3g)$/i.test(connection.effectiveType));
-  const shouldMountHeroVideo = shouldRenderHeroVideo && !shouldSkipHeroVideo;
-
-  useEffect(() => {
-    if (shouldSkipHeroVideo || shouldRenderHeroVideo) {
-      return;
-    }
-
-    const animationFrameId = window.requestAnimationFrame(() => {
-      setShouldRenderHeroVideo(true);
-    });
-
-    return () => {
-      window.cancelAnimationFrame(animationFrameId);
-    };
-  }, [shouldRenderHeroVideo, shouldSkipHeroVideo]);
+  const shouldMountHeroVideo = !shouldReduceMotion;
 
   useEffect(() => {
     if (!shouldMountHeroVideo || !heroVideoSrc) {
