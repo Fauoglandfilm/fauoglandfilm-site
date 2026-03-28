@@ -155,7 +155,9 @@ export function Header() {
   const [searchEntries, setSearchEntries] = useState<SearchEntry[]>([]);
   const [isSearchIndexLoading, setIsSearchIndexLoading] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [navbarPeekOpen, setNavbarPeekOpen] = useState(false);
   const searchInputRef = useRef<HTMLInputElement | null>(null);
+  const headerSurfaceRef = useRef<HTMLDivElement | null>(null);
   const shouldReduceMotion = useReducedMotion();
   const { language, setLanguage, theme, setTheme } = useSitePreferences();
   const copy = uiCopy.header[language];
@@ -167,6 +169,7 @@ export function Header() {
     language === "no"
       ? "Oslo / Reklamefilm / Produksjon"
       : "Oslo / Commercial film / Production";
+  const navExpanded = scrolled || open || searchOpen || navbarPeekOpen;
   const normalizedSearchQuery = searchQuery.trim().toLocaleLowerCase(language === "no" ? "nb-NO" : "en-US");
   const searchResults = useMemo(() => {
     if (!normalizedSearchQuery) {
@@ -324,6 +327,42 @@ export function Header() {
   }, [open]);
 
   useEffect(() => {
+    if (scrolled || open || searchOpen) {
+      setNavbarPeekOpen(false);
+    }
+  }, [open, scrolled, searchOpen]);
+
+  useEffect(() => {
+    setNavbarPeekOpen(false);
+  }, [pathname]);
+
+  useEffect(() => {
+    if (!navbarPeekOpen || scrolled || open || searchOpen) {
+      return;
+    }
+
+    const onPointerDown = (event: PointerEvent) => {
+      if (!headerSurfaceRef.current?.contains(event.target as Node)) {
+        setNavbarPeekOpen(false);
+      }
+    };
+
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        setNavbarPeekOpen(false);
+      }
+    };
+
+    window.addEventListener("pointerdown", onPointerDown);
+    window.addEventListener("keydown", onKeyDown);
+
+    return () => {
+      window.removeEventListener("pointerdown", onPointerDown);
+      window.removeEventListener("keydown", onKeyDown);
+    };
+  }, [navbarPeekOpen, open, scrolled, searchOpen]);
+
+  useEffect(() => {
     if (!searchOpen) {
       return;
     }
@@ -364,6 +403,15 @@ export function Header() {
     setSearchOpen(false);
   };
 
+  const handleCollapsedMenuClick = () => {
+    if (window.innerWidth >= 1024) {
+      setNavbarPeekOpen(true);
+      return;
+    }
+
+    setOpen(true);
+  };
+
   if (hidesGlobalChrome) {
     return null;
   }
@@ -375,179 +423,243 @@ export function Header() {
         className="fixed inset-x-0 top-0 z-50 transition duration-300"
       >
         <div className="mx-auto max-w-[1420px] px-4 sm:px-6 lg:px-8">
-          <div
-            className={cn(
-              "relative mt-2 flex items-center justify-between gap-2.5 overflow-hidden rounded-[1.45rem] px-3 py-2 transition duration-300 sm:mt-3 sm:gap-4 sm:px-4 sm:py-3 lg:grid lg:grid-cols-[auto_minmax(0,1fr)_auto] lg:items-center lg:gap-5 lg:rounded-[1.9rem] lg:px-5 lg:py-3.5",
-              darkOverlayMode
-                ? "border border-white/12 bg-[rgba(14,14,15,0.42)] text-white shadow-[0_24px_64px_rgba(0,0,0,0.26)] backdrop-blur-[18px]"
-                : overlayMode
-                ? "border border-white/18 bg-white/10 text-white shadow-[0_24px_64px_rgba(0,0,0,0.12)] backdrop-blur-[18px]"
-                : "border border-[color:var(--line)]/80 bg-[color:var(--header-surface)]/82 text-[color:var(--foreground)] shadow-[0_22px_56px_rgba(18,14,10,0.08)] backdrop-blur-[20px]",
-            )}
-          >
-            <div
+          <div className="flex justify-end">
+            <motion.div
+              ref={headerSurfaceRef}
+              layout
+              initial={false}
+              transition={{ duration: shouldReduceMotion ? 0.18 : 0.34, ease: [0.22, 1, 0.36, 1] }}
               className={cn(
-                "pointer-events-none absolute inset-0",
+                "relative overflow-hidden transition duration-300",
+                navExpanded
+                  ? "mt-2 w-full rounded-[1.45rem] px-3 py-2 sm:mt-3 sm:px-4 sm:py-3 lg:rounded-[1.9rem] lg:px-5 lg:py-3.5"
+                  : "mt-2 h-[3.25rem] w-[3.25rem] rounded-full sm:mt-3 sm:h-[3.5rem] sm:w-[3.5rem]",
                 darkOverlayMode
-                  ? "bg-[linear-gradient(180deg,rgba(255,255,255,0.08),rgba(255,255,255,0.02))]"
-                  : "bg-[linear-gradient(180deg,rgba(255,255,255,0.2),rgba(255,255,255,0.06))]",
+                  ? "border border-white/12 bg-[rgba(14,14,15,0.42)] text-white shadow-[0_24px_64px_rgba(0,0,0,0.26)] backdrop-blur-[18px]"
+                  : overlayMode
+                  ? "border border-white/18 bg-white/10 text-white shadow-[0_24px_64px_rgba(0,0,0,0.12)] backdrop-blur-[18px]"
+                  : "border border-[color:var(--line)]/80 bg-[color:var(--header-surface)]/82 text-[color:var(--foreground)] shadow-[0_22px_56px_rgba(18,14,10,0.08)] backdrop-blur-[20px]",
               )}
-            />
-            <Link
-              href="/"
-              className={cn(
-                "relative z-[1] flex min-w-0 shrink-0 items-center rounded-[1.3rem] px-1 py-0.5 transition duration-300 lg:max-w-none",
-                overlayMode
-                  ? "text-white"
-                  : "text-[color:var(--foreground)]",
-              )}
-              aria-label="Fau&Land Film"
-              onClick={() => setOpen(false)}
             >
-              <div className="sm:hidden">
-                <HeaderBrandLockup overlayMode={overlayMode} subtitle={menuFooterCopy} mobile />
-              </div>
-
-              <div className="hidden min-w-0 sm:block">
-                <HeaderBrandLockup overlayMode={overlayMode} subtitle={menuFooterCopy} />
-              </div>
-            </Link>
-
-            <nav
-              className="relative z-[1] hidden lg:flex lg:min-w-0 lg:items-center lg:justify-center"
-              aria-label={menuLabel}
-            >
-              {navItems.map((item) => {
-                const active = item.href === "/" ? pathname === "/" : pathname.startsWith(item.href);
-
-                return (
-                    <Link
-                      key={item.href}
-                      href={item.href}
-                      className={cn(
-                        "inline-flex items-center rounded-full border border-transparent px-3.5 py-[0.65rem] text-[0.92rem] font-medium tracking-[-0.02em] transition duration-300",
-                        overlayMode
-                          ? "text-white/84 hover:bg-white/10 hover:text-white"
-                          : "text-[color:var(--foreground)]/72 hover:bg-[color:var(--header-nav-hover-bg)] hover:text-[color:var(--foreground)]",
-                      active &&
-                        (overlayMode
-                          ? "border-white/12 bg-white/14 text-white shadow-[0_10px_24px_rgba(0,0,0,0.12)]"
-                          : "bg-[color:var(--header-nav-active-bg)] text-[color:var(--foreground)] shadow-[0_10px_24px_rgba(18,14,10,0.06)]"),
-                    )}
-                  >
-                    {resolveLocalizedValue(item.label, language)}
-                  </Link>
-                );
-              })}
-              <button
-                type="button"
-                onClick={openSearch}
+              <div
                 className={cn(
-                  "ml-1 inline-flex h-10 w-10 items-center justify-center rounded-full border transition duration-300",
+                  "pointer-events-none absolute inset-0",
                   darkOverlayMode
-                    ? "border-white/14 bg-black/76 text-white hover:bg-black"
-                    : overlayMode
-                    ? "border-white/16 bg-black/72 text-white hover:bg-black/88"
-                    : "border-[color:var(--line)] bg-black text-white hover:bg-black/88",
+                    ? "bg-[linear-gradient(180deg,rgba(255,255,255,0.08),rgba(255,255,255,0.02))]"
+                    : "bg-[linear-gradient(180deg,rgba(255,255,255,0.2),rgba(255,255,255,0.06))]",
                 )}
-                aria-label={copy.searchOpen}
-              >
-                <SearchIcon className="h-4.5 w-4.5" />
-              </button>
-            </nav>
+              />
 
-            <div className="relative z-[1] ml-auto flex items-center gap-2 lg:ml-0">
-              <div className="hidden items-center gap-2 lg:flex">
-                <div className="origin-right scale-[0.98]">
-                  <SegmentedToggle
-                    ariaLabel={copy.languageLabel}
-                    value={language}
-                    options={[
-                      { label: "NO", value: "no" },
-                      { label: "EN", value: "en" },
-                    ]}
-                    onChange={setLanguage}
-                    compact
-                    shellClassName="header-segmented-shell"
-                  />
-                </div>
-                <div className="origin-right scale-[0.98]">
-                  <SegmentedToggle
-                    ariaLabel={copy.themeLabel}
-                    value={theme}
-                    options={[
-                      { value: "light", label: language === "no" ? "Dag" : "Day", icon: <SunIcon /> },
-                        { value: "dark", label: language === "no" ? "Natt" : "Night", icon: <MoonIcon /> },
-                    ]}
-                    onChange={setTheme}
-                    compact
-                    shellClassName="header-segmented-shell"
-                  />
-                </div>
-              </div>
+              <AnimatePresence initial={false} mode="popLayout">
+                {navExpanded ? (
+                  <motion.div
+                    key="expanded-navbar"
+                    initial={
+                      shouldReduceMotion
+                        ? { opacity: 1 }
+                        : { opacity: 0, x: 18, scale: 0.985 }
+                    }
+                    animate={{ opacity: 1, x: 0, scale: 1 }}
+                    exit={
+                      shouldReduceMotion
+                        ? { opacity: 0 }
+                        : { opacity: 0, x: 18, scale: 0.985 }
+                    }
+                    transition={{ duration: shouldReduceMotion ? 0.16 : 0.28, ease: [0.22, 1, 0.36, 1] }}
+                    className="relative z-[1] flex items-center justify-between gap-2.5 sm:gap-4 lg:grid lg:grid-cols-[auto_minmax(0,1fr)_auto] lg:items-center lg:gap-5"
+                  >
+                    <Link
+                      href="/"
+                      className={cn(
+                        "flex min-w-0 shrink-0 items-center rounded-[1.3rem] px-1 py-0.5 transition duration-300 lg:max-w-none",
+                        overlayMode ? "text-white" : "text-[color:var(--foreground)]",
+                      )}
+                      aria-label="Fau&Land Film"
+                      onClick={() => {
+                        setOpen(false);
+                        setNavbarPeekOpen(false);
+                      }}
+                    >
+                      <div className="sm:hidden">
+                        <HeaderBrandLockup overlayMode={overlayMode} subtitle={menuFooterCopy} mobile />
+                      </div>
 
-              <div className="flex items-center lg:hidden">
-                <Button
-                  variant="icon"
-                  size="icon"
-                  className={cn(
-                    "relative z-[1] mr-2 h-11 w-11 shrink-0 rounded-full shadow-none",
-                    darkOverlayMode
-                      ? "border border-white/12 bg-black/76 text-white"
-                      : overlayMode
-                      ? "border border-white/14 bg-black/76 text-white"
-                      : "border border-[color:var(--line)] bg-black text-white",
-                  )}
-                  aria-label={copy.searchOpen}
-                  onClick={openSearch}
-                >
-                  <SearchIcon className="h-4 w-4" />
-                </Button>
-                <Button
-                  variant="icon"
-                  size="icon"
-                  className={cn(
-                    "relative z-[1] h-11 w-11 shrink-0 rounded-full shadow-none",
-                    darkOverlayMode
-                      ? "border border-white/12 bg-black/20 text-white"
-                      : overlayMode
-                      ? "border border-white/14 bg-white/10 text-white"
-                      : "border border-[color:var(--line)] bg-[color:var(--surface)]/88 text-[color:var(--foreground)]",
-                  )}
-                  aria-label={open ? copy.menuClose : copy.menuOpen}
-                  aria-controls="site-menu"
-                  aria-expanded={open}
-                  onClick={() => setOpen((value) => !value)}
-                >
-                  <span className="relative h-4 w-4">
-                    <motion.span
-                      className="absolute inset-0 flex items-center justify-center"
-                      initial={false}
-                      animate={
-                        shouldReduceMotion
-                          ? { opacity: open ? 0 : 1 }
-                          : { opacity: open ? 0 : 1, rotate: open ? -24 : 0, scale: open ? 0.78 : 1 }
-                      }
-                      transition={{ duration: 0.24, ease: [0.22, 1, 0.36, 1] }}
+                      <div className="hidden min-w-0 sm:block">
+                        <HeaderBrandLockup overlayMode={overlayMode} subtitle={menuFooterCopy} />
+                      </div>
+                    </Link>
+
+                    <nav
+                      className="hidden lg:flex lg:min-w-0 lg:items-center lg:justify-center"
+                      aria-label={menuLabel}
                     >
-                      <MenuIcon className="h-4 w-4" />
-                    </motion.span>
-                    <motion.span
-                      className="absolute inset-0 flex items-center justify-center"
-                      initial={false}
-                      animate={
-                        shouldReduceMotion
-                          ? { opacity: open ? 1 : 0 }
-                          : { opacity: open ? 1 : 0, rotate: open ? 0 : 24, scale: open ? 1 : 0.78 }
-                      }
-                      transition={{ duration: 0.24, ease: [0.22, 1, 0.36, 1] }}
-                    >
-                      <CloseIcon className="h-4 w-4" />
-                    </motion.span>
-                  </span>
-                </Button>
-              </div>
-            </div>
+                      {navItems.map((item) => {
+                        const active = item.href === "/" ? pathname === "/" : pathname.startsWith(item.href);
+
+                        return (
+                          <Link
+                            key={item.href}
+                            href={item.href}
+                            className={cn(
+                              "inline-flex items-center rounded-full border border-transparent px-3.5 py-[0.65rem] text-[0.92rem] font-medium tracking-[-0.02em] transition duration-300",
+                              overlayMode
+                                ? "text-white/84 hover:bg-white/10 hover:text-white"
+                                : "text-[color:var(--foreground)]/72 hover:bg-[color:var(--header-nav-hover-bg)] hover:text-[color:var(--foreground)]",
+                              active &&
+                                (overlayMode
+                                  ? "border-white/12 bg-white/14 text-white shadow-[0_10px_24px_rgba(0,0,0,0.12)]"
+                                  : "bg-[color:var(--header-nav-active-bg)] text-[color:var(--foreground)] shadow-[0_10px_24px_rgba(18,14,10,0.06)]"),
+                            )}
+                            onClick={() => setNavbarPeekOpen(false)}
+                          >
+                            {resolveLocalizedValue(item.label, language)}
+                          </Link>
+                        );
+                      })}
+                      <button
+                        type="button"
+                        onClick={openSearch}
+                        className={cn(
+                          "ml-1 inline-flex h-10 w-10 items-center justify-center rounded-full border transition duration-300",
+                          darkOverlayMode
+                            ? "border-white/14 bg-black/76 text-white hover:bg-black"
+                            : overlayMode
+                            ? "border-white/16 bg-black/72 text-white hover:bg-black/88"
+                            : "border-[color:var(--line)] bg-black text-white hover:bg-black/88",
+                        )}
+                        aria-label={copy.searchOpen}
+                      >
+                        <SearchIcon className="h-4.5 w-4.5" />
+                      </button>
+                    </nav>
+
+                    <div className="ml-auto flex items-center gap-2 lg:ml-0">
+                      <div className="hidden items-center gap-2 lg:flex">
+                        <div className="origin-right scale-[0.98]">
+                          <SegmentedToggle
+                            ariaLabel={copy.languageLabel}
+                            value={language}
+                            options={[
+                              { label: "NO", value: "no" },
+                              { label: "EN", value: "en" },
+                            ]}
+                            onChange={setLanguage}
+                            compact
+                            shellClassName="header-segmented-shell"
+                          />
+                        </div>
+                        <div className="origin-right scale-[0.98]">
+                          <SegmentedToggle
+                            ariaLabel={copy.themeLabel}
+                            value={theme}
+                            options={[
+                              { value: "light", label: language === "no" ? "Dag" : "Day", icon: <SunIcon /> },
+                              { value: "dark", label: language === "no" ? "Natt" : "Night", icon: <MoonIcon /> },
+                            ]}
+                            onChange={setTheme}
+                            compact
+                            shellClassName="header-segmented-shell"
+                          />
+                        </div>
+                      </div>
+
+                      <div className="flex items-center lg:hidden">
+                        <Button
+                          variant="icon"
+                          size="icon"
+                          className={cn(
+                            "relative mr-2 h-11 w-11 shrink-0 rounded-full shadow-none",
+                            darkOverlayMode
+                              ? "border border-white/12 bg-black/76 text-white"
+                              : overlayMode
+                              ? "border border-white/14 bg-black/76 text-white"
+                              : "border border-[color:var(--line)] bg-black text-white",
+                          )}
+                          aria-label={copy.searchOpen}
+                          onClick={openSearch}
+                        >
+                          <SearchIcon className="h-4 w-4" />
+                        </Button>
+                        <Button
+                          variant="icon"
+                          size="icon"
+                          className={cn(
+                            "relative h-11 w-11 shrink-0 rounded-full shadow-none",
+                            darkOverlayMode
+                              ? "border border-white/12 bg-black/20 text-white"
+                              : overlayMode
+                              ? "border border-white/14 bg-white/10 text-white"
+                              : "border border-[color:var(--line)] bg-[color:var(--surface)]/88 text-[color:var(--foreground)]",
+                          )}
+                          aria-label={open ? copy.menuClose : copy.menuOpen}
+                          aria-controls="site-menu"
+                          aria-expanded={open}
+                          onClick={() => setOpen((value) => !value)}
+                        >
+                          <span className="relative h-4 w-4">
+                            <motion.span
+                              className="absolute inset-0 flex items-center justify-center"
+                              initial={false}
+                              animate={
+                                shouldReduceMotion
+                                  ? { opacity: open ? 0 : 1 }
+                                  : { opacity: open ? 0 : 1, rotate: open ? -24 : 0, scale: open ? 0.78 : 1 }
+                              }
+                              transition={{ duration: 0.24, ease: [0.22, 1, 0.36, 1] }}
+                            >
+                              <MenuIcon className="h-4 w-4" />
+                            </motion.span>
+                            <motion.span
+                              className="absolute inset-0 flex items-center justify-center"
+                              initial={false}
+                              animate={
+                                shouldReduceMotion
+                                  ? { opacity: open ? 1 : 0 }
+                                  : { opacity: open ? 1 : 0, rotate: open ? 0 : 24, scale: open ? 1 : 0.78 }
+                              }
+                              transition={{ duration: 0.24, ease: [0.22, 1, 0.36, 1] }}
+                            >
+                              <CloseIcon className="h-4 w-4" />
+                            </motion.span>
+                          </span>
+                        </Button>
+                      </div>
+                    </div>
+                  </motion.div>
+                ) : (
+                  <motion.button
+                    key="collapsed-navbar"
+                    type="button"
+                    initial={
+                      shouldReduceMotion
+                        ? { opacity: 1 }
+                        : { opacity: 0, scale: 0.9 }
+                    }
+                    animate={{ opacity: 1, scale: 1 }}
+                    exit={
+                      shouldReduceMotion
+                        ? { opacity: 0 }
+                        : { opacity: 0, scale: 0.9 }
+                    }
+                    transition={{ duration: shouldReduceMotion ? 0.14 : 0.22, ease: [0.22, 1, 0.36, 1] }}
+                    className={cn(
+                      "relative z-[1] flex h-full w-full items-center justify-center rounded-full",
+                      overlayMode ? "text-white" : "text-[color:var(--foreground)]",
+                    )}
+                    aria-label={copy.menuOpen}
+                    aria-controls="site-menu"
+                    aria-expanded={false}
+                    onClick={handleCollapsedMenuClick}
+                  >
+                    <span className="pointer-events-none relative flex h-4 w-4 flex-col items-center justify-center gap-[0.18rem]">
+                      <span className="h-[1.5px] w-4 rounded-full bg-current" />
+                      <span className="h-[1.5px] w-4 rounded-full bg-current opacity-90" />
+                      <span className="h-[1.5px] w-4 rounded-full bg-current opacity-80" />
+                    </span>
+                  </motion.button>
+                )}
+              </AnimatePresence>
+            </motion.div>
           </div>
         </div>
       </header>
