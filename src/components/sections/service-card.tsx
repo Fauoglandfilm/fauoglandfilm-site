@@ -204,7 +204,7 @@ export function ServiceCard({ service, index = 0 }: ServiceCardProps) {
     : "inset 0 1px 0 rgba(255,255,255,0.94), 0 28px 60px rgba(122,140,168,0.22), 0 0 0 1px rgba(255,255,255,0.64)";
   const overlayClassName = isDarkTheme
     ? "bg-[radial-gradient(circle_at_top_left,rgba(255,255,255,0.18),transparent_28%),linear-gradient(160deg,rgba(255,255,255,0.05),transparent_42%,rgba(255,255,255,0.03)_100%)]"
-    : "bg-[radial-gradient(circle_at_top_left,rgba(255,255,255,0.96),transparent_28%),linear-gradient(160deg,rgba(255,255,255,0.42),transparent_42%,rgba(255,255,255,0.18)_100%)]";
+    : "bg-[radial-gradient(circle_at_top_left,rgba(255,255,255,0.44),transparent_24%),linear-gradient(160deg,rgba(255,255,255,0.14),transparent_40%,rgba(255,255,255,0.05)_100%)]";
   const glowClassName = isDarkTheme ? "bg-[color:var(--accent)]/18" : "bg-[color:var(--accent)]/15";
   const sheenClassName = isDarkTheme
     ? "bg-[linear-gradient(90deg,transparent,rgba(255,255,255,0.16),transparent)] opacity-[0.16]"
@@ -217,20 +217,20 @@ export function ServiceCard({ service, index = 0 }: ServiceCardProps) {
     : "bg-[linear-gradient(180deg,rgba(248,251,255,0.16)_0%,rgba(244,248,253,0.04)_24%,rgba(214,224,236,0.16)_58%,rgba(226,234,243,0.62)_100%)]";
   const badgeClassName = isDarkTheme
     ? "border-white/18 bg-[linear-gradient(180deg,rgba(10,14,22,0.74),rgba(10,14,22,0.52))] text-white/90 shadow-[0_10px_24px_rgba(0,0,0,0.28)]"
-    : "border-white/78 bg-[linear-gradient(180deg,rgba(255,255,255,0.86),rgba(245,249,253,0.78))] text-[color:var(--foreground)] shadow-[0_10px_24px_rgba(154,173,200,0.22)]";
+    : "border-white/88 bg-[linear-gradient(180deg,rgba(255,255,255,0.96),rgba(244,248,252,0.92))] text-[color:var(--foreground)] shadow-[0_10px_24px_rgba(154,173,200,0.22)]";
   const contentSurfaceClassName = isDarkTheme
-    ? "border-white/10 bg-[linear-gradient(180deg,rgba(9,12,18,0.9),rgba(9,12,18,0.72)_100%)] shadow-[inset_0_1px_0_rgba(255,255,255,0.06)]"
-    : "border-white/78 bg-[linear-gradient(180deg,rgba(255,255,255,0.9),rgba(243,247,252,0.82)_100%)] shadow-[inset_0_1px_0_rgba(255,255,255,0.8)]";
+    ? "border-white/12 bg-[linear-gradient(180deg,rgba(10,14,21,0.98),rgba(10,14,21,0.92)_54%,rgba(10,14,21,0.86)_100%)] shadow-[inset_0_1px_0_rgba(255,255,255,0.08),0_14px_32px_rgba(0,0,0,0.18)]"
+    : "border-[color:var(--line)]/72 bg-[linear-gradient(180deg,rgba(255,255,255,0.98),rgba(248,250,253,0.97)_46%,rgba(241,245,250,0.95)_100%)] shadow-[inset_0_1px_0_rgba(255,255,255,0.9),0_14px_32px_rgba(154,173,200,0.16)]";
   const titleClassName = isDarkTheme ? "text-white" : "text-[color:var(--foreground)]";
-  const sublineClassName = isDarkTheme ? "text-white/84" : "text-[color:var(--foreground)]/78";
+  const sublineClassName = isDarkTheme ? "text-white/88" : "text-[color:var(--foreground)]/84";
   const chipClassName = isDarkTheme
-    ? "border-white/12 bg-white/[0.07] text-white/84"
-    : "border-black/8 bg-white/72 text-[color:var(--foreground)]/78 shadow-[0_8px_18px_rgba(154,173,200,0.12)]";
-  const listClassName = isDarkTheme ? "text-white/82" : "text-[color:var(--foreground)]/76";
+    ? "border-white/16 bg-white/[0.09] text-white/92 shadow-[0_8px_18px_rgba(0,0,0,0.16)]"
+    : "border-[color:var(--line)]/72 bg-white/94 text-[color:var(--foreground)] shadow-[0_8px_18px_rgba(154,173,200,0.12)]";
+  const listClassName = isDarkTheme ? "text-white/88" : "text-[color:var(--foreground)]/84";
   const secondaryLinkClassName = isDarkTheme
-    ? "border-white/10 bg-white/[0.03] text-white/72 hover:border-white/16 hover:bg-white/[0.05] hover:text-white focus-visible:ring-offset-[#070b12]"
-    : "border-black/8 bg-white/48 text-[color:var(--foreground)] hover:border-black/12 hover:bg-white/64 hover:text-[color:var(--foreground)] focus-visible:ring-offset-[#eef3f9]";
-  const arrowClassName = isDarkTheme ? "text-white/34" : "text-[var(--muted)]";
+    ? "border-white/12 bg-white/[0.05] text-white/84 hover:border-white/18 hover:bg-white/[0.08] hover:text-white focus-visible:ring-offset-[#070b12]"
+    : "border-[color:var(--line)]/72 bg-white/78 text-[color:var(--foreground)] hover:border-[color:var(--line)] hover:bg-white hover:text-[color:var(--foreground)] focus-visible:ring-offset-[#eef3f9]";
+  const arrowClassName = isDarkTheme ? "text-white/52" : "text-[color:var(--foreground)]/48";
   const primaryButtonClassName = isDarkTheme
     ? "border-[color:var(--accent)]/24 bg-[linear-gradient(135deg,color-mix(in_srgb,var(--accent)_28%,rgba(255,255,255,0.12)),rgba(255,255,255,0.05)_58%,rgba(255,255,255,0.03)_100%)] text-white shadow-[0_12px_30px_color-mix(in_srgb,var(--accent)_18%,transparent)] hover:border-[color:var(--accent)]/42 hover:shadow-[0_16px_38px_color-mix(in_srgb,var(--accent)_22%,transparent)]"
     : "border-[color:var(--accent)]/26 bg-[linear-gradient(135deg,color-mix(in_srgb,var(--accent)_22%,white),rgba(255,255,255,0.94)_58%,rgba(255,255,255,0.86)_100%)] text-[color:var(--foreground)] shadow-[0_12px_28px_color-mix(in_srgb,var(--accent)_14%,transparent)] hover:border-[color:var(--accent)]/42 hover:shadow-[0_16px_34px_color-mix(in_srgb,var(--accent)_18%,transparent)]";
@@ -331,7 +331,7 @@ export function ServiceCard({ service, index = 0 }: ServiceCardProps) {
           }
         />
 
-        <div className="relative flex h-full flex-col p-2 sm:p-2.25">
+        <div className="relative flex h-full flex-col p-2.25 sm:p-2.5">
           <div className={`relative overflow-hidden rounded-[0.86rem] ${mediaSurfaceClassName}`}>
             <div
               className={`pointer-events-none absolute left-1.75 top-1.75 z-[3] inline-flex items-center gap-1.25 rounded-full border px-2 py-0.85 backdrop-blur-2xl ${badgeClassName}`}
@@ -372,47 +372,47 @@ export function ServiceCard({ service, index = 0 }: ServiceCardProps) {
             <div className={`absolute inset-0 ${mediaOverlayClassName}`} />
           </div>
 
-          <div className="relative mt-1.75 flex flex-1 flex-col">
+          <div className="relative mt-2.25 flex flex-1 flex-col">
             <div
-              className={`pointer-events-none absolute inset-x-[-0.45rem] inset-y-[-0.4rem] rounded-[0.92rem] border ${contentSurfaceClassName}`}
+              className={`pointer-events-none absolute inset-x-[-0.3rem] inset-y-[-0.35rem] rounded-[0.98rem] border ${contentSurfaceClassName}`}
             />
-            <div className="space-y-1.25">
+            <div className="relative z-[1] space-y-1.75 px-0.3 pt-0.2">
               <div className="flex items-start justify-between gap-3">
                 <h3
-                  className={`max-w-[9.5ch] text-[1.04rem] font-bold leading-[0.92] tracking-[-0.052em] sm:text-[1.12rem] ${titleClassName}`}
+                  className={`max-w-[9.5ch] text-[1.12rem] font-extrabold leading-[0.9] tracking-[-0.052em] sm:text-[1.2rem] ${titleClassName}`}
                 >
                   {title}
                 </h3>
                 <ArrowUpRight
-                  className={`mt-0.5 h-3.25 w-3.25 shrink-0 transition duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-[color:var(--accent)] ${arrowClassName}`}
+                  className={`mt-0.5 h-3.5 w-3.5 shrink-0 transition duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-[color:var(--accent)] ${arrowClassName}`}
                 />
               </div>
-              <p className={`max-w-[22ch] text-[0.78rem] font-medium leading-4.75 sm:text-[0.82rem] ${sublineClassName}`}>
+              <p className={`max-w-[22ch] text-[0.83rem] font-semibold leading-5.25 sm:text-[0.88rem] ${sublineClassName}`}>
                 {subline}
               </p>
+
+              <div className="flex flex-wrap gap-1.1">
+                {[purposeChip, budgetChip, timelineChip].map((chip) => (
+                  <span
+                    key={`${service.slug}-${chip}`}
+                    className={`rounded-full border px-2.1 py-1 text-[0.6rem] font-semibold tracking-[0.01em] backdrop-blur-xl ${chipClassName}`}
+                  >
+                    {chip}
+                  </span>
+                ))}
+              </div>
+
+              <ul className={`space-y-1.2 text-[0.8rem] leading-5 ${listClassName}`}>
+                {deliverables.map((item) => (
+                  <li key={`${service.slug}-${item}`} className="flex items-start gap-2">
+                    <span className="mt-1.6 h-1.2 w-1.2 rounded-full bg-[color:var(--accent)]/92" />
+                    <span className="font-medium">{item}</span>
+                  </li>
+                ))}
+              </ul>
             </div>
 
-            <div className="mt-1.75 flex flex-wrap gap-0.9">
-              {[purposeChip, budgetChip, timelineChip].map((chip) => (
-                <span
-                  key={`${service.slug}-${chip}`}
-                  className={`rounded-full border px-1.8 py-0.8 text-[0.56rem] font-semibold tracking-[0.01em] backdrop-blur-xl ${chipClassName}`}
-                >
-                  {chip}
-                </span>
-              ))}
-            </div>
-
-            <ul className={`mt-2 space-y-0.85 text-[0.76rem] leading-4.5 ${listClassName}`}>
-              {deliverables.map((item) => (
-                <li key={`${service.slug}-${item}`} className="flex items-start gap-1.75">
-                  <span className="mt-1.4 h-1.15 w-1.15 rounded-full bg-[color:var(--accent)]/86" />
-                  <span className="font-medium">{item}</span>
-                </li>
-              ))}
-            </ul>
-
-            <div className="mt-auto flex flex-col gap-1.25 pt-2.25">
+            <div className="relative z-[1] mt-auto flex flex-col gap-1.6 px-0.3 pt-3">
               <ButtonLink
                 href={service.href}
                 size="compact"
@@ -422,7 +422,7 @@ export function ServiceCard({ service, index = 0 }: ServiceCardProps) {
               </ButtonLink>
               <Link
                 href={secondaryHref}
-                className={`inline-flex min-h-9 items-center justify-between rounded-[0.9rem] border px-3 py-1.75 text-[0.76rem] font-medium transition duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--accent)]/62 focus-visible:ring-offset-2 ${secondaryLinkClassName}`}
+                className={`inline-flex min-h-9 items-center justify-between rounded-[0.9rem] border px-3.2 py-2 text-[0.79rem] font-semibold transition duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--accent)]/62 focus-visible:ring-offset-2 ${secondaryLinkClassName}`}
               >
                 <span>{secondaryLabel}</span>
                 <ArrowUpRight className="h-3.25 w-3.25" />
