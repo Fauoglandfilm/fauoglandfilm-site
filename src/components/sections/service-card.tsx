@@ -213,17 +213,20 @@ export function ServiceCard({ service, index = 0 }: ServiceCardProps) {
     ? "bg-white/[0.035] shadow-[inset_0_1px_0_rgba(255,255,255,0.08),0_14px_28px_rgba(0,0,0,0.12)]"
     : "bg-white/56 shadow-[inset_0_1px_0_rgba(255,255,255,0.8),0_14px_28px_rgba(154,173,200,0.12)]";
   const mediaOverlayClassName = isDarkTheme
-    ? "bg-[linear-gradient(180deg,rgba(255,255,255,0.02),rgba(9,12,18,0.02)_30%,rgba(9,12,18,0.12)_100%)]"
-    : "bg-[linear-gradient(180deg,rgba(255,255,255,0.02),rgba(232,238,246,0.02)_30%,rgba(210,222,236,0.1)_100%)]";
+    ? "bg-[linear-gradient(180deg,rgba(4,7,12,0.18)_0%,rgba(4,7,12,0.04)_22%,rgba(7,10,16,0.22)_58%,rgba(7,10,16,0.66)_100%)]"
+    : "bg-[linear-gradient(180deg,rgba(248,251,255,0.16)_0%,rgba(244,248,253,0.04)_24%,rgba(214,224,236,0.16)_58%,rgba(226,234,243,0.62)_100%)]";
   const badgeClassName = isDarkTheme
-    ? "border-white/12 bg-black/18 text-white/66"
-    : "border-white/70 bg-white/58 text-[var(--muted)] shadow-[0_8px_20px_rgba(154,173,200,0.18)]";
+    ? "border-white/18 bg-[linear-gradient(180deg,rgba(10,14,22,0.74),rgba(10,14,22,0.52))] text-white/90 shadow-[0_10px_24px_rgba(0,0,0,0.28)]"
+    : "border-white/78 bg-[linear-gradient(180deg,rgba(255,255,255,0.86),rgba(245,249,253,0.78))] text-[color:var(--foreground)] shadow-[0_10px_24px_rgba(154,173,200,0.22)]";
+  const contentSurfaceClassName = isDarkTheme
+    ? "border-white/10 bg-[linear-gradient(180deg,rgba(9,12,18,0.9),rgba(9,12,18,0.72)_100%)] shadow-[inset_0_1px_0_rgba(255,255,255,0.06)]"
+    : "border-white/78 bg-[linear-gradient(180deg,rgba(255,255,255,0.9),rgba(243,247,252,0.82)_100%)] shadow-[inset_0_1px_0_rgba(255,255,255,0.8)]";
   const titleClassName = isDarkTheme ? "text-white" : "text-[color:var(--foreground)]";
-  const sublineClassName = isDarkTheme ? "text-white/78" : "text-[var(--muted-2)]";
+  const sublineClassName = isDarkTheme ? "text-white/84" : "text-[color:var(--foreground)]/78";
   const chipClassName = isDarkTheme
-    ? "border-white/10 bg-white/[0.05] text-white/74"
-    : "border-black/8 bg-white/54 text-[var(--muted)] shadow-[0_8px_18px_rgba(154,173,200,0.12)]";
-  const listClassName = isDarkTheme ? "text-white/70" : "text-[var(--muted-2)]";
+    ? "border-white/12 bg-white/[0.07] text-white/84"
+    : "border-black/8 bg-white/72 text-[color:var(--foreground)]/78 shadow-[0_8px_18px_rgba(154,173,200,0.12)]";
+  const listClassName = isDarkTheme ? "text-white/82" : "text-[color:var(--foreground)]/76";
   const secondaryLinkClassName = isDarkTheme
     ? "border-white/10 bg-white/[0.03] text-white/72 hover:border-white/16 hover:bg-white/[0.05] hover:text-white focus-visible:ring-offset-[#070b12]"
     : "border-black/8 bg-white/48 text-[color:var(--foreground)] hover:border-black/12 hover:bg-white/64 hover:text-[color:var(--foreground)] focus-visible:ring-offset-[#eef3f9]";
@@ -370,10 +373,13 @@ export function ServiceCard({ service, index = 0 }: ServiceCardProps) {
           </div>
 
           <div className="relative mt-1.75 flex flex-1 flex-col">
+            <div
+              className={`pointer-events-none absolute inset-x-[-0.45rem] inset-y-[-0.4rem] rounded-[0.92rem] border ${contentSurfaceClassName}`}
+            />
             <div className="space-y-1.25">
               <div className="flex items-start justify-between gap-3">
                 <h3
-                  className={`max-w-[9.5ch] text-[1rem] font-semibold leading-[0.94] tracking-[-0.05em] sm:text-[1.08rem] ${titleClassName}`}
+                  className={`max-w-[9.5ch] text-[1.04rem] font-bold leading-[0.92] tracking-[-0.052em] sm:text-[1.12rem] ${titleClassName}`}
                 >
                   {title}
                 </h3>
@@ -381,7 +387,7 @@ export function ServiceCard({ service, index = 0 }: ServiceCardProps) {
                   className={`mt-0.5 h-3.25 w-3.25 shrink-0 transition duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-[color:var(--accent)] ${arrowClassName}`}
                 />
               </div>
-              <p className={`max-w-[22ch] text-[0.74rem] leading-4.5 sm:text-[0.78rem] ${sublineClassName}`}>
+              <p className={`max-w-[22ch] text-[0.78rem] font-medium leading-4.75 sm:text-[0.82rem] ${sublineClassName}`}>
                 {subline}
               </p>
             </div>
@@ -390,18 +396,18 @@ export function ServiceCard({ service, index = 0 }: ServiceCardProps) {
               {[purposeChip, budgetChip, timelineChip].map((chip) => (
                 <span
                   key={`${service.slug}-${chip}`}
-                  className={`rounded-full border px-1.8 py-0.8 text-[0.54rem] font-medium tracking-[0.01em] backdrop-blur-xl ${chipClassName}`}
+                  className={`rounded-full border px-1.8 py-0.8 text-[0.56rem] font-semibold tracking-[0.01em] backdrop-blur-xl ${chipClassName}`}
                 >
                   {chip}
                 </span>
               ))}
             </div>
 
-            <ul className={`mt-2 space-y-0.85 text-[0.74rem] leading-4.4 ${listClassName}`}>
+            <ul className={`mt-2 space-y-0.85 text-[0.76rem] leading-4.5 ${listClassName}`}>
               {deliverables.map((item) => (
                 <li key={`${service.slug}-${item}`} className="flex items-start gap-1.75">
                   <span className="mt-1.4 h-1.15 w-1.15 rounded-full bg-[color:var(--accent)]/86" />
-                  <span>{item}</span>
+                  <span className="font-medium">{item}</span>
                 </li>
               ))}
             </ul>
