@@ -428,7 +428,7 @@ export function Header() {
               ref={headerSurfaceRef}
               layout
               initial={false}
-              transition={{ duration: shouldReduceMotion ? 0.18 : 0.34, ease: [0.22, 1, 0.36, 1] }}
+              transition={{ duration: shouldReduceMotion ? 0.54 : 1.02, ease: [0.22, 1, 0.36, 1] }}
               className={cn(
                 "relative overflow-hidden transition duration-300",
                 navExpanded
@@ -465,7 +465,7 @@ export function Header() {
                         ? { opacity: 0 }
                         : { opacity: 0, x: 18, scale: 0.985 }
                     }
-                    transition={{ duration: shouldReduceMotion ? 0.16 : 0.28, ease: [0.22, 1, 0.36, 1] }}
+                    transition={{ duration: shouldReduceMotion ? 0.48 : 0.84, ease: [0.22, 1, 0.36, 1] }}
                     className="relative z-[1] flex items-center justify-between gap-2.5 sm:gap-4 lg:grid lg:grid-cols-[auto_minmax(0,1fr)_auto] lg:items-center lg:gap-5"
                   >
                     <Link
@@ -641,7 +641,7 @@ export function Header() {
                         ? { opacity: 0 }
                         : { opacity: 0, scale: 0.9 }
                     }
-                    transition={{ duration: shouldReduceMotion ? 0.14 : 0.22, ease: [0.22, 1, 0.36, 1] }}
+                    transition={{ duration: shouldReduceMotion ? 0.42 : 0.66, ease: [0.22, 1, 0.36, 1] }}
                     className={cn(
                       "relative z-[1] flex h-full w-full items-center justify-center rounded-full",
                       overlayMode ? "text-white" : "text-[color:var(--foreground)]",
