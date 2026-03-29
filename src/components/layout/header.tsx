@@ -161,7 +161,9 @@ export function Header() {
   const shouldReduceMotion = useReducedMotion();
   const { language, setLanguage, theme, setTheme } = useSitePreferences();
   const copy = uiCopy.header[language];
-  const overlayMode = pathname === "/" && !scrolled && !open;
+  const isHomepage = pathname === "/";
+  const usesAnimatedHomepageNavbar = isHomepage;
+  const overlayMode = usesAnimatedHomepageNavbar && !scrolled && !open;
   const darkOverlayMode = overlayMode && theme === "dark";
   const hidesGlobalChrome = pathname?.startsWith("/pitch");
   const menuLabel = language === "no" ? "Meny" : "Menu";
@@ -169,7 +171,7 @@ export function Header() {
     language === "no"
       ? "Oslo / Reklamefilm / Produksjon"
       : "Oslo / Commercial film / Production";
-  const navExpanded = scrolled || open || searchOpen || navbarPeekOpen;
+  const navExpanded = !usesAnimatedHomepageNavbar || scrolled || open || searchOpen || navbarPeekOpen;
   const normalizedSearchQuery = searchQuery.trim().toLocaleLowerCase(language === "no" ? "nb-NO" : "en-US");
   const searchResults = useMemo(() => {
     if (!normalizedSearchQuery) {
@@ -327,17 +329,17 @@ export function Header() {
   }, [open]);
 
   useEffect(() => {
-    if (scrolled || open || searchOpen) {
+    if (!usesAnimatedHomepageNavbar || scrolled || open || searchOpen) {
       setNavbarPeekOpen(false);
     }
-  }, [open, scrolled, searchOpen]);
+  }, [open, scrolled, searchOpen, usesAnimatedHomepageNavbar]);
 
   useEffect(() => {
     setNavbarPeekOpen(false);
   }, [pathname]);
 
   useEffect(() => {
-    if (!navbarPeekOpen || scrolled || open || searchOpen) {
+    if (!usesAnimatedHomepageNavbar || !navbarPeekOpen || scrolled || open || searchOpen) {
       return;
     }
 
@@ -360,7 +362,7 @@ export function Header() {
       window.removeEventListener("pointerdown", onPointerDown);
       window.removeEventListener("keydown", onKeyDown);
     };
-  }, [navbarPeekOpen, open, scrolled, searchOpen]);
+  }, [navbarPeekOpen, open, scrolled, searchOpen, usesAnimatedHomepageNavbar]);
 
   useEffect(() => {
     if (!searchOpen) {
@@ -404,6 +406,10 @@ export function Header() {
   };
 
   const handleCollapsedMenuClick = () => {
+    if (!usesAnimatedHomepageNavbar) {
+      return;
+    }
+
     if (window.innerWidth >= 1024) {
       setNavbarPeekOpen(true);
       return;
