@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import type { PointerEvent as ReactPointerEvent } from "react";
+import type { PointerEvent as ReactPointerEvent, ReactNode } from "react";
 
 import {
   motion,
@@ -89,68 +89,37 @@ const servicePurposeChipBySlug = {
   },
 } as const;
 
-const serviceTimelineChipBySlug = {
-  reklamefilm: {
-    no: "2–5 uker",
-    en: "2–5 weeks",
-  },
-  "marketing-distribusjon": {
-    no: "3–10 dager",
-    en: "3–10 days",
-  },
-  "bedriftsfilm-intervjuer": {
-    no: "1–3 uker",
-    en: "1–3 weeks",
-  },
+const serviceTitleLinesBySlug = {
   "some-innhold": {
-    no: "3–10 dager",
-    en: "3–10 days",
-  },
-  "event-live": {
-    no: "Samme dag–2 uker",
-    en: "Same day–2 weeks",
-  },
-  "dronefilm-luftfoto": {
-    no: "1–7 dager",
-    en: "1–7 days",
+    no: ["Innhold for sosiale", "medier"],
+    en: ["Social media", "content"],
   },
 } as const;
 
-const serviceBudgetDisplayBySlug = {
-  reklamefilm: {
-    no: "40 000–180 000 kr+",
-    en: "NOK 40,000-180,000+",
+const infoLabelCopy = {
+  no: {
+    outcome: "HOVEDMÅL",
+    timeline: "LEVERINGSTID",
+    budget: "BUDSJETT",
   },
-  "marketing-distribusjon": {
-    no: "15 000–60 000 kr",
-    en: "NOK 15,000-60,000",
-  },
-  "bedriftsfilm-intervjuer": {
-    no: "35 000–120 000 kr",
-    en: "NOK 35,000-120,000",
-  },
-  "some-innhold": {
-    no: "20 000–80 000 kr",
-    en: "NOK 20,000-80,000",
-  },
-  "event-live": {
-    no: "30 000–120 000 kr+",
-    en: "NOK 30,000-120,000+",
-  },
-  "dronefilm-luftfoto": {
-    no: "10 000–40 000 kr",
-    en: "NOK 10,000-40,000",
+  en: {
+    outcome: "PRIMARY GOAL",
+    timeline: "TIMELINE",
+    budget: "BUDGET",
   },
 } as const;
 
-const serviceChipPriorityBySlug = {
-  reklamefilm: "budget",
-  "marketing-distribusjon": "timeline",
-  "bedriftsfilm-intervjuer": "budget",
-  "some-innhold": "timeline",
-  "event-live": "timeline",
-  "dronefilm-luftfoto": "timeline",
-} as const;
+function renderTitle(title: string, lines?: readonly string[]): ReactNode {
+  if (!lines?.length) {
+    return title;
+  }
+
+  return lines.map((line, index) => (
+    <span key={`${line}-${index}`} className="block">
+      {line}
+    </span>
+  ));
+}
 
 export function ServiceCard({ service, index = 0 }: ServiceCardProps) {
   const { language, theme } = useSitePreferences();
@@ -177,19 +146,12 @@ export function ServiceCard({ service, index = 0 }: ServiceCardProps) {
     servicePurposeChipBySlug[service.slug as keyof typeof servicePurposeChipBySlug],
     language,
   );
-  const timelineChip = resolveLocalizedValue(
-    serviceTimelineChipBySlug[service.slug as keyof typeof serviceTimelineChipBySlug],
-    language,
-  );
-  const budgetChip = resolveLocalizedValue(
-    serviceBudgetDisplayBySlug[service.slug as keyof typeof serviceBudgetDisplayBySlug],
-    language,
-  );
-  const chipPriority = serviceChipPriorityBySlug[service.slug as keyof typeof serviceChipPriorityBySlug] ?? "budget";
-  const keyChips = [purposeChip, chipPriority === "budget" ? budgetChip : timelineChip];
-  const metaLabel =
-    language === "no" ? (chipPriority === "budget" ? "Levering" : "Budsjett") : chipPriority === "budget" ? "Timeline" : "Budget";
-  const metaValue = chipPriority === "budget" ? timelineChip : budgetChip;
+  const infoRows = [
+    { label: infoLabelCopy[language].outcome, value: purposeChip },
+    { label: infoLabelCopy[language].timeline, value: resolveLocalizedValue(service.timeline, language) },
+    { label: infoLabelCopy[language].budget, value: resolveLocalizedValue(service.budget, language) },
+  ];
+  const titleLines = serviceTitleLinesBySlug[service.slug as keyof typeof serviceTitleLinesBySlug]?.[language];
   const shellClassName = isDarkTheme
     ? "border-white/10 bg-[linear-gradient(180deg,rgba(255,255,255,0.1),rgba(255,255,255,0.03)_48%,rgba(255,255,255,0.045)_100%)] shadow-[inset_0_1px_0_rgba(255,255,255,0.1),0_24px_52px_rgba(2,6,12,0.34)]"
     : "border-[color:var(--line)]/78 bg-[linear-gradient(180deg,rgba(255,255,255,0.84),rgba(246,249,253,0.76)_50%,rgba(239,245,252,0.7)_100%)] shadow-[inset_0_1px_0_rgba(255,255,255,0.9),0_22px_48px_rgba(122,140,168,0.18)]";
@@ -211,17 +173,16 @@ export function ServiceCard({ service, index = 0 }: ServiceCardProps) {
     : "bg-[linear-gradient(180deg,rgba(248,251,255,0.16)_0%,rgba(244,248,253,0.04)_24%,rgba(214,224,236,0.16)_58%,rgba(226,234,243,0.62)_100%)]";
   const titleClassName = isDarkTheme ? "text-white" : "text-[color:var(--foreground)]";
   const sublineClassName = isDarkTheme ? "text-white/90" : "text-[color:var(--foreground)]/88";
-  const chipClassName = isDarkTheme
-    ? "border-white/16 bg-white/[0.09] text-white shadow-[0_8px_18px_rgba(0,0,0,0.16)]"
-    : "border-[color:var(--line)]/72 bg-white/94 text-[color:var(--foreground)] shadow-[0_8px_18px_rgba(154,173,200,0.12)]";
-  const metaRowClassName = isDarkTheme ? "text-white/72" : "text-[color:var(--foreground)]/68";
-  const metaLabelClassName = isDarkTheme ? "text-white/54" : "text-[color:var(--foreground)]/48";
+  const infoRowClassName = isDarkTheme
+    ? "border-white/12 text-white/82"
+    : "border-[color:var(--foreground)]/8 text-[color:var(--foreground)]/82";
+  const infoLabelClassName = isDarkTheme ? "text-white/50" : "text-[color:var(--foreground)]/48";
   const secondaryLinkClassName = isDarkTheme
-    ? "border-white/14 bg-white/[0.08] text-white/92 shadow-[0_12px_28px_rgba(0,0,0,0.16)] hover:border-white/22 hover:bg-white/[0.12] hover:text-white focus-visible:ring-offset-[#070b12]"
-    : "border-[color:var(--foreground)]/10 bg-white/92 text-[color:var(--foreground)] shadow-[0_12px_28px_rgba(122,140,168,0.14)] hover:border-[color:var(--foreground)]/18 hover:bg-white hover:text-[color:var(--foreground)] focus-visible:ring-offset-[#eef3f9]";
+    ? "border-white/14 bg-white/[0.12] text-white shadow-[0_12px_28px_rgba(0,0,0,0.16)] hover:border-white/22 hover:bg-white/[0.16] hover:text-white focus-visible:ring-offset-[#070b12]"
+    : "border-[color:var(--foreground)]/10 bg-white text-[color:var(--foreground)] shadow-[0_12px_28px_rgba(122,140,168,0.14)] hover:border-[color:var(--foreground)]/18 hover:bg-white hover:text-[color:var(--foreground)] focus-visible:ring-offset-[#eef3f9]";
   const primaryButtonClassName = isDarkTheme
-    ? "min-h-[2.85rem] border-[color:var(--accent)]/24 shadow-[0_14px_30px_color-mix(in_srgb,var(--accent)_18%,transparent)] hover:border-[color:var(--accent)]/42 hover:shadow-[0_18px_38px_color-mix(in_srgb,var(--accent)_22%,transparent)]"
-    : "min-h-[2.85rem] border-[color:var(--accent)]/26 shadow-[0_14px_28px_color-mix(in_srgb,var(--accent)_14%,transparent)] hover:border-[color:var(--accent)]/42 hover:shadow-[0_18px_34px_color-mix(in_srgb,var(--accent)_18%,transparent)]";
+    ? "min-h-[2.85rem] border-[color:var(--accent)]/24 shadow-[0_14px_30px_color-mix(in_srgb,var(--accent)_18%,transparent)] hover:border-[color:var(--accent)]/42 hover:shadow-[0_18px_38px_color-mix(in_srgb,var(--accent)_22%,transparent)] [&_.button-label-base]:gap-1.5 [&_.button-label-dot]:h-[0.35rem] [&_.button-label-dot]:w-[0.35rem]"
+    : "min-h-[2.85rem] border-[color:var(--accent)]/26 shadow-[0_14px_28px_color-mix(in_srgb,var(--accent)_14%,transparent)] hover:border-[color:var(--accent)]/42 hover:shadow-[0_18px_34px_color-mix(in_srgb,var(--accent)_18%,transparent)] [&_.button-label-base]:gap-1.5 [&_.button-label-dot]:h-[0.35rem] [&_.button-label-dot]:w-[0.35rem]";
 
   const pointerX = useMotionValue(0);
   const pointerY = useMotionValue(0);
@@ -285,7 +246,7 @@ export function ServiceCard({ service, index = 0 }: ServiceCardProps) {
       style={cardStyle}
     >
       <motion.div
-        className={`relative flex h-full w-[78vw] min-w-[14.75rem] max-w-[16.25rem] flex-col overflow-hidden rounded-[1.05rem] border backdrop-blur-[30px] will-change-transform sm:w-[15.5rem] sm:min-w-[15.5rem] sm:max-w-[15.5rem] xl:w-[16.75rem] xl:min-w-[16.75rem] xl:max-w-[16.75rem] ${shellClassName}`}
+        className={`relative flex h-full w-[72vw] min-w-[13.6rem] max-w-[15rem] flex-col overflow-hidden rounded-[1.05rem] border backdrop-blur-[30px] will-change-transform sm:w-[14.45rem] sm:min-w-[14.45rem] sm:max-w-[14.45rem] xl:w-[15.35rem] xl:min-w-[15.35rem] xl:max-w-[15.35rem] ${shellClassName}`}
         whileHover={
           shouldReduceMotion
             ? undefined
@@ -341,7 +302,7 @@ export function ServiceCard({ service, index = 0 }: ServiceCardProps) {
                 mediaObjectClassName={mediaConfig.mediaObjectClassName}
                 previewBehavior={video ? "hover-or-viewport" : "static"}
                 className="absolute inset-0"
-                sizes="(min-width: 1536px) 16.75rem, (min-width: 640px) 15.5rem, 78vw"
+                sizes="(min-width: 1536px) 15.35rem, (min-width: 640px) 14.45rem, 72vw"
                 rootMargin="120px 20px -12% 20px"
                 inViewThreshold={0.22}
                 priority={false}
@@ -355,33 +316,28 @@ export function ServiceCard({ service, index = 0 }: ServiceCardProps) {
           <div className="relative flex flex-1 flex-col px-0.7 pb-0.35 pt-3.2">
             <div className="space-y-3.2">
               <h3
-                className={`max-w-[12ch] text-[1.34rem] font-black leading-[0.9] tracking-[-0.058em] sm:text-[1.48rem] ${titleClassName}`}
+                className={`max-w-[12.5ch] text-balance text-[1.3rem] font-black leading-[0.92] tracking-[-0.05em] sm:text-[1.42rem] ${titleClassName}`}
               >
-                {title}
+                {renderTitle(title, titleLines)}
               </h3>
-              <p className={`max-w-[22ch] text-[0.92rem] font-semibold leading-[1.42] sm:text-[0.98rem] ${sublineClassName} line-clamp-2`}>
+              <p className={`max-w-[22ch] text-[0.9rem] font-semibold leading-[1.42] sm:text-[0.96rem] ${sublineClassName} line-clamp-2`}>
                 {subline}
               </p>
 
-              <div className="flex flex-wrap gap-1.25">
-                {keyChips.map((chip) => (
-                  <span
-                    key={`${service.slug}-${chip}`}
-                    className={`rounded-full border px-2.3 py-1.1 text-[0.67rem] font-semibold tracking-[0.01em] backdrop-blur-xl ${chipClassName}`}
+              <div className="space-y-1.4">
+                {infoRows.map((item) => (
+                  <div
+                    key={`${service.slug}-${item.label}`}
+                    className={`flex items-baseline gap-1.5 border-b pb-1.3 text-[0.72rem] font-medium leading-[1.35] ${infoRowClassName}`}
                   >
-                    {chip}
-                  </span>
+                    <span className={`shrink-0 text-[0.61rem] tracking-[0.16em] ${infoLabelClassName}`}>{item.label}</span>
+                    <span className="min-w-0 text-[0.79rem] font-semibold leading-[1.3]">{item.value}</span>
+                  </div>
                 ))}
-              </div>
-
-              <div className={`flex flex-wrap items-center gap-x-1.8 gap-y-1 text-[0.72rem] font-medium leading-[1.45] ${metaRowClassName}`}>
-                <span className={`uppercase tracking-[0.12em] ${metaLabelClassName}`}>{metaLabel}</span>
-                <span aria-hidden="true" className="h-1 w-1 rounded-full bg-[color:var(--accent)]/72" />
-                <span>{metaValue}</span>
               </div>
             </div>
 
-            <div className="mt-auto grid gap-2.15 pt-4.25">
+            <div className="mt-auto grid gap-2.15 pt-5">
               <ButtonLink
                 href={service.href}
                 size="compact"
@@ -392,10 +348,10 @@ export function ServiceCard({ service, index = 0 }: ServiceCardProps) {
               </ButtonLink>
               <Link
                 href={secondaryHref}
-                className={`inline-flex min-h-[2.85rem] items-center justify-between rounded-full border px-3.4 py-2.1 text-[0.82rem] font-semibold transition duration-200 backdrop-blur-xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--accent)]/62 focus-visible:ring-offset-2 ${secondaryLinkClassName}`}
+                className={`inline-flex w-full min-h-[2.85rem] items-center justify-start gap-1.15 rounded-[1rem] border px-3.15 py-2.1 text-[0.81rem] font-semibold transition duration-200 backdrop-blur-xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--accent)]/62 focus-visible:ring-offset-2 ${secondaryLinkClassName}`}
               >
                 <span>{secondaryLabel}</span>
-                <ArrowUpRight className="h-3.25 w-3.25" />
+                <ArrowUpRight className="h-3.05 w-3.05" />
               </Link>
             </div>
           </div>

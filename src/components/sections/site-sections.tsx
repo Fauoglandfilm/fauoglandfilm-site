@@ -331,7 +331,7 @@ export function ServicesSection({
   };
 
   return (
-    <section id="tjenester" className="section-space pt-0 pb-0">
+    <section id="tjenester" className="section-space py-[clamp(2.8rem,6vw,5.4rem)]">
       <div className="relative left-1/2 w-screen -translate-x-1/2 overflow-hidden">
         <motion.div
           aria-hidden="true"
@@ -343,38 +343,38 @@ export function ServicesSection({
         <div className="grain-overlay absolute inset-0 opacity-24" />
         <div className={`pointer-events-none absolute inset-x-0 top-0 h-px ${topBorderClassName}`} />
 
-        <div className="relative mx-auto max-w-[1320px] px-4 py-[clamp(0.85rem,1.4vw,1.15rem)] sm:px-6 lg:px-8 xl:px-10">
+        <div className="relative mx-auto max-w-[1320px] px-4 py-[clamp(1.3rem,2vw,1.8rem)] sm:px-6 lg:px-8 xl:px-10">
           <motion.div
-            className="mx-auto max-w-[32rem] text-center"
+            className="mx-auto max-w-[36rem] text-center"
             initial={shouldReduceMotion ? false : { opacity: 0, y: 26, filter: "blur(14px)" }}
             whileInView={shouldReduceMotion ? undefined : { opacity: 1, y: 0, filter: "blur(0px)" }}
             viewport={{ once: true, amount: 0.35 }}
             transition={{ duration: 0.88, ease: [0.22, 1, 0.36, 1] }}
           >
-            <p className={`text-[0.58rem] font-semibold uppercase tracking-[0.22em] ${eyebrowClassName}`}>
+            <p className={`text-[0.5rem] font-semibold uppercase tracking-[0.28em] ${eyebrowClassName}`}>
               {copy.servicesEyebrow}
             </p>
             <h2
-              className={`mt-1.25 text-balance text-[clamp(1.36rem,2.8vw,2.16rem)] font-semibold leading-[0.88] tracking-[-0.062em] ${titleClassName}`}
+              className={`mt-3 text-balance text-[clamp(1.42rem,2.8vw,2.12rem)] font-semibold leading-[0.9] tracking-[-0.05em] ${titleClassName}`}
             >
               {resolvedTitle}
             </h2>
             <p
-              className={`mx-auto mt-1 max-w-[23rem] text-balance text-[0.76rem] leading-4.7 sm:text-[0.82rem] sm:leading-4.9 ${descriptionClassName}`}
+              className={`mx-auto mt-2 max-w-[30rem] text-balance text-[0.77rem] leading-4.8 sm:text-[0.83rem] sm:leading-5 ${descriptionClassName}`}
             >
               {resolvedDescription}
             </p>
           </motion.div>
         </div>
 
-        <div className="relative mt-1.75 sm:mt-2 lg:mt-2.25">
+        <div className="relative mt-3 sm:mt-3.5 lg:mt-4">
           <div className={`pointer-events-none absolute inset-y-0 left-0 z-[2] hidden w-16 ${leftFadeClassName} lg:block`} />
           <div className={`pointer-events-none absolute inset-y-0 right-0 z-[2] hidden w-16 ${rightFadeClassName} lg:block`} />
 
           <div className="relative left-1/2 w-screen -translate-x-1/2">
             <div
               ref={trackRef}
-              className="portfolio-service-track flex w-screen gap-2.25 overflow-x-auto overflow-y-hidden overscroll-x-contain overscroll-y-none px-0 pb-0 pr-0 touch-pan-x [scrollbar-width:none] [&::-webkit-scrollbar]:hidden sm:gap-2.5 lg:gap-3"
+              className="portfolio-service-track flex w-screen gap-2.25 overflow-x-auto overflow-y-hidden overscroll-x-contain overscroll-y-none px-4 pb-1 pr-4 touch-pan-x [scrollbar-width:none] [&::-webkit-scrollbar]:hidden sm:gap-2.5 sm:px-6 sm:pr-6 lg:gap-3 lg:px-8 lg:pr-8 xl:px-10 xl:pr-10"
               style={{ WebkitOverflowScrolling: "touch", overscrollBehaviorY: "none" }}
               aria-label={language === "no" ? "Tjenestekarusell" : "Service carousel"}
               tabIndex={0}

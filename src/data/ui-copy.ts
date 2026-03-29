@@ -124,9 +124,9 @@ export const uiCopy = {
   siteSections: {
     no: {
       servicesEyebrow: "Tjenester",
-      servicesTitle: "Video for synlighet, tillit og flere henvendelser",
+      servicesTitle: "Velg videoen som treffer målet deres",
       servicesDescription:
-        "Fire tjenester med effekt, prisnivå og leveranse.",
+        "Hver tjeneste viser når den funker best, typisk budsjett og hvor raskt dere får resultatene.",
       packagesEyebrow: "Samarbeid",
       packagesTitle: "Faste opplegg for dere som trenger jevnlig innhold",
       packagesDescription:
@@ -181,9 +181,9 @@ export const uiCopy = {
     },
     en: {
       servicesEyebrow: "Services",
-      servicesTitle: "Video for visibility, trust and more inquiries",
+      servicesTitle: "Choose the video that fits your goal",
       servicesDescription:
-        "Four services with clear value, typical budget and delivery.",
+        "Each service shows when it works best, the typical budget and how quickly you get the results.",
       packagesEyebrow: "Ongoing support",
       packagesTitle: "Retainers for teams that need content on a regular basis",
       packagesDescription:
