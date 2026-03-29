@@ -6,8 +6,9 @@ Dette prosjektet bruker nå ett rent og bevisst media-system under `public/media
 
 - Forside-hero ligger i `public/media/hero/`
 - Aktiv hero-fil akkurat nå:
-  - `public/media/hero/fau-land-hero-single-source-20260328-final.mp4`
-  - `public/media/hero/fau-land-hero-single-source-20260328-final-poster.webp`
+  - `public/media/hero/fau-land-hero-source-lock-20260329-v1.mp4`
+  - `public/media/hero/fau-land-hero-source-lock-20260329-v1-poster.webp`
+- Hero-komponenten er låst til én eneste videobane uten mobile varianter eller source-arrays
 
 ## Logoer
 

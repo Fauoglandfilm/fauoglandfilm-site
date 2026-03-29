@@ -4,9 +4,10 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
+    "build": "rm -rf .next && next build && node scripts/verify-hero-pipeline.mjs",
     "start": "next start",
     "lint": "eslint",
+    "hero:verify": "node scripts/verify-hero-pipeline.mjs",
     "repo:large-files": "node scripts/detect-large-files.mjs",
     "sanity:dev": "sanity dev --host 0.0.0.0 --port 3333",
     "sanity:deploy": "sanity deploy"

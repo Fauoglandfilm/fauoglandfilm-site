@@ -14,7 +14,7 @@ import {
   servicePillars,
   siteConfig,
   testimonials,
-  videoLibrary,
+  APPROVED_HERO_VIDEO_SRC,
   type CaseStudy,
   type ServicePillar,
 } from "@/data/site-content";
@@ -103,14 +103,9 @@ function HeroTypewriterTitle({
 }
 
 export function HeroSection() {
-  const heroVideo = videoLibrary.hero;
   const { language } = useSitePreferences();
-  const shouldReduceMotion = useReducedMotion();
   const videoRef = useRef<HTMLVideoElement | null>(null);
-  const heroVideoSrc = heroVideo.src;
-  const heroPosterSrc = heroVideo.poster ?? "";
-  const [isVideoReady, setIsVideoReady] = useState(false);
-  const [hasVideoError, setHasVideoError] = useState(false);
+  const heroVideoSrc = APPROVED_HERO_VIDEO_SRC;
 
   const eyebrow =
     language === "no"
@@ -118,10 +113,9 @@ export function HeroSection() {
       : "Oslo / Commercial Film / Production";
   const secondaryCta = language === "no" ? "Portefølje" : "Portfolio";
   const heroTitle = resolveLocalizedValue(homeHeroContent.title, language);
-  const shouldMountHeroVideo = !shouldReduceMotion;
 
   useEffect(() => {
-    if (!shouldMountHeroVideo || !heroVideoSrc) {
+    if (!heroVideoSrc) {
       return;
     }
 
@@ -138,9 +132,13 @@ export function HeroSection() {
       node.playsInline = true;
       node.autoplay = true;
       node.loop = true;
+      node.controls = false;
       node.setAttribute("muted", "");
       node.setAttribute("playsinline", "");
       node.setAttribute("webkit-playsinline", "");
+      node.setAttribute("x-webkit-airplay", "deny");
+      node.setAttribute("controlsList", "nodownload noplaybackrate nofullscreen noremoteplayback");
+      node.removeAttribute("controls");
       node.preload = "auto";
     };
 
@@ -174,75 +172,44 @@ export function HeroSection() {
       document.removeEventListener("visibilitychange", handleVisibility);
       window.removeEventListener("pageshow", handlePageShow);
     };
-  }, [heroVideoSrc, shouldMountHeroVideo]);
+  }, [heroVideoSrc]);
 
   return (
     <section className="relative isolate overflow-hidden bg-[#05070a] text-white">
       <div className="absolute inset-0">
-        <div
-          className={cn(
-            "absolute inset-0 z-[1] block overflow-hidden transition-opacity duration-300 pointer-events-none",
-            hasVideoError || !isVideoReady ? "opacity-100" : "opacity-0",
-          )}
-        >
-          <Image
-            src={heroPosterSrc}
-            alt=""
-            fill
-            priority
-            sizes="100vw"
-            quality={88}
-            className="object-cover"
-          />
-        </div>
-        {shouldMountHeroVideo ? (
-          <video
-            key={heroVideoSrc}
-            ref={videoRef}
-            className={cn(
-              "video-preview-surface mobile-hero-video-surface pointer-events-none absolute inset-0 z-0 h-full w-full object-cover brightness-[1.16] saturate-[1.02] contrast-[1.01] transition-opacity duration-300 sm:brightness-[1.16] sm:saturate-[1.03] sm:contrast-[1.02]",
-              hasVideoError || !isVideoReady ? "opacity-0" : "opacity-100",
-            )}
-            autoPlay
-            muted
-            loop
-            playsInline
-            poster={heroPosterSrc}
-            preload="auto"
-            disablePictureInPicture
-            disableRemotePlayback
-            aria-hidden="true"
-            tabIndex={-1}
-            onLoadedMetadata={(event) => {
-              const node = event.currentTarget;
+        <video
+          key={heroVideoSrc}
+          ref={videoRef}
+          src={heroVideoSrc}
+          className="video-preview-surface mobile-hero-video-surface pointer-events-none absolute inset-0 z-0 h-full w-full object-cover brightness-[1.16] saturate-[1.02] contrast-[1.01] sm:brightness-[1.16] sm:saturate-[1.03] sm:contrast-[1.02]"
+          autoPlay
+          muted
+          loop
+          playsInline
+          preload="auto"
+          disablePictureInPicture
+          disableRemotePlayback
+          aria-hidden="true"
+          tabIndex={-1}
+          onLoadedMetadata={(event) => {
+            const node = event.currentTarget;
 
-              node.defaultMuted = true;
-              node.muted = true;
-              node.playsInline = true;
-              node.setAttribute("muted", "");
-              node.setAttribute("playsinline", "");
-              node.setAttribute("webkit-playsinline", "");
-              void node.play().catch(() => undefined);
-            }}
-            onLoadedData={() => {
-              setHasVideoError(false);
-              setIsVideoReady(true);
-            }}
-            onCanPlay={(event) => {
-              void event.currentTarget.play().catch(() => undefined);
-            }}
-            onPlaying={() => {
-              setHasVideoError(false);
-              setIsVideoReady(true);
-            }}
-            onError={() => {
-              setHasVideoError(true);
-              setIsVideoReady(false);
-            }}
-          >
-            <source src={heroVideoSrc} type="video/mp4" />
-          </video>
-        ) : null}
+            node.defaultMuted = true;
+            node.muted = true;
+            node.playsInline = true;
+            node.controls = false;
+            node.setAttribute("muted", "");
+            node.setAttribute("playsinline", "");
+            node.setAttribute("webkit-playsinline", "");
+            node.setAttribute("x-webkit-airplay", "deny");
+            node.setAttribute("controlsList", "nodownload noplaybackrate nofullscreen noremoteplayback");
+            node.removeAttribute("controls");
+            void node.play().catch(() => undefined);
+          }}
+          onCanPlay={(event) => {
+            void event.currentTarget.play().catch(() => undefined);
+          }}
+        />
         <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(5,7,10,0.13)_0%,rgba(5,7,10,0.055)_24%,rgba(5,7,10,0.115)_56%,rgba(5,7,10,0.315)_100%)]" />
         <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(5,7,10,0.31)_0%,rgba(5,7,10,0.21)_22%,rgba(5,7,10,0.075)_56%,rgba(5,7,10,0.035)_100%)]" />
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(210,173,116,0.11),transparent_30%),radial-gradient(circle_at_82%_14%,rgba(112,143,216,0.06),transparent_22%)]" />
