@@ -244,9 +244,9 @@ export const uiCopy = {
       servicesHeroDescription:
         "Reklamefilm, marketing, bedriftsfilm, SoMe-innhold og aftermovies med tydelig verdi, prisnivå og neste steg.",
       servicesPrimaryCta: "Få et estimat",
-      servicesSectionTitle: "Velg tjenesten som matcher målet dere faktisk har",
+      servicesSectionTitle: "Velg videoen som treffer målet deres",
       servicesSectionDescription:
-        "Hver tjeneste viser hva den er best til, typisk budsjett, leveringstid og hva dere sitter igjen med.",
+        "Hver tjeneste viser når den funker best, typisk budsjett og hvor raskt dere får resultatene.",
       servicesCtaTitle: "Usikre på hvilket oppsett som vil fungere best?",
       servicesCtaDescription:
         "Send en kort brief, så anbefaler vi riktig format, omfang og neste steg uten at dere må spesifisere alt selv.",
@@ -330,9 +330,9 @@ export const uiCopy = {
       servicesHeroDescription:
         "Commercial film, marketing, company film, social content and aftermovies with clear value, budget range and next step.",
       servicesPrimaryCta: "Get an estimate",
-      servicesSectionTitle: "Choose the service that matches the outcome you need",
+      servicesSectionTitle: "Choose the video that fits your goal",
       servicesSectionDescription:
-        "Each service shows what it is best for, the typical budget, the timeline and what you actually get back.",
+        "Each service shows when it works best, the typical budget and how quickly you get the results.",
       servicesCtaTitle: "Not sure which setup will work best?",
       servicesCtaDescription:
         "Send a short brief and we will recommend the right format, scope and next step without you having to define everything first.",

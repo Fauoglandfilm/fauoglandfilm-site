@@ -676,7 +676,7 @@ export const serviceAreas: ServiceArea[] = [
     },
     eyebrow: { no: "Publisering over tid", en: "Ongoing publishing" },
     value: {
-      no: "Hold dere synlige hver uke, uten ekstra styr.",
+      no: "Hold dere synlige hver uke, uten ekstra mas.",
       en: "Stay visible every week without extra hassle.",
     },
     budget: {

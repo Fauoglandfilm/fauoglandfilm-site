@@ -3,6 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import {
+  useCallback,
   useEffect,
   useRef,
   type FocusEvent as ReactFocusEvent,
@@ -68,6 +69,7 @@ export function ServicesSection({
   const wrapLockRef = useRef(false);
   const animationFrameRef = useRef<number | null>(null);
   const userResumeAtRef = useRef(0);
+  const progressFillRef = useRef<HTMLDivElement | null>(null);
   const interactionStateRef = useRef({
     hovering: false,
     focused: false,
@@ -100,11 +102,30 @@ export function ServicesSection({
     ? "bg-[linear-gradient(270deg,color-mix(in_srgb,var(--background)_88%,#081320)_0%,rgba(8,19,32,0.84)_52%,transparent)]"
     : "bg-[linear-gradient(270deg,color-mix(in_srgb,var(--surface)_98%,#e4edf8)_0%,rgba(221,231,244,0.84)_52%,transparent)]";
 
+  const updateProgress = useCallback(() => {
+    const track = trackRef.current;
+    const segmentWidth = segmentWidthRef.current;
+
+    if (!track || !segmentWidth) {
+      if (progressFillRef.current) {
+        progressFillRef.current.style.transform = "scaleX(0.16)";
+      }
+      return;
+    }
+
+    const normalizedOffset =
+      (((track.scrollLeft - segmentWidth * SERVICE_CAROUSEL_CENTER_INDEX) / segmentWidth) % 1 + 1) % 1;
+
+    if (progressFillRef.current) {
+      progressFillRef.current.style.transform = `scaleX(${0.16 + normalizedOffset * 0.84})`;
+    }
+  }, []);
+
   const scheduleResume = (delay = 900) => {
     userResumeAtRef.current = performance.now() + delay;
   };
 
-  const measureTrack = () => {
+  const measureTrack = useCallback(() => {
     const track = trackRef.current;
 
     if (!track) {
@@ -122,9 +143,11 @@ export function ServicesSection({
     if (track.scrollLeft === 0) {
       track.scrollLeft = nextSegmentWidth * SERVICE_CAROUSEL_CENTER_INDEX;
     }
-  };
 
-  const normalizeTrackPosition = () => {
+    updateProgress();
+  }, [updateProgress]);
+
+  const normalizeTrackPosition = useCallback(() => {
     const track = trackRef.current;
     const segmentWidth = segmentWidthRef.current;
 
@@ -137,6 +160,7 @@ export function ServicesSection({
       track.scrollLeft += segmentWidth;
       requestAnimationFrame(() => {
         wrapLockRef.current = false;
+        updateProgress();
       });
       return;
     }
@@ -146,9 +170,10 @@ export function ServicesSection({
       track.scrollLeft -= segmentWidth;
       requestAnimationFrame(() => {
         wrapLockRef.current = false;
+        updateProgress();
       });
     }
-  };
+  }, [updateProgress]);
 
   useEffect(() => {
     measureTrack();
@@ -178,7 +203,7 @@ export function ServicesSection({
     return () => {
       window.removeEventListener("resize", handleResize);
     };
-  }, [services.length]);
+  }, [measureTrack, normalizeTrackPosition, services.length]);
 
   useEffect(() => {
     const track = trackRef.current;
@@ -220,7 +245,7 @@ export function ServicesSection({
         window.cancelAnimationFrame(animationFrameRef.current);
       }
     };
-  }, [shouldReduceMotion, services.length]);
+  }, [normalizeTrackPosition, shouldReduceMotion, services.length]);
 
   const handleWheel = (event: ReactWheelEvent<HTMLDivElement>) => {
     const track = trackRef.current;
@@ -308,6 +333,7 @@ export function ServicesSection({
 
   const handleTrackScroll = () => {
     normalizeTrackPosition();
+    updateProgress();
   };
 
   const handleMouseEnter = () => {
@@ -368,8 +394,8 @@ export function ServicesSection({
         </div>
 
         <div className="relative mt-3 sm:mt-3.5 lg:mt-4">
-          <div className={`pointer-events-none absolute inset-y-0 left-0 z-[2] hidden w-16 ${leftFadeClassName} lg:block`} />
-          <div className={`pointer-events-none absolute inset-y-0 right-0 z-[2] hidden w-16 ${rightFadeClassName} lg:block`} />
+          <div className={`pointer-events-none absolute inset-y-0 left-0 z-[2] w-10 sm:w-12 lg:w-16 ${leftFadeClassName}`} />
+          <div className={`pointer-events-none absolute inset-y-0 right-0 z-[2] w-10 sm:w-12 lg:w-16 ${rightFadeClassName}`} />
 
           <div className="relative left-1/2 w-screen -translate-x-1/2">
             <div
@@ -393,6 +419,16 @@ export function ServicesSection({
               {carouselServices.map(({ service, copyIndex }, index) => (
                 <ServiceCard key={`${service.slug}-${copyIndex}-${index}`} service={service} index={index % services.length} />
               ))}
+            </div>
+          </div>
+
+          <div className="pointer-events-none mt-4 flex justify-center px-4 sm:px-6 lg:px-8 xl:px-10">
+            <div className="relative h-[2px] w-[7.5rem] overflow-hidden rounded-full bg-[color:var(--foreground)]/10">
+              <div
+                ref={progressFillRef}
+                className="absolute inset-0 origin-left rounded-full bg-[color:var(--accent)]/78 transition-transform duration-200 ease-out"
+                style={{ transform: "scaleX(0.16)" }}
+              />
             </div>
           </div>
         </div>

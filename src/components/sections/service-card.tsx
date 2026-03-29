@@ -90,6 +90,10 @@ const servicePurposeChipBySlug = {
 } as const;
 
 const serviceTitleLinesBySlug = {
+  "bedriftsfilm-intervjuer": {
+    no: ["Bedriftsfilm og", "intervjuer"],
+    en: ["Company film and", "interviews"],
+  },
   "some-innhold": {
     no: ["Innhold for sosiale", "medier"],
     en: ["Social media", "content"],
@@ -98,14 +102,14 @@ const serviceTitleLinesBySlug = {
 
 const infoLabelCopy = {
   no: {
-    outcome: "HOVEDMÅL",
-    timeline: "LEVERINGSTID",
-    budget: "BUDSJETT",
+    outcome: "HOVEDMÅL:",
+    timeline: "LEVERINGSTID:",
+    budget: "BUDSJETT:",
   },
   en: {
-    outcome: "PRIMARY GOAL",
-    timeline: "TIMELINE",
-    budget: "BUDGET",
+    outcome: "PRIMARY GOAL:",
+    timeline: "TIMELINE:",
+    budget: "BUDGET:",
   },
 } as const;
 
@@ -181,8 +185,8 @@ export function ServiceCard({ service, index = 0 }: ServiceCardProps) {
     ? "border-white/14 bg-white/[0.12] text-white shadow-[0_12px_28px_rgba(0,0,0,0.16)] hover:border-white/22 hover:bg-white/[0.16] hover:text-white focus-visible:ring-offset-[#070b12]"
     : "border-[color:var(--foreground)]/10 bg-white text-[color:var(--foreground)] shadow-[0_12px_28px_rgba(122,140,168,0.14)] hover:border-[color:var(--foreground)]/18 hover:bg-white hover:text-[color:var(--foreground)] focus-visible:ring-offset-[#eef3f9]";
   const primaryButtonClassName = isDarkTheme
-    ? "min-h-[2.85rem] border-[color:var(--accent)]/24 shadow-[0_14px_30px_color-mix(in_srgb,var(--accent)_18%,transparent)] hover:border-[color:var(--accent)]/42 hover:shadow-[0_18px_38px_color-mix(in_srgb,var(--accent)_22%,transparent)] [&_.button-label-base]:gap-1.5 [&_.button-label-dot]:h-[0.35rem] [&_.button-label-dot]:w-[0.35rem]"
-    : "min-h-[2.85rem] border-[color:var(--accent)]/26 shadow-[0_14px_28px_color-mix(in_srgb,var(--accent)_14%,transparent)] hover:border-[color:var(--accent)]/42 hover:shadow-[0_18px_34px_color-mix(in_srgb,var(--accent)_18%,transparent)] [&_.button-label-base]:gap-1.5 [&_.button-label-dot]:h-[0.35rem] [&_.button-label-dot]:w-[0.35rem]";
+    ? "min-h-[2.85rem] border-[color:var(--accent)]/24 shadow-[0_14px_30px_color-mix(in_srgb,var(--accent)_18%,transparent)] hover:border-[color:var(--accent)]/42 hover:shadow-[0_18px_38px_color-mix(in_srgb,var(--accent)_22%,transparent)] [&_.button-label-base]:gap-1.15 [&_.button-label-dot]:ml-[0.12rem] [&_.button-label-dot]:h-[0.3rem] [&_.button-label-dot]:w-[0.3rem]"
+    : "min-h-[2.85rem] border-[color:var(--accent)]/26 shadow-[0_14px_28px_color-mix(in_srgb,var(--accent)_14%,transparent)] hover:border-[color:var(--accent)]/42 hover:shadow-[0_18px_34px_color-mix(in_srgb,var(--accent)_18%,transparent)] [&_.button-label-base]:gap-1.15 [&_.button-label-dot]:ml-[0.12rem] [&_.button-label-dot]:h-[0.3rem] [&_.button-label-dot]:w-[0.3rem]";
 
   const pointerX = useMotionValue(0);
   const pointerY = useMotionValue(0);
@@ -320,7 +324,7 @@ export function ServiceCard({ service, index = 0 }: ServiceCardProps) {
               >
                 {renderTitle(title, titleLines)}
               </h3>
-              <p className={`max-w-[22ch] text-[0.9rem] font-semibold leading-[1.42] sm:text-[0.96rem] ${sublineClassName} line-clamp-2`}>
+              <p className={`max-w-[22ch] text-[0.9rem] font-semibold leading-[1.5] sm:text-[0.96rem] ${sublineClassName} line-clamp-2`}>
                 {subline}
               </p>
 
@@ -328,16 +332,16 @@ export function ServiceCard({ service, index = 0 }: ServiceCardProps) {
                 {infoRows.map((item) => (
                   <div
                     key={`${service.slug}-${item.label}`}
-                    className={`flex items-baseline gap-1.5 border-b pb-1.3 text-[0.72rem] font-medium leading-[1.35] ${infoRowClassName}`}
+                    className={`grid grid-cols-[6rem_minmax(0,1fr)] items-baseline gap-x-2.2 border-b pb-1.3 text-[0.72rem] leading-[1.35] ${infoRowClassName}`}
                   >
-                    <span className={`shrink-0 text-[0.61rem] tracking-[0.16em] ${infoLabelClassName}`}>{item.label}</span>
-                    <span className="min-w-0 text-[0.79rem] font-semibold leading-[1.3]">{item.value}</span>
+                    <span className={`text-[0.61rem] font-semibold tracking-[0.16em] ${infoLabelClassName}`}>{item.label}</span>
+                    <span className="min-w-0 text-[0.81rem] font-normal leading-[1.38]">{item.value}</span>
                   </div>
                 ))}
               </div>
             </div>
 
-            <div className="mt-auto grid gap-2.15 pt-5">
+            <div className="mt-auto grid gap-2.45 pt-5.5">
               <ButtonLink
                 href={service.href}
                 size="compact"
@@ -348,10 +352,10 @@ export function ServiceCard({ service, index = 0 }: ServiceCardProps) {
               </ButtonLink>
               <Link
                 href={secondaryHref}
-                className={`inline-flex w-full min-h-[2.85rem] items-center justify-start gap-1.15 rounded-[1rem] border px-3.15 py-2.1 text-[0.81rem] font-semibold transition duration-200 backdrop-blur-xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--accent)]/62 focus-visible:ring-offset-2 ${secondaryLinkClassName}`}
+                className={`inline-flex w-full min-h-[2.85rem] items-center justify-start gap-1.15 rounded-[1rem] border px-3.15 py-2.1 text-[0.85rem] font-semibold transition duration-200 backdrop-blur-xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--accent)]/62 focus-visible:ring-offset-2 ${secondaryLinkClassName}`}
               >
                 <span>{secondaryLabel}</span>
-                <ArrowUpRight className="h-3.05 w-3.05" />
+                <ArrowUpRight className="h-[0.96rem] w-[0.96rem] shrink-0" />
               </Link>
             </div>
           </div>
