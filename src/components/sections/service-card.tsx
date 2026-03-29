@@ -116,6 +116,42 @@ const serviceTimelineChipBySlug = {
   },
 } as const;
 
+const serviceBudgetDisplayBySlug = {
+  reklamefilm: {
+    no: "40 000–180 000 kr+",
+    en: "NOK 40,000-180,000+",
+  },
+  "marketing-distribusjon": {
+    no: "15 000–60 000 kr",
+    en: "NOK 15,000-60,000",
+  },
+  "bedriftsfilm-intervjuer": {
+    no: "35 000–120 000 kr",
+    en: "NOK 35,000-120,000",
+  },
+  "some-innhold": {
+    no: "20 000–80 000 kr",
+    en: "NOK 20,000-80,000",
+  },
+  "event-live": {
+    no: "30 000–120 000 kr+",
+    en: "NOK 30,000-120,000+",
+  },
+  "dronefilm-luftfoto": {
+    no: "10 000–40 000 kr",
+    en: "NOK 10,000-40,000",
+  },
+} as const;
+
+const serviceChipPriorityBySlug = {
+  reklamefilm: "budget",
+  "marketing-distribusjon": "timeline",
+  "bedriftsfilm-intervjuer": "budget",
+  "some-innhold": "timeline",
+  "event-live": "timeline",
+  "dronefilm-luftfoto": "timeline",
+} as const;
+
 export function ServiceCard({ service, index = 0 }: ServiceCardProps) {
   const { language, theme } = useSitePreferences();
   const shouldReduceMotion = useReducedMotion();
@@ -145,7 +181,15 @@ export function ServiceCard({ service, index = 0 }: ServiceCardProps) {
     serviceTimelineChipBySlug[service.slug as keyof typeof serviceTimelineChipBySlug],
     language,
   );
-  const keyChips = [purposeChip, timelineChip];
+  const budgetChip = resolveLocalizedValue(
+    serviceBudgetDisplayBySlug[service.slug as keyof typeof serviceBudgetDisplayBySlug],
+    language,
+  );
+  const chipPriority = serviceChipPriorityBySlug[service.slug as keyof typeof serviceChipPriorityBySlug] ?? "budget";
+  const keyChips = [purposeChip, chipPriority === "budget" ? budgetChip : timelineChip];
+  const metaLabel =
+    language === "no" ? (chipPriority === "budget" ? "Levering" : "Budsjett") : chipPriority === "budget" ? "Timeline" : "Budget";
+  const metaValue = chipPriority === "budget" ? timelineChip : budgetChip;
   const shellClassName = isDarkTheme
     ? "border-white/10 bg-[linear-gradient(180deg,rgba(255,255,255,0.1),rgba(255,255,255,0.03)_48%,rgba(255,255,255,0.045)_100%)] shadow-[inset_0_1px_0_rgba(255,255,255,0.1),0_24px_52px_rgba(2,6,12,0.34)]"
     : "border-[color:var(--line)]/78 bg-[linear-gradient(180deg,rgba(255,255,255,0.84),rgba(246,249,253,0.76)_50%,rgba(239,245,252,0.7)_100%)] shadow-[inset_0_1px_0_rgba(255,255,255,0.9),0_22px_48px_rgba(122,140,168,0.18)]";
@@ -165,20 +209,19 @@ export function ServiceCard({ service, index = 0 }: ServiceCardProps) {
   const mediaOverlayClassName = isDarkTheme
     ? "bg-[linear-gradient(180deg,rgba(4,7,12,0.18)_0%,rgba(4,7,12,0.04)_22%,rgba(7,10,16,0.22)_58%,rgba(7,10,16,0.66)_100%)]"
     : "bg-[linear-gradient(180deg,rgba(248,251,255,0.16)_0%,rgba(244,248,253,0.04)_24%,rgba(214,224,236,0.16)_58%,rgba(226,234,243,0.62)_100%)]";
-  const contentSurfaceClassName = isDarkTheme
-    ? "border-white/12 bg-[linear-gradient(180deg,rgba(10,14,21,0.98),rgba(10,14,21,0.92)_54%,rgba(10,14,21,0.86)_100%)] shadow-[inset_0_1px_0_rgba(255,255,255,0.08),0_14px_32px_rgba(0,0,0,0.18)]"
-    : "border-[color:var(--line)]/72 bg-[linear-gradient(180deg,rgba(255,255,255,0.98),rgba(248,250,253,0.97)_46%,rgba(241,245,250,0.95)_100%)] shadow-[inset_0_1px_0_rgba(255,255,255,0.9),0_14px_32px_rgba(154,173,200,0.16)]";
   const titleClassName = isDarkTheme ? "text-white" : "text-[color:var(--foreground)]";
   const sublineClassName = isDarkTheme ? "text-white/90" : "text-[color:var(--foreground)]/88";
   const chipClassName = isDarkTheme
     ? "border-white/16 bg-white/[0.09] text-white shadow-[0_8px_18px_rgba(0,0,0,0.16)]"
     : "border-[color:var(--line)]/72 bg-white/94 text-[color:var(--foreground)] shadow-[0_8px_18px_rgba(154,173,200,0.12)]";
+  const metaRowClassName = isDarkTheme ? "text-white/72" : "text-[color:var(--foreground)]/68";
+  const metaLabelClassName = isDarkTheme ? "text-white/54" : "text-[color:var(--foreground)]/48";
   const secondaryLinkClassName = isDarkTheme
-    ? "border-white/12 bg-white/[0.05] text-white/88 hover:border-white/18 hover:bg-white/[0.08] hover:text-white focus-visible:ring-offset-[#070b12]"
-    : "border-[color:var(--line)]/72 bg-white/78 text-[color:var(--foreground)] hover:border-[color:var(--line)] hover:bg-white hover:text-[color:var(--foreground)] focus-visible:ring-offset-[#eef3f9]";
+    ? "border-white/14 bg-white/[0.08] text-white/92 shadow-[0_12px_28px_rgba(0,0,0,0.16)] hover:border-white/22 hover:bg-white/[0.12] hover:text-white focus-visible:ring-offset-[#070b12]"
+    : "border-[color:var(--foreground)]/10 bg-white/92 text-[color:var(--foreground)] shadow-[0_12px_28px_rgba(122,140,168,0.14)] hover:border-[color:var(--foreground)]/18 hover:bg-white hover:text-[color:var(--foreground)] focus-visible:ring-offset-[#eef3f9]";
   const primaryButtonClassName = isDarkTheme
-    ? "border-[color:var(--accent)]/24 bg-[linear-gradient(135deg,color-mix(in_srgb,var(--accent)_28%,rgba(255,255,255,0.12)),rgba(255,255,255,0.05)_58%,rgba(255,255,255,0.03)_100%)] text-white shadow-[0_12px_30px_color-mix(in_srgb,var(--accent)_18%,transparent)] hover:border-[color:var(--accent)]/42 hover:shadow-[0_16px_38px_color-mix(in_srgb,var(--accent)_22%,transparent)]"
-    : "border-[color:var(--accent)]/26 bg-[linear-gradient(135deg,color-mix(in_srgb,var(--accent)_22%,white),rgba(255,255,255,0.94)_58%,rgba(255,255,255,0.86)_100%)] text-[color:var(--foreground)] shadow-[0_12px_28px_color-mix(in_srgb,var(--accent)_14%,transparent)] hover:border-[color:var(--accent)]/42 hover:shadow-[0_16px_34px_color-mix(in_srgb,var(--accent)_18%,transparent)]";
+    ? "min-h-[2.85rem] border-[color:var(--accent)]/24 shadow-[0_14px_30px_color-mix(in_srgb,var(--accent)_18%,transparent)] hover:border-[color:var(--accent)]/42 hover:shadow-[0_18px_38px_color-mix(in_srgb,var(--accent)_22%,transparent)]"
+    : "min-h-[2.85rem] border-[color:var(--accent)]/26 shadow-[0_14px_28px_color-mix(in_srgb,var(--accent)_14%,transparent)] hover:border-[color:var(--accent)]/42 hover:shadow-[0_18px_34px_color-mix(in_srgb,var(--accent)_18%,transparent)]";
 
   const pointerX = useMotionValue(0);
   const pointerY = useMotionValue(0);
@@ -277,7 +320,7 @@ export function ServiceCard({ service, index = 0 }: ServiceCardProps) {
         />
 
         <div className="relative flex h-full flex-col p-2.4 sm:p-2.7">
-          <div className={`relative overflow-hidden rounded-[0.86rem] ${mediaSurfaceClassName}`}>
+          <div className={`relative overflow-hidden rounded-[0.92rem] ${mediaSurfaceClassName}`}>
             <motion.div
               className="relative aspect-[1.42/1] w-full"
               style={
@@ -309,19 +352,14 @@ export function ServiceCard({ service, index = 0 }: ServiceCardProps) {
             <div className={`absolute inset-0 ${mediaOverlayClassName}`} />
           </div>
 
-          <div className="relative mt-2.6 flex flex-1 flex-col">
-            <div
-              className={`pointer-events-none absolute inset-x-[-0.2rem] inset-y-[-0.15rem] rounded-[1.02rem] border ${contentSurfaceClassName}`}
-            />
-            <div className="relative z-[1] space-y-2.65 px-0.55 pt-0.75">
-              <div className="flex items-start justify-between gap-3">
-                <h3
-                  className={`max-w-[10.5ch] text-[1.34rem] font-black leading-[0.9] tracking-[-0.058em] sm:text-[1.48rem] ${titleClassName}`}
-                >
-                  {title}
-                </h3>
-              </div>
-              <p className={`max-w-[21ch] text-[0.94rem] font-semibold leading-6 sm:text-[0.99rem] ${sublineClassName} line-clamp-2`}>
+          <div className="relative flex flex-1 flex-col px-0.7 pb-0.35 pt-3.2">
+            <div className="space-y-3.2">
+              <h3
+                className={`max-w-[12ch] text-[1.34rem] font-black leading-[0.9] tracking-[-0.058em] sm:text-[1.48rem] ${titleClassName}`}
+              >
+                {title}
+              </h3>
+              <p className={`max-w-[22ch] text-[0.92rem] font-semibold leading-[1.42] sm:text-[0.98rem] ${sublineClassName} line-clamp-2`}>
                 {subline}
               </p>
 
@@ -329,25 +367,32 @@ export function ServiceCard({ service, index = 0 }: ServiceCardProps) {
                 {keyChips.map((chip) => (
                   <span
                     key={`${service.slug}-${chip}`}
-                    className={`rounded-full border px-2.25 py-1.1 text-[0.66rem] font-semibold tracking-[0.01em] backdrop-blur-xl ${chipClassName}`}
+                    className={`rounded-full border px-2.3 py-1.1 text-[0.67rem] font-semibold tracking-[0.01em] backdrop-blur-xl ${chipClassName}`}
                   >
                     {chip}
                   </span>
                 ))}
               </div>
+
+              <div className={`flex flex-wrap items-center gap-x-1.8 gap-y-1 text-[0.72rem] font-medium leading-[1.45] ${metaRowClassName}`}>
+                <span className={`uppercase tracking-[0.12em] ${metaLabelClassName}`}>{metaLabel}</span>
+                <span aria-hidden="true" className="h-1 w-1 rounded-full bg-[color:var(--accent)]/72" />
+                <span>{metaValue}</span>
+              </div>
             </div>
 
-            <div className="relative z-[1] mt-auto flex flex-col gap-2 px-0.55 pt-5">
+            <div className="mt-auto grid gap-2.15 pt-4.25">
               <ButtonLink
                 href={service.href}
                 size="compact"
-                className={`w-full transition duration-200 ${primaryButtonClassName}`}
+                fullWidth
+                className={`transition duration-200 ${primaryButtonClassName}`}
               >
                 {primaryLabel}
               </ButtonLink>
               <Link
                 href={secondaryHref}
-                className={`inline-flex min-h-9 items-center justify-between rounded-[0.9rem] border px-3.3 py-2.15 text-[0.82rem] font-semibold transition duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--accent)]/62 focus-visible:ring-offset-2 ${secondaryLinkClassName}`}
+                className={`inline-flex min-h-[2.85rem] items-center justify-between rounded-full border px-3.4 py-2.1 text-[0.82rem] font-semibold transition duration-200 backdrop-blur-xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--accent)]/62 focus-visible:ring-offset-2 ${secondaryLinkClassName}`}
               >
                 <span>{secondaryLabel}</span>
                 <ArrowUpRight className="h-3.25 w-3.25" />
