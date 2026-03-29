@@ -2404,12 +2404,27 @@ summary::-webkit-details-marker {
 
   .video-preview-surface::-webkit-media-controls,
   .video-preview-surface::-webkit-media-controls-enclosure,
+  .video-preview-surface::-webkit-media-controls-overlay-enclosure,
+  .video-preview-surface::-webkit-media-controls-overlay-play-button,
   .video-preview-surface::-webkit-media-controls-panel,
   .video-preview-surface::-webkit-media-controls-play-button,
   .video-preview-surface::-webkit-media-controls-start-playback-button {
     display: none !important;
     -webkit-appearance: none;
     opacity: 0 !important;
+  }
+
+  .video-preview-surface,
+  .mobile-hero-video-surface {
+    -webkit-appearance: none;
+    appearance: none;
+  }
+
+  .mobile-hero-video-surface {
+    pointer-events: none;
+    -webkit-user-select: none;
+    user-select: none;
+    -webkit-touch-callout: none;
   }
 
   .social-link {

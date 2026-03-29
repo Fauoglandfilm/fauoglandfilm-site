@@ -200,17 +200,19 @@ export function HeroSection() {
             key={heroVideoSrc}
             ref={videoRef}
             className={cn(
-              "video-preview-surface pointer-events-none absolute inset-0 z-0 h-full w-full object-cover brightness-[1.16] saturate-[1.02] contrast-[1.01] transition-opacity duration-300 sm:brightness-[1.16] sm:saturate-[1.03] sm:contrast-[1.02]",
+              "video-preview-surface mobile-hero-video-surface pointer-events-none absolute inset-0 z-0 h-full w-full object-cover brightness-[1.16] saturate-[1.02] contrast-[1.01] transition-opacity duration-300 sm:brightness-[1.16] sm:saturate-[1.03] sm:contrast-[1.02]",
               hasVideoError || !isVideoReady ? "opacity-0" : "opacity-100",
             )}
             autoPlay
             muted
             loop
             playsInline
+            poster={heroPosterSrc}
             preload="auto"
             disablePictureInPicture
             disableRemotePlayback
             aria-hidden="true"
+            tabIndex={-1}
             onLoadedMetadata={(event) => {
               const node = event.currentTarget;
 
