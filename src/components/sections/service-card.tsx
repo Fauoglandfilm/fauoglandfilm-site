@@ -89,33 +89,6 @@ const servicePurposeChipBySlug = {
   },
 } as const;
 
-const serviceBudgetChipBySlug = {
-  reklamefilm: {
-    no: "40–180k+",
-    en: "40–180k+",
-  },
-  "marketing-distribusjon": {
-    no: "15–60k",
-    en: "15–60k",
-  },
-  "bedriftsfilm-intervjuer": {
-    no: "35–120k",
-    en: "35–120k",
-  },
-  "some-innhold": {
-    no: "20–80k",
-    en: "20–80k",
-  },
-  "event-live": {
-    no: "30–120k+",
-    en: "30–120k+",
-  },
-  "dronefilm-luftfoto": {
-    no: "10–40k",
-    en: "10–40k",
-  },
-} as const;
-
 const serviceTimelineChipBySlug = {
   reklamefilm: {
     no: "2–5 uker",
@@ -156,7 +129,6 @@ export function ServiceCard({ service, index = 0 }: ServiceCardProps) {
   };
   const title = resolveLocalizedValue(service.title, language);
   const subline = resolveLocalizedValue(service.value, language);
-  const deliverables = service.deliverables.slice(0, 3).map((item) => resolveLocalizedValue(item, language));
   const primaryLabel = resolveLocalizedValue(service.ctaLabel, language);
   const secondaryHref = service.exampleHref ?? "/case";
   const secondaryLabel = service.exampleLabel
@@ -169,14 +141,11 @@ export function ServiceCard({ service, index = 0 }: ServiceCardProps) {
     servicePurposeChipBySlug[service.slug as keyof typeof servicePurposeChipBySlug],
     language,
   );
-  const budgetChip = resolveLocalizedValue(
-    serviceBudgetChipBySlug[service.slug as keyof typeof serviceBudgetChipBySlug],
-    language,
-  );
   const timelineChip = resolveLocalizedValue(
     serviceTimelineChipBySlug[service.slug as keyof typeof serviceTimelineChipBySlug],
     language,
   );
+  const keyChips = [purposeChip, timelineChip];
   const shellClassName = isDarkTheme
     ? "border-white/10 bg-[linear-gradient(180deg,rgba(255,255,255,0.1),rgba(255,255,255,0.03)_48%,rgba(255,255,255,0.045)_100%)] shadow-[inset_0_1px_0_rgba(255,255,255,0.1),0_24px_52px_rgba(2,6,12,0.34)]"
     : "border-[color:var(--line)]/78 bg-[linear-gradient(180deg,rgba(255,255,255,0.84),rgba(246,249,253,0.76)_50%,rgba(239,245,252,0.7)_100%)] shadow-[inset_0_1px_0_rgba(255,255,255,0.9),0_22px_48px_rgba(122,140,168,0.18)]";
@@ -204,7 +173,6 @@ export function ServiceCard({ service, index = 0 }: ServiceCardProps) {
   const chipClassName = isDarkTheme
     ? "border-white/16 bg-white/[0.09] text-white shadow-[0_8px_18px_rgba(0,0,0,0.16)]"
     : "border-[color:var(--line)]/72 bg-white/94 text-[color:var(--foreground)] shadow-[0_8px_18px_rgba(154,173,200,0.12)]";
-  const listClassName = isDarkTheme ? "text-white/92" : "text-[color:var(--foreground)]/88";
   const secondaryLinkClassName = isDarkTheme
     ? "border-white/12 bg-white/[0.05] text-white/88 hover:border-white/18 hover:bg-white/[0.08] hover:text-white focus-visible:ring-offset-[#070b12]"
     : "border-[color:var(--line)]/72 bg-white/78 text-[color:var(--foreground)] hover:border-[color:var(--line)] hover:bg-white hover:text-[color:var(--foreground)] focus-visible:ring-offset-[#eef3f9]";
@@ -308,7 +276,7 @@ export function ServiceCard({ service, index = 0 }: ServiceCardProps) {
           }
         />
 
-        <div className="relative flex h-full flex-col p-2.25 sm:p-2.5">
+        <div className="relative flex h-full flex-col p-2.4 sm:p-2.7">
           <div className={`relative overflow-hidden rounded-[0.86rem] ${mediaSurfaceClassName}`}>
             <motion.div
               className="relative aspect-[1.42/1] w-full"
@@ -341,44 +309,35 @@ export function ServiceCard({ service, index = 0 }: ServiceCardProps) {
             <div className={`absolute inset-0 ${mediaOverlayClassName}`} />
           </div>
 
-          <div className="relative mt-2.25 flex flex-1 flex-col">
+          <div className="relative mt-2.6 flex flex-1 flex-col">
             <div
-              className={`pointer-events-none absolute inset-x-[-0.3rem] inset-y-[-0.35rem] rounded-[0.98rem] border ${contentSurfaceClassName}`}
+              className={`pointer-events-none absolute inset-x-[-0.2rem] inset-y-[-0.15rem] rounded-[1.02rem] border ${contentSurfaceClassName}`}
             />
-            <div className="relative z-[1] space-y-2.1 px-0.35 pt-0.3">
+            <div className="relative z-[1] space-y-2.65 px-0.55 pt-0.75">
               <div className="flex items-start justify-between gap-3">
                 <h3
-                  className={`max-w-[11ch] text-[1.26rem] font-black leading-[0.9] tracking-[-0.055em] sm:text-[1.38rem] ${titleClassName}`}
+                  className={`max-w-[10.5ch] text-[1.34rem] font-black leading-[0.9] tracking-[-0.058em] sm:text-[1.48rem] ${titleClassName}`}
                 >
                   {title}
                 </h3>
               </div>
-              <p className={`max-w-[22ch] text-[0.89rem] font-semibold leading-5.5 sm:text-[0.95rem] ${sublineClassName} line-clamp-2`}>
+              <p className={`max-w-[21ch] text-[0.94rem] font-semibold leading-6 sm:text-[0.99rem] ${sublineClassName} line-clamp-2`}>
                 {subline}
               </p>
 
-              <div className="flex flex-wrap gap-1.2">
-                {[purposeChip, budgetChip, timelineChip].map((chip) => (
+              <div className="flex flex-wrap gap-1.25">
+                {keyChips.map((chip) => (
                   <span
                     key={`${service.slug}-${chip}`}
-                    className={`rounded-full border px-2.2 py-1.05 text-[0.64rem] font-semibold tracking-[0.01em] backdrop-blur-xl ${chipClassName}`}
+                    className={`rounded-full border px-2.25 py-1.1 text-[0.66rem] font-semibold tracking-[0.01em] backdrop-blur-xl ${chipClassName}`}
                   >
                     {chip}
                   </span>
                 ))}
               </div>
-
-              <ul className={`space-y-1.35 text-[0.85rem] leading-5.5 ${listClassName}`}>
-                {deliverables.map((item) => (
-                  <li key={`${service.slug}-${item}`} className="flex items-start gap-2">
-                    <span className="mt-1.6 h-1.2 w-1.2 rounded-full bg-[color:var(--accent)]/92" />
-                    <span className="line-clamp-1 font-medium">{item}</span>
-                  </li>
-                ))}
-              </ul>
             </div>
 
-            <div className="relative z-[1] mt-auto flex flex-col gap-1.8 px-0.35 pt-3.2">
+            <div className="relative z-[1] mt-auto flex flex-col gap-2 px-0.55 pt-5">
               <ButtonLink
                 href={service.href}
                 size="compact"
@@ -388,7 +347,7 @@ export function ServiceCard({ service, index = 0 }: ServiceCardProps) {
               </ButtonLink>
               <Link
                 href={secondaryHref}
-                className={`inline-flex min-h-9 items-center justify-between rounded-[0.9rem] border px-3.25 py-2.1 text-[0.82rem] font-semibold transition duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--accent)]/62 focus-visible:ring-offset-2 ${secondaryLinkClassName}`}
+                className={`inline-flex min-h-9 items-center justify-between rounded-[0.9rem] border px-3.3 py-2.15 text-[0.82rem] font-semibold transition duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--accent)]/62 focus-visible:ring-offset-2 ${secondaryLinkClassName}`}
               >
                 <span>{secondaryLabel}</span>
                 <ArrowUpRight className="h-3.25 w-3.25" />
