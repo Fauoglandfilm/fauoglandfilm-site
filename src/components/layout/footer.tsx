@@ -5,6 +5,7 @@ import { usePathname } from "next/navigation";
 
 import { useSitePreferences } from "@/components/providers/site-preferences";
 import { BrandLogo } from "@/components/ui/brand-logo";
+import { ButtonLink } from "@/components/ui/button-link";
 import { FacebookIcon, InstagramIcon, LinkedInIcon } from "@/components/ui/icons";
 import { navItems, siteConfig } from "@/data/site-content";
 import { uiCopy } from "@/data/ui-copy";
@@ -119,6 +120,24 @@ export function Footer() {
                   </Link>
                 ))}
               </nav>
+            </div>
+          </div>
+
+          <div className="relative z-[1] mt-4">
+            <div className="footer-conversion-panel">
+              <div className="flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between">
+                <div className="max-w-[32rem]">
+                  <p className="text-[0.92rem] font-semibold leading-5.5 text-[color:var(--foreground)]/96">
+                    {copy.conversionTitle}
+                  </p>
+                  <p className="mt-1 text-[0.78rem] leading-5 text-[color:var(--foreground)]/66">
+                    {copy.conversionDescription}
+                  </p>
+                </div>
+                <ButtonLink href="/kontakt" size="compact" className="w-full lg:w-auto">
+                  {copy.conversionCta}
+                </ButtonLink>
+              </div>
             </div>
           </div>
 

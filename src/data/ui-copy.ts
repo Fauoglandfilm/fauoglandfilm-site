@@ -37,6 +37,9 @@ export const uiCopy = {
       navigation: "Navigasjon",
       social: "Følg Fau&Land Film",
       socialDescription: "Se mer arbeid og oppdateringer.",
+      conversionTitle: "Denne nettsiden er bygget som filmene vi lager: for å skape respons.",
+      conversionDescription: "Når uttrykk, budskap og neste steg sitter, blir booking enklere.",
+      conversionCta: "Book en prat",
     },
     en: {
       productionCompany: "Commercial film and content",
@@ -47,6 +50,9 @@ export const uiCopy = {
       navigation: "Navigation",
       social: "Follow Fau&Land Film",
       socialDescription: "See more work and updates.",
+      conversionTitle: "This site is built like the films we make: to drive response.",
+      conversionDescription: "When the expression, message and next step align, booking gets easier.",
+      conversionCta: "Book a call",
     },
   },
   home: {
