@@ -31,8 +31,7 @@ export const uiCopy = {
     no: {
       productionCompany: "Reklamefilm og innhold",
       title: "Historier som kjennes. Resultater som merkes.",
-      description:
-        "Reklamefilm og visuelt innhold for bedrifter og organisasjoner som trenger tydeligere budskap, sterkere tillit og flere henvendelser.",
+      description: "Film, innhold og nettsider som gjør det enklere å bli valgt.",
       contact: "Kontakt",
       navigation: "Navigasjon",
       social: "Følg Fau&Land Film",
@@ -44,8 +43,7 @@ export const uiCopy = {
     en: {
       productionCompany: "Commercial film and content",
       title: "Stories you feel. Results you notice.",
-      description:
-        "Commercial film and visual content for companies and organisations that need a clearer message, stronger trust and more inquiries.",
+      description: "Film, content and websites that make it easier to get chosen.",
       contact: "Contact",
       navigation: "Navigation",
       social: "Follow Fau&Land Film",
