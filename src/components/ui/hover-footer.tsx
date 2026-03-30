@@ -10,6 +10,7 @@ type TextHoverEffectProps = {
   duration?: number;
   className?: string;
   isDark?: boolean;
+  variant?: "default" | "footer-outline";
 };
 
 export function TextHoverEffect({
@@ -17,6 +18,7 @@ export function TextHoverEffect({
   duration = 0,
   className,
   isDark = false,
+  variant = "default",
 }: TextHoverEffectProps) {
   const svgRef = useRef<SVGSVGElement>(null);
   const gradientId = useId();
@@ -43,8 +45,30 @@ export function TextHoverEffect({
     }
   }, [cursor]);
 
-  const baseStroke = isDark ? "rgba(255,244,223,0.14)" : "rgba(36,28,20,0.12)";
-  const accentStroke = isDark ? "rgba(234,209,159,0.34)" : "rgba(184,146,84,0.36)";
+  const isFooterOutline = variant === "footer-outline";
+  const baseStroke = isFooterOutline
+    ? isDark
+      ? "rgba(96,126,182,0.22)"
+      : "rgba(58,86,126,0.14)"
+    : isDark
+      ? "rgba(255,244,223,0.14)"
+      : "rgba(36,28,20,0.12)";
+  const accentStroke = isFooterOutline
+    ? isDark
+      ? "rgba(96,143,221,0.5)"
+      : "rgba(74,112,176,0.36)"
+    : isDark
+      ? "rgba(234,209,159,0.34)"
+      : "rgba(184,146,84,0.36)";
+  const gradientStops = isFooterOutline
+    ? isDark
+      ? ["#5b84c7", "#6fa6ef", "#4c74b4"]
+      : ["#5f7faa", "#7195c9", "#486a9f"]
+    : isDark
+      ? ["#f8ead0", "#d7b278", "#fff6df"]
+      : ["#d7b278", "#bb8d57", "#eed5a6"];
+  const textOpacity = isFooterOutline ? (hovered ? 0.54 : 0.34) : hovered ? 0.72 : 0.5;
+  const strokeWidth = isFooterOutline ? "1.15" : "1.4";
 
   return (
     <svg
@@ -61,9 +85,9 @@ export function TextHoverEffect({
     >
       <defs>
         <linearGradient id={gradientId} x1="0%" y1="0%" x2="100%" y2="0%">
-          <stop offset="0%" stopColor={isDark ? "#f8ead0" : "#d7b278"} />
-          <stop offset="45%" stopColor={isDark ? "#d7b278" : "#bb8d57"} />
-          <stop offset="100%" stopColor={isDark ? "#fff6df" : "#eed5a6"} />
+          <stop offset="0%" stopColor={gradientStops[0]} />
+          <stop offset="45%" stopColor={gradientStops[1]} />
+          <stop offset="100%" stopColor={gradientStops[2]} />
         </linearGradient>
 
         <motion.radialGradient
@@ -89,14 +113,14 @@ export function TextHoverEffect({
         textAnchor="middle"
         dominantBaseline="middle"
         stroke={baseStroke}
-        strokeWidth="1.4"
+        strokeWidth={strokeWidth}
         fill="transparent"
         style={{
           fontFamily: "var(--font-sora), sans-serif",
           fontSize: "154px",
           fontWeight: 700,
           letterSpacing: "0.16em",
-          opacity: hovered ? 0.72 : 0.5,
+          opacity: textOpacity,
         }}
       >
         {text}
@@ -108,7 +132,7 @@ export function TextHoverEffect({
         textAnchor="middle"
         dominantBaseline="middle"
         stroke={accentStroke}
-        strokeWidth="1.4"
+        strokeWidth={strokeWidth}
         fill="transparent"
         initial={{ strokeDashoffset: 1200, strokeDasharray: 1200 }}
         animate={{ strokeDashoffset: 0, strokeDasharray: 1200 }}
@@ -129,7 +153,7 @@ export function TextHoverEffect({
         textAnchor="middle"
         dominantBaseline="middle"
         stroke={`url(#${gradientId})`}
-        strokeWidth="1.4"
+        strokeWidth={strokeWidth}
         fill="transparent"
         mask={`url(#${maskId})`}
         style={{
@@ -137,7 +161,7 @@ export function TextHoverEffect({
           fontSize: "154px",
           fontWeight: 700,
           letterSpacing: "0.16em",
-          opacity: 0.95,
+          opacity: isFooterOutline ? 0.78 : 0.95,
         }}
       >
         {text}
@@ -158,8 +182,8 @@ export function FooterBackgroundGradient({
       className={cn("absolute inset-0 z-0", className)}
       style={{
         background: isDark
-          ? "radial-gradient(120% 120% at 50% 8%, rgba(255,245,224,0.06) 0%, rgba(215,178,120,0.08) 28%, rgba(8,10,14,0) 64%), linear-gradient(180deg, rgba(255,255,255,0.05), rgba(255,255,255,0) 42%)"
-          : "radial-gradient(120% 120% at 50% 8%, rgba(255,250,241,0.9) 0%, rgba(215,178,120,0.14) 30%, rgba(255,255,255,0) 64%), linear-gradient(180deg, rgba(255,255,255,0.2), rgba(255,255,255,0) 42%)",
+          ? "linear-gradient(180deg, rgba(255,255,255,0.035), rgba(255,255,255,0) 32%), radial-gradient(120% 90% at 52% 100%, rgba(75,114,173,0.08) 0%, rgba(8,10,14,0) 62%)"
+          : "linear-gradient(180deg, rgba(255,255,255,0.12), rgba(255,255,255,0) 30%), radial-gradient(120% 90% at 52% 100%, rgba(85,114,160,0.09) 0%, rgba(255,255,255,0) 62%)",
       }}
     />
   );

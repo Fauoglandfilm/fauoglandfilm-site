@@ -2,21 +2,23 @@
 
 import type { ReactNode } from "react";
 
-import { ArrowUpRight, Mail, MapPin, Phone } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
 import { useSitePreferences } from "@/components/providers/site-preferences";
 import { BrandLogo } from "@/components/ui/brand-logo";
 import {
-  FooterBackgroundGradient,
-  TextHoverEffect,
-} from "@/components/ui/hover-footer";
-import {
   FacebookIcon,
   InstagramIcon,
   LinkedInIcon,
+  MailIcon,
+  PhoneIcon,
+  PinIcon,
 } from "@/components/ui/icons";
+import {
+  FooterBackgroundGradient,
+  TextHoverEffect,
+} from "@/components/ui/hover-footer";
 import { navItems, siteConfig } from "@/data/site-content";
 import { uiCopy } from "@/data/ui-copy";
 import { resolveLocalizedValue } from "@/lib/i18n";
@@ -35,109 +37,70 @@ function getSocialIcon(name: string) {
   return InstagramIcon;
 }
 
-function FooterSectionHeading({ children }: { children: ReactNode }) {
+function FooterHeading({ children }: { children: string }) {
   return (
-    <p className="text-[0.65rem] font-semibold uppercase tracking-[0.24em] text-[color:var(--foreground)]/54">
+    <p className="text-[0.63rem] font-semibold uppercase tracking-[0.24em] text-[color:var(--foreground)]/48">
       {children}
     </p>
   );
 }
 
-function FooterActionRow({
-  label,
+function FooterTextLink({
   href,
-  icon,
-  isDark,
+  label,
   external = false,
 }: {
+  href: string;
   label: string;
-  href?: string;
-  icon?: ReactNode;
-  isDark: boolean;
   external?: boolean;
 }) {
+  const className =
+    "inline-flex w-fit items-center py-1 text-[0.94rem] leading-6 text-[color:var(--foreground)]/76 transition duration-200 hover:text-[color:var(--foreground)]";
+
+  if (external) {
+    return (
+      <a href={href} target="_blank" rel="noreferrer noopener" className={className}>
+        {label}
+      </a>
+    );
+  }
+
+  return (
+    <Link href={href} className={className}>
+      {label}
+    </Link>
+  );
+}
+
+function FooterContactRow({
+  icon,
+  label,
+  href,
+}: {
+  icon: ReactNode;
+  label: string;
+  href?: string;
+}) {
   const content = (
-    <div
-      className="group flex min-h-[2.95rem] items-center gap-2.5 rounded-[1rem] border px-3.5 py-2.5 text-[0.9rem] font-medium leading-none text-[color:var(--foreground)]/78 transition duration-200 hover:-translate-y-0.5 hover:text-[color:var(--foreground)]"
-      style={{
-        borderColor: isDark
-          ? "color-mix(in srgb, var(--line-strong) 44%, rgba(255,255,255,0.08))"
-          : "color-mix(in srgb, var(--line-strong) 28%, rgba(255,255,255,0.26))",
-        background: isDark
-          ? "linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.02) 88%), color-mix(in srgb, var(--surface) 24%, transparent)"
-          : "linear-gradient(180deg, rgba(255,255,255,0.18), rgba(255,255,255,0.06) 88%), color-mix(in srgb, var(--surface) 14%, transparent)",
-        boxShadow: isDark
-          ? "inset 0 1px 0 rgba(255,255,255,0.06), 0 10px 22px rgba(0,0,0,0.16)"
-          : "inset 0 1px 0 rgba(255,255,255,0.24), 0 10px 20px rgba(17,17,17,0.06)",
-      }}
-    >
-      {icon ? (
-        <span className="inline-flex h-4 w-4 flex-shrink-0 items-center justify-center text-[color:var(--foreground)]/52 transition duration-200 group-hover:text-[color:var(--foreground)]/72">
-          {icon}
-        </span>
-      ) : null}
-      <span className="min-w-0 flex-1 truncate">{label}</span>
-      {href ? (
-        <ArrowUpRight className="h-3.5 w-3.5 flex-shrink-0 text-[color:var(--foreground)]/28 transition duration-200 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-[color:var(--foreground)]/64" />
-      ) : null}
-    </div>
+    <span className="inline-flex min-w-0 items-center gap-2.5 text-[0.94rem] leading-6 text-[color:var(--foreground)]/76 transition duration-200">
+      <span className="inline-flex h-4.5 w-4.5 flex-shrink-0 items-center justify-center text-[color:var(--foreground)]/42">
+        {icon}
+      </span>
+      <span className="min-w-0 truncate">{label}</span>
+    </span>
   );
 
   if (!href) {
     return content;
   }
 
-  if (external) {
-    return (
-      <a
-        href={href}
-        target="_blank"
-        rel="noreferrer noopener"
-        className="block rounded-[1rem] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[color:var(--accent)]"
-      >
-        {content}
-      </a>
-    );
-  }
-
   return (
     <a
       href={href}
-      className="block rounded-[1rem] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[color:var(--accent)]"
+      className="inline-flex w-fit transition duration-200 hover:text-[color:var(--foreground)]"
     >
       {content}
     </a>
-  );
-}
-
-function FooterNavLink({
-  href,
-  label,
-  isDark,
-}: {
-  href: string;
-  label: string;
-  isDark: boolean;
-}) {
-  return (
-    <Link
-      href={href}
-      className="group flex min-h-[2.95rem] items-center justify-between gap-3 rounded-[1rem] border px-3.5 py-2.5 text-[0.9rem] font-medium leading-none text-[color:var(--foreground)]/78 transition duration-200 hover:-translate-y-0.5 hover:text-[color:var(--foreground)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[color:var(--accent)]"
-      style={{
-        borderColor: isDark
-          ? "color-mix(in srgb, var(--line-strong) 44%, rgba(255,255,255,0.08))"
-          : "color-mix(in srgb, var(--line-strong) 28%, rgba(255,255,255,0.26))",
-        background: isDark
-          ? "linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.02) 88%), color-mix(in srgb, var(--surface) 24%, transparent)"
-          : "linear-gradient(180deg, rgba(255,255,255,0.18), rgba(255,255,255,0.06) 88%), color-mix(in srgb, var(--surface) 14%, transparent)",
-        boxShadow: isDark
-          ? "inset 0 1px 0 rgba(255,255,255,0.06), 0 10px 22px rgba(0,0,0,0.16)"
-          : "inset 0 1px 0 rgba(255,255,255,0.24), 0 10px 20px rgba(17,17,17,0.06)",
-      }}
-    >
-      <span>{label}</span>
-      <ArrowUpRight className="h-3.5 w-3.5 flex-shrink-0 text-[color:var(--foreground)]/28 transition duration-200 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-[color:var(--foreground)]/64" />
-    </Link>
   );
 }
 
@@ -150,20 +113,23 @@ export function Footer() {
   const footerNavItems = footerNavOrder
     .map((href) => navItems.find((item) => item.href === href))
     .filter((item): item is (typeof navItems)[number] => Boolean(item));
+  const secondaryLinksHeading = language === "no" ? "Mer" : "More";
+  const firstLinkColumn = footerNavItems.slice(0, 3);
+  const secondLinkColumn = footerNavItems.slice(3);
   const contactItems = [
     {
       label: siteConfig.email,
       href: `mailto:${siteConfig.email}`,
-      icon: <Mail className="h-[0.95rem] w-[0.95rem]" />,
+      icon: <MailIcon className="h-[0.95rem] w-[0.95rem]" />,
     },
     {
       label: siteConfig.phonePrimary,
       href: siteConfig.phonePrimaryHref,
-      icon: <Phone className="h-[0.95rem] w-[0.95rem]" />,
+      icon: <PhoneIcon className="h-[0.95rem] w-[0.95rem]" />,
     },
     {
       label: siteConfig.locationLabel,
-      icon: <MapPin className="h-[0.95rem] w-[0.95rem]" />,
+      icon: <PinIcon className="h-[0.95rem] w-[0.95rem]" />,
     },
   ];
 
@@ -173,150 +139,163 @@ export function Footer() {
 
   return (
     <footer id="site-footer" className="relative overflow-hidden text-[color:var(--foreground)]">
-      <div aria-hidden="true" className="pointer-events-none absolute inset-0">
-        <div
-          className="absolute left-[7%] top-8 h-28 w-28 rounded-full blur-3xl sm:h-40 sm:w-40"
-          style={{ background: "color-mix(in srgb, var(--accent) 14%, transparent)" }}
-        />
-        <div
-          className="absolute bottom-0 right-[9%] h-36 w-36 rounded-full blur-3xl sm:h-48 sm:w-48"
-          style={{ background: "color-mix(in srgb, var(--foreground) 7%, transparent)" }}
-        />
-      </div>
-
       <div className="site-container py-5 sm:py-7 lg:py-9">
-        <div className="footer-glass-panel px-4 py-5 sm:px-6 sm:py-6 lg:px-8 lg:py-7">
+        <div
+          className="relative overflow-hidden rounded-[1.9rem] border px-4 py-5 sm:px-6 sm:py-6 lg:px-8 lg:py-7"
+          style={{
+            borderColor: isDark
+              ? "rgba(255,255,255,0.09)"
+              : "color-mix(in srgb, var(--line-strong) 26%, rgba(255,255,255,0.28))",
+            background: isDark
+              ? "linear-gradient(180deg, rgba(9,10,12,0.98), rgba(12,13,16,0.98))"
+              : "linear-gradient(180deg, rgba(244,245,247,0.94), rgba(236,239,243,0.94))",
+            boxShadow: isDark
+              ? "0 28px 64px rgba(0,0,0,0.44), inset 0 1px 0 rgba(255,255,255,0.05)"
+              : "0 24px 48px rgba(17,17,17,0.08), inset 0 1px 0 rgba(255,255,255,0.28)",
+          }}
+        >
           <FooterBackgroundGradient isDark={isDark} />
 
-          <div className="relative z-[1] grid gap-8 lg:grid-cols-[minmax(0,1.05fr)_minmax(0,1.05fr)_minmax(0,0.82fr)] lg:gap-8">
-            <div className="flex max-w-[30rem] flex-col gap-4">
+          <div className="relative z-[1] grid gap-10 lg:grid-cols-[minmax(0,1.15fr)_minmax(0,0.72fr)_minmax(0,0.72fr)_minmax(0,0.95fr)] lg:gap-8">
+            <div className="max-w-[21rem] space-y-4">
               <Link href="/" aria-label="Fau&Land Film" className="inline-flex w-fit">
                 <BrandLogo
                   variant="full"
                   className={
                     isDark
-                      ? "w-[10.4rem] brightness-[1.16] contrast-[1.05] saturate-[1.03] drop-shadow-[0_12px_24px_rgba(0,0,0,0.18)] sm:w-[12rem] lg:w-[12.7rem]"
-                      : "w-[10.4rem] brightness-[0.18] contrast-[1.28] saturate-[1.02] sm:w-[12rem] lg:w-[12.7rem]"
+                      ? "w-[10.2rem] brightness-[1.18] contrast-[1.06] saturate-[1.01] sm:w-[11.8rem] lg:w-[12.4rem]"
+                      : "w-[10.2rem] brightness-[0.14] contrast-[1.32] saturate-[1] sm:w-[11.8rem] lg:w-[12.4rem]"
                   }
                 />
               </Link>
               <div className="space-y-2.5">
-                <p className="text-[clamp(1.45rem,1.7vw+1.05rem,2.4rem)] font-semibold leading-[0.98] tracking-[-0.05em] text-[color:var(--foreground)]/96">
+                <p className="text-[clamp(1.35rem,1.45vw+1.03rem,2.15rem)] font-semibold leading-[1.02] tracking-[-0.048em] text-[color:var(--foreground)]/96">
                   {copy.title}
                 </p>
-                <p className="max-w-[24rem] text-[0.94rem] leading-6 text-[color:var(--foreground)]/66">
+                <p className="max-w-[19rem] text-[0.92rem] leading-6 text-[color:var(--foreground)]/60">
                   {copy.description}
                 </p>
               </div>
+              <Link
+                href={siteConfig.bookingHref}
+                className="inline-flex min-h-[2.7rem] items-center rounded-full border px-3.6 text-[0.86rem] font-semibold transition duration-200 hover:-translate-y-0.5"
+                style={{
+                  borderColor: isDark
+                    ? "rgba(255,255,255,0.14)"
+                    : "color-mix(in srgb, var(--foreground) 18%, rgba(255,255,255,0.14))",
+                  background: isDark
+                    ? "rgba(255,255,255,0.04)"
+                    : "rgba(20,24,30,0.04)",
+                  color: "color-mix(in srgb, var(--foreground) 92%, white 8%)",
+                }}
+              >
+                {copy.conversionCta}
+              </Link>
             </div>
 
-            <div className="grid gap-6 sm:grid-cols-2">
-              <div className="space-y-3">
-                <FooterSectionHeading>{copy.contact}</FooterSectionHeading>
-                <div className="grid gap-2.5">
-                  {contactItems.map((item) => (
-                    <FooterActionRow
-                      key={item.label}
-                      label={item.label}
-                      href={item.href}
-                      icon={item.icon}
-                      isDark={isDark}
-                    />
-                  ))}
-                </div>
-              </div>
+            <div className="space-y-3">
+              <FooterHeading>{copy.navigation}</FooterHeading>
+              <nav className="grid gap-0.5" aria-label={copy.navigation}>
+                {firstLinkColumn.map((item) => (
+                  <FooterTextLink
+                    key={item.href}
+                    href={item.href}
+                    label={resolveLocalizedValue(item.label, language)}
+                  />
+                ))}
+              </nav>
+            </div>
 
-              <div className="space-y-3">
-                <FooterSectionHeading>{copy.social}</FooterSectionHeading>
-                <div className="grid gap-2.5">
-                  {siteConfig.socialLinks.map((item) => {
-                    const Icon = getSocialIcon(item.name);
-
-                    return (
-                      <FooterActionRow
-                        key={item.name}
-                        label={item.name}
-                        href={item.href}
-                        icon={<Icon className="h-[0.95rem] w-[0.95rem]" />}
-                        isDark={isDark}
-                        external
-                      />
-                    );
-                  })}
-                </div>
+            <div className="space-y-3">
+              <FooterHeading>{secondaryLinksHeading}</FooterHeading>
+              <div className="grid gap-0.5">
+                {secondLinkColumn.map((item) => (
+                  <FooterTextLink
+                    key={item.href}
+                    href={item.href}
+                    label={resolveLocalizedValue(item.label, language)}
+                  />
+                ))}
               </div>
             </div>
 
             <div className="space-y-3">
-              <FooterSectionHeading>{copy.navigation}</FooterSectionHeading>
+              <FooterHeading>{copy.contact}</FooterHeading>
               <div className="grid gap-2.5">
-                {footerNavItems.map((item) => (
-                  <FooterNavLink
-                    key={item.href}
+                {contactItems.map((item) => (
+                  <FooterContactRow
+                    key={item.label}
+                    icon={item.icon}
+                    label={item.label}
                     href={item.href}
-                    label={resolveLocalizedValue(item.label, language)}
-                    isDark={isDark}
                   />
                 ))}
-                <Link
-                  href={siteConfig.bookingHref}
-                  className="group inline-flex min-h-[2.95rem] items-center justify-center gap-2 rounded-[1rem] border px-3.5 py-2.5 text-[0.88rem] font-semibold text-[rgba(255,248,234,0.96)] transition duration-200 hover:-translate-y-0.5 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[color:var(--accent)]"
-                  style={{
-                    borderColor: isDark
-                      ? "rgba(255,255,255,0.14)"
-                      : "color-mix(in srgb, var(--accent) 22%, rgba(17,17,17,0.1))",
-                    background: "linear-gradient(180deg, rgba(45,44,42,0.98), rgba(22,21,20,0.98))",
-                    boxShadow: isDark
-                      ? "0 16px 30px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.12)"
-                      : "0 16px 30px rgba(17,17,17,0.14), inset 0 1px 0 rgba(255,255,255,0.08)",
-                  }}
-                >
-                  <span
-                    aria-hidden="true"
-                    className="h-1.5 w-1.5 rounded-full bg-[color:var(--accent)] transition duration-200 group-hover:scale-110"
-                  />
-                  <span>{copy.conversionCta}</span>
-                  <ArrowUpRight className="h-4 w-4 transition duration-200 group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
-                </Link>
               </div>
             </div>
           </div>
 
-          <div className="relative z-[1] mt-7 border-t border-[color:var(--line)]/22 pt-4 sm:pt-5">
+          <div className="relative z-[1] mt-9 border-t pt-4 sm:pt-5" style={{ borderColor: isDark ? "rgba(255,255,255,0.08)" : "rgba(25,32,44,0.1)" }}>
             <div
               className="relative overflow-hidden"
               style={{
                 maskImage:
-                  "linear-gradient(90deg, transparent 0%, black 12%, black 88%, transparent 100%)",
+                  "linear-gradient(90deg, transparent 0%, black 8%, black 92%, transparent 100%)",
                 WebkitMaskImage:
-                  "linear-gradient(90deg, transparent 0%, black 12%, black 88%, transparent 100%)",
+                  "linear-gradient(90deg, transparent 0%, black 8%, black 92%, transparent 100%)",
               }}
             >
-              <div className="flex h-[3.2rem] items-end justify-center lg:hidden">
+              <div className="flex h-[3.35rem] items-end justify-center lg:hidden">
                 <p
                   aria-hidden="true"
-                  className="select-none text-center text-[clamp(2.05rem,15vw,4rem)] font-semibold uppercase tracking-[0.16em] text-[color:var(--foreground)]/10"
+                  className="select-none text-center text-[clamp(2.3rem,16vw,4.2rem)] font-semibold uppercase tracking-[0.16em]"
+                  style={{
+                    color: "transparent",
+                    WebkitTextStroke: isDark ? "1px rgba(96,143,221,0.18)" : "1px rgba(84,112,158,0.18)",
+                  }}
                 >
                   Fau&amp;Land
                 </p>
               </div>
-              <div className="hidden h-[7.2rem] lg:block">
+
+              <div className="hidden h-[8.1rem] lg:block">
                 <div className="absolute inset-x-[-8%] inset-y-0">
                   <TextHoverEffect
                     text="FAU&LAND"
                     isDark={isDark}
-                    duration={0.18}
-                    className="h-full w-full opacity-[0.88]"
+                    variant="footer-outline"
+                    duration={0.16}
+                    className="h-full w-full"
                   />
                 </div>
               </div>
             </div>
 
-            <div className="relative z-[1] mt-2.5 border-t border-[color:var(--line)]/24 pt-3 sm:pt-3.5">
-              <div className="grid gap-1.5 text-center text-[0.62rem] font-semibold uppercase tracking-[0.24em] text-[color:var(--foreground)]/48 sm:grid-cols-3 sm:text-left">
+            <div
+              className="relative z-[1] mt-2.5 flex flex-col gap-3 text-[0.72rem] text-[color:var(--foreground)]/52 sm:flex-row sm:items-center sm:justify-between"
+            >
+              <div className="flex items-center gap-3.5">
+                {siteConfig.socialLinks.map((item) => {
+                  const Icon = getSocialIcon(item.name);
+
+                  return (
+                    <a
+                      key={item.name}
+                      href={item.href}
+                      target="_blank"
+                      rel="noreferrer noopener"
+                      aria-label={item.name}
+                      className="inline-flex h-4.5 w-4.5 items-center justify-center text-[color:var(--foreground)]/42 transition duration-200 hover:text-[color:var(--foreground)]/78"
+                    >
+                      <Icon className="h-[0.95rem] w-[0.95rem]" />
+                    </a>
+                  );
+                })}
+              </div>
+
+              <div className="flex flex-col gap-1.5 text-left sm:flex-row sm:items-center sm:gap-5 sm:text-right">
                 <p>{siteConfig.locationLabel}</p>
-                <p className="sm:text-center">© {new Date().getFullYear()} {siteConfig.legalName}</p>
-                <p className="sm:text-right">Org.nr. {siteConfig.orgId}</p>
+                <p>© {new Date().getFullYear()} {siteConfig.legalName}</p>
+                <p>Org.nr. {siteConfig.orgId}</p>
               </div>
             </div>
           </div>
