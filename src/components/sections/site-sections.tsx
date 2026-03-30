@@ -759,50 +759,50 @@ export function ContactLeadSection({
       title={copy.contactTitle}
       description={copy.contactDescription}
     >
-      <div className="grid gap-4 xl:grid-cols-[0.9fr_1.1fr]">
-        <article className="order-2 card-surface relative overflow-hidden rounded-[1.9rem] p-5 sm:p-6 xl:order-1">
-          <div className="pointer-events-none absolute -bottom-8 right-[-0.5rem] hidden h-28 w-28 md:block opacity-[0.06]">
+      <div className="grid gap-3.5 xl:grid-cols-[0.9fr_1.1fr]">
+        <article className="order-2 card-surface relative overflow-hidden rounded-[1.9rem] p-4.5 sm:p-5.5 xl:order-1">
+          <div className="pointer-events-none absolute -bottom-7 right-[-0.35rem] hidden h-24 w-24 md:block opacity-[0.055]">
             <BrandLogo
               variant="mark"
               className="h-auto w-full brightness-[1.4] saturate-[1.15] drop-shadow-[0_18px_32px_rgba(0,0,0,0.16)]"
             />
           </div>
-          <div className="space-y-4">
-            <Link href="/" className="brand-signature-chip flex w-fit items-center gap-3 px-2.5 py-2">
-              <div className="brand-signature-mark flex h-12 w-12 items-center justify-center rounded-full p-[0.72rem]">
+          <div className="space-y-3.25">
+            <Link href="/" className="brand-signature-chip flex w-fit items-center gap-2.5 px-2.15 py-1.7">
+              <div className="brand-signature-mark flex h-10.5 w-10.5 items-center justify-center rounded-full p-[0.64rem]">
                 <BrandLogo
                   variant="mark"
                   className="relative z-[1] h-auto w-full brightness-[2.02] contrast-[1.24] saturate-[1.82]"
                 />
               </div>
               <div>
-                <p className="font-display text-[1rem] text-[color:var(--foreground)]">Fau&amp;Land Film</p>
-                <p className="text-[0.58rem] font-semibold uppercase tracking-[0.22em] text-[var(--muted)]">
+                <p className="font-display text-[0.94rem] text-[color:var(--foreground)]">Fau&amp;Land Film</p>
+                <p className="text-[0.54rem] font-semibold uppercase tracking-[0.2em] text-[var(--muted)]">
                   Oslo / Production
                 </p>
               </div>
             </Link>
-            <p className="body-copy text-[var(--muted-2)]">
+            <p className="body-copy max-w-[26rem] text-[var(--muted-2)]">
               {copy.contactLead}
             </p>
           </div>
 
-          <div className="mt-6 grid gap-4 border-t border-[color:var(--line)] pt-6">
+          <div className="mt-4.5 grid gap-3 border-t border-[color:var(--line)]/86 pt-4.5">
             <ContactRow icon={<MailIcon className="h-5 w-5" />} label={copy.contactMail} value={siteConfig.email} href={`mailto:${siteConfig.email}`} />
             <ContactRow icon={<PhoneIcon className="h-5 w-5" />} label={copy.contactPhone} value={siteConfig.phonePrimary} href={siteConfig.phonePrimaryHref} />
             <ContactRow icon={<PinIcon className="h-5 w-5" />} label={copy.contactBase} value={siteConfig.locationLabel} />
           </div>
         </article>
 
-        <div className="order-1 grid gap-4 xl:order-2">
+        <div className="order-1 grid gap-3.5 xl:order-2">
           <article className="card-surface overflow-hidden rounded-[1.9rem]">
-            <div className="p-5 sm:p-6">
+            <div className="p-4.5 sm:p-5.5">
               <div className="max-w-2xl">
                 <p className="body-copy text-[var(--muted-2)]">
                   {copy.contactBriefDescription}
                 </p>
               </div>
-              <div className="mt-6">
+              <div className="mt-5">
                 <ContactForm />
               </div>
             </div>
@@ -825,13 +825,13 @@ function ContactRow({
   href?: string;
 }) {
   const content = (
-    <div className="flex items-start gap-4 rounded-[1.35rem] border border-[color:var(--line)] bg-[color:var(--surface)] px-4 py-4">
-      <div className="flex h-10 w-10 items-center justify-center rounded-full bg-[color:var(--foreground)] text-[color:var(--background)]">
+    <div className="flex items-center gap-3.25 rounded-[1.22rem] border border-[color:var(--line)] bg-[color:var(--surface)] px-3.5 py-3.25">
+      <div className="flex h-9.5 w-9.5 items-center justify-center rounded-full bg-[color:var(--foreground)] text-[color:var(--background)]">
         {icon}
       </div>
-      <div>
-        <p className="text-[0.7rem] uppercase tracking-[0.18em] text-[var(--muted)]">{label}</p>
-        <p className="mt-1 text-base text-[color:var(--foreground)]">{value}</p>
+      <div className="min-w-0">
+        <p className="text-[0.64rem] font-medium uppercase tracking-[0.16em] text-[var(--muted)]/82">{label}</p>
+        <p className={cn("mt-0.55 truncate text-[1.02rem] leading-[1.2] text-[color:var(--foreground)]", href ? "font-semibold" : "font-medium")}>{value}</p>
       </div>
     </div>
   );
