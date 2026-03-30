@@ -48,27 +48,27 @@ export function TextHoverEffect({
   const isFooterOutline = variant === "footer-outline";
   const baseStroke = isFooterOutline
     ? isDark
-      ? "rgba(96,126,182,0.22)"
-      : "rgba(58,86,126,0.14)"
+      ? "rgba(87,126,196,0.42)"
+      : "rgba(58,86,126,0.18)"
     : isDark
       ? "rgba(255,244,223,0.14)"
       : "rgba(36,28,20,0.12)";
   const accentStroke = isFooterOutline
     ? isDark
-      ? "rgba(96,143,221,0.5)"
-      : "rgba(74,112,176,0.36)"
+      ? "rgba(118,171,255,0.82)"
+      : "rgba(74,112,176,0.48)"
     : isDark
       ? "rgba(234,209,159,0.34)"
       : "rgba(184,146,84,0.36)";
   const gradientStops = isFooterOutline
     ? isDark
-      ? ["#5b84c7", "#6fa6ef", "#4c74b4"]
+      ? ["#4e75ba", "#77b0ff", "#4a73b8"]
       : ["#5f7faa", "#7195c9", "#486a9f"]
     : isDark
       ? ["#f8ead0", "#d7b278", "#fff6df"]
       : ["#d7b278", "#bb8d57", "#eed5a6"];
-  const textOpacity = isFooterOutline ? (hovered ? 0.54 : 0.34) : hovered ? 0.72 : 0.5;
-  const strokeWidth = isFooterOutline ? "1.15" : "1.4";
+  const textOpacity = isFooterOutline ? (hovered ? 0.7 : 0.54) : hovered ? 0.72 : 0.5;
+  const strokeWidth = isFooterOutline ? "1.08" : "1.4";
 
   return (
     <svg
@@ -161,7 +161,7 @@ export function TextHoverEffect({
           fontSize: "154px",
           fontWeight: 700,
           letterSpacing: "0.16em",
-          opacity: isFooterOutline ? 0.78 : 0.95,
+          opacity: isFooterOutline ? 0.86 : 0.95,
         }}
       >
         {text}
@@ -182,7 +182,7 @@ export function FooterBackgroundGradient({
       className={cn("absolute inset-0 z-0", className)}
       style={{
         background: isDark
-          ? "linear-gradient(180deg, rgba(255,255,255,0.035), rgba(255,255,255,0) 32%), radial-gradient(120% 90% at 52% 100%, rgba(75,114,173,0.08) 0%, rgba(8,10,14,0) 62%)"
+          ? "linear-gradient(180deg, rgba(255,255,255,0.028), rgba(255,255,255,0) 28%), radial-gradient(120% 90% at 52% 100%, rgba(64,103,170,0.13) 0%, rgba(8,10,14,0) 62%)"
           : "linear-gradient(180deg, rgba(255,255,255,0.12), rgba(255,255,255,0) 30%), radial-gradient(120% 90% at 52% 100%, rgba(85,114,160,0.09) 0%, rgba(255,255,255,0) 62%)",
       }}
     />

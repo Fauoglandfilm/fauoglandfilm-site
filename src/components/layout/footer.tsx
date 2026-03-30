@@ -122,6 +122,7 @@ export function Footer() {
       icon: <PinIcon className="h-[0.95rem] w-[0.95rem]" />,
     },
   ];
+  const railSurface = isDark ? "rgba(11,12,15,0.92)" : "rgba(240,242,246,0.92)";
 
   if (hidesGlobalChrome) {
     return null;
@@ -137,10 +138,10 @@ export function Footer() {
               ? "rgba(255,255,255,0.08)"
               : "color-mix(in srgb, var(--line-strong) 24%, rgba(255,255,255,0.3))",
             background: isDark
-              ? "linear-gradient(180deg, rgba(10,11,13,0.985), rgba(13,14,17,0.985))"
+              ? "linear-gradient(180deg, rgba(8,9,11,0.99), rgba(11,12,15,0.99) 58%, rgba(14,18,24,0.995))"
               : "linear-gradient(180deg, rgba(244,245,248,0.95), rgba(236,239,244,0.95))",
             boxShadow: isDark
-              ? "0 30px 70px rgba(0,0,0,0.46), inset 0 1px 0 rgba(255,255,255,0.04)"
+              ? "0 34px 80px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.04)"
               : "0 22px 46px rgba(17,17,17,0.08), inset 0 1px 0 rgba(255,255,255,0.26)",
           }}
         >
@@ -223,43 +224,21 @@ export function Footer() {
               </div>
             </div>
 
-            <div
-              className="relative mt-4 overflow-hidden"
-              style={{
-                maskImage:
-                  "linear-gradient(90deg, transparent 0%, black 8%, black 92%, transparent 100%)",
-                WebkitMaskImage:
-                  "linear-gradient(90deg, transparent 0%, black 8%, black 92%, transparent 100%)",
-              }}
-            >
-              <div className="flex h-[3.15rem] items-end justify-center lg:hidden">
-                <p
-                  aria-hidden="true"
-                  className="select-none text-center text-[clamp(1.95rem,14vw,3.4rem)] font-semibold uppercase tracking-[0.16em] blur-[1.2px] opacity-40"
-                  style={{
-                    color: "transparent",
-                    WebkitTextStroke: isDark ? "1px rgba(96,143,221,0.08)" : "1px rgba(84,112,158,0.08)",
-                  }}
-                >
-                  Fau&amp;Land
-                </p>
-              </div>
+            <div className="relative mt-5 h-[9.6rem] overflow-hidden sm:h-[10.5rem] lg:h-[12rem]">
+              <div
+                aria-hidden="true"
+                className="absolute inset-x-0 top-[1.95rem] h-px"
+                style={{
+                  background: isDark
+                    ? "linear-gradient(90deg, rgba(109,160,255,0) 0%, rgba(109,160,255,0.3) 12%, rgba(109,160,255,0.3) 88%, rgba(109,160,255,0) 100%)"
+                    : "linear-gradient(90deg, rgba(84,112,158,0) 0%, rgba(84,112,158,0.18) 12%, rgba(84,112,158,0.18) 88%, rgba(84,112,158,0) 100%)",
+                }}
+              />
 
-              <div className="hidden h-[6.6rem] lg:block">
-                <div className="absolute inset-x-[11%] inset-y-0 opacity-[0.12] blur-[2.4px]">
-                  <TextHoverEffect
-                    text="FAU&LAND"
-                    isDark={isDark}
-                    variant="footer-outline"
-                    duration={0.16}
-                    className="h-full w-full scale-[0.78]"
-                  />
-                </div>
-              </div>
-            </div>
-
-            <div className="relative z-[1] mt-1.5 flex flex-col gap-2 text-[0.72rem] text-[color:var(--foreground)]/42 sm:flex-row sm:items-baseline sm:justify-between">
-              <div className="flex items-baseline gap-2.5">
+              <div
+                className="absolute left-0 top-[1.02rem] z-[2] flex items-center gap-3 pr-3 sm:gap-3.5"
+                style={{ background: `linear-gradient(90deg, ${railSurface} 0%, ${railSurface} 86%, transparent 100%)` }}
+              >
                 {siteConfig.socialLinks.map((item) => {
                   const Icon = getSocialIcon(item.name);
 
@@ -270,19 +249,64 @@ export function Footer() {
                       target="_blank"
                       rel="noreferrer noopener"
                       aria-label={item.name}
-                      className="inline-flex h-3.5 w-3.5 items-center justify-center text-[color:var(--foreground)]/36 transition duration-200 hover:text-[color:var(--foreground)]/62"
+                      className="inline-flex h-4 w-4 items-center justify-center text-[color:var(--foreground)]/48 transition duration-200 hover:text-[color:var(--foreground)]/78"
                     >
-                      <Icon className="h-[0.88rem] w-[0.88rem]" />
+                      <Icon className="h-[0.95rem] w-[0.95rem]" />
                     </a>
                   );
                 })}
               </div>
 
-              <div className="flex flex-col gap-1 text-left sm:flex-row sm:items-baseline sm:gap-3.5 sm:text-right">
+              <div
+                className="absolute right-0 top-[0.86rem] z-[2] flex flex-wrap items-center justify-end gap-x-3 gap-y-1 pl-3 text-right text-[0.72rem] text-[color:var(--foreground)]/48 sm:gap-x-4"
+                style={{ background: `linear-gradient(270deg, ${railSurface} 0%, ${railSurface} 86%, transparent 100%)` }}
+              >
                 <p>{siteConfig.locationLabel}</p>
                 <p>© {new Date().getFullYear()} {siteConfig.legalName}</p>
                 <p>Org.nr. {siteConfig.orgId}</p>
               </div>
+
+              <div
+                className="absolute inset-x-0 bottom-0 overflow-hidden"
+                style={{
+                  maskImage:
+                    "linear-gradient(90deg, transparent 0%, black 6%, black 94%, transparent 100%)",
+                  WebkitMaskImage:
+                    "linear-gradient(90deg, transparent 0%, black 6%, black 94%, transparent 100%)",
+                }}
+              >
+                <div className="flex h-[5.1rem] items-end justify-center lg:hidden">
+                  <p
+                    aria-hidden="true"
+                    className="select-none text-center text-[clamp(2.5rem,17vw,4.5rem)] font-semibold uppercase tracking-[0.16em]"
+                    style={{
+                      color: "transparent",
+                      WebkitTextStroke: isDark ? "1px rgba(103,159,255,0.34)" : "1px rgba(84,112,158,0.16)",
+                      textShadow: isDark ? "0 0 14px rgba(103,159,255,0.12)" : "none",
+                    }}
+                  >
+                    Fau&amp;Land
+                  </p>
+                </div>
+
+                <div className="hidden h-[9.6rem] lg:block">
+                  <div className="absolute inset-x-[-1%] bottom-[-0.35rem] top-[0.8rem] opacity-[0.72]">
+                    <TextHoverEffect
+                      text="FAU&LAND"
+                      isDark={isDark}
+                      variant="footer-outline"
+                      duration={0.16}
+                      className="h-full w-full scale-[1.14]"
+                    />
+                  </div>
+                </div>
+              </div>
+
+              <div className="pointer-events-none absolute inset-x-[10%] bottom-0 h-[62%] blur-3xl" style={{
+                background: isDark
+                  ? "radial-gradient(70% 70% at 50% 100%, rgba(64,120,220,0.12) 0%, rgba(64,120,220,0) 72%)"
+                  : "radial-gradient(70% 70% at 50% 100%, rgba(84,112,158,0.08) 0%, rgba(84,112,158,0) 72%)",
+              }} />
             </div>
           </div>
         </div>
