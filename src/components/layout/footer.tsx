@@ -39,7 +39,7 @@ function getSocialIcon(name: string) {
 
 function FooterHeading({ children }: { children: string }) {
   return (
-    <p className="text-[0.63rem] font-semibold uppercase tracking-[0.24em] text-[color:var(--foreground)]/46">
+    <p className="text-[0.6rem] font-semibold uppercase tracking-[0.24em] text-[color:var(--foreground)]/40">
       {children}
     </p>
   );
@@ -73,7 +73,7 @@ function FooterContactRow({
 }) {
   const content = (
     <span className="inline-flex min-w-0 items-center gap-2.5 text-[0.94rem] leading-6 text-[color:var(--foreground)]/75 transition duration-200">
-      <span className="inline-flex h-4.5 w-4.5 flex-shrink-0 items-center justify-center text-[color:var(--foreground)]/42">
+      <span className="inline-flex h-[1.125rem] w-[1.125rem] flex-shrink-0 items-center justify-center text-[color:var(--foreground)]/42">
         {icon}
       </span>
       <span className="min-w-0 truncate">{label}</span>
@@ -146,23 +146,23 @@ export function Footer() {
         >
           <FooterBackgroundGradient isDark={isDark} />
 
-          <div className="relative z-[1] grid gap-8 lg:grid-cols-[minmax(0,1.34fr)_minmax(0,0.76fr)_minmax(0,0.76fr)_minmax(0,0.76fr)] lg:items-start lg:gap-6">
-            <div className="flex min-h-[7rem] items-start py-1">
+          <div className="relative z-[1] grid gap-8 lg:grid-cols-[minmax(0,1.22fr)_minmax(0,0.82fr)_minmax(0,0.82fr)_minmax(0,0.82fr)] lg:items-start lg:gap-6">
+            <div className="flex min-h-[6.15rem] items-start pt-0.5 pb-1">
               <Link href="/" aria-label="Fau&Land Film" className="inline-flex w-fit lg:-ml-0.5">
                 <BrandLogo
                   variant="full"
                   className={
                     isDark
-                      ? "w-[15.2rem] brightness-[1.18] contrast-[1.1] saturate-[1.02] sm:w-[17.6rem] lg:w-[20.4rem]"
-                      : "w-[15.2rem] brightness-[0.14] contrast-[1.36] saturate-[1] sm:w-[17.6rem] lg:w-[20.4rem]"
+                      ? "w-[12.8rem] brightness-[1.18] contrast-[1.1] saturate-[1.02] sm:w-[14.8rem] lg:w-[16.8rem] [transform:scaleY(0.93)] [transform-origin:left_top]"
+                      : "w-[12.8rem] brightness-[0.14] contrast-[1.36] saturate-[1] sm:w-[14.8rem] lg:w-[16.8rem] [transform:scaleY(0.93)] [transform-origin:left_top]"
                   }
                 />
               </Link>
             </div>
 
-            <div className="w-full max-w-[11.5rem] space-y-2.5 lg:justify-self-center">
+            <div className="w-full max-w-[11rem] space-y-3.5 pt-0.5 lg:justify-self-center">
               <FooterHeading>{copy.navigation}</FooterHeading>
-              <nav className="grid gap-0.5" aria-label={copy.navigation}>
+              <nav className="grid gap-[0.12rem]" aria-label={copy.navigation}>
                 {primaryLinks.map((item) => (
                   <FooterTextLink
                     key={item.href}
@@ -173,9 +173,9 @@ export function Footer() {
               </nav>
             </div>
 
-            <div className="w-full max-w-[11.5rem] space-y-2.5 lg:justify-self-center">
+            <div className="w-full max-w-[11rem] space-y-3.5 pt-0.5 lg:justify-self-center">
               <FooterHeading>{secondaryHeading}</FooterHeading>
-              <div className="grid gap-0.5">
+              <div className="grid gap-[0.12rem]">
                 {secondaryLinks.map((item) => (
                   <FooterTextLink
                     key={item.href}
@@ -186,9 +186,9 @@ export function Footer() {
               </div>
             </div>
 
-            <div className="w-full max-w-[11.5rem] space-y-2.5 lg:justify-self-center">
+            <div className="w-full max-w-[11rem] space-y-3.5 pt-0.5 lg:justify-self-center">
               <FooterHeading>{copy.contact}</FooterHeading>
-              <div className="grid gap-2">
+              <div className="grid gap-1.5">
                 {contactItems.map((item) => (
                   <FooterContactRow
                     key={item.label}
@@ -202,16 +202,16 @@ export function Footer() {
           </div>
 
           <div
-            className="relative z-[1] mt-9 border-t pt-4 sm:pt-5"
-            style={{ borderColor: isDark ? "rgba(255,255,255,0.08)" : "rgba(25,32,44,0.1)" }}
+            className="relative z-[1] mt-8 border-t pt-4 sm:pt-4"
+            style={{ borderColor: isDark ? "rgba(255,255,255,0.12)" : "rgba(25,32,44,0.12)" }}
           >
             <div className="flex flex-wrap items-center justify-center gap-x-2.5 gap-y-1.5 text-center lg:justify-between lg:text-left">
-              <div className="flex flex-wrap items-center justify-center gap-x-2.5 gap-y-1.5 text-[0.94rem] leading-6 lg:justify-start">
+              <div className="flex max-w-[58rem] flex-wrap items-center justify-center gap-x-2 gap-y-1.5 text-[0.94rem] leading-6 lg:justify-start">
                 <span className="font-semibold tracking-[-0.03em] text-[color:var(--foreground)]/94">
                   {copy.title}
                 </span>
-                <span className="hidden h-[0.22rem] w-[0.22rem] rounded-full bg-[color:var(--foreground)]/18 sm:inline-flex" />
-                <span className="text-[color:var(--foreground)]/54">
+                <span className="hidden h-[0.18rem] w-[0.18rem] rounded-full bg-[color:var(--foreground)]/16 sm:inline-flex" />
+                <span className="text-[color:var(--foreground)]/46">
                   {copy.description}
                 </span>
                 <Link
@@ -232,34 +232,34 @@ export function Footer() {
                   "linear-gradient(90deg, transparent 0%, black 8%, black 92%, transparent 100%)",
               }}
             >
-              <div className="flex h-[3.4rem] items-end justify-center lg:hidden">
+              <div className="flex h-[3.15rem] items-end justify-center lg:hidden">
                 <p
                   aria-hidden="true"
-                  className="select-none text-center text-[clamp(2.1rem,15vw,3.8rem)] font-semibold uppercase tracking-[0.16em] blur-[0.8px] opacity-60"
+                  className="select-none text-center text-[clamp(1.95rem,14vw,3.4rem)] font-semibold uppercase tracking-[0.16em] blur-[1.2px] opacity-40"
                   style={{
                     color: "transparent",
-                    WebkitTextStroke: isDark ? "1px rgba(96,143,221,0.12)" : "1px rgba(84,112,158,0.12)",
+                    WebkitTextStroke: isDark ? "1px rgba(96,143,221,0.08)" : "1px rgba(84,112,158,0.08)",
                   }}
                 >
                   Fau&amp;Land
                 </p>
               </div>
 
-              <div className="hidden h-[7.4rem] lg:block">
-                <div className="absolute inset-x-[4%] inset-y-0 opacity-[0.2] blur-[1.4px]">
+              <div className="hidden h-[6.6rem] lg:block">
+                <div className="absolute inset-x-[11%] inset-y-0 opacity-[0.12] blur-[2.4px]">
                   <TextHoverEffect
                     text="FAU&LAND"
                     isDark={isDark}
                     variant="footer-outline"
                     duration={0.16}
-                    className="h-full w-full scale-[0.9]"
+                    className="h-full w-full scale-[0.78]"
                   />
                 </div>
               </div>
             </div>
 
-            <div className="relative z-[1] mt-2.5 flex flex-col gap-2.5 text-[0.72rem] text-[color:var(--foreground)]/44 sm:flex-row sm:items-baseline sm:justify-between">
-              <div className="flex items-center gap-3">
+            <div className="relative z-[1] mt-1.5 flex flex-col gap-2 text-[0.72rem] text-[color:var(--foreground)]/42 sm:flex-row sm:items-baseline sm:justify-between">
+              <div className="flex items-baseline gap-2.5">
                 {siteConfig.socialLinks.map((item) => {
                   const Icon = getSocialIcon(item.name);
 
@@ -270,15 +270,15 @@ export function Footer() {
                       target="_blank"
                       rel="noreferrer noopener"
                       aria-label={item.name}
-                      className="inline-flex h-4 w-4 items-center justify-center text-[color:var(--foreground)]/38 transition duration-200 hover:text-[color:var(--foreground)]/68"
+                      className="inline-flex h-3.5 w-3.5 items-center justify-center text-[color:var(--foreground)]/36 transition duration-200 hover:text-[color:var(--foreground)]/62"
                     >
-                      <Icon className="h-[0.95rem] w-[0.95rem]" />
+                      <Icon className="h-[0.88rem] w-[0.88rem]" />
                     </a>
                   );
                 })}
               </div>
 
-              <div className="flex flex-col gap-1 text-left sm:flex-row sm:items-baseline sm:gap-4 sm:text-right">
+              <div className="flex flex-col gap-1 text-left sm:flex-row sm:items-baseline sm:gap-3.5 sm:text-right">
                 <p>{siteConfig.locationLabel}</p>
                 <p>© {new Date().getFullYear()} {siteConfig.legalName}</p>
                 <p>Org.nr. {siteConfig.orgId}</p>
