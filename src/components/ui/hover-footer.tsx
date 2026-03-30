@@ -35,8 +35,9 @@ export const TextHoverEffect = ({
   const gradientId = useId();
   const revealMaskId = useId();
   const maskId = useId();
-  const softGlowId = useId();
-  const midGlowId = useId();
+  const glowLayerOneId = useId();
+  const glowLayerTwoId = useId();
+  const glowLayerThreeId = useId();
   const [cursor, setCursor] = useState({ x: 0, y: 0 });
   const [hovered, setHovered] = useState(false);
   const [maskPosition, setMaskPosition] = useState({ cx: "50%", cy: "50%" });
@@ -44,7 +45,7 @@ export const TextHoverEffect = ({
   const resolvedPaths = paths?.length ? paths : undefined;
   const isVectorMode = Boolean(resolvedPaths);
   const resolvedViewBox = viewBox ?? (isVectorMode ? FAU_LAND_LOGO_VIEW_BOX : DEFAULT_TEXT_VIEW_BOX);
-  const resolvedStrokeWidth = strokeWidth ?? (isVectorMode ? 2.35 : 1.08);
+  const resolvedStrokeWidth = strokeWidth ?? (isVectorMode ? 1.45 : 1.08);
 
   useEffect(() => {
     if (!svgRef.current) {
@@ -97,16 +98,17 @@ export const TextHoverEffect = ({
   }, [automatic]);
 
   const active = hovered || automatic;
-  const baseStroke = isDark ? "rgba(128,177,255,0.42)" : "rgba(85,120,182,0.22)";
-  const outlineStroke = isDark ? "rgba(114,181,255,0.96)" : "rgba(86,127,206,0.6)";
-  const accentStopA = isDark ? "#5e92ff" : "#7297db";
-  const accentStopB = isDark ? "#78c4ff" : "#8cbcf0";
-  const accentStopC = isDark ? "#a5e2ff" : "#a6cff8";
-  const outerGlowOpacity = isDark ? 0.32 : 0.12;
-  const innerGlowOpacity = isDark ? 0.48 : 0.18;
+  const neonCore = isDark ? "#3ca2fa" : "#eab308";
+  const neonMid = isDark ? "#63b8ff" : "#f6c93a";
+  const neonOuter = isDark ? "#99d8ff" : "#f8de73";
+  const baseStroke = isDark ? "rgba(178,222,255,0.92)" : "rgba(168,116,0,0.94)";
+  const outlineStroke = isDark ? "rgba(60,162,250,1)" : "rgba(234,179,8,1)";
+  const accentStopA = neonCore;
+  const accentStopB = neonMid;
+  const accentStopC = neonOuter;
   const glowFilter = isDark
-    ? "drop-shadow(0 0 16px rgba(89,167,255,0.34)) drop-shadow(0 0 42px rgba(89,167,255,0.18))"
-    : "drop-shadow(0 0 10px rgba(89,167,255,0.14))";
+    ? "drop-shadow(0 0 8px rgba(60,162,250,0.95)) drop-shadow(0 0 18px rgba(60,162,250,0.72))"
+    : "drop-shadow(0 0 6px rgba(234,179,8,0.5)) drop-shadow(0 0 14px rgba(234,179,8,0.24))";
 
   const vectorShapeProps = {
     fill: "none",
@@ -170,38 +172,52 @@ export const TextHoverEffect = ({
           <rect x="0" y="0" width="100%" height="100%" fill={`url(#${revealMaskId})`} />
         </mask>
 
-        <filter id={softGlowId} x="-24%" y="-50%" width="148%" height="220%">
-          <feGaussianBlur stdDeviation={isDark ? 12 : 7} />
+        <filter id={glowLayerOneId} x="-18%" y="-34%" width="136%" height="168%">
+          <feGaussianBlur stdDeviation={4} />
         </filter>
 
-        <filter id={midGlowId} x="-18%" y="-40%" width="136%" height="190%">
-          <feGaussianBlur stdDeviation={isDark ? 5.5 : 3} />
+        <filter id={glowLayerTwoId} x="-26%" y="-50%" width="152%" height="200%">
+          <feGaussianBlur stdDeviation={10} />
+        </filter>
+
+        <filter id={glowLayerThreeId} x="-34%" y="-70%" width="168%" height="240%">
+          <feGaussianBlur stdDeviation={20} />
         </filter>
       </defs>
 
       {isVectorMode ? (
         <>
           <g
-            opacity={outerGlowOpacity}
-            filter={`url(#${softGlowId})`}
+            opacity={isDark ? 0.34 : 0.18}
+            filter={`url(#${glowLayerThreeId})`}
           >
-            {renderVectorPaths("outer-glow", {
-              stroke: outlineStroke,
-              strokeWidth: resolvedStrokeWidth * 4.6,
+            {renderVectorPaths("glow-3", {
+              stroke: neonCore,
+              strokeWidth: resolvedStrokeWidth * 9.2,
             })}
           </g>
 
           <g
-            opacity={innerGlowOpacity}
-            filter={`url(#${midGlowId})`}
+            opacity={isDark ? 0.62 : 0.3}
+            filter={`url(#${glowLayerTwoId})`}
           >
-            {renderVectorPaths("inner-glow", {
-              stroke: outlineStroke,
-              strokeWidth: resolvedStrokeWidth * 2.4,
+            {renderVectorPaths("glow-2", {
+              stroke: neonMid,
+              strokeWidth: resolvedStrokeWidth * 5.4,
             })}
           </g>
 
-          <g opacity={active ? 0.84 : 0.48}>
+          <g
+            opacity={isDark ? 0.84 : 0.52}
+            filter={`url(#${glowLayerOneId})`}
+          >
+            {renderVectorPaths("glow-1", {
+              stroke: neonOuter,
+              strokeWidth: resolvedStrokeWidth * 2.9,
+            })}
+          </g>
+
+          <g opacity={1}>
             {renderVectorPaths("base", {
               stroke: baseStroke,
               strokeWidth: resolvedStrokeWidth,
@@ -229,12 +245,12 @@ export const TextHoverEffect = ({
 
           <g
             mask={`url(#${maskId})`}
-            opacity={active ? 0.98 : 0.8}
-            filter={`url(#${midGlowId})`}
+            opacity={active ? 1 : 0.94}
+            filter={`url(#${glowLayerOneId})`}
           >
             {renderVectorPaths("accent", {
               stroke: `url(#${gradientId})`,
-              strokeWidth: resolvedStrokeWidth * 1.18,
+              strokeWidth: resolvedStrokeWidth * 1.24,
             })}
           </g>
         </>

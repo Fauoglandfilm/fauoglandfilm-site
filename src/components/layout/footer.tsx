@@ -284,7 +284,7 @@ export function Footer() {
                     isDark={isDark}
                     paths={FAU_LAND_LOGO_PATHS}
                     viewBox={FAU_LAND_LOGO_VIEW_BOX}
-                    strokeWidth={2.45}
+                    strokeWidth={1.42}
                     className="h-full w-full"
                   />
                 </div>
