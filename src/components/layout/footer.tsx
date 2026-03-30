@@ -5,7 +5,6 @@ import { usePathname } from "next/navigation";
 
 import { useSitePreferences } from "@/components/providers/site-preferences";
 import { BrandLogo } from "@/components/ui/brand-logo";
-import { ButtonLink } from "@/components/ui/button-link";
 import { FacebookIcon, InstagramIcon, LinkedInIcon } from "@/components/ui/icons";
 import { navItems, siteConfig } from "@/data/site-content";
 import { uiCopy } from "@/data/ui-copy";
@@ -123,25 +122,22 @@ export function Footer() {
             </div>
           </div>
 
-          <div className="relative z-[1] mt-4">
-            <div className="footer-conversion-panel">
-              <div className="flex flex-col gap-2.5 lg:flex-row lg:items-center lg:justify-between">
-                <div className="max-w-[31rem]">
-                  <p className="text-[0.94rem] font-semibold leading-5.2 text-[color:var(--foreground)]">
-                    {copy.conversionTitle}
-                  </p>
-                  <p className="mt-0.75 text-[0.76rem] font-medium leading-4.7 text-[color:var(--foreground)]/78">
-                    {copy.conversionDescription}
-                  </p>
-                </div>
-                <ButtonLink href="/kontakt" size="compact" className="w-full lg:w-auto lg:shrink-0">
-                  {copy.conversionCta}
-                </ButtonLink>
-              </div>
+          <div className="relative z-[1] mt-3.5 border-t border-[color:var(--line)]/24 pt-2.8">
+            <div className="flex flex-col gap-1.5 text-center sm:flex-row sm:items-center sm:justify-between sm:text-left">
+              <p className="text-[0.84rem] font-semibold leading-5 text-[color:var(--foreground)]/88">
+                {copy.conversionTitle}
+              </p>
+              <Link
+                href="/kontakt"
+                className="inline-flex items-center justify-center gap-1 text-[0.8rem] font-semibold text-[color:var(--foreground)]/72 transition duration-200 hover:text-[color:var(--foreground)] sm:justify-start"
+              >
+                <span>{copy.conversionCta}</span>
+                <span aria-hidden="true" className="text-[0.92em]">↗</span>
+              </Link>
             </div>
           </div>
 
-          <div className="relative z-[1] mt-3.5 border-t border-[color:var(--line)]/38 pt-2.5">
+          <div className="relative z-[1] mt-2.6 border-t border-[color:var(--line)]/38 pt-2.5">
             <div className="flex flex-col items-center gap-1 text-center text-[0.74rem] font-semibold uppercase tracking-[0.16em] text-[color:var(--foreground)]/68 sm:flex-row sm:items-center sm:justify-between sm:text-left">
               <p>{siteConfig.locationLabel}</p>
               <p>Org.nr. {siteConfig.orgId}</p>
