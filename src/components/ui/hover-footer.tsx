@@ -1,30 +1,50 @@
 "use client";
 
-import { useEffect, useId, useRef, useState } from "react";
+import { type SVGProps, useEffect, useId, useRef, useState } from "react";
 import { motion } from "motion/react";
 
+import {
+  FAU_LAND_LOGO_VIEW_BOX,
+} from "@/components/ui/fau-land-logo-paths";
 import { cn } from "@/lib/utils";
 
-export const TextHoverEffect = ({
-  text,
-  duration,
-  automatic = false,
-  className,
-  isDark = false,
-}: {
-  text: string;
+const DEFAULT_TEXT_VIEW_BOX = "0 0 1200 220";
+
+type TextHoverEffectProps = {
+  text?: string;
   duration?: number;
   automatic?: boolean;
   className?: string;
   isDark?: boolean;
-}) => {
+  paths?: readonly string[];
+  viewBox?: string;
+  strokeWidth?: number;
+};
+
+export const TextHoverEffect = ({
+  text = "",
+  duration,
+  automatic = false,
+  className,
+  isDark = false,
+  paths,
+  viewBox,
+  strokeWidth,
+}: TextHoverEffectProps) => {
   const svgRef = useRef<SVGSVGElement>(null);
   const gradientId = useId();
   const revealMaskId = useId();
   const maskId = useId();
+  const softGlowId = useId();
+  const midGlowId = useId();
   const [cursor, setCursor] = useState({ x: 0, y: 0 });
   const [hovered, setHovered] = useState(false);
   const [maskPosition, setMaskPosition] = useState({ cx: "50%", cy: "50%" });
+
+  const resolvedPaths = paths?.length ? paths : undefined;
+  const isVectorMode = Boolean(resolvedPaths);
+  const resolvedViewBox = viewBox ?? (isVectorMode ? FAU_LAND_LOGO_VIEW_BOX : DEFAULT_TEXT_VIEW_BOX);
+  const resolvedStrokeWidth = strokeWidth ?? (isVectorMode ? 2.35 : 1.08);
 
   useEffect(() => {
     if (!svgRef.current) {
@@ -77,35 +97,61 @@ export const TextHoverEffect = ({
   }, [automatic]);
 
   const active = hovered || automatic;
-  const baseStroke = isDark ? "rgba(121,167,255,0.34)" : "rgba(76,112,173,0.18)";
-  const outlineStroke = isDark ? "rgba(98,160,255,0.9)" : "rgba(78,121,196,0.52)";
+  const baseStroke = isDark ? "rgba(128,177,255,0.42)" : "rgba(85,120,182,0.22)";
+  const outlineStroke = isDark ? "rgba(114,181,255,0.96)" : "rgba(86,127,206,0.6)";
+  const accentStopA = isDark ? "#5e92ff" : "#7297db";
+  const accentStopB = isDark ? "#78c4ff" : "#8cbcf0";
+  const accentStopC = isDark ? "#a5e2ff" : "#a6cff8";
+  const outerGlowOpacity = isDark ? 0.32 : 0.12;
+  const innerGlowOpacity = isDark ? 0.48 : 0.18;
   const glowFilter = isDark
-    ? "drop-shadow(0 0 14px rgba(79,153,255,0.32)) drop-shadow(0 0 38px rgba(79,153,255,0.14))"
-    : "drop-shadow(0 0 10px rgba(79,153,255,0.16))";
+    ? "drop-shadow(0 0 16px rgba(89,167,255,0.34)) drop-shadow(0 0 42px rgba(89,167,255,0.18))"
+    : "drop-shadow(0 0 10px rgba(89,167,255,0.14))";
+
+  const vectorShapeProps = {
+    fill: "none",
+    strokeLinejoin: "round" as const,
+    strokeLinecap: "round" as const,
+    vectorEffect: "non-scaling-stroke" as const,
+  };
+
+  const renderVectorPaths = (
+    prefix: string,
+    extras: Omit<SVGProps<SVGPathElement>, "d" | "children">,
+  ) =>
+    resolvedPaths?.map((pathData, index) => (
+      <path
+        key={`${prefix}-${index}`}
+        d={pathData}
+        {...vectorShapeProps}
+        {...extras}
+      />
+    ));
 
   return (
     <svg
       ref={svgRef}
       width="100%"
       height="100%"
-      viewBox="0 0 1200 220"
+      viewBox={resolvedViewBox}
       xmlns="http://www.w3.org/2000/svg"
       preserveAspectRatio="xMidYMid meet"
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
       onMouseMove={(event) => setCursor({ x: event.clientX, y: event.clientY })}
       className={cn(
-        "select-none uppercase",
+        "select-none",
         automatic ? "cursor-default" : "cursor-pointer",
         className,
       )}
+      aria-hidden="true"
     >
       <defs>
         <linearGradient id={gradientId} x1="0%" y1="0%" x2="100%" y2="0%">
-          <stop offset="0%" stopColor={isDark ? "#4d7fd3" : "#6b90c7"} stopOpacity={active ? 0.86 : 0.38} />
-          <stop offset="35%" stopColor={isDark ? "#66b0ff" : "#84b7f2"} stopOpacity={active ? 0.98 : 0.46} />
-          <stop offset="70%" stopColor={isDark ? "#86d3ff" : "#9acbff"} stopOpacity={active ? 0.98 : 0.42} />
-          <stop offset="100%" stopColor={isDark ? "#557fcf" : "#7396cb"} stopOpacity={active ? 0.84 : 0.34} />
+          <stop offset="0%" stopColor={accentStopA} stopOpacity={active ? 0.9 : 0.42} />
+          <stop offset="34%" stopColor={accentStopB} stopOpacity={active ? 1 : 0.54} />
+          <stop offset="68%" stopColor={accentStopC} stopOpacity={active ? 1 : 0.52} />
+          <stop offset="100%" stopColor={accentStopA} stopOpacity={active ? 0.88 : 0.4} />
         </linearGradient>
 
         <motion.radialGradient
@@ -123,75 +169,146 @@ export const TextHoverEffect = ({
         <mask id={maskId}>
           <rect x="0" y="0" width="100%" height="100%" fill={`url(#${revealMaskId})`} />
         </mask>
+
+        <filter id={softGlowId} x="-24%" y="-50%" width="148%" height="220%">
+          <feGaussianBlur stdDeviation={isDark ? 12 : 7} />
+        </filter>
+
+        <filter id={midGlowId} x="-18%" y="-40%" width="136%" height="190%">
+          <feGaussianBlur stdDeviation={isDark ? 5.5 : 3} />
+        </filter>
       </defs>
 
-      <text
-        x="50%"
-        y="55%"
-        textAnchor="middle"
-        dominantBaseline="middle"
-        stroke={baseStroke}
-        strokeWidth="1.08"
-        fill="transparent"
-        style={{
-          fontFamily: "var(--font-hero), serif",
-          fontSize: "176px",
-          fontWeight: 800,
-          letterSpacing: "0.08em",
-          opacity: active ? 0.76 : 0.34,
-        }}
-      >
-        {text}
-      </text>
+      {isVectorMode ? (
+        <>
+          <g
+            opacity={outerGlowOpacity}
+            filter={`url(#${softGlowId})`}
+          >
+            {renderVectorPaths("outer-glow", {
+              stroke: outlineStroke,
+              strokeWidth: resolvedStrokeWidth * 4.6,
+            })}
+          </g>
 
-      <motion.text
-        x="50%"
-        y="55%"
-        textAnchor="middle"
-        dominantBaseline="middle"
-        stroke={outlineStroke}
-        strokeWidth="1.08"
-        fill="transparent"
-        initial={{ strokeDashoffset: 1000, strokeDasharray: 1000 }}
-        animate={{
-          strokeDashoffset: 0,
-          strokeDasharray: 1000,
-        }}
-        transition={{
-          duration: 4,
-          ease: "easeInOut",
-        }}
-        style={{
-          fontFamily: "var(--font-hero), serif",
-          fontSize: "176px",
-          fontWeight: 800,
-          letterSpacing: "0.08em",
-          filter: glowFilter,
-        }}
-      >
-        {text}
-      </motion.text>
+          <g
+            opacity={innerGlowOpacity}
+            filter={`url(#${midGlowId})`}
+          >
+            {renderVectorPaths("inner-glow", {
+              stroke: outlineStroke,
+              strokeWidth: resolvedStrokeWidth * 2.4,
+            })}
+          </g>
 
-      <text
-        x="50%"
-        y="55%"
-        textAnchor="middle"
-        dominantBaseline="middle"
-        stroke={`url(#${gradientId})`}
-        strokeWidth="1.08"
-        mask={`url(#${maskId})`}
-        fill="transparent"
-        style={{
-          fontFamily: "var(--font-hero), serif",
-          fontSize: "176px",
-          fontWeight: 800,
-          letterSpacing: "0.08em",
-          opacity: active ? 0.96 : 0.72,
-          filter: glowFilter,
-        }}
-      >
-        {text}
-      </text>
+          <g opacity={active ? 0.84 : 0.48}>
+            {renderVectorPaths("base", {
+              stroke: baseStroke,
+              strokeWidth: resolvedStrokeWidth,
+            })}
+          </g>
+
+          <g style={{ filter: glowFilter }}>
+            {resolvedPaths?.map((pathData, index) => (
+              <motion.path
+                key={`motion-${index}`}
+                d={pathData}
+                {...vectorShapeProps}
+                stroke={outlineStroke}
+                strokeWidth={resolvedStrokeWidth * 1.08}
+                initial={{ pathLength: 0, opacity: 0.78 }}
+                animate={{ pathLength: 1, opacity: 1 }}
+                transition={{
+                  duration: 4,
+                  ease: "easeInOut",
+                  delay: index * 0.025,
+                }}
+              />
+            ))}
+          </g>
+
+          <g
+            mask={`url(#${maskId})`}
+            opacity={active ? 0.98 : 0.8}
+            filter={`url(#${midGlowId})`}
+          >
+            {renderVectorPaths("accent", {
+              stroke: `url(#${gradientId})`,
+              strokeWidth: resolvedStrokeWidth * 1.18,
+            })}
+          </g>
+        </>
+      ) : (
+        <>
+          <text
+            x="50%"
+            y="55%"
+            textAnchor="middle"
+            dominantBaseline="middle"
+            stroke={baseStroke}
+            strokeWidth={resolvedStrokeWidth}
+            fill="transparent"
+            style={{
+              fontFamily: "var(--font-hero), serif",
+              fontSize: "176px",
+              fontWeight: 800,
+              letterSpacing: "0.08em",
+              opacity: active ? 0.76 : 0.34,
+            }}
+          >
+            {text}
+          </text>
+
+          <motion.text
+            x="50%"
+            y="55%"
+            textAnchor="middle"
+            dominantBaseline="middle"
+            stroke={outlineStroke}
+            strokeWidth={resolvedStrokeWidth}
+            fill="transparent"
+            initial={{ strokeDashoffset: 1000, strokeDasharray: 1000 }}
+            animate={{
+              strokeDashoffset: 0,
+              strokeDasharray: 1000,
+            }}
+            transition={{
+              duration: 4,
+              ease: "easeInOut",
+            }}
+            style={{
+              fontFamily: "var(--font-hero), serif",
+              fontSize: "176px",
+              fontWeight: 800,
+              letterSpacing: "0.08em",
+              filter: glowFilter,
+            }}
+          >
+            {text}
+          </motion.text>
+
+          <text
+            x="50%"
+            y="55%"
+            textAnchor="middle"
+            dominantBaseline="middle"
+            stroke={`url(#${gradientId})`}
+            strokeWidth={resolvedStrokeWidth}
+            mask={`url(#${maskId})`}
+            fill="transparent"
+            style={{
+              fontFamily: "var(--font-hero), serif",
+              fontSize: "176px",
+              fontWeight: 800,
+              letterSpacing: "0.08em",
+              opacity: active ? 0.96 : 0.72,
+              filter: glowFilter,
+            }}
+          >
+            {text}
+          </text>
+        </>
+      )}
     </svg>
   );
 };

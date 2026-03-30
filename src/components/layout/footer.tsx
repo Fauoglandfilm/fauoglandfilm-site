@@ -14,6 +14,10 @@ import {
   PhoneIcon,
   PinIcon,
 } from "@/components/ui/icons";
+import {
+  FAU_LAND_LOGO_PATHS,
+  FAU_LAND_LOGO_VIEW_BOX,
+} from "@/components/ui/fau-land-logo-paths";
 import { FooterBackgroundGradient, TextHoverEffect } from "@/components/ui/hover-footer";
 import { navItems, siteConfig } from "@/data/site-content";
 import { uiCopy } from "@/data/ui-copy";
@@ -234,9 +238,19 @@ export function Footer() {
                         target="_blank"
                         rel="noreferrer noopener"
                         aria-label={item.name}
-                        className="inline-flex h-4 w-4 items-center justify-center text-[color:var(--foreground)]/48 transition duration-200 hover:text-[color:var(--foreground)]/78"
+                        className={`inline-flex h-8 w-8 items-center justify-center rounded-full transition duration-200 hover:scale-[1.05] hover:bg-[#6aaeff1a] hover:shadow-[0_0_0_1px_rgba(106,174,255,0.22),0_0_18px_rgba(106,174,255,0.18)] ${
+                          isDark
+                            ? "text-[rgba(255,255,255,0.82)] hover:text-white"
+                            : "text-[rgba(17,17,17,0.76)] hover:text-[#4f90ff]"
+                        }`}
+                        style={{
+                          background: isDark ? "rgba(255,255,255,0.045)" : "rgba(17,17,17,0.045)",
+                          boxShadow: isDark
+                            ? "inset 0 0 0 1px rgba(255,255,255,0.06)"
+                            : "inset 0 0 0 1px rgba(17,17,17,0.06)",
+                        }}
                       >
-                        <Icon className="h-[0.95rem] w-[0.95rem]" />
+                        <Icon className="h-[1.02rem] w-[1.02rem]" />
                       </a>
                     );
                   })}
@@ -265,10 +279,12 @@ export function Footer() {
               >
                 <div className="mx-auto h-full w-[96%] max-w-[84rem]">
                   <TextHoverEffect
-                    text="FAU&LAND"
                     duration={0.35}
                     automatic
                     isDark={isDark}
+                    paths={FAU_LAND_LOGO_PATHS}
+                    viewBox={FAU_LAND_LOGO_VIEW_BOX}
+                    strokeWidth={2.45}
                     className="h-full w-full"
                   />
                 </div>
