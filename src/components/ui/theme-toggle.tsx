@@ -1,8 +1,8 @@
 "use client";
 
-import { useState } from "react";
 import { Moon, Sun } from "lucide-react";
 
+import { useSitePreferences } from "@/components/providers/site-preferences";
 import { cn } from "@/lib/utils";
 
 interface ThemeToggleProps {
@@ -10,7 +10,8 @@ interface ThemeToggleProps {
 }
 
 export function ThemeToggle({ className }: ThemeToggleProps) {
-  const [isDark, setIsDark] = useState(true);
+  const { theme, setTheme } = useSitePreferences();
+  const isDark = theme === "dark";
 
   return (
     <div
@@ -19,9 +20,16 @@ export function ThemeToggle({ className }: ThemeToggleProps) {
         isDark ? "border border-zinc-800 bg-zinc-950" : "border border-zinc-200 bg-white",
         className,
       )}
-      onClick={() => setIsDark(!isDark)}
+      onClick={() => setTheme(isDark ? "light" : "dark")}
       role="button"
       tabIndex={0}
+      onKeyDown={(event) => {
+        if (event.key === "Enter" || event.key === " ") {
+          event.preventDefault();
+          setTheme(isDark ? "light" : "dark");
+        }
+      }}
+      aria-pressed={isDark}
     >
       <div className="flex w-full items-center justify-between">
         <div

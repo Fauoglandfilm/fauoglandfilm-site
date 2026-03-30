@@ -28,6 +28,30 @@ const LANGUAGE_STORAGE_KEY = "fauoglandfilm-language";
 const THEME_STORAGE_KEY = "fauoglandfilm-theme";
 const SitePreferencesContext = createContext<SitePreferencesContextValue | null>(null);
 
+function getSystemTheme(): ThemeMode {
+  if (typeof window !== "undefined" && window.matchMedia) {
+    return window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+  }
+
+  return "light";
+}
+
+function readStoredTheme(): ThemeMode | null {
+  if (typeof window === "undefined") {
+    return null;
+  }
+
+  try {
+    const storedTheme = window.localStorage.getItem(THEME_STORAGE_KEY);
+
+    if (storedTheme === "light" || storedTheme === "dark") {
+      return storedTheme;
+    }
+  } catch {}
+
+  return null;
+}
+
 function getInitialLanguage(): LanguageCode {
   if (typeof document !== "undefined") {
     const storedLanguage = document.documentElement.dataset.language;
@@ -41,6 +65,12 @@ function getInitialLanguage(): LanguageCode {
 }
 
 function getInitialTheme(): ThemeMode {
+  const storedTheme = readStoredTheme();
+
+  if (storedTheme) {
+    return storedTheme;
+  }
+
   if (typeof document !== "undefined") {
     const storedTheme = document.documentElement.dataset.theme;
 
@@ -49,7 +79,7 @@ function getInitialTheme(): ThemeMode {
     }
   }
 
-  return "light";
+  return getSystemTheme();
 }
 
 export function SitePreferencesProvider({ children }: { children: ReactNode }) {
@@ -73,6 +103,43 @@ export function SitePreferencesProvider({ children }: { children: ReactNode }) {
       window.localStorage.setItem(THEME_STORAGE_KEY, theme);
     } catch {}
   }, [language, theme]);
+
+  useEffect(() => {
+    if (typeof window === "undefined" || !window.matchMedia) {
+      return;
+    }
+
+    const mediaQuery = window.matchMedia("(prefers-color-scheme: dark)");
+
+    const handleMediaChange = (event: MediaQueryListEvent) => {
+      if (readStoredTheme()) {
+        return;
+      }
+
+      setThemeState(event.matches ? "dark" : "light");
+    };
+
+    const handleStorageChange = (event: StorageEvent) => {
+      if (event.key !== THEME_STORAGE_KEY) {
+        return;
+      }
+
+      if (event.newValue === "light" || event.newValue === "dark") {
+        setThemeState(event.newValue);
+        return;
+      }
+
+      setThemeState(getSystemTheme());
+    };
+
+    mediaQuery.addEventListener("change", handleMediaChange);
+    window.addEventListener("storage", handleStorageChange);
+
+    return () => {
+      mediaQuery.removeEventListener("change", handleMediaChange);
+      window.removeEventListener("storage", handleStorageChange);
+    };
+  }, []);
 
   const value = useMemo(
     () => ({
