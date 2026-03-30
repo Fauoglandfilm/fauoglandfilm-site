@@ -37,7 +37,7 @@ export const uiCopy = {
       navigation: "Navigasjon",
       social: "Følg Fau&Land Film",
       socialDescription: "Se mer arbeid og oppdateringer.",
-      conversionTitle: "Denne nettsiden er laget for å drive booking.",
+      conversionTitle: "Denne nettsiden er laget av oss for å konvertere. Vi bygger det samme for dere.",
       conversionDescription: "",
       conversionCta: "Book en prat",
     },
