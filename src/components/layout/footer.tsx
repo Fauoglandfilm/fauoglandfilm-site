@@ -125,16 +125,16 @@ export function Footer() {
 
           <div className="relative z-[1] mt-4">
             <div className="footer-conversion-panel">
-              <div className="flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between">
-                <div className="max-w-[32rem]">
-                  <p className="text-[0.92rem] font-semibold leading-5.5 text-[color:var(--foreground)]/96">
+              <div className="flex flex-col gap-2.5 lg:flex-row lg:items-center lg:justify-between">
+                <div className="max-w-[31rem]">
+                  <p className="text-[0.94rem] font-semibold leading-5.2 text-[color:var(--foreground)]">
                     {copy.conversionTitle}
                   </p>
-                  <p className="mt-1 text-[0.78rem] leading-5 text-[color:var(--foreground)]/66">
+                  <p className="mt-0.75 text-[0.76rem] font-medium leading-4.7 text-[color:var(--foreground)]/78">
                     {copy.conversionDescription}
                   </p>
                 </div>
-                <ButtonLink href="/kontakt" size="compact" className="w-full lg:w-auto">
+                <ButtonLink href="/kontakt" size="compact" className="w-full lg:w-auto lg:shrink-0">
                   {copy.conversionCta}
                 </ButtonLink>
               </div>
