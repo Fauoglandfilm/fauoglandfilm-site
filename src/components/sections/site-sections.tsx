@@ -761,18 +761,18 @@ export function ContactLeadSection({
     >
       <div className="grid gap-3.5 xl:grid-cols-[0.9fr_1.1fr]">
         <article className="order-2 card-surface relative overflow-hidden rounded-[1.9rem] p-4.5 sm:p-5.5 xl:order-1">
-          <div className="pointer-events-none absolute -bottom-7 right-[-0.35rem] hidden h-24 w-24 md:block opacity-[0.055]">
+          <div className="pointer-events-none absolute -bottom-6 right-[-0.2rem] hidden h-26 w-26 md:block opacity-[0.11]">
             <BrandLogo
               variant="mark"
-              className="h-auto w-full brightness-[1.4] saturate-[1.15] drop-shadow-[0_18px_32px_rgba(0,0,0,0.16)]"
+              className="h-auto w-full brightness-[1.18] contrast-[1.42] saturate-[1.52] drop-shadow-[0_16px_26px_rgba(186,151,88,0.14)]"
             />
           </div>
           <div className="space-y-3.25">
             <Link href="/" className="brand-signature-chip flex w-fit items-center gap-2.5 px-2.15 py-1.7">
-              <div className="brand-signature-mark flex h-10.5 w-10.5 items-center justify-center rounded-full p-[0.64rem]">
+              <div className="brand-signature-mark flex h-11 w-11 items-center justify-center rounded-full bg-white/92 p-[0.6rem] shadow-[0_12px_24px_rgba(17,17,17,0.08),inset_0_1px_0_rgba(255,255,255,0.44)] ring-1 ring-[color:var(--accent)]/12">
                 <BrandLogo
                   variant="mark"
-                  className="relative z-[1] h-auto w-full brightness-[2.02] contrast-[1.24] saturate-[1.82]"
+                  className="relative z-[1] h-auto w-full scale-[1.04] brightness-[1.72] contrast-[1.52] saturate-[2.22] drop-shadow-[0_2px_6px_rgba(186,151,88,0.14)]"
                 />
               </div>
               <div>
