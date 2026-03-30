@@ -51,8 +51,8 @@ export function Footer() {
       </div>
 
       <div className="site-container py-4 sm:py-7">
-        <div className="footer-glass-panel px-4 py-4 sm:px-6 sm:py-5 lg:px-7 lg:py-5.5">
-          <div className="relative z-[1] grid gap-4 sm:gap-5 lg:grid-cols-[minmax(0,1.08fr)_minmax(0,0.84fr)_minmax(0,0.82fr)] lg:items-start">
+        <div className="footer-glass-panel px-4 py-5 sm:px-6 sm:py-6 lg:px-7 lg:py-6.5">
+          <div className="relative z-[1] grid gap-4 sm:gap-5 lg:grid-cols-[minmax(0,1.08fr)_minmax(0,0.84fr)_minmax(0,0.82fr)] lg:items-center">
             <div className="flex flex-col items-center gap-2 text-center lg:items-start lg:text-left">
               <Link href="/" aria-label="Fau&Land Film" className="flex flex-col items-center gap-1 lg:items-start">
                 <BrandLogo
@@ -78,7 +78,7 @@ export function Footer() {
               </div>
             </div>
 
-            <div className="flex flex-col items-center gap-2 text-center lg:items-start lg:text-left">
+            <div className="flex flex-col items-center gap-2 text-center lg:items-start lg:self-center lg:text-left">
               <p className="text-[0.68rem] font-semibold uppercase tracking-[0.22em] text-[color:var(--foreground)]/72">
                 {copy.social}
               </p>
@@ -104,7 +104,7 @@ export function Footer() {
               </div>
             </div>
 
-            <div className="flex flex-col items-center gap-2 text-center lg:items-end lg:text-right">
+            <div className="flex flex-col items-center gap-2 text-center lg:items-end lg:self-center lg:text-right">
               <p className="text-[0.68rem] font-semibold uppercase tracking-[0.22em] text-[color:var(--foreground)]/72">
                 {copy.navigation}
               </p>
@@ -122,14 +122,14 @@ export function Footer() {
             </div>
           </div>
 
-          <div className="relative z-[1] mt-3.5 border-t border-[color:var(--line)]/24 pt-2.8">
-            <div className="flex flex-col gap-1.5 text-center sm:flex-row sm:items-center sm:justify-between sm:text-left">
-              <p className="text-[0.84rem] font-semibold leading-5 text-[color:var(--foreground)]/88">
+          <div className="relative z-[1] mt-4 border-t border-[color:var(--line)]/24 pt-3.4">
+            <div className="flex flex-col gap-2 text-center sm:flex-row sm:items-center sm:justify-between sm:text-left">
+              <p className="text-[0.84rem] font-semibold leading-5.2 text-[color:var(--foreground)]/88">
                 {copy.conversionTitle}
               </p>
               <Link
                 href="/kontakt"
-                className="inline-flex items-center justify-center gap-1 text-[0.8rem] font-semibold text-[color:var(--foreground)]/72 transition duration-200 hover:text-[color:var(--foreground)] sm:justify-start"
+                className="inline-flex min-h-[2.72rem] items-center justify-center gap-1 rounded-full border border-[color:var(--line)]/54 bg-[linear-gradient(180deg,rgba(255,255,255,0.16),rgba(255,255,255,0.05))] px-3.25 text-[0.81rem] font-semibold text-[color:var(--foreground)]/82 shadow-[0_10px_20px_rgba(17,17,17,0.08),inset_0_1px_0_rgba(255,255,255,0.22)] transition duration-200 hover:border-[color:var(--accent)]/34 hover:bg-[linear-gradient(180deg,rgba(255,255,255,0.22),rgba(255,255,255,0.07))] hover:text-[color:var(--foreground)] hover:shadow-[0_14px_26px_color-mix(in_srgb,var(--accent)_14%,transparent),inset_0_1px_0_rgba(255,255,255,0.28)] sm:justify-start"
               >
                 <span>{copy.conversionCta}</span>
                 <span aria-hidden="true" className="text-[0.92em]">↗</span>
@@ -137,8 +137,8 @@ export function Footer() {
             </div>
           </div>
 
-          <div className="relative z-[1] mt-2.6 border-t border-[color:var(--line)]/38 pt-2.5">
-            <div className="flex flex-col items-center gap-1 text-center text-[0.74rem] font-semibold uppercase tracking-[0.16em] text-[color:var(--foreground)]/68 sm:flex-row sm:items-center sm:justify-between sm:text-left">
+          <div className="relative z-[1] mt-3.1 border-t border-[color:var(--line)]/34 pt-2.6">
+            <div className="flex flex-col items-center gap-1 text-center text-[0.66rem] font-semibold uppercase tracking-[0.22em] text-[color:var(--foreground)]/56 sm:flex-row sm:items-center sm:justify-between sm:text-left">
               <p>{siteConfig.locationLabel}</p>
               <p>Org.nr. {siteConfig.orgId}</p>
             </div>

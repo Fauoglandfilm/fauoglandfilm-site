@@ -2508,13 +2508,13 @@ summary::-webkit-details-marker {
     display: inline-flex;
     align-items: center;
     gap: 0.72rem;
-    min-height: 2.65rem;
+    min-height: 2.56rem;
     border: 1px solid color-mix(in srgb, var(--line-strong) 42%, rgba(255, 255, 255, 0.26));
-    border-radius: 1rem;
+    border-radius: 0.86rem;
     background:
       linear-gradient(180deg, rgba(255, 255, 255, 0.18), rgba(255, 255, 255, 0.06) 82%),
       color-mix(in srgb, var(--surface) 18%, transparent);
-    padding: 0.58rem 0.82rem;
+    padding: 0.52rem 0.76rem;
     color: color-mix(in srgb, var(--foreground) 94%, var(--muted) 6%);
     font-size: 0.87rem;
     font-weight: 600;
@@ -2559,14 +2559,14 @@ summary::-webkit-details-marker {
     align-items: center;
     justify-content: center;
     flex-shrink: 0;
-    width: 2rem;
-    height: 2rem;
+    width: 1.86rem;
+    height: 1.86rem;
     border-radius: 999px;
     border: 1px solid color-mix(in srgb, var(--line-strong) 48%, rgba(255, 255, 255, 0.24));
     background:
       linear-gradient(180deg, rgba(255, 255, 255, 0.22), rgba(255, 255, 255, 0.06)),
       color-mix(in srgb, var(--surface) 18%, transparent);
-    color: var(--foreground);
+    color: color-mix(in srgb, var(--foreground) 82%, var(--muted) 18%);
     box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.22);
   }
 
