@@ -609,9 +609,13 @@ export function Header() {
                               animate={
                                 shouldReduceMotion
                                   ? { opacity: open ? 0 : 1 }
-                                  : { opacity: open ? 0 : 1, rotate: open ? -24 : 0, scale: open ? 0.78 : 1 }
+                                  : {
+                                      opacity: open ? 0 : 1,
+                                      filter: open ? "blur(4px)" : "blur(0px)",
+                                      y: open ? -2 : 0,
+                                    }
                               }
-                              transition={{ duration: 0.24, ease: [0.22, 1, 0.36, 1] }}
+                              transition={{ duration: 0.28, ease: [0.22, 1, 0.36, 1] }}
                             >
                               <MenuIcon className="h-4 w-4" />
                             </motion.span>
@@ -621,9 +625,13 @@ export function Header() {
                               animate={
                                 shouldReduceMotion
                                   ? { opacity: open ? 1 : 0 }
-                                  : { opacity: open ? 1 : 0, rotate: open ? 0 : 24, scale: open ? 1 : 0.78 }
+                                  : {
+                                      opacity: open ? 1 : 0,
+                                      filter: open ? "blur(0px)" : "blur(4px)",
+                                      y: open ? 0 : 2,
+                                    }
                               }
-                              transition={{ duration: 0.24, ease: [0.22, 1, 0.36, 1] }}
+                              transition={{ duration: 0.28, ease: [0.22, 1, 0.36, 1] }}
                             >
                               <CloseIcon className="h-4 w-4" />
                             </motion.span>
@@ -639,15 +647,15 @@ export function Header() {
                     initial={
                       shouldReduceMotion
                         ? { opacity: 1 }
-                        : { opacity: 0, scale: 0.9 }
+                        : { opacity: 0, filter: "blur(6px)", y: 3 }
                     }
-                    animate={{ opacity: 1, scale: 1 }}
+                    animate={shouldReduceMotion ? { opacity: 1 } : { opacity: 1, filter: "blur(0px)", y: 0 }}
                     exit={
                       shouldReduceMotion
                         ? { opacity: 0 }
-                        : { opacity: 0, scale: 0.9 }
+                        : { opacity: 0, filter: "blur(6px)", y: -3 }
                     }
-                    transition={{ duration: shouldReduceMotion ? 0.42 : 0.66, ease: [0.22, 1, 0.36, 1] }}
+                    transition={{ duration: shouldReduceMotion ? 0.42 : 0.54, ease: [0.22, 1, 0.36, 1] }}
                     className={cn(
                       "relative z-[1] flex h-full w-full items-center justify-center rounded-full",
                       overlayMode ? "text-white" : "text-[color:var(--foreground)]",
