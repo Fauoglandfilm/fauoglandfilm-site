@@ -172,6 +172,9 @@ export function Header() {
       ? "Oslo / Reklamefilm / Produksjon"
       : "Oslo / Commercial film / Production";
   const navExpanded = !usesAnimatedHomepageNavbar || scrolled || open || searchOpen || navbarPeekOpen;
+  const premiumEase: [number, number, number, number] = [0.16, 1, 0.3, 1];
+  const shellTransition = { duration: shouldReduceMotion ? 0.18 : 0.38, ease: premiumEase };
+  const contentTransition = { duration: shouldReduceMotion ? 0.14 : 0.22, ease: premiumEase };
   const normalizedSearchQuery = searchQuery.trim().toLocaleLowerCase(language === "no" ? "nb-NO" : "en-US");
   const searchResults = useMemo(() => {
     if (!normalizedSearchQuery) {
@@ -432,14 +435,14 @@ export function Header() {
           <div className="flex justify-end">
             <motion.div
               ref={headerSurfaceRef}
-              layout
               initial={false}
-              transition={{ duration: shouldReduceMotion ? 0.54 : 1.02, ease: [0.22, 1, 0.36, 1] }}
+              animate={{
+                width: navExpanded ? "100%" : "var(--homepage-navbar-collapsed-width)",
+                borderRadius: navExpanded ? "var(--homepage-navbar-expanded-radius)" : "999px",
+              }}
+              transition={shellTransition}
               className={cn(
-                "relative overflow-hidden transition duration-300",
-                navExpanded
-                  ? "mt-2 w-full rounded-[1.45rem] px-3 py-2 sm:mt-3 sm:px-4 sm:py-3 lg:rounded-[1.9rem] lg:px-5 lg:py-3.5"
-                  : "mt-2 h-[3.25rem] w-[3.25rem] rounded-full sm:mt-3 sm:h-[3.5rem] sm:w-[3.5rem]",
+                "homepage-navbar-shell relative mt-2 h-[var(--homepage-navbar-shell-height)] overflow-hidden sm:mt-3",
                 darkOverlayMode
                   ? "border border-white/12 bg-[rgba(14,14,15,0.42)] text-white shadow-[0_24px_64px_rgba(0,0,0,0.26)] backdrop-blur-[18px]"
                   : overlayMode
@@ -456,23 +459,15 @@ export function Header() {
                 )}
               />
 
-              <AnimatePresence initial={false} mode="popLayout">
+              <AnimatePresence initial={false}>
                 {navExpanded ? (
                   <motion.div
                     key="expanded-navbar"
-                    initial={
-                      shouldReduceMotion
-                        ? { opacity: 1 }
-                        : { opacity: 0, x: 18, scale: 0.985 }
-                    }
-                    animate={{ opacity: 1, x: 0, scale: 1 }}
-                    exit={
-                      shouldReduceMotion
-                        ? { opacity: 0 }
-                        : { opacity: 0, x: 18, scale: 0.985 }
-                    }
-                    transition={{ duration: shouldReduceMotion ? 0.48 : 0.84, ease: [0.22, 1, 0.36, 1] }}
-                    className="relative z-[1] flex items-center justify-between gap-2.5 sm:gap-4 lg:grid lg:grid-cols-[auto_minmax(0,1fr)_auto] lg:items-center lg:gap-5"
+                    initial={{ opacity: 0, filter: shouldReduceMotion ? "blur(0px)" : "blur(8px)" }}
+                    animate={{ opacity: 1, filter: "blur(0px)" }}
+                    exit={{ opacity: 0, filter: shouldReduceMotion ? "blur(0px)" : "blur(8px)" }}
+                    transition={contentTransition}
+                    className="absolute inset-0 z-[1] flex h-full items-center justify-between gap-2.5 px-3 sm:gap-4 sm:px-4 lg:grid lg:grid-cols-[auto_minmax(0,1fr)_auto] lg:items-center lg:gap-5 lg:px-5"
                   >
                     <Link
                       href="/"
@@ -541,32 +536,28 @@ export function Header() {
 
                     <div className="ml-auto flex items-center gap-2 lg:ml-0">
                       <div className="hidden items-center gap-2 lg:flex">
-                        <div className="origin-right scale-[0.98]">
-                          <SegmentedToggle
-                            ariaLabel={copy.languageLabel}
-                            value={language}
-                            options={[
-                              { label: "NO", value: "no" },
-                              { label: "EN", value: "en" },
-                            ]}
-                            onChange={setLanguage}
-                            compact
-                            shellClassName="header-segmented-shell"
-                          />
-                        </div>
-                        <div className="origin-right scale-[0.98]">
-                          <SegmentedToggle
-                            ariaLabel={copy.themeLabel}
-                            value={theme}
-                            options={[
-                              { value: "light", label: language === "no" ? "Dag" : "Day", icon: <SunIcon /> },
-                              { value: "dark", label: language === "no" ? "Natt" : "Night", icon: <MoonIcon /> },
-                            ]}
-                            onChange={setTheme}
-                            compact
-                            shellClassName="header-segmented-shell"
-                          />
-                        </div>
+                        <SegmentedToggle
+                          ariaLabel={copy.languageLabel}
+                          value={language}
+                          options={[
+                            { label: "NO", value: "no" },
+                            { label: "EN", value: "en" },
+                          ]}
+                          onChange={setLanguage}
+                          compact
+                          shellClassName="header-segmented-shell"
+                        />
+                        <SegmentedToggle
+                          ariaLabel={copy.themeLabel}
+                          value={theme}
+                          options={[
+                            { value: "light", label: language === "no" ? "Dag" : "Day", icon: <SunIcon /> },
+                            { value: "dark", label: language === "no" ? "Natt" : "Night", icon: <MoonIcon /> },
+                          ]}
+                          onChange={setTheme}
+                          compact
+                          shellClassName="header-segmented-shell"
+                        />
                       </div>
 
                       <div className="flex items-center lg:hidden">
@@ -606,32 +597,22 @@ export function Header() {
                             <motion.span
                               className="absolute inset-0 flex items-center justify-center"
                               initial={false}
-                              animate={
-                                shouldReduceMotion
-                                  ? { opacity: open ? 0 : 1 }
-                                  : {
-                                      opacity: open ? 0 : 1,
-                                      filter: open ? "blur(6px)" : "blur(0px)",
-                                      y: open ? -1.5 : 0,
-                                    }
-                              }
-                              transition={{ duration: shouldReduceMotion ? 0.2 : 0.32, ease: [0.22, 1, 0.36, 1] }}
+                              animate={{
+                                opacity: open ? 0 : 1,
+                                filter: !shouldReduceMotion && open ? "blur(6px)" : "blur(0px)",
+                              }}
+                              transition={contentTransition}
                             >
                               <MenuIcon className="h-4 w-4" />
                             </motion.span>
                             <motion.span
                               className="absolute inset-0 flex items-center justify-center"
                               initial={false}
-                              animate={
-                                shouldReduceMotion
-                                  ? { opacity: open ? 1 : 0 }
-                                  : {
-                                      opacity: open ? 1 : 0,
-                                      filter: open ? "blur(0px)" : "blur(6px)",
-                                      y: open ? 0 : 1.5,
-                                    }
-                              }
-                              transition={{ duration: shouldReduceMotion ? 0.2 : 0.32, ease: [0.22, 1, 0.36, 1] }}
+                              animate={{
+                                opacity: open ? 1 : 0,
+                                filter: !shouldReduceMotion && !open ? "blur(6px)" : "blur(0px)",
+                              }}
+                              transition={contentTransition}
                             >
                               <CloseIcon className="h-4 w-4" />
                             </motion.span>
@@ -644,20 +625,12 @@ export function Header() {
                   <motion.button
                     key="collapsed-navbar"
                     type="button"
-                    initial={
-                      shouldReduceMotion
-                        ? { opacity: 1 }
-                        : { opacity: 0, filter: "blur(8px)", y: 4 }
-                    }
-                    animate={shouldReduceMotion ? { opacity: 1 } : { opacity: 1, filter: "blur(0px)", y: 0 }}
-                    exit={
-                      shouldReduceMotion
-                        ? { opacity: 0 }
-                        : { opacity: 0, filter: "blur(8px)", y: -2 }
-                    }
-                    transition={{ duration: shouldReduceMotion ? 0.24 : 0.46, ease: [0.22, 1, 0.36, 1] }}
+                    initial={{ opacity: 0, filter: shouldReduceMotion ? "blur(0px)" : "blur(8px)" }}
+                    animate={{ opacity: 1, filter: "blur(0px)" }}
+                    exit={{ opacity: 0, filter: shouldReduceMotion ? "blur(0px)" : "blur(8px)" }}
+                    transition={contentTransition}
                     className={cn(
-                      "relative z-[1] flex h-full w-full items-center justify-center rounded-full",
+                      "absolute inset-0 z-[1] flex h-full w-full items-center justify-center rounded-full",
                       overlayMode ? "text-white" : "text-[color:var(--foreground)]",
                     )}
                     aria-label={copy.menuOpen}
@@ -667,8 +640,8 @@ export function Header() {
                   >
                     <span className="pointer-events-none relative flex h-4 w-4 flex-col items-center justify-center gap-[0.18rem]">
                       <span className="h-[1.5px] w-4 rounded-full bg-current" />
-                      <span className="h-[1.5px] w-4 rounded-full bg-current opacity-90" />
-                      <span className="h-[1.5px] w-4 rounded-full bg-current opacity-80" />
+                      <span className="h-[1.5px] w-4 rounded-full bg-current" />
+                      <span className="h-[1.5px] w-4 rounded-full bg-current" />
                     </span>
                   </motion.button>
                 )}

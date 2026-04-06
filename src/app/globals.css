@@ -1030,6 +1030,20 @@ summary::-webkit-details-marker {
     padding: 0;
   }
 
+  .homepage-navbar-shell {
+    --homepage-navbar-shell-height: 3.5rem;
+    --homepage-navbar-collapsed-width: 3.5rem;
+    --homepage-navbar-expanded-radius: 1.45rem;
+  }
+
+  @media (min-width: 1024px) {
+    .homepage-navbar-shell {
+      --homepage-navbar-shell-height: 4rem;
+      --homepage-navbar-collapsed-width: 4rem;
+      --homepage-navbar-expanded-radius: 1.9rem;
+    }
+  }
+
   .segmented-toggle-premium {
     position: relative;
     gap: 0.18rem;
