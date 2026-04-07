@@ -2,6 +2,7 @@
 
 import {
   createContext,
+  useCallback,
   useContext,
   useEffect,
   useMemo,
@@ -28,12 +29,9 @@ const LANGUAGE_STORAGE_KEY = "fauoglandfilm-language";
 const THEME_STORAGE_KEY = "fauoglandfilm-theme";
 const SitePreferencesContext = createContext<SitePreferencesContextValue | null>(null);
 
-function getSystemTheme(): ThemeMode {
-  if (typeof window !== "undefined" && window.matchMedia) {
-    return window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
-  }
-
-  return "light";
+function getTimeBasedTheme(): ThemeMode {
+  const hour = new Date().getHours();
+  return hour >= 7 && hour < 20 ? "light" : "dark";
 }
 
 function readStoredTheme(): ThemeMode | null {
@@ -79,7 +77,7 @@ function getInitialTheme(): ThemeMode {
     }
   }
 
-  return getSystemTheme();
+  return getTimeBasedTheme();
 }
 
 export function SitePreferencesProvider({ children }: { children: ReactNode }) {
@@ -100,24 +98,13 @@ export function SitePreferencesProvider({ children }: { children: ReactNode }) {
 
     try {
       window.localStorage.setItem(LANGUAGE_STORAGE_KEY, language);
-      window.localStorage.setItem(THEME_STORAGE_KEY, theme);
     } catch {}
   }, [language, theme]);
 
   useEffect(() => {
-    if (typeof window === "undefined" || !window.matchMedia) {
+    if (typeof window === "undefined") {
       return;
     }
-
-    const mediaQuery = window.matchMedia("(prefers-color-scheme: dark)");
-
-    const handleMediaChange = (event: MediaQueryListEvent) => {
-      if (readStoredTheme()) {
-        return;
-      }
-
-      setThemeState(event.matches ? "dark" : "light");
-    };
 
     const handleStorageChange = (event: StorageEvent) => {
       if (event.key !== THEME_STORAGE_KEY) {
@@ -129,16 +116,21 @@ export function SitePreferencesProvider({ children }: { children: ReactNode }) {
         return;
       }
 
-      setThemeState(getSystemTheme());
+      setThemeState(getTimeBasedTheme());
     };
 
-    mediaQuery.addEventListener("change", handleMediaChange);
     window.addEventListener("storage", handleStorageChange);
 
     return () => {
-      mediaQuery.removeEventListener("change", handleMediaChange);
       window.removeEventListener("storage", handleStorageChange);
     };
+  }, []);
+
+  const setTheme = useCallback((newTheme: ThemeMode) => {
+    try {
+      window.localStorage.setItem(THEME_STORAGE_KEY, newTheme);
+    } catch {}
+    setThemeState(newTheme);
   }, []);
 
   const value = useMemo(
@@ -146,9 +138,9 @@ export function SitePreferencesProvider({ children }: { children: ReactNode }) {
       language,
       setLanguage: setLanguageState,
       theme,
-      setTheme: setThemeState,
+      setTheme,
     }),
-    [language, theme],
+    [language, theme, setTheme],
   );
 
   return (
