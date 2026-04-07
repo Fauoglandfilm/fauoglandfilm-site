@@ -88,7 +88,7 @@ export function CaseCard({
           </p>
         </div>
 
-        <div className="hidden gap-3 md:grid md:grid-cols-3">
+        <div className="grid grid-cols-3 gap-2 md:gap-3">
           {[
             { label: copy.relatedCaseGoal, value: resolveLocalizedValue(caseStudy.goal, language) },
             {
@@ -97,11 +97,11 @@ export function CaseCard({
             },
             { label: copy.relatedCaseImpact, value: resolveLocalizedValue(caseStudy.impact, language) },
           ].map((item) => (
-            <div key={item.label} className="border-t border-[color:var(--line)] pt-3">
-              <p className="text-[0.66rem] uppercase tracking-[0.18em] text-[var(--muted)]">
+            <div key={item.label} className="border-t border-[color:var(--line)] pt-2 md:pt-3">
+              <p className="text-[0.58rem] uppercase tracking-[0.16em] text-[var(--muted)] md:text-[0.66rem] md:tracking-[0.18em]">
                 {item.label}
               </p>
-              <p className="mt-2 text-sm leading-6 text-[var(--muted-2)]">{item.value}</p>
+              <p className="mt-1 line-clamp-2 text-[0.75rem] leading-5 text-[var(--muted-2)] md:mt-2 md:text-sm md:leading-6">{item.value}</p>
             </div>
           ))}
         </div>
