@@ -123,6 +123,18 @@ export function Footer() {
     },
   ];
   const railSurface = isDark ? "rgba(11,12,15,0.94)" : "rgba(243,245,249,0.94)";
+  const shellBorder = isDark
+    ? "rgba(255,255,255,0.08)"
+    : "color-mix(in srgb, var(--line-strong) 54%, rgba(255,255,255,0.72))";
+  const shellBackground = isDark
+    ? "linear-gradient(180deg, rgba(7,8,10,0.996), rgba(10,11,14,0.996) 54%, rgba(11,15,22,0.998))"
+    : "linear-gradient(180deg, rgba(245,246,249,0.985), rgba(234,238,244,0.975) 52%, rgba(228,233,240,0.97))";
+  const shellShadow = isDark
+    ? "0 36px 92px rgba(0,0,0,0.56), inset 0 1px 0 rgba(255,255,255,0.04)"
+    : "0 22px 50px rgba(17,17,17,0.08), inset 0 1px 0 rgba(255,255,255,0.54)";
+  const bodyCopy = isDark ? "text-[color:var(--foreground)]/48" : "text-[color:var(--foreground)]/64";
+  const strongCopy = isDark ? "text-[color:var(--foreground)]/94" : "text-[color:var(--foreground)]/96";
+  const linkCopy = isDark ? "text-[color:var(--foreground)]/92" : "text-[color:var(--foreground)]";
 
   if (hidesGlobalChrome) {
     return null;
@@ -134,15 +146,9 @@ export function Footer() {
         <div
           className="relative overflow-hidden rounded-[1.95rem] border px-5 py-7 sm:px-7 sm:py-8 lg:px-9 lg:py-9"
           style={{
-            borderColor: isDark
-              ? "rgba(255,255,255,0.08)"
-              : "color-mix(in srgb, var(--line-strong) 22%, rgba(255,255,255,0.42))",
-            background: isDark
-              ? "linear-gradient(180deg, rgba(7,8,10,0.996), rgba(10,11,14,0.996) 54%, rgba(11,15,22,0.998))"
-              : "linear-gradient(180deg, rgba(246,247,250,0.98), rgba(237,240,245,0.97))",
-            boxShadow: isDark
-              ? "0 36px 92px rgba(0,0,0,0.56), inset 0 1px 0 rgba(255,255,255,0.04)"
-              : "0 22px 50px rgba(17,17,17,0.08), inset 0 1px 0 rgba(255,255,255,0.28)",
+            borderColor: shellBorder,
+            background: shellBackground,
+            boxShadow: shellShadow,
           }}
         >
           <FooterBackgroundGradient isDark={isDark} />
@@ -192,16 +198,16 @@ export function Footer() {
 
             <div className="flex justify-center text-center">
               <div className="flex max-w-[52rem] flex-wrap items-center justify-center gap-x-2 gap-y-1.5 text-[0.96rem] leading-6 sm:text-[1rem]">
-                <span className="font-semibold tracking-[-0.03em] text-[color:var(--foreground)]/94">
+                <span className={`font-semibold tracking-[-0.03em] ${strongCopy}`}>
                   {copy.title}
                 </span>
                 <span className="inline-flex h-[0.18rem] w-[0.18rem] rounded-full bg-[color:var(--foreground)]/18" />
-                <span className="text-[color:var(--foreground)]/48">
+                <span className={bodyCopy}>
                   {copy.description}
                 </span>
                 <Link
                   href={siteConfig.bookingHref}
-                  className="inline-flex items-center font-bold tracking-[-0.02em] text-[color:var(--foreground)]/92 transition duration-200 hover:text-[color:var(--foreground)]"
+                  className={`inline-flex items-center font-bold tracking-[-0.02em] ${linkCopy} transition duration-200 hover:text-[color:var(--foreground)]`}
                 >
                   {copy.conversionCta}
                 </Link>
@@ -217,7 +223,7 @@ export function Footer() {
                 style={{
                   background: isDark
                     ? "linear-gradient(90deg, rgba(110,170,255,0) 0%, rgba(110,170,255,0.32) 10%, rgba(110,170,255,0.32) 90%, rgba(110,170,255,0) 100%)"
-                    : "linear-gradient(90deg, rgba(89,124,190,0) 0%, rgba(89,124,190,0.18) 10%, rgba(89,124,190,0.18) 90%, rgba(89,124,190,0) 100%)",
+                    : "linear-gradient(90deg, rgba(89,124,190,0) 0%, rgba(89,124,190,0.3) 10%, rgba(89,124,190,0.3) 90%, rgba(89,124,190,0) 100%)",
                 }}
               />
 
@@ -241,13 +247,13 @@ export function Footer() {
                         className={`inline-flex h-8 w-8 items-center justify-center rounded-full transition duration-200 hover:scale-[1.05] hover:bg-[#6aaeff1a] hover:shadow-[0_0_0_1px_rgba(106,174,255,0.22),0_0_18px_rgba(106,174,255,0.18)] ${
                           isDark
                             ? "text-[rgba(255,255,255,0.82)] hover:text-white"
-                            : "text-[rgba(17,17,17,0.76)] hover:text-[#4f90ff]"
+                            : "text-[rgba(17,17,17,0.86)] hover:text-[#3f77d6]"
                         }`}
                         style={{
-                          background: isDark ? "rgba(255,255,255,0.045)" : "rgba(17,17,17,0.045)",
+                          background: isDark ? "rgba(255,255,255,0.045)" : "rgba(17,17,17,0.07)",
                           boxShadow: isDark
                             ? "inset 0 0 0 1px rgba(255,255,255,0.06)"
-                            : "inset 0 0 0 1px rgba(17,17,17,0.06)",
+                            : "inset 0 0 0 1px rgba(17,17,17,0.1)",
                         }}
                       >
                         <Icon className="h-[1.02rem] w-[1.02rem]" />
@@ -257,7 +263,7 @@ export function Footer() {
                 </div>
 
                 <div
-                  className="flex flex-wrap items-center justify-end gap-x-3 gap-y-1 pl-4 text-right text-[0.72rem] text-[color:var(--foreground)]/48 sm:gap-x-4"
+                  className={`flex flex-wrap items-center justify-end gap-x-3 gap-y-1 pl-4 text-right text-[0.72rem] sm:gap-x-4 ${bodyCopy}`}
                   style={{
                     background: `linear-gradient(270deg, ${railSurface} 0%, ${railSurface} 84%, transparent 100%)`,
                   }}
@@ -295,7 +301,7 @@ export function Footer() {
                 style={{
                   background: isDark
                     ? "radial-gradient(70% 70% at 50% 100%, rgba(76,134,235,0.16) 0%, rgba(76,134,235,0) 72%)"
-                    : "radial-gradient(70% 70% at 50% 100%, rgba(84,112,158,0.08) 0%, rgba(84,112,158,0) 72%)",
+                    : "radial-gradient(70% 70% at 50% 100%, rgba(84,112,158,0.035) 0%, rgba(84,112,158,0) 68%)",
                 }}
               />
             </div>
