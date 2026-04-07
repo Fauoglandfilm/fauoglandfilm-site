@@ -319,6 +319,7 @@ export const portfolioPageContent = {
 
 // Hero-media styres her. Resten av siten bruker nå primært tekst, gradienter og placeholders.
 export const APPROVED_HERO_VIDEO_SRC = "/media/hero/fau-land-hero-source-lock-20260329-v1.mp4";
+export const APPROVED_HERO_MOBILE_VIDEO_SRC = "/media/hero/fau-land-hero-source-lock-20260329-v1-mobile.mp4";
 export const APPROVED_HERO_POSTER_SRC = "/media/hero/fau-land-hero-source-lock-20260329-v1-poster.webp";
 
 export const videoLibrary = {

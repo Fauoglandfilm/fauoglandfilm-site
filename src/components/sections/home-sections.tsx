@@ -15,6 +15,7 @@ import {
   siteConfig,
   testimonials,
   APPROVED_HERO_VIDEO_SRC,
+  APPROVED_HERO_MOBILE_VIDEO_SRC,
   type CaseStudy,
   type ServicePillar,
 } from "@/data/site-content";
@@ -180,7 +181,6 @@ export function HeroSection() {
         <video
           key={heroVideoSrc}
           ref={videoRef}
-          src={heroVideoSrc}
           className="video-preview-surface mobile-hero-video-surface pointer-events-none absolute inset-0 z-0 h-full w-full object-cover brightness-[1.16] saturate-[1.02] contrast-[1.01] sm:brightness-[1.16] sm:saturate-[1.03] sm:contrast-[1.02]"
           autoPlay
           muted
@@ -210,7 +210,10 @@ export function HeroSection() {
           onCanPlay={(event) => {
             void event.currentTarget.play().catch(() => undefined);
           }}
-        />
+        >
+          <source media="(max-width: 767px)" src={APPROVED_HERO_MOBILE_VIDEO_SRC} type="video/mp4" />
+          <source src={heroVideoSrc} type="video/mp4" />
+        </video>
         <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(5,7,10,0.13)_0%,rgba(5,7,10,0.055)_24%,rgba(5,7,10,0.115)_56%,rgba(5,7,10,0.315)_100%)]" />
         <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(5,7,10,0.31)_0%,rgba(5,7,10,0.21)_22%,rgba(5,7,10,0.075)_56%,rgba(5,7,10,0.035)_100%)]" />
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(210,173,116,0.11),transparent_30%),radial-gradient(circle_at_82%_14%,rgba(112,143,216,0.06),transparent_22%)]" />
