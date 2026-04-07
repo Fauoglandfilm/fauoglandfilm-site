@@ -186,6 +186,7 @@ export function HeroSection() {
           muted
           loop
           playsInline
+          poster={APPROVED_HERO_POSTER_SRC}
           preload="auto"
           disablePictureInPicture
           disableRemotePlayback
@@ -228,7 +229,7 @@ export function HeroSection() {
               </p>
             </div>
 
-            <div className="hidden sm:mt-7 sm:flex sm:flex-row sm:gap-3">
+            <div className="mt-5 flex flex-col gap-2.5 sm:mt-7 sm:flex-row sm:gap-3">
               <InteractiveHoverButton
                 href={siteConfig.bookingHref}
                 text={resolveLocalizedValue(homeHeroContent.ctaLabel, language)}
