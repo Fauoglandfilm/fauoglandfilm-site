@@ -5,6 +5,7 @@ const ROOT = process.cwd();
 const HERO_DIR = path.join(ROOT, "public", "media", "hero");
 const ALLOWED_HERO_FILES = new Set([
   "fau-land-hero-source-lock-20260329-v1.mp4",
+  "fau-land-hero-source-lock-20260329-v1-mobile.mp4",
   "fau-land-hero-source-lock-20260329-v1-poster.webp",
 ]);
 const FORBIDDEN_HERO_TOKENS = [
