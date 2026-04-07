@@ -123,8 +123,9 @@ export function CaseDetailContent({
   caseStudy,
   relatedCases,
 }: CaseDetailContentProps) {
-  const { language } = useSitePreferences();
+  const { language, theme } = useSitePreferences();
   const copy = uiCopy.pages[language];
+  const isDarkTheme = theme === "dark";
   const localizedDeliverables = caseStudy.deliverables.map((item) =>
     resolveLocalizedValue(item, language),
   );
@@ -472,19 +473,51 @@ export function CaseDetailContent({
       {isVilleGleder && villeGlederTestimonial ? (
         <section className="section-space pt-0">
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-            <div className="overflow-hidden rounded-[2rem] border border-white/10 bg-[#111111] px-5 py-6 text-white shadow-[0_28px_90px_rgba(0,0,0,0.24)] sm:px-8 sm:py-8 lg:px-10">
-              <p className="text-[0.72rem] font-semibold uppercase tracking-[0.24em] text-white/56">
+            <div
+              className={cn(
+                "overflow-hidden rounded-[2rem] border px-5 py-6 sm:px-8 sm:py-8 lg:px-10",
+                isDarkTheme
+                  ? "border-white/10 bg-[#111111] text-white shadow-[0_28px_90px_rgba(0,0,0,0.24)]"
+                  : "border-[color:var(--line)]/80 bg-[linear-gradient(180deg,color-mix(in_srgb,var(--surface)_96%,white),color-mix(in_srgb,var(--surface-muted)_92%,white))] text-[color:var(--foreground)] shadow-[0_24px_70px_rgba(18,14,10,0.08)]",
+              )}
+            >
+              <p
+                className={cn(
+                  "text-[0.72rem] font-semibold uppercase tracking-[0.24em]",
+                  isDarkTheme ? "text-white/56" : "text-[var(--muted)]",
+                )}
+              >
                 {language === "no" ? "Kundeuttalelse" : "Client quote"}
               </p>
-              <blockquote className="mt-4 max-w-4xl font-display text-[1.55rem] leading-[1.16] tracking-[-0.04em] text-white sm:text-[2rem] lg:text-[2.35rem]">
+              <blockquote
+                className={cn(
+                  "mt-4 max-w-4xl font-display text-[1.55rem] leading-[1.16] tracking-[-0.04em] sm:text-[2rem] lg:text-[2.35rem]",
+                  isDarkTheme ? "text-white" : "text-[color:var(--foreground)]",
+                )}
+              >
                 “{resolveLocalizedValue(villeGlederTestimonial.quote, language)}”
               </blockquote>
-              <div className="mt-5 flex flex-col gap-1 text-white/72 sm:flex-row sm:items-center sm:gap-3">
-                <p className="text-[0.82rem] font-semibold uppercase tracking-[0.16em] text-white">
+              <div
+                className={cn(
+                  "mt-5 flex flex-col gap-1 sm:flex-row sm:items-center sm:gap-3",
+                  isDarkTheme ? "text-white/72" : "text-[var(--muted-2)]",
+                )}
+              >
+                <p
+                  className={cn(
+                    "text-[0.82rem] font-semibold uppercase tracking-[0.16em]",
+                    isDarkTheme ? "text-white" : "text-[color:var(--foreground)]",
+                  )}
+                >
                   {villeGlederTestimonial.name}
                 </p>
-                <span className="hidden h-1 w-1 rounded-full bg-white/28 sm:block" />
-                <p className="text-sm text-white/68">
+                <span
+                  className={cn(
+                    "hidden h-1 w-1 rounded-full sm:block",
+                    isDarkTheme ? "bg-white/28" : "bg-[color:var(--line-strong)]",
+                  )}
+                />
+                <p className={cn("text-sm", isDarkTheme ? "text-white/68" : "text-[var(--muted-2)]")}>
                   {villeGlederTestimonial.company}
                 </p>
               </div>

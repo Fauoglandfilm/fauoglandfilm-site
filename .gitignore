@@ -15,6 +15,7 @@ coverage
 dist
 tmp
 temp
+.claude/
 FILER TIL NETTSIDE*
 ARKIV*
 public/**/_raw/

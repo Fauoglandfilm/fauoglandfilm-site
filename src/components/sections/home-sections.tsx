@@ -909,21 +909,33 @@ export function WhyUsProofSection() {
 }
 
 export function ClosingCtaSection() {
-  const { language } = useSitePreferences();
+  const { language, theme } = useSitePreferences();
+  const isDarkTheme = theme === "dark";
+  const panelClassName = isDarkTheme
+    ? "border-white/10 bg-[#111111] text-white shadow-[0_34px_110px_rgba(0,0,0,0.16)]"
+    : "border-[color:var(--line)]/80 bg-[linear-gradient(180deg,color-mix(in_srgb,var(--surface)_96%,white),color-mix(in_srgb,var(--surface-muted)_92%,white))] text-[color:var(--foreground)] shadow-[0_28px_84px_rgba(18,14,10,0.08)]";
+  const eyebrowClassName = isDarkTheme ? "text-white/44" : "text-[var(--muted)]";
+  const titleClassName = isDarkTheme ? "text-white" : "text-[color:var(--foreground)]";
+  const descriptionClassName = isDarkTheme ? "text-white/72" : "text-[var(--muted-2)]";
 
   return (
     <section className="section-space pt-0">
       <div className="site-container">
         <Reveal y={16}>
-          <div className="overflow-hidden rounded-[2rem] border border-white/10 bg-[#111111] px-6 py-8 text-white shadow-[0_34px_110px_rgba(0,0,0,0.16)] sm:px-8 sm:py-10 lg:flex lg:items-end lg:justify-between lg:gap-8">
+          <div
+            className={cn(
+              "overflow-hidden rounded-[2rem] border px-6 py-8 sm:px-8 sm:py-10 lg:flex lg:items-end lg:justify-between lg:gap-8",
+              panelClassName,
+            )}
+          >
             <div className="max-w-[38rem]">
-              <p className="text-[0.72rem] font-semibold uppercase tracking-[0.24em] text-white/44">
+              <p className={cn("text-[0.72rem] font-semibold uppercase tracking-[0.24em]", eyebrowClassName)}>
                 {resolveLocalizedValue(closingCtaContent.eyebrow, language)}
               </p>
-              <h2 className="section-title mt-3 text-white sm:mt-4">
+              <h2 className={cn("section-title mt-3 sm:mt-4", titleClassName)}>
                 {resolveLocalizedValue(closingCtaContent.title, language)}
               </h2>
-              <p className="body-lead mt-4 text-white/72">
+              <p className={cn("body-lead mt-4", descriptionClassName)}>
                 {resolveLocalizedValue(closingCtaContent.description, language)}
               </p>
             </div>

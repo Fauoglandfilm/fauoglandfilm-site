@@ -933,13 +933,25 @@ export function CtaBanner({
   secondaryHref?: string;
   align?: "left" | "center";
 }) {
-  const { language } = useSitePreferences();
+  const { language, theme } = useSitePreferences();
   const copy = uiCopy.siteSections[language];
+  const isDarkTheme = theme === "dark";
+  const bannerSurfaceClassName = isDarkTheme
+    ? "border-white/10 bg-[#111111] text-white shadow-[0_16px_36px_rgba(15,15,15,0.1)]"
+    : "border-[color:var(--line)]/80 bg-[linear-gradient(180deg,color-mix(in_srgb,var(--surface)_96%,white),color-mix(in_srgb,var(--surface-muted)_92%,white))] text-[color:var(--foreground)] shadow-[0_16px_36px_rgba(18,14,10,0.08)]";
+  const bannerEyebrowClassName = isDarkTheme ? "text-white/44" : "text-[var(--muted)]";
+  const bannerTitleClassName = isDarkTheme ? "text-white" : "text-[color:var(--foreground)]";
+  const bannerDescriptionClassName = isDarkTheme ? "text-white/68" : "text-[var(--muted-2)]";
 
   return (
     <section className="pt-[clamp(0.2rem,0.5vw,0.45rem)] pb-[clamp(0.55rem,1vw,0.9rem)]">
       <div className="site-container">
-        <div className="overflow-hidden rounded-[1.2rem] border border-black/8 bg-[#111111] px-3.5 py-3.5 text-white shadow-[0_16px_36px_rgba(15,15,15,0.1)] sm:rounded-[1.35rem] sm:px-4 sm:py-4 lg:px-5 lg:py-4.5">
+        <div
+          className={cn(
+            "overflow-hidden rounded-[1.2rem] border px-3.5 py-3.5 sm:rounded-[1.35rem] sm:px-4 sm:py-4 lg:px-5 lg:py-4.5",
+            bannerSurfaceClassName,
+          )}
+        >
           <div
             className={
               align === "center"
@@ -948,13 +960,23 @@ export function CtaBanner({
             }
           >
             <div className="space-y-1.5">
-              <p className="text-[0.64rem] font-semibold uppercase tracking-[0.22em] text-white/44">
+              <p className={cn("text-[0.64rem] font-semibold uppercase tracking-[0.22em]", bannerEyebrowClassName)}>
                 {copy.ctaEyebrow}
               </p>
-              <h2 className="text-balance font-sans text-[clamp(1.35rem,2.8vw,2.15rem)] font-semibold leading-[1.01] tracking-[-0.055em] text-white">
+              <h2
+                className={cn(
+                  "text-balance font-sans text-[clamp(1.35rem,2.8vw,2.15rem)] font-semibold leading-[1.01] tracking-[-0.055em]",
+                  bannerTitleClassName,
+                )}
+              >
                 {resolveLocalizedValue(title, language)}
               </h2>
-              <p className="mx-auto max-w-[31rem] text-[0.82rem] leading-5 text-white/68 sm:text-[0.88rem] sm:leading-5.4">
+              <p
+                className={cn(
+                  "mx-auto max-w-[31rem] text-[0.82rem] leading-5 sm:text-[0.88rem] sm:leading-5.4",
+                  bannerDescriptionClassName,
+                )}
+              >
                 {resolveLocalizedValue(description, language)}
               </p>
             </div>
@@ -983,7 +1005,7 @@ export function RelatedLinks({
   links,
 }: {
   links: Array<{ href: string; label: MaybeLocalizedText }>;
-}) {
+  }) {
   const { language } = useSitePreferences();
 
   return (
@@ -1019,21 +1041,42 @@ export function PageHero(props: {
     secondaryCta,
     compact = false,
   } = props;
-  const { language } = useSitePreferences();
+  const { language, theme } = useSitePreferences();
   const resolvedEyebrow = resolveLocalizedValue(eyebrow, language);
   const resolvedTitle = resolveLocalizedValue(title, language);
   const resolvedDescription = resolveLocalizedValue(description, language);
+  const isDarkTheme = theme === "dark";
   const compactTitleLines = compact
     ? resolvedTitle.split("\n").map((line) => line.trim()).filter(Boolean)
     : [resolvedTitle];
+  const heroSurfaceClassName = isDarkTheme
+    ? "bg-[#111111] text-white"
+    : "border-b border-[color:var(--line)]/70 bg-[linear-gradient(180deg,color-mix(in_srgb,var(--surface)_97%,white)_0%,color-mix(in_srgb,var(--surface-muted)_92%,white)_100%)] text-[color:var(--foreground)]";
+  const heroEyebrowClassName = isDarkTheme ? "text-white/62" : "text-[var(--muted)]";
+  const heroTitleClassName = isDarkTheme ? "text-white" : "text-[color:var(--foreground)]";
+  const heroDescriptionClassName = isDarkTheme ? "text-white/76" : "text-[var(--muted-2)]";
 
   return (
-    <section className={cn("bg-[#111111] text-white", compact ? "pt-[max(6.6rem,calc(env(safe-area-inset-top,0px)+5.9rem))] sm:pt-[max(7.25rem,calc(env(safe-area-inset-top,0px)+6.4rem))]" : "pt-20 sm:pt-28")}>
+    <section
+      className={cn(
+        heroSurfaceClassName,
+        compact
+          ? "pt-[max(6.6rem,calc(env(safe-area-inset-top,0px)+5.9rem))] sm:pt-[max(7.25rem,calc(env(safe-area-inset-top,0px)+6.4rem))]"
+          : "pt-20 sm:pt-28",
+      )}
+    >
       <div className="site-container">
         <Reveal className={cn("w-full", compact ? "pb-4.5 sm:pb-5.5 lg:pb-5.5" : "py-10 sm:py-14 lg:py-16")} delay={0.04} y={18}>
           <div className={cn(compact ? "max-w-[29rem]" : "max-w-[44rem]")}>
-            <span className="hero-badge text-white/62">{resolvedEyebrow}</span>
-            <h1 className={cn("text-white", compact ? "mt-1.75 max-w-[11.5ch] font-display text-[1.82rem] leading-[0.88] tracking-[-0.068em] sm:text-[2.2rem] lg:text-[2.7rem]" : "mt-3 page-title max-w-[13ch]")}>
+            <span className={cn("hero-badge", heroEyebrowClassName)}>{resolvedEyebrow}</span>
+            <h1
+              className={cn(
+                heroTitleClassName,
+                compact
+                  ? "mt-1.75 max-w-[11.5ch] font-display text-[1.82rem] leading-[0.88] tracking-[-0.068em] sm:text-[2.2rem] lg:text-[2.7rem]"
+                  : "mt-3 page-title max-w-[13ch]",
+              )}
+            >
               {compact && compactTitleLines.length > 1 ? (
                 compactTitleLines.map((line) => (
                   <span key={line} className="block whitespace-nowrap">
@@ -1044,7 +1087,14 @@ export function PageHero(props: {
                 resolvedTitle
               )}
             </h1>
-            <p className={cn("text-white/76", compact ? "mt-1.5 max-w-[25rem] text-[0.84rem] leading-5 sm:text-[0.9rem] sm:leading-5.5" : "mt-3.5 body-copy max-w-2xl sm:mt-4 sm:text-base sm:leading-7")}>
+            <p
+              className={cn(
+                heroDescriptionClassName,
+                compact
+                  ? "mt-1.5 max-w-[25rem] text-[0.84rem] leading-5 sm:text-[0.9rem] sm:leading-5.5"
+                  : "mt-3.5 body-copy max-w-2xl sm:mt-4 sm:text-base sm:leading-7",
+              )}
+            >
               {resolvedDescription}
             </p>
             {primaryCta || secondaryCta ? (
