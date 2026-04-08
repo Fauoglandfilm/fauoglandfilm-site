@@ -733,14 +733,14 @@ function PortfolioVideoModal({
 
         <div
           className={cn(
-            "pointer-events-none absolute inset-x-3 top-[calc(max(env(safe-area-inset-top),0.85rem)+4.9rem)] bottom-[max(env(safe-area-inset-bottom),0.85rem)] z-[2] flex min-h-0 overflow-hidden rounded-[1.45rem] border border-white/12 bg-[linear-gradient(180deg,rgba(255,255,255,0.14),rgba(255,255,255,0.05))] text-white shadow-[0_24px_60px_rgba(0,0,0,0.24)] backdrop-blur-xl transition duration-300 sm:inset-x-auto sm:bottom-auto sm:left-[max(env(safe-area-inset-left),1rem)] sm:top-[calc(max(env(safe-area-inset-top),1rem)+4.75rem)] sm:h-[calc(100dvh-7.25rem)] supports-[height:100svh]:sm:h-[calc(100svh-7.25rem)] sm:w-[27rem]",
+            "pointer-events-none absolute inset-x-3 top-[calc(max(env(safe-area-inset-top),0.85rem)+4.9rem)] bottom-[max(env(safe-area-inset-bottom),0.85rem)] z-[2] min-h-0 overflow-hidden rounded-[1.45rem] border border-white/12 bg-[linear-gradient(180deg,rgba(255,255,255,0.14),rgba(255,255,255,0.05))] text-white shadow-[0_24px_60px_rgba(0,0,0,0.24)] backdrop-blur-xl transition duration-300 sm:inset-x-auto sm:bottom-auto sm:left-[max(env(safe-area-inset-left),1rem)] sm:top-[calc(max(env(safe-area-inset-top),1rem)+4.75rem)] sm:h-[calc(100dvh-7.25rem)] supports-[height:100svh]:sm:h-[calc(100svh-7.25rem)] sm:w-[27rem]",
             isInfoOpen ? "translate-y-0 opacity-100" : "translate-y-4 opacity-0 sm:-translate-x-3 sm:translate-y-0",
             isInfoOpen && "pointer-events-auto",
           )}
           onClick={(event) => event.stopPropagation()}
         >
           <div
-            className="portfolio-modal-scroll min-h-0 flex-1 px-4 py-4 pr-3.5 sm:px-4 sm:py-4 sm:pr-3"
+            className="portfolio-modal-scroll absolute inset-0 h-full max-h-full overflow-y-auto px-4 py-4 pr-3.5 sm:px-4 sm:py-4 sm:pr-3"
             style={{
               paddingBottom: "calc(1rem + env(safe-area-inset-bottom))",
             }}
