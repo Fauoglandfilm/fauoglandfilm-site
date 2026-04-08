@@ -1,6 +1,5 @@
 "use client";
 
-import Link from "next/link";
 import type { PointerEvent as ReactPointerEvent, ReactNode } from "react";
 
 import {
@@ -11,7 +10,6 @@ import {
   useTransform,
   type MotionStyle,
 } from "framer-motion";
-import { ArrowUpRight } from "lucide-react";
 
 import { PreviewMedia } from "@/components/media/preview-media";
 import { useSitePreferences } from "@/components/providers/site-preferences";
@@ -62,33 +60,6 @@ const serviceMediaConfigBySlug = {
   },
 } as const;
 
-const servicePurposeChipBySlug = {
-  reklamefilm: {
-    no: "Flere henvendelser",
-    en: "More leads",
-  },
-  "marketing-distribusjon": {
-    no: "Sett, brukt, målt",
-    en: "Seen, used, measured",
-  },
-  "bedriftsfilm-intervjuer": {
-    no: "Bygg tillit",
-    en: "Build trust",
-  },
-  "some-innhold": {
-    no: "Hold dere synlige",
-    en: "Stay visible",
-  },
-  "event-live": {
-    no: "Forleng effekten",
-    en: "Extend the impact",
-  },
-  "dronefilm-luftfoto": {
-    no: "Oversikt og tyngde",
-    en: "Scale and overview",
-  },
-} as const;
-
 const serviceTitleLinesBySlug = {
   "bedriftsfilm-intervjuer": {
     no: ["Bedriftsfilm og", "intervjuer"],
@@ -97,19 +68,6 @@ const serviceTitleLinesBySlug = {
   "some-innhold": {
     no: ["Innhold for sosiale", "medier"],
     en: ["Social media", "content"],
-  },
-} as const;
-
-const infoLabelCopy = {
-  no: {
-    outcome: "HOVEDMÅL:",
-    timeline: "LEVERINGSTID:",
-    budget: "BUDSJETT:",
-  },
-  en: {
-    outcome: "PRIMARY GOAL:",
-    timeline: "TIMELINE:",
-    budget: "BUDGET:",
   },
 } as const;
 
@@ -125,6 +83,52 @@ function renderTitle(title: string, lines?: readonly string[]): ReactNode {
   ));
 }
 
+function getServiceCardCta(service: ServiceArea, language: "no" | "en") {
+  const isCaseLink = (href?: string) => Boolean(href && href.startsWith("/case/"));
+  const contactHref = "/kontakt";
+  const caseHref = isCaseLink(service.exampleHref) ? service.exampleHref : null;
+
+  switch (service.slug) {
+    case "reklamefilm":
+    case "marketing-distribusjon":
+    case "event-live":
+    case "dronefilm-luftfoto":
+      return {
+        href: contactHref,
+        label: language === "no" ? "Kontakt oss" : "Contact us",
+      };
+    case "bedriftsfilm-intervjuer":
+      return {
+        href: caseHref ?? contactHref,
+        label:
+          caseHref
+            ? language === "no"
+              ? "Se case"
+              : "View case"
+            : language === "no"
+              ? "Kontakt oss"
+              : "Contact us",
+      };
+    case "some-innhold":
+      return {
+        href: caseHref ?? contactHref,
+        label:
+          caseHref
+            ? language === "no"
+              ? "Se case"
+              : "View case"
+            : language === "no"
+              ? "Kontakt oss"
+              : "Contact us",
+      };
+    default:
+      return {
+        href: service.href,
+        label: resolveLocalizedValue(service.ctaLabel, language),
+      };
+  }
+}
+
 export function ServiceCard({ service, index = 0 }: ServiceCardProps) {
   const { language, theme } = useSitePreferences();
   const shouldReduceMotion = useReducedMotion();
@@ -138,23 +142,9 @@ export function ServiceCard({ service, index = 0 }: ServiceCardProps) {
   };
   const title = resolveLocalizedValue(service.title, language);
   const subline = resolveLocalizedValue(service.value, language);
-  const primaryLabel = resolveLocalizedValue(service.ctaLabel, language);
-  const secondaryHref = service.exampleHref ?? "/case";
-  const secondaryLabel = service.exampleLabel
-    ? resolveLocalizedValue(service.exampleLabel, language)
-    : language === "no"
-      ? "Se eksempel"
-      : "See example";
+  const cta = getServiceCardCta(service, language);
   const mediaAlt = visual ? resolveLocalizedValue(visual.alt, language) : title;
-  const purposeChip = resolveLocalizedValue(
-    servicePurposeChipBySlug[service.slug as keyof typeof servicePurposeChipBySlug],
-    language,
-  );
-  const infoRows = [
-    { label: infoLabelCopy[language].outcome, value: purposeChip },
-    { label: infoLabelCopy[language].timeline, value: resolveLocalizedValue(service.timeline, language) },
-    { label: infoLabelCopy[language].budget, value: resolveLocalizedValue(service.budget, language) },
-  ];
+  const budget = resolveLocalizedValue(service.budget, language);
   const titleLines = serviceTitleLinesBySlug[service.slug as keyof typeof serviceTitleLinesBySlug]?.[language];
   const shellClassName = isDarkTheme
     ? "border-white/10 bg-[linear-gradient(180deg,rgba(255,255,255,0.1),rgba(255,255,255,0.03)_48%,rgba(255,255,255,0.045)_100%)] shadow-[inset_0_1px_0_rgba(255,255,255,0.1),0_24px_52px_rgba(2,6,12,0.34)]"
@@ -177,13 +167,6 @@ export function ServiceCard({ service, index = 0 }: ServiceCardProps) {
     : "bg-[linear-gradient(180deg,rgba(248,251,255,0.16)_0%,rgba(244,248,253,0.04)_24%,rgba(214,224,236,0.16)_58%,rgba(226,234,243,0.62)_100%)]";
   const titleClassName = isDarkTheme ? "text-white" : "text-[color:var(--foreground)]";
   const sublineClassName = isDarkTheme ? "text-white/90" : "text-[color:var(--foreground)]/88";
-  const infoRowClassName = isDarkTheme
-    ? "border-white/12 text-white/82"
-    : "border-[color:var(--foreground)]/8 text-[color:var(--foreground)]/82";
-  const infoLabelClassName = isDarkTheme ? "text-white/50" : "text-[color:var(--foreground)]/48";
-  const secondaryLinkClassName = isDarkTheme
-    ? "border-white/14 bg-white/[0.12] text-white shadow-[0_12px_28px_rgba(0,0,0,0.16)] hover:border-white/22 hover:bg-white/[0.16] hover:text-white focus-visible:ring-offset-[#070b12]"
-    : "border-[color:var(--foreground)]/10 bg-white text-[color:var(--foreground)] shadow-[0_12px_28px_rgba(122,140,168,0.14)] hover:border-[color:var(--foreground)]/18 hover:bg-white hover:text-[color:var(--foreground)] focus-visible:ring-offset-[#eef3f9]";
   const primaryButtonClassName = isDarkTheme
     ? "min-h-[2.85rem] border-[color:var(--accent)]/24 shadow-[0_14px_30px_color-mix(in_srgb,var(--accent)_18%,transparent)] hover:border-[color:var(--accent)]/42 hover:shadow-[0_18px_38px_color-mix(in_srgb,var(--accent)_22%,transparent)] [&_.button-label-base]:gap-1.15 [&_.button-label-dot]:ml-[0.12rem] [&_.button-label-dot]:h-[0.3rem] [&_.button-label-dot]:w-[0.3rem]"
     : "min-h-[2.85rem] border-[color:var(--accent)]/26 shadow-[0_14px_28px_color-mix(in_srgb,var(--accent)_14%,transparent)] hover:border-[color:var(--accent)]/42 hover:shadow-[0_18px_34px_color-mix(in_srgb,var(--accent)_18%,transparent)] [&_.button-label-base]:gap-1.15 [&_.button-label-dot]:ml-[0.12rem] [&_.button-label-dot]:h-[0.3rem] [&_.button-label-dot]:w-[0.3rem]";
@@ -284,7 +267,7 @@ export function ServiceCard({ service, index = 0 }: ServiceCardProps) {
           }
         />
 
-        <div className="relative flex h-full flex-col p-2.4 sm:p-2.7">
+        <div className="relative flex h-full flex-col p-2.15 sm:p-2.35">
           <div className={`relative overflow-hidden rounded-[0.92rem] ${mediaSurfaceClassName}`}>
             <motion.div
               className="relative aspect-[1.42/1] w-full"
@@ -317,46 +300,32 @@ export function ServiceCard({ service, index = 0 }: ServiceCardProps) {
             <div className={`absolute inset-0 ${mediaOverlayClassName}`} />
           </div>
 
-          <div className="relative flex flex-1 flex-col px-0.7 pb-0.35 pt-3.2">
-            <div className="space-y-3.2">
+          <div className="relative flex flex-1 flex-col px-0.55 pb-0.2 pt-2.7">
+            <div className="space-y-2.35">
               <h3
                 className={`max-w-[12.5ch] text-balance text-[1.3rem] font-black leading-[0.92] tracking-[-0.05em] sm:text-[1.42rem] ${titleClassName}`}
               >
                 {renderTitle(title, titleLines)}
               </h3>
-              <p className={`max-w-[22ch] text-[0.9rem] font-semibold leading-[1.5] sm:text-[0.96rem] ${sublineClassName} line-clamp-2`}>
+              <p
+                className={`max-w-[22ch] text-[0.88rem] font-semibold leading-[1.45] sm:text-[0.93rem] ${sublineClassName} line-clamp-2`}
+              >
                 {subline}
               </p>
-
-              <div className="space-y-1.4">
-                {infoRows.map((item) => (
-                  <div
-                    key={`${service.slug}-${item.label}`}
-                    className={`grid grid-cols-[6rem_minmax(0,1fr)] items-baseline gap-x-2.2 border-b pb-1.3 text-[0.72rem] leading-[1.35] ${infoRowClassName}`}
-                  >
-                    <span className={`text-[0.61rem] font-semibold tracking-[0.16em] ${infoLabelClassName}`}>{item.label}</span>
-                    <span className="min-w-0 text-[0.81rem] font-normal leading-[1.38]">{item.value}</span>
-                  </div>
-                ))}
-              </div>
+              <p className={`text-[0.92rem] font-semibold leading-none sm:text-[0.98rem] ${titleClassName}`}>
+                {budget}
+              </p>
             </div>
 
-            <div className="mt-auto grid gap-2.45 pt-5.5">
+            <div className="mt-auto pt-5.25">
               <ButtonLink
-                href={service.href}
+                href={cta.href}
                 size="compact"
                 fullWidth
                 className={`transition duration-200 ${primaryButtonClassName}`}
               >
-                {primaryLabel}
+                {cta.label}
               </ButtonLink>
-              <Link
-                href={secondaryHref}
-                className={`inline-flex w-full min-h-[2.85rem] items-center justify-start gap-1.15 rounded-[1rem] border px-3.15 py-2.1 text-[0.85rem] font-semibold transition duration-200 backdrop-blur-xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--accent)]/62 focus-visible:ring-offset-2 ${secondaryLinkClassName}`}
-              >
-                <span>{secondaryLabel}</span>
-                <ArrowUpRight className="h-[0.96rem] w-[0.96rem] shrink-0" />
-              </Link>
             </div>
           </div>
         </div>
