@@ -178,10 +178,10 @@ function getPortfolioTeaserLine(project: PortfolioProject, language: "no" | "en"
 
 function getPortfolioCardAspectClass(index: number) {
   const compactAspectCycle = [
-    "aspect-[1.24/0.86]",
-    "aspect-[1.06/0.98]",
-    "aspect-[1.18/0.9]",
-    "aspect-[1.08/1]",
+    "aspect-[1.34/0.82]",
+    "aspect-[1.2/0.84]",
+    "aspect-[1.28/0.8]",
+    "aspect-[1.18/0.86]",
   ] as const;
 
   return compactAspectCycle[index % compactAspectCycle.length];
@@ -358,9 +358,9 @@ export function PortfolioPageContent({
             </div>
           </Reveal>
 
-          <div className="mt-4 columns-1 gap-4 xl:columns-2 xl:gap-4 [column-fill:_balance]">
+          <div className="mt-4 grid gap-3 md:grid-cols-2 xl:gap-4">
             {visibleFeaturedProjects.map((project, index) => (
-              <div key={project.slug} className="mb-4 break-inside-avoid">
+              <div key={project.slug}>
                 <Reveal delay={0.04 * index}>
                   <PortfolioProjectCard
                     project={project}
@@ -427,9 +427,9 @@ export function PortfolioPageContent({
             </div>
           </Reveal>
 
-          <div className="mt-4 columns-1 gap-4 xl:columns-2 xl:gap-4 [column-fill:_balance]">
+          <div className="mt-4 grid gap-3 sm:grid-cols-2 xl:grid-cols-3 xl:gap-4">
             {filteredProjects.map((project, index) => (
-              <div key={project.slug} className="mb-4 break-inside-avoid">
+              <div key={project.slug}>
                 <Reveal delay={0.02 * index}>
                   <PortfolioProjectCard
                     project={project}
@@ -505,7 +505,7 @@ function PortfolioProjectCard({
 
   return (
     <article
-      className="group relative overflow-hidden rounded-[1.45rem] border border-[color:var(--line)]/75 bg-[linear-gradient(180deg,rgba(255,255,255,0.1),rgba(255,255,255,0.04))] shadow-[0_12px_30px_rgba(18,14,10,0.06)] backdrop-blur-[18px]"
+      className="group relative overflow-hidden rounded-[1.2rem] border border-[color:var(--line)]/75 bg-[linear-gradient(180deg,rgba(255,255,255,0.1),rgba(255,255,255,0.04))] shadow-[0_10px_24px_rgba(18,14,10,0.055)] backdrop-blur-[18px]"
     >
       {canOpen ? (
         <button
@@ -530,14 +530,14 @@ function PortfolioProjectCard({
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(255,255,255,0.08),transparent_34%),linear-gradient(180deg,rgba(8,8,8,0.02),rgba(8,8,8,0.1)_40%,rgba(8,8,8,0.3)_100%)]" />
 
           {groupTitle ? (
-            <span className="absolute left-3 top-3 z-[2] rounded-full border border-white/12 bg-black/16 px-2.5 py-1 text-[0.58rem] font-semibold uppercase tracking-[0.16em] text-white/76">
+            <span className="absolute left-2.5 top-2.5 z-[2] rounded-full border border-white/12 bg-black/16 px-2 py-0.75 text-[0.54rem] font-semibold uppercase tracking-[0.14em] text-white/76">
               {groupTitle}
             </span>
           ) : null}
 
-          <div className="absolute inset-x-0 bottom-0 z-[2] flex items-end justify-between gap-4 p-3.5 text-white sm:p-4">
+          <div className="absolute inset-x-0 bottom-0 z-[2] flex items-end justify-between gap-3 p-3 text-white sm:p-3.5">
             <div className="min-w-0">
-              <div className="flex flex-wrap items-center gap-2 text-[0.56rem] font-semibold uppercase tracking-[0.16em] text-white/58">
+              <div className="flex flex-wrap items-center gap-1.5 text-[0.52rem] font-semibold uppercase tracking-[0.14em] text-white/58">
                 <span>{project.client}</span>
                 {project.year ? (
                   <>
@@ -548,25 +548,25 @@ function PortfolioProjectCard({
               </div>
             </div>
             {canOpen ? (
-              <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-white/12 bg-[rgba(255,255,255,0.08)] shadow-[0_10px_22px_rgba(0,0,0,0.16)] backdrop-blur-xl">
-                <ArrowUpRight className="h-3.5 w-3.5" />
+              <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full border border-white/12 bg-[rgba(255,255,255,0.08)] shadow-[0_10px_22px_rgba(0,0,0,0.16)] backdrop-blur-xl">
+                <ArrowUpRight className="h-3.25 w-3.25" />
               </span>
             ) : null}
           </div>
 
-          <div className="pointer-events-none absolute inset-x-3 bottom-3 z-[3] hidden translate-y-2 rounded-[1rem] border border-white/12 bg-[linear-gradient(180deg,rgba(0,0,0,0.42),rgba(0,0,0,0.22))] px-3 py-2.5 text-white opacity-0 shadow-[0_16px_34px_rgba(0,0,0,0.18)] backdrop-blur-xl transition duration-300 group-hover:translate-y-0 group-hover:opacity-100 group-focus-within:translate-y-0 group-focus-within:opacity-100 lg:block">
-            <p className="text-[0.56rem] font-semibold uppercase tracking-[0.16em] text-white/54">
+          <div className="pointer-events-none absolute inset-x-2.5 bottom-2.5 z-[3] hidden translate-y-2 rounded-[0.9rem] border border-white/12 bg-[linear-gradient(180deg,rgba(0,0,0,0.42),rgba(0,0,0,0.22))] px-2.5 py-2 text-white opacity-0 shadow-[0_14px_28px_rgba(0,0,0,0.16)] backdrop-blur-xl transition duration-300 group-hover:translate-y-0 group-hover:opacity-100 group-focus-within:translate-y-0 group-focus-within:opacity-100 xl:block">
+            <p className="text-[0.52rem] font-semibold uppercase tracking-[0.14em] text-white/54">
               {detailLabel}
             </p>
-            <p className="mt-1 text-[0.74rem] leading-5 text-white/82">
+            <p className="mt-1 text-[0.7rem] leading-4.5 text-white/82">
               {detailHint}
             </p>
             {hoverInfoPoints.length ? (
-              <div className="mt-2 flex flex-wrap gap-1.5">
+              <div className="mt-1.5 flex flex-wrap gap-1.25">
                 {hoverInfoPoints.map((point) => (
                   <span
                     key={`${project.slug}-hover-${point}`}
-                    className="rounded-full border border-white/10 bg-white/8 px-2 py-0.75 text-[0.54rem] font-semibold uppercase tracking-[0.12em] text-white/74"
+                    className="rounded-full border border-white/10 bg-white/8 px-1.75 py-0.5 text-[0.5rem] font-semibold uppercase tracking-[0.1em] text-white/74"
                   >
                     {point}
                   </span>
@@ -576,8 +576,8 @@ function PortfolioProjectCard({
           </div>
         </div>
 
-        <div className="relative flex min-h-0 flex-col gap-3 px-3.5 py-3.5 sm:px-4 sm:py-4">
-          <div className="flex flex-wrap items-center gap-2 text-[0.58rem] font-semibold uppercase tracking-[0.16em] text-[var(--muted)]">
+        <div className="relative flex min-h-0 flex-col gap-2.5 px-3 py-3 sm:px-3.5 sm:py-3.5">
+          <div className="flex flex-wrap items-center gap-1.5 text-[0.54rem] font-semibold uppercase tracking-[0.14em] text-[var(--muted)]">
             {formatLabel ? (
               <span>{formatLabel}</span>
             ) : null}
@@ -595,21 +595,21 @@ function PortfolioProjectCard({
             ) : null}
           </div>
 
-          <div className="space-y-1.5">
-            <h3 className="max-w-[12ch] text-[1.3rem] font-semibold leading-[0.94] tracking-[-0.05em] text-[color:var(--foreground)] sm:text-[1.45rem]">
+          <div className="space-y-1">
+            <h3 className="max-w-[13ch] text-[1.08rem] font-semibold leading-[0.96] tracking-[-0.045em] text-[color:var(--foreground)] sm:text-[1.18rem]">
               {title}
             </h3>
-            <p className="max-w-[34rem] text-[0.84rem] leading-5 text-[var(--muted-2)]">
+            <p className="max-w-[30rem] text-[0.76rem] leading-[1.3] text-[var(--muted-2)]">
               {summary}
             </p>
           </div>
 
           {visibleInfoPoints.length ? (
-            <div className="flex flex-wrap gap-1.5">
+            <div className="flex flex-wrap gap-1.25">
               {visibleInfoPoints.map((point) => (
                 <span
                   key={`${project.slug}-${point}`}
-                  className="rounded-full border border-[color:var(--line)]/80 bg-white/[0.04] px-2.25 py-1 text-[0.54rem] font-semibold uppercase tracking-[0.12em] text-[var(--muted-2)]"
+                  className="rounded-full border border-[color:var(--line)]/80 bg-white/[0.04] px-2 py-0.75 text-[0.5rem] font-semibold uppercase tracking-[0.1em] text-[var(--muted-2)]"
                 >
                   {point}
                 </span>
