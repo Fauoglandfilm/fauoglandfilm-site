@@ -3,6 +3,10 @@
    ============================================ */
 
 @layer utilities {
+  .footer-signature-svg path {
+    transition: stroke 400ms ease;
+  }
+
   .footer-glass-panel {
     position: relative;
     overflow: hidden;

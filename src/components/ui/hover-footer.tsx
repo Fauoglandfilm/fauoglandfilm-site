@@ -149,6 +149,7 @@ export const TextHoverEffect = ({
       className={cn(
         "select-none",
         "cursor-pointer",
+        "footer-signature-svg",
         className,
       )}
       aria-hidden="true"
@@ -238,7 +239,7 @@ export const TextHoverEffect = ({
           <motion.g
             animate={{ opacity: isDark ? 0.92 : 0.72 }}
             transition={hoverTransition}
-            style={{ filter: glowFilter }}
+            style={{ filter: glowFilter, transition: "filter 400ms ease" }}
           >
             {resolvedPaths?.map((pathData, index) => (
               <motion.path
@@ -250,9 +251,8 @@ export const TextHoverEffect = ({
                 initial={{ pathLength: 0, opacity: 0.78 }}
                 animate={{ pathLength: 1, opacity: isDark ? 0.92 : 0.72 }}
                 transition={{
-                  duration: 4,
-                  ease: "easeInOut",
-                  delay: index * 0.025,
+                  pathLength: { duration: 4, ease: "easeInOut", delay: index * 0.025 },
+                  opacity: hoverTransition,
                 }}
               />
             ))}
@@ -395,6 +395,7 @@ export const FooterBackgroundGradient = ({
         background: isDark
           ? "radial-gradient(125% 125% at 50% 10%, rgba(15,15,17,0.86) 44%, rgba(60,162,250,0.2) 100%)"
           : "radial-gradient(125% 125% at 50% 10%, rgba(245,247,251,0.96) 44%, rgba(60,162,250,0.12) 100%)",
+        transition: "background 400ms ease",
       }}
     />
   );

@@ -149,6 +149,7 @@ export function Footer() {
             borderColor: shellBorder,
             background: shellBackground,
             boxShadow: shellShadow,
+            transition: "border-color 400ms ease, background 400ms ease, box-shadow 400ms ease",
           }}
         >
           <FooterBackgroundGradient isDark={isDark} />
@@ -224,6 +225,7 @@ export function Footer() {
                   background: isDark
                     ? "linear-gradient(90deg, rgba(110,170,255,0) 0%, rgba(110,170,255,0.32) 10%, rgba(110,170,255,0.32) 90%, rgba(110,170,255,0) 100%)"
                     : "linear-gradient(90deg, rgba(89,124,190,0) 0%, rgba(89,124,190,0.3) 10%, rgba(89,124,190,0.3) 90%, rgba(89,124,190,0) 100%)",
+                  transition: "background 400ms ease",
                 }}
               />
 
@@ -302,6 +304,7 @@ export function Footer() {
                   background: isDark
                     ? "radial-gradient(70% 70% at 50% 100%, rgba(76,134,235,0.16) 0%, rgba(76,134,235,0) 72%)"
                     : "radial-gradient(70% 70% at 50% 100%, rgba(84,112,158,0.035) 0%, rgba(84,112,158,0) 68%)",
+                  transition: "background 400ms ease",
                 }}
               />
             </div>
