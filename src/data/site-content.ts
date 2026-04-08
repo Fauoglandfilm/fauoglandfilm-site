@@ -2272,10 +2272,10 @@ const portfolioProjectsBase: PortfolioProject[] = [
       en: "Editing, animation, graphics and sound by us around the artist's original footage, shaped into a clear and shareable TikTok-native format for the exhibition.",
     },
     ctaLabel: viewReferenceCta,
-    image: "/assets/team/tommy/portfolio/event/tm51-preview.jpg",
+    image: "/assets/team/tommy/portfolio/event/tm51-film-still.jpg",
     imageAlt: {
-      no: "Still fra Machines Like Us hos Galleri TM51",
-      en: "Still from Machines Like Us at Galleri TM51",
+      no: "Filmscreenshot fra Machines Like Us hos Galleri TM51",
+      en: "Film still from Machines Like Us at Galleri TM51",
     },
     mediaFit: "contain",
     externalVideo: tiktokAsset(
@@ -2284,7 +2284,7 @@ const portfolioProjectsBase: PortfolioProject[] = [
         no: "Sculptures at TM51 - Jakob Grosse-Ophoff",
         en: "Sculptures at TM51 - Jakob Grosse-Ophoff",
       },
-      "/assets/team/tommy/portfolio/event/tm51-preview.jpg",
+      "/assets/team/tommy/portfolio/event/tm51-film-still.jpg",
     ),
     palette: "from-[#131313] via-[#4d4034] to-[#a18b72]",
   },
