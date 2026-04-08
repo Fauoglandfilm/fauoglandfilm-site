@@ -901,8 +901,11 @@ function PortfolioVideoModal({
             />
           ) : modalMedia?.kind === "external" ? (
             modalMedia.provider === "instagram" ? (
-              <div className="flex w-full justify-center px-3 sm:px-0">
-                <InstagramEmbed permalink={modalMedia.sourceUrl} className="max-w-[34rem]" />
+              <div className="flex max-h-[calc(100svh-7rem)] w-full justify-center overflow-hidden px-3 sm:max-h-[calc(100svh-8rem)] sm:px-0">
+                <InstagramEmbed
+                  permalink={modalMedia.sourceUrl}
+                  className="max-h-full max-w-[34rem]"
+                />
               </div>
             ) : (
               <div className="relative aspect-video h-auto w-full max-w-[min(100%,78rem)] overflow-hidden bg-[#05070b] sm:max-h-[calc(100svh-6rem)] sm:rounded-[1.4rem]">
