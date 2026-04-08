@@ -199,16 +199,15 @@ export function PortfolioPageContent({
     projects.find((project) => project.slug === slug),
   ).filter((project): project is PortfolioProject => Boolean(project));
   const visibleFeaturedProjects = featuredProjects.length ? featuredProjects : allProjects.slice(0, 4);
-  const featuredProjectSlugs = new Set(visibleFeaturedProjects.map((project) => project.slug));
-  const filteredProjects =
+  const catalogProjects =
     activeFilter === ALL_FILTER
-      ? allProjects.filter((project) => !featuredProjectSlugs.has(project.slug))
+      ? allProjects
       : allProjects.filter((project) => project.group === activeFilter);
   const activeGroup = portfolioSections.find((group) => group.slug === activeFilter);
   const projectCountLabel =
     language === "no"
-      ? `${filteredProjects.length} prosjekter`
-      : `${filteredProjects.length} projects`;
+      ? `${catalogProjects.length} prosjekter`
+      : `${catalogProjects.length} projects`;
 
   const copy =
     language === "no"
@@ -306,7 +305,7 @@ export function PortfolioPageContent({
                     inViewThreshold={0.14}
                     rootMargin="300px 0px -4% 0px"
                     sizes="(min-width: 1280px) 48vw, (min-width: 1024px) 60vw, 100vw"
-                    className="object-cover transition duration-700 group-hover:scale-[1.03]"
+                    className="object-cover transition duration-700"
                   />
                   <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(255,255,255,0.06),transparent_30%),linear-gradient(180deg,rgba(8,8,8,0.02),rgba(8,8,8,0.12)_44%,rgba(8,8,8,0.56)_100%)]" />
                   <div className="absolute inset-x-0 bottom-0 z-[2] p-4 text-white sm:p-5 lg:p-5.5">
@@ -421,7 +420,7 @@ export function PortfolioPageContent({
           </Reveal>
 
           <div className="mt-4 grid gap-3 sm:grid-cols-2 xl:grid-cols-3 xl:gap-4">
-            {filteredProjects.map((project, index) => (
+            {catalogProjects.map((project, index) => (
               <div key={project.slug}>
                 <Reveal delay={0.02 * index}>
                   <PortfolioProjectCard
@@ -492,8 +491,8 @@ function PortfolioProjectCard({
   const detailLabel = language === "no" ? "Åpne prosjekt" : "Open project";
   const detailHint =
     language === "no" ? "Se video, beskrivelser og leveranser" : "View video, description and deliverables";
-  const visibleInfoPoints = infoPoints.slice(0, 1);
-  const hoverInfoPoints = infoPoints.slice(1, 3);
+  const visibleInfoPoints = infoPoints.slice(0, 2);
+  const hoverInfoPoints = infoPoints.slice(2, 4);
   const mediaAspectClass = getPortfolioCardAspectClass(index);
 
   return (
@@ -547,7 +546,7 @@ function PortfolioProjectCard({
             ) : null}
           </div>
 
-          <div className="pointer-events-none absolute inset-x-2.5 bottom-2.5 z-[3] hidden translate-y-2 rounded-[0.9rem] border border-white/12 bg-[linear-gradient(180deg,rgba(0,0,0,0.42),rgba(0,0,0,0.22))] px-2.5 py-2 text-white opacity-0 shadow-[0_14px_28px_rgba(0,0,0,0.16)] backdrop-blur-xl transition duration-300 group-hover:translate-y-0 group-hover:opacity-100 group-focus-within:translate-y-0 group-focus-within:opacity-100 xl:block">
+          <div className="pointer-events-none absolute inset-x-2.5 bottom-2.5 z-[3] hidden rounded-[0.9rem] border border-white/12 bg-[linear-gradient(180deg,rgba(0,0,0,0.42),rgba(0,0,0,0.22))] px-2.5 py-2 text-white opacity-0 shadow-[0_14px_28px_rgba(0,0,0,0.16)] backdrop-blur-xl transition duration-300 group-hover:opacity-100 group-focus-within:opacity-100 xl:block">
             <p className="text-[0.52rem] font-semibold uppercase tracking-[0.14em] text-white/54">
               {detailLabel}
             </p>
@@ -596,6 +595,36 @@ function PortfolioProjectCard({
               {summary}
             </p>
           </div>
+
+          {canOpen ? (
+            <div className="rounded-[0.95rem] border border-[color:var(--line)]/80 bg-[linear-gradient(180deg,rgba(255,255,255,0.07),rgba(255,255,255,0.03))] px-2.75 py-2.5 text-[color:var(--foreground)] xl:hidden">
+              <div className="flex items-start justify-between gap-3">
+                <div className="min-w-0">
+                  <p className="text-[0.54rem] font-semibold uppercase tracking-[0.14em] text-[var(--muted)]">
+                    {detailLabel}
+                  </p>
+                  <p className="mt-1 text-[0.74rem] leading-[1.35] text-[var(--muted-2)]">
+                    {detailHint}
+                  </p>
+                </div>
+                <span className="flex h-7.5 w-7.5 shrink-0 items-center justify-center rounded-full border border-[color:var(--line)]/90 bg-white/[0.05] text-[color:var(--foreground)]">
+                  <ArrowUpRight className="h-3 w-3" />
+                </span>
+              </div>
+              {hoverInfoPoints.length ? (
+                <div className="mt-2 flex flex-wrap gap-1.25">
+                  {hoverInfoPoints.map((point) => (
+                    <span
+                      key={`${project.slug}-mobile-${point}`}
+                      className="rounded-full border border-[color:var(--line)]/80 bg-white/[0.04] px-2 py-0.75 text-[0.5rem] font-semibold uppercase tracking-[0.1em] text-[var(--muted-2)]"
+                    >
+                      {point}
+                    </span>
+                  ))}
+                </div>
+              ) : null}
+            </div>
+          ) : null}
 
           {visibleInfoPoints.length ? (
             <div className="flex flex-wrap gap-1.25">
@@ -975,7 +1004,6 @@ function PortfolioMedia({
   const imageClassName = cn(
     "object-cover",
     "transition duration-700",
-    playMode !== "static" && "group-hover:scale-[1.03]",
     resolvedMediaFit === "contain" && "object-contain p-5 sm:p-6",
     className,
   );
@@ -1001,7 +1029,7 @@ function PortfolioMedia({
         rootMargin={rootMargin}
         inViewThreshold={inViewThreshold}
         posterClassName={imageClassName}
-        previewClassName={cn("scale-[1.01]", resolvedMediaFit === "contain" && "object-contain p-5 sm:p-6")}
+        previewClassName={cn(resolvedMediaFit === "contain" && "object-contain p-5 sm:p-6")}
       />
     );
   }
@@ -1027,7 +1055,7 @@ function PortfolioMedia({
         fill
         priority={priority}
         sizes={sizes}
-        className={cn("object-cover transition duration-700 group-hover:scale-[1.03]", className)}
+        className={cn("object-cover transition duration-700", className)}
       />
     );
   }
@@ -1052,7 +1080,7 @@ function PortfolioMedia({
       fill
       priority={priority}
       sizes={sizes}
-      className={cn("object-cover transition duration-700 group-hover:scale-[1.03]", className)}
+      className={cn("object-cover transition duration-700", className)}
     />
   );
 }

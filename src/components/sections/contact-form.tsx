@@ -12,6 +12,7 @@ const initialState: ContactFormPayload = {
   company: "",
   email: "",
   message: "",
+  website: "",
 };
 
 export function ContactForm() {
@@ -67,7 +68,24 @@ export function ContactForm() {
   };
 
   return (
-    <form className="grid gap-3.5" onSubmit={handleSubmit} id="foresporsel">
+    <form className="relative grid gap-3.5" onSubmit={handleSubmit} id="foresporsel">
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute left-[-9999px] top-auto h-px w-px overflow-hidden"
+      >
+        <label htmlFor="website">Website</label>
+        <input
+          id="website"
+          name="website"
+          tabIndex={-1}
+          autoComplete="off"
+          value={formState.website}
+          onChange={(event) =>
+            setFormState((current) => ({ ...current, website: event.target.value }))
+          }
+        />
+      </div>
+
       <div className="grid gap-3.5 md:grid-cols-2">
         <label className="space-y-2">
           <span className="text-sm font-medium text-[color:var(--foreground)]">{copy.name}</span>

@@ -1,6 +1,5 @@
 import Link from "next/link";
 import type { ComponentPropsWithoutRef, ReactNode } from "react";
-import { ArrowRight } from "lucide-react";
 
 import { buttonClassName, type ButtonSize, type ButtonVariant } from "@/components/ui/button-styles";
 
@@ -24,14 +23,7 @@ export function ButtonLink({
     variant === "icon" ? (
       children
     ) : children ? (
-      <>
-        <span className="button-label-base"><span className="button-label-dot" aria-hidden="true" /><span>{children}</span></span>
-        <span className="button-label-hover" aria-hidden="true">
-          <span>{children}</span>
-          <ArrowRight className="h-4 w-4 shrink-0" />
-        </span>
-        <span className="button-hover-orb" aria-hidden="true" />
-      </>
+      <span className="button-label-base">{children}</span>
     ) : null;
 
   return (

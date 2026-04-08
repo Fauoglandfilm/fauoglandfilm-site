@@ -732,7 +732,7 @@ export function TeamSection({
                     </div>
                     <ButtonLink href={member.href ?? "/om-oss"} variant="ghost" size="compact" className="w-full sm:w-auto">
                       {language === "no" ? "Se profil" : "View profile"}
-                      <ArrowUpRightIcon className="h-4 w-4 transition duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+                      <ArrowUpRightIcon className="h-4 w-4 transition duration-300 group-hover:translate-x-px" />
                     </ButtonLink>
                   </div>
                 </Link>
@@ -841,7 +841,7 @@ function ContactRow({
   }
 
   return (
-    <a href={href} className="transition hover:translate-y-[-1px]">
+    <a href={href} className="transition">
       {content}
     </a>
   );

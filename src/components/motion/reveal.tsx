@@ -52,7 +52,7 @@ export function Reveal({
   children,
   className,
   delay = 0,
-  y = 28,
+  y = 18,
   amount = 0.25,
 }: RevealProps) {
   const shouldDisableViewportMotion = useShouldDisableViewportMotion();
@@ -64,11 +64,11 @@ export function Reveal({
   return (
     <motion.div
       className={className}
-      initial={{ opacity: 0, y, scale: 0.978, filter: "blur(14px)" }}
-      whileInView={{ opacity: 1, y: 0, scale: 1, filter: "blur(0px)" }}
+      initial={{ opacity: 0, y, filter: "blur(10px)" }}
+      whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
       viewport={{ once: true, amount }}
       transition={{
-        duration: 0.92,
+        duration: 0.64,
         delay,
         ease: [0.22, 1, 0.36, 1],
       }}
@@ -93,10 +93,10 @@ export function FloatingLayer({ children, className }: ParallaxProps) {
   return (
     <motion.div
       className={cn(className)}
-      initial={{ opacity: 0.76, scale: 0.97, y: 24, filter: "blur(12px)" }}
-      whileInView={{ opacity: 1, scale: 1, y: 0, filter: "blur(0px)" }}
+      initial={{ opacity: 0, y: 18, filter: "blur(8px)" }}
+      whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
       viewport={{ once: true, amount: 0.25 }}
-      transition={{ duration: 1.05, ease: [0.22, 1, 0.36, 1] }}
+      transition={{ duration: 0.72, ease: [0.22, 1, 0.36, 1] }}
     >
       {children}
     </motion.div>

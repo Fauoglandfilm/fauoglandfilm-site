@@ -265,12 +265,7 @@ export function PreviewMedia({
           fallbackContent={fallbackContent}
           className={cn(
             mediaObjectClass,
-            "transition duration-700",
-            shouldRenderPreview
-              ? "scale-[1.015] opacity-100"
-              : hasPlayableMedia && shouldPlay
-                ? "scale-[1.02] opacity-100"
-                : "scale-100 opacity-100",
+            "transition duration-500 opacity-100",
             posterClassName,
           )}
         />

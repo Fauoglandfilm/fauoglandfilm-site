@@ -44,7 +44,7 @@ export default async function ArticlesPage() {
                         alt={article.imageAlt?.no ?? article.title.no}
                         fill
                         sizes="(min-width: 1280px) 32vw, (min-width: 768px) 48vw, 100vw"
-                        className="object-cover transition duration-500 group-hover:scale-[1.03]"
+                        className="object-cover transition duration-500"
                       />
                     ) : null}
                     <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(8,8,8,0.03),rgba(8,8,8,0.26)_56%,rgba(8,8,8,0.82)_100%)]" />

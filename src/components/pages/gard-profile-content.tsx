@@ -92,7 +92,7 @@ function GardEditorialCase({
             previewBehavior={hasPlayableMedia(activeProject) ? "viewport" : "static"}
             className="absolute inset-0"
             sizes="(min-width: 1280px) 58vw, (min-width: 1024px) 54vw, 100vw"
-            posterClassName="transition duration-700 group-hover:scale-[1.02]"
+            posterClassName="transition duration-700"
             previewClassName="transition duration-700"
           />
 

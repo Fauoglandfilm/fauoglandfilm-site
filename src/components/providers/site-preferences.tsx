@@ -54,9 +54,12 @@ function applyLanguageToDocument(language: LanguageCode) {
   document.documentElement.lang = language === "no" ? "nb" : "en";
 }
 
-function getTimeBasedTheme(): ThemeMode {
-  const hour = new Date().getHours();
-  return hour >= 7 && hour < 20 ? "light" : "dark";
+function getSystemTheme(): ThemeMode {
+  if (typeof window === "undefined") {
+    return "light";
+  }
+
+  return window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
 }
 
 function readStoredTheme(): ThemeMode | null {
@@ -102,7 +105,7 @@ function getInitialTheme(): ThemeMode {
     }
   }
 
-  return getTimeBasedTheme();
+  return getSystemTheme();
 }
 
 export function SitePreferencesProvider({ children }: { children: ReactNode }) {
@@ -135,13 +138,40 @@ export function SitePreferencesProvider({ children }: { children: ReactNode }) {
         return;
       }
 
-      setThemeState(getTimeBasedTheme());
+      setThemeState(getSystemTheme());
     };
 
     window.addEventListener("storage", handleStorageChange);
 
     return () => {
       window.removeEventListener("storage", handleStorageChange);
+    };
+  }, []);
+
+  useEffect(() => {
+    if (typeof window === "undefined") {
+      return;
+    }
+
+    const mediaQuery = window.matchMedia("(prefers-color-scheme: dark)");
+    const handlePreferenceChange = () => {
+      if (!readStoredTheme()) {
+        setThemeState(mediaQuery.matches ? "dark" : "light");
+      }
+    };
+
+    if (typeof mediaQuery.addEventListener === "function") {
+      mediaQuery.addEventListener("change", handlePreferenceChange);
+    } else {
+      mediaQuery.addListener(handlePreferenceChange);
+    }
+
+    return () => {
+      if (typeof mediaQuery.removeEventListener === "function") {
+        mediaQuery.removeEventListener("change", handlePreferenceChange);
+      } else {
+        mediaQuery.removeListener(handlePreferenceChange);
+      }
     };
   }, []);
 

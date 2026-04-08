@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import { ZodError } from "zod";
 
-import { contactFormSchema } from "@/lib/contact-form";
+import { contactFormSchema, isContactFormSpam } from "@/lib/contact-form";
 import { getResend } from "@/lib/resend";
 import {
   buildConfirmationEmail,
@@ -13,6 +13,11 @@ export async function POST(request: Request) {
   try {
     const json = await request.json();
     const payload = contactFormSchema.parse(json);
+
+    if (isContactFormSpam(payload)) {
+      return NextResponse.json({ ok: true });
+    }
+
     const notificationEmail = buildNotificationEmail(payload);
     const confirmationEmail = buildConfirmationEmail(payload);
 

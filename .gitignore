@@ -10,6 +10,7 @@ node_modules
 *.icloud
 *.crdownload
 .cache
+.codex-tmp/
 .turbo
 coverage
 dist

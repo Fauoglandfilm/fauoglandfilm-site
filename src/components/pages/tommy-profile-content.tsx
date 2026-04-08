@@ -108,7 +108,7 @@ function PosterButton({
         fill
         sizes="(min-width: 1280px) 18rem, (min-width: 768px) 42vw, 100vw"
         className={cn(
-          "transition duration-500 group-hover:scale-[1.015]",
+          "transition duration-500",
           image.fit === "cover" ? "object-cover" : "object-contain p-3 sm:p-4",
         )}
       />

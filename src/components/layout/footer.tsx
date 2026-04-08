@@ -277,7 +277,7 @@ export function Footer() {
                         target="_blank"
                         rel="noreferrer noopener"
                         aria-label={item.name}
-                        className="site-footer-social-chip inline-flex h-8 w-8 items-center justify-center rounded-full transition duration-200 hover:scale-[1.05]"
+                        className="site-footer-social-chip inline-flex h-8 w-8 items-center justify-center rounded-full transition duration-200"
                       >
                         <Icon className="h-[1.02rem] w-[1.02rem]" />
                       </a>

@@ -999,7 +999,6 @@ function HomeCaseCard({
   const previewMediaClassName = cn(
     previewMediaFit === "contain" ? "object-contain p-4 sm:p-5" : "object-cover",
     "transition duration-700",
-    isTreningshuset ? "" : "group-hover:scale-[1.035]",
   );
   const previewMediaStyle = isTreningshuset
     ? { objectPosition: useMobilePreview ? "center top" : "center center" }
@@ -1202,8 +1201,7 @@ function HomeCaseCard({
               priority={false}
               rootMargin="160px 0px -8% 0px"
               inViewThreshold={0.18}
-              posterClassName="transition duration-700 group-hover:scale-[1.035]"
-              previewClassName="scale-[1.03]"
+              posterClassName="transition duration-700"
             />
           )}
           <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(8,10,14,0.06),rgba(8,10,14,0.08)_24%,rgba(8,10,14,0.78)_100%)]" />
@@ -1214,7 +1212,7 @@ function HomeCaseCard({
               <span className="inline-flex w-fit rounded-full border border-white/16 bg-black/20 px-3 py-1 text-[0.66rem] font-semibold uppercase tracking-[0.18em] text-white/72 backdrop-blur-md">
                 {resolveLocalizedValue(caseStudy.category, language)}
               </span>
-              <span className="flex h-10 w-10 items-center justify-center rounded-full border border-white/14 bg-white/8 text-white/86 backdrop-blur-md transition duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5">
+              <span className="flex h-10 w-10 items-center justify-center rounded-full border border-white/14 bg-white/8 text-white/86 backdrop-blur-md transition duration-300 group-hover:translate-x-px">
                 <ArrowUpRightIcon className="h-4 w-4" />
               </span>
             </div>
@@ -1267,8 +1265,7 @@ function ServiceCard({
               sizes="(min-width: 1280px) 22vw, (min-width: 640px) 48vw, 100vw"
               rootMargin="140px 0px -8% 0px"
               inViewThreshold={0.16}
-              posterClassName="transition duration-700 group-hover:scale-[1.04]"
-              previewClassName="scale-[1.03]"
+              posterClassName="transition duration-700"
             />
             <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(8,8,8,0.02),rgba(8,8,8,0.1)_36%,rgba(8,8,8,0.42)_100%)]" />
             <div className="absolute left-3 top-3 inline-flex rounded-full border border-white/14 bg-black/20 px-2.5 py-1 text-[0.64rem] font-semibold uppercase tracking-[0.18em] text-white/72 backdrop-blur-md">
@@ -1285,7 +1282,7 @@ function ServiceCard({
             </p>
             <span className="mt-5 inline-flex items-center gap-2 text-sm font-medium text-[color:var(--foreground)]">
               <span>{language === "no" ? "Se tjenester" : "See services"}</span>
-              <ArrowUpRightIcon className="h-4 w-4 transition duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+              <ArrowUpRightIcon className="h-4 w-4 transition duration-300 group-hover:translate-x-px" />
             </span>
           </div>
         </article>

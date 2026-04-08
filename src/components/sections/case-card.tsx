@@ -68,8 +68,6 @@ export function CaseCard({
           sizes={isFeature ? "(min-width: 1024px) 50vw, 100vw" : "(min-width: 1280px) 33vw, 100vw"}
           rootMargin={previewRootMargin}
           inViewThreshold={previewInViewThreshold}
-          posterClassName="group-hover:scale-[1.035]"
-          previewClassName="scale-[1.02]"
         />
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(255,255,255,0.08),transparent_32%),linear-gradient(180deg,rgba(17,17,17,0.05),rgba(17,17,17,0.22)_34%,rgba(17,17,17,0.82)_100%)]" />
         <div className="grain-overlay absolute inset-0 opacity-45" />

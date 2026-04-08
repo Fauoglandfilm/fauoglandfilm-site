@@ -670,13 +670,13 @@ export function Header() {
               initial={
                 shouldReduceMotion
                   ? { opacity: 1 }
-                  : { opacity: 0, y: 16, scale: 0.985 }
+                  : { opacity: 0, y: 14, filter: "blur(8px)" }
               }
-              animate={{ opacity: 1, y: 0, scale: 1 }}
+              animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
               exit={
                 shouldReduceMotion
                   ? { opacity: 0 }
-                  : { opacity: 0, y: 10, scale: 0.99 }
+                  : { opacity: 0, y: 8, filter: "blur(8px)" }
               }
               transition={{ duration: 0.28, ease: [0.22, 1, 0.36, 1] }}
               onClick={(event) => event.stopPropagation()}

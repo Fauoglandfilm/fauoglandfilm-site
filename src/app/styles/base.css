@@ -8,11 +8,11 @@
   --foreground: #111111;
   --surface: #ffffff;
   --surface-strong: #ffffff;
-  --surface-muted: #f7f7f8;
-  --line: rgba(17, 17, 17, 0.08);
-  --line-strong: rgba(17, 17, 17, 0.16);
-  --muted: #71757c;
-  --muted-2: #3f4349;
+  --surface-muted: #f5f6f8;
+  --line: rgba(17, 17, 17, 0.1);
+  --line-strong: rgba(17, 17, 17, 0.18);
+  --muted: #666c75;
+  --muted-2: #31363d;
   --accent: #d2ad74;
   --accent-2: #8d7349;
   --shadow: 0 24px 60px rgba(17, 17, 17, 0.08);
@@ -73,7 +73,7 @@
   --control-option-active-bg: #1d1d1d;
   --control-option-active-text: #ffffff;
   --control-option-active-border: rgba(255, 255, 255, 0.14);
-  --header-surface: rgba(255, 255, 255, 0.72);
+  --header-surface: rgba(255, 255, 255, 0.82);
   --header-overlay-surface: rgba(255, 255, 255, 0.12);
   --header-overlay-border: rgba(255, 255, 255, 0.18);
   --header-brand-surface: rgba(255, 247, 231, 0.92);
@@ -89,11 +89,11 @@ html[data-theme="light"] {
   --foreground: #111111;
   --surface: #ffffff;
   --surface-strong: #ffffff;
-  --surface-muted: #f7f7f8;
-  --line: rgba(17, 17, 17, 0.08);
-  --line-strong: rgba(17, 17, 17, 0.16);
-  --muted: #71757c;
-  --muted-2: #3f4349;
+  --surface-muted: #f5f6f8;
+  --line: rgba(17, 17, 17, 0.1);
+  --line-strong: rgba(17, 17, 17, 0.18);
+  --muted: #666c75;
+  --muted-2: #31363d;
   --accent: #b8935e;
   --accent-2: #8d7349;
   --shadow: 0 24px 60px rgba(17, 17, 17, 0.08);
@@ -150,7 +150,7 @@ html[data-theme="light"] {
   --control-option-active-bg: #1d1d1d;
   --control-option-active-text: #ffffff;
   --control-option-active-border: rgba(255, 255, 255, 0.14);
-  --header-surface: rgba(255, 255, 255, 0.74);
+  --header-surface: rgba(255, 255, 255, 0.84);
   --header-overlay-surface: rgba(255, 255, 255, 0.12);
   --header-overlay-border: rgba(255, 255, 255, 0.18);
   --header-brand-surface: rgba(255, 249, 237, 0.92);
@@ -474,79 +474,51 @@ summary::-webkit-details-marker {
     border-color: rgba(255, 255, 255, 0.1);
     background: linear-gradient(180deg, rgba(17, 17, 17, 0.78), rgba(17, 17, 17, 0.62));
     box-shadow:
-      0 20px 48px rgba(0, 0, 0, 0.24),
-      0 8px 22px rgba(0, 0, 0, 0.16),
+      0 14px 32px rgba(0, 0, 0, 0.18),
+      0 6px 16px rgba(0, 0, 0, 0.12),
       inset 0 1px 0 rgba(255, 255, 255, 0.08),
-      inset 0 14px 26px rgba(255, 255, 255, 0.02);
-    backdrop-filter: blur(18px) saturate(165%);
-    -webkit-backdrop-filter: blur(18px) saturate(165%);
+      inset 0 10px 20px rgba(255, 255, 255, 0.02);
+    backdrop-filter: blur(14px) saturate(155%);
+    -webkit-backdrop-filter: blur(14px) saturate(155%);
   }
 
   html[data-theme="light"] .segmented-toggle-premium {
     border-color: rgba(255, 255, 255, 0.08);
     background: linear-gradient(180deg, rgba(17, 17, 17, 0.84), rgba(17, 17, 17, 0.68));
     box-shadow:
-      0 18px 38px rgba(17, 17, 17, 0.2),
-      0 8px 20px rgba(17, 17, 17, 0.12),
+      0 14px 30px rgba(17, 17, 17, 0.16),
+      0 6px 14px rgba(17, 17, 17, 0.1),
       inset 0 1px 0 rgba(255, 255, 255, 0.08),
-      inset 0 14px 24px rgba(255, 255, 255, 0.02);
+      inset 0 10px 18px rgba(255, 255, 255, 0.02);
   }
 
   .segmented-toggle-option {
     position: relative;
     transition:
       color 200ms ease,
-      transform 200ms ease,
       box-shadow 200ms ease,
       background-color 200ms ease,
       border-color 200ms ease;
   }
 
-  .segmented-toggle-option:hover {
-    transform: translateY(-1px);
-  }
-
-  .segmented-toggle-option:active {
-    transform: translateY(0);
-  }
-
   .segmented-toggle-active-pill {
     background: linear-gradient(180deg, rgba(29, 29, 29, 0.96), rgba(22, 22, 22, 0.92));
     box-shadow:
-      0 12px 28px rgba(0, 0, 0, 0.26),
+      0 8px 18px rgba(0, 0, 0, 0.18),
       inset 0 1px 0 rgba(255, 255, 255, 0.1),
-      inset 0 12px 22px rgba(255, 255, 255, 0.03);
+      inset 0 8px 16px rgba(255, 255, 255, 0.03);
   }
 
   html[data-theme="light"] .segmented-toggle-active-pill {
     box-shadow:
-      0 12px 24px rgba(17, 17, 17, 0.18),
+      0 8px 18px rgba(17, 17, 17, 0.14),
       inset 0 1px 0 rgba(255, 255, 255, 0.1),
-      inset 0 12px 20px rgba(255, 255, 255, 0.03);
+      inset 0 8px 16px rgba(255, 255, 255, 0.03);
   }
 
   .segmented-toggle-shimmer {
-    opacity: 0;
-    background: linear-gradient(120deg, transparent 0%, rgba(255, 255, 255, 0.1) 48%, transparent 100%);
-    transform: translateX(-130%);
-    transition: opacity 220ms ease;
+    display: none;
     pointer-events: none;
-  }
-
-  .segmented-toggle-option:hover .segmented-toggle-shimmer,
-  .segmented-toggle-option:focus-visible .segmented-toggle-shimmer {
-    opacity: 1;
-    animation: segmented-shimmer 680ms ease;
-  }
-
-  @keyframes segmented-shimmer {
-    from {
-      transform: translateX(-130%);
-    }
-
-    to {
-      transform: translateX(130%);
-    }
   }
 
   .button-base {
@@ -576,10 +548,10 @@ summary::-webkit-details-marker {
     white-space: normal;
     -webkit-tap-highlight-color: transparent;
     box-shadow:
-      0 18px 40px rgba(0, 0, 0, 0.16),
+      0 12px 28px rgba(0, 0, 0, 0.12),
       inset 0 1px 0 rgba(255, 255, 255, 0.08);
     transition:
-      transform 220ms ease,
+      transform 180ms ease,
       background-color 220ms ease,
       border-color 220ms ease,
       color 220ms ease,
@@ -595,107 +567,24 @@ summary::-webkit-details-marker {
 
   .button-label-base {
     position: relative;
-    z-index: 2;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    gap: 0.5rem;
-    white-space: nowrap;
-    transform: translateX(0);
-    transition:
-      transform 300ms ease,
-      opacity 300ms ease;
-  }
-
-  .button-label-dot {
-    display: inline-flex;
-    height: 0.5rem;
-    width: 0.5rem;
-    flex: 0 0 auto;
-    border-radius: 999px;
-    background: #d2ad74;
-    box-shadow: 0 0 18px rgba(210, 173, 116, 0.32);
-  }
-
-  .button-label-hover {
-    position: absolute;
-    inset: 0;
-    z-index: 3;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 0.5rem;
-    white-space: nowrap;
-    color: var(--button-hover-overlay-text) !important;
-    -webkit-text-fill-color: var(--button-hover-overlay-text) !important;
-    opacity: 0;
-    transform: translateX(3rem);
-    transition:
-      transform 300ms ease,
-      opacity 300ms ease;
-    pointer-events: none;
-  }
-
-  .button-label-hover > span,
-  .button-label-hover svg {
-    color: var(--button-hover-overlay-text) !important;
-    -webkit-text-fill-color: var(--button-hover-overlay-text) !important;
-  }
-
-  .button-hover-orb {
-    position: absolute;
-    left: 1rem;
-    top: 50%;
     z-index: 1;
-    height: 0.55rem;
-    width: 0.55rem;
-    border-radius: 999px;
-    background: var(--button-orb-bg);
-    box-shadow: 0 0 28px color-mix(in srgb, var(--button-orb-bg) 42%, transparent);
-    opacity: 0;
-    transform: translateY(-50%);
-    transition:
-      left 300ms ease,
-      top 300ms ease,
-      width 300ms ease,
-      height 300ms ease,
-      transform 300ms ease,
-      opacity 300ms ease,
-      background-color 300ms ease;
-  }
-
-  .button-base:hover .button-label-base,
-  .button-base:focus-visible .button-label-base {
-    transform: translateX(3rem);
-    opacity: 0;
-  }
-
-  .button-base:hover .button-label-hover,
-  .button-base:focus-visible .button-label-hover {
-    transform: translateX(0);
-    opacity: 1;
-  }
-
-  .button-base:hover .button-hover-orb,
-  .button-base:focus-visible .button-hover-orb {
-    left: 0;
-    top: 0;
-    height: 100%;
-    width: 100%;
-    opacity: 1;
-    transform: scale(1.8);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    white-space: nowrap;
   }
 
   .button-base:hover {
-    transform: translateY(-3px);
+    transform: translateY(-1px);
     box-shadow:
-      0 24px 52px rgba(6, 6, 6, 0.22),
+      0 16px 34px rgba(6, 6, 6, 0.16),
       0 0 0 1px color-mix(in srgb, var(--button-border-current) 64%, transparent),
       inset 0 1px 0 rgba(255, 255, 255, 0.12);
   }
 
   .button-base:active {
-    transform: translateY(-1px);
+    transform: translateY(0);
   }
 
   .button-base:focus-visible {

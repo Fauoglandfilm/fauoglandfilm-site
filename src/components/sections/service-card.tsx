@@ -310,7 +310,7 @@ export function ServiceCard({ service, index = 0 }: ServiceCardProps) {
                 rootMargin="120px 20px -12% 20px"
                 inViewThreshold={0.22}
                 priority={false}
-                posterClassName={cn(mediaConfig.mediaObjectClassName, "transition duration-500 ease-out group-hover:scale-[1.02]")}
+                posterClassName={cn(mediaConfig.mediaObjectClassName, "transition duration-500 ease-out")}
                 previewClassName="transition duration-500 ease-out"
               />
             </motion.div>
