@@ -8,6 +8,7 @@ import type { LocalizedText } from "@/lib/i18n";
 import { resolveLocalizedValue } from "@/lib/i18n";
 import { cn } from "@/lib/utils";
 
+import { InstagramEmbed } from "./instagram-embed";
 import { MediaImage } from "./media-image";
 
 const GLOBAL_MEDIA_FALLBACKS = [
@@ -467,6 +468,16 @@ export function EmbeddedVideoPlayer({
             fallbackContent={<FallbackSurface />}
             className={mediaObjectClass}
           />
+        </div>
+      );
+    }
+
+    if (externalVideo.provider === "instagram") {
+      return (
+        <div className={wrapperClassName} aria-label={resolvedTitle}>
+          <div className="flex h-full w-full items-center justify-center bg-[#05070b] p-3 sm:p-4">
+            <InstagramEmbed permalink={externalVideo.sourceUrl} className="max-h-full" />
+          </div>
         </div>
       );
     }

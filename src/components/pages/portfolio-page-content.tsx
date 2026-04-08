@@ -5,6 +5,7 @@ import { ArrowUpRight, ChevronDown, ChevronUp, Info } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 
 import { PreviewMedia } from "@/components/media/preview-media";
+import { InstagramEmbed } from "@/components/media/instagram-embed";
 import { Reveal } from "@/components/motion/reveal";
 import { useSitePreferences } from "@/components/providers/site-preferences";
 import { CtaBanner, PageHero, ServicesSection } from "@/components/sections/site-sections";
@@ -46,6 +47,7 @@ type PortfolioModalMedia =
       kind: "external";
       provider: "youtube" | "vimeo" | "tiktok" | "instagram";
       iframeSrc: string;
+      sourceUrl: string;
     };
 
 function getPortfolioDirectVideo(project: PortfolioProject): Extract<VideoAsset, { videoType: "direct" }> | null {
@@ -105,6 +107,7 @@ function resolvePortfolioModalMedia(project: PortfolioProject): PortfolioModalMe
       kind: "external",
       provider: project.externalVideo.provider,
       iframeSrc: buildPortfolioModalIframeSrc(project.externalVideo),
+      sourceUrl: project.externalVideo.sourceUrl,
     };
   }
 
@@ -897,16 +900,22 @@ function PortfolioVideoModal({
               disableRemotePlayback
             />
           ) : modalMedia?.kind === "external" ? (
-            <div className="relative aspect-video h-auto w-full max-w-[min(100%,78rem)] overflow-hidden bg-[#05070b] sm:max-h-[calc(100svh-6rem)] sm:rounded-[1.4rem]">
-              <iframe
-                src={modalMedia.iframeSrc}
-                title={title}
-                className="absolute inset-0 h-full w-full"
-                allow="autoplay; encrypted-media; picture-in-picture; fullscreen; clipboard-write"
-                referrerPolicy="strict-origin-when-cross-origin"
-                allowFullScreen
-              />
-            </div>
+            modalMedia.provider === "instagram" ? (
+              <div className="flex w-full justify-center px-3 sm:px-0">
+                <InstagramEmbed permalink={modalMedia.sourceUrl} className="max-w-[34rem]" />
+              </div>
+            ) : (
+              <div className="relative aspect-video h-auto w-full max-w-[min(100%,78rem)] overflow-hidden bg-[#05070b] sm:max-h-[calc(100svh-6rem)] sm:rounded-[1.4rem]">
+                <iframe
+                  src={modalMedia.iframeSrc}
+                  title={title}
+                  className="absolute inset-0 h-full w-full"
+                  allow="autoplay; encrypted-media; picture-in-picture; fullscreen; clipboard-write"
+                  referrerPolicy="strict-origin-when-cross-origin"
+                  allowFullScreen
+                />
+              </div>
+            )
           ) : project.image ? (
             <div
               className={cn(
