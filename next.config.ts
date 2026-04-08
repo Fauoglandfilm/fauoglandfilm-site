@@ -18,6 +18,40 @@ const contentSecurityPolicyReportOnly = [
   "media-src 'self' blob: data:",
 ].join("; ");
 
+const baseSecurityHeaders = [
+  {
+    key: "Referrer-Policy",
+    value: "strict-origin-when-cross-origin",
+  },
+  {
+    key: "X-Content-Type-Options",
+    value: "nosniff",
+  },
+  {
+    key: "X-Frame-Options",
+    value: "SAMEORIGIN",
+  },
+  {
+    key: "Permissions-Policy",
+    value:
+      "accelerometer=(), ambient-light-sensor=(), camera=(), display-capture=(), geolocation=(), gyroscope=(), magnetometer=(), microphone=(), midi=(), payment=(), usb=()",
+  },
+  {
+    key: "Content-Security-Policy-Report-Only",
+    value: contentSecurityPolicyReportOnly,
+  },
+] as const;
+
+const transportSecurityHeader =
+  process.env.NODE_ENV === "production"
+    ? [
+        {
+          key: "Strict-Transport-Security",
+          value: "max-age=31536000",
+        },
+      ]
+    : [];
+
 const nextConfig: NextConfig = {
   experimental: {
     optimizePackageImports: ["lucide-react"],
@@ -26,29 +60,7 @@ const nextConfig: NextConfig = {
     return [
       {
         source: "/(.*)",
-        headers: [
-          {
-            key: "Referrer-Policy",
-            value: "strict-origin-when-cross-origin",
-          },
-          {
-            key: "X-Content-Type-Options",
-            value: "nosniff",
-          },
-          {
-            key: "X-Frame-Options",
-            value: "SAMEORIGIN",
-          },
-          {
-            key: "Permissions-Policy",
-            value:
-              "accelerometer=(), ambient-light-sensor=(), camera=(), display-capture=(), geolocation=(), gyroscope=(), magnetometer=(), microphone=(), midi=(), payment=(), usb=()",
-          },
-          {
-            key: "Content-Security-Policy-Report-Only",
-            value: contentSecurityPolicyReportOnly,
-          },
-        ],
+        headers: [...baseSecurityHeaders, ...transportSecurityHeader],
       },
     ];
   },
