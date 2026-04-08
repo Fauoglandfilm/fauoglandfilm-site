@@ -44,7 +44,7 @@ type PortfolioModalMedia =
     }
   | {
       kind: "external";
-      provider: "youtube" | "vimeo";
+      provider: "youtube" | "vimeo" | "tiktok";
       iframeSrc: string;
     };
 
@@ -88,6 +88,12 @@ function buildPortfolioModalIframeSrc(video: ExternalVideoAsset) {
     url.searchParams.set("portrait", "0");
     url.searchParams.set("dnt", "1");
     url.searchParams.delete("background");
+  }
+
+  if (video.provider === "tiktok") {
+    url.searchParams.set("autoplay", "0");
+    url.searchParams.set("description", "0");
+    url.searchParams.set("controls", "1");
   }
 
   return url.toString();
@@ -640,6 +646,7 @@ function PortfolioVideoModal({
   const awards = project.awards?.map((item) => resolveLocalizedValue(item, language)) ?? [];
   const festivals = project.festivals?.map((item) => resolveLocalizedValue(item, language)) ?? [];
   const credits = project.credits ?? [];
+  const links = project.links ?? [];
   const quoteText = project.quote ? resolveLocalizedValue(project.quote.text, language) : null;
   const quoteAttribution = project.quote?.attribution
     ? resolveLocalizedValue(project.quote.attribution, language)
@@ -850,6 +857,27 @@ function PortfolioVideoModal({
                       <span className="text-white/52">{credit.role}</span>
                       <span className="text-right text-white/82">{credit.name}</span>
                     </div>
+                  ))}
+                </div>
+              </div>
+            ) : null}
+            {links.length ? (
+              <div className="mt-4 rounded-[1rem] border border-white/10 bg-black/18 px-3.5 py-3">
+                <p className="text-[0.62rem] font-semibold uppercase tracking-[0.16em] text-white/54">
+                  {language === "no" ? "Lenker" : "Links"}
+                </p>
+                <div className="mt-2 grid gap-2">
+                  {links.map((link) => (
+                    <a
+                      key={`${project.slug}-link-${link.href}`}
+                      href={link.href}
+                      target="_blank"
+                      rel="noreferrer noopener"
+                      className="inline-flex items-center justify-between gap-3 rounded-[0.9rem] border border-white/10 bg-white/6 px-3 py-2 text-[0.78rem] font-medium text-white/84 transition duration-200 hover:border-white/18 hover:bg-white/10 hover:text-white"
+                    >
+                      <span>{resolveLocalizedValue(link.label, language)}</span>
+                      <ArrowUpRight className="h-3.5 w-3.5 shrink-0" />
+                    </a>
                   ))}
                 </div>
               </div>

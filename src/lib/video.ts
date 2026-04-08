@@ -5,6 +5,11 @@ function sanitizeVideoId(value: string) {
   return value.trim().replace(/^\/+|\/+$/g, "");
 }
 
+function extractTikTokVideoId(url: string) {
+  const match = url.match(/\/video\/(\d+)/i);
+  return match?.[1] ?? null;
+}
+
 export function buildYoutubeEmbedUrl(videoId: string) {
   const id = sanitizeVideoId(videoId);
   return `https://www.youtube.com/embed/${id}?rel=0&modestbranding=1&playsinline=1`;
@@ -26,6 +31,32 @@ export function buildVimeoEmbedUrl(videoId: string, hash?: string) {
 export function buildVimeoWatchUrl(videoId: string, hash?: string) {
   const id = sanitizeVideoId(videoId);
   return `https://vimeo.com/${id}${hash ? `/${hash}` : ""}`;
+}
+
+export function buildTikTokEmbedUrl(videoId: string) {
+  return `https://www.tiktok.com/player/v1/${sanitizeVideoId(videoId)}`;
+}
+
+export function tiktokAsset(
+  sourceUrl: string,
+  label: LocalizedText,
+  thumbnailSrc: string,
+): ExternalVideoAsset {
+  const videoId = extractTikTokVideoId(sourceUrl);
+
+  if (!videoId) {
+    throw new Error(`Could not extract TikTok video id from URL: ${sourceUrl}`);
+  }
+
+  return {
+    provider: "tiktok",
+    videoType: "tiktok",
+    videoId: sanitizeVideoId(videoId),
+    embedUrl: buildTikTokEmbedUrl(videoId),
+    thumbnailSrc,
+    label,
+    sourceUrl,
+  };
 }
 
 export function youtubeAsset(
@@ -130,6 +161,15 @@ export function parseExternalVideoUrl({
       thumbnailSrc ??
         "https://images.squarespace-cdn.com/content/v1/5f44d95d64e4796dddb229d6/6b6e38f0-753f-4fb0-85dc-6ef2fd7974cf/fauoglandfilm-vimeo-fallback.jpg",
       hash ?? undefined,
+    );
+  }
+
+  if (hostname === "tiktok.com" || hostname === "m.tiktok.com" || hostname === "www.tiktok.com") {
+    return tiktokAsset(
+      url,
+      label,
+      thumbnailSrc ??
+        "https://images.squarespace-cdn.com/content/v1/5f44d95d64e4796dddb229d6/6b6e38f0-753f-4fb0-85dc-6ef2fd7974cf/fauoglandfilm-vimeo-fallback.jpg",
     );
   }
 

@@ -24,13 +24,18 @@ export type VideoAsset =
     };
 
 export type ExternalVideoAsset = {
-  provider: "youtube" | "vimeo";
-  videoType: "youtube" | "vimeo";
+  provider: "youtube" | "vimeo" | "tiktok";
+  videoType: "youtube" | "vimeo" | "tiktok";
   videoId: string;
   embedUrl: string;
   thumbnailSrc: string;
   label: LocalizedText;
   sourceUrl: string;
+};
+
+export type PortfolioProjectLink = {
+  label: LocalizedText;
+  href: string;
 };
 
 export type VideoVariant = {
@@ -138,6 +143,7 @@ export type PortfolioProjectInfo = {
   awards?: LocalizedText[];
   festivals?: LocalizedText[];
   credits?: PortfolioProjectCredit[];
+  links?: PortfolioProjectLink[];
 };
 
 export type PortfolioProject = {
@@ -155,6 +161,7 @@ export type PortfolioProject = {
   awards?: LocalizedText[];
   festivals?: LocalizedText[];
   credits?: PortfolioProjectCredit[];
+  links?: PortfolioProjectLink[];
   year?: string;
   detailHref?: string;
   sourceUrl?: string;
@@ -392,6 +399,16 @@ export const homeServiceVideoLibrary = {
 } satisfies Record<string, VideoAsset>;
 
 const youtubeWatchUrl = (videoId: string) => `https://www.youtube.com/watch?v=${videoId}`;
+const tiktokEmbedUrl = (videoId: string) => `https://www.tiktok.com/player/v1/${videoId}`;
+
+function sanitizeExternalVideoId(value: string) {
+  return value.trim().replace(/^\/+|\/+$/g, "");
+}
+
+function extractTikTokVideoId(url: string) {
+  const match = url.match(/\/video\/(\d+)/i);
+  return match?.[1] ?? null;
+}
 
 const youtubeAsset = (
   videoId: string,
@@ -421,6 +438,28 @@ const vimeoAsset = (
   label,
   sourceUrl: `https://vimeo.com/${videoId}${hash ? `/${hash}` : ""}`,
 });
+
+const tiktokAsset = (
+  sourceUrl: string,
+  label: LocalizedText,
+  thumbnailSrc: string,
+): ExternalVideoAsset => {
+  const videoId = extractTikTokVideoId(sourceUrl);
+
+  if (!videoId) {
+    throw new Error(`Could not extract TikTok video id from URL: ${sourceUrl}`);
+  }
+
+  return {
+    provider: "tiktok",
+    videoType: "tiktok",
+    videoId: sanitizeExternalVideoId(videoId),
+    embedUrl: tiktokEmbedUrl(videoId),
+    thumbnailSrc,
+    label,
+    sourceUrl,
+  };
+};
 
 const viewCaseCta = { no: "Se case", en: "View case" } satisfies LocalizedText;
 const openFilmCta = { no: "Åpne film", en: "Open film" } satisfies LocalizedText;
@@ -1547,6 +1586,65 @@ export const portfolioProjectInfoContent: Partial<Record<string, PortfolioProjec
       { role: "Instructor", name: "David Nutter" },
     ],
   },
+  "galleri-tm51-machines-like-us": {
+    shortDescription: {
+      no: "Sosialt innhold og promoteringsfilmer for utstillingen Machines Like Us hos Galleri TM51.",
+      en: "Social content and promotional films for the Machines Like Us exhibition at Galleri TM51.",
+    },
+    extendedDescription: {
+      no: "Vi klippet, animerte, lydla og bygget grafiske leveranser rundt kunstnerens egne opptak for å gi utstillingen et tydelig, delbart uttrykk på TikTok og Instagram. Filmene løftet frem de kinetiske treskulpturene til Jakob Grosse-Ophoff og gjorde dem lesbare både som kunstformidling og som sosialt innhold.",
+      en: "We edited, animated, sound-designed and built the graphic layer around the artist's own footage to give the exhibition a clear, shareable expression across TikTok and Instagram. The films framed Jakob Grosse-Ophoff's kinetic wooden sculptures in a way that worked both as art communication and as social-first content.",
+    },
+    deliverables: [
+      { no: "Klipp til TikTok og Instagram", en: "Edits for TikTok and Instagram" },
+      { no: "Animasjon og grafikk", en: "Animation and graphics" },
+      { no: "Lyddesign", en: "Sound design" },
+      { no: "Promoteringsinnhold for utstilling", en: "Promotional content for the exhibition" },
+    ],
+    result: {
+      no: "Et sosialt innholdsløp som bygget videre på kunstverk som allerede hadde millioner av visninger, og som gjorde Galleri TM51s utstilling tydeligere og mer delbar i egne flater.",
+      en: "A social content package built around artworks that had already generated millions of views online, helping Galleri TM51 present the exhibition more clearly and more shareably in its own channels.",
+    },
+    credits: [
+      { role: "Client", name: "Galleri TM51" },
+      { role: "Artist", name: "Jakob Grosse-Ophoff" },
+      { role: "Footage", name: "Filmed by the artist" },
+      { role: "Edit", name: "Fau&Land Film" },
+      { role: "Animation", name: "Fau&Land Film" },
+      { role: "Graphics", name: "Fau&Land Film" },
+      { role: "Sound", name: "Fau&Land Film" },
+    ],
+    links: [
+      {
+        label: {
+          no: "TikTok: Sculptures at TM51",
+          en: "TikTok: Sculptures at TM51",
+        },
+        href: "https://www.tiktok.com/@galleri_tm51/video/7556321128533200150?lang=en",
+      },
+      {
+        label: {
+          no: "TikTok: Painted Happy",
+          en: "TikTok: Painted Happy",
+        },
+        href: "https://www.tiktok.com/@galleri_tm51/video/7556903335287147798?lang=en",
+      },
+      {
+        label: {
+          no: "TikTok: Machines Like Us clip 3",
+          en: "TikTok: Machines Like Us clip 3",
+        },
+        href: "https://www.tiktok.com/@galleri_tm51/video/7558383452949597462?lang=en",
+      },
+      {
+        label: {
+          no: "TikTok: Machines Like Us clip 4",
+          en: "TikTok: Machines Like Us clip 4",
+        },
+        href: "https://www.tiktok.com/@galleri_tm51/video/7558048309378600214?lang=en",
+      },
+    ],
+  },
 };
 
 export const portfolioGroups: PortfolioGroup[] = [
@@ -2080,6 +2178,43 @@ const portfolioProjectsBase: PortfolioProject[] = [
       en: "The Giant Artist",
     }),
     palette: "from-[#19181a] via-[#44505a] to-[#8ca0af]",
+  },
+  {
+    slug: "galleri-tm51-machines-like-us",
+    group: "event",
+    client: "Galleri TM51",
+    title: {
+      no: "Machines Like Us",
+      en: "Machines Like Us",
+    },
+    format: {
+      no: "Utstillingsfilmer for TikTok og sosiale medier",
+      en: "Exhibition films for TikTok and social media",
+    },
+    summary: {
+      no: "Vi lagde innhold og promoteringsfilmer for Galleri TM51s utstilling Machines Like Us av den tyske kunstneren Jakob Grosse-Ophoff, kjent for kinetiske treskulpturer med hundrevis av millioner visninger i sosiale medier.",
+      en: "We created content and promotional films for Galleri TM51's exhibition Machines Like Us by German artist Jakob Grosse-Ophoff, known for kinetic wooden sculptures that have generated hundreds of millions of views across social media.",
+    },
+    result: {
+      no: "Klipp, animasjon, grafikk og lyd levert av oss rundt kunstnerens egne opptak for å gjøre utstillingen tydelig og delbar i TikTok-format.",
+      en: "Editing, animation, graphics and sound by us around the artist's original footage, shaped into a clear and shareable TikTok-native format for the exhibition.",
+    },
+    ctaLabel: viewReferenceCta,
+    image: "/assets/team/tommy/portfolio/event/tm51-poster.webp",
+    imageAlt: {
+      no: "Poster for Machines Like Us hos Galleri TM51",
+      en: "Poster for Machines Like Us at Galleri TM51",
+    },
+    mediaFit: "contain",
+    externalVideo: tiktokAsset(
+      "https://www.tiktok.com/@galleri_tm51/video/7556321128533200150?lang=en",
+      {
+        no: "Sculptures at TM51 - Jakob Grosse-Ophoff",
+        en: "Sculptures at TM51 - Jakob Grosse-Ophoff",
+      },
+      "/assets/team/tommy/portfolio/event/tm51-poster.webp",
+    ),
+    palette: "from-[#131313] via-[#4d4034] to-[#a18b72]",
   },
   {
     slug: "treningshuset",

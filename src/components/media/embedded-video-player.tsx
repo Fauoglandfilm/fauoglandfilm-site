@@ -105,6 +105,14 @@ function withPlayerParams(video: ExternalVideoAsset, autoplay: boolean, previewM
     }
   }
 
+  if (video.provider === "tiktok") {
+    url.searchParams.set("controls", "1");
+    url.searchParams.set("description", "0");
+    if (!shouldAutoplay) {
+      url.searchParams.set("autoplay", "0");
+    }
+  }
+
   return url.toString();
 }
 
