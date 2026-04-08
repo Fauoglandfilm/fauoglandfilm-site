@@ -243,11 +243,8 @@ export function PortfolioPageContent({
       return;
     }
 
-    const scrollY = window.scrollY;
     const previousOverflow = document.body.style.overflow;
-    const previousPosition = document.body.style.position;
-    const previousTop = document.body.style.top;
-    const previousWidth = document.body.style.width;
+    const previousHtmlOverflow = document.documentElement.style.overflow;
     const handleKeyDown = (event: KeyboardEvent) => {
       if (event.key === "Escape") {
         setActiveProject(null);
@@ -255,17 +252,12 @@ export function PortfolioPageContent({
     };
 
     document.body.style.overflow = "hidden";
-    document.body.style.position = "fixed";
-    document.body.style.top = `-${scrollY}px`;
-    document.body.style.width = "100%";
+    document.documentElement.style.overflow = "hidden";
     window.addEventListener("keydown", handleKeyDown);
 
     return () => {
       document.body.style.overflow = previousOverflow;
-      document.body.style.position = previousPosition;
-      document.body.style.top = previousTop;
-      document.body.style.width = previousWidth;
-      window.scrollTo(0, scrollY);
+      document.documentElement.style.overflow = previousHtmlOverflow;
       window.removeEventListener("keydown", handleKeyDown);
     };
   }, [activeProject]);
@@ -746,8 +738,6 @@ function PortfolioVideoModal({
             isInfoOpen && "pointer-events-auto",
           )}
           onClick={(event) => event.stopPropagation()}
-          onWheel={(event) => event.stopPropagation()}
-          onTouchMove={(event) => event.stopPropagation()}
         >
           <div
             className="portfolio-modal-scroll min-h-0 flex-1 px-4 py-4 pr-3.5 sm:px-4 sm:py-4 sm:pr-3"
