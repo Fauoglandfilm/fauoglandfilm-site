@@ -7,6 +7,11 @@ import {
   buildConfirmationEmail,
   buildNotificationEmail,
 } from "@/lib/server/contact-email";
+import {
+  getClientIp,
+  limitContactRequest,
+  verifyContactTurnstileToken,
+} from "@/lib/server/contact-protection";
 import { getResendConfig, hasResendServerConfig } from "@/lib/server/resend-config";
 
 const JSON_MIME_TYPE = "application/json";
@@ -16,11 +21,13 @@ const MAX_CONTACT_REQUEST_BYTES = 24_000;
 function jsonResponse(
   body: { ok: boolean; message?: string; delivery?: "logged" },
   status = 200,
+  headers?: HeadersInit,
 ) {
   return NextResponse.json(body, {
     status,
     headers: {
       "Cache-Control": "no-store",
+      ...headers,
     },
   });
 }
@@ -52,6 +59,23 @@ export async function POST(request: Request) {
     return jsonResponse({ ok: false, message: "Ugyldig innholdstype." }, 415);
   }
 
+  const rateLimit = await limitContactRequest(request);
+
+  if (!rateLimit.success) {
+    const retryAfterSeconds = Math.max(1, Math.ceil((rateLimit.reset - Date.now()) / 1000));
+
+    return jsonResponse(
+      {
+        ok: false,
+        message: "For mange forespørsler. Vent litt og prøv igjen.",
+      },
+      429,
+      {
+        "Retry-After": String(retryAfterSeconds),
+      },
+    );
+  }
+
   const contentLength = getContentLength(request);
 
   if (contentLength !== null && contentLength > MAX_CONTACT_REQUEST_BYTES) {
@@ -66,14 +90,30 @@ export async function POST(request: Request) {
       return jsonResponse({ ok: true });
     }
 
+    const ipAddress = getClientIp(request);
+    const turnstile = await verifyContactTurnstileToken(payload.turnstileToken, ipAddress);
+
+    if (!turnstile.success) {
+      console.warn("[contact] bot protection rejected request", {
+        reason: turnstile.reason,
+        details: turnstile.details,
+      });
+
+      return jsonResponse(
+        {
+          ok: false,
+          message: "Bekreft at du ikke er en robot og prøv igjen.",
+        },
+        400,
+      );
+    }
+
     const notificationEmail = buildNotificationEmail(payload);
     const confirmationEmail = buildConfirmationEmail(payload);
 
     if (!hasResendServerConfig()) {
       console.warn("[contact] resend unavailable, storing submission in logs", {
-        name: payload.name,
-        company: payload.company,
-        email: payload.email,
+        hasCompany: payload.company.length > 0,
         messageLength: payload.message.length,
       });
 
@@ -95,9 +135,7 @@ export async function POST(request: Request) {
     } catch (error) {
       console.error("[contact] notification delivery failed; falling back to logs", error);
       console.warn("[contact] submission stored in logs after delivery failure", {
-        name: payload.name,
-        company: payload.company,
-        email: payload.email,
+        hasCompany: payload.company.length > 0,
         messageLength: payload.message.length,
       });
 

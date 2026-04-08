@@ -441,6 +441,7 @@ export const uiCopy = {
       placeholder:
         "Beskriv kort hva dere trenger, når dere trenger det og hvor filmen skal brukes.",
       submit: "Send prosjektbeskrivelse",
+      botCheckMessage: "Bekreft at du ikke er en robot og prøv igjen.",
       successMessage: "Meldingen er sendt. En av oss tar kontakt med deg snart.",
     },
     en: {
@@ -468,6 +469,7 @@ export const uiCopy = {
       placeholder:
         "Briefly describe what you need, when you need it and where the film will be used.",
       submit: "Send project details",
+      botCheckMessage: "Please confirm that you are not a robot and try again.",
       successMessage: "Your message has been sent. One of us will contact you soon.",
     },
   },

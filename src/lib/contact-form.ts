@@ -6,6 +6,7 @@ export const contactFormSchema = z.object({
   email: z.string().trim().email().max(160),
   message: z.string().trim().min(12).max(4000),
   website: z.string().trim().max(2000).optional().default(""),
+  turnstileToken: z.string().trim().max(2048).optional().default(""),
 });
 
 export type ContactFormPayload = z.infer<typeof contactFormSchema>;
@@ -17,6 +18,7 @@ export function normalizeContactFormPayload(payload: ContactFormPayload): Contac
     email: payload.email.trim(),
     message: payload.message.trim(),
     website: payload.website.trim(),
+    turnstileToken: payload.turnstileToken.trim(),
   };
 }
 

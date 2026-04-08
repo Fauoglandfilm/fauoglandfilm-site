@@ -4,8 +4,11 @@ import { useState } from "react";
 
 import { useSitePreferences } from "@/components/providers/site-preferences";
 import { Button } from "@/components/ui/button";
+import { TurnstileWidget } from "@/components/ui/turnstile-widget";
 import { normalizeContactFormPayload, type ContactFormPayload } from "@/lib/contact-form";
 import { uiCopy } from "@/data/ui-copy";
+
+const turnstileSiteKey = process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY?.trim() ?? "";
 
 const initialState: ContactFormPayload = {
   name: "",
@@ -13,6 +16,7 @@ const initialState: ContactFormPayload = {
   email: "",
   message: "",
   website: "",
+  turnstileToken: "",
 };
 
 export function ContactForm() {
@@ -20,6 +24,8 @@ export function ContactForm() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [didSubmitSuccessfully, setDidSubmitSuccessfully] = useState(false);
   const [submitError, setSubmitError] = useState<string | null>(null);
+  const [turnstileToken, setTurnstileToken] = useState<string | null>(null);
+  const [turnstileResetKey, setTurnstileResetKey] = useState(0);
   const { language } = useSitePreferences();
   const copy = uiCopy.form[language];
   const genericSubmitError =
@@ -32,7 +38,14 @@ export function ContactForm() {
     setDidSubmitSuccessfully(false);
 
     try {
-      const payload = normalizeContactFormPayload(formState);
+      if (turnstileSiteKey && !turnstileToken) {
+        throw new Error(copy.botCheckMessage);
+      }
+
+      const payload = normalizeContactFormPayload({
+        ...formState,
+        turnstileToken: turnstileToken ?? "",
+      });
 
       const response = await fetch("/api/contact", {
         method: "POST",
@@ -47,7 +60,7 @@ export function ContactForm() {
         | null;
 
       if (!response.ok || !result?.ok) {
-        if (response.status === 400 && result?.message) {
+        if (result?.message) {
           throw new Error(result.message);
         }
 
@@ -56,12 +69,18 @@ export function ContactForm() {
 
       setDidSubmitSuccessfully(true);
       setFormState(initialState);
+      setTurnstileToken(null);
+      setTurnstileResetKey((current) => current + 1);
     } catch (error) {
       setSubmitError(
         error instanceof Error
           ? error.message
           : genericSubmitError,
       );
+      if (turnstileSiteKey) {
+        setTurnstileToken(null);
+        setTurnstileResetKey((current) => current + 1);
+      }
     } finally {
       setIsSubmitting(false);
     }
@@ -154,15 +173,32 @@ export function ContactForm() {
         />
       </label>
 
+      {turnstileSiteKey ? (
+        <div className="pt-1">
+          <TurnstileWidget
+            siteKey={turnstileSiteKey}
+            resetKey={turnstileResetKey}
+            onTokenChange={setTurnstileToken}
+            className="min-h-[65px]"
+          />
+        </div>
+      ) : null}
+
       <div className="flex flex-col gap-3 pt-1 sm:flex-row sm:items-center sm:justify-between">
         <div className="space-y-2">
           {didSubmitSuccessfully ? (
-            <div className="rounded-[1rem] border border-[var(--accent)]/24 bg-[var(--accent)]/10 px-4 py-3 text-sm leading-6 text-[color:var(--foreground)]">
+            <div
+              role="status"
+              className="rounded-[1rem] border border-[var(--accent)]/24 bg-[var(--accent)]/10 px-4 py-3 text-sm leading-6 text-[color:var(--foreground)]"
+            >
               <p className="font-semibold text-[color:var(--foreground)]">{copy.successMessage}</p>
             </div>
           ) : null}
           {submitError ? (
-            <div className="rounded-[1rem] border border-[color:var(--line-strong)] bg-[color:var(--surface)] px-4 py-3 text-sm leading-6 text-[color:var(--foreground)]">
+            <div
+              role="alert"
+              className="rounded-[1rem] border border-[color:var(--line-strong)] bg-[color:var(--surface)] px-4 py-3 text-sm leading-6 text-[color:var(--foreground)]"
+            >
               {submitError}
             </div>
           ) : null}
