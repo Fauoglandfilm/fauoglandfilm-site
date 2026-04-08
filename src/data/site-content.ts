@@ -1662,6 +1662,61 @@ export const portfolioProjectInfoContent: Partial<Record<string, PortfolioProjec
       },
     ],
   },
+  "fau-land-drone-archive": {
+    shortDescription: {
+      no: "Droneopptak filmet av oss for bruk i kampanjer, nettsider og innholdsbanker.",
+      en: "Drone footage filmed by us for campaigns, websites and content libraries.",
+    },
+    extendedDescription: {
+      no: "Et løpende bibliotek med droneopptak produsert av Fau&Land Film for bruk i egne og kunders produksjoner. Materialet er filmet for å fungere som fleksibelt stock-innhold: stemningsbilder, etableringer og natursekvenser som kan løfte filmer, kampanjer og presentasjoner med større romfølelse og bedre geografisk forankring.",
+      en: "An ongoing library of drone footage produced by Fau&Land Film for use across our own and our clients' productions. The material is captured as flexible stock content: atmospheric shots, establishing visuals and landscape sequences that add scale, place and cinematic breathing room to films, campaigns and presentations.",
+    },
+    deliverables: [
+      { no: "Droneopptak til innholdsbank", en: "Drone footage for content libraries" },
+      { no: "Etableringsbilder og landskap", en: "Establishing shots and landscapes" },
+      { no: "Klargjort materiale for film og SoMe", en: "Prepared material for film and social" },
+      { no: "Opptak til fremtidige kampanjer og profileringsfilmer", en: "Footage for future campaigns and profile films" },
+    ],
+    result: {
+      no: "Gir oss og kundene tilgang på et stadig voksende bibliotek med egenproduserte dronebilder som kan brukes raskt i nye produksjoner uten å starte fra null hver gang.",
+      en: "Provides us and our clients with a growing library of original drone visuals that can be deployed quickly in new productions without starting from scratch every time.",
+    },
+    credits: [
+      { role: "Client", name: "Fau&Land Film" },
+      { role: "Drone footage", name: "Fau&Land Film" },
+      { role: "Production", name: "Fau&Land Film" },
+    ],
+    links: [
+      {
+        label: {
+          no: "Dronefilm 02",
+          en: "Drone film 02",
+        },
+        href: "https://www.youtube.com/watch?v=B8S64aB_Y1w&list=PLjd4-w3930IU953iMMe59G-zX83S1E2Oi&index=3",
+      },
+      {
+        label: {
+          no: "Dronefilm 03",
+          en: "Drone film 03",
+        },
+        href: "https://www.youtube.com/watch?v=CUPmGfHPvtw&list=PLjd4-w3930IU953iMMe59G-zX83S1E2Oi&index=4",
+      },
+      {
+        label: {
+          no: "Dronefilm 04",
+          en: "Drone film 04",
+        },
+        href: "https://www.youtube.com/watch?v=prAWPYpE7Iw&list=PLjd4-w3930IU953iMMe59G-zX83S1E2Oi&index=5",
+      },
+      {
+        label: {
+          no: "Dronefilm 05",
+          en: "Drone film 05",
+        },
+        href: "https://www.youtube.com/watch?v=LRy0mLfEn0k&list=PLjd4-w3930IU953iMMe59G-zX83S1E2Oi&index=6",
+      },
+    ],
+  },
 };
 
 export const portfolioGroups: PortfolioGroup[] = [
@@ -2232,6 +2287,38 @@ const portfolioProjectsBase: PortfolioProject[] = [
       "/assets/team/tommy/portfolio/event/tm51-poster.webp",
     ),
     palette: "from-[#131313] via-[#4d4034] to-[#a18b72]",
+  },
+  {
+    slug: "fau-land-drone-archive",
+    group: "commercial",
+    client: "Fau&Land Film",
+    title: {
+      no: "Droneoppdrag og stock-opptak",
+      en: "Drone assignments and stock footage",
+    },
+    format: {
+      no: "Dronefilm og luftfoto",
+      en: "Drone film and aerial footage",
+    },
+    summary: {
+      no: "Et utvalg droneopptak filmet av oss i Fau&Land, bygget som et fleksibelt bibliotek for kampanjer, profileringsfilmer og innholdsproduksjon.",
+      en: "A curated set of drone footage filmed by us at Fau&Land, built as a flexible library for campaigns, profile films and content production.",
+    },
+    result: {
+      no: "Et eget bibliotek med luftfoto og etableringsbilder som kan brukes videre i nye produksjoner, både som rene dronefilmer og som stock i større prosjekter.",
+      en: "An in-house library of aerial footage and establishing shots that can be reused in future productions, both as standalone drone films and as stock within larger projects.",
+    },
+    ctaLabel: viewReferenceCta,
+    image: "/assets/services/posters/drone-poster.webp",
+    imageAlt: {
+      no: "Still fra Fau&Land sine droneopptak",
+      en: "Still from Fau&Land's drone footage",
+    },
+    externalVideo: youtubeAsset("t5UFNzkM134", {
+      no: "Droneoppdrag og stock-opptak",
+      en: "Drone assignments and stock footage",
+    }),
+    palette: "from-[#162028] via-[#385567] to-[#89a7ba]",
   },
   {
     slug: "treningshuset",
