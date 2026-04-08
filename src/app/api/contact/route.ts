@@ -9,13 +9,61 @@ import {
 } from "@/lib/server/contact-email";
 import { getResendConfig, hasResendServerConfig } from "@/lib/server/resend-config";
 
+const JSON_MIME_TYPE = "application/json";
+const ALLOW_HEADER = "POST, OPTIONS";
+const MAX_CONTACT_REQUEST_BYTES = 24_000;
+
+function jsonResponse(
+  body: { ok: boolean; message?: string; delivery?: "logged" },
+  status = 200,
+) {
+  return NextResponse.json(body, {
+    status,
+    headers: {
+      "Cache-Control": "no-store",
+    },
+  });
+}
+
+function hasJsonContentType(request: Request) {
+  const contentType = request.headers.get("content-type");
+
+  return typeof contentType === "string" && contentType.toLowerCase().includes(JSON_MIME_TYPE);
+}
+
+function getContentLength(request: Request) {
+  const value = Number(request.headers.get("content-length") ?? "");
+
+  return Number.isFinite(value) ? value : null;
+}
+
+export function OPTIONS() {
+  return new NextResponse(null, {
+    status: 204,
+    headers: {
+      Allow: ALLOW_HEADER,
+      "Cache-Control": "no-store",
+    },
+  });
+}
+
 export async function POST(request: Request) {
+  if (!hasJsonContentType(request)) {
+    return jsonResponse({ ok: false, message: "Ugyldig innholdstype." }, 415);
+  }
+
+  const contentLength = getContentLength(request);
+
+  if (contentLength !== null && contentLength > MAX_CONTACT_REQUEST_BYTES) {
+    return jsonResponse({ ok: false, message: "Forespørselen er for stor." }, 413);
+  }
+
   try {
     const json = await request.json();
     const payload = contactFormSchema.parse(json);
 
     if (isContactFormSpam(payload)) {
-      return NextResponse.json({ ok: true });
+      return jsonResponse({ ok: true });
     }
 
     const notificationEmail = buildNotificationEmail(payload);
@@ -29,7 +77,7 @@ export async function POST(request: Request) {
         messageLength: payload.message.length,
       });
 
-      return NextResponse.json({ ok: true, delivery: "logged" });
+      return jsonResponse({ ok: true, delivery: "logged" });
     }
 
     const resend = getResend();
@@ -53,7 +101,7 @@ export async function POST(request: Request) {
         messageLength: payload.message.length,
       });
 
-      return NextResponse.json({ ok: true, delivery: "logged" });
+      return jsonResponse({ ok: true, delivery: "logged" });
     }
 
     try {
@@ -69,26 +117,46 @@ export async function POST(request: Request) {
       console.error("[contact] confirmation delivery failed", error);
     }
 
-    return NextResponse.json({ ok: true });
+    return jsonResponse({ ok: true });
   } catch (error) {
-    console.error("[contact] submit failed", error);
-
     if (error instanceof ZodError) {
-      return NextResponse.json(
+      console.warn(
+        "[contact] validation failed",
+        error.issues.map((issue) => ({
+          code: issue.code,
+          path: issue.path.join("."),
+        })),
+      );
+
+      return jsonResponse(
         {
           ok: false,
           message: "Sjekk feltene og prøv igjen.",
         },
-        { status: 400 },
+        400,
       );
     }
 
-    return NextResponse.json(
+    if (error instanceof SyntaxError) {
+      return jsonResponse(
+        {
+          ok: false,
+          message: "Ugyldig forespørsel.",
+        },
+        400,
+      );
+    }
+
+    console.error("[contact] submit failed", {
+      name: error instanceof Error ? error.name : "UnknownError",
+    });
+
+    return jsonResponse(
       {
         ok: false,
         message: "Kunne ikke sende henvendelsen akkurat nå.",
       },
-      { status: 502 },
+      502,
     );
   }
 }
