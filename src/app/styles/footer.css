@@ -7,6 +7,107 @@
     transition: stroke 400ms ease;
   }
 
+  .site-footer-shell {
+    border-color: var(--footer-shell-border);
+    background: var(--footer-shell-background);
+    box-shadow: var(--footer-shell-shadow);
+    transition:
+      border-color 400ms ease,
+      background 400ms ease,
+      box-shadow 400ms ease;
+  }
+
+  .site-footer-heading {
+    color: var(--footer-heading-copy);
+    transition: color 240ms ease;
+  }
+
+  .site-footer-body-copy {
+    color: var(--footer-body-copy);
+    transition: color 240ms ease;
+  }
+
+  .site-footer-strong-copy {
+    color: var(--footer-strong-copy);
+    transition: color 240ms ease;
+  }
+
+  .site-footer-link-copy {
+    color: var(--footer-link-copy);
+    transition: color 200ms ease;
+  }
+
+  .site-footer-link-copy:hover,
+  .site-footer-link-copy:focus-visible {
+    color: var(--footer-text-link-hover);
+  }
+
+  .site-footer-text-link {
+    color: var(--footer-text-link);
+  }
+
+  .site-footer-text-link:hover,
+  .site-footer-text-link:focus-visible {
+    color: var(--footer-text-link-hover);
+  }
+
+  .site-footer-contact-icon {
+    color: var(--footer-contact-icon);
+    transition: color 200ms ease;
+  }
+
+  .site-footer-rule {
+    background: var(--footer-rule-gradient);
+    transition: background 400ms ease;
+  }
+
+  .site-footer-rail {
+    transition: background 400ms ease;
+  }
+
+  .site-footer-rail--left {
+    background: linear-gradient(
+      90deg,
+      var(--footer-rail-surface) 0%,
+      var(--footer-rail-surface) 84%,
+      transparent 100%
+    );
+  }
+
+  .site-footer-rail--right {
+    background: linear-gradient(
+      270deg,
+      var(--footer-rail-surface) 0%,
+      var(--footer-rail-surface) 84%,
+      transparent 100%
+    );
+  }
+
+  .site-footer-social-chip {
+    color: var(--footer-social-chip-color);
+    background: var(--footer-social-chip-bg);
+    box-shadow: var(--footer-social-chip-shadow);
+    border: 1px solid var(--footer-social-chip-border);
+    transition:
+      color 200ms ease,
+      background 200ms ease,
+      border-color 200ms ease,
+      box-shadow 200ms ease,
+      transform 200ms ease;
+  }
+
+  .site-footer-social-chip:hover,
+  .site-footer-social-chip:focus-visible {
+    color: var(--footer-social-chip-hover-color);
+    background: var(--footer-social-chip-hover-bg);
+    box-shadow: var(--footer-social-chip-hover-shadow);
+  }
+
+  .site-footer-bottom-glow {
+    background: var(--footer-bottom-glow);
+    transition: background 400ms ease;
+  }
+
   .footer-glass-panel {
     position: relative;
     overflow: hidden;

@@ -5,6 +5,7 @@ import {
   useCallback,
   useContext,
   useEffect,
+  useLayoutEffect,
   useMemo,
   useState,
   type ReactNode,
@@ -28,6 +29,30 @@ type SitePreferencesContextValue = {
 const LANGUAGE_STORAGE_KEY = "fauoglandfilm-language";
 const THEME_STORAGE_KEY = "fauoglandfilm-theme";
 const SitePreferencesContext = createContext<SitePreferencesContextValue | null>(null);
+
+function applyThemeToDocument(theme: ThemeMode) {
+  if (typeof document === "undefined") {
+    return;
+  }
+
+  document.documentElement.dataset.theme = theme;
+
+  const themeColor = theme === "dark" ? "#111111" : "#ffffff";
+  const themeColorMeta = document.querySelector('meta[name="theme-color"]');
+
+  if (themeColorMeta instanceof HTMLMetaElement) {
+    themeColorMeta.setAttribute("content", themeColor);
+  }
+}
+
+function applyLanguageToDocument(language: LanguageCode) {
+  if (typeof document === "undefined") {
+    return;
+  }
+
+  document.documentElement.dataset.language = language;
+  document.documentElement.lang = language === "no" ? "nb" : "en";
+}
 
 function getTimeBasedTheme(): ThemeMode {
   const hour = new Date().getHours();
@@ -84,22 +109,16 @@ export function SitePreferencesProvider({ children }: { children: ReactNode }) {
   const [language, setLanguageState] = useState<LanguageCode>(getInitialLanguage);
   const [theme, setThemeState] = useState<ThemeMode>(getInitialTheme);
 
+  useLayoutEffect(() => {
+    applyThemeToDocument(theme);
+    applyLanguageToDocument(language);
+  }, [language, theme]);
+
   useEffect(() => {
-    document.documentElement.dataset.theme = theme;
-    document.documentElement.dataset.language = language;
-    document.documentElement.lang = language === "no" ? "nb" : "en";
-
-    const themeColor = theme === "dark" ? "#111111" : "#ffffff";
-    const themeColorMeta = document.querySelector('meta[name="theme-color"]');
-
-    if (themeColorMeta instanceof HTMLMetaElement) {
-      themeColorMeta.setAttribute("content", themeColor);
-    }
-
     try {
       window.localStorage.setItem(LANGUAGE_STORAGE_KEY, language);
     } catch {}
-  }, [language, theme]);
+  }, [language]);
 
   useEffect(() => {
     if (typeof window === "undefined") {
