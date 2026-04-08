@@ -44,23 +44,13 @@ type PortfolioModalMedia =
     }
   | {
       kind: "external";
-      provider: "youtube" | "vimeo" | "tiktok";
+      provider: "youtube" | "vimeo" | "tiktok" | "instagram";
       iframeSrc: string;
     };
 
 function getPortfolioDirectVideo(project: PortfolioProject): Extract<VideoAsset, { videoType: "direct" }> | null {
   if (project.video?.videoType === "direct") {
     return project.video;
-  }
-
-  if (project.slug === "liten-bedrift") {
-    return {
-      videoType: "direct",
-      src: "/assets/services/videos/bedriftfilm.mp4",
-      poster: project.image,
-      label: project.video?.label ?? project.title,
-      hasEmbeddedText: false,
-    };
   }
 
   return null;

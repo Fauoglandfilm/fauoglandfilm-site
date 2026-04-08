@@ -24,8 +24,8 @@ export type VideoAsset =
     };
 
 export type ExternalVideoAsset = {
-  provider: "youtube" | "vimeo" | "tiktok";
-  videoType: "youtube" | "vimeo" | "tiktok";
+  provider: "youtube" | "vimeo" | "tiktok" | "instagram";
+  videoType: "youtube" | "vimeo" | "tiktok" | "instagram";
   videoId: string;
   embedUrl: string;
   thumbnailSrc: string;
@@ -400,6 +400,8 @@ export const homeServiceVideoLibrary = {
 
 const youtubeWatchUrl = (videoId: string) => `https://www.youtube.com/watch?v=${videoId}`;
 const tiktokEmbedUrl = (videoId: string) => `https://www.tiktok.com/player/v1/${videoId}`;
+const instagramEmbedUrl = (postId: string) =>
+  `https://www.instagram.com/p/${postId}/embed/captioned/`;
 
 function sanitizeExternalVideoId(value: string) {
   return value.trim().replace(/^\/+|\/+$/g, "");
@@ -460,6 +462,21 @@ const tiktokAsset = (
     sourceUrl,
   };
 };
+
+const instagramAsset = (
+  sourceUrl: string,
+  postId: string,
+  label: LocalizedText,
+  thumbnailSrc: string,
+): ExternalVideoAsset => ({
+  provider: "instagram",
+  videoType: "instagram",
+  videoId: sanitizeExternalVideoId(postId),
+  embedUrl: instagramEmbedUrl(postId),
+  thumbnailSrc,
+  label,
+  sourceUrl,
+});
 
 const viewCaseCta = { no: "Se case", en: "View case" } satisfies LocalizedText;
 const openFilmCta = { no: "Åpne film", en: "Open film" } satisfies LocalizedText;
@@ -2357,18 +2374,15 @@ const portfolioProjectsBase: PortfolioProject[] = [
       no: "Still fra in-house promoen Liten bedrift",
       en: "Still from the in-house promo Small business",
     },
-    video: {
-      videoType: "request",
-      poster: "/assets/portfolio/inhouse/posters/liten-bedrift-poster.avif",
-      label: {
+    externalVideo: instagramAsset(
+      "https://www.instagram.com/p/DILsOCiiT1X/",
+      "DILsOCiiT1X",
+      {
         no: "In-house promo: Liten bedrift",
         en: "In-house promo: Small business",
       },
-      availabilityNote: {
-        no: "Video er tilgjengelig på forespørsel.",
-        en: "Video is available on request.",
-      },
-    },
+      "/assets/portfolio/inhouse/posters/liten-bedrift-poster.avif",
+    ),
     palette: "from-[#1d181a] via-[#5a232d] to-[#b14f54]",
   },
   {
