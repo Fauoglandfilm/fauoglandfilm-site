@@ -758,16 +758,16 @@ export function ContactLeadSection({
       title={copy.contactTitle}
       description={copy.contactDescription}
     >
-      <div className="grid gap-3.5 xl:grid-cols-[0.9fr_1.1fr]">
-        <article className="order-2 card-surface relative overflow-hidden rounded-[1.9rem] p-4.5 sm:p-5.5 xl:order-1">
+      <div className="contact-section-grid grid gap-4 xl:grid-cols-[0.88fr_1.12fr] xl:gap-5">
+        <article className="contact-lead-panel order-2 card-surface relative overflow-hidden rounded-[2rem] p-5 sm:p-6 xl:order-1 xl:p-7">
           <div className="contact-section-logo-ghost pointer-events-none absolute -bottom-6 right-[-0.2rem] hidden h-26 w-26 md:block">
             <BrandLogo
               variant="mark"
               className="h-auto w-full"
             />
           </div>
-          <div className="space-y-3.25">
-            <Link href="/" className="brand-signature-chip flex w-fit items-center gap-2.5 px-2.15 py-1.7">
+          <div className="contact-lead-panel__header space-y-4">
+            <Link href="/" className="brand-signature-chip contact-brand-chip flex w-fit items-center gap-2.5 px-2.5 py-2">
               <div className="brand-signature-mark contact-section-brand-mark flex h-11 w-11 items-center justify-center rounded-full p-[0.6rem]">
                 <BrandLogo
                   variant="mark"
@@ -781,12 +781,12 @@ export function ContactLeadSection({
                 </p>
               </div>
             </Link>
-            <p className="body-copy max-w-[26rem] text-[var(--muted-2)]">
+            <p className="contact-lead-panel__summary body-copy max-w-[27rem] text-[var(--muted-2)]">
               {copy.contactLead}
             </p>
           </div>
 
-          <div className="mt-4.5 grid gap-3 border-t border-[color:var(--line)]/86 pt-4.5">
+          <div className="contact-lead-panel__rows mt-6 grid gap-3.5 border-t border-[color:var(--line)]/86 pt-5">
             <ContactRow icon={<MailIcon className="h-5 w-5" />} label={copy.contactMail} value={siteConfig.email} href={`mailto:${siteConfig.email}`} />
             <ContactRow icon={<PhoneIcon className="h-5 w-5" />} label={copy.contactPhone} value={siteConfig.phonePrimary} href={siteConfig.phonePrimaryHref} />
             <ContactRow icon={<PinIcon className="h-5 w-5" />} label={copy.contactBase} value={siteConfig.locationLabel} />
@@ -794,14 +794,14 @@ export function ContactLeadSection({
         </article>
 
         <div className="order-1 grid gap-3.5 xl:order-2">
-          <article className="card-surface overflow-hidden rounded-[1.9rem]">
-            <div className="p-4.5 sm:p-5.5">
-              <div className="max-w-2xl">
+          <article className="contact-form-panel card-surface overflow-hidden rounded-[2rem]">
+            <div className="p-5 sm:p-6 xl:p-7">
+              <div className="contact-form-panel__intro max-w-2xl">
                 <p className="body-copy text-[var(--muted-2)]">
                   {copy.contactBriefDescription}
                 </p>
               </div>
-              <div className="mt-5">
+              <div className="mt-6">
                 <ContactForm />
               </div>
             </div>
@@ -824,7 +824,7 @@ function ContactRow({
   href?: string;
 }) {
   const content = (
-    <div className="contact-row-surface flex items-center gap-3.25 rounded-[1.22rem] border px-3.5 py-3.25">
+    <div className="contact-row-surface flex items-center gap-3.5 rounded-[1.35rem] border px-4 py-3.5">
       <div className="contact-row-icon flex h-9.5 w-9.5 items-center justify-center rounded-full">
         {icon}
       </div>

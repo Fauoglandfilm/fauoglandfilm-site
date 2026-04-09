@@ -87,7 +87,7 @@ export function ContactForm() {
   };
 
   return (
-    <form className="relative grid gap-3.5" onSubmit={handleSubmit} id="foresporsel">
+    <form className="contact-form-shell relative grid gap-4" onSubmit={handleSubmit} id="foresporsel">
       <div
         aria-hidden="true"
         className="pointer-events-none absolute left-[-9999px] top-auto h-px w-px overflow-hidden"
@@ -105,11 +105,11 @@ export function ContactForm() {
         />
       </div>
 
-      <div className="grid gap-3.5 md:grid-cols-2">
-        <label className="space-y-2">
-          <span className="text-sm font-medium text-[color:var(--foreground)]">{copy.name}</span>
+      <div className="contact-form-row grid gap-4 md:grid-cols-2">
+        <label className="contact-form-field space-y-2.5">
+          <span className="contact-form-label text-sm font-medium text-[color:var(--foreground)]">{copy.name}</span>
           <input
-            className="form-input"
+            className="form-input contact-form-input"
             name="name"
             autoComplete="name"
             minLength={2}
@@ -121,10 +121,10 @@ export function ContactForm() {
             required
           />
         </label>
-        <label className="space-y-2">
-          <span className="text-sm font-medium text-[color:var(--foreground)]">{copy.company}</span>
+        <label className="contact-form-field space-y-2.5">
+          <span className="contact-form-label text-sm font-medium text-[color:var(--foreground)]">{copy.company}</span>
           <input
-            className="form-input"
+            className="form-input contact-form-input"
             name="company"
             autoComplete="organization"
             maxLength={160}
@@ -136,11 +136,11 @@ export function ContactForm() {
         </label>
       </div>
 
-      <div className="grid gap-3.5 md:grid-cols-2">
-        <label className="space-y-2">
-          <span className="text-sm font-medium text-[color:var(--foreground)]">{copy.email}</span>
+      <div className="contact-form-row grid gap-4 md:grid-cols-2">
+        <label className="contact-form-field space-y-2.5">
+          <span className="contact-form-label text-sm font-medium text-[color:var(--foreground)]">{copy.email}</span>
           <input
-            className="form-input"
+            className="form-input contact-form-input"
             name="email"
             type="email"
             autoComplete="email"
@@ -156,10 +156,10 @@ export function ContactForm() {
         <div />
       </div>
 
-      <label className="space-y-2">
-        <span className="text-sm font-medium text-[color:var(--foreground)]">{copy.message}</span>
+      <label className="contact-form-field space-y-2.5">
+        <span className="contact-form-label text-sm font-medium text-[color:var(--foreground)]">{copy.message}</span>
         <textarea
-          className="form-input min-h-32 resize-y"
+          className="form-input contact-form-input contact-form-textarea min-h-32 resize-y"
           name="message"
           rows={5}
           minLength={12}
@@ -184,12 +184,12 @@ export function ContactForm() {
         </div>
       ) : null}
 
-      <div className="flex flex-col gap-3 pt-1 sm:flex-row sm:items-center sm:justify-between">
-        <div className="space-y-2">
+      <div className="contact-form-actions flex flex-col gap-3 pt-2 sm:flex-row sm:items-end sm:justify-between">
+        <div className="contact-form-feedback space-y-2">
           {didSubmitSuccessfully ? (
             <div
               role="status"
-              className="rounded-[1rem] border border-[var(--accent)]/24 bg-[var(--accent)]/10 px-4 py-3 text-sm leading-6 text-[color:var(--foreground)]"
+              className="contact-form-status rounded-[1rem] border border-[var(--accent)]/24 bg-[var(--accent)]/10 px-4 py-3 text-sm leading-6 text-[color:var(--foreground)]"
             >
               <p className="font-semibold text-[color:var(--foreground)]">{copy.successMessage}</p>
             </div>
@@ -197,13 +197,17 @@ export function ContactForm() {
           {submitError ? (
             <div
               role="alert"
-              className="rounded-[1rem] border border-[color:var(--line-strong)] bg-[color:var(--surface)] px-4 py-3 text-sm leading-6 text-[color:var(--foreground)]"
+              className="contact-form-status rounded-[1rem] border border-[color:var(--line-strong)] bg-[color:var(--surface)] px-4 py-3 text-sm leading-6 text-[color:var(--foreground)]"
             >
               {submitError}
             </div>
           ) : null}
         </div>
-        <Button type="submit" fullWidth className="sm:w-auto">
+        <Button
+          type="submit"
+          fullWidth
+          className="contact-form-submit sm:w-auto [--button-bg-current:#171717] [--button-border-current:rgba(17,17,17,0.16)] [--button-text-current:#f7f3ea] hover:[--button-bg-current:#202020] hover:[--button-border-current:rgba(17,17,17,0.22)] active:[--button-bg-current:#111111] active:[--button-border-current:rgba(17,17,17,0.24)] [html[data-theme='dark']_&]:[--button-bg-current:#f2eadb] [html[data-theme='dark']_&]:[--button-border-current:rgba(255,255,255,0.14)] [html[data-theme='dark']_&]:[--button-text-current:#111111] [html[data-theme='dark']_&]:hover:[--button-bg-current:#fff6e7]"
+        >
           {isSubmitting ? "..." : copy.submit}
         </Button>
       </div>
