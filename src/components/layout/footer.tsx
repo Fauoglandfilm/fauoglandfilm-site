@@ -239,8 +239,8 @@ export function Footer() {
               </div>
             </div>
 
-            <div className="flex justify-center text-center">
-              <div className="flex max-w-[52rem] flex-wrap items-center justify-center gap-x-2 gap-y-1.5 text-[0.96rem] leading-6 sm:text-[1rem]">
+            <div className="flex w-full justify-center text-center">
+              <div className="site-footer-conversion-row flex max-w-[52rem] flex-wrap items-center justify-center gap-x-2 gap-y-1.5 px-4 py-3 text-[0.96rem] leading-6 sm:text-[1rem]">
                 <span className="site-footer-strong-copy font-semibold tracking-[-0.03em]">
                   {copy.title}
                 </span>
@@ -259,7 +259,7 @@ export function Footer() {
           </div>
 
           <div className="relative z-[1] mt-8 sm:mt-9 lg:mt-10">
-            <div className="relative h-[10.8rem] sm:h-[12rem] lg:h-[16.4rem]">
+            <div className="site-footer-wordmark-stage relative h-[10.8rem] sm:h-[12rem] lg:h-[16.4rem]">
               <div
                 aria-hidden="true"
                 className="site-footer-rule absolute inset-x-0 top-[1.6rem] h-px"

@@ -114,6 +114,7 @@ export function HeroSection() {
       : "Oslo / Commercial Film / Production";
   const secondaryCta = language === "no" ? "Portefølje" : "Portfolio";
   const heroTitle = resolveLocalizedValue(homeHeroContent.title, language);
+  const heroStageLabels = eyebrow.split(" / ");
 
   useEffect(() => {
     if (!heroVideoSrc) {
@@ -176,7 +177,7 @@ export function HeroSection() {
   }, [heroVideoSrc]);
 
   return (
-    <section className="relative isolate overflow-hidden bg-[#05070a] text-white">
+    <section className="hero-section relative isolate overflow-hidden bg-[#05070a] text-white">
       <div className="absolute inset-0">
         <video
           key={heroVideoSrc}
@@ -216,10 +217,12 @@ export function HeroSection() {
         <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(5,7,10,0.13)_0%,rgba(5,7,10,0.055)_24%,rgba(5,7,10,0.115)_56%,rgba(5,7,10,0.315)_100%)]" />
         <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(5,7,10,0.31)_0%,rgba(5,7,10,0.21)_22%,rgba(5,7,10,0.075)_56%,rgba(5,7,10,0.035)_100%)]" />
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(210,173,116,0.11),transparent_30%),radial-gradient(circle_at_82%_14%,rgba(112,143,216,0.06),transparent_22%)]" />
+        <div className="hero-stage-lines pointer-events-none absolute inset-x-[6%] top-[7.5rem] hidden h-[62%] rounded-[2rem] lg:block" />
+        <div className="hero-stage-glow pointer-events-none absolute -right-[8%] top-[8%] hidden h-[26rem] w-[26rem] rounded-full lg:block" />
       </div>
 
       <div className="site-container relative z-[1] flex min-h-[72svh] items-end pb-7 pt-[5.35rem] sm:min-h-[92svh] sm:pb-14 sm:pt-[8.8rem] lg:min-h-[96vh] lg:pb-16 lg:pt-[10.5rem]">
-        <div className="w-full">
+        <div className="grid w-full items-end gap-8 lg:grid-cols-[minmax(0,35rem)_minmax(0,1fr)] lg:gap-10">
           <div className="w-full max-w-full sm:max-w-[27rem] lg:max-w-[33rem] xl:max-w-[35rem]">
             <div className="hero-editorial-block">
               <p className="hero-editorial-kicker">{eyebrow}</p>
@@ -242,6 +245,24 @@ export function HeroSection() {
                 text={secondaryCta}
                 className="w-full sm:w-[11.5rem]"
               />
+            </div>
+          </div>
+
+          <div className="hero-stage-panel relative hidden min-h-[24rem] items-end justify-end lg:flex">
+            <div className="hero-stage-panel__frame">
+              <div className="hero-stage-panel__rail">
+                <div className="flex flex-wrap justify-end gap-2">
+                  {heroStageLabels.map((label) => (
+                    <span key={label} className="hero-stage-panel__chip">
+                      {label}
+                    </span>
+                  ))}
+                </div>
+                <div className="hero-stage-panel__note">
+                  <span className="hero-stage-panel__index">01</span>
+                  <span>{language === "no" ? "Cinematic produksjonssystem" : "Cinematic production system"}</span>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -284,27 +305,31 @@ export function SelectedWorkSection({ items }: { items: CaseStudy[] }) {
   return (
     <section id="selected-work" className="section-space pt-[clamp(2.3rem,3.8vw,5.3rem)]">
       <div className="site-container">
-        <div className="flex flex-col gap-4 sm:gap-5 lg:flex-row lg:items-end lg:justify-between">
-          <div className="max-w-[40rem]">
-            <p className="eyebrow">{eyebrow}</p>
-            <h2 className="section-title mt-3 text-[color:var(--foreground)] sm:mt-4">
-              {title}
-            </h2>
-            <p className="body-lead mt-3 max-w-[34rem] text-[var(--muted-2)] sm:mt-4">
-              {description}
-            </p>
+        <div className="home-section-shell home-section-shell--spotlight px-5 py-6 sm:px-7 sm:py-8 lg:px-9 lg:py-10">
+          <div className="flex flex-col gap-4 sm:gap-5 lg:flex-row lg:items-end lg:justify-between">
+            <div className="max-w-[40rem]">
+              <p className="eyebrow">{eyebrow}</p>
+              <h2 className="section-title mt-3 text-[color:var(--foreground)] sm:mt-4">
+                {title}
+              </h2>
+              <p className="body-lead mt-3 max-w-[34rem] text-[var(--muted-2)] sm:mt-4">
+                {description}
+              </p>
+            </div>
+            <ButtonLink href="/case" variant="ghost" className="w-full sm:w-auto">
+              {language === "no" ? "Se alle case" : "View all cases"}
+            </ButtonLink>
           </div>
-          <ButtonLink href="/case" variant="ghost" className="w-full sm:w-auto">
-            {language === "no" ? "Se alle case" : "View all cases"}
-          </ButtonLink>
-        </div>
 
-        <div className="mt-8 grid gap-4 lg:grid-cols-[1.18fr_0.82fr]">
-          {items[0] ? <HomeCaseCard caseStudy={items[0]} featured /> : null}
-          <div className="grid gap-4">
-            {items.slice(1, 3).map((caseStudy, index) => (
-              <HomeCaseCard key={caseStudy.slug} caseStudy={caseStudy} delay={0.06 * (index + 1)} />
-            ))}
+          <div className="home-section-shell__rule mt-7 sm:mt-8" />
+
+          <div className="mt-7 grid gap-4 lg:grid-cols-[1.18fr_0.82fr]">
+            {items[0] ? <HomeCaseCard caseStudy={items[0]} featured /> : null}
+            <div className="grid gap-4">
+              {items.slice(1, 3).map((caseStudy, index) => (
+                <HomeCaseCard key={caseStudy.slug} caseStudy={caseStudy} delay={0.06 * (index + 1)} />
+              ))}
+            </div>
           </div>
         </div>
       </div>
@@ -380,23 +405,27 @@ export function ServicesSection() {
   return (
     <section className="section-space">
       <div className="site-container">
-        <div className="flex flex-col gap-4 sm:gap-5 lg:flex-row lg:items-end lg:justify-between">
-          <div className="max-w-[38rem]">
-            <p className="eyebrow">{eyebrow}</p>
-            <h2 className="section-title mt-3 text-[color:var(--foreground)] sm:mt-4">
-              {title}
-            </h2>
-            <p className="body-lead mt-3 text-[var(--muted-2)] sm:mt-4">{description}</p>
+        <div className="home-section-shell home-section-shell--quiet px-5 py-6 sm:px-7 sm:py-8 lg:px-9 lg:py-10">
+          <div className="flex flex-col gap-4 sm:gap-5 lg:flex-row lg:items-end lg:justify-between">
+            <div className="max-w-[38rem]">
+              <p className="eyebrow">{eyebrow}</p>
+              <h2 className="section-title mt-3 text-[color:var(--foreground)] sm:mt-4">
+                {title}
+              </h2>
+              <p className="body-lead mt-3 text-[var(--muted-2)] sm:mt-4">{description}</p>
+            </div>
+            <ButtonLink href="/tjenester" variant="ghost" className="w-full sm:w-auto">
+              {language === "no" ? "Se tjenester" : "See services"}
+            </ButtonLink>
           </div>
-          <ButtonLink href="/tjenester" variant="ghost" className="w-full sm:w-auto">
-            {language === "no" ? "Se tjenester" : "See services"}
-          </ButtonLink>
-        </div>
 
-        <div className="mt-8 grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
-          {servicePillars.map((pillar, index) => (
-            <ServiceCard key={pillar.eyebrow} pillar={pillar} delay={0.05 * index} />
-          ))}
+          <div className="home-section-shell__rule mt-7 sm:mt-8" />
+
+          <div className="mt-7 grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
+            {servicePillars.map((pillar, index) => (
+              <ServiceCard key={pillar.eyebrow} pillar={pillar} delay={0.05 * index} />
+            ))}
+          </div>
         </div>
       </div>
     </section>
@@ -924,7 +953,7 @@ export function ClosingCtaSection() {
         <Reveal y={16}>
           <div
             className={cn(
-              "overflow-hidden rounded-[2rem] border px-6 py-8 sm:px-8 sm:py-10 lg:flex lg:items-end lg:justify-between lg:gap-8",
+              "closing-cta-shell overflow-hidden rounded-[2rem] border px-6 py-8 sm:px-8 sm:py-10 lg:grid lg:grid-cols-[minmax(0,1fr)_auto] lg:items-end lg:gap-8",
               panelClassName,
             )}
           >
@@ -940,7 +969,7 @@ export function ClosingCtaSection() {
               </p>
             </div>
 
-            <div className="mt-7 flex flex-col gap-3 sm:flex-row lg:mt-0 lg:shrink-0">
+            <div className="closing-cta-shell__actions mt-7 flex flex-col gap-3 sm:flex-row lg:mt-0 lg:shrink-0">
               <ButtonLink
                 href={siteConfig.bookingHref}
                 className="w-full sm:w-auto"
@@ -1111,7 +1140,7 @@ function HomeCaseCard({
         <article
           ref={cardRef}
           className={cn(
-            "relative h-full overflow-hidden rounded-[1.9rem] bg-[#0c1016] text-white shadow-[0_28px_90px_rgba(0,0,0,0.18)]",
+            "home-case-card relative h-full overflow-hidden rounded-[1.9rem] bg-[#0c1016] text-white shadow-[0_28px_90px_rgba(0,0,0,0.18)]",
             featured ? "min-h-[24rem] sm:min-h-[29rem] lg:min-h-[34rem]" : "min-h-[18rem] sm:min-h-[20rem]",
           )}
         >
@@ -1206,13 +1235,14 @@ function HomeCaseCard({
           )}
           <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(8,10,14,0.06),rgba(8,10,14,0.08)_24%,rgba(8,10,14,0.78)_100%)]" />
           <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(8,10,14,0.48),rgba(8,10,14,0.1)_38%,rgba(8,10,14,0.36)_100%)]" />
+          <div className="home-case-card__glow absolute -right-[8%] bottom-[-16%] h-[38%] w-[42%] rounded-full" />
 
           <div className="relative z-[1] flex h-full flex-col justify-between p-5 sm:p-6 lg:p-7">
             <div className="flex items-start justify-between gap-3">
-              <span className="inline-flex w-fit rounded-full border border-white/16 bg-black/20 px-3 py-1 text-[0.66rem] font-semibold uppercase tracking-[0.18em] text-white/72 backdrop-blur-md">
+              <span className="home-case-card__chip inline-flex w-fit rounded-full border border-white/16 bg-black/20 px-3 py-1 text-[0.66rem] font-semibold uppercase tracking-[0.18em] text-white/72 backdrop-blur-md">
                 {resolveLocalizedValue(caseStudy.category, language)}
               </span>
-              <span className="flex h-10 w-10 items-center justify-center rounded-full border border-white/14 bg-white/8 text-white/86 backdrop-blur-md transition duration-300 group-hover:translate-x-px">
+              <span className="home-case-card__arrow flex h-10 w-10 items-center justify-center rounded-full border border-white/14 bg-white/8 text-white/86 backdrop-blur-md transition duration-300 group-hover:translate-x-px">
                 <ArrowUpRightIcon className="h-4 w-4" />
               </span>
             </div>
@@ -1253,7 +1283,7 @@ function ServiceCard({
   return (
     <Reveal delay={delay} y={14}>
       <Link href="/tjenester" className="group block h-full">
-        <article className="card-surface flex h-full flex-col overflow-hidden rounded-[1.7rem] shadow-[0_18px_48px_rgba(18,14,10,0.08)]">
+        <article className="card-surface service-pillar-card flex h-full flex-col overflow-hidden rounded-[1.7rem] shadow-[0_18px_48px_rgba(18,14,10,0.08)]">
           <div className="relative aspect-[1.02/0.78] overflow-hidden bg-[#0b0d12]">
             <PreviewMedia
               title={pillar.title}
@@ -1268,7 +1298,7 @@ function ServiceCard({
               posterClassName="transition duration-700"
             />
             <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(8,8,8,0.02),rgba(8,8,8,0.1)_36%,rgba(8,8,8,0.42)_100%)]" />
-            <div className="absolute left-3 top-3 inline-flex rounded-full border border-white/14 bg-black/20 px-2.5 py-1 text-[0.64rem] font-semibold uppercase tracking-[0.18em] text-white/72 backdrop-blur-md">
+            <div className="service-pillar-card__chip absolute left-3 top-3 inline-flex rounded-full border border-white/14 bg-black/20 px-2.5 py-1 text-[0.64rem] font-semibold uppercase tracking-[0.18em] text-white/72 backdrop-blur-md">
               {pillar.eyebrow}
             </div>
           </div>
@@ -1280,7 +1310,7 @@ function ServiceCard({
             <p className="mt-2 text-sm leading-6 text-[var(--muted-2)] sm:text-[0.98rem]">
               {resolveLocalizedValue(pillar.summary, language)}
             </p>
-            <span className="mt-5 inline-flex items-center gap-2 text-sm font-medium text-[color:var(--foreground)]">
+            <span className="service-pillar-card__cta mt-5 inline-flex items-center gap-2 text-sm font-medium text-[color:var(--foreground)]">
               <span>{language === "no" ? "Se tjenester" : "See services"}</span>
               <ArrowUpRightIcon className="h-4 w-4 transition duration-300 group-hover:translate-x-px" />
             </span>

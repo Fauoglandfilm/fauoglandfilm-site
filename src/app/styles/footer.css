@@ -8,6 +8,8 @@
   }
 
   .site-footer-shell {
+    position: relative;
+    isolation: isolate;
     border-color: var(--footer-shell-border);
     background: var(--footer-shell-background);
     box-shadow: var(--footer-shell-shadow);
@@ -15,6 +17,31 @@
       border-color 400ms ease,
       background 400ms ease,
       box-shadow 400ms ease;
+  }
+
+  .site-footer-shell::before,
+  .site-footer-shell::after {
+    content: "";
+    position: absolute;
+    pointer-events: none;
+  }
+
+  .site-footer-shell::before {
+    inset: 0;
+    background:
+      linear-gradient(180deg, rgba(255, 255, 255, 0.16), transparent 20%),
+      radial-gradient(circle at 18% 0%, rgba(120, 164, 255, 0.12), transparent 24%);
+    opacity: 0.72;
+  }
+
+  .site-footer-shell::after {
+    inset: auto -8% -16% auto;
+    width: 32rem;
+    height: 32rem;
+    border-radius: 999px;
+    background: radial-gradient(circle, rgba(106, 174, 255, 0.12) 0%, transparent 72%);
+    filter: blur(28px);
+    opacity: 0.54;
   }
 
   .site-footer-heading {
@@ -108,6 +135,29 @@
     transition: background 400ms ease;
   }
 
+  .site-footer-conversion-row {
+    border-radius: 999px;
+    border: 1px solid color-mix(in srgb, var(--footer-shell-border) 92%, rgba(255, 255, 255, 0.28));
+    background:
+      linear-gradient(180deg, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.06)),
+      color-mix(in srgb, var(--footer-rail-surface) 92%, transparent);
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.24),
+      0 12px 30px rgba(0, 0, 0, 0.06);
+    backdrop-filter: blur(18px) saturate(146%);
+    -webkit-backdrop-filter: blur(18px) saturate(146%);
+  }
+
+  .site-footer-wordmark-stage::before {
+    content: "";
+    position: absolute;
+    inset: 1.4rem 7% 0.8rem;
+    border-radius: 2rem;
+    border: 1px solid color-mix(in srgb, var(--footer-shell-border) 78%, rgba(255, 255, 255, 0.14));
+    pointer-events: none;
+    opacity: 0.7;
+  }
+
   .footer-glass-panel {
     position: relative;
     overflow: hidden;
@@ -154,6 +204,23 @@
       radial-gradient(circle at 12% 0%, color-mix(in srgb, var(--accent) 20%, transparent) 0%, transparent 36%),
       linear-gradient(180deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0) 32%);
     opacity: 0.88;
+  }
+
+  html[data-theme="dark"] .site-footer-shell::before {
+    background:
+      linear-gradient(180deg, rgba(255, 255, 255, 0.08), transparent 20%),
+      radial-gradient(circle at 18% 0%, rgba(106, 174, 255, 0.16), transparent 24%);
+    opacity: 0.84;
+  }
+
+  html[data-theme="dark"] .site-footer-conversion-row {
+    border-color: color-mix(in srgb, var(--footer-shell-border) 92%, rgba(255, 255, 255, 0.08));
+    background:
+      linear-gradient(180deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.03)),
+      color-mix(in srgb, var(--footer-rail-surface) 94%, transparent);
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.1),
+      0 16px 34px rgba(0, 0, 0, 0.28);
   }
 
   @keyframes footer-glass-drift {
