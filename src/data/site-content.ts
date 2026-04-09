@@ -248,12 +248,12 @@ export const siteConfig = {
 
 export const homeHeroContent = {
   title: {
-    no: "Film som selger.",
-    en: "Film that sells.",
+    no: "Film som gir deg kunder.",
+    en: "Film that brings you customers.",
   },
   description: {
-    no: "Film for nettside, annonser og sosiale medier.",
-    en: "Film for websites, ads and social media.",
+    no: "Vi lager reklame og innhold som øker synlighet, bygger tillit og gir flere henvendelser.",
+    en: "We create commercials and content that increase visibility, build trust and generate more inquiries.",
   },
   ctaLabel: {
     no: "Book møte",

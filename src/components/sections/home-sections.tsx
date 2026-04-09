@@ -112,7 +112,7 @@ export function HeroSection() {
     language === "no"
       ? "Oslo / Reklamefilm / Produksjon"
       : "Oslo / Commercial Film / Production";
-  const secondaryCta = language === "no" ? "Portefølje" : "Portfolio";
+  const secondaryCta = language === "no" ? "Se arbeid" : "See work";
   const heroTitle = resolveLocalizedValue(homeHeroContent.title, language);
   const heroStageLabels = eyebrow.split(" / ");
 
