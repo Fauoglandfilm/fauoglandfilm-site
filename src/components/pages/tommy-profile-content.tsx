@@ -126,6 +126,14 @@ function ShortFilmCard({
 }) {
   const { language } = useSitePreferences();
   const title = resolveLocalizedValue(project.title, language);
+  const primaryItems = project.awards.length ? project.awards : (project.credits ?? []);
+  const primaryLabel = project.awards.length
+    ? language === "no"
+      ? "Awards & nominasjoner"
+      : "Awards & nominations"
+    : language === "no"
+      ? "Nøkkelinfo"
+      : "Key info";
 
   return (
     <Reveal delay={0.04 * index}>
@@ -159,13 +167,13 @@ function ShortFilmCard({
             <div className="grid gap-4 xl:grid-cols-2">
               <div className="rounded-[1.35rem] border border-[color:var(--line)]/70 bg-[color:var(--surface-muted)]/75 p-4">
                 <p className="text-[0.7rem] font-semibold uppercase tracking-[0.18em] text-[var(--muted)]">
-                  {language === "no" ? "Awards & nominasjoner" : "Awards & nominations"}
+                  {primaryLabel}
                 </p>
                 <ul className="mt-3 space-y-2.5">
-                  {project.awards.map((award) => (
-                    <li key={award} className="flex gap-2.5 text-sm leading-6 text-[color:var(--foreground)]/92">
+                  {primaryItems.map((item) => (
+                    <li key={item} className="flex gap-2.5 text-sm leading-6 text-[color:var(--foreground)]/92">
                       <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-[color:var(--accent)]/58" />
-                      <span>{award}</span>
+                      <span>{item}</span>
                     </li>
                   ))}
                 </ul>

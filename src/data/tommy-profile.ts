@@ -23,6 +23,7 @@ export type TommyShortFilmProject = {
   role: LocalizedText;
   logline: LocalizedText;
   awards: string[];
+  credits?: string[];
   festivals: string[];
   links: TommyPortfolioLink[];
   poster: TommyPortfolioImage;
@@ -169,6 +170,40 @@ export const tommyPortfolioPage = {
       gallery: [],
     },
     {
+      slug: "skjonnheten-skal-frelse-verden",
+      type: "shortfilm",
+      title: sameText("Skjønnheten skal frelse verden"),
+      year: "2024",
+      role: sameText("Line producer"),
+      logline: {
+        no: "Norsk kortfilm regissert og skrevet av Andres Heger-Bratterud, produsert av Alexander Balchen for Både Og, der Tommy gikk inn som line producer på en ensembledrevet festivalfilm med tydelig auteurpreg.",
+        en: "A Norwegian short film directed and written by Andres Heger-Bratterud, produced by Alexander Balchen for Både Og, with Tommy serving as line producer on an ensemble-driven festival film with a clear auteur sensibility.",
+      },
+      awards: [],
+      credits: [
+        "Regi og manus: Andres Heger-Bratterud",
+        "Foto: Morten Forsberg",
+        "Produsent: Alexander Balchen",
+        "Produksjonsselskap: Både Og",
+        "Med: Fredrik Høyer, Kyrre Hellum, Nader Khademi, Evelyn Rasmussen Osazuwa, Christian Waaler, Peder Ulven, Hege Jeanette Eriksen",
+      ],
+      festivals: [
+        "Oslo Pix - 2024",
+      ],
+      links: [
+        externalLink("Oslo Pix", "https://www.oslopix.no/no/film/2024/skj%C3%B8nnheten-skal-frelse-verden"),
+        externalLink("Trailer", "https://www.facebook.com/watch/?v=1565485000933742"),
+      ],
+      poster: poster(
+        "/assets/team/tommy/portfolio/other-roles/skjonnheten-skal-frelse-verden-poster.webp",
+        "Poster for Skjønnheten skal frelse verden",
+        "Poster for Skjønnheten skal frelse verden",
+        "cover",
+        "portrait",
+      ),
+      gallery: [],
+    },
+    {
       slug: "en-midnatts-vuggesang",
       type: "shortfilm",
       title: {
@@ -218,8 +253,6 @@ export const tommyPortfolioPage = {
       ],
       links: [
         externalLink("FilmFreeway", "https://filmfreeway.com/MauraShort"),
-        externalLink("Trailer", "https://www.youtube.com/watch?v=3SA8MLCaGQs&t=1s"),
-        externalLink("IMDb", "https://www.imdb.com/title/tt32215748/"),
       ],
       poster: poster(
         "/assets/team/tommy/portfolio/shortfilms/maura-poster.avif",
@@ -248,7 +281,10 @@ export const tommyPortfolioPage = {
         "Athens Monthly Art Film Festival - Official Selection",
         "Sustain Film Festival - Official Selection",
       ],
-      links: [externalLink("FilmFreeway", "https://filmfreeway.com/HuldredansSHORT")],
+      links: [
+        externalLink("FilmFreeway", "https://filmfreeway.com/HuldredansSHORT"),
+        externalLink("IMDb", "https://www.imdb.com/title/tt32215748/"),
+      ],
       poster: poster(
         "/assets/team/tommy/portfolio/shortfilms/huldredans-poster.avif",
         "Plakat for Huldredans",
@@ -511,17 +547,6 @@ export const tommyPortfolioPage = {
         en: "",
       },
       items: [
-        {
-          slug: "skjonnheten-skal-frelse-verden",
-          title: sameText("Skjønnheten skal frelse verden"),
-          poster: poster(
-            "/assets/team/tommy/portfolio/other-roles/skjonnheten-skal-frelse-verden-poster.webp",
-            "Poster for Skjønnheten skal frelse verden",
-            "Poster for Skjønnheten skal frelse verden",
-            "cover",
-            "portrait",
-          ),
-        },
         {
           slug: "royalteen",
           title: sameText("Royalteen"),
