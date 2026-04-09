@@ -760,18 +760,18 @@ export function ContactLeadSection({
     >
       <div className="grid gap-3.5 xl:grid-cols-[0.9fr_1.1fr]">
         <article className="order-2 card-surface relative overflow-hidden rounded-[1.9rem] p-4.5 sm:p-5.5 xl:order-1">
-          <div className="pointer-events-none absolute -bottom-6 right-[-0.2rem] hidden h-26 w-26 md:block opacity-[0.11]">
+          <div className="contact-section-logo-ghost pointer-events-none absolute -bottom-6 right-[-0.2rem] hidden h-26 w-26 md:block">
             <BrandLogo
               variant="mark"
-              className="h-auto w-full brightness-[1.18] contrast-[1.42] saturate-[1.52] drop-shadow-[0_16px_26px_rgba(186,151,88,0.14)]"
+              className="h-auto w-full"
             />
           </div>
           <div className="space-y-3.25">
             <Link href="/" className="brand-signature-chip flex w-fit items-center gap-2.5 px-2.15 py-1.7">
-              <div className="brand-signature-mark flex h-11 w-11 items-center justify-center rounded-full bg-white/92 p-[0.6rem] shadow-[0_12px_24px_rgba(17,17,17,0.08),inset_0_1px_0_rgba(255,255,255,0.44)] ring-1 ring-[color:var(--accent)]/12">
+              <div className="brand-signature-mark contact-section-brand-mark flex h-11 w-11 items-center justify-center rounded-full p-[0.6rem]">
                 <BrandLogo
                   variant="mark"
-                  className="relative z-[1] h-auto w-full scale-[1.04] brightness-[1.72] contrast-[1.52] saturate-[2.22] drop-shadow-[0_2px_6px_rgba(186,151,88,0.14)]"
+                  className="contact-section-brand-mark__logo relative z-[1] h-auto w-full scale-[1.04]"
                 />
               </div>
               <div>
@@ -824,12 +824,12 @@ function ContactRow({
   href?: string;
 }) {
   const content = (
-    <div className="flex items-center gap-3.25 rounded-[1.22rem] border border-[color:var(--line)] bg-[color:var(--surface)] px-3.5 py-3.25">
-      <div className="flex h-9.5 w-9.5 items-center justify-center rounded-full bg-[color:var(--foreground)] text-[color:var(--background)]">
+    <div className="contact-row-surface flex items-center gap-3.25 rounded-[1.22rem] border px-3.5 py-3.25">
+      <div className="contact-row-icon flex h-9.5 w-9.5 items-center justify-center rounded-full">
         {icon}
       </div>
       <div className="min-w-0">
-        <p className="text-[0.64rem] font-medium uppercase tracking-[0.16em] text-[var(--muted)]/82">{label}</p>
+        <p className="text-[0.64rem] font-medium uppercase tracking-[0.16em] text-[var(--muted)]/88">{label}</p>
         <p className={cn("mt-0.55 truncate text-[1.02rem] leading-[1.2] text-[color:var(--foreground)]", href ? "font-semibold" : "font-medium")}>{value}</p>
       </div>
     </div>
