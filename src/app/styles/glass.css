@@ -6,6 +6,7 @@
   .glass-panel {
     position: relative;
     isolation: isolate;
+    overflow: hidden;
     border: 1px solid var(--line);
     background:
       linear-gradient(180deg, rgba(255, 255, 255, 0.16), rgba(255, 255, 255, 0.05) 100%),
@@ -15,6 +16,19 @@
       0 6px 18px color-mix(in srgb, var(--glass-shadow-soft) 36%, transparent),
       inset 0 1px 0 rgba(255, 255, 255, 0.18);
     backdrop-filter: none;
+  }
+
+  .glass-panel::after {
+    content: "";
+    position: absolute;
+    inset: -22% auto -22% -32%;
+    width: 48%;
+    pointer-events: none;
+    background: linear-gradient(118deg, transparent 0%, var(--glass-sheen-bright) 38%, var(--glass-sheen-soft) 54%, transparent 100%);
+    opacity: 0.26;
+    transform: translate3d(0, 0, 0) rotate(14deg);
+    mix-blend-mode: screen;
+    animation: glass-panel-drift 18s linear infinite;
   }
 
   .glass-sheen {
@@ -48,8 +62,19 @@
   }
 }
 
+@keyframes glass-panel-drift {
+  from {
+    transform: translate3d(-8%, 0, 0) rotate(14deg);
+  }
+
+  to {
+    transform: translate3d(148%, 0, 0) rotate(14deg);
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
-  .glass-sheen {
+  .glass-sheen,
+  .glass-panel::after {
     animation: none;
   }
 }

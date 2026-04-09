@@ -134,6 +134,7 @@
       radial-gradient(circle at 14% 0%, color-mix(in srgb, var(--accent) 18%, transparent) 0%, transparent 34%),
       linear-gradient(180deg, rgba(255, 255, 255, 0.22), rgba(255, 255, 255, 0) 36%);
     opacity: 0.78;
+    animation: footer-glass-drift 20s ease-in-out infinite alternate;
   }
 
   html[data-theme="dark"] .footer-glass-panel {
@@ -153,6 +154,18 @@
       radial-gradient(circle at 12% 0%, color-mix(in srgb, var(--accent) 20%, transparent) 0%, transparent 36%),
       linear-gradient(180deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0) 32%);
     opacity: 0.88;
+  }
+
+  @keyframes footer-glass-drift {
+    from {
+      transform: translate3d(0, 0, 0);
+      opacity: 0.72;
+    }
+
+    to {
+      transform: translate3d(1.5%, -1.5%, 0);
+      opacity: 0.9;
+    }
   }
 
   .footer-social-link {
@@ -265,5 +278,11 @@
       width: 1.76rem;
       height: 1.76rem;
     }
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .footer-glass-panel::before {
+    animation: none;
   }
 }

@@ -40,6 +40,7 @@
   .card-surface {
     position: relative;
     isolation: isolate;
+    overflow: hidden;
     border: 1px solid var(--line);
     background:
       linear-gradient(180deg, rgba(255, 255, 255, 0.18), rgba(255, 255, 255, 0.04) 100%),
@@ -54,6 +55,46 @@
       box-shadow 280ms ease,
       border-color 280ms ease,
       background-color 280ms ease;
+  }
+
+  .card-surface::before,
+  .card-surface::after {
+    content: "";
+    position: absolute;
+    pointer-events: none;
+  }
+
+  .card-surface::before {
+    inset: -18% auto -18% -34%;
+    width: 44%;
+    background: linear-gradient(120deg, transparent 10%, rgba(255, 255, 255, 0.12) 42%, rgba(255, 255, 255, 0.02) 58%, transparent 100%);
+    opacity: 0.22;
+    transform: translate3d(0, 0, 0) rotate(12deg);
+    mix-blend-mode: screen;
+    animation: card-sheen-drift 19s linear infinite;
+  }
+
+  .card-surface::after {
+    inset: auto -12% -18% auto;
+    width: 42%;
+    height: 42%;
+    border-radius: 999px;
+    background: radial-gradient(circle, color-mix(in srgb, var(--accent) 12%, transparent) 0%, transparent 74%);
+    opacity: 0.2;
+    filter: blur(20px);
+    animation: card-glow-float 10s ease-in-out infinite alternate;
+  }
+
+  .card-surface:hover {
+    transform: translateY(-2px);
+    box-shadow:
+      0 22px 56px color-mix(in srgb, var(--glass-shadow-deep) 38%, transparent),
+      0 8px 22px color-mix(in srgb, var(--glass-shadow-soft) 48%, transparent),
+      inset 0 1px 0 rgba(255, 255, 255, 0.22);
+  }
+
+  .card-surface:hover::before {
+    opacity: 0.34;
   }
 
   .results-showcase {
@@ -207,6 +248,26 @@
     box-shadow:
       inset 0 1px 0 rgba(255, 255, 255, 0.08),
       0 14px 36px color-mix(in srgb, var(--glass-shadow-soft) 44%, transparent);
+  }
+
+  @keyframes card-sheen-drift {
+    from {
+      transform: translate3d(-6%, 0, 0) rotate(12deg);
+    }
+
+    to {
+      transform: translate3d(142%, 0, 0) rotate(12deg);
+    }
+  }
+
+  @keyframes card-glow-float {
+    from {
+      transform: translate3d(0, 10%, 0) scale(0.94);
+    }
+
+    to {
+      transform: translate3d(-2%, -2%, 0) scale(1.04);
+    }
   }
 
   .cinematic-panel {
@@ -864,6 +925,11 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
+  .card-surface::before,
+  .card-surface::after {
+    animation: none;
+  }
+
   .card-surface:hover,
   .media-frame:hover {
     transform: none;

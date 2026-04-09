@@ -383,6 +383,7 @@
     opacity: 0.58;
     pointer-events: none;
     transform: rotate(-18deg);
+    animation: hero-panel-sheen-drift 18s ease-in-out infinite alternate;
   }
 
   .hero-panel-content {
@@ -408,6 +409,18 @@
     width: 8rem;
     background: radial-gradient(circle, rgba(120, 164, 255, 0.26), rgba(255, 255, 255, 0.06) 46%, transparent 76%);
     opacity: 0.62;
+  }
+
+  @keyframes hero-panel-sheen-drift {
+    from {
+      transform: translate3d(-2%, 0, 0) rotate(-18deg);
+      opacity: 0.46;
+    }
+
+    to {
+      transform: translate3d(4%, -2%, 0) rotate(-16deg);
+      opacity: 0.62;
+    }
   }
 
   .subpage-hero-panel {
@@ -655,6 +668,10 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
+  .hero-glass-panel::after {
+    animation: none;
+  }
+
   .hero-typewriter--gold {
     animation: none;
     opacity: 1;

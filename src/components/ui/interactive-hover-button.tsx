@@ -12,7 +12,7 @@ type InteractiveHoverButtonProps = {
 } & Omit<React.AnchorHTMLAttributes<HTMLAnchorElement>, "className" | "href">;
 
 const baseClassName =
-  "group relative inline-flex min-h-12 min-w-[11rem] items-center justify-center rounded-full border px-5 py-3 text-center text-sm font-semibold tracking-[-0.01em] shadow-[0_14px_34px_rgba(0,0,0,0.14)] transition-[transform,border-color,background-color,color,box-shadow] duration-200";
+  "button-base button-size-default group relative inline-flex min-h-12 min-w-[11rem] items-center justify-center px-5 py-3 text-center text-sm font-semibold tracking-[-0.01em]";
 
 const InteractiveHoverButton = React.forwardRef<
   HTMLAnchorElement,
@@ -27,7 +27,7 @@ const InteractiveHoverButton = React.forwardRef<
 
   const resolvedClassName = cn(
     baseClassName,
-    "border-white/18 bg-white/10 text-white backdrop-blur-[16px] hover:-translate-y-px hover:border-white/24 hover:bg-white/[0.13] hover:shadow-[0_18px_42px_rgba(0,0,0,0.18)] active:translate-y-0",
+    "[--button-bg-current:rgba(255,255,255,0.1)] [--button-border-current:rgba(255,255,255,0.18)] [--button-text-current:#ffffff] [--button-glow-opacity:0.22] backdrop-blur-[16px] hover:[--button-bg-current:rgba(255,255,255,0.14)] hover:[--button-border-current:rgba(255,255,255,0.26)] hover:[--button-text-current:#ffffff] active:[--button-bg-current:rgba(255,255,255,0.11)] active:[--button-border-current:rgba(255,255,255,0.22)] active:[--button-text-current:#ffffff]",
     className,
   );
 
