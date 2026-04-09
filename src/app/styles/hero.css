@@ -120,9 +120,8 @@
     inset: 0;
     pointer-events: none;
     background:
-      linear-gradient(180deg, rgba(255, 255, 255, 0.04), transparent 18%, transparent 82%, rgba(255, 255, 255, 0.03)),
-      radial-gradient(circle at 78% 18%, rgba(100, 152, 255, 0.08), transparent 22%);
-    opacity: 0.82;
+      linear-gradient(180deg, rgba(255, 255, 255, 0.02), transparent 20%, transparent 84%, rgba(255, 255, 255, 0.02));
+    opacity: 0.52;
     z-index: 1;
   }
 
@@ -179,31 +178,17 @@
     display: inline-flex;
     flex-direction: column;
     align-items: flex-start;
-    gap: 0.74rem;
+    gap: 0.72rem;
     width: min(100%, 100%);
-    padding: 1rem 1rem 1.02rem;
-    border-radius: 1.45rem;
-    border: 1px solid rgba(255, 255, 255, 0.12);
-    background:
-      linear-gradient(180deg, rgba(10, 14, 22, 0.44), rgba(10, 14, 22, 0.22)),
-      linear-gradient(135deg, rgba(122, 168, 255, 0.04), rgba(255, 255, 255, 0.028) 42%, rgba(8, 12, 20, 0.04) 100%);
+    padding: 0.95rem 1rem 1rem;
+    border-radius: 1.3rem;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    background: linear-gradient(180deg, rgba(8, 11, 16, 0.52), rgba(8, 11, 16, 0.34));
     box-shadow:
-      0 18px 46px rgba(0, 0, 0, 0.16),
-      inset 0 1px 0 rgba(255, 255, 255, 0.12);
-    backdrop-filter: blur(14px) saturate(140%);
-    -webkit-backdrop-filter: blur(14px) saturate(140%);
-  }
-
-  .hero-editorial-block::after {
-    content: "";
-    position: absolute;
-    inset: 0;
-    border-radius: inherit;
-    pointer-events: none;
-    background:
-      linear-gradient(135deg, rgba(255, 255, 255, 0.16), transparent 22%, transparent 68%, rgba(255, 255, 255, 0.08)),
-      radial-gradient(circle at 12% 10%, rgba(255, 255, 255, 0.12), transparent 22%);
-    opacity: 0.92;
+      0 18px 42px rgba(0, 0, 0, 0.18),
+      inset 0 1px 0 rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(8px) saturate(118%);
+    -webkit-backdrop-filter: blur(8px) saturate(118%);
   }
 
   .hero-editorial-kicker {
@@ -233,113 +218,6 @@
     gap: 0.72rem;
   }
 
-  .hero-stage-lines {
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    background:
-      linear-gradient(180deg, rgba(255, 255, 255, 0.04), rgba(255, 255, 255, 0.008) 34%, transparent 100%),
-      linear-gradient(90deg, rgba(255, 255, 255, 0.04), transparent 18%, transparent 82%, rgba(255, 255, 255, 0.04));
-    box-shadow:
-      inset 0 1px 0 rgba(255, 255, 255, 0.08),
-      0 28px 80px rgba(0, 0, 0, 0.16);
-    backdrop-filter: blur(10px);
-  }
-
-  .hero-stage-glow {
-    background: radial-gradient(circle, rgba(95, 146, 239, 0.14) 0%, rgba(95, 146, 239, 0) 68%);
-    filter: blur(18px);
-    animation: hero-stage-drift 16s ease-in-out infinite alternate;
-  }
-
-  .hero-stage-panel__frame {
-    position: relative;
-    width: min(100%, 30rem);
-    min-height: 22rem;
-    overflow: hidden;
-    border-radius: 2rem;
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    background:
-      linear-gradient(180deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.015) 32%, rgba(255, 255, 255, 0.01) 100%),
-      radial-gradient(circle at 78% 16%, rgba(106, 174, 255, 0.16), transparent 24%),
-      linear-gradient(135deg, rgba(210, 173, 116, 0.08), transparent 40%),
-      rgba(7, 10, 16, 0.34);
-    box-shadow:
-      0 32px 90px rgba(0, 0, 0, 0.26),
-      inset 0 1px 0 rgba(255, 255, 255, 0.1);
-    backdrop-filter: blur(24px) saturate(140%);
-  }
-
-  .hero-stage-panel__frame::before,
-  .hero-stage-panel__frame::after {
-    content: "";
-    position: absolute;
-    pointer-events: none;
-  }
-
-  .hero-stage-panel__frame::before {
-    inset: 1.1rem;
-    border-radius: 1.4rem;
-    border: 1px solid rgba(255, 255, 255, 0.08);
-  }
-
-  .hero-stage-panel__frame::after {
-    inset: auto 1.1rem 1.1rem auto;
-    width: 38%;
-    height: 38%;
-    border-radius: 999px;
-    background: radial-gradient(circle, rgba(210, 173, 116, 0.16) 0%, transparent 72%);
-    filter: blur(16px);
-  }
-
-  .hero-stage-panel__rail {
-    position: absolute;
-    inset: auto 1.45rem 1.45rem auto;
-    display: flex;
-    max-width: 18rem;
-    flex-direction: column;
-    align-items: flex-end;
-    gap: 0.8rem;
-  }
-
-  .hero-stage-panel__chip {
-    display: inline-flex;
-    align-items: center;
-    min-height: 1.95rem;
-    border-radius: 999px;
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    background:
-      linear-gradient(180deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.02)),
-      rgba(10, 14, 20, 0.42);
-    padding: 0.45rem 0.8rem;
-    color: rgba(255, 255, 255, 0.84);
-    font-size: 0.68rem;
-    font-weight: 700;
-    letter-spacing: 0.16em;
-    line-height: 1;
-    text-transform: uppercase;
-    backdrop-filter: blur(16px);
-  }
-
-  .hero-stage-panel__note {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.7rem;
-    color: rgba(255, 255, 255, 0.66);
-    font-size: 0.72rem;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-  }
-
-  .hero-stage-panel__index {
-    display: inline-flex;
-    min-width: 2rem;
-    justify-content: center;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.18);
-    padding-bottom: 0.16rem;
-    color: rgba(240, 210, 160, 0.92);
-    font-weight: 700;
-    letter-spacing: 0.18em;
-  }
-
   @media (min-width: 1024px) {
     .hero-heading-row {
       flex-direction: row;
@@ -355,14 +233,11 @@
     }
 
     .hero-editorial-block {
-      width: min(100%, 33rem);
-      max-width: 33rem;
-      gap: 0.88rem;
-      padding: 1.14rem 1.18rem 1.16rem;
-      border-radius: 1.65rem;
-      background:
-        linear-gradient(180deg, rgba(10, 14, 22, 0.4), rgba(10, 14, 22, 0.18)),
-        linear-gradient(135deg, rgba(122, 168, 255, 0.04), rgba(255, 255, 255, 0.024) 42%, rgba(8, 12, 20, 0.04) 100%);
+      width: min(100%, 31rem);
+      max-width: 31rem;
+      gap: 0.86rem;
+      padding: 1.08rem 1.14rem 1.12rem;
+      border-radius: 1.45rem;
     }
 
     .hero-editorial-kicker {
@@ -551,18 +426,6 @@
     to {
       transform: translate3d(4%, -2%, 0) rotate(-16deg);
       opacity: 0.62;
-    }
-  }
-
-  @keyframes hero-stage-drift {
-    from {
-      transform: translate3d(0, 0, 0) scale(0.96);
-      opacity: 0.52;
-    }
-
-    to {
-      transform: translate3d(-2%, 3%, 0) scale(1.02);
-      opacity: 0.84;
     }
   }
 
@@ -812,10 +675,6 @@
 
 @media (prefers-reduced-motion: reduce) {
   .hero-glass-panel::after {
-    animation: none;
-  }
-
-  .hero-stage-glow {
     animation: none;
   }
 

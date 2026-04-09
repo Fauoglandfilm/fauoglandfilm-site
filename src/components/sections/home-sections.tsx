@@ -114,7 +114,6 @@ export function HeroSection() {
       : "Oslo / Commercial Film / Production";
   const secondaryCta = language === "no" ? "Se arbeid" : "See work";
   const heroTitle = resolveLocalizedValue(homeHeroContent.title, language);
-  const heroStageLabels = eyebrow.split(" / ");
 
   useEffect(() => {
     if (!heroVideoSrc) {
@@ -214,56 +213,33 @@ export function HeroSection() {
         >
           <source src={heroVideoSrc} type="video/mp4" />
         </video>
-        <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(5,7,10,0.13)_0%,rgba(5,7,10,0.055)_24%,rgba(5,7,10,0.115)_56%,rgba(5,7,10,0.315)_100%)]" />
-        <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(5,7,10,0.31)_0%,rgba(5,7,10,0.21)_22%,rgba(5,7,10,0.075)_56%,rgba(5,7,10,0.035)_100%)]" />
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(210,173,116,0.11),transparent_30%),radial-gradient(circle_at_82%_14%,rgba(112,143,216,0.06),transparent_22%)]" />
-        <div className="hero-stage-lines pointer-events-none absolute inset-x-[6%] top-[7.5rem] hidden h-[62%] rounded-[2rem] lg:block" />
-        <div className="hero-stage-glow pointer-events-none absolute -right-[8%] top-[8%] hidden h-[26rem] w-[26rem] rounded-full lg:block" />
+        <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(5,7,10,0.09)_0%,rgba(5,7,10,0.045)_26%,rgba(5,7,10,0.12)_58%,rgba(5,7,10,0.34)_100%)]" />
+        <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(5,7,10,0.26)_0%,rgba(5,7,10,0.13)_24%,rgba(5,7,10,0.06)_56%,rgba(5,7,10,0.04)_100%)]" />
       </div>
 
       <div className="site-container relative z-[1] flex min-h-[72svh] items-end pb-7 pt-[5.35rem] sm:min-h-[92svh] sm:pb-14 sm:pt-[8.8rem] lg:min-h-[96vh] lg:pb-16 lg:pt-[10.5rem]">
-        <div className="grid w-full items-end gap-8 lg:grid-cols-[minmax(0,35rem)_minmax(0,1fr)] lg:gap-10">
-          <div className="w-full max-w-full sm:max-w-[27rem] lg:max-w-[33rem] xl:max-w-[35rem]">
-            <div className="hero-editorial-block">
-              <p className="hero-editorial-kicker">{eyebrow}</p>
-              <h1 className="hero-title hero-title--editorial text-white">
-                <HeroTypewriterTitle title={heroTitle} className="hero-typewriter--gold hero-typewriter--editorial" />
-              </h1>
-              <p className="hero-editorial-support text-[0.98rem] leading-6 text-white/88 sm:text-[1.02rem] sm:leading-7">
-                {resolveLocalizedValue(homeHeroContent.description, language)}
-              </p>
-            </div>
-
-            <div className="mt-5 flex flex-col gap-2.5 sm:mt-7 sm:flex-row sm:gap-3">
-              <InteractiveHoverButton
-                href={siteConfig.bookingHref}
-                text={resolveLocalizedValue(homeHeroContent.ctaLabel, language)}
-                className="w-full sm:w-[11.5rem]"
-              />
-              <InteractiveHoverButton
-                href="/case"
-                text={secondaryCta}
-                className="w-full sm:w-[11.5rem]"
-              />
-            </div>
+        <div className="w-full max-w-full sm:max-w-[27rem] lg:max-w-[31rem] xl:max-w-[33rem]">
+          <div className="hero-editorial-block">
+            <p className="hero-editorial-kicker">{eyebrow}</p>
+            <h1 className="hero-title hero-title--editorial text-white">
+              <HeroTypewriterTitle title={heroTitle} className="hero-typewriter--gold hero-typewriter--editorial" />
+            </h1>
+            <p className="hero-editorial-support text-[0.98rem] leading-6 text-white/88 sm:text-[1.02rem] sm:leading-7">
+              {resolveLocalizedValue(homeHeroContent.description, language)}
+            </p>
           </div>
 
-          <div className="hero-stage-panel relative hidden min-h-[24rem] items-end justify-end lg:flex">
-            <div className="hero-stage-panel__frame">
-              <div className="hero-stage-panel__rail">
-                <div className="flex flex-wrap justify-end gap-2">
-                  {heroStageLabels.map((label) => (
-                    <span key={label} className="hero-stage-panel__chip">
-                      {label}
-                    </span>
-                  ))}
-                </div>
-                <div className="hero-stage-panel__note">
-                  <span className="hero-stage-panel__index">01</span>
-                  <span>{language === "no" ? "Cinematic produksjonssystem" : "Cinematic production system"}</span>
-                </div>
-              </div>
-            </div>
+          <div className="mt-5 flex flex-col gap-2.5 sm:mt-7 sm:flex-row sm:gap-3">
+            <InteractiveHoverButton
+              href={siteConfig.bookingHref}
+              text={resolveLocalizedValue(homeHeroContent.ctaLabel, language)}
+              className="w-full sm:w-[11.5rem]"
+            />
+            <InteractiveHoverButton
+              href="/case"
+              text={secondaryCta}
+              className="w-full sm:w-[11.5rem]"
+            />
           </div>
         </div>
       </div>
