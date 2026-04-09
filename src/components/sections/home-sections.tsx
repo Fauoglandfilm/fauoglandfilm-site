@@ -1259,7 +1259,7 @@ function ServiceCard({
   return (
     <Reveal delay={delay} y={14}>
       <Link href="/tjenester" className="group block h-full">
-        <article className="card-surface service-pillar-card flex h-full flex-col overflow-hidden rounded-[1.7rem] shadow-[0_18px_48px_rgba(18,14,10,0.08)]">
+        <article className="card-surface service-pillar-card flex h-full flex-col overflow-hidden rounded-[1.7rem]">
           <div className="relative aspect-[1.02/0.78] overflow-hidden bg-[#0b0d12]">
             <PreviewMedia
               title={pillar.title}
@@ -1273,20 +1273,20 @@ function ServiceCard({
               inViewThreshold={0.16}
               posterClassName="transition duration-700"
             />
-            <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(8,8,8,0.02),rgba(8,8,8,0.1)_36%,rgba(8,8,8,0.42)_100%)]" />
-            <div className="service-pillar-card__chip absolute left-3 top-3 inline-flex rounded-full border border-white/14 bg-black/20 px-2.5 py-1 text-[0.64rem] font-semibold uppercase tracking-[0.18em] text-white/72 backdrop-blur-md">
+            <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(8,8,8,0.02),rgba(8,8,8,0.08)_34%,rgba(8,8,8,0.28)_100%)]" />
+            <div className="service-pillar-card__chip absolute left-3 top-3 inline-flex rounded-full border border-white/12 bg-black/16 px-2.5 py-1 text-[0.64rem] font-semibold uppercase tracking-[0.18em] text-white/68">
               {pillar.eyebrow}
             </div>
           </div>
 
-          <div className="flex flex-1 flex-col p-4 sm:p-5">
+          <div className="flex flex-1 flex-col p-4 sm:p-[1.15rem]">
             <h3 className="font-display text-[1.28rem] leading-[1.02] tracking-[-0.05em] text-[color:var(--foreground)] sm:text-[1.42rem]">
               {resolveLocalizedValue(pillar.title, language)}
             </h3>
             <p className="mt-2 text-sm leading-6 text-[var(--muted-2)] sm:text-[0.98rem]">
               {resolveLocalizedValue(pillar.summary, language)}
             </p>
-            <span className="service-pillar-card__cta mt-5 inline-flex items-center gap-2 text-sm font-medium text-[color:var(--foreground)]">
+            <span className="service-pillar-card__cta mt-6 inline-flex items-center gap-2 text-sm font-medium text-[color:var(--foreground)]">
               <span>{language === "no" ? "Se tjenester" : "See services"}</span>
               <ArrowUpRightIcon className="h-4 w-4 transition duration-300 group-hover:translate-x-px" />
             </span>

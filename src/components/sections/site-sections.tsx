@@ -89,8 +89,8 @@ export function ServicesSection({
   const resolvedTitle = title ? resolveLocalizedValue(title, language) : copy.servicesTitle;
   const resolvedDescription = description ? resolveLocalizedValue(description, language) : copy.servicesDescription;
   const surfaceClassName = isDarkTheme
-    ? "bg-[radial-gradient(circle_at_top,rgba(255,255,255,0.05),transparent_28%),radial-gradient(circle_at_82%_8%,color-mix(in_srgb,var(--accent)_16%,transparent),transparent_24%),linear-gradient(180deg,color-mix(in_srgb,var(--background)_94%,#030407)_0%,color-mix(in_srgb,var(--background)_82%,#08111b)_100%)]"
-    : "bg-[radial-gradient(circle_at_top,rgba(255,255,255,0.82),transparent_32%),radial-gradient(circle_at_84%_10%,color-mix(in_srgb,var(--accent)_14%,transparent),transparent_24%),linear-gradient(180deg,color-mix(in_srgb,var(--surface)_94%,white)_0%,color-mix(in_srgb,var(--surface)_98%,#eef3f9)_100%)]";
+    ? "bg-[radial-gradient(circle_at_top,rgba(255,255,255,0.035),transparent_24%),radial-gradient(circle_at_82%_8%,color-mix(in_srgb,var(--accent)_10%,transparent),transparent_22%),linear-gradient(180deg,color-mix(in_srgb,var(--background)_95%,#030407)_0%,color-mix(in_srgb,var(--background)_86%,#08111b)_100%)]"
+    : "bg-[radial-gradient(circle_at_top,rgba(255,255,255,0.68),transparent_28%),radial-gradient(circle_at_84%_10%,color-mix(in_srgb,var(--accent)_9%,transparent),transparent_22%),linear-gradient(180deg,color-mix(in_srgb,var(--surface)_95%,white)_0%,color-mix(in_srgb,var(--surface)_99%,#eef3f9)_100%)]";
   const topBorderClassName = isDarkTheme ? "bg-white/8" : "bg-[color:var(--line)]/80";
   const eyebrowClassName = isDarkTheme ? "text-[color:var(--accent)]/88" : "text-[color:var(--accent)]/92";
   const titleClassName = isDarkTheme ? "text-white" : "text-[color:var(--foreground)]";
@@ -366,7 +366,6 @@ export function ServicesSection({
           animate={shouldReduceMotion ? undefined : { opacity: 1 }}
           transition={{ duration: 0.32, ease: "easeOut" }}
         />
-        <div className="grain-overlay absolute inset-0 opacity-24" />
         <div className={`pointer-events-none absolute inset-x-0 top-0 h-px ${topBorderClassName}`} />
 
         <div className="relative mx-auto max-w-[1320px] px-4 py-[clamp(1.3rem,2vw,1.8rem)] sm:px-6 lg:px-8 xl:px-10">

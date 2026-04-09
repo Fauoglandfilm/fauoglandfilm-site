@@ -9,12 +9,12 @@
     overflow: hidden;
     border: 1px solid var(--line);
     background:
-      linear-gradient(180deg, rgba(255, 255, 255, 0.16), rgba(255, 255, 255, 0.05) 100%),
-      color-mix(in srgb, var(--surface-muted) 96%, transparent);
+      linear-gradient(180deg, rgba(255, 255, 255, 0.14), rgba(255, 255, 255, 0.045) 100%),
+      color-mix(in srgb, var(--surface-muted) 97%, transparent);
     box-shadow:
-      0 18px 48px color-mix(in srgb, var(--glass-shadow-deep) 28%, transparent),
-      0 6px 18px color-mix(in srgb, var(--glass-shadow-soft) 36%, transparent),
-      inset 0 1px 0 rgba(255, 255, 255, 0.18);
+      0 16px 42px color-mix(in srgb, var(--glass-shadow-deep) 22%, transparent),
+      0 5px 14px color-mix(in srgb, var(--glass-shadow-soft) 24%, transparent),
+      inset 0 1px 0 rgba(255, 255, 255, 0.16);
     backdrop-filter: none;
   }
 
@@ -25,10 +25,10 @@
     width: 48%;
     pointer-events: none;
     background: linear-gradient(118deg, transparent 0%, var(--glass-sheen-bright) 38%, var(--glass-sheen-soft) 54%, transparent 100%);
-    opacity: 0.26;
+    opacity: 0.16;
     transform: translate3d(0, 0, 0) rotate(14deg);
     mix-blend-mode: screen;
-    animation: glass-panel-drift 18s linear infinite;
+    animation: glass-panel-drift 24s linear infinite;
   }
 
   .glass-sheen {
@@ -43,12 +43,12 @@
   html[data-theme="dark"] .glass-panel {
     border-color: color-mix(in srgb, var(--line) 92%, rgba(255, 255, 255, 0.08));
     background:
-      linear-gradient(180deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.018) 100%),
-      color-mix(in srgb, var(--surface) 92%, rgba(223, 175, 55, 0.05));
+      linear-gradient(180deg, rgba(255, 255, 255, 0.045), rgba(255, 255, 255, 0.016) 100%),
+      color-mix(in srgb, var(--surface) 94%, rgba(223, 175, 55, 0.04));
     box-shadow:
-      0 24px 58px color-mix(in srgb, var(--glass-shadow-deep) 56%, transparent),
-      0 8px 24px color-mix(in srgb, var(--glass-shadow-soft) 52%, transparent),
-      inset 0 1px 0 rgba(255, 255, 255, 0.08);
+      0 22px 52px color-mix(in srgb, var(--glass-shadow-deep) 46%, transparent),
+      0 7px 20px color-mix(in srgb, var(--glass-shadow-soft) 34%, transparent),
+      inset 0 1px 0 rgba(255, 255, 255, 0.07);
   }
 }
 
