@@ -44,6 +44,45 @@ function toPreviewProject(project: GardProject, companion?: GardProjectCompanion
   };
 }
 
+function getProjectActionHref(project: GardProject) {
+  if (project.externalVideo?.sourceUrl) {
+    return project.externalVideo.sourceUrl;
+  }
+
+  if (project.video?.videoType === "direct") {
+    return project.video.fullSrc ?? project.video.src;
+  }
+
+  if (project.image) {
+    return project.image;
+  }
+
+  return null;
+}
+
+function getProjectActionMeta(project: GardProject, language: "no" | "en") {
+  const href = getProjectActionHref(project);
+
+  if (!href) {
+    return null;
+  }
+
+  const isExternal =
+    href.startsWith("http://") ||
+    href.startsWith("https://") ||
+    /\.(mp4|webm|mov|avif|webp|jpe?g|png|gif)(\?|$)/i.test(href);
+  const label =
+    project.externalVideo || project.video?.videoType === "direct"
+      ? language === "no"
+        ? "Se film"
+        : "Watch film"
+      : language === "no"
+        ? "Se plakat"
+        : "View poster";
+
+  return { href, isExternal, label };
+}
+
 function GardEditorialCase({
   project,
   index,
@@ -60,6 +99,7 @@ function GardEditorialCase({
     activeProject.video?.videoType === "request"
       ? resolveLocalizedValue(activeProject.video.availabilityNote, language)
       : null;
+  const action = getProjectActionMeta(activeProject, language);
 
   const focusInlineProject = (nextProject: GardProject) => {
     setActiveProject(nextProject);
@@ -73,11 +113,12 @@ function GardEditorialCase({
           ref={mediaRef}
           className="media-frame group relative min-h-[18rem] overflow-hidden rounded-[2rem] bg-[#07090d] sm:min-h-[24rem] lg:min-h-[32rem]"
         >
-          {hasPlayableMedia(activeProject) ? (
-            <button
-              type="button"
-              onClick={() => focusInlineProject(activeProject)}
-              aria-label={language === "no" ? `Fokuser ${title}` : `Focus ${title}`}
+          {action ? (
+            <a
+              href={action.href}
+              target={action.isExternal ? "_blank" : undefined}
+              rel={action.isExternal ? "noreferrer noopener" : undefined}
+              aria-label={language === "no" ? `Åpne ${title}` : `Open ${title}`}
               className="absolute inset-0 z-[3]"
             />
           ) : null}
@@ -152,9 +193,18 @@ function GardEditorialCase({
           ) : null}
 
           <div className="mt-auto flex flex-col gap-2.5 pt-6 sm:flex-row sm:flex-wrap">
-            {(hasPlayableMedia(activeProject) || activeProject.image) ? (
+            {action ? (
+              <ButtonLink
+                href={action.href}
+                className="w-full sm:w-auto"
+                target={action.isExternal ? "_blank" : undefined}
+                rel={action.isExternal ? "noreferrer noopener" : undefined}
+              >
+                {action.label}
+              </ButtonLink>
+            ) : hasPlayableMedia(activeProject) || activeProject.image ? (
               <Button className="w-full sm:w-auto" onClick={() => focusInlineProject(activeProject)}>
-                {language === "no" ? "Se prosjekt" : "View project"}
+                {language === "no" ? "Vis i preview" : "Show preview"}
               </Button>
             ) : null}
             <ButtonLink href="/kontakt" variant="ghost" className="w-full sm:w-auto">
