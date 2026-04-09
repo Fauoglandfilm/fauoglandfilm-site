@@ -472,6 +472,34 @@ const projectGroups: GardProjectGroup[] = [
     },
     projects: [
       {
+        slug: "er-det-sa-javlig-vanskelig",
+        client: "Fau&Land Film",
+        year: "2026",
+        title: {
+          no: "Er det så jævlig vanskelig?",
+          en: "Is It Really That Damn Hard?",
+        },
+        format: {
+          no: "Kortfilmkomedie",
+          en: "Short comedy film",
+        },
+        role: {
+          no: "Regi og klipp",
+          en: "Direction and edit",
+        },
+        summary: {
+          no: "En filmskaperkomedie skrevet og spilt av Morten Hansen, der Gard har regi og klipp i en fortelling om hvor krevende det faktisk er å lage film og hva som skjer når sterke personligheter krasjer i samme produksjon.",
+          en: "A filmmaker comedy written and performed by Morten Hansen, with Gard directing and editing a story about how hard filmmaking really is and what happens when strong personalities collide inside the same production.",
+        },
+        image: "/assets/team/gard/portfolio/narrative/er-det-sa-javlig-vanskelig-poster.jpg",
+        imageAlt: {
+          no: "Plakat for Er det så jævlig vanskelig?",
+          en: "Poster for Is It Really That Damn Hard?",
+        },
+        mediaFit: "contain",
+        preview: true,
+      },
+      {
         slug: "the-voice-within",
         client: "NTNU BA-film",
         year: "2022",

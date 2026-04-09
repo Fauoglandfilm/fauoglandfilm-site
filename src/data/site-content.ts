@@ -1554,6 +1554,24 @@ export const portfolioProjectInfoContent: Partial<Record<string, PortfolioProjec
       { role: "Theme", name: "Grief and folklore" },
     ],
   },
+  "er-det-sa-javlig-vanskelig": {
+    shortDescription: {
+      no: "Kortfilmkomedie om hvor kaotisk filmproduksjon faktisk kan bli.",
+      en: "A short comedy about how chaotic film production can really become.",
+    },
+    extendedDescription: {
+      no: "Skrevet og spilt av Morten Hansen, med regi og klipp av Gard Ruben Fauske. Filmen tar for seg hvor vanskelig det faktisk er å lage film, og hva som skjer når sterke personligheter skal lose samme produksjon i mål. En komedie av filmskapere, for filmskapere.",
+      en: "Written and performed by Morten Hansen, with direction and edit by Gard Ruben Fauske. The film looks at how difficult filmmaking really is, and what happens when strong personalities try to carry the same production across the line. A comedy by filmmakers, for filmmakers.",
+    },
+    credits: [
+      { role: "Written and performed by", name: "Morten Hansen" },
+      { role: "Direction and edit", name: "Gard Ruben Fauske" },
+      { role: "Executive Producer", name: "Tommy Garland" },
+      { role: "BTS Photographer", name: "Malky Renate Frank" },
+      { role: "Assistant Director", name: "Johan Ferdinand Østereng" },
+      { role: "Sound on set", name: "Morten James Willums" },
+    ],
+  },
   "takk-for-at-du-er-min-venn": {
     shortDescription: {
       no: "Musikkvideo med NRK distribusjon.",
@@ -1957,6 +1975,36 @@ const portfolioProjectsBase: PortfolioProject[] = [
       en: "A Message From Martha",
     }),
     palette: "from-[#28171a] via-[#5a232d] to-[#b14f54]",
+  },
+  {
+    slug: "er-det-sa-javlig-vanskelig",
+    group: "narrative",
+    client: "Fau&Land Film",
+    year: "2026",
+    title: {
+      no: "Er det så jævlig vanskelig?",
+      en: "Is It Really That Damn Hard?",
+    },
+    format: {
+      no: "Kortfilmkomedie",
+      en: "Short comedy film",
+    },
+    summary: {
+      no: "En kortfilmkomedie om hvor vanskelig det faktisk er å lage film, og hva som skjer når ulike personligheter skal få samme produksjon i mål.",
+      en: "A short comedy about how difficult filmmaking really is, and what happens when different personalities try to land the same production together.",
+    },
+    result: {
+      no: "Skrevet og spilt av Morten Hansen. Regi og klipp av Gard Ruben Fauske. Executive producer: Tommy Garland.",
+      en: "Written and performed by Morten Hansen. Directed and edited by Gard Ruben Fauske. Executive producer: Tommy Garland.",
+    },
+    ctaLabel: viewReferenceCta,
+    image: "/assets/portfolio/er-det-sa-javlig-vanskelig/er-det-sa-javlig-vanskelig-poster.jpg",
+    imageAlt: {
+      no: "Plakat for Er det så jævlig vanskelig?",
+      en: "Poster for Is It Really That Damn Hard?",
+    },
+    mediaFit: "contain",
+    palette: "from-[#201813] via-[#8f7757] to-[#d8c09a]",
   },
   {
     slug: "takk-for-at-du-er-min-venn",

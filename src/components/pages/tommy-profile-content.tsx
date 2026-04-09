@@ -132,6 +132,11 @@ function ShortFilmCard({
   const creditsLabel = language === "no" ? "Credits" : "Credits";
   const awardsLabel = language === "no" ? "Awards" : "Awards";
   const festivalsLabel = language === "no" ? "Festivaler & seleksjoner" : "Festivals & selections";
+  const infoSections = [
+    { label: creditsLabel, items: credits },
+    { label: awardsLabel, items: awards },
+    { label: festivalsLabel, items: festivals },
+  ].filter((section) => section.items.length > 0);
 
   return (
     <Reveal delay={0.04 * index}>
@@ -162,49 +167,25 @@ function ShortFilmCard({
               </p>
             </div>
 
-            <div className="grid gap-4 xl:grid-cols-3">
-              <div className="rounded-[1.35rem] border border-[color:var(--line)]/70 bg-[color:var(--surface-muted)]/75 p-4">
-                <p className="text-[0.7rem] font-semibold uppercase tracking-[0.18em] text-[var(--muted)]">
-                  {creditsLabel}
-                </p>
-                <ul className="mt-3 space-y-2.5">
-                  {credits.map((item) => (
-                    <li key={item} className="flex gap-2.5 text-sm leading-6 text-[color:var(--foreground)]/92">
-                      <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-[color:var(--accent)]/58" />
-                      <span>{item}</span>
-                    </li>
-                  ))}
-                </ul>
+            {infoSections.length ? (
+              <div className={cn("grid gap-4", infoSections.length >= 3 ? "xl:grid-cols-3" : infoSections.length === 2 ? "xl:grid-cols-2" : "xl:grid-cols-1")}>
+                {infoSections.map((section) => (
+                  <div key={section.label} className="rounded-[1.35rem] border border-[color:var(--line)]/70 bg-[color:var(--surface-muted)]/75 p-4">
+                    <p className="text-[0.7rem] font-semibold uppercase tracking-[0.18em] text-[var(--muted)]">
+                      {section.label}
+                    </p>
+                    <ul className="mt-3 space-y-2.5">
+                      {section.items.map((item) => (
+                        <li key={item} className="flex gap-2.5 text-sm leading-6 text-[color:var(--foreground)]/92">
+                          <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-[color:var(--accent)]/58" />
+                          <span>{item}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                ))}
               </div>
-
-              <div className="rounded-[1.35rem] border border-[color:var(--line)]/70 bg-[color:var(--surface-muted)]/75 p-4">
-                <p className="text-[0.7rem] font-semibold uppercase tracking-[0.18em] text-[var(--muted)]">
-                  {awardsLabel}
-                </p>
-                <ul className="mt-3 space-y-2.5">
-                  {awards.map((award) => (
-                    <li key={award} className="flex gap-2.5 text-sm leading-6 text-[color:var(--foreground)]/92">
-                      <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-[color:var(--accent)]/58" />
-                      <span>{award}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-
-              <div className="rounded-[1.35rem] border border-[color:var(--line)]/70 bg-[color:var(--surface-muted)]/75 p-4">
-                <p className="text-[0.7rem] font-semibold uppercase tracking-[0.18em] text-[var(--muted)]">
-                  {festivalsLabel}
-                </p>
-                <ul className="mt-3 space-y-2.5">
-                  {festivals.map((festival) => (
-                    <li key={festival} className="flex gap-2.5 text-sm leading-6 text-[color:var(--foreground)]/92">
-                      <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-[color:var(--accent)]/58" />
-                      <span>{festival}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            </div>
+            ) : null}
 
             <div className="flex flex-wrap gap-2">
               {project.links.map((link) => (

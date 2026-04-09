@@ -142,6 +142,38 @@ export const tommyPortfolioPage = {
   },
   shortFilms: [
     {
+      slug: "er-det-sa-javlig-vanskelig",
+      type: "shortfilm",
+      title: sameText("Er det så jævlig vanskelig?"),
+      year: "2026",
+      role: sameText("Executive Producer"),
+      logline: {
+        no: "En kortfilmkomedie skrevet og spilt av Morten Hansen, regissert og klippet av Gard Ruben Fauske, om hvor vanskelig det faktisk er å lage film og hva som skjer når ulike personligheter krasjer i samme produksjon.",
+        en: "A short comedy written and performed by Morten Hansen, directed and edited by Gard Ruben Fauske, about how difficult filmmaking actually is and what happens when different personalities collide inside the same production.",
+      },
+      awards: [],
+      credits: [
+        "Skrevet og spilt av: Morten Hansen",
+        "Regi og klipp: Gard Ruben Fauske",
+        "Executive produsent: Tommy Garland",
+        "BTS-fotograf: Malky Renate Frank",
+        "Regiassistent: Johan Ferdinand Ostereng",
+        "Lyd på sett: Morten James Willums",
+        "Produksjonsassistenter: Emmeline Jansen, Kaja Meloy, Victoria Minos, Vincent Ekeli",
+        "Cast: Morten Hansen, Victoria Minos, Johan Ferdinand Ostereng, Kaja Meloy, Emmeline Jansen, Gard Ruben Fauske, Morten James Willums",
+      ],
+      festivals: [],
+      links: [],
+      poster: poster(
+        "/assets/team/tommy/portfolio/shortfilms/er-det-sa-javlig-vanskelig-poster.jpg",
+        "Plakat for Er det så jævlig vanskelig?",
+        "Poster for Is It Really That Damn Hard?",
+        "cover",
+        "portrait",
+      ),
+      gallery: [],
+    },
+    {
       slug: "a-message-from-martha",
       type: "shortfilm",
       title: sameText("A Message from Martha"),
