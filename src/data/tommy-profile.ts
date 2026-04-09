@@ -262,9 +262,13 @@ export const tommyPortfolioPage = {
         en: "A gothic thriller portrait about a young woman confronting a dark family inheritance, built as a visually precise festival film with a strong genre identity.",
       },
       awards: [
-        "Touchstone Independent Film Festival - Best Fantasy Short, Best Original Story (2025)",
-        "Five Continents International Film Festival - Best Thriller Short, Audience Award 2nd Place, Female Director, Art Direction, Lighting, Young Actress, Sound Design (2025)",
-        "Athens Monthly Art Film Festival - Finalist & Honorable Mention (2026)",
+        "Audience Award - 2nd Place",
+        "Best Thriller Short Film",
+        "Best Female Director Short Film - Natassia Malthe",
+        "Best Lead Actress Short Film (Special Mention) - Ellen Aabol",
+        "Best Lighting Short Film - Rebekka Grendal",
+        "Best Art Direction Short Film - Natassia Malthe",
+        "Best Sound Design Short Film (Special Mention) - Simon S. Skjong",
       ],
       credits: [
         "Regi: Natassia Linn Malthe",
@@ -278,6 +282,8 @@ export const tommyPortfolioPage = {
         "Med: Ellen M. Aabol, Mari Baade, Odin Vang",
       ],
       festivals: [
+        "Official Selection",
+        "Live Screening",
         "Nepal Cultural International Film Festival - Official Selection",
         "FICOCC - Screening",
       ],
@@ -302,9 +308,13 @@ export const tommyPortfolioPage = {
         en: "A dark folk tale about a winter encounter between Magne and a huldra, built as an atmosphere-driven short with a strong visual identity and clear festival profile.",
       },
       awards: [
-        "South Film and Arts Academy Festival - Best Horror, Screenplay, Cinematography, Art Direction, Audience Award, Hon. Mention Director",
-        "Five Continents International Film Festival - Award Winner (2025)",
-        "International Sound & Film Music Festival, Croatia - Nominee, Crystal Pine Award (2025)",
+        "Best Short Film of the Month",
+        "Best Horror Short Film",
+        "Best Director (Short Film) - Eskil Hoel Abrahamsen",
+        "Special Mention - Screenplay (Short Film) - Eskil Hoel Abrahamsen",
+        "Best Lead Actor (Short Film) - Tarjei Sandvik Moe",
+        "Best Cinematography (Short Film) - Thomas Husebo",
+        "Best Lighting (Short Film)",
       ],
       credits: [
         "Regi: Eskil Hoel Abrahamsen",
@@ -318,6 +328,7 @@ export const tommyPortfolioPage = {
       festivals: [
         "Anatolia IFF - Official Selection",
         "Athens Monthly Art Film Festival - Official Selection",
+        "International Sound & Film Music Festival, Croatia - Nominee, Crystal Pine Award (2025)",
         "Sustain Film Festival - Official Selection",
       ],
       links: [
@@ -342,9 +353,8 @@ export const tommyPortfolioPage = {
         en: "A psychological short drama about Markus and Mona, a young couple who meet the perfect family and are slowly pulled into an unsettling spiral of comparison, desire and control.",
       },
       awards: [
-        "South Film and Arts Academy Festival - Best Poster, Best Female Director (2025)",
-        "Five Continents International Film Festival - Award Winner (2025)",
-        "FICOCC - Special Mention, Best Lead Actor (2025)",
+        "Best Female Director In A Short Film - Natassia Linn Malthe",
+        "Best Poster - Mirror Effect, By Natassia Linn Malthe",
       ],
       credits: [
         "Regi og manus: Natassia Linn Malthe",
@@ -355,6 +365,8 @@ export const tommyPortfolioPage = {
         "Med: Simon Wroldsen, Amalie Njaastad, Siv Vatne Renning",
       ],
       festivals: [
+        "Official Selection - Mirror Effect, By Natassia Linn Malthe",
+        "Live Screening - Mirror Effect, By Natassia Linn Malthe",
         "MegaFlix Movie Awards - Official Selection",
         "Dare To Imagin9ne Festival - Official Selection",
         "Athens Monthly Art Film Festival - Official Selection",

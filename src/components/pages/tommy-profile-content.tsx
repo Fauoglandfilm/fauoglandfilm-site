@@ -126,8 +126,12 @@ function ShortFilmCard({
 }) {
   const { language } = useSitePreferences();
   const title = resolveLocalizedValue(project.title, language);
-  const primaryItems = project.credits ?? project.awards;
-  const primaryLabel = language === "no" ? "Nøkkelinfo" : "Key info";
+  const credits = project.credits ?? [];
+  const awards = project.awards ?? [];
+  const festivals = project.festivals ?? [];
+  const creditsLabel = language === "no" ? "Credits" : "Credits";
+  const awardsLabel = language === "no" ? "Awards" : "Awards";
+  const festivalsLabel = language === "no" ? "Festivaler & seleksjoner" : "Festivals & selections";
 
   return (
     <Reveal delay={0.04 * index}>
@@ -158,13 +162,13 @@ function ShortFilmCard({
               </p>
             </div>
 
-            <div className="grid gap-4 xl:grid-cols-2">
+            <div className="grid gap-4 xl:grid-cols-3">
               <div className="rounded-[1.35rem] border border-[color:var(--line)]/70 bg-[color:var(--surface-muted)]/75 p-4">
                 <p className="text-[0.7rem] font-semibold uppercase tracking-[0.18em] text-[var(--muted)]">
-                  {primaryLabel}
+                  {creditsLabel}
                 </p>
                 <ul className="mt-3 space-y-2.5">
-                  {primaryItems.map((item) => (
+                  {credits.map((item) => (
                     <li key={item} className="flex gap-2.5 text-sm leading-6 text-[color:var(--foreground)]/92">
                       <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-[color:var(--accent)]/58" />
                       <span>{item}</span>
@@ -175,10 +179,24 @@ function ShortFilmCard({
 
               <div className="rounded-[1.35rem] border border-[color:var(--line)]/70 bg-[color:var(--surface-muted)]/75 p-4">
                 <p className="text-[0.7rem] font-semibold uppercase tracking-[0.18em] text-[var(--muted)]">
-                  {language === "no" ? "Festivaler & seleksjoner" : "Festivals & selections"}
+                  {awardsLabel}
                 </p>
                 <ul className="mt-3 space-y-2.5">
-                  {project.festivals.map((festival) => (
+                  {awards.map((award) => (
+                    <li key={award} className="flex gap-2.5 text-sm leading-6 text-[color:var(--foreground)]/92">
+                      <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-[color:var(--accent)]/58" />
+                      <span>{award}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+
+              <div className="rounded-[1.35rem] border border-[color:var(--line)]/70 bg-[color:var(--surface-muted)]/75 p-4">
+                <p className="text-[0.7rem] font-semibold uppercase tracking-[0.18em] text-[var(--muted)]">
+                  {festivalsLabel}
+                </p>
+                <ul className="mt-3 space-y-2.5">
+                  {festivals.map((festival) => (
                     <li key={festival} className="flex gap-2.5 text-sm leading-6 text-[color:var(--foreground)]/92">
                       <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-[color:var(--accent)]/58" />
                       <span>{festival}</span>
