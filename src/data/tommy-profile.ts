@@ -155,6 +155,16 @@ export const tommyPortfolioPage = {
         "Short to the Point - Official Selection (Producer)",
         "Amandus Blikkfang - Official Selection (Producer)",
       ],
+      credits: [
+        "Regi, manus og executive producer: Elia Biondi",
+        "Produsent: Tommy Garland",
+        "Foto: Justin Bellucci",
+        "Klipp: Svein Olav Sandem",
+        "Komponist: Lisa Braathen",
+        "Scenografi: Mille Gran",
+        "Lyddesign: Simon Skjong",
+        "Med: Turid Rachel Bråthen, Celina Skailand, Thor Normann",
+      ],
       festivals: [
         "Short to the Point - Official Selection",
         "Amandus Blikkfang - Official Selection",
@@ -219,6 +229,15 @@ export const tommyPortfolioPage = {
       awards: [
         "Golden Chair Award - Nominee, Best Norwegian Short Film (Norwegian Short Film Festival, 2023)",
       ],
+      credits: [
+        "Språk: Kinesisk, norsk",
+        "Regi og manus: Victor Quach",
+        "Foto: Mikolaj Kepinski",
+        "Musikk: Herman Granlund",
+        "Produksjonsdesign: Marie Bøe",
+        "Produsenter: Tommy Garland, Victor Quach, Hisham Zaman",
+        "Med: Li Xing, Isabella Xing",
+      ],
       festivals: [
         "Norwegian Short Film Festival, Grimstad - Official Selection",
       ],
@@ -246,6 +265,17 @@ export const tommyPortfolioPage = {
         "Touchstone Independent Film Festival - Best Fantasy Short, Best Original Story (2025)",
         "Five Continents International Film Festival - Best Thriller Short, Audience Award 2nd Place, Female Director, Art Direction, Lighting, Young Actress, Sound Design (2025)",
         "Athens Monthly Art Film Festival - Finalist & Honorable Mention (2026)",
+      ],
+      credits: [
+        "Regi: Natassia Linn Malthe",
+        "Manus: Philip C Geertsen",
+        "Produsent: Tommy Garland",
+        "Foto: Julien Oscar Robert Vigneau",
+        "Klipp: Martine Sørensen",
+        "Lyd: Simon Skjong",
+        "Lyddesign: Etienne Streeton",
+        "Mix: Hans-Kristian Haugseggen",
+        "Med: Ellen M. Aabol, Mari Baade, Odin Vang",
       ],
       festivals: [
         "Nepal Cultural International Film Festival - Official Selection",
@@ -275,6 +305,15 @@ export const tommyPortfolioPage = {
         "South Film and Arts Academy Festival - Best Horror, Screenplay, Cinematography, Art Direction, Audience Award, Hon. Mention Director",
         "Five Continents International Film Festival - Award Winner (2025)",
         "International Sound & Film Music Festival, Croatia - Nominee, Crystal Pine Award (2025)",
+      ],
+      credits: [
+        "Regi: Eskil Hoel Abrahamsen",
+        "Manus: Marie Randmæl, Eskil Hoel Abrahamsen, Thomas Husebø, Tarjei Sandvik Moe",
+        "Produsent: Tommy Garland",
+        "Foto: Thomas Husebø",
+        "Klipp: Jesper Widnes",
+        "Lyddesign: Etienne Streeton, Joel Kolltveit",
+        "Med: Tarjei Sandvik Moe, Amund Harboe, Ylva Bjørkaas Thedin",
       ],
       festivals: [
         "Anatolia IFF - Official Selection",
@@ -306,6 +345,14 @@ export const tommyPortfolioPage = {
         "South Film and Arts Academy Festival - Best Poster, Best Female Director (2025)",
         "Five Continents International Film Festival - Award Winner (2025)",
         "FICOCC - Special Mention, Best Lead Actor (2025)",
+      ],
+      credits: [
+        "Regi og manus: Natassia Linn Malthe",
+        "Produsent: Tommy Garland",
+        "Foto: Jakob Lundberg",
+        "Klipp: Marie Sørlie",
+        "Lyd: Joel Kolltveit, Edvin Skår",
+        "Med: Simon Wroldsen, Amalie Njaastad, Siv Vatne Renning",
       ],
       festivals: [
         "MegaFlix Movie Awards - Official Selection",

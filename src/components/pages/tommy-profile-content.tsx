@@ -126,14 +126,8 @@ function ShortFilmCard({
 }) {
   const { language } = useSitePreferences();
   const title = resolveLocalizedValue(project.title, language);
-  const primaryItems = project.awards.length ? project.awards : (project.credits ?? []);
-  const primaryLabel = project.awards.length
-    ? language === "no"
-      ? "Awards & nominasjoner"
-      : "Awards & nominations"
-    : language === "no"
-      ? "Nøkkelinfo"
-      : "Key info";
+  const primaryItems = project.credits ?? project.awards;
+  const primaryLabel = language === "no" ? "Nøkkelinfo" : "Key info";
 
   return (
     <Reveal delay={0.04 * index}>
