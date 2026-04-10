@@ -1008,10 +1008,10 @@ function HomeCaseCard({
   const previewMediaStyle = isTreningshuset
     ? { objectPosition: useMobilePreview ? "center top" : "center center" }
     : undefined;
-  const shouldUseInlinePreview = shouldRenderPreviewVideo && (!isMobileViewport || featured);
+  const shouldUseInlinePreview = shouldRenderPreviewVideo && !isMobileViewport;
 
   useEffect(() => {
-    const mediaQuery = window.matchMedia("(max-width: 639px)");
+    const mediaQuery = window.matchMedia("(max-width: 767px)");
     const updateViewport = () => setIsMobileViewport(mediaQuery.matches);
 
     updateViewport();
@@ -1065,7 +1065,7 @@ function HomeCaseCard({
   }, [previewVideo, previewVideoSrc, shouldRenderPreviewVideo]);
 
   useEffect(() => {
-    if (!previewVideo || !previewVideoSrc || hasVideoError || !shouldRenderPreviewVideo) {
+    if (!previewVideo || !previewVideoSrc || hasVideoError || !shouldRenderPreviewVideo || isMobileViewport) {
       return;
     }
 
@@ -1108,7 +1108,7 @@ function HomeCaseCard({
       videoRetryTimeoutsRef.current.forEach((timeoutId) => window.clearTimeout(timeoutId));
       videoRetryTimeoutsRef.current = [];
     };
-  }, [hasVideoError, previewVideo, previewVideoSrc, shouldRenderPreviewVideo]);
+  }, [hasVideoError, isMobileViewport, previewVideo, previewVideoSrc, shouldRenderPreviewVideo]);
 
   return (
     <Reveal delay={delay} y={16}>

@@ -429,6 +429,7 @@ export function EmbeddedVideoPlayer({
   disableMobileSource = false,
 }: EmbeddedVideoPlayerProps) {
   const { language } = useSitePreferences();
+  const [isMobileViewport, setIsMobileViewport] = useState(false);
   const resolvedTitle = resolveLocalizedValue(title, language);
   const resolvedImageAlt = imageAlt
     ? resolveLocalizedValue(imageAlt, language)
@@ -454,6 +455,37 @@ export function EmbeddedVideoPlayer({
     !hasExplicitPositionClass(className) && "relative",
     className,
   );
+
+  useEffect(() => {
+    const mediaQuery = window.matchMedia("(max-width: 767px)");
+    const updateViewport = () => setIsMobileViewport(mediaQuery.matches);
+
+    updateViewport();
+
+    if (typeof mediaQuery.addEventListener === "function") {
+      mediaQuery.addEventListener("change", updateViewport);
+      return () => mediaQuery.removeEventListener("change", updateViewport);
+    }
+
+    mediaQuery.addListener(updateViewport);
+    return () => mediaQuery.removeListener(updateViewport);
+  }, []);
+
+  if (previewMode && isMobileViewport) {
+    return (
+      <div className={wrapperClassName} aria-label={resolvedTitle}>
+        <MediaImage
+          src={fallbackSrc}
+          fallbackSrcs={fallbackSrcs}
+          alt={resolvedImageAlt}
+          priority={priority}
+          sizes={sizes}
+          fallbackContent={<FallbackSurface />}
+          className={mediaObjectClass}
+        />
+      </div>
+    );
+  }
 
   if (externalVideo) {
     if (previewMode) {

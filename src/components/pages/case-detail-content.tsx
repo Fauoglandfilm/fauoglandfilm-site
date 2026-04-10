@@ -124,6 +124,7 @@ export function CaseDetailContent({
   relatedCases,
 }: CaseDetailContentProps) {
   const { language, theme } = useSitePreferences();
+  const [isMobileViewport, setIsMobileViewport] = useState(false);
   const copy = uiCopy.pages[language];
   const isDarkTheme = theme === "dark";
   const localizedDeliverables = caseStudy.deliverables.map((item) =>
@@ -145,6 +146,21 @@ export function CaseDetailContent({
   const [activeVideoVariantSlug, setActiveVideoVariantSlug] = useState<string | null>(null);
   const activeVideoVariant =
     playableVideoVariants.find((variant) => variant.slug === activeVideoVariantSlug) ?? null;
+
+  useEffect(() => {
+    const mediaQuery = window.matchMedia("(max-width: 767px)");
+    const updateViewport = () => setIsMobileViewport(mediaQuery.matches);
+
+    updateViewport();
+
+    if (typeof mediaQuery.addEventListener === "function") {
+      mediaQuery.addEventListener("change", updateViewport);
+      return () => mediaQuery.removeEventListener("change", updateViewport);
+    }
+
+    mediaQuery.addListener(updateViewport);
+    return () => mediaQuery.removeListener(updateViewport);
+  }, []);
 
   return (
     <main>
@@ -249,7 +265,7 @@ export function CaseDetailContent({
                             : "min-h-[14.5rem] sm:min-h-[18rem] md:min-h-[24rem]",
                       )}
                     >
-                      {usesInteractiveVideoGrid && variant.video?.videoType === "direct" ? (
+                      {!isMobileViewport && usesInteractiveVideoGrid && variant.video?.videoType === "direct" ? (
                         <video
                           className={cn(
                             "video-preview-surface absolute inset-0 h-full w-full bg-[#05070b]",
@@ -273,7 +289,8 @@ export function CaseDetailContent({
                           image={variant.image}
                           imageAlt={variant.imageAlt}
                           mediaFit={variant.mediaFit ?? caseStudy.mediaFit}
-                          autoplay
+                          autoplay={!isMobileViewport}
+                          previewMode={isMobileViewport}
                           className="absolute inset-0 h-full w-full"
                           sizes="(min-width: 768px) 50vw, 100vw"
                         />

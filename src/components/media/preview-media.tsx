@@ -166,6 +166,7 @@ export function PreviewMedia({
   const wrapperRef = useRef<HTMLDivElement | null>(null);
   const [isHovered, setIsHovered] = useState(false);
   const [isViewportReady, setIsViewportReady] = useState(previewBehavior === "always" || priority);
+  const [isMobileViewport, setIsMobileViewport] = useState(false);
 
   const resolvedTitle = resolveLocalizedValue(title, language);
   const resolvedAlt = imageAlt ? resolveLocalizedValue(imageAlt, language) : resolvedTitle;
@@ -175,20 +176,35 @@ export function PreviewMedia({
   const hasExternalPreview = Boolean(externalVideo);
   const hasPlayableMedia = hasDirectPreview || hasExternalPreview;
   const fallbackContent = <PreviewFallbackState title={resolvedTitle} />;
+  const shouldAllowPreviewPlayback = previewBehavior !== "static" && !isMobileViewport;
 
-  const shouldPlay = previewBehavior !== "static";
   const usesViewportActivation =
     previewBehavior === "viewport" || previewBehavior === "hover-or-viewport";
   const usesHoverActivation =
     previewBehavior === "hover" || previewBehavior === "hover-or-viewport";
   const shouldRenderPreview =
-    shouldPlay &&
+    shouldAllowPreviewPlayback &&
     hasPlayableMedia &&
     (previewBehavior === "always" || (usesViewportActivation && isViewportReady) || (usesHoverActivation && isHovered));
   const mediaObjectClass = cn(
     mediaFit === "contain" ? "object-contain p-1.5 sm:p-2" : "object-cover",
     mediaObjectClassName,
   );
+
+  useEffect(() => {
+    const mediaQuery = window.matchMedia("(max-width: 767px)");
+    const updateViewport = () => setIsMobileViewport(mediaQuery.matches);
+
+    updateViewport();
+
+    if (typeof mediaQuery.addEventListener === "function") {
+      mediaQuery.addEventListener("change", updateViewport);
+      return () => mediaQuery.removeEventListener("change", updateViewport);
+    }
+
+    mediaQuery.addListener(updateViewport);
+    return () => mediaQuery.removeListener(updateViewport);
+  }, []);
 
   useEffect(() => {
     if (!usesViewportActivation || isViewportReady) {
