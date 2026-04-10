@@ -107,18 +107,18 @@ export const TextHoverEffect = ({
   }, [automatic, hovered]);
 
   const revealActive = hovered || automatic;
-  const neonCore = isDarkMode ? "#3ca2fa" : "#5873a0";
-  const neonMid = isDarkMode ? "#63b8ff" : "#7f94ba";
-  const neonOuter = isDarkMode ? "#99d8ff" : "#aab9d1";
-  const baseStroke = isDarkMode ? "rgba(178,222,255,0.92)" : "rgba(33,46,69,0.96)";
-  const outlineStroke = isDarkMode ? "rgba(60,162,250,1)" : "rgba(68,86,117,0.96)";
-  const boostedOutlineStroke = isDarkMode ? "rgba(129,208,255,1)" : "rgba(88,108,142,0.98)";
+  const neonCore = isDarkMode ? "#3ca2fa" : "#3f5b84";
+  const neonMid = isDarkMode ? "#63b8ff" : "#58729b";
+  const neonOuter = isDarkMode ? "#99d8ff" : "#7e97ba";
+  const baseStroke = isDarkMode ? "rgba(178,222,255,0.92)" : "rgba(15,23,42,0.98)";
+  const outlineStroke = isDarkMode ? "rgba(60,162,250,1)" : "rgba(43,60,86,0.96)";
+  const boostedOutlineStroke = isDarkMode ? "rgba(129,208,255,1)" : "rgba(60,80,110,0.98)";
   const accentStopA = neonCore;
   const accentStopB = neonMid;
   const accentStopC = neonOuter;
   const glowFilter = isDarkMode
     ? "drop-shadow(0 0 8px rgba(60,162,250,0.95)) drop-shadow(0 0 18px rgba(60,162,250,0.72))"
-    : "drop-shadow(0 0 1px rgba(88,115,160,0.18)) drop-shadow(0 0 6px rgba(88,115,160,0.08))";
+    : "drop-shadow(0 0 1px rgba(63,91,132,0.07)) drop-shadow(0 0 2px rgba(63,91,132,0.03))";
 
   const vectorShapeProps = {
     fill: "none",
@@ -199,7 +199,7 @@ export const TextHoverEffect = ({
       {isVectorMode ? (
         <>
           <motion.g
-            animate={{ opacity: isDarkMode ? 0.34 : 0.02 }}
+            animate={{ opacity: isDarkMode ? 0.34 : 0.005 }}
             transition={hoverTransition}
             filter={`url(#${glowLayerThreeId})`}
           >
@@ -210,7 +210,7 @@ export const TextHoverEffect = ({
           </motion.g>
 
           <motion.g
-            animate={{ opacity: isDarkMode ? 0.62 : 0.06 }}
+            animate={{ opacity: isDarkMode ? 0.62 : 0.012 }}
             transition={hoverTransition}
             filter={`url(#${glowLayerTwoId})`}
           >
@@ -221,7 +221,7 @@ export const TextHoverEffect = ({
           </motion.g>
 
           <motion.g
-            animate={{ opacity: isDarkMode ? 0.84 : 0.08 }}
+            animate={{ opacity: isDarkMode ? 0.84 : 0.02 }}
             transition={hoverTransition}
             filter={`url(#${glowLayerOneId})`}
           >
@@ -242,7 +242,7 @@ export const TextHoverEffect = ({
           </motion.g>
 
           <motion.g
-            animate={{ opacity: isDarkMode ? 0.92 : 0.82 }}
+            animate={{ opacity: isDarkMode ? 0.92 : 0.96 }}
             transition={hoverTransition}
             style={{ filter: glowFilter, transition: "filter 400ms ease" }}
           >
@@ -252,9 +252,9 @@ export const TextHoverEffect = ({
                 d={pathData}
                 {...vectorShapeProps}
                 stroke={outlineStroke}
-                strokeWidth={resolvedStrokeWidth * (isDarkMode ? 1.08 : 1.02)}
+                strokeWidth={resolvedStrokeWidth * (isDarkMode ? 1.08 : 1.14)}
                 initial={{ pathLength: 0, opacity: 0.78 }}
-                animate={{ pathLength: 1, opacity: isDarkMode ? 0.92 : 0.82 }}
+                animate={{ pathLength: 1, opacity: isDarkMode ? 0.92 : 0.96 }}
                 transition={{
                   pathLength: { duration: 4, ease: "easeInOut", delay: index * 0.025 },
                   opacity: hoverTransition,
@@ -265,7 +265,7 @@ export const TextHoverEffect = ({
 
           <motion.g
             mask={`url(#${maskId})`}
-            animate={{ opacity: hovered ? (isDarkMode ? 0.9 : 0.05) : 0 }}
+            animate={{ opacity: hovered ? (isDarkMode ? 0.9 : 0.015) : 0 }}
             transition={hoverTransition}
             filter={`url(#${glowLayerThreeId})`}
           >
@@ -277,7 +277,7 @@ export const TextHoverEffect = ({
 
           <motion.g
             mask={`url(#${maskId})`}
-            animate={{ opacity: hovered ? (isDarkMode ? 0.82 : 0.08) : 0 }}
+            animate={{ opacity: hovered ? (isDarkMode ? 0.82 : 0.025) : 0 }}
             transition={hoverTransition}
             filter={`url(#${glowLayerTwoId})`}
           >
@@ -326,7 +326,7 @@ export const TextHoverEffect = ({
               fontSize: "176px",
               fontWeight: 800,
               letterSpacing: "0.08em",
-              opacity: revealActive ? 0.76 : 0.34,
+              opacity: revealActive ? (isDarkMode ? 0.76 : 0.9) : (isDarkMode ? 0.34 : 0.72),
             }}
           >
             {text}
@@ -374,7 +374,7 @@ export const TextHoverEffect = ({
               fontSize: "176px",
               fontWeight: 800,
               letterSpacing: "0.08em",
-              opacity: revealActive ? 0.96 : 0.72,
+              opacity: revealActive ? 0.96 : (isDarkMode ? 0.72 : 0.82),
               filter: glowFilter,
             }}
           >
@@ -404,7 +404,7 @@ export const FooterBackgroundGradient = ({
       style={{
         background: isDarkMode
           ? "radial-gradient(125% 125% at 50% 10%, rgba(15,15,17,0.86) 44%, rgba(60,162,250,0.2) 100%)"
-          : "radial-gradient(125% 125% at 50% 10%, rgba(248,250,253,0.98) 30%, rgba(229,236,246,0.94) 68%, rgba(126,156,206,0.18) 100%)",
+          : "radial-gradient(125% 125% at 50% 10%, rgba(247,249,252,0.98) 30%, rgba(236,241,248,0.94) 68%, rgba(111,138,181,0.08) 100%)",
         transition: "background 400ms ease",
       }}
     />

@@ -29,32 +29,32 @@ type FooterThemeVarMap = Record<`--${string}`, string>;
 const FOOTER_THEME_VARS: Record<"light" | "dark", FooterThemeVarMap> = {
   light: {
     "--footer-shell-border":
-      "color-mix(in srgb, var(--line-strong) 46%, rgba(255,255,255,0.74))",
+      "color-mix(in srgb, var(--line-strong) 54%, rgba(255,255,255,0.78))",
     "--footer-shell-background":
-      "linear-gradient(180deg, rgba(249,250,252,0.985), rgba(240,244,249,0.982) 48%, rgba(232,238,246,0.978))",
+      "linear-gradient(180deg, rgba(248,249,251,0.988), rgba(240,244,248,0.986) 48%, rgba(234,239,246,0.984))",
     "--footer-shell-shadow":
-      "0 26px 56px rgba(17,17,17,0.08), inset 0 1px 0 rgba(255,255,255,0.74)",
-    "--footer-rail-surface": "rgba(247,249,252,0.985)",
+      "0 28px 60px rgba(17,17,17,0.08), inset 0 1px 0 rgba(255,255,255,0.8)",
+    "--footer-rail-surface": "rgba(246,248,251,0.986)",
     "--footer-rule-gradient":
-      "linear-gradient(90deg, rgba(114,140,188,0) 0%, rgba(92,116,158,0.34) 10%, rgba(92,116,158,0.34) 90%, rgba(114,140,188,0) 100%)",
-    "--footer-body-copy": "rgba(32,40,52,0.82)",
-    "--footer-strong-copy": "rgba(14,20,32,0.98)",
-    "--footer-link-copy": "rgba(24,53,104,0.98)",
-    "--footer-heading-copy": "rgba(31,41,55,0.62)",
-    "--footer-text-link": "rgba(24,32,44,0.9)",
-    "--footer-text-link-hover": "rgba(15,23,42,1)",
-    "--footer-contact-icon": "rgba(31,41,55,0.72)",
+      "linear-gradient(90deg, rgba(114,140,188,0) 0%, rgba(57,74,101,0.34) 10%, rgba(57,74,101,0.34) 90%, rgba(114,140,188,0) 100%)",
+    "--footer-body-copy": "var(--footer-text-body)",
+    "--footer-strong-copy": "var(--footer-text-strong)",
+    "--footer-link-copy": "var(--footer-text-accent-link)",
+    "--footer-heading-copy": "var(--footer-text-heading)",
+    "--footer-text-link": "var(--footer-text-link)",
+    "--footer-text-link-hover": "var(--footer-text-link-hover)",
+    "--footer-contact-icon": "var(--footer-text-icon)",
     "--footer-social-chip-bg":
       "linear-gradient(180deg, rgba(255,255,255,0.86), rgba(248,251,255,0.72) 100%)",
-    "--footer-social-chip-border": "rgba(31,41,55,0.18)",
-    "--footer-social-chip-color": "rgba(15,23,42,0.9)",
+    "--footer-social-chip-border": "rgba(31,41,55,0.2)",
+    "--footer-social-chip-color": "var(--footer-text-strong)",
     "--footer-social-chip-hover-bg": "rgba(106,174,255,0.12)",
-    "--footer-social-chip-hover-color": "rgba(54,101,192,1)",
-    "--footer-social-chip-shadow": "inset 0 0 0 1px rgba(255,255,255,0.72), 0 10px 22px rgba(17,17,17,0.06)",
+    "--footer-social-chip-hover-color": "var(--footer-text-link-hover)",
+    "--footer-social-chip-shadow": "inset 0 0 0 1px rgba(255,255,255,0.78), 0 10px 22px rgba(17,17,17,0.06)",
     "--footer-social-chip-hover-shadow":
       "0 0 0 1px rgba(106,174,255,0.18), 0 0 18px rgba(106,174,255,0.14)",
     "--footer-bottom-glow":
-      "radial-gradient(70% 70% at 50% 100%, rgba(92,124,182,0.08) 0%, rgba(92,124,182,0) 72%)",
+      "radial-gradient(70% 70% at 50% 100%, rgba(92,124,182,0.04) 0%, rgba(92,124,182,0) 72%)",
   },
   dark: {
     "--footer-shell-border": "rgba(255,255,255,0.08)",
@@ -65,18 +65,18 @@ const FOOTER_THEME_VARS: Record<"light" | "dark", FooterThemeVarMap> = {
     "--footer-rail-surface": "rgba(11,12,15,0.94)",
     "--footer-rule-gradient":
       "linear-gradient(90deg, rgba(110,170,255,0) 0%, rgba(110,170,255,0.32) 10%, rgba(110,170,255,0.32) 90%, rgba(110,170,255,0) 100%)",
-    "--footer-body-copy": "rgba(255,255,255,0.48)",
-    "--footer-strong-copy": "rgba(255,255,255,0.94)",
-    "--footer-link-copy": "rgba(255,255,255,0.92)",
-    "--footer-heading-copy": "rgba(255,255,255,0.42)",
-    "--footer-text-link": "rgba(255,255,255,0.78)",
-    "--footer-text-link-hover": "rgba(255,255,255,1)",
-    "--footer-contact-icon": "rgba(255,255,255,0.42)",
+    "--footer-body-copy": "var(--footer-text-body)",
+    "--footer-strong-copy": "var(--footer-text-strong)",
+    "--footer-link-copy": "var(--footer-text-accent-link)",
+    "--footer-heading-copy": "var(--footer-text-heading)",
+    "--footer-text-link": "var(--footer-text-link)",
+    "--footer-text-link-hover": "var(--footer-text-link-hover)",
+    "--footer-contact-icon": "var(--footer-text-icon)",
     "--footer-social-chip-bg": "rgba(255,255,255,0.045)",
     "--footer-social-chip-border": "rgba(255,255,255,0.06)",
-    "--footer-social-chip-color": "rgba(255,255,255,0.82)",
+    "--footer-social-chip-color": "var(--footer-text-link)",
     "--footer-social-chip-hover-bg": "rgba(106,174,255,0.1)",
-    "--footer-social-chip-hover-color": "rgba(255,255,255,1)",
+    "--footer-social-chip-hover-color": "var(--footer-text-link-hover)",
     "--footer-social-chip-shadow": "inset 0 0 0 1px rgba(255,255,255,0.06)",
     "--footer-social-chip-hover-shadow":
       "0 0 0 1px rgba(106,174,255,0.22), 0 0 18px rgba(106,174,255,0.18)",
@@ -147,7 +147,7 @@ function FooterContactRow({
   return (
     <a
       href={href}
-      className="inline-flex w-fit justify-center transition duration-200 hover:text-[color:var(--foreground)]"
+      className="site-footer-contact-link inline-flex w-fit justify-center transition duration-200"
     >
       {content}
     </a>
@@ -187,7 +187,7 @@ export function Footer() {
   }
 
   return (
-    <footer id="site-footer" className="relative overflow-hidden text-[color:var(--foreground)]">
+    <footer id="site-footer" className="relative overflow-hidden text-[var(--footer-strong-copy)]">
       <div className="site-container py-5 sm:py-7 lg:py-9">
         <div
           className="site-footer-shell relative overflow-hidden rounded-[1.95rem] border px-5 py-7 sm:px-7 sm:py-8 lg:px-9 lg:py-9"
@@ -244,7 +244,7 @@ export function Footer() {
                 <span className="site-footer-strong-copy font-semibold tracking-[-0.03em]">
                   {copy.title}
                 </span>
-                <span className="inline-flex h-[0.18rem] w-[0.18rem] rounded-full bg-[color:var(--foreground)]/18" />
+                <span className="inline-flex h-[0.18rem] w-[0.18rem] rounded-full bg-[var(--footer-heading-copy)]" />
                 <span className="site-footer-body-copy">
                   {copy.description}
                 </span>
