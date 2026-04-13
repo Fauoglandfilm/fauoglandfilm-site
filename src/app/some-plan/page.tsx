@@ -49,15 +49,15 @@ const valuePoints = [
 export default function SocialMediaPlanPage() {
   return (
     <main>
-      <section className="bg-[linear-gradient(180deg,color-mix(in_srgb,var(--surface)_98%,white)_0%,color-mix(in_srgb,var(--surface-muted)_94%,white)_100%)] pt-[max(4.9rem,calc(env(safe-area-inset-top,0px)+4.1rem))] sm:pt-[max(5.3rem,calc(env(safe-area-inset-top,0px)+4.5rem))]">
+      <section className="bg-[linear-gradient(180deg,color-mix(in_srgb,var(--surface)_98%,white)_0%,color-mix(in_srgb,var(--surface-muted)_94%,white)_100%)] pt-[max(3.9rem,calc(env(safe-area-inset-top,0px)+3.2rem))] sm:pt-[max(4.25rem,calc(env(safe-area-inset-top,0px)+3.45rem))]">
         <div className="site-container">
-          <div className="py-5 sm:py-6 lg:py-8">
-            <div className="max-w-[43rem]">
+          <div className="pb-8 pt-3 sm:pb-10 sm:pt-4 lg:pb-12 lg:pt-5">
+            <div className="max-w-[40rem]">
               <span className="hero-badge text-[var(--muted)]">Sosiale medier plan</span>
-              <h1 className="page-title mt-2.5 max-w-[12ch] text-[color:var(--foreground)]">
+              <h1 className="mt-2 max-w-[9ch] text-balance font-sans text-[clamp(3.7rem,9vw,6.4rem)] font-semibold leading-[0.88] tracking-[-0.085em] text-[color:var(--foreground)]">
                 Få flere kunder fra sosiale medier uten å bruke mer tid
               </h1>
-              <p className="body-copy mt-3 max-w-[38rem] text-[var(--muted-2)] sm:text-base sm:leading-7">
+              <p className="mt-3 max-w-[34rem] text-[1rem] leading-7 text-[var(--muted-2)] sm:text-[1.04rem]">
                 Vi lager en konkret plan for hva dere skal poste, når og hvorfor det gir resultater
               </p>
               <div className="mt-4 flex flex-col gap-2 sm:mt-5 sm:flex-row sm:flex-wrap sm:gap-2.5">
@@ -66,29 +66,30 @@ export default function SocialMediaPlanPage() {
                 </ButtonLink>
               </div>
             </div>
-          </div>
-        </div>
-      </section>
 
-      <section className="pb-10 pt-1 sm:pb-12 sm:pt-2 lg:pb-14">
-        <div className="site-container">
-          <div className="mx-auto max-w-[74rem]">
-            <div className="overflow-hidden rounded-[2rem] border border-[color:var(--line)]/80 bg-[linear-gradient(180deg,color-mix(in_srgb,var(--surface)_99%,white),color-mix(in_srgb,var(--surface-muted)_95%,white))] shadow-[0_22px_44px_rgba(18,14,10,0.07)]">
-              <div className="border-b border-[color:var(--line)]/70 px-4 py-3 sm:px-5">
-                <p className="text-[0.62rem] font-semibold uppercase tracking-[0.2em] text-[var(--muted)]">Sosiale medier plan</p>
+            <div className="mt-6 overflow-hidden rounded-[2rem] border border-[color:var(--line)]/80 bg-[linear-gradient(180deg,color-mix(in_srgb,var(--surface)_99%,white),color-mix(in_srgb,var(--surface-muted)_95%,white))] shadow-[0_26px_56px_rgba(18,14,10,0.08)] sm:mt-7 lg:mt-8">
+              <div className="flex items-center justify-between gap-3 border-b border-[color:var(--line)]/70 px-4 py-3 sm:px-5">
+                <p className="text-[0.62rem] font-semibold uppercase tracking-[0.2em] text-[var(--muted)]">
+                  Sosiale medier plan
+                </p>
+                <span className="hidden h-2.5 w-2.5 rounded-full bg-[color:var(--foreground)]/18 sm:block" />
               </div>
-              <div className="relative aspect-square w-full overflow-hidden bg-[color:var(--surface)] sm:aspect-[1/1]">
-                <iframe
-                  title="Sosiale medier plan Canva"
-                  src="https://www.canva.com/design/DAG3XOWLTnA/q-8DUYc6k-SChHrTsPVQ9A/view?embed"
-                  loading="lazy"
-                  allowFullScreen
-                  allow="fullscreen"
-                  scrolling="no"
-                  className="absolute inset-0 h-full w-full border-0"
-                />
+              <div className="p-2 sm:p-3">
+                <div className="overflow-hidden rounded-[1.45rem] border border-[color:var(--line)]/70 bg-white shadow-[inset_0_1px_0_rgba(255,255,255,0.45)]">
+                  <div className="relative h-[clamp(32rem,74vh,72rem)] w-full bg-[color:var(--surface)]">
+                    <iframe
+                      title="Sosiale medier plan Canva"
+                      src="https://www.canva.com/design/DAG3XOWLTnA/q-8DUYc6k-SChHrTsPVQ9A/view?embed"
+                      loading="lazy"
+                      allowFullScreen
+                      allow="fullscreen"
+                      scrolling="no"
+                      className="absolute inset-0 h-full w-full border-0"
+                    />
+                  </div>
+                </div>
               </div>
-              <div className="border-t border-[color:var(--line)]/70 px-4 py-3.5 text-center sm:px-5">
+              <div className="border-t border-[color:var(--line)]/70 px-4 py-3 text-center sm:px-5">
                 <p className="text-sm text-[var(--muted)]">
                   <Link
                     href="https://www.canva.com/design/DAG3XOWLTnA/q-8DUYc6k-SChHrTsPVQ9A/view?utm_content=DAG3XOWLTnA&utm_campaign=designshare&utm_medium=embeds&utm_source=link"
@@ -111,7 +112,7 @@ export default function SocialMediaPlanPage() {
         title="En plan som gjør publisering enklere å gjennomføre."
         description="Kort, konkret og bygget for å gjøre det lettere å poste jevnt med innhold som faktisk støtter salg."
         align="center"
-        className="pt-0"
+        className="pt-8 sm:pt-10 lg:pt-12"
       >
         <div className="grid gap-3.5 sm:grid-cols-3">
           {valuePoints.map((point) => (

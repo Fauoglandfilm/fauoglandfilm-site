@@ -445,13 +445,16 @@ export function Header() {
               ref={headerSurfaceRef}
               initial={false}
               animate={{
-                width: navExpanded ? "100%" : "var(--homepage-navbar-collapsed-width)",
+                width: navExpanded ? "100%" : isMinimalLandingPage ? "3.25rem" : "var(--homepage-navbar-collapsed-width)",
                 borderRadius: navExpanded ? "var(--homepage-navbar-expanded-radius)" : "999px",
               }}
               transition={shellTransition}
               className={cn(
-                "homepage-navbar-shell relative mt-2 h-[var(--homepage-navbar-shell-height)] overflow-hidden sm:mt-3",
-                darkOverlayMode
+                "homepage-navbar-shell relative overflow-hidden",
+                isMinimalLandingPage ? "mt-3 h-[3.25rem] sm:mt-4 sm:h-[3.25rem]" : "mt-2 h-[var(--homepage-navbar-shell-height)] sm:mt-3",
+                isMinimalLandingPage
+                  ? "border border-[color:var(--line)]/70 bg-[color:var(--surface)]/84 text-[color:var(--foreground)] shadow-[0_18px_34px_rgba(18,14,10,0.06)] backdrop-blur-[16px]"
+                  : darkOverlayMode
                   ? "border border-white/12 bg-[rgba(14,14,15,0.42)] text-white shadow-[0_24px_64px_rgba(0,0,0,0.26)] backdrop-blur-[18px]"
                   : overlayMode
                   ? "border border-white/18 bg-white/10 text-white shadow-[0_24px_64px_rgba(0,0,0,0.12)] backdrop-blur-[18px]"
@@ -461,7 +464,9 @@ export function Header() {
               <div
                 className={cn(
                   "pointer-events-none absolute inset-0",
-                  darkOverlayMode
+                  isMinimalLandingPage
+                    ? "bg-[linear-gradient(180deg,rgba(255,255,255,0.24),rgba(255,255,255,0.08))]"
+                    : darkOverlayMode
                     ? "bg-[linear-gradient(180deg,rgba(255,255,255,0.08),rgba(255,255,255,0.02))]"
                     : "bg-[linear-gradient(180deg,rgba(255,255,255,0.2),rgba(255,255,255,0.06))]",
                 )}
