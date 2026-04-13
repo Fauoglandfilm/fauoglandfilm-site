@@ -162,8 +162,9 @@ export function Header() {
   const { language, setLanguage, theme, setTheme } = useSitePreferences();
   const copy = uiCopy.header[language];
   const isHomepage = pathname === "/";
-  const usesAnimatedHomepageNavbar = isHomepage;
-  const overlayMode = usesAnimatedHomepageNavbar && !scrolled && !open;
+  const isMinimalLandingPage = pathname === "/some-plan";
+  const usesAnimatedHomepageNavbar = isHomepage || isMinimalLandingPage;
+  const overlayMode = isHomepage && !scrolled && !open;
   const darkOverlayMode = overlayMode && theme === "dark";
   const hidesGlobalChrome = pathname?.startsWith("/pitch");
   const menuLabel = language === "no" ? "Meny" : "Menu";
@@ -171,7 +172,9 @@ export function Header() {
     language === "no"
       ? "Oslo / Reklamefilm / Produksjon"
       : "Oslo / Commercial film / Production";
-  const navExpanded = !usesAnimatedHomepageNavbar || scrolled || open || searchOpen || navbarPeekOpen;
+  const navExpanded = isMinimalLandingPage
+    ? false
+    : !usesAnimatedHomepageNavbar || scrolled || open || searchOpen || navbarPeekOpen;
   const premiumEase: [number, number, number, number] = [0.16, 1, 0.3, 1];
   const shellTransition = { duration: shouldReduceMotion ? 0.18 : 0.38, ease: premiumEase };
   const contentTransition = { duration: shouldReduceMotion ? 0.14 : 0.22, ease: premiumEase };
@@ -413,6 +416,11 @@ export function Header() {
       return;
     }
 
+    if (isMinimalLandingPage) {
+      setOpen((value) => !value);
+      return;
+    }
+
     if (window.innerWidth >= 1024) {
       setNavbarPeekOpen(true);
       return;
@@ -633,15 +641,44 @@ export function Header() {
                       "absolute inset-0 z-[1] flex h-full w-full items-center justify-center rounded-full",
                       overlayMode ? "text-white" : "text-[color:var(--foreground)]",
                     )}
-                    aria-label={copy.menuOpen}
+                    aria-label={open ? copy.menuClose : copy.menuOpen}
                     aria-controls="site-menu"
-                    aria-expanded={false}
+                    aria-expanded={open}
                     onClick={handleCollapsedMenuClick}
                   >
-                    <span className="pointer-events-none relative flex h-4 w-4 flex-col items-center justify-center gap-[0.18rem]">
-                      <span className="h-[1.5px] w-4 rounded-full bg-current" />
-                      <span className="h-[1.5px] w-4 rounded-full bg-current" />
-                      <span className="h-[1.5px] w-4 rounded-full bg-current" />
+                    <span className="pointer-events-none relative h-4 w-4">
+                      {isMinimalLandingPage ? (
+                        <>
+                          <motion.span
+                            className="absolute inset-0 flex items-center justify-center"
+                            initial={false}
+                            animate={{
+                              opacity: open ? 0 : 1,
+                              filter: !shouldReduceMotion && open ? "blur(6px)" : "blur(0px)",
+                            }}
+                            transition={contentTransition}
+                          >
+                            <MenuIcon className="h-4 w-4" />
+                          </motion.span>
+                          <motion.span
+                            className="absolute inset-0 flex items-center justify-center"
+                            initial={false}
+                            animate={{
+                              opacity: open ? 1 : 0,
+                              filter: !shouldReduceMotion && !open ? "blur(6px)" : "blur(0px)",
+                            }}
+                            transition={contentTransition}
+                          >
+                            <CloseIcon className="h-4 w-4" />
+                          </motion.span>
+                        </>
+                      ) : (
+                        <span className="absolute inset-0 flex flex-col items-center justify-center gap-[0.18rem]">
+                          <span className="h-[1.5px] w-4 rounded-full bg-current" />
+                          <span className="h-[1.5px] w-4 rounded-full bg-current" />
+                          <span className="h-[1.5px] w-4 rounded-full bg-current" />
+                        </span>
+                      )}
                     </span>
                   </motion.button>
                 )}
@@ -749,7 +786,7 @@ export function Header() {
         ) : null}
         {open ? (
           <motion.div
-            className="fixed inset-0 z-40 bg-[rgba(10,10,10,0.44)] text-[color:var(--foreground)] backdrop-blur-sm lg:hidden"
+            className={cn("fixed inset-0 z-40 bg-[rgba(10,10,10,0.44)] text-[color:var(--foreground)] backdrop-blur-sm", !isMinimalLandingPage && "lg:hidden")}
             initial={shouldReduceMotion ? { opacity: 1 } : { opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}

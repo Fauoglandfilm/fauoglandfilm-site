@@ -49,18 +49,18 @@ const valuePoints = [
 export default function SocialMediaPlanPage() {
   return (
     <main>
-      <section className="border-b border-[color:var(--line)]/70 bg-[linear-gradient(180deg,color-mix(in_srgb,var(--surface)_97%,white)_0%,color-mix(in_srgb,var(--surface-muted)_92%,white)_100%)] pt-[max(6.6rem,calc(env(safe-area-inset-top,0px)+5.9rem))] sm:pt-[max(7.25rem,calc(env(safe-area-inset-top,0px)+6.4rem))]">
+      <section className="bg-[linear-gradient(180deg,color-mix(in_srgb,var(--surface)_98%,white)_0%,color-mix(in_srgb,var(--surface-muted)_94%,white)_100%)] pt-[max(4.9rem,calc(env(safe-area-inset-top,0px)+4.1rem))] sm:pt-[max(5.3rem,calc(env(safe-area-inset-top,0px)+4.5rem))]">
         <div className="site-container">
-          <div className="py-10 sm:py-14 lg:py-16">
+          <div className="py-5 sm:py-6 lg:py-8">
             <div className="max-w-[43rem]">
               <span className="hero-badge text-[var(--muted)]">Sosiale medier plan</span>
-              <h1 className="page-title mt-3 max-w-[12ch] text-[color:var(--foreground)]">
+              <h1 className="page-title mt-2.5 max-w-[12ch] text-[color:var(--foreground)]">
                 Få flere kunder fra sosiale medier uten å bruke mer tid
               </h1>
-              <p className="body-copy mt-3.5 max-w-2xl text-[var(--muted-2)] sm:mt-4 sm:text-base sm:leading-7">
+              <p className="body-copy mt-3 max-w-[38rem] text-[var(--muted-2)] sm:text-base sm:leading-7">
                 Vi lager en konkret plan for hva dere skal poste, når og hvorfor det gir resultater
               </p>
-              <div className="mt-5 flex flex-col gap-2 sm:mt-6 sm:flex-row sm:flex-wrap sm:gap-2.5">
+              <div className="mt-4 flex flex-col gap-2 sm:mt-5 sm:flex-row sm:flex-wrap sm:gap-2.5">
                 <ButtonLink href="/kontakt" className="w-full sm:w-auto">
                   Book møte
                 </ButtonLink>
@@ -70,10 +70,13 @@ export default function SocialMediaPlanPage() {
         </div>
       </section>
 
-      <section className="section-space">
+      <section className="pb-10 pt-1 sm:pb-12 sm:pt-2 lg:pb-14">
         <div className="site-container">
-          <div className="mx-auto max-w-[62rem]">
-            <div className="overflow-hidden rounded-[1.9rem] border border-[color:var(--line)]/80 bg-[linear-gradient(180deg,color-mix(in_srgb,var(--surface)_98%,white),color-mix(in_srgb,var(--surface-muted)_94%,white))] shadow-[0_18px_36px_rgba(18,14,10,0.06)]">
+          <div className="mx-auto max-w-[74rem]">
+            <div className="overflow-hidden rounded-[2rem] border border-[color:var(--line)]/80 bg-[linear-gradient(180deg,color-mix(in_srgb,var(--surface)_99%,white),color-mix(in_srgb,var(--surface-muted)_95%,white))] shadow-[0_22px_44px_rgba(18,14,10,0.07)]">
+              <div className="border-b border-[color:var(--line)]/70 px-4 py-3 sm:px-5">
+                <p className="text-[0.62rem] font-semibold uppercase tracking-[0.2em] text-[var(--muted)]">Sosiale medier plan</p>
+              </div>
               <div className="relative aspect-square w-full overflow-hidden bg-[color:var(--surface)] sm:aspect-[1/1]">
                 <iframe
                   title="Sosiale medier plan Canva"
@@ -85,18 +88,20 @@ export default function SocialMediaPlanPage() {
                   className="absolute inset-0 h-full w-full border-0"
                 />
               </div>
+              <div className="border-t border-[color:var(--line)]/70 px-4 py-3.5 text-center sm:px-5">
+                <p className="text-sm text-[var(--muted)]">
+                  <Link
+                    href="https://www.canva.com/design/DAG3XOWLTnA/q-8DUYc6k-SChHrTsPVQ9A/view?utm_content=DAG3XOWLTnA&utm_campaign=designshare&utm_medium=embeds&utm_source=link"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="transition hover:text-[color:var(--foreground)]"
+                  >
+                    Sosiale medier plan NTA
+                  </Link>{" "}
+                  av Tommy Garland
+                </p>
+              </div>
             </div>
-            <p className="mt-3 text-center text-sm text-[var(--muted)]">
-              <Link
-                href="https://www.canva.com/design/DAG3XOWLTnA/q-8DUYc6k-SChHrTsPVQ9A/view?utm_content=DAG3XOWLTnA&utm_campaign=designshare&utm_medium=embeds&utm_source=link"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="transition hover:text-[color:var(--foreground)]"
-              >
-                Sosiale medier plan NTA
-              </Link>{" "}
-              av Tommy Garland
-            </p>
           </div>
         </div>
       </section>
@@ -106,6 +111,7 @@ export default function SocialMediaPlanPage() {
         title="En plan som gjør publisering enklere å gjennomføre."
         description="Kort, konkret og bygget for å gjøre det lettere å poste jevnt med innhold som faktisk støtter salg."
         align="center"
+        className="pt-0"
       >
         <div className="grid gap-3.5 sm:grid-cols-3">
           {valuePoints.map((point) => (
