@@ -158,7 +158,7 @@ export function Footer() {
   const pathname = usePathname();
   const { language, theme } = useSitePreferences();
   const copy = uiCopy.footer[language];
-  const hidesGlobalChrome = pathname?.startsWith("/pitch");
+  const hidesGlobalChrome = pathname?.startsWith("/pitch") || pathname?.startsWith("/some-plan/view");
   const footerThemeStyle = FOOTER_THEME_VARS[theme] as CSSProperties;
   const footerNavItems = footerNavOrder
     .map((href) => navItems.find((item) => item.href === href))
