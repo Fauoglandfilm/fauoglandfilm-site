@@ -1,4 +1,5 @@
 import {
+  ClientSlider,
   ClosingCtaSection,
   HeroSection,
   ResultsSection,
@@ -22,6 +23,7 @@ export default function HomePage() {
   return (
     <main>
       <HeroSection />
+      <ClientSlider />
       <WhyUsProofSection />
       <SelectedWorkSection items={homepageCaseStudies} />
       <ResultsSection />
