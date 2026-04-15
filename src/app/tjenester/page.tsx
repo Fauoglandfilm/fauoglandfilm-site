@@ -1,8 +1,8 @@
+import { ServiceAccordionSection } from "@/components/sections/service-accordion";
 import {
   CtaBanner,
   PageHero,
   ProcessSection,
-  ServicesSection,
 } from "@/components/sections/site-sections";
 import {
   processSteps,
@@ -34,7 +34,7 @@ export default async function ServicesPage() {
         }}
         compact
       />
-      <ServicesSection
+      <ServiceAccordionSection
         services={services}
         title={{ no: copy.no.servicesSectionTitle, en: copy.en.servicesSectionTitle }}
         description={{
