@@ -27,7 +27,7 @@ const InteractiveHoverButton = React.forwardRef<
 
   const resolvedClassName = cn(
     baseClassName,
-    "[--button-bg-current:rgba(255,255,255,0.1)] [--button-border-current:rgba(255,255,255,0.18)] [--button-text-current:#ffffff] [--button-glow-opacity:0.22] backdrop-blur-[16px] hover:[--button-bg-current:rgba(255,255,255,0.14)] hover:[--button-border-current:rgba(255,255,255,0.26)] hover:[--button-text-current:#ffffff] active:[--button-bg-current:rgba(255,255,255,0.11)] active:[--button-border-current:rgba(255,255,255,0.22)] active:[--button-text-current:#ffffff]",
+    "[--button-bg-current:#ffffff] [--button-border-current:rgba(255,255,255,0.9)] [--button-text-current:#111111] [--button-glow-opacity:0.18] hover:[--button-bg-current:#f5f5f5] hover:[--button-border-current:#ffffff] hover:[--button-text-current:#111111] active:[--button-bg-current:#ebebeb] active:[--button-border-current:rgba(255,255,255,0.9)] active:[--button-text-current:#111111]",
     className,
   );
 
