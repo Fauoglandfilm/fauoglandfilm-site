@@ -1,8 +1,4 @@
-import {
-  ContactLeadSection,
-  PageHero,
-} from "@/components/sections/site-sections";
-import { uiCopy } from "@/data/ui-copy";
+import { ContactLeadSection } from "@/components/sections/site-sections";
 import { buildMetadata } from "@/lib/seo";
 
 export const metadata = buildMetadata({
@@ -13,16 +9,8 @@ export const metadata = buildMetadata({
 });
 
 export default function ContactPage() {
-  const copy = uiCopy.pages;
-
   return (
     <main>
-      <PageHero
-        eyebrow={{ no: copy.no.contactHeroEyebrow, en: copy.en.contactHeroEyebrow }}
-        title={{ no: copy.no.contactHeroTitle, en: copy.en.contactHeroTitle }}
-        description={{ no: copy.no.contactHeroDescription, en: copy.en.contactHeroDescription }}
-        visualKey="contact"
-      />
       <ContactLeadSection />
     </main>
   );
