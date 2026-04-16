@@ -864,6 +864,51 @@ summary::-webkit-details-marker {
     color: var(--btn-icon-text) !important;
   }
 
+  /* Hero CTA buttons sit on top of the dark hero video in every theme,
+     but in light mode we want a premium frosted-glass treatment with
+     dark readable text. In dark mode they keep the subtle glass look. */
+  .hero-glass-button {
+    --button-bg-current: rgba(255, 255, 255, 0.1);
+    --button-border-current: rgba(255, 255, 255, 0.18);
+    --button-text-current: #ffffff;
+    --button-glow-opacity: 0.22;
+    backdrop-filter: blur(16px) saturate(160%);
+    -webkit-backdrop-filter: blur(16px) saturate(160%);
+  }
+
+  .hero-glass-button:hover,
+  .hero-glass-button:focus-visible {
+    --button-bg-current: rgba(255, 255, 255, 0.14);
+    --button-border-current: rgba(255, 255, 255, 0.26);
+    --button-text-current: #ffffff;
+  }
+
+  .hero-glass-button:active {
+    --button-bg-current: rgba(255, 255, 255, 0.11);
+    --button-border-current: rgba(255, 255, 255, 0.22);
+    --button-text-current: #ffffff;
+  }
+
+  html[data-theme="light"] .hero-glass-button {
+    --button-bg-current: rgba(255, 255, 255, 0.88);
+    --button-border-current: rgba(255, 255, 255, 0.72);
+    --button-text-current: #111111;
+    --button-glow-opacity: 0.16;
+  }
+
+  html[data-theme="light"] .hero-glass-button:hover,
+  html[data-theme="light"] .hero-glass-button:focus-visible {
+    --button-bg-current: rgba(255, 255, 255, 0.94);
+    --button-border-current: rgba(255, 255, 255, 0.82);
+    --button-text-current: #111111;
+  }
+
+  html[data-theme="light"] .hero-glass-button:active {
+    --button-bg-current: rgba(255, 255, 255, 0.78);
+    --button-border-current: rgba(255, 255, 255, 0.64);
+    --button-text-current: #111111;
+  }
+
   .control-shell {
     display: inline-flex;
     align-items: center;
