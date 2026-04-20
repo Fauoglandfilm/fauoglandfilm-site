@@ -7,6 +7,7 @@ import { useRouter } from "next/navigation";
 import { BrandLogo } from "@/components/ui/brand-logo";
 import { Button } from "@/components/ui/button";
 import { ArrowUpRightIcon } from "@/components/ui/icons";
+import { PresentationFullscreenHint } from "@/components/ui/presentation-fullscreen-hint";
 import {
   SOCIAL_PLAN_CANVA_EMBED_SRC,
   SOCIAL_PLAN_SESSION_STORAGE_KEY,
@@ -101,6 +102,7 @@ export function SocialPlanViewer() {
                 allowFullScreen
                 className="absolute inset-0 h-full w-full border-0"
               />
+              <PresentationFullscreenHint theme="light" />
             </div>
           </div>
         </div>

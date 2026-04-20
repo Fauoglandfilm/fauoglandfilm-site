@@ -1283,6 +1283,28 @@ summary::-webkit-details-marker {
   }
 }
 
+@keyframes presentation-hint-float {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
+
+  50% {
+    transform: translate3d(0, -0.3rem, 0);
+  }
+}
+
+@keyframes presentation-arrow-nudge {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
+
+  50% {
+    transform: translate3d(0.18rem, 0.18rem, 0);
+  }
+}
+
 .portfolio-modal-scroll {
   min-height: 0;
   max-height: 100%;

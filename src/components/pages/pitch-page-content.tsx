@@ -6,6 +6,7 @@ import { useEffect, useRef, useState } from "react";
 import { BrandLogo } from "@/components/ui/brand-logo";
 import { Button } from "@/components/ui/button";
 import { ArrowUpRightIcon } from "@/components/ui/icons";
+import { PresentationFullscreenHint } from "@/components/ui/presentation-fullscreen-hint";
 import { cn } from "@/lib/utils";
 
 const PITCH_PASSWORD = "Pitch2025";
@@ -125,6 +126,7 @@ export function PitchPageContent() {
                   allowFullScreen
                   className="absolute inset-0 h-full w-full border-0"
                 />
+                <PresentationFullscreenHint theme="dark" />
               </div>
             </div>
           </div>
