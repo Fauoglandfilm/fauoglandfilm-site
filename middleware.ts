@@ -13,13 +13,17 @@ export async function middleware(request: NextRequest) {
     return NextResponse.next();
   }
 
-  const { supabase, getResponse } = createMiddlewareClient(request);
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
+  try {
+    const { supabase, getResponse } = createMiddlewareClient(request);
+    const {
+      data: { user },
+    } = await supabase.auth.getUser();
 
-  if (user) {
-    return getResponse();
+    if (user) {
+      return getResponse();
+    }
+  } catch {
+    // Keep protected routes from crashing the whole app if auth config is missing or unavailable.
   }
 
   const loginUrl = new URL("/frilanseren/login", request.url);

@@ -6,15 +6,30 @@ import { ButtonLink } from "@/components/ui/button-link";
 import { signOutAction } from "@/lib/supabase/actions";
 import { createServerComponentClient } from "@/lib/supabase/serverClient";
 
+async function getOptionalUser() {
+  try {
+    const supabase = await createServerComponentClient();
+    const {
+      data: { user },
+      error,
+    } = await supabase.auth.getUser();
+
+    if (error) {
+      return null;
+    }
+
+    return user;
+  } catch {
+    return null;
+  }
+}
+
 export default async function FrilanserenLayout({
   children,
 }: {
   children: ReactNode;
 }) {
-  const supabase = await createServerComponentClient();
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
+  const user = await getOptionalUser();
 
   return (
     <div className="min-h-screen bg-[linear-gradient(180deg,color-mix(in_srgb,var(--surface)_97%,white),color-mix(in_srgb,var(--surface-muted)_92%,white))] text-[color:var(--foreground)]">

@@ -489,7 +489,7 @@ export const navItems: NavItem[] = [
   { href: "/om-oss", label: { no: "Om oss", en: "About" } },
   { href: "/faq", label: { no: "FAQ", en: "FAQ" } },
   { href: "/kontakt", label: { no: "Kontakt", en: "Contact" } },
-  { href: "/frilanseren", label: { no: "Logg inn / Plattform", en: "Login / Platform" } },
+  { href: "/frilanseren", label: { no: "Frilanseren", en: "Frilanseren" } },
 ];
 
 // Curated active set from clients/COLOR. The marquee only uses verified brand files.
