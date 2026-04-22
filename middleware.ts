@@ -9,7 +9,17 @@ function isProtectedPath(pathname: string) {
 }
 
 export async function middleware(request: NextRequest) {
-  if (!isProtectedPath(request.nextUrl.pathname)) {
+  const { pathname } = request.nextUrl;
+  const isProtected = isProtectedPath(pathname);
+
+  console.log("[FRILANSEREN_MIDDLEWARE] hit", {
+    path: pathname,
+    isProtected,
+    hasSupabaseUrl: Boolean(process.env.NEXT_PUBLIC_SUPABASE_URL),
+    hasSupabaseAnonKey: Boolean(process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY),
+  });
+
+  if (!isProtected) {
     return NextResponse.next();
   }
 
@@ -19,11 +29,21 @@ export async function middleware(request: NextRequest) {
       data: { user },
     } = await supabase.auth.getUser();
 
+    console.log("[FRILANSEREN_MIDDLEWARE] auth-check", {
+      path: pathname,
+      hasUser: Boolean(user),
+    });
+
     if (user) {
       return getResponse();
     }
-  } catch {
-    // Keep protected routes from crashing the whole app if auth config is missing or unavailable.
+  } catch (error) {
+    console.error("[FRILANSEREN_MIDDLEWARE] threw", {
+      path: pathname,
+      errorMessage: error instanceof Error ? error.message : String(error),
+      errorStack: error instanceof Error ? error.stack : undefined,
+    });
+    // Fall through to login redirect so we never return a blind 500 from middleware.
   }
 
   const loginUrl = new URL("/frilanseren/login", request.url);

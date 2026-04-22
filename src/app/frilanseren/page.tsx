@@ -10,7 +10,34 @@ export const metadata = buildMetadata({
   path: "/frilanseren",
 });
 
+// Force dynamic rendering so the server-side probe runs on every request in prod
+// and the error (if any) surfaces in Vercel runtime logs.
+export const dynamic = "force-dynamic";
+
+function runFrilanserenServerProbe() {
+  try {
+    const snapshot = {
+      route: "/frilanseren",
+      ts: new Date().toISOString(),
+      hasSupabaseUrl: Boolean(process.env.NEXT_PUBLIC_SUPABASE_URL),
+      hasSupabaseAnonKey: Boolean(process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY),
+      hasServiceRole: Boolean(process.env.SUPABASE_SERVICE_ROLE_KEY),
+      hasSiteUrl: Boolean(process.env.NEXT_PUBLIC_SITE_URL),
+      nodeEnv: process.env.NODE_ENV ?? null,
+      vercelEnv: process.env.VERCEL_ENV ?? null,
+    };
+    console.log("[FRILANSEREN_SERVER_PROBE]", snapshot);
+  } catch (error) {
+    console.error("[FRILANSEREN_SERVER_PROBE]", {
+      route: "/frilanseren",
+      errorMessage: error instanceof Error ? error.message : String(error),
+      errorStack: error instanceof Error ? error.stack : undefined,
+    });
+  }
+}
+
 export default function FrilanserenEntryPage() {
+  runFrilanserenServerProbe();
   return (
     <div className="mx-auto max-w-6xl space-y-10">
       <section className="max-w-4xl space-y-4">
