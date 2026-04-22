@@ -2,6 +2,7 @@
 
 import { redirect } from "next/navigation";
 
+import { hasSupabaseAuthConfig, missingSupabaseEnvs } from "@/lib/env";
 import type { FrilanserenActionState } from "@/lib/frilanseren/types";
 import {
   forgotPasswordSchema,
@@ -16,6 +17,17 @@ const loginErrorState: FrilanserenActionState = {
   status: "error",
   message: "Feil e-post eller passord. Prøv igjen.",
 };
+
+function authUnavailableState(): FrilanserenActionState {
+  console.error("[frilanseren/auth-unavailable]", {
+    missing: missingSupabaseEnvs(),
+  });
+  return {
+    status: "error",
+    message:
+      "Innlogging er midlertidig utilgjengelig. Vi jobber med å få det opp igjen. Prøv igjen om litt.",
+  };
+}
 
 function getSafeRedirectTarget(value: FormDataEntryValue | null) {
   const target = String(value ?? "").trim();
@@ -54,6 +66,10 @@ export async function signInWithPasswordAction(
     };
   }
 
+  if (!hasSupabaseAuthConfig()) {
+    return authUnavailableState();
+  }
+
   const supabase = await createServerComponentClient();
   const { error } = await supabase.auth.signInWithPassword(payload.data);
 
@@ -86,6 +102,10 @@ export async function requestPasswordResetAction(
       status: "error",
       fieldErrors: issueMapToFieldErrors(payload.error),
     };
+  }
+
+  if (!hasSupabaseAuthConfig()) {
+    return authUnavailableState();
   }
 
   const supabase = await createServerComponentClient();
@@ -122,6 +142,10 @@ export async function resetPasswordAction(
     };
   }
 
+  if (!hasSupabaseAuthConfig()) {
+    return authUnavailableState();
+  }
+
   const supabase = await createServerComponentClient();
   const { error } = await supabase.auth.updateUser({
     password: payload.data.password,
@@ -141,7 +165,13 @@ export async function resetPasswordAction(
 }
 
 export async function signOutAction() {
-  const supabase = await createServerComponentClient();
-  await supabase.auth.signOut();
+  if (hasSupabaseAuthConfig()) {
+    try {
+      const supabase = await createServerComponentClient();
+      await supabase.auth.signOut();
+    } catch (error) {
+      console.error("[frilanseren/signout-failed]", error);
+    }
+  }
   redirect("/frilanseren/login");
 }

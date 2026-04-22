@@ -32,6 +32,30 @@ export function hasSentryConfig() {
   return isNonEmpty(appEnv.sentryDsn);
 }
 
+export function missingSupabaseEnvs(options?: { includeAdmin?: boolean }) {
+  const missing: string[] = [];
+
+  if (!isNonEmpty(process.env.NEXT_PUBLIC_SUPABASE_URL)) {
+    missing.push("NEXT_PUBLIC_SUPABASE_URL");
+  }
+  if (!isNonEmpty(process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY)) {
+    missing.push("NEXT_PUBLIC_SUPABASE_ANON_KEY");
+  }
+  if (options?.includeAdmin && !isNonEmpty(process.env.SUPABASE_SERVICE_ROLE_KEY)) {
+    missing.push("SUPABASE_SERVICE_ROLE_KEY");
+  }
+
+  return missing;
+}
+
+export function hasSupabaseAuthConfig() {
+  return missingSupabaseEnvs().length === 0;
+}
+
+export function hasSupabaseAdminConfig() {
+  return missingSupabaseEnvs({ includeAdmin: true }).length === 0;
+}
+
 export function readRequiredEnv(
   value: string | undefined | null,
   key: string,
