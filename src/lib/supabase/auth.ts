@@ -4,12 +4,35 @@ import { headers } from "next/headers";
 
 import { createServerComponentClient } from "./serverClient";
 
-function getBaseUrl() {
-  const configuredSiteUrl = process.env.NEXT_PUBLIC_SITE_URL?.trim();
+function normalizeUrl(value: string | undefined | null) {
+  if (!value) return null;
+  const trimmed = value.trim();
+  if (!trimmed) return null;
+  const withScheme = /^https?:\/\//.test(trimmed) ? trimmed : `https://${trimmed}`;
+  return withScheme.endsWith("/") ? withScheme.slice(0, -1) : withScheme;
+}
 
-  if (configuredSiteUrl) {
-    return configuredSiteUrl.endsWith("/") ? configuredSiteUrl.slice(0, -1) : configuredSiteUrl;
-  }
+/**
+ * Resolve the canonical base URL for emails and redirects.
+ *
+ * Fallback chain (strongest → weakest):
+ *   1. NEXT_PUBLIC_SITE_URL              — explicit prod config, we own this
+ *   2. VERCEL_PROJECT_PRODUCTION_URL     — stable prod domain on Vercel
+ *   3. VERCEL_URL                        — current deployment URL on Vercel
+ *   4. http://localhost:3000             — dev only
+ *
+ * This ensures Supabase confirmation emails NEVER contain "localhost" in prod,
+ * even if NEXT_PUBLIC_SITE_URL was forgotten on Vercel.
+ */
+function getBaseUrl() {
+  const fromEnv = normalizeUrl(process.env.NEXT_PUBLIC_SITE_URL);
+  if (fromEnv) return fromEnv;
+
+  const fromVercelProd = normalizeUrl(process.env.VERCEL_PROJECT_PRODUCTION_URL);
+  if (fromVercelProd) return fromVercelProd;
+
+  const fromVercel = normalizeUrl(process.env.VERCEL_URL);
+  if (fromVercel) return fromVercel;
 
   return "http://localhost:3000";
 }

@@ -4,7 +4,7 @@ import { redirect } from "next/navigation";
 import { z } from "zod";
 
 import { createAdminClient, createServerComponentClient } from "@/lib/supabase/serverClient";
-import { getRequestMetadata } from "@/lib/supabase/auth";
+import { absoluteAuthUrl, getRequestMetadata } from "@/lib/supabase/auth";
 
 import {
   ACCESS_REQUEST_SUCCESS_MESSAGE,
@@ -104,7 +104,7 @@ export async function registerEmployerAction(
     email: payload.data.email,
     password: payload.data.password,
     options: {
-      emailRedirectTo: `${process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000"}/auth/confirm?next=/frilanseren/dashboard`,
+      emailRedirectTo: absoluteAuthUrl("/auth/confirm?next=/frilanseren/dashboard"),
     },
   });
 
@@ -172,7 +172,7 @@ export async function registerFreelancerAction(
     email: payload.data.email,
     password: payload.data.password,
     options: {
-      emailRedirectTo: `${process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000"}/auth/confirm?next=/frilanseren/dashboard`,
+      emailRedirectTo: absoluteAuthUrl("/auth/confirm?next=/frilanseren/dashboard"),
     },
   });
 

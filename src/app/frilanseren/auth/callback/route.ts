@@ -4,12 +4,23 @@ import { createServerClient } from "@supabase/ssr";
 
 import { hasSupabaseAuthConfig } from "@/lib/env";
 
+/**
+ * OAuth / PKCE callback for Frilanseren.
+ *
+ * Supabase redirects here after the user clicks a confirmation link or returns
+ * from an OAuth provider. We accept:
+ *   - ?code=...                → exchangeCodeForSession(code)
+ *   - ?token_hash=...&type=... → verifyOtp({ token_hash, type })  (fallback)
+ *
+ * On success → /frilanseren/dashboard (or safe ?next=/...).
+ * On any failure → /frilanseren/login?error=auth_failed.
+ */
+
 const DEFAULT_NEXT = "/frilanseren/dashboard";
 const FAILURE_REDIRECT = "/frilanseren/login?error=auth_failed";
 
 function safeNextPath(raw: string | null): string {
   if (!raw) return DEFAULT_NEXT;
-  // Only allow same-origin relative paths. Block "//evil.com" and absolute URLs.
   if (!raw.startsWith("/") || raw.startsWith("//")) return DEFAULT_NEXT;
   return raw;
 }
@@ -23,20 +34,30 @@ function requireEnv(name: "NEXT_PUBLIC_SUPABASE_URL" | "NEXT_PUBLIC_SUPABASE_ANO
 export async function GET(request: NextRequest) {
   const requestUrl = new URL(request.url);
   const next = safeNextPath(requestUrl.searchParams.get("next"));
+  const code = requestUrl.searchParams.get("code");
   const tokenHash = requestUrl.searchParams.get("token_hash");
   const type = requestUrl.searchParams.get("type");
-  const code = requestUrl.searchParams.get("code");
+  const errorParam = requestUrl.searchParams.get("error");
+  const errorDescription = requestUrl.searchParams.get("error_description");
 
   const failure = NextResponse.redirect(new URL(FAILURE_REDIRECT, request.url));
 
-  if (!hasSupabaseAuthConfig()) {
-    console.error("[AUTH_CONFIRM] supabase auth config missing — redirecting to failure");
+  if (errorParam) {
+    console.error("[FRILANSEREN_AUTH_CALLBACK] provider returned error", {
+      error: errorParam,
+      description: errorDescription,
+    });
     return failure;
   }
 
-  // No params at all → nothing to verify, just bounce to next (safe default).
+  if (!hasSupabaseAuthConfig()) {
+    console.error("[FRILANSEREN_AUTH_CALLBACK] supabase auth config missing");
+    return failure;
+  }
+
   if (!code && (!tokenHash || !type)) {
-    return NextResponse.redirect(new URL(next, request.url));
+    console.error("[FRILANSEREN_AUTH_CALLBACK] missing code/token_hash — nothing to verify");
+    return failure;
   }
 
   const success = NextResponse.redirect(new URL(next, request.url));
@@ -62,13 +83,13 @@ export async function GET(request: NextRequest) {
     if (code) {
       const { error } = await supabase.auth.exchangeCodeForSession(code);
       if (error) {
-        console.error("[AUTH_CONFIRM] exchangeCodeForSession failed", {
+        console.error("[FRILANSEREN_AUTH_CALLBACK] exchangeCodeForSession failed", {
           message: error.message,
           status: error.status,
         });
         return failure;
       }
-      console.log("[AUTH_CONFIRM] exchangeCodeForSession ok", { next });
+      console.log("[FRILANSEREN_AUTH_CALLBACK] exchangeCodeForSession ok", { next });
       return success;
     }
 
@@ -78,18 +99,18 @@ export async function GET(request: NextRequest) {
         type: type as "email" | "recovery" | "invite" | "magiclink",
       });
       if (error) {
-        console.error("[AUTH_CONFIRM] verifyOtp failed", {
+        console.error("[FRILANSEREN_AUTH_CALLBACK] verifyOtp failed", {
           type,
           message: error.message,
           status: error.status,
         });
         return failure;
       }
-      console.log("[AUTH_CONFIRM] verifyOtp ok", { type, next });
+      console.log("[FRILANSEREN_AUTH_CALLBACK] verifyOtp ok", { type, next });
       return success;
     }
   } catch (error) {
-    console.error("[AUTH_CONFIRM] threw", {
+    console.error("[FRILANSEREN_AUTH_CALLBACK] threw", {
       message: error instanceof Error ? error.message : String(error),
       stack: error instanceof Error ? error.stack : undefined,
     });
