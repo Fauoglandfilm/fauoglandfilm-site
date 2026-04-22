@@ -83,6 +83,12 @@ function GoogleAnalyticsPageTracker() {
 }
 
 export function TrackingScripts() {
+  const pathname = usePathname();
+
+  if (pathname?.startsWith("/frilanseren")) {
+    return null;
+  }
+
   return (
     <>
       {isProduction ? (

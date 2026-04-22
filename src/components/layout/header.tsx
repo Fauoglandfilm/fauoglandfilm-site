@@ -166,7 +166,10 @@ export function Header() {
   const usesAnimatedHomepageNavbar = isHomepage || isMinimalLandingPage;
   const overlayMode = isHomepage && !scrolled && !open;
   const darkOverlayMode = overlayMode && theme === "dark";
-  const hidesGlobalChrome = pathname?.startsWith("/pitch") || pathname?.startsWith("/some-plan/view");
+  const hidesGlobalChrome =
+    pathname?.startsWith("/pitch") ||
+    pathname?.startsWith("/some-plan/view") ||
+    pathname?.startsWith("/frilanseren");
   const menuLabel = language === "no" ? "Meny" : "Menu";
   const menuFooterCopy =
     language === "no"
