@@ -25,6 +25,7 @@ import { cn } from "@/lib/utils";
 
 import { Reveal } from "../motion/reveal";
 import { ButtonLink } from "../ui/button-link";
+import { BrandLogo } from "../ui/brand-logo";
 import { InteractiveHoverButton } from "../ui/interactive-hover-button";
 import { ArrowUpRightIcon } from "../ui/icons";
 import { ClientLogoMarquee } from "./client-logo-marquee";
@@ -106,6 +107,9 @@ function HeroTypewriterTitle({
 export function HeroSection() {
   const { language } = useSitePreferences();
   const videoRef = useRef<HTMLVideoElement | null>(null);
+  const shouldReduceMotion = useReducedMotion();
+  const [isMobileViewport, setIsMobileViewport] = useState(false);
+  const [hasResolvedViewport, setHasResolvedViewport] = useState(false);
   const heroVideoSrc = APPROVED_HERO_VIDEO_SRC;
 
   const eyebrow =
@@ -114,9 +118,40 @@ export function HeroSection() {
       : "Oslo / Commercial Film / Production";
   const secondaryCta = language === "no" ? "Se arbeid" : "See work";
   const heroTitle = resolveLocalizedValue(homeHeroContent.title, language);
+  const shouldRenderHeroVideo = Boolean(heroVideoSrc) && hasResolvedViewport && !isMobileViewport && !shouldReduceMotion;
 
   useEffect(() => {
-    if (!heroVideoSrc) {
+    const viewportQuery = window.matchMedia("(max-width: 767px)");
+    const coarsePointerQuery = window.matchMedia("(pointer: coarse)");
+
+    const updateViewport = () => {
+      setIsMobileViewport(viewportQuery.matches || coarsePointerQuery.matches);
+      setHasResolvedViewport(true);
+    };
+
+    updateViewport();
+
+    if (typeof viewportQuery.addEventListener === "function") {
+      viewportQuery.addEventListener("change", updateViewport);
+      coarsePointerQuery.addEventListener("change", updateViewport);
+
+      return () => {
+        viewportQuery.removeEventListener("change", updateViewport);
+        coarsePointerQuery.removeEventListener("change", updateViewport);
+      };
+    }
+
+    viewportQuery.addListener(updateViewport);
+    coarsePointerQuery.addListener(updateViewport);
+
+    return () => {
+      viewportQuery.removeListener(updateViewport);
+      coarsePointerQuery.removeListener(updateViewport);
+    };
+  }, []);
+
+  useEffect(() => {
+    if (!shouldRenderHeroVideo) {
       return;
     }
 
@@ -173,46 +208,70 @@ export function HeroSection() {
       document.removeEventListener("visibilitychange", handleVisibility);
       window.removeEventListener("pageshow", handlePageShow);
     };
-  }, [heroVideoSrc]);
+  }, [shouldRenderHeroVideo]);
 
   return (
     <section className="hero-section relative isolate overflow-hidden bg-[#05070a] text-white">
       <div className="absolute inset-0">
-        <video
-          key={heroVideoSrc}
-          ref={videoRef}
-          className="video-preview-surface mobile-hero-video-surface pointer-events-none absolute inset-0 z-0 h-full w-full object-cover brightness-[1.16] saturate-[1.02] contrast-[1.01] sm:brightness-[1.16] sm:saturate-[1.03] sm:contrast-[1.02]"
-          autoPlay
-          muted
-          loop
-          playsInline
-          poster={APPROVED_HERO_POSTER_SRC}
-          preload="auto"
-          disablePictureInPicture
-          disableRemotePlayback
-          aria-hidden="true"
-          tabIndex={-1}
-          onLoadedMetadata={(event) => {
-            const node = event.currentTarget;
+        {shouldRenderHeroVideo ? (
+          <video
+            key={heroVideoSrc}
+            ref={videoRef}
+            className="video-preview-surface mobile-hero-video-surface pointer-events-none absolute inset-0 z-0 h-full w-full object-cover brightness-[1.16] saturate-[1.02] contrast-[1.01] sm:brightness-[1.16] sm:saturate-[1.03] sm:contrast-[1.02]"
+            autoPlay
+            muted
+            loop
+            playsInline
+            poster={APPROVED_HERO_POSTER_SRC}
+            preload="auto"
+            disablePictureInPicture
+            disableRemotePlayback
+            aria-hidden="true"
+            tabIndex={-1}
+            onLoadedMetadata={(event) => {
+              const node = event.currentTarget;
 
-            node.defaultMuted = true;
-            node.muted = true;
-            node.playsInline = true;
-            node.controls = false;
-            node.setAttribute("muted", "");
-            node.setAttribute("playsinline", "");
-            node.setAttribute("webkit-playsinline", "");
-            node.setAttribute("x-webkit-airplay", "deny");
-            node.setAttribute("controlsList", "nodownload noplaybackrate nofullscreen noremoteplayback");
-            node.removeAttribute("controls");
-            void node.play().catch(() => undefined);
-          }}
-          onCanPlay={(event) => {
-            void event.currentTarget.play().catch(() => undefined);
-          }}
-        >
-          <source src={heroVideoSrc} type="video/mp4" />
-        </video>
+              node.defaultMuted = true;
+              node.muted = true;
+              node.playsInline = true;
+              node.controls = false;
+              node.setAttribute("muted", "");
+              node.setAttribute("playsinline", "");
+              node.setAttribute("webkit-playsinline", "");
+              node.setAttribute("x-webkit-airplay", "deny");
+              node.setAttribute("controlsList", "nodownload noplaybackrate nofullscreen noremoteplayback");
+              node.removeAttribute("controls");
+              void node.play().catch(() => undefined);
+            }}
+            onCanPlay={(event) => {
+              void event.currentTarget.play().catch(() => undefined);
+            }}
+          >
+            <source src={heroVideoSrc} type="video/mp4" />
+          </video>
+        ) : (
+          <>
+            <Image
+              src={APPROVED_HERO_POSTER_SRC}
+              alt=""
+              fill
+              priority
+              sizes="100vw"
+              className="pointer-events-none absolute inset-0 z-0 h-full w-full object-cover brightness-[0.96] saturate-[0.94] contrast-[1.02] sm:brightness-[1.05] sm:saturate-[0.98]"
+            />
+            {isMobileViewport ? (
+              <div className="hero-mobile-brand-lockup" aria-hidden="true">
+                <div className="hero-mobile-brand-lockup__shell">
+                  <BrandLogo
+                    variant="full"
+                    priority
+                    className="hero-mobile-brand-lockup__logo"
+                  />
+                </div>
+              </div>
+            ) : null}
+          </>
+        )}
         <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(5,7,10,0.09)_0%,rgba(5,7,10,0.045)_26%,rgba(5,7,10,0.12)_58%,rgba(5,7,10,0.34)_100%)]" />
         <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(5,7,10,0.26)_0%,rgba(5,7,10,0.13)_24%,rgba(5,7,10,0.06)_56%,rgba(5,7,10,0.04)_100%)]" />
       </div>
