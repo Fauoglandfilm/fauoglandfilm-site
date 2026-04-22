@@ -3,34 +3,12 @@ import Link from "next/link";
 
 import { BrandLogo } from "@/components/ui/brand-logo";
 import { ButtonLink } from "@/components/ui/button-link";
-import { signOutAction } from "@/lib/supabase/actions";
-import { createServerComponentClient } from "@/lib/supabase/serverClient";
 
-async function getOptionalUser() {
-  try {
-    const supabase = await createServerComponentClient();
-    const {
-      data: { user },
-      error,
-    } = await supabase.auth.getUser();
-
-    if (error) {
-      return null;
-    }
-
-    return user;
-  } catch {
-    return null;
-  }
-}
-
-export default async function FrilanserenLayout({
+export default function FrilanserenLayout({
   children,
 }: {
   children: ReactNode;
 }) {
-  const user = await getOptionalUser();
-
   return (
     <div className="min-h-screen bg-[linear-gradient(180deg,color-mix(in_srgb,var(--surface)_97%,white),color-mix(in_srgb,var(--surface-muted)_92%,white))] text-[color:var(--foreground)]">
       <header className="border-b border-[color:var(--line)]/80 bg-[color:var(--surface)]/88 backdrop-blur-md">
@@ -53,30 +31,12 @@ export default async function FrilanserenLayout({
             <ButtonLink href="/frilanseren" variant="ghost" size="compact">
               Oversikt
             </ButtonLink>
-            {user ? (
-              <>
-                <ButtonLink href="/frilanseren/dashboard" variant="ghost" size="compact">
-                  Dashboard
-                </ButtonLink>
-                <ButtonLink href="/frilanseren/profile" variant="ghost" size="compact">
-                  Profil
-                </ButtonLink>
-                <form action={signOutAction}>
-                  <button type="submit" className="button-base button-size-compact button-ghost">
-                    <span className="button-label-base">Logg ut</span>
-                  </button>
-                </form>
-              </>
-            ) : (
-              <>
-                <ButtonLink href="/frilanseren/login" variant="ghost" size="compact">
-                  Logg inn
-                </ButtonLink>
-                <ButtonLink href="/frilanseren/register" size="compact">
-                  Opprett konto
-                </ButtonLink>
-              </>
-            )}
+            <ButtonLink href="/frilanseren/login" variant="ghost" size="compact">
+              Logg inn
+            </ButtonLink>
+            <ButtonLink href="/frilanseren/register" size="compact">
+              Opprett konto
+            </ButtonLink>
           </nav>
         </div>
       </header>
