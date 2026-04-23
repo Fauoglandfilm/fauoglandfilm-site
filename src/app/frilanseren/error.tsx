@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useEffect } from "react";
 
 type FrilanserenErrorProps = {
@@ -42,18 +43,18 @@ export default function FrilanserenError({ error, reset }: FrilanserenErrorProps
         >
           <span className="button-label-base">Prøv igjen</span>
         </button>
-        <a
+        <Link
           href="/frilanseren"
           className="button-base button-size-default button-ghost"
         >
           <span className="button-label-base">Tilbake til Frilanseren</span>
-        </a>
-        <a
+        </Link>
+        <Link
           href="/"
           className="text-sm text-[var(--muted-2)] underline underline-offset-4"
         >
           Til forsiden
-        </a>
+        </Link>
       </div>
     </div>
   );

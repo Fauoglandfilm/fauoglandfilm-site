@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useEffect } from "react";
 
 type GlobalErrorProps = {
@@ -96,7 +97,7 @@ export default function GlobalError({ error, reset }: GlobalErrorProps) {
             >
               Prøv igjen
             </button>
-            <a
+            <Link
               href="/"
               style={{
                 display: "inline-flex",
@@ -111,7 +112,7 @@ export default function GlobalError({ error, reset }: GlobalErrorProps) {
               }}
             >
               Til forsiden
-            </a>
+            </Link>
           </div>
         </div>
       </body>
