@@ -8,7 +8,7 @@ import { PreviewMedia } from "@/components/media/preview-media";
 import { InstagramEmbed } from "@/components/media/instagram-embed";
 import { Reveal } from "@/components/motion/reveal";
 import { useSitePreferences } from "@/components/providers/site-preferences";
-import { CtaBanner, PageHero, ServicesSection } from "@/components/sections/site-sections";
+import { CtaBanner, PageHero } from "@/components/sections/site-sections";
 import {
   segmentedControlOptionClassName,
   segmentedControlShellClassName,
@@ -18,7 +18,6 @@ import {
   portfolioGroups,
   portfolioPageContent,
   portfolioProjects,
-  serviceAreas,
   type ExternalVideoAsset,
   type PortfolioGroup,
   type PortfolioProject,
@@ -435,18 +434,6 @@ export function PortfolioPageContent({
           </div>
         </div>
       </section>
-
-      <ServicesSection
-        services={serviceAreas}
-        title={{
-          no: uiCopy.pages.no.servicesSectionTitle,
-          en: uiCopy.pages.en.servicesSectionTitle,
-        }}
-        description={{
-          no: uiCopy.pages.no.servicesSectionDescription,
-          en: uiCopy.pages.en.servicesSectionDescription,
-        }}
-      />
 
       <CtaBanner
         title={portfolioPageContent.footerTitle}

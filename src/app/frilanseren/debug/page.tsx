@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { notFound } from "next/navigation";
 
 // Dynamic + no-index: this is a debug probe, not a public page.
 export const dynamic = "force-dynamic";
@@ -49,6 +50,10 @@ async function checkCreateServerClient(): Promise<CheckResult> {
 }
 
 export default async function FrilanserenDebugPage() {
+  if (process.env.NODE_ENV === "production" || process.env.VERCEL_ENV === "production") {
+    notFound();
+  }
+
   const flags = {
     hasSupabaseUrl: Boolean(process.env.NEXT_PUBLIC_SUPABASE_URL),
     hasSupabaseAnonKey: Boolean(process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY),

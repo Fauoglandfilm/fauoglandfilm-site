@@ -1,6 +1,5 @@
 "use client";
 
-import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { useState } from "react";
 
 import { PreviewMedia } from "@/components/media/preview-media";
@@ -48,7 +47,6 @@ function ServiceAccordionRow({
   onToggle: () => void;
 }) {
   const { language, theme } = useSitePreferences();
-  const shouldReduceMotion = useReducedMotion();
   const isDarkTheme = theme === "dark";
 
   const title = resolveLocalizedValue(service.title, language);
@@ -56,10 +54,6 @@ function ServiceAccordionRow({
   const value = resolveLocalizedValue(service.value, language);
   const summary = resolveLocalizedValue(service.summary, language);
   const budget = resolveLocalizedValue(service.budget, language);
-  const timeline = resolveLocalizedValue(service.timeline, language);
-  const deliverables = service.deliverables.map((d) =>
-    resolveLocalizedValue(d, language),
-  );
 
   const videoKey =
     serviceVideoKeyBySlug[service.slug as keyof typeof serviceVideoKeyBySlug];
@@ -104,9 +98,6 @@ function ServiceAccordionRow({
   const metaValueColor = isDarkTheme
     ? "text-white/80"
     : "text-[color:var(--foreground)]/82";
-  const checkColor = isDarkTheme
-    ? "text-[color:var(--accent)]/80"
-    : "text-[color:var(--accent)]/88";
 
   return (
     <div className={cn("border-b transition-colors duration-200", borderColor)}>
@@ -168,38 +159,20 @@ function ServiceAccordionRow({
       </button>
 
       {/* Expanded panel */}
-      <AnimatePresence initial={false}>
-        {isOpen && (
-          <motion.div
-            key="content"
-            initial={shouldReduceMotion ? false : { height: 0, opacity: 0 }}
-            animate={{ height: "auto", opacity: 1 }}
-            exit={shouldReduceMotion ? undefined : { height: 0, opacity: 0 }}
-            transition={{
-              height: {
-                type: "spring",
-                stiffness: 300,
-                damping: 34,
-                mass: 0.8,
-              },
-              opacity: { duration: 0.22, delay: 0.06 },
-            }}
-            style={{ overflow: "hidden" }}
-          >
+      <div
+        aria-hidden={!isOpen}
+        className={cn(
+          "grid overflow-hidden transition-[grid-template-rows,opacity] duration-200 ease-out",
+          isOpen
+            ? "grid-rows-[1fr] opacity-100"
+            : "pointer-events-none grid-rows-[0fr] opacity-0",
+        )}
+      >
+        {isOpen ? (
+          <div className="min-h-0 overflow-hidden">
             <div className="grid gap-6 px-5 pb-7 pt-3 sm:px-6 lg:grid-cols-[1.1fr_0.9fr] lg:gap-8 lg:px-8 lg:pb-9 lg:pt-4">
               {/* Media */}
-              <motion.div
-                initial={
-                  shouldReduceMotion
-                    ? false
-                    : { opacity: 0, y: 10, filter: "blur(8px)" }
-                }
-                animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-                transition={{
-                  duration: 0.44,
-                  delay: 0.1,
-                  ease: [0.22, 1, 0.36, 1],
-                }}
+              <div
                 className="relative overflow-hidden rounded-[1.1rem] bg-[#0b0d12]"
                 style={{ aspectRatio: "16/9" }}
               >
@@ -210,7 +183,7 @@ function ServiceAccordionRow({
                   imageAlt={title}
                   mediaFit="cover"
                   mediaObjectClassName={mediaConfig.objectClassName}
-                  previewBehavior={video ? "hover-or-viewport" : "static"}
+                  previewBehavior={video ? "hover" : "static"}
                   className="absolute inset-0"
                   sizes="(min-width: 1024px) 50vw, 100vw"
                   rootMargin="80px 0px"
@@ -222,19 +195,10 @@ function ServiceAccordionRow({
                   previewClassName="transition duration-500 ease-out"
                 />
                 <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(8,8,8,0.04),rgba(8,8,8,0.22)_100%)]" />
-              </motion.div>
+              </div>
 
               {/* Content */}
-              <motion.div
-                initial={
-                  shouldReduceMotion ? false : { opacity: 0, y: 14 }
-                }
-                animate={{ opacity: 1, y: 0 }}
-                transition={{
-                  duration: 0.44,
-                  delay: 0.14,
-                  ease: [0.22, 1, 0.36, 1],
-                }}
+              <div
                 className="flex flex-col justify-between gap-5"
               >
                 <div className="space-y-3">
@@ -253,7 +217,7 @@ function ServiceAccordionRow({
 
                 <div className={cn("h-px w-full", dividerColor)} />
 
-                <div className="grid grid-cols-2 gap-4">
+                <div className="grid gap-4 sm:grid-cols-[minmax(0,0.72fr)_minmax(0,1fr)]">
                   <div>
                     <p
                       className={cn(
@@ -267,37 +231,7 @@ function ServiceAccordionRow({
                       {budget}
                     </p>
                   </div>
-                  <div>
-                    <p
-                      className={cn(
-                        "mb-1 text-[0.62rem] font-semibold uppercase tracking-[0.16em]",
-                        metaLabelColor,
-                      )}
-                    >
-                      {language === "no" ? "Tidslinje" : "Timeline"}
-                    </p>
-                    <p className={cn("text-[0.9rem] font-semibold", metaValueColor)}>
-                      {timeline}
-                    </p>
-                  </div>
-                </div>
 
-                {deliverables.length > 0 && (
-                  <div className="space-y-1.5">
-                    {deliverables.map((item) => (
-                      <div key={item} className="flex items-center gap-2.5">
-                        <span className={cn("text-[0.78rem]", checkColor)}>✓</span>
-                        <span
-                          className={cn("text-[0.86rem] font-medium", bodyColor)}
-                        >
-                          {item}
-                        </span>
-                      </div>
-                    ))}
-                  </div>
-                )}
-
-                <div className="pt-1">
                   <ButtonLink
                     href={ctaHref}
                     variant="primary"
@@ -307,11 +241,11 @@ function ServiceAccordionRow({
                     {ctaLabel}
                   </ButtonLink>
                 </div>
-              </motion.div>
+              </div>
             </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+          </div>
+        ) : null}
+      </div>
     </div>
   );
 }
@@ -332,8 +266,8 @@ export function ServiceAccordionSection({
   const [openIndex, setOpenIndex] = useState<number>(0);
 
   const sectionBg = isDarkTheme
-    ? "bg-[radial-gradient(circle_at_top,rgba(255,255,255,0.03),transparent_24%),linear-gradient(180deg,color-mix(in_srgb,var(--background)_94%,#030407)_0%,color-mix(in_srgb,var(--background)_88%,#08111b)_100%)]"
-    : "bg-[radial-gradient(circle_at_top,rgba(255,255,255,0.62),transparent_28%),linear-gradient(180deg,color-mix(in_srgb,var(--surface)_96%,white)_0%,color-mix(in_srgb,var(--surface)_99%,#eef3f9)_100%)]";
+    ? "bg-[linear-gradient(180deg,color-mix(in_srgb,var(--background)_97%,#05070a)_0%,color-mix(in_srgb,var(--background)_92%,#071018)_100%)]"
+    : "bg-[linear-gradient(180deg,color-mix(in_srgb,var(--surface)_98%,white)_0%,color-mix(in_srgb,var(--surface)_99%,#edf2f7)_100%)]";
 
   const eyebrowColor = isDarkTheme
     ? "text-[color:var(--accent)]/88"
@@ -357,11 +291,7 @@ export function ServiceAccordionSection({
     <section className={cn("section-space", sectionBg)}>
       <div className="mx-auto max-w-[1320px] px-4 sm:px-6 lg:px-8 xl:px-10">
         {/* Header */}
-        <motion.div
-          initial={{ opacity: 0, y: 22, filter: "blur(12px)" }}
-          whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-          viewport={{ once: true, amount: 0.3 }}
-          transition={{ duration: 0.82, ease: [0.22, 1, 0.36, 1] }}
+        <div
           className="mb-8 flex flex-col gap-3 sm:mb-10 sm:gap-4 lg:flex-row lg:items-end lg:justify-between"
         >
           <div className="max-w-[38rem]">
@@ -393,7 +323,7 @@ export function ServiceAccordionSection({
           <ButtonLink href="/kontakt" variant="ghost" className="w-full sm:w-auto">
             {language === "no" ? "Book møte" : "Book a meeting"}
           </ButtonLink>
-        </motion.div>
+        </div>
 
         {/* Accordion */}
         <div

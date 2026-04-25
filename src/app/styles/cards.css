@@ -65,36 +65,34 @@
   }
 
   .card-surface::before {
-    inset: -18% auto -18% -34%;
-    width: 44%;
-    background: linear-gradient(120deg, transparent 10%, rgba(255, 255, 255, 0.12) 42%, rgba(255, 255, 255, 0.02) 58%, transparent 100%);
-    opacity: 0.14;
-    transform: translate3d(0, 0, 0) rotate(12deg);
-    mix-blend-mode: screen;
-    animation: card-sheen-drift 24s linear infinite;
+    inset: -12% auto -12% -30%;
+    width: 36%;
+    background: linear-gradient(120deg, transparent 16%, rgba(255, 255, 255, 0.08) 46%, rgba(255, 255, 255, 0.018) 62%, transparent 100%);
+    opacity: 0.07;
+    transform: translate3d(0, 0, 0) rotate(10deg);
+    mix-blend-mode: normal;
   }
 
   .card-surface::after {
-    inset: auto -12% -18% auto;
-    width: 42%;
-    height: 42%;
+    inset: auto -10% -14% auto;
+    width: 34%;
+    height: 34%;
     border-radius: 999px;
-    background: radial-gradient(circle, color-mix(in srgb, var(--accent) 12%, transparent) 0%, transparent 74%);
-    opacity: 0.1;
-    filter: blur(16px);
-    animation: card-glow-float 14s ease-in-out infinite alternate;
+    background: radial-gradient(circle, color-mix(in srgb, var(--accent) 9%, transparent) 0%, transparent 76%);
+    opacity: 0.055;
+    filter: blur(10px);
   }
 
   .card-surface:hover {
-    transform: translateY(-2px);
+    transform: translateY(-1px);
     box-shadow:
-      0 20px 50px color-mix(in srgb, var(--glass-shadow-deep) 30%, transparent),
-      0 6px 18px color-mix(in srgb, var(--glass-shadow-soft) 34%, transparent),
-      inset 0 1px 0 rgba(255, 255, 255, 0.18);
+      0 18px 44px color-mix(in srgb, var(--glass-shadow-deep) 28%, transparent),
+      0 5px 16px color-mix(in srgb, var(--glass-shadow-soft) 30%, transparent),
+      inset 0 1px 0 rgba(255, 255, 255, 0.16);
   }
 
   .card-surface:hover::before {
-    opacity: 0.2;
+    opacity: 0.1;
   }
 
   .results-showcase {
@@ -814,20 +812,20 @@
     .cinematic-panel:hover {
       transform: translateY(-1px);
       box-shadow:
-        0 26px 72px color-mix(in srgb, var(--glass-shadow-deep) 44%, transparent),
-        0 8px 22px color-mix(in srgb, var(--glass-shadow-soft) 42%, transparent),
+        0 20px 54px color-mix(in srgb, var(--glass-shadow-deep) 36%, transparent),
+        0 6px 18px color-mix(in srgb, var(--glass-shadow-soft) 34%, transparent),
         inset 0 1px 0 var(--glass-inner-top),
         inset 0 -1px 0 rgba(255, 255, 255, 0.05),
-        inset 0 12px 26px var(--glass-inner-bottom);
+        inset 0 8px 20px var(--glass-inner-bottom);
     }
 
     .card-surface:hover .media-frame,
     .cinematic-panel:hover .media-frame {
-      transform: translateY(-1px);
+      transform: none;
       box-shadow:
-        0 24px 60px color-mix(in srgb, var(--glass-shadow-deep) 42%, transparent),
+        0 18px 46px color-mix(in srgb, var(--glass-shadow-deep) 34%, transparent),
         inset 0 1px 0 rgba(255, 255, 255, 0.14),
-        inset 0 14px 24px var(--glass-inner-bottom);
+        inset 0 8px 18px var(--glass-inner-bottom);
     }
   }
 
