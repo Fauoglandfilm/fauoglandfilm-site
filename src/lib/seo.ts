@@ -7,6 +7,7 @@ type MetadataInput = {
   description: string;
   path?: string;
   keywords?: string[];
+  noIndex?: boolean;
 };
 
 export function absoluteUrl(path = "/") {
@@ -18,6 +19,7 @@ export function buildMetadata({
   description,
   path = "/",
   keywords = [],
+  noIndex = false,
 }: MetadataInput): Metadata {
   const fullTitle = `${title} | ${siteConfig.name}`;
   const url = absoluteUrl(path);
@@ -38,6 +40,13 @@ export function buildMetadata({
     alternates: {
       canonical: url,
     },
+    robots: noIndex
+      ? {
+          index: false,
+          follow: false,
+          googleBot: { index: false, follow: false },
+        }
+      : undefined,
     openGraph: {
       title: fullTitle,
       description,

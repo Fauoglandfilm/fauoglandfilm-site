@@ -196,6 +196,65 @@
       0 14px 36px color-mix(in srgb, var(--glass-shadow-soft) 24%, transparent);
   }
 
+  .conversion-path-shell {
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+    border-radius: 2rem;
+    border: 1px solid color-mix(in srgb, var(--line-strong) 58%, rgba(255, 255, 255, 0.22));
+    background:
+      linear-gradient(135deg, color-mix(in srgb, var(--foreground) 4%, transparent), transparent 42%),
+      linear-gradient(180deg, color-mix(in srgb, var(--surface) 98%, white), color-mix(in srgb, var(--surface-muted) 96%, white));
+    box-shadow:
+      0 30px 92px color-mix(in srgb, var(--glass-shadow-deep) 12%, transparent),
+      0 10px 28px color-mix(in srgb, var(--glass-shadow-soft) 20%, transparent),
+      inset 0 1px 0 rgba(255, 255, 255, 0.52);
+  }
+
+  .conversion-path-shell::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background:
+      linear-gradient(90deg, color-mix(in srgb, var(--accent) 10%, transparent), transparent 34%),
+      radial-gradient(circle at 88% 12%, color-mix(in srgb, var(--accent) 10%, transparent) 0%, transparent 28%);
+    opacity: 0.74;
+  }
+
+  .conversion-path-card {
+    position: relative;
+    z-index: 1;
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+    gap: 1rem;
+    align-items: start;
+    border-radius: 1.35rem;
+    border: 1px solid color-mix(in srgb, var(--line) 90%, rgba(255, 255, 255, 0.22));
+    background:
+      linear-gradient(180deg, rgba(255, 255, 255, 0.48), rgba(255, 255, 255, 0.18)),
+      color-mix(in srgb, var(--surface-strong) 94%, transparent);
+    padding: 1.05rem;
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.44),
+      0 14px 34px color-mix(in srgb, var(--glass-shadow-soft) 18%, transparent);
+  }
+
+  .conversion-path-card__index {
+    display: inline-flex;
+    min-width: 2.3rem;
+    height: 2.3rem;
+    align-items: center;
+    justify-content: center;
+    border-radius: 999px;
+    border: 1px solid color-mix(in srgb, var(--accent) 24%, var(--line));
+    background: color-mix(in srgb, var(--accent) 9%, var(--surface) 91%);
+    color: color-mix(in srgb, var(--foreground) 82%, var(--accent) 18%);
+    font-size: 0.7rem;
+    font-weight: 800;
+    letter-spacing: 0.12em;
+  }
+
   .home-section-shell {
     position: relative;
     isolation: isolate;
@@ -294,6 +353,24 @@
     box-shadow:
       0 14px 34px rgba(18, 14, 10, 0.06),
       inset 0 1px 0 rgba(255, 255, 255, 0.16);
+  }
+
+  .service-pillar-card--sales {
+    border-color: color-mix(in srgb, var(--line-strong) 62%, rgba(255, 255, 255, 0.2));
+  }
+
+  .service-pillar-card__proof {
+    border-radius: 1rem;
+    border: 1px solid color-mix(in srgb, var(--line) 88%, rgba(255, 255, 255, 0.18));
+    background:
+      linear-gradient(180deg, rgba(255, 255, 255, 0.42), rgba(255, 255, 255, 0.14)),
+      color-mix(in srgb, var(--surface-muted) 78%, transparent);
+    padding: 0.78rem 0.82rem;
+  }
+
+  .service-pillar-card__meta {
+    border-top: 1px solid color-mix(in srgb, var(--line) 88%, transparent);
+    padding-top: 1rem;
   }
 
   .service-pillar-card__cta {
@@ -478,6 +555,34 @@
     padding-top: 1.25rem;
   }
 
+  .contact-conversion-strip__item {
+    border-radius: 1rem;
+    border: 1px solid color-mix(in srgb, var(--line) 88%, rgba(255, 255, 255, 0.2));
+    background:
+      linear-gradient(180deg, rgba(255, 255, 255, 0.56), rgba(248, 243, 236, 0.72)),
+      color-mix(in srgb, var(--surface) 96%, transparent);
+    padding: 0.85rem;
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.54),
+      0 10px 22px rgba(17, 17, 17, 0.04);
+  }
+
+  .contact-conversion-strip__item span {
+    display: block;
+    font-size: 0.62rem;
+    font-weight: 800;
+    letter-spacing: 0.18em;
+    color: color-mix(in srgb, var(--accent) 84%, var(--foreground) 16%);
+  }
+
+  .contact-conversion-strip__item p {
+    margin-top: 0.45rem;
+    font-size: 0.82rem;
+    font-weight: 650;
+    line-height: 1.35;
+    color: color-mix(in srgb, var(--foreground) 86%, var(--muted) 14%);
+  }
+
   .contact-form-feedback {
     min-height: 2.75rem;
   }
@@ -533,6 +638,34 @@
     z-index: 1;
   }
 
+  .closing-cta-proof-grid {
+    position: relative;
+    z-index: 1;
+  }
+
+  .closing-cta-proof-card {
+    border-radius: 1rem;
+    border: 1px solid color-mix(in srgb, var(--line) 80%, rgba(255, 255, 255, 0.14));
+    background: color-mix(in srgb, var(--surface) 70%, transparent);
+    padding: 0.85rem 0.9rem;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  }
+
+  .closing-cta-proof-card__index {
+    display: block;
+    font-size: 0.58rem;
+    font-weight: 800;
+    letter-spacing: 0.18em;
+    color: color-mix(in srgb, var(--accent) 82%, var(--foreground) 18%);
+  }
+
+  .closing-cta-proof-card p {
+    margin-top: 0.38rem;
+    font-size: 0.84rem;
+    font-weight: 650;
+    line-height: 1.35;
+  }
+
   html[data-theme="dark"] .results-showcase {
     border-color: color-mix(in srgb, var(--line-strong) 74%, rgba(240, 210, 160, 0.18));
     background:
@@ -585,6 +718,40 @@
       0 14px 36px color-mix(in srgb, var(--glass-shadow-soft) 44%, transparent);
   }
 
+  html[data-theme="dark"] .conversion-path-shell {
+    border-color: color-mix(in srgb, var(--line-strong) 70%, rgba(240, 210, 160, 0.12));
+    background:
+      linear-gradient(135deg, rgba(240, 210, 160, 0.07), transparent 42%),
+      linear-gradient(180deg, color-mix(in srgb, var(--surface-strong) 94%, #0c0d10), color-mix(in srgb, var(--background) 92%, #10141a));
+    box-shadow:
+      0 32px 96px color-mix(in srgb, var(--glass-shadow-deep) 48%, transparent),
+      0 10px 28px color-mix(in srgb, var(--glass-shadow-soft) 36%, transparent),
+      inset 0 1px 0 rgba(255, 255, 255, 0.07);
+  }
+
+  html[data-theme="dark"] .conversion-path-shell::before {
+    background:
+      linear-gradient(90deg, rgba(240, 210, 160, 0.08), transparent 34%),
+      radial-gradient(circle at 88% 12%, rgba(106, 174, 255, 0.1) 0%, transparent 28%);
+    opacity: 0.78;
+  }
+
+  html[data-theme="dark"] .conversion-path-card {
+    border-color: color-mix(in srgb, var(--line) 92%, rgba(255, 255, 255, 0.08));
+    background:
+      linear-gradient(180deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.018)),
+      color-mix(in srgb, var(--surface-strong) 94%, rgba(255, 255, 255, 0.03));
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.08),
+      0 14px 34px color-mix(in srgb, var(--glass-shadow-soft) 42%, transparent);
+  }
+
+  html[data-theme="dark"] .conversion-path-card__index {
+    border-color: color-mix(in srgb, var(--accent) 28%, rgba(255, 255, 255, 0.12));
+    background: color-mix(in srgb, var(--accent) 12%, var(--surface-strong) 88%);
+    color: color-mix(in srgb, var(--accent) 84%, white 16%);
+  }
+
   html[data-theme="dark"] .home-section-shell {
     border-color: color-mix(in srgb, var(--line-strong) 68%, rgba(255, 255, 255, 0.1));
     background:
@@ -605,6 +772,17 @@
 
   html[data-theme="dark"] .home-section-shell__rule {
     background: linear-gradient(90deg, transparent 0%, color-mix(in srgb, var(--line-strong) 72%, rgba(240, 210, 160, 0.12)) 12%, color-mix(in srgb, var(--line-strong) 72%, rgba(240, 210, 160, 0.12)) 88%, transparent 100%);
+  }
+
+  html[data-theme="dark"] .service-pillar-card__proof {
+    border-color: color-mix(in srgb, var(--line) 92%, rgba(255, 255, 255, 0.08));
+    background:
+      linear-gradient(180deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.018)),
+      color-mix(in srgb, var(--surface-muted) 86%, rgba(255, 255, 255, 0.03));
+  }
+
+  html[data-theme="dark"] .service-pillar-card__meta {
+    border-top-color: color-mix(in srgb, var(--line) 82%, transparent);
   }
 
   html[data-theme="dark"] .contact-section-logo-ghost {
@@ -689,6 +867,20 @@
       inset 0 1px 0 rgba(255, 255, 255, 0.08);
   }
 
+  html[data-theme="dark"] .contact-conversion-strip__item {
+    border-color: color-mix(in srgb, var(--line) 88%, rgba(255, 255, 255, 0.08));
+    background:
+      linear-gradient(180deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.018)),
+      color-mix(in srgb, var(--surface-muted) 90%, rgba(255, 255, 255, 0.03));
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.08),
+      0 10px 24px color-mix(in srgb, var(--glass-shadow-soft) 38%, transparent);
+  }
+
+  html[data-theme="dark"] .contact-conversion-strip__item p {
+    color: color-mix(in srgb, var(--foreground) 88%, var(--muted) 12%);
+  }
+
   html[data-theme="dark"] .contact-form-input {
     border-color: color-mix(in srgb, var(--line) 90%, rgba(255, 255, 255, 0.08));
     background:
@@ -731,6 +923,11 @@
     box-shadow:
       0 20px 46px rgba(0, 0, 0, 0.34),
       inset 0 1px 0 rgba(255, 255, 255, 0.08);
+  }
+
+  html[data-theme="dark"] .closing-cta-proof-card {
+    border-color: rgba(255, 255, 255, 0.11);
+    background: rgba(255, 255, 255, 0.045);
   }
 
   @keyframes card-sheen-drift {

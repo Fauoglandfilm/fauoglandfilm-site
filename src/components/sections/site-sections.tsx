@@ -44,6 +44,20 @@ import { TestimonialCard } from "./testimonial-card";
 type MaybeLocalizedText = string | LocalizedText;
 const SERVICE_CAROUSEL_COPY_COUNT = 3;
 const SERVICE_CAROUSEL_CENTER_INDEX = Math.floor(SERVICE_CAROUSEL_COPY_COUNT / 2);
+const contactConversionItems = [
+  {
+    no: "Dere trenger ikke ferdig brief",
+    en: "You do not need a finished brief",
+  },
+  {
+    no: "Vi anbefaler riktig format",
+    en: "We recommend the right format",
+  },
+  {
+    no: "Dere får konkret neste steg",
+    en: "You get a concrete next step",
+  },
+] satisfies LocalizedText[];
 
 export function ServicesSection({
   services,
@@ -800,6 +814,14 @@ export function ContactLeadSection({
                 <p className="body-copy text-[var(--muted-2)]">
                   {copy.contactBriefDescription}
                 </p>
+                <div className="contact-conversion-strip mt-5 grid gap-2.5 sm:grid-cols-3">
+                  {contactConversionItems.map((item, index) => (
+                    <div key={resolveLocalizedValue(item, language)} className="contact-conversion-strip__item">
+                      <span>{String(index + 1).padStart(2, "0")}</span>
+                      <p>{resolveLocalizedValue(item, language)}</p>
+                    </div>
+                  ))}
+                </div>
               </div>
               <div className="mt-6">
                 <ContactForm />

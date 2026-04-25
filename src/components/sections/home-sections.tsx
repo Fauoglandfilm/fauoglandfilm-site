@@ -90,6 +90,137 @@ const closingCtaContent = {
   secondaryCta: LocalizedText;
 };
 
+const heroProofItems = [
+  {
+    value: "100+",
+    label: {
+      no: "filmer levert",
+      en: "films delivered",
+    },
+  },
+  {
+    value: "5M+",
+    label: {
+      no: "visninger på SoMe",
+      en: "social views",
+    },
+  },
+  {
+    value: "Oslo",
+    label: {
+      no: "senior produksjon",
+      en: "senior production",
+    },
+  },
+] satisfies Array<{ value: string; label: LocalizedText }>;
+
+const conversionPathItems = [
+  {
+    title: {
+      no: "Avklar hva filmen skal selge",
+      en: "Clarify what the film should sell",
+    },
+    description: {
+      no: "Vi starter med mål, kanal og målgruppe, ikke bare bilder. Da blir produksjonen enklere å kjøpe og enklere å måle.",
+      en: "We start with goal, channel and audience, not only visuals. That makes the production easier to buy and easier to measure.",
+    },
+  },
+  {
+    title: {
+      no: "Produser hovedfilm og uttak samtidig",
+      en: "Produce the hero film and cutdowns together",
+    },
+    description: {
+      no: "Ett opptak planlegges for nettside, annonser, Reels, stories og presentasjoner, så dere får mer materiale per produksjonsdag.",
+      en: "One shoot is planned for website, ads, Reels, stories and presentations, so you get more material per production day.",
+    },
+  },
+  {
+    title: {
+      no: "Publiser med tydelig neste steg",
+      en: "Publish with a clear next step",
+    },
+    description: {
+      no: "Filmene leveres som konkrete flater dere faktisk kan bruke: tillit på nettsiden, respons i feed og bedre grunnlag for salg.",
+      en: "Films are delivered as practical assets you can actually use: trust on the website, response in feed and better sales material.",
+    },
+  },
+] satisfies Array<{ title: LocalizedText; description: LocalizedText }>;
+
+const serviceSalesDetails = {
+  "01": {
+    outcome: {
+      no: "Gjør tilbudet enklere å forstå og velge.",
+      en: "Makes the offer easier to understand and choose.",
+    },
+    bestFor: {
+      no: "Lansering, annonser og nettside",
+      en: "Launches, ads and websites",
+    },
+    price: {
+      no: "Fra 20 000 kr",
+      en: "From NOK 20,000",
+    },
+  },
+  "02": {
+    outcome: {
+      no: "Bygger tillit før kunden tar kontakt.",
+      en: "Builds trust before the customer contacts you.",
+    },
+    bestFor: {
+      no: "B2B, rekruttering og salg",
+      en: "B2B, recruitment and sales",
+    },
+    price: {
+      no: "Fra 20 000 kr",
+      en: "From NOK 20,000",
+    },
+  },
+  "03": {
+    outcome: {
+      no: "Holder dere synlige med innhold som kan brukes ofte.",
+      en: "Keeps you visible with content you can use often.",
+    },
+    bestFor: {
+      no: "Reels, ads og løpende synlighet",
+      en: "Reels, ads and ongoing visibility",
+    },
+    price: {
+      no: "Fra 5 000 kr",
+      en: "From NOK 5,000",
+    },
+  },
+  "04": {
+    outcome: {
+      no: "Forlenger verdien av arrangementet etterpå.",
+      en: "Extends the value of the event after it ends.",
+    },
+    bestFor: {
+      no: "Event, konferanse og employer brand",
+      en: "Events, conferences and employer brand",
+    },
+    price: {
+      no: "Fra 15 000 kr",
+      en: "From NOK 15,000",
+    },
+  },
+} satisfies Record<string, { outcome: LocalizedText; bestFor: LocalizedText; price: LocalizedText }>;
+
+const closingNextSteps = [
+  {
+    no: "Kort avklaring av mål og kanal",
+    en: "Short clarification of goal and channel",
+  },
+  {
+    no: "Anbefalt format og omfang",
+    en: "Recommended format and scope",
+  },
+  {
+    no: "Tydelig neste steg før produksjon",
+    en: "Clear next step before production",
+  },
+] satisfies LocalizedText[];
+
 function HeroTypewriterTitle({
   title,
   className,
@@ -300,6 +431,17 @@ export function HeroSection() {
               className="w-full sm:w-[11.5rem]"
             />
           </div>
+
+          <div className="hero-proof-rail mt-4 grid grid-cols-3 gap-2.5 sm:mt-5">
+            {heroProofItems.map((item) => (
+              <div key={item.value} className="hero-proof-card">
+                <p className="hero-proof-card__value">{item.value}</p>
+                <p className="hero-proof-card__label">
+                  {resolveLocalizedValue(item.label, language)}
+                </p>
+              </div>
+            ))}
+          </div>
         </div>
       </div>
     </section>
@@ -319,6 +461,62 @@ export function ClientSlider() {
         </p>
         <div className="carousel-mobile-bleed mt-3 sm:mt-4.5">
           <ClientLogoMarquee logos={clientLogos} durationSeconds={46} />
+        </div>
+      </div>
+    </section>
+  );
+}
+
+export function ConversionPathSection() {
+  const { language } = useSitePreferences();
+
+  return (
+    <section className="section-space pt-[clamp(1.8rem,3vw,3.8rem)]">
+      <div className="site-container">
+        <div className="conversion-path-shell px-5 py-6 sm:px-7 sm:py-8 lg:grid lg:grid-cols-[0.86fr_1.14fr] lg:gap-8 lg:px-9 lg:py-10">
+          <Reveal y={14}>
+            <div className="max-w-[34rem]">
+              <p className="eyebrow">{language === "no" ? "Salgsflyt" : "Sales flow"}</p>
+              <h2 className="section-title mt-3 text-[color:var(--foreground)] sm:mt-4">
+                {language === "no"
+                  ? "Fra pen film til materiale som faktisk hjelper salget."
+                  : "From good-looking film to assets that actually support sales."}
+              </h2>
+              <p className="body-lead mt-4 text-[var(--muted-2)]">
+                {language === "no"
+                  ? "Profesjonell video handler ikke om å filme mest mulig. Det handler om å lage riktig materiale for beslutningen kunden skal ta."
+                  : "Professional video is not about filming as much as possible. It is about making the right assets for the decision your customer needs to make."}
+              </p>
+              <div className="mt-6 flex flex-col gap-3 sm:flex-row">
+                <ButtonLink href="/kontakt" className="w-full sm:w-auto">
+                  {language === "no" ? "Få anbefalt oppsett" : "Get a recommended setup"}
+                </ButtonLink>
+                <ButtonLink href="/case" variant="ghost" className="w-full sm:w-auto">
+                  {language === "no" ? "Se bevis" : "See proof"}
+                </ButtonLink>
+              </div>
+            </div>
+          </Reveal>
+
+          <div className="mt-7 grid gap-3 lg:mt-0">
+            {conversionPathItems.map((item, index) => (
+              <Reveal key={resolveLocalizedValue(item.title, language)} delay={0.05 * index} y={12}>
+                <article className="conversion-path-card">
+                  <span className="conversion-path-card__index">
+                    {String(index + 1).padStart(2, "0")}
+                  </span>
+                  <div>
+                    <h3 className="font-display text-[1.28rem] leading-[1.04] tracking-[-0.052em] text-[color:var(--foreground)] sm:text-[1.55rem]">
+                      {resolveLocalizedValue(item.title, language)}
+                    </h3>
+                    <p className="mt-2 text-sm leading-6 text-[var(--muted-2)] sm:text-[0.98rem]">
+                      {resolveLocalizedValue(item.description, language)}
+                    </p>
+                  </div>
+                </article>
+              </Reveal>
+            ))}
+          </div>
         </div>
       </div>
     </section>
@@ -430,12 +628,12 @@ export function ServicesSection() {
   const eyebrow = language === "no" ? "Tjenester" : "Services";
   const title =
     language === "no"
-      ? "Fire formater vi leverer oftest."
-      : "Four formats we deliver most often.";
+      ? "Velg formatet som raskest kan gi respons."
+      : "Choose the format most likely to create response.";
   const description =
     language === "no"
-      ? "Tydelige leveranser for nettside, kampanjer, sosiale medier og arrangementer."
-      : "Clear deliverables for websites, campaigns, social media and events.";
+      ? "Vi pakker film som et salgsverktøy: tydelig mål, riktig kanal og materiale dere faktisk får brukt."
+      : "We package film as a sales asset: clear goal, right channel and material your team will actually use.";
 
   return (
     <section className="section-space">
@@ -450,7 +648,7 @@ export function ServicesSection() {
               <p className="body-lead mt-3 text-[var(--muted-2)] sm:mt-4">{description}</p>
             </div>
             <ButtonLink href="/tjenester" variant="ghost" className="w-full sm:w-auto">
-              {language === "no" ? "Se tjenester" : "See services"}
+              {language === "no" ? "Sammenlign tjenester" : "Compare services"}
             </ButtonLink>
           </div>
 
@@ -1002,6 +1200,16 @@ export function ClosingCtaSection() {
               <p className={cn("body-lead mt-4", descriptionClassName)}>
                 {resolveLocalizedValue(closingCtaContent.description, language)}
               </p>
+              <div className="closing-cta-proof-grid mt-6 grid gap-2.5 sm:grid-cols-3">
+                {closingNextSteps.map((item, index) => (
+                  <div key={resolveLocalizedValue(item, language)} className="closing-cta-proof-card">
+                    <span className="closing-cta-proof-card__index">
+                      {String(index + 1).padStart(2, "0")}
+                    </span>
+                    <p>{resolveLocalizedValue(item, language)}</p>
+                  </div>
+                ))}
+              </div>
             </div>
 
             <div className="closing-cta-shell__actions mt-7 flex flex-col gap-3 sm:flex-row lg:mt-0 lg:shrink-0">
@@ -1314,11 +1522,12 @@ function ServiceCard({
 }) {
   const { language } = useSitePreferences();
   const video = homeServiceVideoLibrary[pillar.eyebrow as keyof typeof homeServiceVideoLibrary];
+  const details = serviceSalesDetails[pillar.eyebrow as keyof typeof serviceSalesDetails];
 
   return (
     <Reveal delay={delay} y={14}>
-      <Link href="/tjenester" className="group block h-full">
-        <article className="card-surface service-pillar-card flex h-full flex-col overflow-hidden rounded-[1.7rem]">
+      <Link href="/kontakt" className="group block h-full">
+        <article className="card-surface service-pillar-card service-pillar-card--sales flex h-full flex-col overflow-hidden rounded-[1.7rem]">
           <div className="relative aspect-[1.02/0.78] overflow-hidden bg-[#0b0d12]">
             <PreviewMedia
               title={pillar.title}
@@ -1339,16 +1548,35 @@ function ServiceCard({
           </div>
 
           <div className="flex flex-1 flex-col p-4 sm:p-[1.15rem]">
+            {details ? (
+              <div className="service-pillar-card__proof mb-4 grid gap-2">
+                <p className="text-[0.64rem] font-semibold uppercase tracking-[0.18em] text-[var(--muted)]">
+                  {language === "no" ? "Passer for" : "Best for"}
+                </p>
+                <p className="text-sm font-semibold leading-5 text-[color:var(--foreground)]">
+                  {resolveLocalizedValue(details.bestFor, language)}
+                </p>
+              </div>
+            ) : null}
             <h3 className="font-display text-[1.28rem] leading-[1.02] tracking-[-0.05em] text-[color:var(--foreground)] sm:text-[1.42rem]">
               {resolveLocalizedValue(pillar.title, language)}
             </h3>
             <p className="mt-2 text-sm leading-6 text-[var(--muted-2)] sm:text-[0.98rem]">
-              {resolveLocalizedValue(pillar.summary, language)}
+              {details
+                ? resolveLocalizedValue(details.outcome, language)
+                : resolveLocalizedValue(pillar.summary, language)}
             </p>
-            <span className="service-pillar-card__cta mt-6 inline-flex items-center gap-2 text-sm font-medium text-[color:var(--foreground)]">
-              <span>{language === "no" ? "Se tjenester" : "See services"}</span>
-              <ArrowUpRightIcon className="h-4 w-4 transition duration-300 group-hover:translate-x-px" />
-            </span>
+            <div className="mt-auto pt-6">
+              <div className="service-pillar-card__meta flex items-center justify-between gap-3">
+                <span className="text-[0.72rem] font-semibold uppercase tracking-[0.16em] text-[var(--muted)]">
+                  {details ? resolveLocalizedValue(details.price, language) : null}
+                </span>
+                <span className="service-pillar-card__cta inline-flex items-center gap-2 text-sm font-semibold text-[color:var(--foreground)]">
+                  <span>{language === "no" ? "Book oppsett" : "Book setup"}</span>
+                  <ArrowUpRightIcon className="h-4 w-4 transition duration-300 group-hover:translate-x-px" />
+                </span>
+              </div>
+            </div>
           </div>
         </article>
       </Link>

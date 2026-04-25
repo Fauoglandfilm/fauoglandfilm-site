@@ -73,6 +73,24 @@
       line-height: 1.35;
       letter-spacing: -0.022em;
     }
+
+    .hero-proof-rail {
+      width: calc(100vw - max(env(safe-area-inset-left), 0px) - max(env(safe-area-inset-right), 0px) - 2rem);
+    }
+
+    .hero-proof-card {
+      border-radius: 0.86rem;
+      padding: 0.62rem 0.56rem;
+    }
+
+    .hero-proof-card__value {
+      font-size: clamp(0.92rem, 4.2vw, 1.12rem);
+    }
+
+    .hero-proof-card__label {
+      font-size: 0.48rem;
+      letter-spacing: 0.08em;
+    }
   }
 
   @media (min-width: 1024px) {
@@ -246,6 +264,46 @@
     line-height: 1.25;
     letter-spacing: -0.018em;
     text-shadow: 0 10px 24px rgba(0, 0, 0, 0.26);
+  }
+
+  .hero-proof-rail {
+    width: min(100%, 31rem);
+  }
+
+  .hero-proof-card {
+    min-width: 0;
+    border-radius: 1.05rem;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    background:
+      linear-gradient(180deg, rgba(10, 14, 20, 0.42), rgba(10, 14, 20, 0.24)),
+      rgba(255, 255, 255, 0.045);
+    box-shadow:
+      0 16px 34px rgba(0, 0, 0, 0.14),
+      inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    padding: 0.72rem 0.78rem;
+    backdrop-filter: blur(8px) saturate(112%);
+    -webkit-backdrop-filter: blur(8px) saturate(112%);
+  }
+
+  .hero-proof-card__value {
+    margin: 0;
+    font-family: var(--font-sora), sans-serif;
+    font-size: clamp(1rem, 2.4vw, 1.38rem);
+    font-weight: 700;
+    line-height: 1;
+    letter-spacing: -0.055em;
+    color: #f2d08a;
+    text-shadow: 0 10px 24px rgba(0, 0, 0, 0.24);
+  }
+
+  .hero-proof-card__label {
+    margin: 0.32rem 0 0;
+    font-size: 0.58rem;
+    font-weight: 700;
+    line-height: 1.2;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.72);
   }
 
   .hero-heading-row {
