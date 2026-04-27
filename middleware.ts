@@ -2,7 +2,7 @@ import { NextResponse, type NextRequest } from "next/server";
 
 import { createMiddlewareClient } from "@/lib/supabase/serverClient";
 
-const protectedPrefixes = ["/frilanseren/dashboard", "/frilanseren/profile"] as const;
+const protectedPrefixes = ["/frilanseren/dashboard", "/frilanseren/profile", "/frilanseren/admin"] as const;
 
 function isProtectedPath(pathname: string) {
   return protectedPrefixes.some((prefix) => pathname.startsWith(prefix));
@@ -11,13 +11,6 @@ function isProtectedPath(pathname: string) {
 export async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
   const isProtected = isProtectedPath(pathname);
-
-  console.log("[FRILANSEREN_MIDDLEWARE] hit", {
-    path: pathname,
-    isProtected,
-    hasSupabaseUrl: Boolean(process.env.NEXT_PUBLIC_SUPABASE_URL),
-    hasSupabaseAnonKey: Boolean(process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY),
-  });
 
   if (!isProtected) {
     return NextResponse.next();
@@ -28,11 +21,6 @@ export async function middleware(request: NextRequest) {
     const {
       data: { user },
     } = await supabase.auth.getUser();
-
-    console.log("[FRILANSEREN_MIDDLEWARE] auth-check", {
-      path: pathname,
-      hasUser: Boolean(user),
-    });
 
     if (user) {
       return getResponse();

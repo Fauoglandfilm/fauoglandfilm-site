@@ -14,6 +14,7 @@ import {
   getConsentTextVersion,
 } from "./gdpr";
 import { buildProfileImagePath, getUploadedFile, validateImageFile } from "./media";
+import { upsertWithOptionalColumn } from "./profile-upsert";
 import { requireCurrentUserContext } from "./queries";
 import {
   DUPLICATE_EMAIL_MESSAGE,
@@ -271,11 +272,6 @@ export async function registerEmployerAction(
       email: payload.data.email,
       message: error instanceof Error ? error.message : String(error),
     });
-
-    return {
-      status: "error",
-      message: getGenericServerErrorMessage(),
-    };
   }
 
   const supabase = await createServerComponentClient();
@@ -319,17 +315,17 @@ export async function registerEmployerAction(
       throw userMetaError;
     }
 
-    const { error: profileError } = await admin.from("employer_profiles").upsert({
-      user_id: data.user.id,
-      company_name: payload.data.company_name,
-      production_types: payload.data.production_types,
-      annual_volume: payload.data.annual_volume,
-      logo_path: uploadResult.path,
+    const profileUpsertResult = await upsertWithOptionalColumn({
+      payload: {
+        user_id: data.user.id,
+        company_name: payload.data.company_name,
+        production_types: payload.data.production_types,
+        annual_volume: payload.data.annual_volume,
+        logo_path: uploadResult.path,
+      },
+      optionalColumn: "logo_path",
+      execute: (upsertPayload) => admin.from("employer_profiles").upsert(upsertPayload),
     });
-
-    if (profileError) {
-      throw profileError;
-    }
 
     await createConsentLog(data.user.id, admin);
     await logAdminAction(
@@ -347,7 +343,7 @@ export async function registerEmployerAction(
 
     return {
       status: "success",
-      message: uploadResult.failed
+      message: uploadResult.failed || profileUpsertResult.fallbackUsed
         ? `Vi har sendt deg en bekreftelseslenke på e-post. Bekreft e-posten din for å aktivere kontoen. ${getRegistrationImageWarning("employer")}`
         : "Vi har sendt deg en bekreftelseslenke på e-post. Bekreft e-posten din for å aktivere kontoen. Når vi er klare til å teste jobbmatching, kontakter vi deg med konkrete forslag til hvordan vi kan fylle neste produksjon.",
     };
@@ -419,11 +415,6 @@ export async function registerFreelancerAction(
       email: payload.data.email,
       message: error instanceof Error ? error.message : String(error),
     });
-
-    return {
-      status: "error",
-      message: getGenericServerErrorMessage(),
-    };
   }
 
   const supabase = await createServerComponentClient();
@@ -466,16 +457,16 @@ export async function registerFreelancerAction(
       throw userMetaError;
     }
 
-    const { error: profileError } = await admin.from("freelancer_profiles").upsert({
-      user_id: data.user.id,
-      roles: payload.data.roles,
-      experience_level: payload.data.experience_level,
-      profile_image_path: uploadResult.path,
+    const profileUpsertResult = await upsertWithOptionalColumn({
+      payload: {
+        user_id: data.user.id,
+        roles: payload.data.roles,
+        experience_level: payload.data.experience_level,
+        profile_image_path: uploadResult.path,
+      },
+      optionalColumn: "profile_image_path",
+      execute: (upsertPayload) => admin.from("freelancer_profiles").upsert(upsertPayload),
     });
-
-    if (profileError) {
-      throw profileError;
-    }
 
     await createConsentLog(data.user.id, admin);
     await logAdminAction(
@@ -493,7 +484,7 @@ export async function registerFreelancerAction(
 
     return {
       status: "success",
-      message: uploadResult.failed
+      message: uploadResult.failed || profileUpsertResult.fallbackUsed
         ? `Vi har sendt deg en bekreftelseslenke på e-post. Bekreft e-posten din for å aktivere kontoen. ${getRegistrationImageWarning("freelancer")}`
         : "Vi har sendt deg en bekreftelseslenke på e-post. Bekreft e-posten din for å aktivere kontoen. Når vi åpner for jobbmatching, får du beskjed og blir prioritert i de første pilotoppdragene.",
     };
@@ -560,15 +551,26 @@ export async function updateEmployerProfileAction(
     })
     .eq("id", context.userId);
 
-  const { error: profileError } = await supabase
-    .from("employer_profiles")
-    .upsert({
-      user_id: context.userId,
-      company_name: payload.data.company_name,
-      production_types: payload.data.production_types,
-      annual_volume: payload.data.annual_volume,
-      logo_path: uploadResult.path,
+  let profileFallbackUsed = false;
+  let profileError: unknown = null;
+
+  try {
+    const result = await upsertWithOptionalColumn({
+      payload: {
+        user_id: context.userId,
+        company_name: payload.data.company_name,
+        production_types: payload.data.production_types,
+        annual_volume: payload.data.annual_volume,
+        logo_path: uploadResult.path,
+      },
+      optionalColumn: "logo_path",
+      execute: (upsertPayload) => supabase.from("employer_profiles").upsert(upsertPayload),
     });
+
+    profileFallbackUsed = result.fallbackUsed;
+  } catch (error) {
+    profileError = error;
+  }
 
   if (userMetaError || profileError) {
     return {
@@ -579,7 +581,10 @@ export async function updateEmployerProfileAction(
 
   return {
     status: "success",
-    message: uploadResult.failed ? getProfileUpdateImageWarning("employer") : "Profilen din er oppdatert.",
+    message:
+      uploadResult.failed || profileFallbackUsed
+        ? getProfileUpdateImageWarning("employer")
+        : "Profilen din er oppdatert.",
   };
 }
 
@@ -636,14 +641,25 @@ export async function updateFreelancerProfileAction(
     })
     .eq("id", context.userId);
 
-  const { error: profileError } = await supabase
-    .from("freelancer_profiles")
-    .upsert({
-      user_id: context.userId,
-      roles: payload.data.roles,
-      experience_level: payload.data.experience_level,
-      profile_image_path: uploadResult.path,
+  let profileFallbackUsed = false;
+  let profileError: unknown = null;
+
+  try {
+    const result = await upsertWithOptionalColumn({
+      payload: {
+        user_id: context.userId,
+        roles: payload.data.roles,
+        experience_level: payload.data.experience_level,
+        profile_image_path: uploadResult.path,
+      },
+      optionalColumn: "profile_image_path",
+      execute: (upsertPayload) => supabase.from("freelancer_profiles").upsert(upsertPayload),
     });
+
+    profileFallbackUsed = result.fallbackUsed;
+  } catch (error) {
+    profileError = error;
+  }
 
   if (userMetaError || profileError) {
     return {
@@ -654,7 +670,10 @@ export async function updateFreelancerProfileAction(
 
   return {
     status: "success",
-    message: uploadResult.failed ? getProfileUpdateImageWarning("freelancer") : "Profilen din er oppdatert.",
+    message:
+      uploadResult.failed || profileFallbackUsed
+        ? getProfileUpdateImageWarning("freelancer")
+        : "Profilen din er oppdatert.",
   };
 }
 
@@ -696,18 +715,33 @@ export async function requestAccountDeletionAction() {
   const supabase = await createServerComponentClient();
   const timestamp = new Date().toISOString();
 
-  await supabase
+  const { error: metaError } = await supabase
     .from("users_meta")
     .update({
       deleted_at: timestamp,
     })
     .eq("id", context.userId);
 
-  await supabase.from("data_requests").insert({
+  const { error: requestError } = await supabase.from("data_requests").insert({
     user_id: context.userId,
     request_type: "delete",
     status: "open",
   });
+
+  if (metaError || requestError) {
+    console.error("[frilanseren/account-deletion-request-failed]", {
+      userId: context.userId,
+      metaError: metaError?.message ?? null,
+      requestError: requestError?.message ?? null,
+    });
+
+    const params = new URLSearchParams({
+      message: "Vi kunne ikke registrere slettingen akkurat nå. Prøv igjen.",
+      status: "error",
+    });
+
+    redirect(`/frilanseren/dashboard?${params.toString()}`);
+  }
 
   await logAdminAction("account_deletion_requested", context.userId, {
     source: "frilanseren_dashboard",

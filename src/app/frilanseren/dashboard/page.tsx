@@ -38,7 +38,29 @@ function formatLabel(value: string | null | undefined, options: ReadonlyArray<{ 
   return labelByValue.get(value) ?? value;
 }
 
-export default async function FrilanserenDashboardPage() {
+type FrilanserenDashboardPageProps = {
+  searchParams: Promise<{
+    message?: string;
+    status?: "success" | "error";
+  }>;
+};
+
+function FeedbackBanner({ message, status }: { message: string; status: "success" | "error" }) {
+  return (
+    <div
+      className={`rounded-[1.4rem] border px-4 py-3 text-sm leading-6 ${
+        status === "error"
+          ? "border-[#f1b7ae] bg-[#fff5f3] text-[#7a271a]"
+          : "border-[color:var(--line)] bg-[color:var(--surface-muted)]/55 text-[color:var(--foreground)]"
+      }`}
+    >
+      {message}
+    </div>
+  );
+}
+
+export default async function FrilanserenDashboardPage({ searchParams }: FrilanserenDashboardPageProps) {
+  const { message, status } = await searchParams;
   const context = await requireCurrentUserContext();
 
   if (!context.userMeta) {
@@ -47,6 +69,7 @@ export default async function FrilanserenDashboardPage() {
         title="Du er med i piloten"
         description="Vi finner ikke en full profil på deg ennå. Fyll ut feltene under for å komme i gang."
       >
+        {message ? <FeedbackBanner message={message} status={status === "error" ? "error" : "success"} /> : null}
         <AuthCard>
           <ButtonLink href="/frilanseren/profile">Fullfør profilen</ButtonLink>
         </AuthCard>
@@ -62,6 +85,7 @@ export default async function FrilanserenDashboardPage() {
         title={`Hei, ${firstName}. Du er med i piloten.`}
         description="Vi bygger nå første versjon av plattformen. Vi bruker informasjonen du har lagt inn til å forstå behovene i bransjen, og kontakter deg når vi er klare til å teste jobbmatching i praksis."
       >
+        {message ? <FeedbackBanner message={message} status={status === "error" ? "error" : "success"} /> : null}
         {context.isAdmin ? (
           <AuthCard
             title="Intern oversikt"
@@ -137,6 +161,7 @@ export default async function FrilanserenDashboardPage() {
       title={`Hei, ${firstName}. Du er med i frilanspiloten.`}
       description="Vi bygger en norsk plattform for filmfrilansere. I denne fasen bruker vi profilen din til å forstå hvilke type oppdrag vi bør hente inn først."
     >
+      {message ? <FeedbackBanner message={message} status={status === "error" ? "error" : "success"} /> : null}
       {context.isAdmin ? (
         <AuthCard
           title="Intern oversikt"
