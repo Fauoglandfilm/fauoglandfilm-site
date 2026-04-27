@@ -11,6 +11,7 @@ node_modules
 *.crdownload
 .cache
 .codex-tmp/
+.worktrees/
 .turbo
 coverage
 dist
