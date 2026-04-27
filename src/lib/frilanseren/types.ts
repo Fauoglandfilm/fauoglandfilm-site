@@ -14,6 +14,7 @@ export interface EmployerProfile {
   company_name: string;
   production_types: string[];
   annual_volume: "1_2" | "3_10" | "10_plus";
+  logo_path: string | null;
   created_at: string;
   updated_at: string;
 }
@@ -22,6 +23,7 @@ export interface FreelancerProfile {
   user_id: string;
   roles: string[];
   experience_level: "0_2" | "3_7" | "8_plus";
+  profile_image_path: string | null;
   created_at: string;
   updated_at: string;
 }
@@ -66,7 +68,28 @@ export interface FrilanserenActionState {
 export interface FrilanserenUserContext {
   userId: string;
   email: string;
+  isAdmin: boolean;
   userMeta: UserMeta | null;
   employerProfile: EmployerProfile | null;
   freelancerProfile: FreelancerProfile | null;
+  profileImageUrl: string | null;
+}
+
+export interface RegisteredUserOverview {
+  id: string;
+  email: string | null;
+  emailConfirmedAt: string | null;
+  lastSignInAt: string | null;
+  createdAt: string | null;
+  role: UserRole | null;
+  fullName: string | null;
+  companyName: string | null;
+  productionTypes: string[];
+  annualVolume: EmployerProfile["annual_volume"] | null;
+  freelancerRoles: string[];
+  experienceLevel: FreelancerProfile["experience_level"] | null;
+  deletedAt: string | null;
+  imageUrl: string | null;
+  imageLabel: string | null;
+  hasProfileRecord: boolean;
 }

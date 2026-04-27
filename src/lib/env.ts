@@ -13,6 +13,7 @@ export const appEnv = {
   sentryAuthToken: process.env.SENTRY_AUTH_TOKEN,
   sentryOrg: process.env.SENTRY_ORG,
   sentryProject: process.env.SENTRY_PROJECT,
+  frilanserenAdminEmails: process.env.FRILANSEREN_ADMIN_EMAILS,
 } as const;
 
 export const resendDefaults = {
@@ -54,6 +55,21 @@ export function hasSupabaseAuthConfig() {
 
 export function hasSupabaseAdminConfig() {
   return missingSupabaseEnvs({ includeAdmin: true }).length === 0;
+}
+
+export function getFrilanserenAdminEmails() {
+  return (appEnv.frilanserenAdminEmails ?? "")
+    .split(",")
+    .map((value) => value.trim().toLowerCase())
+    .filter(Boolean);
+}
+
+export function isFrilanserenAdminEmail(email: string | null | undefined) {
+  if (!isNonEmpty(email)) {
+    return false;
+  }
+
+  return getFrilanserenAdminEmails().includes(email.trim().toLowerCase());
 }
 
 export function readRequiredEnv(

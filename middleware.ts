@@ -57,5 +57,5 @@ export async function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/frilanseren/dashboard/:path*", "/frilanseren/profile/:path*"],
+  matcher: ["/frilanseren/dashboard/:path*", "/frilanseren/profile/:path*", "/frilanseren/admin/:path*"],
 };

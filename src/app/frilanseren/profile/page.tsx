@@ -20,7 +20,7 @@ export default async function FrilanserenProfilePage() {
         description="Vi finner ikke en full profil på deg ennå. Fyll ut feltene under for å komme i gang."
       >
         <AuthCard>
-          <ProfileForm role="freelancer" fullName="" email={context.email} />
+          <ProfileForm role="freelancer" fullName="" email={context.email} imageUrl={context.profileImageUrl} />
         </AuthCard>
       </ProtectedRouteShell>
     );
@@ -36,6 +36,7 @@ export default async function FrilanserenProfilePage() {
           role={context.userMeta.role}
           fullName={context.userMeta.full_name}
           email={context.email}
+          imageUrl={context.profileImageUrl}
           employerProfile={context.employerProfile}
           freelancerProfile={context.freelancerProfile}
         />

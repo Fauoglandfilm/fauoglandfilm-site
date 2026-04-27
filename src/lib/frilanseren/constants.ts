@@ -52,9 +52,19 @@ export const FREELANCER_EXPERIENCE_OPTIONS = [
 export const FRILANSEREN_PROTECTED_PATHS = [
   "/frilanseren/dashboard",
   "/frilanseren/profile",
+  "/frilanseren/admin",
 ] as const;
 
 export const FRILANSEREN_BASE_PATH = "/frilanseren";
+export const FRILANSEREN_ADMIN_PATH = "/frilanseren/admin";
 export const FRILANSEREN_PRIVACY_CONTACT_PATH = "/kontakt";
 export const FRILANSEREN_CONSENT_TEXT_VERSION = "frilanseren-v1";
 export const FRILANSEREN_MIN_PASSWORD_LENGTH = 10;
+export const FRILANSEREN_MEDIA_BUCKET = "frilanseren-media";
+export const FRILANSEREN_ALLOWED_IMAGE_TYPES = [
+  "image/jpeg",
+  "image/png",
+  "image/webp",
+  "image/avif",
+] as const;
+export const FRILANSEREN_MAX_IMAGE_BYTES = 2 * 1024 * 1024;

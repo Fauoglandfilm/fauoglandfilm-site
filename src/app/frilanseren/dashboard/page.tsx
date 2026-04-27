@@ -5,6 +5,7 @@ import { ProtectedRouteShell } from "@/components/frilanseren/protected-route-sh
 import { requireCurrentUserContext } from "@/lib/frilanseren/queries";
 import { PRIVACY_SECTION_COPY } from "@/lib/frilanseren/gdpr";
 import {
+  FRILANSEREN_ADMIN_PATH,
   EMPLOYER_ANNUAL_VOLUME_OPTIONS,
   EMPLOYER_PRODUCTION_TYPES,
   FREELANCER_EXPERIENCE_OPTIONS,
@@ -61,35 +62,58 @@ export default async function FrilanserenDashboardPage() {
         title={`Hei, ${firstName}. Du er med i piloten.`}
         description="Vi bygger nå første versjon av plattformen. Vi bruker informasjonen du har lagt inn til å forstå behovene i bransjen, og kontakter deg når vi er klare til å teste jobbmatching i praksis."
       >
+        {context.isAdmin ? (
+          <AuthCard
+            title="Intern oversikt"
+            description="Du har admin-tilgang til å se registrerte brukere, status på kontoer og hvilke profiler som mangler data."
+            footer={<ButtonLink href={FRILANSEREN_ADMIN_PATH}>Se registrerte brukere</ButtonLink>}
+          />
+        ) : null}
+
         <div className="grid gap-6 lg:grid-cols-[1.15fr_0.85fr]">
           <AuthCard
             title="Din profil"
             footer={<ButtonLink href="/frilanseren/profile">Rediger profil</ButtonLink>}
           >
-            <dl className="grid gap-4 sm:grid-cols-2">
-              <div>
-                <dt className="text-sm font-medium text-[var(--muted)]">Navn</dt>
-                <dd className="mt-1 text-[color:var(--foreground)]">{context.userMeta.full_name}</dd>
-              </div>
-              <div>
-                <dt className="text-sm font-medium text-[var(--muted)]">Firma</dt>
-                <dd className="mt-1 text-[color:var(--foreground)]">{context.employerProfile?.company_name ?? "—"}</dd>
-              </div>
-              <div>
-                <dt className="text-sm font-medium text-[var(--muted)]">Produksjonstyper</dt>
-                <dd className="mt-1 text-[color:var(--foreground)]">
-                  {context.employerProfile?.production_types?.length
-                    ? formatLabels(context.employerProfile.production_types, EMPLOYER_PRODUCTION_TYPES)
-                    : "—"}
-                </dd>
-              </div>
-              <div>
-                <dt className="text-sm font-medium text-[var(--muted)]">Volum</dt>
-                <dd className="mt-1 text-[color:var(--foreground)]">
-                  {formatLabel(context.employerProfile?.annual_volume, EMPLOYER_ANNUAL_VOLUME_OPTIONS)}
-                </dd>
-              </div>
-            </dl>
+            <div className="grid gap-5 md:grid-cols-[8rem_1fr]">
+              {context.profileImageUrl ? (
+                // eslint-disable-next-line @next/next/no-img-element
+                <img
+                  src={context.profileImageUrl}
+                  alt="Firmalogo"
+                  className="h-28 w-28 rounded-[1.4rem] border border-[color:var(--line)] object-cover"
+                />
+              ) : (
+                <div className="flex h-28 w-28 items-center justify-center rounded-[1.4rem] border border-dashed border-[color:var(--line)] text-xs uppercase tracking-[0.18em] text-[var(--muted)]">
+                  Ingen logo
+                </div>
+              )}
+
+              <dl className="grid gap-4 sm:grid-cols-2">
+                <div>
+                  <dt className="text-sm font-medium text-[var(--muted)]">Navn</dt>
+                  <dd className="mt-1 text-[color:var(--foreground)]">{context.userMeta.full_name}</dd>
+                </div>
+                <div>
+                  <dt className="text-sm font-medium text-[var(--muted)]">Firma</dt>
+                  <dd className="mt-1 text-[color:var(--foreground)]">{context.employerProfile?.company_name ?? "—"}</dd>
+                </div>
+                <div>
+                  <dt className="text-sm font-medium text-[var(--muted)]">Produksjonstyper</dt>
+                  <dd className="mt-1 text-[color:var(--foreground)]">
+                    {context.employerProfile?.production_types?.length
+                      ? formatLabels(context.employerProfile.production_types, EMPLOYER_PRODUCTION_TYPES)
+                      : "—"}
+                  </dd>
+                </div>
+                <div>
+                  <dt className="text-sm font-medium text-[var(--muted)]">Volum</dt>
+                  <dd className="mt-1 text-[color:var(--foreground)]">
+                    {formatLabel(context.employerProfile?.annual_volume, EMPLOYER_ANNUAL_VOLUME_OPTIONS)}
+                  </dd>
+                </div>
+              </dl>
+            </div>
           </AuthCard>
 
           <AuthCard title="Hva du kan forvente nå">
@@ -113,35 +137,58 @@ export default async function FrilanserenDashboardPage() {
       title={`Hei, ${firstName}. Du er med i frilanspiloten.`}
       description="Vi bygger en norsk plattform for filmfrilansere. I denne fasen bruker vi profilen din til å forstå hvilke type oppdrag vi bør hente inn først."
     >
+      {context.isAdmin ? (
+        <AuthCard
+          title="Intern oversikt"
+          description="Du har admin-tilgang til å se registrerte brukere, status på kontoer og hvilke profiler som mangler data."
+          footer={<ButtonLink href={FRILANSEREN_ADMIN_PATH}>Se registrerte brukere</ButtonLink>}
+        />
+      ) : null}
+
       <div className="grid gap-6 lg:grid-cols-[1.15fr_0.85fr]">
         <AuthCard
           title="Din profil"
           footer={<ButtonLink href="/frilanseren/profile">Rediger profil</ButtonLink>}
         >
-          <dl className="grid gap-4 sm:grid-cols-2">
-            <div>
-              <dt className="text-sm font-medium text-[var(--muted)]">Navn</dt>
-              <dd className="mt-1 text-[color:var(--foreground)]">{context.userMeta.full_name}</dd>
-            </div>
-            <div>
-              <dt className="text-sm font-medium text-[var(--muted)]">E-post</dt>
-              <dd className="mt-1 text-[color:var(--foreground)]">{context.email}</dd>
-            </div>
-            <div>
-              <dt className="text-sm font-medium text-[var(--muted)]">Roller</dt>
-              <dd className="mt-1 text-[color:var(--foreground)]">
-                {context.freelancerProfile?.roles?.length
-                  ? formatLabels(context.freelancerProfile.roles, FREELANCER_ROLE_OPTIONS)
-                  : "—"}
-              </dd>
-            </div>
-            <div>
-              <dt className="text-sm font-medium text-[var(--muted)]">Erfaring</dt>
-              <dd className="mt-1 text-[color:var(--foreground)]">
-                {formatLabel(context.freelancerProfile?.experience_level, FREELANCER_EXPERIENCE_OPTIONS)}
-              </dd>
-            </div>
-          </dl>
+          <div className="grid gap-5 md:grid-cols-[8rem_1fr]">
+            {context.profileImageUrl ? (
+              // eslint-disable-next-line @next/next/no-img-element
+              <img
+                src={context.profileImageUrl}
+                alt="Profilbilde"
+                className="h-28 w-28 rounded-[1.4rem] border border-[color:var(--line)] object-cover"
+              />
+            ) : (
+              <div className="flex h-28 w-28 items-center justify-center rounded-[1.4rem] border border-dashed border-[color:var(--line)] text-xs uppercase tracking-[0.18em] text-[var(--muted)]">
+                Ingen bilde
+              </div>
+            )}
+
+            <dl className="grid gap-4 sm:grid-cols-2">
+              <div>
+                <dt className="text-sm font-medium text-[var(--muted)]">Navn</dt>
+                <dd className="mt-1 text-[color:var(--foreground)]">{context.userMeta.full_name}</dd>
+              </div>
+              <div>
+                <dt className="text-sm font-medium text-[var(--muted)]">E-post</dt>
+                <dd className="mt-1 text-[color:var(--foreground)]">{context.email}</dd>
+              </div>
+              <div>
+                <dt className="text-sm font-medium text-[var(--muted)]">Roller</dt>
+                <dd className="mt-1 text-[color:var(--foreground)]">
+                  {context.freelancerProfile?.roles?.length
+                    ? formatLabels(context.freelancerProfile.roles, FREELANCER_ROLE_OPTIONS)
+                    : "—"}
+                </dd>
+              </div>
+              <div>
+                <dt className="text-sm font-medium text-[var(--muted)]">Erfaring</dt>
+                <dd className="mt-1 text-[color:var(--foreground)]">
+                  {formatLabel(context.freelancerProfile?.experience_level, FREELANCER_EXPERIENCE_OPTIONS)}
+                </dd>
+              </div>
+            </dl>
+          </div>
         </AuthCard>
 
         <AuthCard title="Hva skjer videre?">

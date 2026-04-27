@@ -32,18 +32,22 @@ create table if not exists public.employer_profiles (
   company_name text not null,
   production_types text[] not null default '{}',
   annual_volume text not null check (annual_volume in ('1_2', '3_10', '10_plus')),
+  logo_path text,
   created_at timestamptz not null default now(),
   updated_at timestamptz not null default now()
 );
+alter table public.employer_profiles add column if not exists logo_path text;
 create index if not exists employer_profiles_user_id_idx on public.employer_profiles (user_id);
 
 create table if not exists public.freelancer_profiles (
   user_id uuid primary key references public.users_meta(id) on delete cascade,
   roles text[] not null default '{}',
   experience_level text not null check (experience_level in ('0_2', '3_7', '8_plus')),
+  profile_image_path text,
   created_at timestamptz not null default now(),
   updated_at timestamptz not null default now()
 );
+alter table public.freelancer_profiles add column if not exists profile_image_path text;
 create index if not exists freelancer_profiles_user_id_idx on public.freelancer_profiles (user_id);
 
 create table if not exists public.consent_logs (
@@ -76,6 +80,20 @@ create table if not exists public.admin_audit_logs (
   created_at timestamptz not null default now()
 );
 create index if not exists admin_audit_logs_created_at_idx on public.admin_audit_logs (created_at);
+
+insert into storage.buckets (id, name, public, file_size_limit, allowed_mime_types)
+values (
+  'frilanseren-media',
+  'frilanseren-media',
+  false,
+  2097152,
+  array['image/jpeg', 'image/png', 'image/webp', 'image/avif']
+)
+on conflict (id) do update
+set
+  public = excluded.public,
+  file_size_limit = excluded.file_size_limit,
+  allowed_mime_types = excluded.allowed_mime_types;
 
 drop trigger if exists users_meta_set_updated_at on public.users_meta;
 create trigger users_meta_set_updated_at
@@ -253,3 +271,64 @@ on public.admin_audit_logs
 for insert
 to authenticated
 with check (public.is_admin());
+
+drop policy if exists frilanseren_media_select on storage.objects;
+create policy frilanseren_media_select
+on storage.objects
+for select
+to authenticated
+using (
+  bucket_id = 'frilanseren-media'
+  and (
+    (storage.foldername(name))[1] = (select auth.uid())::text
+    or public.is_admin()
+  )
+);
+
+drop policy if exists frilanseren_media_insert on storage.objects;
+create policy frilanseren_media_insert
+on storage.objects
+for insert
+to authenticated
+with check (
+  bucket_id = 'frilanseren-media'
+  and (
+    (storage.foldername(name))[1] = (select auth.uid())::text
+    or public.is_admin()
+  )
+  and lower(storage.extension(name)) in ('jpg', 'jpeg', 'png', 'webp', 'avif')
+);
+
+drop policy if exists frilanseren_media_update on storage.objects;
+create policy frilanseren_media_update
+on storage.objects
+for update
+to authenticated
+using (
+  bucket_id = 'frilanseren-media'
+  and (
+    (storage.foldername(name))[1] = (select auth.uid())::text
+    or public.is_admin()
+  )
+)
+with check (
+  bucket_id = 'frilanseren-media'
+  and (
+    (storage.foldername(name))[1] = (select auth.uid())::text
+    or public.is_admin()
+  )
+  and lower(storage.extension(name)) in ('jpg', 'jpeg', 'png', 'webp', 'avif')
+);
+
+drop policy if exists frilanseren_media_delete on storage.objects;
+create policy frilanseren_media_delete
+on storage.objects
+for delete
+to authenticated
+using (
+  bucket_id = 'frilanseren-media'
+  and (
+    (storage.foldername(name))[1] = (select auth.uid())::text
+    or public.is_admin()
+  )
+);

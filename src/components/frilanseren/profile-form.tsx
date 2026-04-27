@@ -18,6 +18,7 @@ type ProfileFormProps = {
   role: UserRole;
   fullName: string;
   email: string;
+  imageUrl?: string | null;
   employerProfile?: EmployerProfile | null;
   freelancerProfile?: FreelancerProfile | null;
 };
@@ -26,14 +27,16 @@ export function ProfileForm({
   role,
   fullName,
   email,
+  imageUrl,
   employerProfile,
   freelancerProfile,
 }: ProfileFormProps) {
   const action = role === "employer" ? updateEmployerProfileAction : updateFreelancerProfileAction;
   const [state, formAction] = useActionState<FrilanserenActionState, FormData>(action, initialActionState);
+  const imageLabel = role === "employer" ? "Firmalogo" : "Profilbilde";
 
   return (
-    <form action={formAction} className="space-y-5">
+    <form action={formAction} className="space-y-5" encType="multipart/form-data">
       <div className="grid gap-4 md:grid-cols-2">
         <label className="block space-y-2">
           <span className="text-sm font-medium text-[color:var(--foreground)]">Navn</span>
@@ -45,6 +48,40 @@ export function ProfileForm({
           <span className="text-sm font-medium text-[color:var(--foreground)]">E-post</span>
           <input className="form-input opacity-80" value={email} disabled readOnly />
         </label>
+      </div>
+
+      <div className="space-y-3 rounded-[1.4rem] border border-[color:var(--line)] bg-[color:var(--surface-muted)]/48 p-4">
+        <div className="flex flex-wrap items-center gap-4">
+          {imageUrl ? (
+            // eslint-disable-next-line @next/next/no-img-element
+            <img
+              src={imageUrl}
+              alt={imageLabel}
+              className="h-20 w-20 rounded-[1.25rem] border border-[color:var(--line)] object-cover"
+            />
+          ) : (
+            <div className="flex h-20 w-20 items-center justify-center rounded-[1.25rem] border border-dashed border-[color:var(--line)] text-xs uppercase tracking-[0.18em] text-[var(--muted)]">
+              Ingen fil
+            </div>
+          )}
+
+          <div className="min-w-0 flex-1 space-y-2">
+            <p className="text-sm font-medium text-[color:var(--foreground)]">{imageLabel}</p>
+            <input
+              name={role === "employer" ? "company_logo" : "profile_image"}
+              type="file"
+              accept="image/jpeg,image/png,image/webp,image/avif"
+              className="form-input file:mr-3 file:rounded-full file:border-0 file:bg-[color:var(--surface)] file:px-3 file:py-2 file:text-sm file:font-medium"
+            />
+            <p className="text-sm text-[var(--muted)]">Last opp JPG, PNG, WebP eller AVIF. Maks 2 MB.</p>
+            {role === "employer" && state.fieldErrors?.company_logo ? (
+              <p className="text-sm text-[#b42318]">{state.fieldErrors.company_logo}</p>
+            ) : null}
+            {role === "freelancer" && state.fieldErrors?.profile_image ? (
+              <p className="text-sm text-[#b42318]">{state.fieldErrors.profile_image}</p>
+            ) : null}
+          </div>
+        </div>
       </div>
 
       {role === "employer" ? (

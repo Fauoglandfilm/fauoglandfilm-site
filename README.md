@@ -20,6 +20,8 @@ Modulen på `/frilanseren` dekker v1 av pilotflyten:
 - registrering for arbeidsgiver og frilanser
 - innlogging og glemt passord
 - dashboard og profilredigering
+- profilbilde for frilanser og firmalogo for arbeidsgiver
+- intern adminoversikt over registrerte brukere
 - GDPR-handlinger for innsyn og sletting
 
 Det brukes kun nødvendige auth/session-cookies i dette produktområdet. Global analytics og tredjeparts tracking er slått av for `/frilanseren`.
@@ -30,6 +32,7 @@ Det brukes kun nødvendige auth/session-cookies i dette produktområdet. Global 
 - `/frilanseren/login` → dashboard
 - `/frilanseren/dashboard` → `/frilanseren/profile`
 - dashboard → `Be om innsyn i mine data` eller `Slett min konto og mine data`
+- adminbrukere kan gå til `/frilanseren/admin` for å se registrerte brukere
 
 ## Supabase-oppsett
 
@@ -38,7 +41,9 @@ Det brukes kun nødvendige auth/session-cookies i dette produktområdet. Global 
 3. Sørg for at redirect-URLer i Supabase Auth inkluderer:
    - `http://localhost:3000/auth/confirm`
    - produksjonsdomenet ditt på Vercel, for eksempel `https://fauoglandfilm.com/auth/confirm`
-4. Hvis du vil kreve e-postverifisering i piloten, slå det på i Supabase Auth.
+4. Oppdater e-postmalen for bekreftelse og recovery slik at den peker til `/auth/confirm` med `token_hash` og `type`, i tråd med Supabase sin SSR-flyt.
+5. Hvis du vil kreve e-postverifisering i piloten, slå det på i Supabase Auth.
+6. SQL-skriptet oppretter også en privat Storage-bucket kalt `frilanseren-media` for profilbilder og firmalogoer.
 
 ## Miljøvariabler
 
@@ -51,6 +56,7 @@ Viktig for `/frilanseren`:
 - `SUPABASE_SERVICE_ROLE_KEY`
 - `SUPABASE_JWT_SECRET`
 - `NEXT_PUBLIC_SITE_URL`
+- `FRILANSEREN_ADMIN_EMAILS` for kommaseparert liste med interne e-postadresser som skal kunne se `/frilanseren/admin`
 
 ## Testing lokalt
 
@@ -68,7 +74,9 @@ For å teste auth-flyten lokalt:
 2. Start appen med `npm run dev`.
 3. Gå til `/frilanseren`.
 4. Registrer en arbeidsgiver eller frilanser.
-5. Verifiser at dashboard og profil er beskyttet, og at GDPR-knappene oppretter forespørsler i `data_requests`.
+5. Last eventuelt opp profilbilde eller firmalogo i registrering eller på profilsiden.
+6. Verifiser at dashboard og profil er beskyttet, og at GDPR-knappene oppretter forespørsler i `data_requests`.
+7. Logg inn som adminbruker og kontroller at `/frilanseren/admin` viser registrerte kontoer og bekreftelsesstatus.
 
 ## Deploy
 

@@ -1,16 +1,20 @@
 "use server";
 
 import { redirect } from "next/navigation";
+import type { User } from "@supabase/supabase-js";
 import { z } from "zod";
 
-import { createAdminClient, createServerComponentClient } from "@/lib/supabase/serverClient";
+import { hasSupabaseAdminConfig, hasSupabaseAuthConfig, missingSupabaseEnvs } from "@/lib/env";
 import { absoluteAuthUrl, getRequestMetadata } from "@/lib/supabase/auth";
+import { createAdminClient, createServerComponentClient } from "@/lib/supabase/serverClient";
 
+import { FRILANSEREN_MEDIA_BUCKET } from "./constants";
 import {
   ACCESS_REQUEST_SUCCESS_MESSAGE,
   DELETE_REQUEST_SUCCESS_MESSAGE,
   getConsentTextVersion,
 } from "./gdpr";
+import { buildProfileImagePath, getUploadedFile, validateImageFile } from "./media";
 import { requireCurrentUserContext } from "./queries";
 import type { FrilanserenActionState } from "./types";
 import {
@@ -19,6 +23,8 @@ import {
   freelancerProfileSchema,
   freelancerRegistrationSchema,
 } from "./validation";
+
+type AdminClient = ReturnType<typeof createAdminClient>;
 
 function issueMapToFieldErrors(error: z.ZodError) {
   return Object.fromEntries(
@@ -37,6 +43,18 @@ function getGenericServerErrorMessage() {
   return "Vi kunne ikke lagre informasjonen akkurat nå. Prøv igjen.";
 }
 
+function registrationUnavailableState(): FrilanserenActionState {
+  console.error("[frilanseren/registration-unavailable]", {
+    missing: missingSupabaseEnvs({ includeAdmin: true }),
+  });
+
+  return {
+    status: "error",
+    message:
+      "Registrering er midlertidig utilgjengelig. Vi jobber med å få det opp igjen. Prøv igjen om litt.",
+  };
+}
+
 function mapSupabaseRegistrationError(message: string | undefined) {
   if (!message) {
     return getGenericServerErrorMessage();
@@ -53,34 +71,147 @@ function mapSupabaseRegistrationError(message: string | undefined) {
   return getGenericServerErrorMessage();
 }
 
-async function createConsentLog(userId: string) {
-  const admin = createAdminClient();
-  const metadata = await getRequestMetadata();
+function looksLikeObfuscatedExistingUser(user: User) {
+  return Array.isArray(user.identities) && user.identities.length === 0;
+}
 
-  await admin.from("consent_logs").insert({
+function getRegistrationImageWarning(role: "employer" | "freelancer") {
+  return role === "employer"
+    ? "Kontoen ble opprettet, men firmalogoen kunne ikke lagres akkurat nå."
+    : "Kontoen ble opprettet, men profilbildet kunne ikke lagres akkurat nå.";
+}
+
+function getProfileUpdateImageWarning(role: "employer" | "freelancer") {
+  return role === "employer"
+    ? "Profilen din er oppdatert, men firmalogoen kunne ikke lagres akkurat nå."
+    : "Profilen din er oppdatert, men profilbildet kunne ikke lagres akkurat nå.";
+}
+
+async function createConsentLog(userId: string, admin: AdminClient) {
+  const metadata = await getRequestMetadata();
+  const { error } = await admin.from("consent_logs").insert({
     user_id: userId,
     consent_type: "pilot_account",
     consent_text_version: getConsentTextVersion(),
     ip_address: metadata.ipAddress,
     user_agent: metadata.userAgent,
   });
+
+  if (error) {
+    throw error;
+  }
 }
 
-async function logAdminAction(action: string, targetUserId: string, metadata: Record<string, unknown>) {
-  const admin = createAdminClient();
+async function logAdminAction(
+  action: string,
+  targetUserId: string,
+  metadata: Record<string, unknown>,
+  admin?: AdminClient,
+) {
+  if (!hasSupabaseAdminConfig()) {
+    return;
+  }
 
-  await admin.from("admin_audit_logs").insert({
+  const client = admin ?? createAdminClient();
+  const { error } = await client.from("admin_audit_logs").insert({
     admin_user_id: null,
     action,
     target_user_id: targetUserId,
     metadata,
   });
+
+  if (error) {
+    console.error("[frilanseren/admin-audit-log-failed]", {
+      action,
+      targetUserId,
+      message: error.message,
+    });
+  }
+}
+
+async function cleanupFailedRegistration(userId: string) {
+  if (!hasSupabaseAdminConfig()) {
+    return;
+  }
+
+  try {
+    const admin = createAdminClient();
+    const { error } = await admin.auth.admin.deleteUser(userId);
+
+    if (error) {
+      console.error("[frilanseren/registration-cleanup-failed]", {
+        userId,
+        message: error.message,
+      });
+    }
+  } catch (error) {
+    console.error("[frilanseren/registration-cleanup-threw]", {
+      userId,
+      message: error instanceof Error ? error.message : String(error),
+    });
+  }
+}
+
+async function uploadProfileImage(
+  admin: AdminClient,
+  userId: string,
+  role: "employer" | "freelancer",
+  file: File | null,
+  previousPath?: string | null,
+) {
+  if (!file) {
+    return {
+      path: previousPath ?? null,
+      failed: false,
+    };
+  }
+
+  const path = buildProfileImagePath(userId, role, file);
+  const { error } = await admin.storage
+    .from(FRILANSEREN_MEDIA_BUCKET)
+    .upload(path, await file.arrayBuffer(), {
+      contentType: file.type,
+      cacheControl: "3600",
+      upsert: true,
+    });
+
+  if (error) {
+    console.error("[frilanseren/profile-image-upload-failed]", {
+      userId,
+      role,
+      message: error.message,
+    });
+
+    return {
+      path: previousPath ?? null,
+      failed: true,
+    };
+  }
+
+  if (previousPath && previousPath !== path) {
+    const { error: removeError } = await admin.storage.from(FRILANSEREN_MEDIA_BUCKET).remove([previousPath]);
+
+    if (removeError) {
+      console.error("[frilanseren/profile-image-remove-old-failed]", {
+        userId,
+        role,
+        previousPath,
+        message: removeError.message,
+      });
+    }
+  }
+
+  return {
+    path,
+    failed: false,
+  };
 }
 
 export async function registerEmployerAction(
   _previousState: FrilanserenActionState,
   formData: FormData,
 ): Promise<FrilanserenActionState> {
+  const logoFile = getUploadedFile(formData, "company_logo");
   const payload = employerRegistrationSchema.safeParse({
     full_name: formData.get("full_name"),
     company_name: formData.get("company_name"),
@@ -99,12 +230,32 @@ export async function registerEmployerAction(
     };
   }
 
+  const logoError = validateImageFile(logoFile);
+
+  if (logoError) {
+    return {
+      status: "error",
+      fieldErrors: {
+        company_logo: logoError,
+      },
+    };
+  }
+
+  if (!hasSupabaseAuthConfig() || !hasSupabaseAdminConfig()) {
+    return registrationUnavailableState();
+  }
+
   const supabase = await createServerComponentClient();
   const { data, error } = await supabase.auth.signUp({
     email: payload.data.email,
     password: payload.data.password,
     options: {
       emailRedirectTo: absoluteAuthUrl("/auth/confirm?next=/frilanseren/dashboard"),
+      data: {
+        full_name: payload.data.full_name,
+        role: "employer",
+        company_name: payload.data.company_name,
+      },
     },
   });
 
@@ -115,41 +266,80 @@ export async function registerEmployerAction(
     };
   }
 
-  const admin = createAdminClient();
-
-  await admin.from("users_meta").upsert({
-    id: data.user.id,
-    role: "employer",
-    full_name: payload.data.full_name,
-  });
-
-  await admin.from("employer_profiles").upsert({
-    user_id: data.user.id,
-    company_name: payload.data.company_name,
-    production_types: payload.data.production_types,
-    annual_volume: payload.data.annual_volume,
-  });
-
-  await createConsentLog(data.user.id);
-  await logAdminAction("employer_registered", data.user.id, {
-    role: "employer",
-  });
-
-  if (data.session) {
-    redirect("/frilanseren/dashboard");
+  if (looksLikeObfuscatedExistingUser(data.user)) {
+    return {
+      status: "error",
+      message: "Denne e-postadressen er allerede registrert.",
+    };
   }
 
-  return {
-    status: "success",
-    message:
-      "Du er med i piloten. Bekreft e-posten din for å aktivere kontoen. Når vi er klare til å teste jobbmatching, kontakter vi deg med konkrete forslag til hvordan vi kan fylle neste produksjon.",
-  };
+  const admin = createAdminClient();
+
+  try {
+    const uploadResult = await uploadProfileImage(admin, data.user.id, "employer", logoFile);
+
+    const { error: userMetaError } = await admin.from("users_meta").upsert({
+      id: data.user.id,
+      role: "employer",
+      full_name: payload.data.full_name,
+    });
+
+    if (userMetaError) {
+      throw userMetaError;
+    }
+
+    const { error: profileError } = await admin.from("employer_profiles").upsert({
+      user_id: data.user.id,
+      company_name: payload.data.company_name,
+      production_types: payload.data.production_types,
+      annual_volume: payload.data.annual_volume,
+      logo_path: uploadResult.path,
+    });
+
+    if (profileError) {
+      throw profileError;
+    }
+
+    await createConsentLog(data.user.id, admin);
+    await logAdminAction(
+      "employer_registered",
+      data.user.id,
+      {
+        role: "employer",
+      },
+      admin,
+    );
+
+    if (data.session) {
+      redirect("/frilanseren/dashboard");
+    }
+
+    return {
+      status: "success",
+      message: uploadResult.failed
+        ? `Du er med i piloten. Bekreft e-posten din for å aktivere kontoen. ${getRegistrationImageWarning("employer")}`
+        : "Du er med i piloten. Bekreft e-posten din for å aktivere kontoen. Når vi er klare til å teste jobbmatching, kontakter vi deg med konkrete forslag til hvordan vi kan fylle neste produksjon.",
+    };
+  } catch (adminError) {
+    await cleanupFailedRegistration(data.user.id);
+
+    console.error("[frilanseren/register-employer-failed]", {
+      userId: data.user.id,
+      message: adminError instanceof Error ? adminError.message : String(adminError),
+    });
+
+    return {
+      status: "error",
+      message: getGenericServerErrorMessage(),
+    };
+  }
 }
 
 export async function registerFreelancerAction(
   _previousState: FrilanserenActionState,
   formData: FormData,
 ): Promise<FrilanserenActionState> {
+  const profileImageFile = getUploadedFile(formData, "profile_image");
   const payload = freelancerRegistrationSchema.safeParse({
     full_name: formData.get("full_name"),
     email: formData.get("email"),
@@ -167,12 +357,31 @@ export async function registerFreelancerAction(
     };
   }
 
+  const profileImageError = validateImageFile(profileImageFile);
+
+  if (profileImageError) {
+    return {
+      status: "error",
+      fieldErrors: {
+        profile_image: profileImageError,
+      },
+    };
+  }
+
+  if (!hasSupabaseAuthConfig() || !hasSupabaseAdminConfig()) {
+    return registrationUnavailableState();
+  }
+
   const supabase = await createServerComponentClient();
   const { data, error } = await supabase.auth.signUp({
     email: payload.data.email,
     password: payload.data.password,
     options: {
       emailRedirectTo: absoluteAuthUrl("/auth/confirm?next=/frilanseren/dashboard"),
+      data: {
+        full_name: payload.data.full_name,
+        role: "freelancer",
+      },
     },
   });
 
@@ -183,34 +392,72 @@ export async function registerFreelancerAction(
     };
   }
 
-  const admin = createAdminClient();
-
-  await admin.from("users_meta").upsert({
-    id: data.user.id,
-    role: "freelancer",
-    full_name: payload.data.full_name,
-  });
-
-  await admin.from("freelancer_profiles").upsert({
-    user_id: data.user.id,
-    roles: payload.data.roles,
-    experience_level: payload.data.experience_level,
-  });
-
-  await createConsentLog(data.user.id);
-  await logAdminAction("freelancer_registered", data.user.id, {
-    role: "freelancer",
-  });
-
-  if (data.session) {
-    redirect("/frilanseren/dashboard");
+  if (looksLikeObfuscatedExistingUser(data.user)) {
+    return {
+      status: "error",
+      message: "Denne e-postadressen er allerede registrert.",
+    };
   }
 
-  return {
-    status: "success",
-    message:
-      "Du er med i piloten. Bekreft e-posten din for å aktivere kontoen. Når vi åpner for jobbmatching, får du beskjed og blir prioritert i de første pilotoppdragene.",
-  };
+  const admin = createAdminClient();
+
+  try {
+    const uploadResult = await uploadProfileImage(admin, data.user.id, "freelancer", profileImageFile);
+
+    const { error: userMetaError } = await admin.from("users_meta").upsert({
+      id: data.user.id,
+      role: "freelancer",
+      full_name: payload.data.full_name,
+    });
+
+    if (userMetaError) {
+      throw userMetaError;
+    }
+
+    const { error: profileError } = await admin.from("freelancer_profiles").upsert({
+      user_id: data.user.id,
+      roles: payload.data.roles,
+      experience_level: payload.data.experience_level,
+      profile_image_path: uploadResult.path,
+    });
+
+    if (profileError) {
+      throw profileError;
+    }
+
+    await createConsentLog(data.user.id, admin);
+    await logAdminAction(
+      "freelancer_registered",
+      data.user.id,
+      {
+        role: "freelancer",
+      },
+      admin,
+    );
+
+    if (data.session) {
+      redirect("/frilanseren/dashboard");
+    }
+
+    return {
+      status: "success",
+      message: uploadResult.failed
+        ? `Du er med i piloten. Bekreft e-posten din for å aktivere kontoen. ${getRegistrationImageWarning("freelancer")}`
+        : "Du er med i piloten. Bekreft e-posten din for å aktivere kontoen. Når vi åpner for jobbmatching, får du beskjed og blir prioritert i de første pilotoppdragene.",
+    };
+  } catch (adminError) {
+    await cleanupFailedRegistration(data.user.id);
+
+    console.error("[frilanseren/register-freelancer-failed]", {
+      userId: data.user.id,
+      message: adminError instanceof Error ? adminError.message : String(adminError),
+    });
+
+    return {
+      status: "error",
+      message: getGenericServerErrorMessage(),
+    };
+  }
 }
 
 export async function updateEmployerProfileAction(
@@ -218,6 +465,7 @@ export async function updateEmployerProfileAction(
   formData: FormData,
 ): Promise<FrilanserenActionState> {
   const context = await requireCurrentUserContext();
+  const logoFile = getUploadedFile(formData, "company_logo");
 
   const payload = employerProfileSchema.safeParse({
     full_name: formData.get("full_name"),
@@ -233,7 +481,25 @@ export async function updateEmployerProfileAction(
     };
   }
 
+  const logoError = validateImageFile(logoFile);
+
+  if (logoError) {
+    return {
+      status: "error",
+      fieldErrors: {
+        company_logo: logoError,
+      },
+    };
+  }
+
   const supabase = await createServerComponentClient();
+  const admin = hasSupabaseAdminConfig() ? createAdminClient() : null;
+  const uploadResult = admin
+    ? await uploadProfileImage(admin, context.userId, "employer", logoFile, context.employerProfile?.logo_path)
+    : {
+        path: context.employerProfile?.logo_path ?? null,
+        failed: Boolean(logoFile),
+      };
 
   const { error: userMetaError } = await supabase
     .from("users_meta")
@@ -249,6 +515,7 @@ export async function updateEmployerProfileAction(
       company_name: payload.data.company_name,
       production_types: payload.data.production_types,
       annual_volume: payload.data.annual_volume,
+      logo_path: uploadResult.path,
     });
 
   if (userMetaError || profileError) {
@@ -260,7 +527,7 @@ export async function updateEmployerProfileAction(
 
   return {
     status: "success",
-    message: "Profilen din er oppdatert.",
+    message: uploadResult.failed ? getProfileUpdateImageWarning("employer") : "Profilen din er oppdatert.",
   };
 }
 
@@ -269,6 +536,7 @@ export async function updateFreelancerProfileAction(
   formData: FormData,
 ): Promise<FrilanserenActionState> {
   const context = await requireCurrentUserContext();
+  const profileImageFile = getUploadedFile(formData, "profile_image");
 
   const payload = freelancerProfileSchema.safeParse({
     full_name: formData.get("full_name"),
@@ -283,7 +551,31 @@ export async function updateFreelancerProfileAction(
     };
   }
 
+  const profileImageError = validateImageFile(profileImageFile);
+
+  if (profileImageError) {
+    return {
+      status: "error",
+      fieldErrors: {
+        profile_image: profileImageError,
+      },
+    };
+  }
+
   const supabase = await createServerComponentClient();
+  const admin = hasSupabaseAdminConfig() ? createAdminClient() : null;
+  const uploadResult = admin
+    ? await uploadProfileImage(
+        admin,
+        context.userId,
+        "freelancer",
+        profileImageFile,
+        context.freelancerProfile?.profile_image_path,
+      )
+    : {
+        path: context.freelancerProfile?.profile_image_path ?? null,
+        failed: Boolean(profileImageFile),
+      };
 
   const { error: userMetaError } = await supabase
     .from("users_meta")
@@ -298,6 +590,7 @@ export async function updateFreelancerProfileAction(
       user_id: context.userId,
       roles: payload.data.roles,
       experience_level: payload.data.experience_level,
+      profile_image_path: uploadResult.path,
     });
 
   if (userMetaError || profileError) {
@@ -309,7 +602,7 @@ export async function updateFreelancerProfileAction(
 
   return {
     status: "success",
-    message: "Profilen din er oppdatert.",
+    message: uploadResult.failed ? getProfileUpdateImageWarning("freelancer") : "Profilen din er oppdatert.",
   };
 }
 

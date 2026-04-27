@@ -19,7 +19,7 @@ export function EmployerRegistrationForm() {
   const [state, action] = useActionState(registerEmployerAction, initialActionState);
 
   return (
-    <form action={action} className="space-y-4">
+    <form action={action} className="space-y-4" encType="multipart/form-data">
       <label className="block space-y-2">
         <span className="text-sm font-medium text-[color:var(--foreground)]">Navn</span>
         <input name="full_name" className="form-input" placeholder="Fornavn Etternavn" />
@@ -98,6 +98,20 @@ export function EmployerRegistrationForm() {
           <p className="text-sm text-[#b42318]">{state.fieldErrors.annual_volume}</p>
         ) : null}
       </fieldset>
+
+      <label className="block space-y-2">
+        <span className="text-sm font-medium text-[color:var(--foreground)]">Firmalogo (valgfritt)</span>
+        <input
+          name="company_logo"
+          type="file"
+          accept="image/jpeg,image/png,image/webp,image/avif"
+          className="form-input file:mr-3 file:rounded-full file:border-0 file:bg-[color:var(--surface)] file:px-3 file:py-2 file:text-sm file:font-medium"
+        />
+        <p className="text-sm text-[var(--muted)]">Last opp JPG, PNG, WebP eller AVIF. Maks 2 MB.</p>
+        {state.fieldErrors?.company_logo ? (
+          <p className="text-sm text-[#b42318]">{state.fieldErrors.company_logo}</p>
+        ) : null}
+      </label>
 
       <ConsentCheckbox label={EMPLOYER_CONSENT_TEXT} error={state.fieldErrors?.consent} />
 
