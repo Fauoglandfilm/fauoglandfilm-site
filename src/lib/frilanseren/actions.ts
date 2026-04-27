@@ -1,7 +1,6 @@
 "use server";
 
 import { redirect } from "next/navigation";
-import type { User } from "@supabase/supabase-js";
 import { z } from "zod";
 
 import { hasSupabaseAdminConfig, hasSupabaseAuthConfig, missingSupabaseEnvs } from "@/lib/env";
@@ -16,6 +15,12 @@ import {
 } from "./gdpr";
 import { buildProfileImagePath, getUploadedFile, validateImageFile } from "./media";
 import { requireCurrentUserContext } from "./queries";
+import {
+  DUPLICATE_EMAIL_MESSAGE,
+  findMatchingUserByEmail,
+  looksLikeObfuscatedExistingUser,
+  mapRegistrationErrorMessage,
+} from "./signup";
 import type { FrilanserenActionState } from "./types";
 import {
   employerProfileSchema,
@@ -39,10 +44,6 @@ function stringArrayFromFormData(formData: FormData, field: string) {
     .filter(Boolean);
 }
 
-function getGenericServerErrorMessage() {
-  return "Vi kunne ikke lagre informasjonen akkurat nå. Prøv igjen.";
-}
-
 function registrationUnavailableState(): FrilanserenActionState {
   console.error("[frilanseren/registration-unavailable]", {
     missing: missingSupabaseEnvs({ includeAdmin: true }),
@@ -55,24 +56,8 @@ function registrationUnavailableState(): FrilanserenActionState {
   };
 }
 
-function mapSupabaseRegistrationError(message: string | undefined) {
-  if (!message) {
-    return getGenericServerErrorMessage();
-  }
-
-  if (message.toLowerCase().includes("already registered")) {
-    return "Denne e-postadressen er allerede registrert.";
-  }
-
-  if (message.toLowerCase().includes("password")) {
-    return "Passordet må være lengre. Minst 10 tegn.";
-  }
-
-  return getGenericServerErrorMessage();
-}
-
-function looksLikeObfuscatedExistingUser(user: User) {
-  return Array.isArray(user.identities) && user.identities.length === 0;
+function getGenericServerErrorMessage() {
+  return "Vi kunne ikke lagre informasjonen akkurat nå. Prøv igjen.";
 }
 
 function getRegistrationImageWarning(role: "employer" | "freelancer") {
@@ -150,6 +135,31 @@ async function cleanupFailedRegistration(userId: string) {
       message: error instanceof Error ? error.message : String(error),
     });
   }
+}
+
+async function findExistingAuthUserByEmail(admin: AdminClient, email: string) {
+  const perPage = 200;
+
+  for (let page = 1; page <= 10; page += 1) {
+    const { data, error } = await admin.auth.admin.listUsers({ page, perPage });
+
+    if (error) {
+      throw error;
+    }
+
+    const batch = data.users ?? [];
+    const existingUser = findMatchingUserByEmail(batch, email);
+
+    if (existingUser) {
+      return existingUser;
+    }
+
+    if (batch.length < perPage) {
+      break;
+    }
+  }
+
+  return null;
 }
 
 async function uploadProfileImage(
@@ -245,6 +255,29 @@ export async function registerEmployerAction(
     return registrationUnavailableState();
   }
 
+  const admin = createAdminClient();
+
+  try {
+    const existingUser = await findExistingAuthUserByEmail(admin, payload.data.email);
+
+    if (existingUser) {
+      return {
+        status: "error",
+        message: DUPLICATE_EMAIL_MESSAGE,
+      };
+    }
+  } catch (error) {
+    console.error("[frilanseren/register-employer-precheck-failed]", {
+      email: payload.data.email,
+      message: error instanceof Error ? error.message : String(error),
+    });
+
+    return {
+      status: "error",
+      message: getGenericServerErrorMessage(),
+    };
+  }
+
   const supabase = await createServerComponentClient();
   const { data, error } = await supabase.auth.signUp({
     email: payload.data.email,
@@ -262,18 +295,16 @@ export async function registerEmployerAction(
   if (error || !data.user) {
     return {
       status: "error",
-      message: mapSupabaseRegistrationError(error?.message),
+      message: mapRegistrationErrorMessage(error?.message),
     };
   }
 
   if (looksLikeObfuscatedExistingUser(data.user)) {
     return {
       status: "error",
-      message: "Denne e-postadressen er allerede registrert.",
+      message: DUPLICATE_EMAIL_MESSAGE,
     };
   }
-
-  const admin = createAdminClient();
 
   try {
     const uploadResult = await uploadProfileImage(admin, data.user.id, "employer", logoFile);
@@ -317,8 +348,8 @@ export async function registerEmployerAction(
     return {
       status: "success",
       message: uploadResult.failed
-        ? `Du er med i piloten. Bekreft e-posten din for å aktivere kontoen. ${getRegistrationImageWarning("employer")}`
-        : "Du er med i piloten. Bekreft e-posten din for å aktivere kontoen. Når vi er klare til å teste jobbmatching, kontakter vi deg med konkrete forslag til hvordan vi kan fylle neste produksjon.",
+        ? `Vi har sendt deg en bekreftelseslenke på e-post. Bekreft e-posten din for å aktivere kontoen. ${getRegistrationImageWarning("employer")}`
+        : "Vi har sendt deg en bekreftelseslenke på e-post. Bekreft e-posten din for å aktivere kontoen. Når vi er klare til å teste jobbmatching, kontakter vi deg med konkrete forslag til hvordan vi kan fylle neste produksjon.",
     };
   } catch (adminError) {
     await cleanupFailedRegistration(data.user.id);
@@ -372,6 +403,29 @@ export async function registerFreelancerAction(
     return registrationUnavailableState();
   }
 
+  const admin = createAdminClient();
+
+  try {
+    const existingUser = await findExistingAuthUserByEmail(admin, payload.data.email);
+
+    if (existingUser) {
+      return {
+        status: "error",
+        message: DUPLICATE_EMAIL_MESSAGE,
+      };
+    }
+  } catch (error) {
+    console.error("[frilanseren/register-freelancer-precheck-failed]", {
+      email: payload.data.email,
+      message: error instanceof Error ? error.message : String(error),
+    });
+
+    return {
+      status: "error",
+      message: getGenericServerErrorMessage(),
+    };
+  }
+
   const supabase = await createServerComponentClient();
   const { data, error } = await supabase.auth.signUp({
     email: payload.data.email,
@@ -388,18 +442,16 @@ export async function registerFreelancerAction(
   if (error || !data.user) {
     return {
       status: "error",
-      message: mapSupabaseRegistrationError(error?.message),
+      message: mapRegistrationErrorMessage(error?.message),
     };
   }
 
   if (looksLikeObfuscatedExistingUser(data.user)) {
     return {
       status: "error",
-      message: "Denne e-postadressen er allerede registrert.",
+      message: DUPLICATE_EMAIL_MESSAGE,
     };
   }
-
-  const admin = createAdminClient();
 
   try {
     const uploadResult = await uploadProfileImage(admin, data.user.id, "freelancer", profileImageFile);
@@ -442,8 +494,8 @@ export async function registerFreelancerAction(
     return {
       status: "success",
       message: uploadResult.failed
-        ? `Du er med i piloten. Bekreft e-posten din for å aktivere kontoen. ${getRegistrationImageWarning("freelancer")}`
-        : "Du er med i piloten. Bekreft e-posten din for å aktivere kontoen. Når vi åpner for jobbmatching, får du beskjed og blir prioritert i de første pilotoppdragene.",
+        ? `Vi har sendt deg en bekreftelseslenke på e-post. Bekreft e-posten din for å aktivere kontoen. ${getRegistrationImageWarning("freelancer")}`
+        : "Vi har sendt deg en bekreftelseslenke på e-post. Bekreft e-posten din for å aktivere kontoen. Når vi åpner for jobbmatching, får du beskjed og blir prioritert i de første pilotoppdragene.",
     };
   } catch (adminError) {
     await cleanupFailedRegistration(data.user.id);

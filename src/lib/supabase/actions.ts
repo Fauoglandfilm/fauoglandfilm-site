@@ -76,6 +76,13 @@ export async function signInWithPasswordAction(
   if (error) {
     const errorMessage = error.message.toLowerCase();
 
+    if (errorMessage.includes("email not confirmed")) {
+      return {
+        status: "error",
+        message: "Du må bekrefte e-posten din før du kan logge inn. Sjekk innboksen din for bekreftelseslenken.",
+      };
+    }
+
     if (errorMessage.includes("too many") || errorMessage.includes("rate limit")) {
       return {
         status: "error",
