@@ -4,9 +4,11 @@ import Image from "next/image";
 import { ArrowUpRight, ChevronDown, ChevronUp, Info } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 
+import { ExternalMediaConsentPlaceholder } from "@/components/media/external-media-consent-placeholder";
 import { PreviewMedia } from "@/components/media/preview-media";
 import { InstagramEmbed } from "@/components/media/instagram-embed";
 import { Reveal } from "@/components/motion/reveal";
+import { useCookieConsent } from "@/components/providers/cookie-consent";
 import { useSitePreferences } from "@/components/providers/site-preferences";
 import { CtaBanner, PageHero } from "@/components/sections/site-sections";
 import {
@@ -638,6 +640,7 @@ function PortfolioVideoModal({
   project: PortfolioProject;
   onClose: () => void;
 }) {
+  const { externalMediaEnabled } = useCookieConsent();
   const { language } = useSitePreferences();
   const title = resolveLocalizedValue(project.title, language);
   const summary = getPortfolioShortDescription(project, language);
@@ -916,7 +919,11 @@ function PortfolioVideoModal({
               disableRemotePlayback
             />
           ) : modalMedia?.kind === "external" ? (
-            modalMedia.provider === "instagram" ? (
+            !externalMediaEnabled ? (
+              <div className="relative aspect-video h-auto w-full max-w-[min(100%,78rem)] overflow-hidden bg-[#05070b] sm:max-h-[calc(100svh-6rem)] sm:rounded-[1.4rem]">
+                <ExternalMediaConsentPlaceholder sourceUrl={modalMedia.sourceUrl} />
+              </div>
+            ) : modalMedia.provider === "instagram" ? (
               <div className="flex max-h-[calc(100svh-7rem)] w-full justify-center overflow-hidden px-3 sm:max-h-[calc(100svh-8rem)] sm:px-0">
                 <InstagramEmbed
                   permalink={modalMedia.sourceUrl}

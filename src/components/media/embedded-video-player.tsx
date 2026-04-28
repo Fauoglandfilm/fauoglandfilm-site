@@ -2,12 +2,14 @@
 
 import { useCallback, useEffect, useRef, useState } from "react";
 
+import { useCookieConsent } from "@/components/providers/cookie-consent";
 import { useSitePreferences } from "@/components/providers/site-preferences";
 import type { ExternalVideoAsset, VideoAsset } from "@/data/site-content";
 import type { LocalizedText } from "@/lib/i18n";
 import { resolveLocalizedValue } from "@/lib/i18n";
 import { cn } from "@/lib/utils";
 
+import { ExternalMediaConsentPlaceholder } from "./external-media-consent-placeholder";
 import { InstagramEmbed } from "./instagram-embed";
 import { MediaImage } from "./media-image";
 
@@ -429,6 +431,7 @@ export function EmbeddedVideoPlayer({
   disableMobileSource = false,
 }: EmbeddedVideoPlayerProps) {
   const { language } = useSitePreferences();
+  const { externalMediaEnabled } = useCookieConsent();
   const [isMobileViewport, setIsMobileViewport] = useState(false);
   const resolvedTitle = resolveLocalizedValue(title, language);
   const resolvedImageAlt = imageAlt
@@ -500,6 +503,27 @@ export function EmbeddedVideoPlayer({
             fallbackContent={<FallbackSurface />}
             className={mediaObjectClass}
           />
+        </div>
+      );
+    }
+
+    if (!externalMediaEnabled) {
+      return (
+        <div className={wrapperClassName} aria-label={resolvedTitle}>
+          {fallbackSrc || fallbackSrcs.length ? (
+            <MediaImage
+              src={fallbackSrc}
+              fallbackSrcs={fallbackSrcs}
+              alt={resolvedImageAlt}
+              priority={priority}
+              sizes={sizes}
+              fallbackContent={<FallbackSurface />}
+              className={cn(mediaObjectClass, "z-[1]")}
+            />
+          ) : (
+            <FallbackSurface />
+          )}
+          <ExternalMediaConsentPlaceholder sourceUrl={externalVideo.sourceUrl} />
         </div>
       );
     }

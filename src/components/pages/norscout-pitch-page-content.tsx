@@ -3,6 +3,8 @@
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 
+import { ExternalMediaConsentPlaceholder } from "@/components/media/external-media-consent-placeholder";
+import { useCookieConsent } from "@/components/providers/cookie-consent";
 import { BrandLogo } from "@/components/ui/brand-logo";
 import { Button } from "@/components/ui/button";
 import { ArrowUpRightIcon } from "@/components/ui/icons";
@@ -27,6 +29,7 @@ function getInitialUnlockedState() {
 }
 
 export function NorScoutPitchPageContent() {
+  const { externalMediaEnabled } = useCookieConsent();
   const inputRef = useRef<HTMLInputElement | null>(null);
   const [password, setPassword] = useState("");
   const [isUnlocked, setIsUnlocked] = useState(getInitialUnlockedState);
@@ -119,14 +122,18 @@ export function NorScoutPitchPageContent() {
 
             <div className="relative min-h-0 flex-1 p-2.5 sm:p-3.5">
               <div className="relative h-full w-full overflow-hidden rounded-[1.35rem] border border-white/10 bg-[#0a121d] shadow-[inset_0_1px_0_rgba(255,255,255,0.06)] sm:rounded-[1.6rem]">
-                <iframe
-                  src={NORSCOUT_CANVA_EMBED_SRC}
-                  title="NorScout client presentation"
-                  loading="eager"
-                  allow="fullscreen"
-                  allowFullScreen
-                  className="absolute inset-0 h-full w-full border-0"
-                />
+                {externalMediaEnabled ? (
+                  <iframe
+                    src={NORSCOUT_CANVA_EMBED_SRC}
+                    title="NorScout client presentation"
+                    loading="eager"
+                    allow="fullscreen"
+                    allowFullScreen
+                    className="absolute inset-0 h-full w-full border-0"
+                  />
+                ) : (
+                  <ExternalMediaConsentPlaceholder sourceUrl={NORSCOUT_CANVA_EMBED_SRC} />
+                )}
                 <PresentationFullscreenHint theme="dark" />
               </div>
             </div>

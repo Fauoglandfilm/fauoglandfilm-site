@@ -4,6 +4,8 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 
+import { ExternalMediaConsentPlaceholder } from "@/components/media/external-media-consent-placeholder";
+import { useCookieConsent } from "@/components/providers/cookie-consent";
 import { BrandLogo } from "@/components/ui/brand-logo";
 import { Button } from "@/components/ui/button";
 import { ArrowUpRightIcon } from "@/components/ui/icons";
@@ -26,6 +28,7 @@ function getInitialAccessState() {
 }
 
 export function SocialPlanViewer() {
+  const { externalMediaEnabled } = useCookieConsent();
   const router = useRouter();
   const [hasAccess] = useState(getInitialAccessState);
 
@@ -94,14 +97,18 @@ export function SocialPlanViewer() {
 
           <div className="relative min-h-0 flex-1 p-2.5 sm:p-3.5">
             <div className="relative h-full w-full overflow-hidden rounded-[1.35rem] border border-black/8 bg-white shadow-[inset_0_1px_0_rgba(255,255,255,0.42),0_18px_36px_rgba(18,14,10,0.06)] sm:rounded-[1.55rem]">
-              <iframe
-                src={SOCIAL_PLAN_CANVA_EMBED_SRC}
-                title="Sosiale medier plan"
-                loading="eager"
-                allow="fullscreen"
-                allowFullScreen
-                className="absolute inset-0 h-full w-full border-0"
-              />
+              {externalMediaEnabled ? (
+                <iframe
+                  src={SOCIAL_PLAN_CANVA_EMBED_SRC}
+                  title="Sosiale medier plan"
+                  loading="eager"
+                  allow="fullscreen"
+                  allowFullScreen
+                  className="absolute inset-0 h-full w-full border-0"
+                />
+              ) : (
+                <ExternalMediaConsentPlaceholder sourceUrl={SOCIAL_PLAN_CANVA_EMBED_SRC} />
+              )}
               <PresentationFullscreenHint theme="light" />
             </div>
           </div>

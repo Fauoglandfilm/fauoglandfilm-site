@@ -5,6 +5,7 @@ import type { CSSProperties, ReactNode } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
+import { useCookieConsent } from "@/components/providers/cookie-consent";
 import { useSitePreferences } from "@/components/providers/site-preferences";
 import {
   FacebookIcon,
@@ -156,6 +157,7 @@ function FooterContactRow({
 
 export function Footer() {
   const pathname = usePathname();
+  const { openPreferences } = useCookieConsent();
   const { language, theme } = useSitePreferences();
   const copy = uiCopy.footer[language];
   const hidesGlobalChrome =
@@ -169,6 +171,10 @@ export function Footer() {
   const primaryLinks = footerNavItems.slice(0, 3);
   const secondaryLinks = footerNavItems.slice(3);
   const secondaryHeading = language === "no" ? "Mer" : "More";
+  const cookieSettingsLabel =
+    language === "no" ? "Cookievalg" : "Cookie settings";
+  const cookiePolicyLabel =
+    language === "no" ? "Cookie-erklæring" : "Cookie notice";
   const contactItems = [
     {
       label: siteConfig.email,
@@ -289,6 +295,19 @@ export function Footer() {
                 </div>
 
                 <div className="site-footer-rail site-footer-rail--right site-footer-body-copy flex flex-wrap items-center justify-end gap-x-3 gap-y-1 pl-4 text-right text-[0.72rem] sm:gap-x-4">
+                  <button
+                    type="button"
+                    onClick={openPreferences}
+                    className="site-footer-text-link inline-flex items-center justify-center py-[0.18rem] transition duration-200"
+                  >
+                    {cookieSettingsLabel}
+                  </button>
+                  <Link
+                    href="/cookies"
+                    className="site-footer-text-link inline-flex items-center justify-center py-[0.18rem] transition duration-200"
+                  >
+                    {cookiePolicyLabel}
+                  </Link>
                   <p>{siteConfig.locationLabel}</p>
                   <p>© {new Date().getFullYear()} {siteConfig.legalName}</p>
                   <p>Org.nr. {siteConfig.orgId}</p>

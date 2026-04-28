@@ -4,6 +4,8 @@ import { useEffect, useRef } from "react";
 import { usePathname } from "next/navigation";
 import Script from "next/script";
 
+import { useCookieConsent } from "@/components/providers/cookie-consent";
+
 const GA4_ID = "G-D813C0VRPC";
 const META_PIXEL_ID = process.env.NEXT_PUBLIC_META_PIXEL_ID;
 const LINKEDIN_PARTNER_ID = process.env.NEXT_PUBLIC_LINKEDIN_PARTNER_ID;
@@ -84,6 +86,17 @@ function GoogleAnalyticsPageTracker() {
 
 export function TrackingScripts() {
   const pathname = usePathname();
+  const { analyticsEnabled, marketingEnabled } = useCookieConsent();
+
+  useEffect(() => {
+    if (!isProduction || typeof window === "undefined") {
+      return;
+    }
+
+    (
+      window as unknown as Record<`ga-disable-${string}`, boolean | undefined>
+    )[`ga-disable-${GA4_ID}`] = !analyticsEnabled;
+  }, [analyticsEnabled]);
 
   if (pathname?.startsWith("/frilanseren")) {
     return null;
@@ -91,7 +104,7 @@ export function TrackingScripts() {
 
   return (
     <>
-      {isProduction ? (
+      {isProduction && analyticsEnabled ? (
         <>
           <Script
             id="ga4-script"
@@ -114,7 +127,7 @@ export function TrackingScripts() {
         </>
       ) : null}
 
-      {isProduction && META_PIXEL_ID ? (
+      {isProduction && marketingEnabled && META_PIXEL_ID ? (
         <Script id="meta-pixel" strategy="lazyOnload">
           {`
             !function(f,b,e,v,n,t,s)
@@ -131,7 +144,7 @@ export function TrackingScripts() {
         </Script>
       ) : null}
 
-      {isProduction && LINKEDIN_PARTNER_ID ? (
+      {isProduction && marketingEnabled && LINKEDIN_PARTNER_ID ? (
         <Script id="linkedin-insight" strategy="lazyOnload">
           {`
             window._linkedin_partner_id = "${LINKEDIN_PARTNER_ID}";
