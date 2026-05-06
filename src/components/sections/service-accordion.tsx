@@ -183,7 +183,7 @@ function ServiceAccordionRow({
       : "opacity-62 group-hover:opacity-82";
 
   return (
-    <div className={cn("border-b transition-colors duration-200", borderColor)}>
+    <div className={cn("border-b [overflow-anchor:none] transition-colors duration-200", borderColor)}>
       {/* Collapsed row — always visible */}
       <button
         type="button"
@@ -226,7 +226,8 @@ function ServiceAccordionRow({
           >
             <span
               className={cn(
-                "absolute left-0 top-1/2 h-px w-4 -translate-x-[72%] transition-opacity duration-200",
+                "absolute left-0 top-1/2 h-px -translate-x-[72%] transition-[opacity,width] duration-300 ease-out",
+                isOpen ? "w-7" : "w-4 group-hover:w-6",
                 leftRailClassName,
                 isOpen ? "opacity-100" : "opacity-35 group-hover:opacity-80",
               )}
@@ -237,10 +238,10 @@ function ServiceAccordionRow({
             />
             <ArrowUpRightIcon
               className={cn(
-                "h-4 w-4 transition-transform duration-200 ease-out",
+                "h-4 w-4 origin-center transition-[opacity,transform] duration-300 [transition-timing-function:cubic-bezier(0.22,1,0.36,1)]",
                 isOpen
-                  ? "rotate-90"
-                  : "rotate-0 group-hover:translate-x-0.5 group-hover:-translate-y-0.5",
+                  ? "translate-y-0.5 rotate-90 opacity-100"
+                  : "rotate-0 opacity-[0.78] group-hover:translate-x-1 group-hover:-translate-y-1 group-hover:opacity-100",
               )}
             />
           </span>
@@ -286,18 +287,21 @@ function ServiceAccordionRow({
       {/* Expanded panel */}
       <div
         aria-hidden={!isOpen}
+        inert={!isOpen}
         className={cn(
-          "grid overflow-hidden transition-[grid-template-rows,opacity] duration-200 ease-out",
+          "grid overflow-hidden [overflow-anchor:none] transition-[grid-template-rows,opacity] [transition-timing-function:cubic-bezier(0.22,1,0.36,1)]",
           isOpen
-            ? "grid-rows-[1fr] opacity-100"
-            : "pointer-events-none grid-rows-[0fr] opacity-0",
+            ? "grid-rows-[1fr] opacity-100 duration-[360ms]"
+            : "pointer-events-none grid-rows-[0fr] opacity-0 duration-[260ms]",
         )}
       >
-        {isOpen ? (
-          <div className="min-h-0 overflow-hidden">
-            <div
-              className="relative grid gap-6 overflow-hidden px-5 pb-7 pt-3 sm:px-6 lg:grid-cols-[1.1fr_0.9fr] lg:gap-8 lg:px-8 lg:pb-9 lg:pt-4"
-            >
+        <div className="min-h-0 overflow-hidden">
+          <div
+            className={cn(
+              "relative grid gap-6 overflow-hidden px-5 pb-7 pt-3 transition-[opacity,transform] duration-300 [transition-timing-function:cubic-bezier(0.22,1,0.36,1)] sm:px-6 lg:grid-cols-[1.1fr_0.9fr] lg:gap-8 lg:px-8 lg:pb-9 lg:pt-4",
+              isOpen ? "translate-y-0 opacity-100" : "-translate-y-2 opacity-0",
+            )}
+          >
               <div
                 aria-hidden="true"
                 className="pointer-events-none absolute inset-x-0 top-0 h-px opacity-60"
@@ -315,7 +319,7 @@ function ServiceAccordionRow({
                   imageAlt={title}
                   mediaFit="cover"
                   mediaObjectClassName={mediaConfig.objectClassName}
-                  previewBehavior={video ? "hover-or-viewport" : "static"}
+                  previewBehavior={isOpen && video ? "hover-or-viewport" : "static"}
                   className="absolute inset-0"
                   sizes="(min-width: 1024px) 50vw, 100vw"
                   rootMargin="80px 0px"
@@ -369,6 +373,7 @@ function ServiceAccordionRow({
                     variant="primary"
                     size="default"
                     className="w-full sm:w-auto"
+                    tabIndex={isOpen ? undefined : -1}
                   >
                     {ctaLabel}
                   </ButtonLink>
@@ -376,9 +381,8 @@ function ServiceAccordionRow({
               </div>
             </div>
           </div>
-        ) : null}
+        </div>
       </div>
-    </div>
   );
 }
 
