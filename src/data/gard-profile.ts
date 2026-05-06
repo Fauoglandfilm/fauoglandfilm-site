@@ -525,57 +525,65 @@ const projectGroups: GardProjectGroup[] = [
         preview: true,
       },
       {
-        slug: "ferie-for-to-midnatts",
+        slug: "ferie-for-to",
         client: "Sentinel Film / Snowfall Cinema",
         year: "2023",
         title: {
-          no: "Ferie for to og En Midnatts Vuggesang",
-          en: "Holiday for Two and A Midnight Lullaby",
+          no: "Ferie for to",
+          en: "Holiday for Two",
         },
         format: {
-          no: "Kortfilm og drama",
-          en: "Short film and drama",
+          no: "Kortfilm",
+          en: "Short film",
         },
         role: {
           no: "Produksjonsledelse, 1st AD og set-ledelse",
           en: "Production management, 1st AD and set leadership",
         },
         summary: {
-          no: "To dramaprosjekter som viser Gard sitt arbeid bak kamera når opptaksflyt, logistikk og trygg set-ledelse må løfte fortellingen.",
-          en: "Two drama productions that show Gard's work behind the camera when shoot flow, logistics and confident set leadership need to support the story.",
+          no: "Et kortfilmprosjekt der Gard sitt arbeid bak kamera handlet om opptaksflyt, logistikk og trygg set-ledelse rundt fortellingen.",
+          en: "A short film project where Gard's work behind the camera centered on shoot flow, logistics and confident set leadership around the story.",
         },
         externalVideo: youtubeAsset("zY4IMJsXNBQ", {
           no: "Ferie for to",
           en: "Holiday for Two",
         }),
         preview: true,
-        companions: [
-          {
-            slug: "en-midnatts-vuggesang",
-            title: {
-              no: "En Midnatts Vuggesang",
-              en: "A Midnight Lullaby",
-            },
-            year: "2023",
-            format: {
-              no: "Dramakortfilm",
-              en: "Drama short",
-            },
-            image: "/assets/portfolio/midnatts-vuggesang/posters/en-midnatts-vuggesang-poster.avif",
-            imageAlt: {
-              no: "Poster for En Midnatts Vuggesang",
-              en: "Poster for A Midnight Lullaby",
-            },
-          },
-        ],
       },
       {
-        slug: "cork-selfish-day-by-night",
-        client: "Independent / Los Angeles",
-        year: "2021-2022",
+        slug: "en-midnatts-vuggesang",
+        client: "Snowfall Cinema x Fau&Land Film",
+        year: "2023",
         title: {
-          no: "Cork, Selfish og Day By Night",
-          en: "Cork, Selfish and Day By Night",
+          no: "En Midnatts Vuggesang",
+          en: "A Midnight Lullaby",
+        },
+        format: {
+          no: "Dramakortfilm",
+          en: "Drama short",
+        },
+        role: {
+          no: "Produksjonsledelse, 1st AD og set-ledelse",
+          en: "Production management, 1st AD and set leadership",
+        },
+        summary: {
+          no: "Drama om Li-hua, en alenemor i Oslo som kjemper for å få endene til å møtes, der Gard bidro med trygg produksjonsflyt rundt et nært fortellende univers.",
+          en: "A drama about Li-hua, a single mother in Oslo fighting to make ends meet, where Gard helped keep production flow steady around an intimate story world.",
+        },
+        image: "/assets/portfolio/midnatts-vuggesang/posters/en-midnatts-vuggesang-poster.avif",
+        imageAlt: {
+          no: "Poster for En Midnatts Vuggesang",
+          en: "Poster for A Midnight Lullaby",
+        },
+        preview: true,
+      },
+      {
+        slug: "cork",
+        client: "Independent / Los Angeles",
+        year: "2021",
+        title: {
+          no: "Cork",
+          en: "Cork",
         },
         format: {
           no: "Fortellende kortformat",
@@ -586,8 +594,8 @@ const projectGroups: GardProjectGroup[] = [
           en: "Direction, editing and production work",
         },
         summary: {
-          no: "Et mer uavhengig spor som viser Gard sitt arbeid i mindre fortellende formater, med sterkere fokus på stemning, rytme og visuelt uttrykk.",
-          en: "A more independent track showing Gard's work in smaller narrative formats, with a stronger focus on atmosphere, rhythm and visual voice.",
+          no: "Et uavhengig kortformat fra Los Angeles-perioden, med fokus på stemning, rytme og et mer presist visuelt uttrykk.",
+          en: "An independent short-form project from the Los Angeles period, focused on atmosphere, rhythm and a more precise visual voice.",
         },
         externalVideo: vimeoAsset(
           "563949732",
@@ -599,30 +607,58 @@ const projectGroups: GardProjectGroup[] = [
           "693b90049d",
         ),
         preview: true,
-        companions: [
-          {
-            slug: "selfish",
-            title: {
-              no: "Selfish",
-              en: "Selfish",
-            },
-            externalVideo: youtubeAsset("UB2t19KGPIs", {
-              no: "Selfish",
-              en: "Selfish",
-            }),
-          },
-          {
-            slug: "day-by-night",
-            title: {
-              no: "Day By Night",
-              en: "Day By Night",
-            },
-            externalVideo: youtubeAsset("b6JUOY8FB20", {
-              no: "Day By Night",
-              en: "Day By Night",
-            }),
-          },
-        ],
+      },
+      {
+        slug: "selfish",
+        client: "Independent / Los Angeles",
+        year: "2022",
+        title: {
+          no: "Selfish",
+          en: "Selfish",
+        },
+        format: {
+          no: "Fortellende kortformat",
+          en: "Narrative short-form work",
+        },
+        role: {
+          no: "Regi, klipp og produksjonsarbeid",
+          en: "Direction, editing and production work",
+        },
+        summary: {
+          no: "Et selvstendig kortformat som viser Gard sitt arbeid med tone, timing og visuell fortelling i et mindre produksjonsoppsett.",
+          en: "A standalone short-form project showing Gard's work with tone, timing and visual storytelling in a smaller production setup.",
+        },
+        externalVideo: youtubeAsset("UB2t19KGPIs", {
+          no: "Selfish",
+          en: "Selfish",
+        }),
+        preview: true,
+      },
+      {
+        slug: "day-by-night",
+        client: "Independent / Los Angeles",
+        year: "2022",
+        title: {
+          no: "Day By Night",
+          en: "Day By Night",
+        },
+        format: {
+          no: "Fortellende kortformat",
+          en: "Narrative short-form work",
+        },
+        role: {
+          no: "Regi, klipp og produksjonsarbeid",
+          en: "Direction, editing and production work",
+        },
+        summary: {
+          no: "Et individuelt kortformat fra Gard sitt uavhengige spor, med tydelig fokus på rytme, stemning og visuelt uttrykk.",
+          en: "An individual short-form piece from Gard's independent track, with a clear focus on rhythm, atmosphere and visual expression.",
+        },
+        externalVideo: youtubeAsset("b6JUOY8FB20", {
+          no: "Day By Night",
+          en: "Day By Night",
+        }),
+        preview: true,
       },
       {
         slug: "hvite-penger",
