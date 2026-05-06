@@ -91,13 +91,18 @@ function ServiceAccordionRow({
     : "text-[color:var(--accent)]/80";
   const titleColor = isDarkTheme ? "text-white" : "text-[color:var(--foreground)]";
   const budgetColor = isDarkTheme ? "text-white/52" : "text-black/44";
-  const iconColor = isDarkTheme ? "text-white/40" : "text-black/32";
   const bodyColor = isDarkTheme ? "text-white/62" : "text-[color:var(--muted-2)]";
   const dividerColor = isDarkTheme ? "bg-white/8" : "bg-black/8";
   const metaLabelColor = isDarkTheme ? "text-white/38" : "text-black/36";
   const metaValueColor = isDarkTheme
     ? "text-white/80"
     : "text-[color:var(--foreground)]/82";
+  const actionPillClassName = isDarkTheme
+    ? "border-white/12 bg-white/[0.045] text-white/66 group-hover:border-[color:var(--accent)]/28 group-hover:bg-[color:var(--accent)]/10 group-hover:text-white"
+    : "border-black/10 bg-white/72 text-black/54 shadow-[0_8px_18px_rgba(84,101,125,0.08)] group-hover:border-[color:var(--accent)]/32 group-hover:bg-[color:var(--accent)]/12 group-hover:text-[color:var(--foreground)]";
+  const arrowOrbClassName = isDarkTheme
+    ? "border-white/10 bg-white/[0.055] text-white/72 group-hover:border-[color:var(--accent)]/34 group-hover:bg-[color:var(--accent)]/12 group-hover:text-white"
+    : "border-black/10 bg-white/86 text-black/62 shadow-[0_10px_22px_rgba(84,101,125,0.1)] group-hover:border-[color:var(--accent)]/34 group-hover:bg-[color:var(--accent)]/14 group-hover:text-[color:var(--foreground)]";
 
   return (
     <div className={cn("border-b transition-colors duration-200", borderColor)}>
@@ -149,10 +154,32 @@ function ServiceAccordionRow({
 
         <span
           className={cn(
-            "ml-auto shrink-0 transition-transform duration-200 ease-out",
-            isOpen ? "rotate-90" : "rotate-0",
-            iconColor,
+            "hidden shrink-0 items-center gap-2 rounded-full border px-3 py-2 text-[0.62rem] font-semibold uppercase tracking-[0.16em] transition duration-200 ease-out sm:inline-flex",
+            actionPillClassName,
           )}
+        >
+          {isOpen
+            ? language === "no"
+              ? "Åpen"
+              : "Open"
+            : language === "no"
+              ? "Trykk"
+              : "Tap"}
+          <ArrowUpRightIcon
+            className={cn(
+              "h-3.5 w-3.5 transition-transform duration-200 ease-out",
+              isOpen ? "rotate-90" : "rotate-0 group-hover:translate-x-0.5",
+            )}
+          />
+        </span>
+
+        <span
+          className={cn(
+            "ml-auto inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-full border transition duration-200 ease-out sm:hidden",
+            isOpen ? "rotate-90" : "rotate-0",
+            arrowOrbClassName,
+          )}
+          aria-hidden="true"
         >
           <ArrowUpRightIcon className="h-4 w-4 transition-transform duration-200 group-hover:translate-x-px" />
         </span>
@@ -183,18 +210,22 @@ function ServiceAccordionRow({
                   imageAlt={title}
                   mediaFit="cover"
                   mediaObjectClassName={mediaConfig.objectClassName}
-                  previewBehavior={video ? "hover" : "static"}
+                  previewBehavior={video ? "hover-or-viewport" : "static"}
                   className="absolute inset-0"
                   sizes="(min-width: 1024px) 50vw, 100vw"
                   rootMargin="80px 0px"
                   inViewThreshold={0.1}
                   posterClassName={cn(
                     mediaConfig.objectClassName,
-                    "transition duration-500 ease-out",
+                    "transition duration-500 ease-out group-hover:scale-[1.015]",
                   )}
                   previewClassName="transition duration-500 ease-out"
                 />
                 <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(8,8,8,0.04),rgba(8,8,8,0.22)_100%)]" />
+                <div className="pointer-events-none absolute bottom-3 right-3 hidden items-center gap-2 rounded-full border border-white/14 bg-black/34 px-3 py-2 text-[0.62rem] font-semibold uppercase tracking-[0.16em] text-white/72 backdrop-blur-[14px] sm:inline-flex">
+                  <span className="h-1.5 w-1.5 rounded-full bg-[color:var(--accent)] shadow-[0_0_14px_color-mix(in_srgb,var(--accent)_80%,transparent)]" />
+                  {language === "no" ? "Bevegelig preview" : "Motion preview"}
+                </div>
               </div>
 
               {/* Content */}
