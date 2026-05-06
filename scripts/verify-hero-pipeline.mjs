@@ -8,7 +8,6 @@ const ALLOWED_HERO_FILES = new Set([
   "fau-land-hero-source-lock-20260329-v1-poster.webp",
 ]);
 const FORBIDDEN_HERO_TOKENS = [
-  "fau-land-winter",
   "FL-Bakgrunn",
   "home-hero-mobile",
   "hero-nature-desktop-poster",

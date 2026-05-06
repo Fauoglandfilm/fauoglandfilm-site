@@ -45,6 +45,13 @@ export type GardProjectGroup = {
   projects: GardProject[];
 };
 
+export type GardProjectDetail = GardProject & {
+  group: GardProjectGroup;
+  isCompanion?: boolean;
+  parentSlug?: string;
+  parentTitle?: LocalizedText;
+};
+
 export type GardLink = {
   label: LocalizedText;
   href: string;
@@ -104,12 +111,12 @@ const projectGroups: GardProjectGroup[] = [
     },
     projects: [
       {
-        slug: "continental",
+        slug: "continental-2023",
         client: "Continental",
-        year: "2023-2024",
+        year: "2023",
         title: {
-          no: "Continental - dekkampanjer for vinter og sommer",
-          en: "Continental - tyre campaigns for winter and summer",
+          no: "Continental Dekk 2023",
+          en: "Continental Tyres 2023",
         },
         format: {
           no: "Kampanjefilm",
@@ -120,48 +127,40 @@ const projectGroups: GardProjectGroup[] = [
           en: "Project lead, 1st AD and execution",
         },
         summary: {
-          no: "Flere reklameproduksjoner for Continental, der Gard holdt tempo, opptaksflyt og leveranse samlet på tvers av VC8, 2023-kampanjen og sommeruttak.",
-          en: "A run of Continental productions where Gard kept pace, set flow and delivery aligned across VC8, the 2023 campaign and summer cutdowns.",
+          no: "Et kampanjeuttak for Continental der Gard holdt opptaksflyt, set-ledelse og gjennomføring samlet fra plan til leveranse.",
+          en: "A Continental campaign cut where Gard kept set flow, leadership and execution aligned from planning to delivery.",
         },
-        externalVideo: youtubeAsset("Bn6j7bemquc", {
-          no: "Continental Dekk VC8",
-          en: "Continental Tyres VC8",
+        externalVideo: youtubeAsset("7RD9f8XBRm4", {
+          no: "Continental Dekk 2023",
+          en: "Continental Tyres 2023",
         }),
         preview: true,
-        companions: [
-          {
-            slug: "continental-2023",
-            title: {
-              no: "Continental Dekk 2023",
-              en: "Continental Tyres 2023",
-            },
-            year: "2023",
-            format: {
-              no: "Kampanjefilm",
-              en: "Campaign film",
-            },
-            externalVideo: youtubeAsset("7RD9f8XBRm4", {
-              no: "Continental Dekk 2023",
-              en: "Continental Tyres 2023",
-            }),
-          },
-          {
-            slug: "continental-sommer",
-            title: {
-              no: "Continental sommer",
-              en: "Continental summer",
-            },
-            year: "2024",
-            format: {
-              no: "Produktfilm",
-              en: "Product film",
-            },
-            externalVideo: youtubeAsset("z3JrMUKUz7s", {
-              no: "Continental sommer",
-              en: "Continental summer",
-            }),
-          },
-        ],
+      },
+      {
+        slug: "continental-sommer",
+        client: "Continental",
+        year: "2024",
+        title: {
+          no: "Continental sommer",
+          en: "Continental summer",
+        },
+        format: {
+          no: "Produktfilm",
+          en: "Product film",
+        },
+        role: {
+          no: "Prosjektledelse, 1st AD og gjennomføring",
+          en: "Project lead, 1st AD and execution",
+        },
+        summary: {
+          no: "Et lettere produktuttak for Continental, bygget rundt tydelig produktfokus, tempo og trygg produksjonsflyt.",
+          en: "A lighter Continental product cut built around clear product focus, pace and confident production flow.",
+        },
+        externalVideo: youtubeAsset("z3JrMUKUz7s", {
+          no: "Continental sommer",
+          en: "Continental summer",
+        }),
+        preview: true,
       },
       {
         slug: "vibb",
@@ -895,3 +894,61 @@ export const gardProfilePage = {
   contactEmail: "gard@fauoglandfilm.com",
   contactPhone: "+47 940 53 050",
 };
+
+export function getGardProjectPath(slug: string) {
+  return `/team/gard-ruben-fauske/prosjekter/${slug}`;
+}
+
+export function getGardProjectIndex(): GardProjectDetail[] {
+  return projectGroups.flatMap((group) =>
+    group.projects.flatMap((project) => {
+      const primaryProject: GardProjectDetail = {
+        ...project,
+        group,
+      };
+      const companionProjects =
+        project.companions?.map((companion): GardProjectDetail => ({
+          ...project,
+          ...companion,
+          slug: companion.slug,
+          client: project.client,
+          title: companion.title,
+          summary: companion.summary ?? project.summary,
+          format: companion.format ?? project.format,
+          role: project.role,
+          year: companion.year ?? project.year,
+          image: companion.image ?? project.image,
+          imageAlt: companion.imageAlt ?? project.imageAlt,
+          video: companion.video,
+          externalVideo: companion.externalVideo,
+          mediaFit: companion.mediaFit ?? project.mediaFit,
+          companions: undefined,
+          group,
+          isCompanion: true,
+          parentSlug: project.slug,
+          parentTitle: project.title,
+        })) ?? [];
+
+      return [primaryProject, ...companionProjects];
+    }),
+  );
+}
+
+export function getGardProjectBySlug(slug: string) {
+  return getGardProjectIndex().find((project) => project.slug === slug);
+}
+
+export function getGardRelatedProjects(slug: string, limit = 4) {
+  const currentProject = getGardProjectBySlug(slug);
+
+  if (!currentProject) {
+    return [];
+  }
+
+  return getGardProjectIndex()
+    .filter(
+      (project) =>
+        project.slug !== slug && project.group.slug === currentProject.group.slug,
+    )
+    .slice(0, limit);
+}

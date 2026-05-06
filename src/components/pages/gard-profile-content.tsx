@@ -1,86 +1,26 @@
 "use client";
 
 import Image from "next/image";
-import { useRef, useState } from "react";
+import Link from "next/link";
 
 import { PreviewMedia } from "@/components/media/preview-media";
 import { Reveal } from "@/components/motion/reveal";
 import { ProfileImageCard } from "@/components/pages/profile-image-card";
 import { useSitePreferences } from "@/components/providers/site-preferences";
-import { Button } from "@/components/ui/button";
 import { ButtonLink } from "@/components/ui/button-link";
 import { ArrowUpRightIcon } from "@/components/ui/icons";
 import {
   gardProfilePage,
+  getGardProjectPath,
   type GardProject,
-  type GardProjectCompanion,
   type GardProjectGroup,
 } from "@/data/gard-profile";
 import { siteConfig } from "@/data/site-content";
 import { resolveLocalizedValue } from "@/lib/i18n";
 import { cn } from "@/lib/utils";
 
-function hasPlayableMedia(project: GardProject | GardProjectCompanion) {
+function hasPlayableMedia(project: GardProject) {
   return Boolean(project.video || project.externalVideo);
-}
-
-function toPreviewProject(project: GardProject, companion?: GardProjectCompanion): GardProject {
-  if (!companion) {
-    return project;
-  }
-
-  return {
-    ...project,
-    slug: `${project.slug}-${companion.slug}`,
-    title: companion.title,
-    summary: companion.summary ?? project.summary,
-    format: companion.format ?? project.format,
-    year: companion.year ?? project.year,
-    image: companion.image ?? project.image,
-    imageAlt: companion.imageAlt ?? project.imageAlt,
-    video: companion.video,
-    externalVideo: companion.externalVideo,
-    mediaFit: companion.mediaFit ?? project.mediaFit,
-  };
-}
-
-function getProjectActionHref(project: GardProject) {
-  if (project.externalVideo?.sourceUrl) {
-    return project.externalVideo.sourceUrl;
-  }
-
-  if (project.video?.videoType === "direct") {
-    return project.video.fullSrc ?? project.video.src;
-  }
-
-  if (project.image) {
-    return project.image;
-  }
-
-  return null;
-}
-
-function getProjectActionMeta(project: GardProject, language: "no" | "en") {
-  const href = getProjectActionHref(project);
-
-  if (!href) {
-    return null;
-  }
-
-  const isExternal =
-    href.startsWith("http://") ||
-    href.startsWith("https://") ||
-    /\.(mp4|webm|mov|avif|webp|jpe?g|png|gif)(\?|$)/i.test(href);
-  const label =
-    project.externalVideo || project.video?.videoType === "direct"
-      ? language === "no"
-        ? "Se film"
-        : "Watch film"
-      : language === "no"
-        ? "Se plakat"
-        : "View poster";
-
-  return { href, isExternal, label };
 }
 
 function GardEditorialCase({
@@ -91,46 +31,30 @@ function GardEditorialCase({
   index: number;
 }) {
   const { language } = useSitePreferences();
-  const mediaRef = useRef<HTMLDivElement | null>(null);
-  const [activeProject, setActiveProject] = useState<GardProject>(project);
-  const title = resolveLocalizedValue(activeProject.title, language);
+  const title = resolveLocalizedValue(project.title, language);
   const mediaFirst = index % 2 === 0;
-  const availabilityNote =
-    activeProject.video?.videoType === "request"
-      ? resolveLocalizedValue(activeProject.video.availabilityNote, language)
-      : null;
-  const action = getProjectActionMeta(activeProject, language);
-
-  const focusInlineProject = (nextProject: GardProject) => {
-    setActiveProject(nextProject);
-    mediaRef.current?.scrollIntoView({ behavior: "smooth", block: "nearest" });
-  };
+  const projectHref = getGardProjectPath(project.slug);
 
   return (
     <article className="grid gap-5 lg:grid-cols-[minmax(0,1.14fr)_minmax(20rem,0.86fr)] lg:gap-7 lg:items-stretch">
       <div className={cn("order-1", !mediaFirst && "lg:order-2")}>
         <div
-          ref={mediaRef}
           className="media-frame group relative min-h-[18rem] overflow-hidden rounded-[2rem] bg-[#07090d] sm:min-h-[24rem] lg:min-h-[32rem]"
         >
-          {action ? (
-            <a
-              href={action.href}
-              target={action.isExternal ? "_blank" : undefined}
-              rel={action.isExternal ? "noreferrer noopener" : undefined}
-              aria-label={language === "no" ? `Åpne ${title}` : `Open ${title}`}
-              className="absolute inset-0 z-[3]"
-            />
-          ) : null}
+          <Link
+            href={projectHref}
+            aria-label={language === "no" ? `Åpne ${title}` : `Open ${title}`}
+            className="absolute inset-0 z-[3]"
+          />
 
           <PreviewMedia
-            title={activeProject.title}
-            video={activeProject.video}
-            externalVideo={activeProject.externalVideo}
-            image={activeProject.image}
-            imageAlt={activeProject.imageAlt}
-            mediaFit={activeProject.mediaFit}
-            previewBehavior={hasPlayableMedia(activeProject) ? "viewport" : "static"}
+            title={project.title}
+            video={project.video}
+            externalVideo={project.externalVideo}
+            image={project.image}
+            imageAlt={project.imageAlt}
+            mediaFit={project.mediaFit}
+            previewBehavior={hasPlayableMedia(project) ? "viewport" : "static"}
             className="absolute inset-0"
             sizes="(min-width: 1280px) 58vw, (min-width: 1024px) 54vw, 100vw"
             posterClassName="transition duration-700"
@@ -141,11 +65,11 @@ function GardEditorialCase({
           <div className="grain-overlay absolute inset-0 opacity-28" />
 
           <div className="absolute left-4 top-4 z-[4] flex flex-wrap items-center gap-2 text-[0.64rem] font-semibold uppercase tracking-[0.22em] text-white/74 sm:left-5 sm:top-5">
-            <span>{activeProject.client}</span>
-            {activeProject.year ? (
+            <span>{project.client}</span>
+            {project.year ? (
               <>
                 <span className="h-1 w-1 rounded-full bg-white/32" />
-                <span>{activeProject.year}</span>
+                <span>{project.year}</span>
               </>
             ) : null}
           </div>
@@ -157,9 +81,9 @@ function GardEditorialCase({
         <div className="glass-panel flex w-full flex-col rounded-[2rem] px-5 py-5 sm:px-6 sm:py-6 lg:px-7 lg:py-7">
           <div className="space-y-4">
             <div className="flex flex-wrap items-center gap-2">
-              <span className="founder-profile-chip">{resolveLocalizedValue(activeProject.format, language)}</span>
+              <span className="founder-profile-chip">{resolveLocalizedValue(project.format, language)}</span>
               <span className="founder-profile-chip founder-profile-chip-muted">
-                {resolveLocalizedValue(activeProject.role, language)}
+                {resolveLocalizedValue(project.role, language)}
               </span>
             </div>
 
@@ -167,46 +91,34 @@ function GardEditorialCase({
               {title}
             </h3>
             <p className="body-lead max-w-[34rem] text-[var(--muted-2)]">
-              {resolveLocalizedValue(activeProject.summary, language)}
+              {resolveLocalizedValue(project.summary, language)}
             </p>
-            {availabilityNote ? <p className="body-copy text-[var(--muted)]">{availabilityNote}</p> : null}
           </div>
 
           {project.companions?.length ? (
             <div className="mt-6">
               <p className="text-[0.68rem] font-semibold uppercase tracking-[0.2em] text-[var(--muted)]">
-                {language === "no" ? "Flere klipp fra samme spor" : "More from the same body of work"}
+                {language === "no" ? "Egne prosjektsider" : "Dedicated project pages"}
               </p>
               <div className="mt-3 flex flex-wrap gap-2.5">
                 {project.companions.map((companion) => (
-                  <button
+                  <Link
                     key={companion.slug}
-                    type="button"
-                  onClick={() => focusInlineProject(toPreviewProject(project, companion))}
-                  className="inline-flex items-center gap-2 rounded-full border border-[color:var(--line-strong)] bg-[color:var(--surface)]/78 px-3.5 py-2 text-left text-sm font-medium text-[color:var(--foreground)] transition duration-300 hover:border-[color:var(--accent)]/38 hover:bg-[color:var(--surface-2)]"
-                >
-                  <span>{resolveLocalizedValue(companion.title, language)}</span>
-                </button>
-              ))}
+                    href={getGardProjectPath(companion.slug)}
+                    className="inline-flex items-center gap-2 rounded-full border border-[color:var(--line-strong)] bg-[color:var(--surface)]/78 px-3.5 py-2 text-left text-sm font-medium text-[color:var(--foreground)] transition duration-300 hover:border-[color:var(--accent)]/38 hover:bg-[color:var(--surface-2)]"
+                  >
+                    <span>{resolveLocalizedValue(companion.title, language)}</span>
+                    <ArrowUpRightIcon className="h-3.5 w-3.5 opacity-60" />
+                  </Link>
+                ))}
               </div>
             </div>
           ) : null}
 
           <div className="mt-auto flex flex-col gap-2.5 pt-6 sm:flex-row sm:flex-wrap">
-            {action ? (
-              <ButtonLink
-                href={action.href}
-                className="w-full sm:w-auto"
-                target={action.isExternal ? "_blank" : undefined}
-                rel={action.isExternal ? "noreferrer noopener" : undefined}
-              >
-                {action.label}
-              </ButtonLink>
-            ) : hasPlayableMedia(activeProject) || activeProject.image ? (
-              <Button className="w-full sm:w-auto" onClick={() => focusInlineProject(activeProject)}>
-                {language === "no" ? "Vis i preview" : "Show preview"}
-              </Button>
-            ) : null}
+            <ButtonLink href={projectHref} className="w-full sm:w-auto">
+              {language === "no" ? "Åpne prosjektside" : "Open project page"}
+            </ButtonLink>
             <ButtonLink href="/kontakt" variant="ghost" className="w-full sm:w-auto">
               {language === "no" ? "Snakk med oss om prosjektet" : "Talk to us about the project"}
               <ArrowUpRightIcon className="h-4 w-4" />
