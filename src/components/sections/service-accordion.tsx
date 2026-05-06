@@ -35,6 +35,73 @@ const serviceMediaConfigBySlug: Record<string, { objectClassName: string }> = {
   "dronefilm-luftfoto": { objectClassName: "object-center" },
 };
 
+type ServiceTint = {
+  ribbon: string;
+  wash: string;
+  marker: string;
+  rail: string;
+};
+
+const serviceTintFallback: ServiceTint = {
+  ribbon:
+    "linear-gradient(180deg,rgba(214,176,109,0.42),rgba(131,164,214,0.24),rgba(255,255,255,0.1))",
+  wash:
+    "linear-gradient(90deg,rgba(214,176,109,0.08),rgba(131,164,214,0.045),transparent 66%)",
+  marker: "linear-gradient(135deg,rgba(214,176,109,0.18),rgba(131,164,214,0.08))",
+  rail: "rgba(214,176,109,0.68)",
+};
+
+const serviceTintBySlug: Record<string, ServiceTint> = {
+  reklamefilm: {
+    ribbon:
+      "linear-gradient(180deg,rgba(223,178,86,0.46),rgba(209,111,78,0.24),rgba(99,124,158,0.16))",
+    wash:
+      "linear-gradient(90deg,rgba(223,178,86,0.11),rgba(209,111,78,0.055),transparent 66%)",
+    marker: "linear-gradient(135deg,rgba(223,178,86,0.2),rgba(209,111,78,0.1))",
+    rail: "rgba(223,178,86,0.74)",
+  },
+  "marketing-distribusjon": {
+    ribbon:
+      "linear-gradient(180deg,rgba(100,151,224,0.42),rgba(81,190,171,0.22),rgba(228,196,120,0.14))",
+    wash:
+      "linear-gradient(90deg,rgba(100,151,224,0.095),rgba(81,190,171,0.052),transparent 66%)",
+    marker: "linear-gradient(135deg,rgba(100,151,224,0.18),rgba(81,190,171,0.1))",
+    rail: "rgba(100,151,224,0.72)",
+  },
+  "bedriftsfilm-intervjuer": {
+    ribbon:
+      "linear-gradient(180deg,rgba(126,151,184,0.42),rgba(214,176,109,0.18),rgba(80,103,128,0.18))",
+    wash:
+      "linear-gradient(90deg,rgba(126,151,184,0.095),rgba(214,176,109,0.045),transparent 66%)",
+    marker: "linear-gradient(135deg,rgba(126,151,184,0.18),rgba(214,176,109,0.08))",
+    rail: "rgba(126,151,184,0.72)",
+  },
+  "some-innhold": {
+    ribbon:
+      "linear-gradient(180deg,rgba(208,130,166,0.4),rgba(119,168,214,0.2),rgba(221,187,109,0.14))",
+    wash:
+      "linear-gradient(90deg,rgba(208,130,166,0.088),rgba(119,168,214,0.048),transparent 66%)",
+    marker: "linear-gradient(135deg,rgba(208,130,166,0.17),rgba(119,168,214,0.09))",
+    rail: "rgba(208,130,166,0.68)",
+  },
+  "event-live": {
+    ribbon:
+      "linear-gradient(180deg,rgba(214,136,82,0.42),rgba(175,90,142,0.2),rgba(232,196,117,0.14))",
+    wash:
+      "linear-gradient(90deg,rgba(214,136,82,0.094),rgba(175,90,142,0.05),transparent 66%)",
+    marker: "linear-gradient(135deg,rgba(214,136,82,0.18),rgba(175,90,142,0.09))",
+    rail: "rgba(214,136,82,0.7)",
+  },
+  "dronefilm-luftfoto": {
+    ribbon:
+      "linear-gradient(180deg,rgba(141,178,139,0.4),rgba(108,157,204,0.2),rgba(224,232,218,0.14))",
+    wash:
+      "linear-gradient(90deg,rgba(141,178,139,0.088),rgba(108,157,204,0.048),transparent 66%)",
+    marker: "linear-gradient(135deg,rgba(141,178,139,0.17),rgba(108,157,204,0.09))",
+    rail: "rgba(141,178,139,0.68)",
+  },
+};
+
 function ServiceAccordionRow({
   service,
   index,
@@ -62,6 +129,7 @@ function ServiceAccordionRow({
   const mediaConfig = serviceMediaConfigBySlug[service.slug] ?? {
     objectClassName: "object-center",
   };
+  const tint = serviceTintBySlug[service.slug] ?? serviceTintFallback;
 
   const ctaHref =
     service.exampleHref?.startsWith("/case/")
@@ -85,24 +153,34 @@ function ServiceAccordionRow({
       : "bg-transparent hover:bg-black/[0.016]";
 
   const borderColor = isDarkTheme ? "border-white/10" : "border-black/8";
-  const numberColor = isDarkTheme ? "text-white/28" : "text-black/22";
   const eyebrowColor = isDarkTheme
     ? "text-[color:var(--accent)]/72"
     : "text-[color:var(--accent)]/80";
   const titleColor = isDarkTheme ? "text-white" : "text-[color:var(--foreground)]";
   const budgetColor = isDarkTheme ? "text-white/52" : "text-black/44";
+  const numberColor = isDarkTheme ? "text-white/34" : "text-black/32";
   const bodyColor = isDarkTheme ? "text-white/62" : "text-[color:var(--muted-2)]";
   const dividerColor = isDarkTheme ? "bg-white/8" : "bg-black/8";
   const metaLabelColor = isDarkTheme ? "text-white/38" : "text-black/36";
   const metaValueColor = isDarkTheme
     ? "text-white/80"
     : "text-[color:var(--foreground)]/82";
-  const actionPillClassName = isDarkTheme
-    ? "border-white/12 bg-white/[0.045] text-white/66 group-hover:border-[color:var(--accent)]/28 group-hover:bg-[color:var(--accent)]/10 group-hover:text-white"
-    : "border-black/10 bg-white/72 text-black/54 shadow-[0_8px_18px_rgba(84,101,125,0.08)] group-hover:border-[color:var(--accent)]/32 group-hover:bg-[color:var(--accent)]/12 group-hover:text-[color:var(--foreground)]";
-  const arrowOrbClassName = isDarkTheme
-    ? "border-white/10 bg-white/[0.055] text-white/72 group-hover:border-[color:var(--accent)]/34 group-hover:bg-[color:var(--accent)]/12 group-hover:text-white"
-    : "border-black/10 bg-white/86 text-black/62 shadow-[0_10px_22px_rgba(84,101,125,0.1)] group-hover:border-[color:var(--accent)]/34 group-hover:bg-[color:var(--accent)]/14 group-hover:text-[color:var(--foreground)]";
+  const leftMarkerClassName = isDarkTheme
+    ? "border-white/11 bg-white/[0.038] text-white/62 group-hover:border-[color:var(--accent)]/34 group-hover:bg-[color:var(--accent)]/10 group-hover:text-white"
+    : "border-black/10 bg-white/82 text-black/58 shadow-[0_10px_22px_rgba(84,101,125,0.08)] group-hover:border-[color:var(--accent)]/36 group-hover:bg-[color:var(--accent)]/12 group-hover:text-[color:var(--foreground)]";
+  const leftMarkerActiveClassName = isDarkTheme
+    ? "border-[color:var(--accent)]/34 bg-[color:var(--accent)]/11 text-white"
+    : "border-[color:var(--accent)]/38 bg-[color:var(--accent)]/14 text-[color:var(--foreground)]";
+  const leftRailClassName = isDarkTheme
+    ? "bg-[color:var(--accent)]/58 shadow-[0_0_18px_color-mix(in_srgb,var(--accent)_45%,transparent)]"
+    : "bg-[color:var(--accent)]/72 shadow-[0_0_14px_color-mix(in_srgb,var(--accent)_28%,transparent)]";
+  const tintOpacityClassName = isDarkTheme
+    ? isOpen
+      ? "opacity-100"
+      : "opacity-72 group-hover:opacity-90"
+    : isOpen
+      ? "opacity-90"
+      : "opacity-62 group-hover:opacity-82";
 
   return (
     <div className={cn("border-b transition-colors duration-200", borderColor)}>
@@ -112,22 +190,74 @@ function ServiceAccordionRow({
         onClick={onToggle}
         aria-expanded={isOpen}
         className={cn(
-          "group flex w-full cursor-pointer items-center gap-4 px-5 py-4 text-left transition-colors duration-150 sm:gap-6 sm:px-6 sm:py-5 lg:px-8 lg:py-5",
+          "group relative flex w-full cursor-pointer items-center gap-4 overflow-hidden px-5 py-4 text-left transition-colors duration-150 sm:gap-6 sm:px-6 sm:py-5 lg:px-8 lg:py-5",
           rowBg,
         )}
       >
         <span
+          aria-hidden="true"
           className={cn(
-            "hidden shrink-0 text-[0.62rem] font-semibold tabular-nums tracking-[0.18em] sm:inline-block",
-            numberColor,
+            "pointer-events-none absolute inset-y-2 left-0 w-[0.34rem] rounded-r-full blur-[0.1px] transition-opacity duration-300",
+            tintOpacityClassName,
           )}
-        >
-          {String(index + 1).padStart(2, "0")}
+          style={{ background: tint.ribbon }}
+        />
+        <span
+          aria-hidden="true"
+          className={cn(
+            "pointer-events-none absolute inset-y-0 left-0 w-[min(48vw,30rem)] transition-opacity duration-300",
+            tintOpacityClassName,
+          )}
+          style={{
+            background: tint.wash,
+            maskImage: "linear-gradient(90deg,#000 0%,rgba(0,0,0,0.74) 28%,transparent 100%)",
+          }}
+        />
+
+        <span className="relative z-[1] flex shrink-0 items-center gap-2.5 sm:gap-3.5">
+          <span
+            className={cn(
+              "relative inline-flex h-10 w-10 items-center justify-center rounded-full border transition duration-200 ease-out sm:h-10.5 sm:w-10.5",
+              leftMarkerClassName,
+              isOpen && leftMarkerActiveClassName,
+            )}
+            aria-hidden="true"
+            style={{ background: tint.marker }}
+          >
+            <span
+              className={cn(
+                "absolute left-0 top-1/2 h-px w-4 -translate-x-[72%] transition-opacity duration-200",
+                leftRailClassName,
+                isOpen ? "opacity-100" : "opacity-35 group-hover:opacity-80",
+              )}
+              style={{
+                backgroundColor: tint.rail,
+                boxShadow: `0 0 18px ${tint.rail}`,
+              }}
+            />
+            <ArrowUpRightIcon
+              className={cn(
+                "h-4 w-4 transition-transform duration-200 ease-out",
+                isOpen
+                  ? "rotate-90"
+                  : "rotate-0 group-hover:translate-x-0.5 group-hover:-translate-y-0.5",
+              )}
+            />
+          </span>
+
+          <span
+            className={cn(
+              "hidden text-[0.62rem] font-semibold tabular-nums tracking-[0.18em] sm:inline-block",
+              numberColor,
+            )}
+          >
+            {String(index + 1).padStart(2, "0")}
+          </span>
         </span>
 
         <span
           className={cn(
-            "flex-1 text-[1.08rem] font-black leading-[1.1] tracking-[-0.04em] sm:text-[1.22rem] lg:text-[1.32rem]",
+            "relative z-[1] flex-1 text-[1.08rem] font-black leading-[1.1] tracking-[-0.04em] sm:text-[1.22rem] lg:text-[1.32rem]",
             titleColor,
           )}
         >
@@ -136,7 +266,7 @@ function ServiceAccordionRow({
 
         <span
           className={cn(
-            "hidden shrink-0 text-[0.62rem] font-semibold uppercase tracking-[0.16em] sm:block lg:min-w-[11rem]",
+            "relative z-[1] hidden shrink-0 text-[0.62rem] font-semibold uppercase tracking-[0.16em] sm:block lg:min-w-[11rem]",
             eyebrowColor,
           )}
         >
@@ -145,43 +275,11 @@ function ServiceAccordionRow({
 
         <span
           className={cn(
-            "hidden shrink-0 text-[0.82rem] font-semibold tabular-nums lg:block lg:min-w-[9rem] lg:text-right",
+            "relative z-[1] hidden shrink-0 text-[0.82rem] font-semibold tabular-nums lg:block lg:min-w-[9rem] lg:text-right",
             budgetColor,
           )}
         >
           {budget}
-        </span>
-
-        <span
-          className={cn(
-            "hidden shrink-0 items-center gap-2 rounded-full border px-3 py-2 text-[0.62rem] font-semibold uppercase tracking-[0.16em] transition duration-200 ease-out sm:inline-flex",
-            actionPillClassName,
-          )}
-        >
-          {isOpen
-            ? language === "no"
-              ? "Åpen"
-              : "Open"
-            : language === "no"
-              ? "Trykk"
-              : "Tap"}
-          <ArrowUpRightIcon
-            className={cn(
-              "h-3.5 w-3.5 transition-transform duration-200 ease-out",
-              isOpen ? "rotate-90" : "rotate-0 group-hover:translate-x-0.5",
-            )}
-          />
-        </span>
-
-        <span
-          className={cn(
-            "ml-auto inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-full border transition duration-200 ease-out sm:hidden",
-            isOpen ? "rotate-90" : "rotate-0",
-            arrowOrbClassName,
-          )}
-          aria-hidden="true"
-        >
-          <ArrowUpRightIcon className="h-4 w-4 transition-transform duration-200 group-hover:translate-x-px" />
         </span>
       </button>
 
@@ -197,7 +295,14 @@ function ServiceAccordionRow({
       >
         {isOpen ? (
           <div className="min-h-0 overflow-hidden">
-            <div className="grid gap-6 px-5 pb-7 pt-3 sm:px-6 lg:grid-cols-[1.1fr_0.9fr] lg:gap-8 lg:px-8 lg:pb-9 lg:pt-4">
+            <div
+              className="relative grid gap-6 overflow-hidden px-5 pb-7 pt-3 sm:px-6 lg:grid-cols-[1.1fr_0.9fr] lg:gap-8 lg:px-8 lg:pb-9 lg:pt-4"
+            >
+              <div
+                aria-hidden="true"
+                className="pointer-events-none absolute inset-x-0 top-0 h-px opacity-60"
+                style={{ background: tint.ribbon }}
+              />
               {/* Media */}
               <div
                 className="relative overflow-hidden rounded-[1.1rem] bg-[#0b0d12]"
@@ -222,10 +327,6 @@ function ServiceAccordionRow({
                   previewClassName="transition duration-500 ease-out"
                 />
                 <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(8,8,8,0.04),rgba(8,8,8,0.22)_100%)]" />
-                <div className="pointer-events-none absolute bottom-3 right-3 hidden items-center gap-2 rounded-full border border-white/14 bg-black/34 px-3 py-2 text-[0.62rem] font-semibold uppercase tracking-[0.16em] text-white/72 backdrop-blur-[14px] sm:inline-flex">
-                  <span className="h-1.5 w-1.5 rounded-full bg-[color:var(--accent)] shadow-[0_0_14px_color-mix(in_srgb,var(--accent)_80%,transparent)]" />
-                  {language === "no" ? "Bevegelig preview" : "Motion preview"}
-                </div>
               </div>
 
               {/* Content */}
