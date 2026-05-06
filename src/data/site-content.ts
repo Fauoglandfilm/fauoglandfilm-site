@@ -1069,12 +1069,15 @@ export const caseStudies: CaseStudy[] = [
       { no: "Arrangement", en: "Event" },
     ],
     video: {
-      videoType: "direct",
-      src: "/assets/portfolio/foreningen-norden/videos/foreningen-norden-nettsideinnhold.mp4",
+      videoType: "request",
       poster: "/assets/portfolio/foreningen-norden/posters/foreningen-norden-nettsideinnhold-poster.avif",
       label: {
         no: "Foreningen Norden - nettsideinnhold",
         en: "Foreningen Norden website content",
+      },
+      availabilityNote: {
+        no: "Full kvalitet vises på forespørsel.",
+        en: "Full-quality version available on request.",
       },
     },
     palette: "from-[#efe9df] via-[#d6cabc] to-[#bfa98c]",
@@ -1901,12 +1904,15 @@ const portfolioProjectsBase: PortfolioProject[] = [
       en: "Still from Foreningen Norden website content",
     },
     video: {
-      videoType: "direct",
-      src: "/assets/portfolio/foreningen-norden/videos/foreningen-norden-nettsideinnhold.mp4",
+      videoType: "request",
       poster: "/assets/portfolio/foreningen-norden/posters/foreningen-norden-nettsideinnhold-poster.avif",
       label: {
         no: "Foreningen Norden - nettsideinnhold",
         en: "Foreningen Norden website content",
+      },
+      availabilityNote: {
+        no: "Full kvalitet vises på forespørsel.",
+        en: "Full-quality version available on request.",
       },
     },
     palette: "from-[#efe9df] via-[#d6cabc] to-[#bfa98c]",
