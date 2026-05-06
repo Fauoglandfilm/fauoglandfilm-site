@@ -95,26 +95,6 @@ function GardEditorialCase({
             </p>
           </div>
 
-          {project.companions?.length ? (
-            <div className="mt-6">
-              <p className="text-[0.68rem] font-semibold uppercase tracking-[0.2em] text-[var(--muted)]">
-                {language === "no" ? "Egne prosjektsider" : "Dedicated project pages"}
-              </p>
-              <div className="mt-3 flex flex-wrap gap-2.5">
-                {project.companions.map((companion) => (
-                  <Link
-                    key={companion.slug}
-                    href={getGardProjectPath(companion.slug)}
-                    className="inline-flex items-center gap-2 rounded-full border border-[color:var(--line-strong)] bg-[color:var(--surface)]/78 px-3.5 py-2 text-left text-sm font-medium text-[color:var(--foreground)] transition duration-300 hover:border-[color:var(--accent)]/38 hover:bg-[color:var(--surface-2)]"
-                  >
-                    <span>{resolveLocalizedValue(companion.title, language)}</span>
-                    <ArrowUpRightIcon className="h-3.5 w-3.5 opacity-60" />
-                  </Link>
-                ))}
-              </div>
-            </div>
-          ) : null}
-
           <div className="mt-auto flex flex-col gap-2.5 pt-6 sm:flex-row sm:flex-wrap">
             <ButtonLink href={projectHref} className="w-full sm:w-auto">
               {language === "no" ? "Åpne prosjektside" : "Open project page"}

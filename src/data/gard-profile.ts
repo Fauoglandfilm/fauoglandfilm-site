@@ -8,19 +8,6 @@ export type GardFocusArea = {
   description: LocalizedText;
 };
 
-export type GardProjectCompanion = {
-  slug: string;
-  title: LocalizedText;
-  summary?: LocalizedText;
-  format?: LocalizedText;
-  year?: string;
-  image?: string;
-  imageAlt?: LocalizedText;
-  video?: VideoAsset;
-  externalVideo?: ExternalVideoAsset;
-  mediaFit?: "cover" | "contain";
-};
-
 export type GardProject = {
   slug: string;
   client: string;
@@ -35,7 +22,6 @@ export type GardProject = {
   externalVideo?: ExternalVideoAsset;
   mediaFit?: "cover" | "contain";
   preview?: boolean;
-  companions?: GardProjectCompanion[];
 };
 
 export type GardProjectGroup = {
@@ -47,9 +33,6 @@ export type GardProjectGroup = {
 
 export type GardProjectDetail = GardProject & {
   group: GardProjectGroup;
-  isCompanion?: boolean;
-  parentSlug?: string;
-  parentTitle?: LocalizedText;
 };
 
 export type GardLink = {
@@ -187,23 +170,32 @@ const projectGroups: GardProjectGroup[] = [
           en: "Vibb",
         }),
         preview: true,
-        companions: [
-          {
-            slug: "vibb-short",
-            title: {
-              no: "Vibb short",
-              en: "Vibb short",
-            },
-            format: {
-              no: "Vertikal preview",
-              en: "Vertical preview",
-            },
-            externalVideo: youtubeAsset("SlYuc877-iE", {
-              no: "Vibb short",
-              en: "Vibb short",
-            }),
-          },
-        ],
+      },
+      {
+        slug: "vibb-short",
+        client: "Vibb",
+        year: "2024",
+        title: {
+          no: "Vibb short",
+          en: "Vibb short",
+        },
+        format: {
+          no: "Vertikal preview",
+          en: "Vertical preview",
+        },
+        role: {
+          no: "Prosjektleder og set-ledelse",
+          en: "Project lead and set leadership",
+        },
+        summary: {
+          no: "Et separat vertikalt uttak fra Vibb-produksjonen, laget for rask forståelse og tydelig produktkommunikasjon i mobilformat.",
+          en: "A separate vertical cut from the Vibb production, built for fast comprehension and clear product communication in mobile format.",
+        },
+        externalVideo: youtubeAsset("SlYuc877-iE", {
+          no: "Vibb short",
+          en: "Vibb short",
+        }),
+        preview: true,
       },
       {
         slug: "nor-way-bussekspress",
@@ -273,22 +265,22 @@ const projectGroups: GardProjectGroup[] = [
       {
         slug: "nei-til-atomvapen",
         client: "Nei til Atomvåpen",
-        year: "2024-2025",
+        year: "2024",
         title: {
-          no: "Nei til Atomvåpen - kampanje, konferanse og 1. mai",
-          en: "No to Nuclear Weapons - campaign, conference and Workers' Day",
+          no: "Nei til Atomvåpen - konferansefilm",
+          en: "No to Nuclear Weapons - conference film",
         },
         format: {
-          no: "Kampanje og aftermovie",
-          en: "Campaign and aftermovie",
+          no: "Konferansefilm",
+          en: "Conference film",
         },
         role: {
           no: "Produsent, regi og klipp",
           en: "Producer, direction and edit",
         },
         summary: {
-          no: "Et lengre samarbeid der Gard har formet både informasjonsfilm, konferansefilm og eventdekning til bruk i verving, dokumentasjon og videre kampanjeuttak.",
-          en: "A longer collaboration where Gard has shaped information films, conference coverage and event output for recruitment, documentation and ongoing campaign use.",
+          no: "En konferansefilm der Gard formet opptak, regi og klipp til tydelig dokumentasjon og videre kampanjebruk.",
+          en: "A conference film where Gard shaped capture, direction and edit into clear documentation and campaign material.",
         },
         image: "/assets/portfolio/nei-til-atomvapen/posters/bli-med-i-kampen-poster.avif",
         imageAlt: {
@@ -300,70 +292,88 @@ const projectGroups: GardProjectGroup[] = [
           en: "No to Nuclear Weapons - conference",
         }),
         preview: true,
-        companions: [
-          {
-            slug: "nta-1-mai",
-            title: {
-              no: "1. mai - stemningsfilm",
-              en: "Workers' Day - aftermovie",
-            },
-            year: "2025",
-            format: {
-              no: "Aftermovie",
-              en: "Aftermovie",
-            },
-            image: "/assets/portfolio/nei-til-atomvapen/posters/internasjonal-arbeiderdag-poster.avif",
-            imageAlt: {
-              no: "Still fra 1. mai-filmen",
-              en: "Still from the Workers' Day film",
-            },
-            externalVideo: youtubeAsset("STycvvvjsWY", {
-              no: "Nei til Atomvåpen - 1. mai",
-              en: "No to Nuclear Weapons - Workers' Day",
-            }),
-          },
-          {
-            slug: "nta-tale",
-            title: {
-              no: "Miranda Aaland - tale",
-              en: "Miranda Aaland - full speech",
-            },
-            year: "2025",
-            format: {
-              no: "Fullt opptak",
-              en: "Full recording",
-            },
-            image: "/assets/portfolio/nei-til-atomvapen/posters/internasjonal-arbeiderdag-reel-poster.avif",
-            imageAlt: {
-              no: "Still fra talen på Youngstorget",
-              en: "Still from the speech at Youngstorget",
-            },
-            externalVideo: youtubeAsset("L0bWrEnlvNk", {
-              no: "Miranda Aaland - tale",
-              en: "Miranda Aaland - full speech",
-            }),
-          },
-        ],
+      },
+      {
+        slug: "nta-1-mai",
+        client: "Nei til Atomvåpen",
+        year: "2025",
+        title: {
+          no: "1. mai - stemningsfilm",
+          en: "Workers' Day - aftermovie",
+        },
+        format: {
+          no: "Aftermovie",
+          en: "Aftermovie",
+        },
+        role: {
+          no: "Produsent, regi og klipp",
+          en: "Producer, direction and edit",
+        },
+        summary: {
+          no: "Et eget 1. mai-uttak for Nei til Atomvåpen, klippet for stemning, tilstedeværelse og tydelig kampanjeenergi.",
+          en: "A dedicated Workers' Day cut for No to Nuclear Weapons, edited for atmosphere, presence and clear campaign energy.",
+        },
+        image: "/assets/portfolio/nei-til-atomvapen/posters/internasjonal-arbeiderdag-poster.avif",
+        imageAlt: {
+          no: "Still fra 1. mai-filmen",
+          en: "Still from the Workers' Day film",
+        },
+        externalVideo: youtubeAsset("STycvvvjsWY", {
+          no: "Nei til Atomvåpen - 1. mai",
+          en: "No to Nuclear Weapons - Workers' Day",
+        }),
+        preview: true,
+      },
+      {
+        slug: "nta-tale",
+        client: "Nei til Atomvåpen",
+        year: "2025",
+        title: {
+          no: "Miranda Aaland - tale",
+          en: "Miranda Aaland - full speech",
+        },
+        format: {
+          no: "Fullt opptak",
+          en: "Full recording",
+        },
+        role: {
+          no: "Produsent, regi og klipp",
+          en: "Producer, direction and edit",
+        },
+        summary: {
+          no: "Et separat taleopptak fra Youngstorget, levert som tydelig dokumentasjon og publiserbart kampanjemateriale.",
+          en: "A separate speech recording from Youngstorget, delivered as clear documentation and publishable campaign material.",
+        },
+        image: "/assets/portfolio/nei-til-atomvapen/posters/internasjonal-arbeiderdag-reel-poster.avif",
+        imageAlt: {
+          no: "Still fra talen på Youngstorget",
+          en: "Still from the speech at Youngstorget",
+        },
+        externalVideo: youtubeAsset("L0bWrEnlvNk", {
+          no: "Miranda Aaland - tale",
+          en: "Miranda Aaland - full speech",
+        }),
+        preview: true,
       },
       {
         slug: "foreningen-norden",
         client: "Foreningen Norden",
-        year: "2022-2024",
+        year: "2024",
         title: {
-          no: "Foreningen Norden - nettsidefilm, debatt og teaseruttak",
-          en: "The Nordic Association - website film, debate and teaser work",
+          no: "Foreningen Norden - debatt",
+          en: "The Nordic Association - debate",
         },
         format: {
-          no: "Organisasjonsfilm og flerkameraopptak",
-          en: "Organisation film and multicam capture",
+          no: "Flerkameraopptak",
+          en: "Multicam capture",
         },
         role: {
           no: "Klipp, animasjon, regi og multicam",
           en: "Edit, animation, direction and multicam",
         },
         summary: {
-          no: "Arbeid som spenner fra nettsidefilm og animasjon til debattoppsett med flere kameraer og raske teaserleveranser for publisering samme dag.",
-          en: "Work spanning website film and animation to multicam debate setups and fast teaser deliveries ready for same-day publishing.",
+          no: "Et eget debattoppsett for Foreningen Norden, med flerkamera, trygg opptaksflyt og klipp til tydelig publisering.",
+          en: "A dedicated debate setup for the Nordic Association, with multicam capture, steady production flow and clear publishing edits.",
         },
         image: "/assets/portfolio/foreningen-norden/posters/foreningen-norden-nettsideinnhold-poster.avif",
         imageAlt: {
@@ -375,40 +385,60 @@ const projectGroups: GardProjectGroup[] = [
           en: "The Nordic Association - debate",
         }),
         preview: true,
-        companions: [
-          {
-            slug: "foreningen-norden-teaser",
-            title: {
-              no: "Debatt-teaser",
-              en: "Debate teaser",
-            },
-            format: {
-              no: "Vertikal teaser",
-              en: "Vertical teaser",
-            },
-            externalVideo: youtubeAsset("4ftzsDDxpXw", {
-              no: "Foreningen Norden - teaser",
-              en: "The Nordic Association - teaser",
-            }),
-          },
-          {
-            slug: "foreningen-norden-nettsidefilm",
-            title: {
-              no: "Nettsidefilm",
-              en: "Website film",
-            },
-            format: {
-              no: "Organisasjonsfilm",
-              en: "Organisation film",
-            },
-            image: "/assets/portfolio/foreningen-norden/posters/foreningen-norden-nettsideinnhold-poster.avif",
-            imageAlt: {
-              no: "Still fra nettsidefilm for Foreningen Norden",
-              en: "Still from the website film for the Nordic Association",
-            },
-            video: getPortfolioProject("foreningen-norden-nettsideinnhold").video,
-          },
-        ],
+      },
+      {
+        slug: "foreningen-norden-teaser",
+        client: "Foreningen Norden",
+        year: "2024",
+        title: {
+          no: "Foreningen Norden - debatt-teaser",
+          en: "The Nordic Association - debate teaser",
+        },
+        format: {
+          no: "Vertikal teaser",
+          en: "Vertical teaser",
+        },
+        role: {
+          no: "Klipp, animasjon, regi og multicam",
+          en: "Edit, animation, direction and multicam",
+        },
+        summary: {
+          no: "Et separat teaseruttak fra debatten, laget for rask publisering og tydelig distribusjon i sosiale kanaler.",
+          en: "A separate teaser cut from the debate, built for fast publishing and clear distribution across social channels.",
+        },
+        externalVideo: youtubeAsset("4ftzsDDxpXw", {
+          no: "Foreningen Norden - teaser",
+          en: "The Nordic Association - teaser",
+        }),
+        preview: true,
+      },
+      {
+        slug: "foreningen-norden-nettsidefilm",
+        client: "Foreningen Norden",
+        year: "2022",
+        title: {
+          no: "Foreningen Norden - nettsidefilm",
+          en: "The Nordic Association - website film",
+        },
+        format: {
+          no: "Organisasjonsfilm",
+          en: "Organisation film",
+        },
+        role: {
+          no: "Klipp, animasjon og regi",
+          en: "Edit, animation and direction",
+        },
+        summary: {
+          no: "En egen nettsidefilm for Foreningen Norden, bygget for å forklare organisasjonen tydelig og løfte avsenderen visuelt.",
+          en: "A dedicated website film for the Nordic Association, built to explain the organisation clearly and elevate the brand visually.",
+        },
+        image: "/assets/portfolio/foreningen-norden/posters/foreningen-norden-nettsideinnhold-poster.avif",
+        imageAlt: {
+          no: "Still fra nettsidefilm for Foreningen Norden",
+          en: "Still from the website film for the Nordic Association",
+        },
+        video: getPortfolioProject("foreningen-norden-nettsideinnhold").video,
+        preview: true,
       },
       {
         slug: "ville-gleder",
@@ -437,25 +467,34 @@ const projectGroups: GardProjectGroup[] = [
         },
         video: getPortfolioProject("ville-gleder-villmarksforedrag").video,
         preview: true,
-        companions: [
-          {
-            slug: "ville-gleder-vat-kald-sulten",
-            title: {
-              no: "Våt, kald og sulten",
-              en: "Wet, cold and hungry",
-            },
-            format: {
-              no: "Promofilm",
-              en: "Promo film",
-            },
-            image: "/assets/portfolio/ville-gleder/stills/vat-kald-sulten-still010.webp",
-            imageAlt: {
-              no: "Jan Monsen og Mattis Thørud i promofilm for Våt, kald & sulten",
-              en: "Jan Monsen and Mattis Thorud in the Wet, cold and hungry promo film",
-            },
-            video: getPortfolioProject("ville-gleder-vat-kald-sulten").video,
-          },
-        ],
+      },
+      {
+        slug: "ville-gleder-vat-kald-sulten",
+        client: "Ville Gleder",
+        year: "2024",
+        title: {
+          no: "Våt, kald og sulten",
+          en: "Wet, cold and hungry",
+        },
+        format: {
+          no: "Promofilm",
+          en: "Promo film",
+        },
+        role: {
+          no: "Regi, lyd og klipp",
+          en: "Direction, sound and edit",
+        },
+        summary: {
+          no: "En egen promofilm for Våt, kald og sulten, med tydelig naturfølelse og kommersiell retning rundt booking.",
+          en: "A dedicated promo film for Wet, cold and hungry, with a clear outdoor feeling and commercial direction around bookings.",
+        },
+        image: "/assets/portfolio/ville-gleder/stills/vat-kald-sulten-still010.webp",
+        imageAlt: {
+          no: "Jan Monsen og Mattis Thørud i promofilm for Våt, kald & sulten",
+          en: "Jan Monsen and Mattis Thorud in the Wet, cold and hungry promo film",
+        },
+        video: getPortfolioProject("ville-gleder-vat-kald-sulten").video,
+        preview: true,
       },
     ],
   },
@@ -700,12 +739,12 @@ const projectGroups: GardProjectGroup[] = [
     },
     projects: [
       {
-        slug: "kommer-hjem-takk",
+        slug: "kommer-hjem",
         client: "Klaus Perry / Elleville Elfrid",
         year: "2021",
         title: {
-          no: "Kommer Hjem og Takk for at du er min venn",
-          en: "Kommer Hjem and Thank You for Being My Friend",
+          no: "Kommer Hjem",
+          en: "Kommer Hjem",
         },
         format: {
           no: "Musikkvideo",
@@ -716,8 +755,8 @@ const projectGroups: GardProjectGroup[] = [
           en: "Producer, 1st AD and edit",
         },
         summary: {
-          no: "To ulike musikkvideoprosjekter som viser Gard sin evne til å holde både leken tone, fortelling og gjennomføring samlet.",
-          en: "Two different music video productions that show Gard's ability to hold tone, story and execution together.",
+          no: "En musikkvideo som viser Gard sin evne til å holde leken tone, fortelling og gjennomføring samlet i et familievennlig univers.",
+          en: "A music video showing Gard's ability to hold playful tone, story and execution together in a family-friendly world.",
         },
         image: "/assets/portfolio/kommer-hjem/posters/kommer-hjem-poster.avif",
         imageAlt: {
@@ -726,66 +765,107 @@ const projectGroups: GardProjectGroup[] = [
         },
         externalVideo: getPortfolioProject("kommer-hjem-musikkvideo").externalVideo,
         preview: true,
-        companions: [
-          {
-            slug: "takk-for-at-du-er-min-venn",
-            title: {
-              no: "Takk for at du er min venn",
-              en: "Thank You for Being My Friend",
-            },
-            externalVideo: getPortfolioProject("takk-for-at-du-er-min-venn").externalVideo,
-          },
-        ],
       },
       {
-        slug: "sweathearts-gulltransporten-ramon",
-        client: "Monster / 74 Entertainment / Ramón",
-        year: "2022-2024",
+        slug: "takk-for-at-du-er-min-venn",
+        client: "Klaus Perry / Elleville Elfrid",
+        year: "2021",
         title: {
-          no: "Sweathearts, Gulltransporten og Så klart det gjør vondt",
-          en: "Sweathearts, Gold Run and Of Course It Hurts",
+          no: "Takk for at du er min venn",
+          en: "Thank You for Being My Friend",
         },
         format: {
-          no: "TV, underholdning og performance",
-          en: "TV, entertainment and performance-led work",
+          no: "Musikkvideo",
+          en: "Music video",
+        },
+        role: {
+          no: "Produsent, 1st AD og klipp",
+          en: "Producer, 1st AD and edit",
+        },
+        summary: {
+          no: "Et eget musikkvideoprosjekt fra samme lekne univers, med Gard i produksjon, opptaksflyt og klipp.",
+          en: "A dedicated music video project from the same playful world, with Gard across production, set flow and edit.",
+        },
+        externalVideo: getPortfolioProject("takk-for-at-du-er-min-venn").externalVideo,
+        preview: true,
+      },
+      {
+        slug: "sweathearts",
+        client: "Monster / 74 Entertainment / Ramón",
+        year: "2024",
+        title: {
+          no: "Sweathearts",
+          en: "Sweathearts",
+        },
+        format: {
+          no: "TV og underholdning",
+          en: "TV and entertainment",
         },
         role: {
           no: "1st AD, produksjonssekretær og on-set koordinering",
           en: "1st AD, production secretary and on-set coordination",
         },
         summary: {
-          no: "Prosjekter som viser Gard sitt arbeid i større oppsett med høyere logistisk kompleksitet, tydelig fremdrift og trygg håndtering av sett og crew.",
-          en: "Projects that show Gard's work in larger setups with higher logistical complexity, clear forward motion and confident set-and-crew handling.",
+          no: "Et større underholdningsoppsett som viser Gard sitt arbeid med logistikk, fremdrift og trygg håndtering av set og crew.",
+          en: "A larger entertainment setup showing Gard's work with logistics, momentum and confident handling of set and crew.",
         },
         externalVideo: youtubeAsset("LTU3Uw4Rglc", {
           no: "Sweathearts",
           en: "Sweathearts",
         }),
         preview: true,
-        companions: [
-          {
-            slug: "gulltransporten",
-            title: {
-              no: "Gulltransporten",
-              en: "Gold Run",
-            },
-            externalVideo: youtubeAsset("4F8Q7Uo0c1k", {
-              no: "Gulltransporten",
-              en: "Gold Run",
-            }),
-          },
-          {
-            slug: "sa-klart-det-gjor-vondt",
-            title: {
-              no: "Så klart det gjør vondt",
-              en: "Of Course It Hurts",
-            },
-            externalVideo: youtubeAsset("VrSSCWIvCZ0", {
-              no: "Of Course It Hurts",
-              en: "Of Course It Hurts",
-            }),
-          },
-        ],
+      },
+      {
+        slug: "gulltransporten",
+        client: "Fantefilm / 74 Entertainment",
+        year: "2022",
+        title: {
+          no: "Gulltransporten",
+          en: "Gold Run",
+        },
+        format: {
+          no: "Filmproduksjon",
+          en: "Film production",
+        },
+        role: {
+          no: "On-set koordinering",
+          en: "On-set coordination",
+        },
+        summary: {
+          no: "Et eget større produksjonsspor der Gard bidro med koordinering og trygg flyt rundt et mer komplekst opptaksoppsett.",
+          en: "A dedicated larger production track where Gard contributed coordination and steady flow around a more complex shoot setup.",
+        },
+        externalVideo: youtubeAsset("4F8Q7Uo0c1k", {
+          no: "Gulltransporten",
+          en: "Gold Run",
+        }),
+        preview: true,
+      },
+      {
+        slug: "sa-klart-det-gjor-vondt",
+        client: "Ramón",
+        year: "2024",
+        title: {
+          no: "Så klart det gjør vondt",
+          en: "Of Course It Hurts",
+        },
+        format: {
+          no: "Performancefilm",
+          en: "Performance film",
+        },
+        role: {
+          no: "On-set koordinering",
+          en: "On-set coordination",
+        },
+        summary: {
+          no: "Et separat performanceprosjekt med Ramón, der Gard bidro til trygg flyt, timing og gjennomføring på set.",
+          en: "A separate performance project with Ramón, where Gard contributed to steady flow, timing and execution on set.",
+        },
+        externalVideo: youtubeAsset("VrSSCWIvCZ0", {
+          no: "Of Course It Hurts",
+          en: "Of Course It Hurts",
+        }),
+        preview: true,
       },
     ],
   },
@@ -937,36 +1017,10 @@ export function getGardProjectPath(slug: string) {
 
 export function getGardProjectIndex(): GardProjectDetail[] {
   return projectGroups.flatMap((group) =>
-    group.projects.flatMap((project) => {
-      const primaryProject: GardProjectDetail = {
+    group.projects.map((project) => ({
         ...project,
         group,
-      };
-      const companionProjects =
-        project.companions?.map((companion): GardProjectDetail => ({
-          ...project,
-          ...companion,
-          slug: companion.slug,
-          client: project.client,
-          title: companion.title,
-          summary: companion.summary ?? project.summary,
-          format: companion.format ?? project.format,
-          role: project.role,
-          year: companion.year ?? project.year,
-          image: companion.image ?? project.image,
-          imageAlt: companion.imageAlt ?? project.imageAlt,
-          video: companion.video,
-          externalVideo: companion.externalVideo,
-          mediaFit: companion.mediaFit ?? project.mediaFit,
-          companions: undefined,
-          group,
-          isCompanion: true,
-          parentSlug: project.slug,
-          parentTitle: project.title,
-        })) ?? [];
-
-      return [primaryProject, ...companionProjects];
-    }),
+      })),
   );
 }
 

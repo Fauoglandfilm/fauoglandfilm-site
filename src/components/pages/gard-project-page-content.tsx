@@ -51,9 +51,6 @@ export function GardProjectPageContent({
   const { language } = useSitePreferences();
   const title = resolveLocalizedValue(project.title, language);
   const groupTitle = resolveLocalizedValue(project.group.title, language);
-  const parentTitle = project.parentTitle
-    ? resolveLocalizedValue(project.parentTitle, language)
-    : null;
   const availabilityNote =
     project.video?.videoType === "request"
       ? resolveLocalizedValue(project.video.availabilityNote, language)
@@ -130,13 +127,6 @@ export function GardProjectPageContent({
                   <p className="body-lead text-[var(--muted-2)]">
                     {resolveLocalizedValue(project.summary, language)}
                   </p>
-                  {parentTitle ? (
-                    <p className="body-copy text-[var(--muted)]">
-                      {language === "no"
-                        ? `Dette er en egen prosjektside fra samme spor som ${parentTitle}.`
-                        : `This is a dedicated project page from the same body of work as ${parentTitle}.`}
-                    </p>
-                  ) : null}
                   {availabilityNote ? (
                     <p className="body-copy text-[var(--muted)]">{availabilityNote}</p>
                   ) : null}
