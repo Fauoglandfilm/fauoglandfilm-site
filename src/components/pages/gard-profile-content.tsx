@@ -17,7 +17,6 @@ import {
 } from "@/data/gard-profile";
 import { siteConfig } from "@/data/site-content";
 import { resolveLocalizedValue } from "@/lib/i18n";
-import { cn } from "@/lib/utils";
 
 function hasPlayableMedia(project: GardProject) {
   return Boolean(project.video || project.externalVideo);
@@ -25,85 +24,73 @@ function hasPlayableMedia(project: GardProject) {
 
 function GardEditorialCase({
   project,
-  index,
 }: {
   project: GardProject;
-  index: number;
 }) {
   const { language } = useSitePreferences();
   const title = resolveLocalizedValue(project.title, language);
-  const mediaFirst = index % 2 === 0;
   const projectHref = getGardProjectPath(project.slug);
 
   return (
-    <article className="grid gap-5 lg:grid-cols-[minmax(0,1.14fr)_minmax(20rem,0.86fr)] lg:gap-7 lg:items-stretch">
-      <div className={cn("order-1", !mediaFirst && "lg:order-2")}>
-        <div
-          className="media-frame group relative min-h-[18rem] overflow-hidden rounded-[2rem] bg-[#07090d] sm:min-h-[24rem] lg:min-h-[32rem]"
-        >
-          <Link
-            href={projectHref}
-            aria-label={language === "no" ? `Åpne ${title}` : `Open ${title}`}
-            className="absolute inset-0 z-[3]"
-          />
+    <article className="card-surface group flex h-full flex-col overflow-hidden rounded-[1.7rem] transition duration-300 hover:-translate-y-1 hover:border-[color:var(--line-strong)]">
+      <div className="media-frame relative aspect-[16/10] min-h-[10.5rem] overflow-hidden rounded-b-none bg-[#07090d]">
+        <Link
+          href={projectHref}
+          aria-label={language === "no" ? `Åpne ${title}` : `Open ${title}`}
+          className="absolute inset-0 z-[3]"
+        />
 
-          <PreviewMedia
-            title={project.title}
-            video={project.video}
-            externalVideo={project.externalVideo}
-            image={project.image}
-            imageAlt={project.imageAlt}
-            mediaFit={project.mediaFit}
-            previewBehavior={hasPlayableMedia(project) ? "viewport" : "static"}
-            className="absolute inset-0"
-            sizes="(min-width: 1280px) 58vw, (min-width: 1024px) 54vw, 100vw"
-            posterClassName="transition duration-700"
-            previewClassName="transition duration-700"
-          />
+        <PreviewMedia
+          title={project.title}
+          video={project.video}
+          externalVideo={project.externalVideo}
+          image={project.image}
+          imageAlt={project.imageAlt}
+          mediaFit={project.mediaFit}
+          previewBehavior={hasPlayableMedia(project) ? "viewport" : "static"}
+          className="absolute inset-0"
+          sizes="(min-width: 1280px) 23vw, (min-width: 768px) 45vw, 100vw"
+          posterClassName="transition duration-700 group-hover:scale-[1.025]"
+          previewClassName="transition duration-700"
+        />
 
-          <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(6,7,10,0.04),rgba(6,7,10,0.14)_42%,rgba(6,7,10,0.84)_100%)]" />
-          <div className="grain-overlay absolute inset-0 opacity-28" />
+        <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(6,7,10,0.02),rgba(6,7,10,0.08)_38%,rgba(6,7,10,0.82)_100%)]" />
+        <div className="grain-overlay absolute inset-0 opacity-22" />
 
-          <div className="absolute left-4 top-4 z-[4] flex flex-wrap items-center gap-2 text-[0.64rem] font-semibold uppercase tracking-[0.22em] text-white/74 sm:left-5 sm:top-5">
-            <span>{project.client}</span>
-            {project.year ? (
-              <>
-                <span className="h-1 w-1 rounded-full bg-white/32" />
-                <span>{project.year}</span>
-              </>
-            ) : null}
-          </div>
-
+        <div className="absolute inset-x-3 bottom-3 z-[4] flex flex-wrap items-center gap-2 text-[0.58rem] font-semibold uppercase tracking-[0.18em] text-white/78">
+          <span>{project.client}</span>
+          {project.year ? (
+            <>
+              <span className="h-1 w-1 rounded-full bg-white/32" />
+              <span>{project.year}</span>
+            </>
+          ) : null}
         </div>
       </div>
 
-      <div className={cn("order-2 flex", !mediaFirst && "lg:order-1")}>
-        <div className="glass-panel flex w-full flex-col rounded-[2rem] px-5 py-5 sm:px-6 sm:py-6 lg:px-7 lg:py-7">
-          <div className="space-y-4">
-            <div className="flex flex-wrap items-center gap-2">
-              <span className="founder-profile-chip">{resolveLocalizedValue(project.format, language)}</span>
-              <span className="founder-profile-chip founder-profile-chip-muted">
-                {resolveLocalizedValue(project.role, language)}
-              </span>
-            </div>
+      <div className="flex flex-1 flex-col px-4 py-4 sm:px-5 sm:py-5">
+        <div className="flex flex-wrap items-center gap-2">
+          <span className="founder-profile-chip">{resolveLocalizedValue(project.format, language)}</span>
+          <span className="founder-profile-chip founder-profile-chip-muted">
+            {resolveLocalizedValue(project.role, language)}
+          </span>
+        </div>
 
-            <h3 className="section-title text-[color:var(--foreground)] lg:text-[clamp(1.95rem,3.1vw,3.1rem)]">
-              {title}
-            </h3>
-            <p className="body-lead max-w-[34rem] text-[var(--muted-2)]">
-              {resolveLocalizedValue(project.summary, language)}
-            </p>
-          </div>
+        <h3 className="mt-3 text-[1.18rem] font-semibold leading-[1.05] tracking-[-0.05em] text-[color:var(--foreground)] sm:text-[1.28rem]">
+          {title}
+        </h3>
+        <p className="mt-3 text-sm leading-6 text-[var(--muted-2)]">
+          {resolveLocalizedValue(project.summary, language)}
+        </p>
 
-          <div className="mt-auto flex flex-col gap-2.5 pt-6 sm:flex-row sm:flex-wrap">
-            <ButtonLink href={projectHref} className="w-full sm:w-auto">
-              {language === "no" ? "Åpne prosjektside" : "Open project page"}
-            </ButtonLink>
-            <ButtonLink href="/kontakt" variant="ghost" className="w-full sm:w-auto">
-              {language === "no" ? "Snakk med oss om prosjektet" : "Talk to us about the project"}
-              <ArrowUpRightIcon className="h-4 w-4" />
-            </ButtonLink>
-          </div>
+        <div className="mt-auto grid gap-2 pt-5">
+          <ButtonLink href={projectHref} size="compact" className="w-full">
+            {language === "no" ? "Åpne prosjektside" : "Open project page"}
+          </ButtonLink>
+          <ButtonLink href="/kontakt" variant="ghost" size="compact" className="w-full">
+            {language === "no" ? "Snakk med oss om prosjektet" : "Talk to us about the project"}
+            <ArrowUpRightIcon className="h-4 w-4" />
+          </ButtonLink>
         </div>
       </div>
     </article>
@@ -129,10 +116,10 @@ function ProjectGroupSection({
           </div>
         </Reveal>
 
-        <div className="mt-7 space-y-8 sm:space-y-10 lg:space-y-12">
+        <div className="mt-7 grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
           {group.projects.map((project, index) => (
             <Reveal key={project.slug} delay={0.04 * index}>
-              <GardEditorialCase project={project} index={index} />
+              <GardEditorialCase project={project} />
             </Reveal>
           ))}
         </div>
