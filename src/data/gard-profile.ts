@@ -83,19 +83,73 @@ function getPortfolioProject(slug: string) {
 
 const projectGroups: GardProjectGroup[] = [
   {
-    slug: "commercial",
+    slug: "commercial-content",
     title: {
-      no: "Reklame og branded content",
-      en: "Commercial and branded content",
+      no: "Reklame og Innhold",
+      en: "Commercial and Content",
     },
     description: {
-      no: "Kampanjearbeid der regi, produksjonskontroll og tydelig kundeverdi må sitte samtidig.",
-      en: "Campaign-led work where direction, production control and commercial clarity need to hold together at the same time.",
+      no: "Reklame, kampanjer og innhold der Gard har ledet brief, opptaksflyt og leveranse tett gjennom produksjonen.",
+      en: "Commercials, campaigns and content where Gard has led the brief, shoot flow and delivery closely through production.",
     },
     projects: [
       {
+        slug: "continental-vc8",
+        client: "Continental / Yellow Banana",
+        year: "2024",
+        title: {
+          no: "Continental VC8",
+          en: "Continental VC8",
+        },
+        format: {
+          no: "Reklamefilm",
+          en: "Commercial film",
+        },
+        role: {
+          no: "Prosjektleder og Innspillingsleder",
+          en: "Project manager and 1st AD",
+        },
+        summary: {
+          no: "Den store Continental VC8-reklamen, der Gard holdt prosjektledelse og innspillingsflyt samlet for Yellow Banana.",
+          en: "The major Continental VC8 commercial, where Gard kept project management and set flow aligned for Yellow Banana.",
+        },
+        externalVideo: youtubeAsset("Bn6j7bemquc", {
+          no: "Continental VC8",
+          en: "Continental VC8",
+        }),
+        preview: true,
+      },
+      {
+        slug: "continental-rudskogen",
+        client: "Continental / Yellow Banana",
+        year: "2024",
+        title: {
+          no: "Continental Rudskogen",
+          en: "Continental Rudskogen",
+        },
+        format: {
+          no: "Reklamefilm",
+          en: "Commercial film",
+        },
+        role: {
+          no: "Prosjektleder, Regissør og Klipp",
+          en: "Project manager, director and edit",
+        },
+        summary: {
+          no: "Et eget Continental-uttak fra Rudskogen der Gard ledet prosjektet, regisserte og klippet leveransen.",
+          en: "A dedicated Continental cut from Rudskogen where Gard led the project, directed and edited the delivery.",
+        },
+        image:
+          "https://images.squarespace-cdn.com/content/v1/5f44d95d64e4796dddb229d6/49de9a5d-1686-4ce9-bd95-fba5a7815ab5/Continental+BTS-293+%281%29.jpg",
+        imageAlt: {
+          no: "Behind the scenes fra Continental-produksjon",
+          en: "Behind the scenes from a Continental production",
+        },
+        preview: true,
+      },
+      {
         slug: "continental-2023",
-        client: "Continental",
+        client: "Continental / Yellow Banana",
         year: "2023",
         title: {
           no: "Continental Dekk 2023",
@@ -106,8 +160,8 @@ const projectGroups: GardProjectGroup[] = [
           en: "Campaign film",
         },
         role: {
-          no: "Prosjektledelse, 1st AD og gjennomføring",
-          en: "Project lead, 1st AD and execution",
+          no: "Prosjektleder og Innspillingsleder",
+          en: "Project manager and 1st AD",
         },
         summary: {
           no: "Et kampanjeuttak for Continental der Gard holdt opptaksflyt, set-ledelse og gjennomføring samlet fra plan til leveranse.",
@@ -121,7 +175,7 @@ const projectGroups: GardProjectGroup[] = [
       },
       {
         slug: "continental-sommer",
-        client: "Continental",
+        client: "Continental / Yellow Banana",
         year: "2024",
         title: {
           no: "Continental sommer",
@@ -132,8 +186,8 @@ const projectGroups: GardProjectGroup[] = [
           en: "Product film",
         },
         role: {
-          no: "Prosjektledelse, 1st AD og gjennomføring",
-          en: "Project lead, 1st AD and execution",
+          no: "Prosjektleder og Innspillingsleder",
+          en: "Project manager and 1st AD",
         },
         summary: {
           no: "Et lettere produktuttak for Continental, bygget rundt tydelig produktfokus, tempo og trygg produksjonsflyt.",
@@ -146,20 +200,48 @@ const projectGroups: GardProjectGroup[] = [
         preview: true,
       },
       {
-        slug: "vibb",
-        client: "Vibb",
+        slug: "efi-the-designer",
+        client: "Efi / Yellow Banana",
         year: "2024",
         title: {
-          no: "Vibb - kortformat med tempo og tydelig produktfokus",
-          en: "Vibb - fast, product-led short-form work",
+          no: "Efi - The Designer",
+          en: "Efi - The Designer",
+        },
+        format: {
+          no: "Reklamekonsept og bilder",
+          en: "Commercial concept and images",
+        },
+        role: {
+          no: "Kreatør og Prosjektleder",
+          en: "Creative and project manager",
+        },
+        summary: {
+          no: "Et visuelt reklameuttak for Efi der Gard designet bildene, formet uttrykket og ledet prosjektet.",
+          en: "A visual commercial project for Efi where Gard designed the images, shaped the look and led the project.",
+        },
+        image:
+          "https://images.squarespace-cdn.com/content/v1/5f44d95d64e4796dddb229d6/62f9aac3-66b4-483a-beac-5ed049609326/Credits+Image.jpg",
+        imageAlt: {
+          no: "Kampanjebilde fra Efi - The Designer",
+          en: "Campaign image from Efi - The Designer",
+        },
+        preview: true,
+      },
+      {
+        slug: "vibb",
+        client: "Vibb / Yellow Banana",
+        year: "2024",
+        title: {
+          no: "Vibb",
+          en: "Vibb",
         },
         format: {
           no: "Reklamefilm og shorts",
           en: "Commercial film and shorts",
         },
         role: {
-          no: "Prosjektleder og set-ledelse",
-          en: "Project lead and set leadership",
+          no: "Prosjektleder og Innspillingsleder",
+          en: "Project manager and 1st AD",
         },
         summary: {
           no: "Et kommersielt format bygget for rask forståelse, tydelig produktkommunikasjon og effektiv distribusjon i flere uttak.",
@@ -172,46 +254,48 @@ const projectGroups: GardProjectGroup[] = [
         preview: true,
       },
       {
-        slug: "vibb-short",
-        client: "Vibb",
+        slug: "mental-helse-ungdom",
+        client: "Mental Helse Ungdom / Yellow Banana",
         year: "2024",
         title: {
-          no: "Vibb short",
-          en: "Vibb short",
+          no: "Mental Helse Ungdom",
+          en: "Mental Helse Ungdom",
         },
         format: {
-          no: "Vertikal preview",
-          en: "Vertical preview",
+          no: "Kampanjeinnhold",
+          en: "Campaign content",
         },
         role: {
-          no: "Prosjektleder og set-ledelse",
-          en: "Project lead and set leadership",
+          no: "Prosjektleder og Innspillingsleder",
+          en: "Project manager and 1st AD",
         },
         summary: {
-          no: "Et separat vertikalt uttak fra Vibb-produksjonen, laget for rask forståelse og tydelig produktkommunikasjon i mobilformat.",
-          en: "A separate vertical cut from the Vibb production, built for fast comprehension and clear product communication in mobile format.",
+          no: "Kampanjeinnhold for Mental Helse Ungdom der Gard ledet plan, opptaksflyt og gjennomføring for Yellow Banana.",
+          en: "Campaign content for Mental Helse Ungdom where Gard led planning, set flow and execution for Yellow Banana.",
         },
-        externalVideo: youtubeAsset("SlYuc877-iE", {
-          no: "Vibb short",
-          en: "Vibb short",
-        }),
+        image:
+          "https://images.squarespace-cdn.com/content/v1/5f44d95d64e4796dddb229d6/638884f7-9ea7-429e-9626-fd6c0726bcd9/artikkel.yb.mhu.jul.png",
+        imageAlt: {
+          no: "Kampanjebilde fra Mental Helse Ungdom",
+          en: "Campaign image from Mental Helse Ungdom",
+        },
         preview: true,
       },
       {
         slug: "nor-way-bussekspress",
-        client: "NOR-WAY Bussekspress",
+        client: "NOR-WAY Bussekspress / Yellow Banana",
         year: "2024",
         title: {
-          no: "NOR-WAY Bussekspress - vertikalt kampanjeuttak",
-          en: "NOR-WAY Bussekspress - vertical campaign cutdown",
+          no: "NOR-WAY Bussekspress",
+          en: "NOR-WAY Bussekspress",
         },
         format: {
           no: "Shorts / kampanjeuttak",
           en: "Shorts / campaign cutdown",
         },
         role: {
-          no: "Prosjektledelse og opptaksflyt",
-          en: "Project lead and set flow",
+          no: "Prosjektleder og Innspillingsleder",
+          en: "Project manager and 1st AD",
         },
         summary: {
           no: "Et raskt reklameuttak laget for mobil flate, der tempo, framing og tydelig avsender måtte sitte på få sekunder.",
@@ -224,63 +308,50 @@ const projectGroups: GardProjectGroup[] = [
         preview: true,
       },
       {
-        slug: "steins-hytte",
-        client: "Stein's hytte",
-        year: "2023",
+        slug: "treningshuset",
+        client: "Treningshuset",
+        year: "2025",
         title: {
-          no: "Stein's hytte - eiendomsfilm med tydelig salgsfokus",
-          en: "Stein's cabin - property film with a clearer sales focus",
+          no: "Treningshuset",
+          en: "Treningshuset",
         },
         format: {
-          no: "Eiendomsfilm og foto",
-          en: "Property film and photography",
+          no: "Annonsefilm og sosiale medier",
+          en: "Ad films and social media",
         },
         role: {
-          no: "Produsent",
-          en: "Producer",
+          no: "Regi, produksjon og klipp",
+          en: "Direction, production and edit",
         },
         summary: {
-          no: "Film og foto laget for å løfte presentasjonen av eiendommen og gi salgsprosessen et mer profesjonelt visuelt uttrykk.",
-          en: "Film and photography built to elevate the property presentation and give the sales process a stronger visual expression.",
+          no: "Filmer for annonser og sosiale medier, laget for å drive flere innmeldinger og gi Treningshuset et tydeligere mobiluttrykk.",
+          en: "Films for ads and social media, built to drive more memberships and give Treningshuset a clearer mobile-first expression.",
         },
-        externalVideo: youtubeAsset("2nE9ut7eb1c", {
-          no: "Stein's hytte",
-          en: "Stein's cabin",
-        }),
+        image: getPortfolioProject("treningshuset").image,
+        imageAlt: getPortfolioProject("treningshuset").imageAlt,
+        video: getPortfolioProject("treningshuset").video,
+        mediaFit: getPortfolioProject("treningshuset").mediaFit,
         preview: true,
       },
-    ],
-  },
-  {
-    slug: "organisation",
-    title: {
-      no: "Organisasjon og samfunn",
-      en: "Organisation and public-interest work",
-    },
-    description: {
-      no: "Prosjekter der dokumentarisk nerve, tydelig budskap og ryddig gjennomføring er like viktige som den visuelle finishen.",
-      en: "Projects where documentary energy, message clarity and reliable execution matter just as much as visual finish.",
-    },
-    projects: [
       {
         slug: "nei-til-atomvapen",
         client: "Nei til Atomvåpen",
-        year: "2024",
+        year: "2024-2025",
         title: {
-          no: "Nei til Atomvåpen - konferansefilm",
-          en: "No to Nuclear Weapons - conference film",
+          no: "Nei til Atomvåpen",
+          en: "No to Nuclear Weapons",
         },
         format: {
-          no: "Konferansefilm",
-          en: "Conference film",
+          no: "Kampanje, konferanse og eventinnhold",
+          en: "Campaign, conference and event content",
         },
         role: {
           no: "Produsent, regi og klipp",
           en: "Producer, direction and edit",
         },
         summary: {
-          no: "En konferansefilm der Gard formet opptak, regi og klipp til tydelig dokumentasjon og videre kampanjebruk.",
-          en: "A conference film where Gard shaped capture, direction and edit into clear documentation and campaign material.",
+          no: "Et samlet samarbeid der Gard har formet informasjonsfilm, konferansefilm, 1. mai-dekning og taleopptak til bruk i verving, dokumentasjon og kampanje.",
+          en: "A collected collaboration where Gard shaped information film, conference work, Workers' Day coverage and speech recordings for recruitment, documentation and campaign use.",
         },
         image: "/assets/portfolio/nei-til-atomvapen/posters/bli-med-i-kampen-poster.avif",
         imageAlt: {
@@ -294,148 +365,29 @@ const projectGroups: GardProjectGroup[] = [
         preview: true,
       },
       {
-        slug: "nta-1-mai",
-        client: "Nei til Atomvåpen",
-        year: "2025",
-        title: {
-          no: "1. mai - stemningsfilm",
-          en: "Workers' Day - aftermovie",
-        },
-        format: {
-          no: "Aftermovie",
-          en: "Aftermovie",
-        },
-        role: {
-          no: "Produsent, regi og klipp",
-          en: "Producer, direction and edit",
-        },
-        summary: {
-          no: "Et eget 1. mai-uttak for Nei til Atomvåpen, klippet for stemning, tilstedeværelse og tydelig kampanjeenergi.",
-          en: "A dedicated Workers' Day cut for No to Nuclear Weapons, edited for atmosphere, presence and clear campaign energy.",
-        },
-        image: "/assets/portfolio/nei-til-atomvapen/posters/internasjonal-arbeiderdag-poster.avif",
-        imageAlt: {
-          no: "Still fra 1. mai-filmen",
-          en: "Still from the Workers' Day film",
-        },
-        externalVideo: youtubeAsset("STycvvvjsWY", {
-          no: "Nei til Atomvåpen - 1. mai",
-          en: "No to Nuclear Weapons - Workers' Day",
-        }),
-        preview: true,
-      },
-      {
-        slug: "nta-tale",
-        client: "Nei til Atomvåpen",
-        year: "2025",
-        title: {
-          no: "Miranda Aaland - tale",
-          en: "Miranda Aaland - full speech",
-        },
-        format: {
-          no: "Fullt opptak",
-          en: "Full recording",
-        },
-        role: {
-          no: "Produsent, regi og klipp",
-          en: "Producer, direction and edit",
-        },
-        summary: {
-          no: "Et separat taleopptak fra Youngstorget, levert som tydelig dokumentasjon og publiserbart kampanjemateriale.",
-          en: "A separate speech recording from Youngstorget, delivered as clear documentation and publishable campaign material.",
-        },
-        image: "/assets/portfolio/nei-til-atomvapen/posters/internasjonal-arbeiderdag-reel-poster.avif",
-        imageAlt: {
-          no: "Still fra talen på Youngstorget",
-          en: "Still from the speech at Youngstorget",
-        },
-        externalVideo: youtubeAsset("L0bWrEnlvNk", {
-          no: "Miranda Aaland - tale",
-          en: "Miranda Aaland - full speech",
-        }),
-        preview: true,
-      },
-      {
         slug: "foreningen-norden",
         client: "Foreningen Norden",
-        year: "2024",
+        year: "2022-2024",
         title: {
-          no: "Foreningen Norden - debatt",
-          en: "The Nordic Association - debate",
+          no: "Foreningen Norden",
+          en: "The Nordic Association",
         },
         format: {
-          no: "Flerkameraopptak",
-          en: "Multicam capture",
+          no: "Nettsidefilm, debatt og teaserinnhold",
+          en: "Website film, debate and teaser content",
         },
         role: {
           no: "Klipp, animasjon, regi og multicam",
           en: "Edit, animation, direction and multicam",
         },
         summary: {
-          no: "Et eget debattoppsett for Foreningen Norden, med flerkamera, trygg opptaksflyt og klipp til tydelig publisering.",
-          en: "A dedicated debate setup for the Nordic Association, with multicam capture, steady production flow and clear publishing edits.",
+          no: "Et samlet Foreningen Norden-spor med nettsidefilm, animasjon, debattopptak og raske teaserleveranser for publisering.",
+          en: "A collected Nordic Association track with website film, animation, debate capture and fast teaser deliveries for publishing.",
         },
         image: "/assets/portfolio/foreningen-norden/posters/foreningen-norden-nettsideinnhold-poster.avif",
         imageAlt: {
           no: "Still fra Foreningen Norden-produksjon",
           en: "Still from a Nordic Association production",
-        },
-        externalVideo: youtubeAsset("IDd2LByeYU0", {
-          no: "Foreningen Norden - debatt",
-          en: "The Nordic Association - debate",
-        }),
-        preview: true,
-      },
-      {
-        slug: "foreningen-norden-teaser",
-        client: "Foreningen Norden",
-        year: "2024",
-        title: {
-          no: "Foreningen Norden - debatt-teaser",
-          en: "The Nordic Association - debate teaser",
-        },
-        format: {
-          no: "Vertikal teaser",
-          en: "Vertical teaser",
-        },
-        role: {
-          no: "Klipp, animasjon, regi og multicam",
-          en: "Edit, animation, direction and multicam",
-        },
-        summary: {
-          no: "Et separat teaseruttak fra debatten, laget for rask publisering og tydelig distribusjon i sosiale kanaler.",
-          en: "A separate teaser cut from the debate, built for fast publishing and clear distribution across social channels.",
-        },
-        externalVideo: youtubeAsset("4ftzsDDxpXw", {
-          no: "Foreningen Norden - teaser",
-          en: "The Nordic Association - teaser",
-        }),
-        preview: true,
-      },
-      {
-        slug: "foreningen-norden-nettsidefilm",
-        client: "Foreningen Norden",
-        year: "2022",
-        title: {
-          no: "Foreningen Norden - nettsidefilm",
-          en: "The Nordic Association - website film",
-        },
-        format: {
-          no: "Organisasjonsfilm",
-          en: "Organisation film",
-        },
-        role: {
-          no: "Klipp, animasjon og regi",
-          en: "Edit, animation and direction",
-        },
-        summary: {
-          no: "En egen nettsidefilm for Foreningen Norden, bygget for å forklare organisasjonen tydelig og løfte avsenderen visuelt.",
-          en: "A dedicated website film for the Nordic Association, built to explain the organisation clearly and elevate the brand visually.",
-        },
-        image: "/assets/portfolio/foreningen-norden/posters/foreningen-norden-nettsideinnhold-poster.avif",
-        imageAlt: {
-          no: "Still fra nettsidefilm for Foreningen Norden",
-          en: "Still from the website film for the Nordic Association",
         },
         video: getPortfolioProject("foreningen-norden-nettsideinnhold").video,
         preview: true,
@@ -445,8 +397,8 @@ const projectGroups: GardProjectGroup[] = [
         client: "Ville Gleder",
         year: "2024",
         title: {
-          no: "Ville Gleder - promofilm for foredrag som skal bookes",
-          en: "Ville Gleder - promo films built to help talks get booked",
+          no: "Ville Gleder - Villmarksforedrag",
+          en: "Ville Gleder - wilderness talks",
         },
         format: {
           no: "Promofilm",
@@ -469,44 +421,130 @@ const projectGroups: GardProjectGroup[] = [
         preview: true,
       },
       {
-        slug: "ville-gleder-vat-kald-sulten",
-        client: "Ville Gleder",
-        year: "2024",
+        slug: "steins-hytte",
+        client: "Stein's hytte",
+        year: "2023",
         title: {
-          no: "Våt, kald og sulten",
-          en: "Wet, cold and hungry",
+          no: "Stein's hytte",
+          en: "Stein's cabin",
         },
         format: {
-          no: "Promofilm",
-          en: "Promo film",
+          no: "Eiendomsfilm og foto",
+          en: "Property film and photography",
         },
         role: {
-          no: "Regi, lyd og klipp",
-          en: "Direction, sound and edit",
+          no: "Produsent",
+          en: "Producer",
         },
         summary: {
-          no: "En egen promofilm for Våt, kald og sulten, med tydelig naturfølelse og kommersiell retning rundt booking.",
-          en: "A dedicated promo film for Wet, cold and hungry, with a clear outdoor feeling and commercial direction around bookings.",
+          no: "Film og foto laget for å løfte presentasjonen av eiendommen og gi salgsprosessen et mer profesjonelt visuelt uttrykk.",
+          en: "Film and photography built to elevate the property presentation and give the sales process a stronger visual expression.",
         },
-        image: "/assets/portfolio/ville-gleder/stills/vat-kald-sulten-still010.webp",
-        imageAlt: {
-          no: "Jan Monsen og Mattis Thørud i promofilm for Våt, kald & sulten",
-          en: "Jan Monsen and Mattis Thorud in the Wet, cold and hungry promo film",
-        },
-        video: getPortfolioProject("ville-gleder-vat-kald-sulten").video,
+        externalVideo: youtubeAsset("2nE9ut7eb1c", {
+          no: "Stein's hytte",
+          en: "Stein's cabin",
+        }),
         preview: true,
       },
     ],
   },
   {
-    slug: "narrative",
+    slug: "film-tv",
     title: {
-      no: "Kortfilm, drama og fortellende arbeid",
-      en: "Short film, drama and narrative work",
+      no: "Film og TV",
+      en: "Film and TV",
     },
     description: {
-      no: "Prosjekter som viser Gard sitt regigrep, klippeblikk og trygghet i fortellende produksjoner med tydelig stemning.",
-      en: "Projects that show Gard's directing instincts, editorial eye and confidence in narrative productions with a strong atmosphere.",
+      no: "Større film-, dokumentar- og TV-produksjoner med tydelige roller på set, logistikk og gjennomføring.",
+      en: "Larger film, documentary and TV productions with clear roles across set, logistics and execution.",
+    },
+    projects: [
+      {
+        slug: "the-giant-artist",
+        client: "The Giant Artist",
+        year: "2020",
+        title: {
+          no: "The Giant Artist",
+          en: "The Giant Artist",
+        },
+        format: {
+          no: "Dokumentar",
+          en: "Documentary",
+        },
+        role: {
+          no: "Produsent, Regissør og Klipp",
+          en: "Producer, director and edit",
+        },
+        summary: {
+          no: "En dokumentar om Martin, en fremadstormende maler som prøver å finne sin plass i verden.",
+          en: "A documentary about Martin, an emerging painter trying to find his place in the world.",
+        },
+        externalVideo: getPortfolioProject("the-giant-artist").externalVideo,
+        preview: true,
+      },
+      {
+        slug: "sweathearts",
+        client: "Monster",
+        year: "2024",
+        title: {
+          no: "Sweathearts",
+          en: "Sweathearts",
+        },
+        format: {
+          no: "TV og underholdning",
+          en: "TV and entertainment",
+        },
+        role: {
+          no: "Innspillingsleder",
+          en: "1st AD",
+        },
+        summary: {
+          no: "Et større underholdningsoppsett der Gard hadde rollen som innspillingsleder og holdt flyt, timing og set-rytmikk samlet.",
+          en: "A larger entertainment setup where Gard worked as 1st AD and kept flow, timing and set rhythm aligned.",
+        },
+        externalVideo: youtubeAsset("LTU3Uw4Rglc", {
+          no: "Sweathearts",
+          en: "Sweathearts",
+        }),
+        preview: true,
+      },
+      {
+        slug: "gulltransporten",
+        client: "Fantefilm / 74 Entertainment",
+        year: "2022",
+        title: {
+          no: "Gulltransporten",
+          en: "Gold Run",
+        },
+        format: {
+          no: "Filmproduksjon",
+          en: "Film production",
+        },
+        role: {
+          no: "Produksjonssekretær",
+          en: "Production secretary",
+        },
+        summary: {
+          no: "Et større produksjonsspor der Gard bidro som produksjonssekretær rundt et mer komplekst opptaksoppsett.",
+          en: "A larger production track where Gard contributed as production secretary around a more complex shoot setup.",
+        },
+        externalVideo: youtubeAsset("4F8Q7Uo0c1k", {
+          no: "Gulltransporten",
+          en: "Gold Run",
+        }),
+        preview: true,
+      },
+    ],
+  },
+  {
+    slug: "short-film",
+    title: {
+      no: "Kortfilm",
+      en: "Short Film",
+    },
+    description: {
+      no: "Kortfilmer og fortellende prosjekter der Gard sitt arbeid spenner fra regi og klipp til produksjonsledelse og opptakslyd.",
+      en: "Short films and narrative projects where Gard's work spans direction, edit, production leadership and location sound.",
     },
     projects: [
       {
@@ -526,8 +564,8 @@ const projectGroups: GardProjectGroup[] = [
           en: "Direction and edit",
         },
         summary: {
-          no: "En filmskaperkomedie skrevet og spilt av Morten Hansen, der Gard har regi og klipp i en fortelling om hvor krevende det faktisk er å lage film og hva som skjer når sterke personligheter krasjer i samme produksjon.",
-          en: "A filmmaker comedy written and performed by Morten Hansen, with Gard directing and editing a story about how hard filmmaking really is and what happens when strong personalities collide inside the same production.",
+          no: "En filmskaperkomedie skrevet og spilt av Morten Hansen, der Gard har regi og klipp i en fortelling om hvor krevende det faktisk er å lage film.",
+          en: "A filmmaker comedy written and performed by Morten Hansen, with Gard directing and editing a story about how hard filmmaking really is.",
         },
         image: "/assets/team/gard/portfolio/narrative/er-det-sa-javlig-vanskelig-poster.jpg",
         imageAlt: {
@@ -554,8 +592,8 @@ const projectGroups: GardProjectGroup[] = [
           en: "Producer, co-direction and final edit",
         },
         summary: {
-          no: "Bachelorfilmen som ble ferdigstilt under krevende COVID-forhold, og som viser Gard sitt arbeid med både form, gjennomføring og siste fortellende presisjon i klipp.",
-          en: "A bachelor film completed under difficult COVID conditions, showing Gard's work across form, execution and the final narrative precision in the edit.",
+          no: "Bachelorfilmen som ble ferdigstilt under krevende COVID-forhold, og som viser Gard sitt arbeid med form, gjennomføring og fortellende presisjon i klipp.",
+          en: "A bachelor film completed under difficult COVID conditions, showing Gard's work across form, execution and narrative precision in the edit.",
         },
         externalVideo: youtubeAsset("Dl9eVepNacQ", {
           no: "The Voice Within",
@@ -625,16 +663,16 @@ const projectGroups: GardProjectGroup[] = [
           en: "Cork",
         },
         format: {
-          no: "Fortellende kortformat",
-          en: "Narrative short-form work",
+          no: "Kortfilm",
+          en: "Short film",
         },
         role: {
-          no: "Regi, klipp og produksjonsarbeid",
-          en: "Direction, editing and production work",
+          no: "Opptakslyd",
+          en: "Location sound",
         },
         summary: {
-          no: "Et uavhengig kortformat fra Los Angeles-perioden, med fokus på stemning, rytme og et mer presist visuelt uttrykk.",
-          en: "An independent short-form project from the Los Angeles period, focused on atmosphere, rhythm and a more precise visual voice.",
+          no: "Et uavhengig kortformat fra Los Angeles-perioden der Gard hadde opptakslyd.",
+          en: "An independent short-form project from the Los Angeles period where Gard handled location sound.",
         },
         externalVideo: vimeoAsset(
           "563949732",
@@ -645,58 +683,6 @@ const projectGroups: GardProjectGroup[] = [
           "https://i.vimeocdn.com/video/1165845202-810cfc0fae0c0d3405e78aa9cd48584d78bdae83c53eace81e6426292e8cfda9-d_295x166?region=us",
           "693b90049d",
         ),
-        preview: true,
-      },
-      {
-        slug: "selfish",
-        client: "Independent / Los Angeles",
-        year: "2022",
-        title: {
-          no: "Selfish",
-          en: "Selfish",
-        },
-        format: {
-          no: "Fortellende kortformat",
-          en: "Narrative short-form work",
-        },
-        role: {
-          no: "Regi, klipp og produksjonsarbeid",
-          en: "Direction, editing and production work",
-        },
-        summary: {
-          no: "Et selvstendig kortformat som viser Gard sitt arbeid med tone, timing og visuell fortelling i et mindre produksjonsoppsett.",
-          en: "A standalone short-form project showing Gard's work with tone, timing and visual storytelling in a smaller production setup.",
-        },
-        externalVideo: youtubeAsset("UB2t19KGPIs", {
-          no: "Selfish",
-          en: "Selfish",
-        }),
-        preview: true,
-      },
-      {
-        slug: "day-by-night",
-        client: "Independent / Los Angeles",
-        year: "2022",
-        title: {
-          no: "Day By Night",
-          en: "Day By Night",
-        },
-        format: {
-          no: "Fortellende kortformat",
-          en: "Narrative short-form work",
-        },
-        role: {
-          no: "Regi, klipp og produksjonsarbeid",
-          en: "Direction, editing and production work",
-        },
-        summary: {
-          no: "Et individuelt kortformat fra Gard sitt uavhengige spor, med tydelig fokus på rytme, stemning og visuelt uttrykk.",
-          en: "An individual short-form piece from Gard's independent track, with a clear focus on rhythm, atmosphere and visual expression.",
-        },
-        externalVideo: youtubeAsset("b6JUOY8FB20", {
-          no: "Day By Night",
-          en: "Day By Night",
-        }),
         preview: true,
       },
       {
@@ -728,14 +714,14 @@ const projectGroups: GardProjectGroup[] = [
     ],
   },
   {
-    slug: "music-entertainment",
+    slug: "music-video",
     title: {
-      no: "Musikk, underholdning og større oppsett",
-      en: "Music, entertainment and larger productions",
+      no: "Musikkvideo",
+      en: "Music Video",
     },
     description: {
-      no: "Arbeid som viser bredde fra musikkvideo og artistfilm til større TV- og underholdningsproduksjoner.",
-      en: "Work that shows range across music video, artist-led projects and larger TV or entertainment productions.",
+      no: "Musikkvideoer og performanceprosjekter med tydelige roller innen produksjon, innspillingsledelse, regi, klipp og lyd.",
+      en: "Music videos and performance projects with clear roles across production, 1st AD work, direction, edit and sound.",
     },
     projects: [
       {
@@ -751,12 +737,12 @@ const projectGroups: GardProjectGroup[] = [
           en: "Music video",
         },
         role: {
-          no: "Produsent, 1st AD og klipp",
-          en: "Producer, 1st AD and edit",
+          no: "Produsent og Innspillingsleder",
+          en: "Producer and 1st AD",
         },
         summary: {
-          no: "En musikkvideo som viser Gard sin evne til å holde leken tone, fortelling og gjennomføring samlet i et familievennlig univers.",
-          en: "A music video showing Gard's ability to hold playful tone, story and execution together in a family-friendly world.",
+          no: "En musikkvideo der Gard hadde produsentansvar og innspillingsledelse i et leken familieunivers.",
+          en: "A music video where Gard handled producing and 1st AD work in a playful family-friendly world.",
         },
         image: "/assets/portfolio/kommer-hjem/posters/kommer-hjem-poster.avif",
         imageAlt: {
@@ -779,65 +765,65 @@ const projectGroups: GardProjectGroup[] = [
           en: "Music video",
         },
         role: {
-          no: "Produsent, 1st AD og klipp",
-          en: "Producer, 1st AD and edit",
+          no: "Produsent og Innspillingsleder",
+          en: "Producer and 1st AD",
         },
         summary: {
-          no: "Et eget musikkvideoprosjekt fra samme lekne univers, med Gard i produksjon, opptaksflyt og klipp.",
-          en: "A dedicated music video project from the same playful world, with Gard across production, set flow and edit.",
+          no: "Et eget musikkvideoprosjekt fra samme lekne univers, med Gard i produsentrollen og som innspillingsleder.",
+          en: "A dedicated music video project from the same playful world, with Gard as producer and 1st AD.",
         },
         externalVideo: getPortfolioProject("takk-for-at-du-er-min-venn").externalVideo,
         preview: true,
       },
       {
-        slug: "sweathearts",
-        client: "Monster / 74 Entertainment / Ramón",
-        year: "2024",
+        slug: "selfish",
+        client: "Independent / Los Angeles",
+        year: "2022",
         title: {
-          no: "Sweathearts",
-          en: "Sweathearts",
+          no: "Selfish",
+          en: "Selfish",
         },
         format: {
-          no: "TV og underholdning",
-          en: "TV and entertainment",
+          no: "Musikkvideo",
+          en: "Music video",
         },
         role: {
-          no: "1st AD, produksjonssekretær og on-set koordinering",
-          en: "1st AD, production secretary and on-set coordination",
+          no: "Regi og klipp",
+          en: "Direction and edit",
         },
         summary: {
-          no: "Et større underholdningsoppsett som viser Gard sitt arbeid med logistikk, fremdrift og trygg håndtering av set og crew.",
-          en: "A larger entertainment setup showing Gard's work with logistics, momentum and confident handling of set and crew.",
+          no: "Et selvstendig musikkvideoprosjekt som viser Gard sitt arbeid med tone, timing og visuell fortelling.",
+          en: "A standalone music video project showing Gard's work with tone, timing and visual storytelling.",
         },
-        externalVideo: youtubeAsset("LTU3Uw4Rglc", {
-          no: "Sweathearts",
-          en: "Sweathearts",
+        externalVideo: youtubeAsset("UB2t19KGPIs", {
+          no: "Selfish",
+          en: "Selfish",
         }),
         preview: true,
       },
       {
-        slug: "gulltransporten",
-        client: "Fantefilm / 74 Entertainment",
+        slug: "day-by-night",
+        client: "Independent / Los Angeles",
         year: "2022",
         title: {
-          no: "Gulltransporten",
-          en: "Gold Run",
+          no: "Day By Night",
+          en: "Day By Night",
         },
         format: {
-          no: "Filmproduksjon",
-          en: "Film production",
+          no: "Musikkvideo",
+          en: "Music video",
         },
         role: {
-          no: "On-set koordinering",
-          en: "On-set coordination",
+          no: "Innspillingsleder",
+          en: "1st AD",
         },
         summary: {
-          no: "Et eget større produksjonsspor der Gard bidro med koordinering og trygg flyt rundt et mer komplekst opptaksoppsett.",
-          en: "A dedicated larger production track where Gard contributed coordination and steady flow around a more complex shoot setup.",
+          no: "Et musikkvideoprosjekt fra Los Angeles-perioden der Gard hadde rollen som innspillingsleder.",
+          en: "A music video project from the Los Angeles period where Gard worked as 1st AD.",
         },
-        externalVideo: youtubeAsset("4F8Q7Uo0c1k", {
-          no: "Gulltransporten",
-          en: "Gold Run",
+        externalVideo: youtubeAsset("b6JUOY8FB20", {
+          no: "Day By Night",
+          en: "Day By Night",
         }),
         preview: true,
       },
@@ -850,16 +836,16 @@ const projectGroups: GardProjectGroup[] = [
           en: "Of Course It Hurts",
         },
         format: {
-          no: "Performancefilm",
-          en: "Performance film",
+          no: "Musikkvideo / performance",
+          en: "Music video / performance",
         },
         role: {
-          no: "On-set koordinering",
-          en: "On-set coordination",
+          no: "Set-lyd",
+          en: "Set sound",
         },
         summary: {
-          no: "Et separat performanceprosjekt med Ramón, der Gard bidro til trygg flyt, timing og gjennomføring på set.",
-          en: "A separate performance project with Ramón, where Gard contributed to steady flow, timing and execution on set.",
+          no: "Et performanceprosjekt med Ramón der Gard hadde set-lyd og bidro til trygg opptaksflyt.",
+          en: "A performance project with Ramón where Gard handled set sound and contributed to steady shoot flow.",
         },
         externalVideo: youtubeAsset("VrSSCWIvCZ0", {
           no: "Of Course It Hurts",
@@ -922,8 +908,8 @@ export const gardProfilePage = {
     en: "A creative perspective with real confidence across set, post and project flow.",
   },
   introBody: {
-    no: "Med bakgrunn fra NTNU, Kristiania og California State University Los Angeles har Gard bygget erfaring fra Fau&Land Film, Yellow Banana, Nord DDB, Monster, Fantefilm og flere reklame- og filmproduksjoner i Norge og Los Angeles.",
-    en: "With studies from NTNU, Kristiania and California State University Los Angeles, Gard has built experience across Fau&Land Film, Yellow Banana, Nord DDB, Monster, Fantefilm and a broader mix of production work in Norway and Los Angeles.",
+    no: "Med utdannelse fra NTNU, Kristiania og California State University Los Angeles og solid erfaring fra en rekke produksjoner innen film, TV og reklame, stiller Gard med et sterkt fundament av kunnskap og erfaring. Før Fau&Land Film var han også prosjektleder i reklamebyrå, der han ledet en rekke store produksjoner.",
+    en: "With education from NTNU, Kristiania and California State University Los Angeles, and solid experience across film, TV and advertising productions, Gard brings a strong foundation of knowledge and experience. Before Fau&Land Film, he also worked as a project manager in an advertising agency, where he led a range of large productions.",
   },
   introFacts: [
     "NTNU",

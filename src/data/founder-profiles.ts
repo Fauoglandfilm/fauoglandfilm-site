@@ -287,8 +287,8 @@ export const founderProfiles: FounderProfile[] = [
       en: "Storytelling with control across production, structure and post.",
     },
     introBody: {
-      no: "Gard Ruben Fauske er daglig leder, prosjektleder og regissør i Fau&Land Film. Han kombinerer historiefortelling, regi, klipp og innspillingsledelse, med erfaring fra reklameproduksjon, kortfilm og kreative produksjonsmiljøer i både Norge og Los Angeles.",
-      en: "Gard Ruben Fauske is the managing director, project lead and director at Fau&Land Film. He combines story, direction, edit and set leadership with experience from commercial production, short film and creative production environments in both Norway and Los Angeles.",
+      no: "Med utdannelse fra NTNU, Kristiania og California State University Los Angeles og solid erfaring fra en rekke produksjoner innen film, TV og reklame, stiller Gard med et sterkt fundament av kunnskap og erfaring. Før Fau&Land Film var han også prosjektleder i reklamebyrå, der han ledet en rekke store produksjoner.",
+      en: "With education from NTNU, Kristiania and California State University Los Angeles, and solid experience across film, TV and advertising productions, Gard brings a strong foundation of knowledge and experience. Before Fau&Land Film, he also worked as a project manager in an advertising agency, where he led a range of large productions.",
     },
     strengths: [
       {
