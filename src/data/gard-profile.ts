@@ -148,6 +148,36 @@ const projectGroups: GardProjectGroup[] = [
         preview: true,
       },
       {
+        slug: "toyota-heisjef",
+        client: "Toyota / Heisjef",
+        year: "2025",
+        title: {
+          no: "Toyota-reklame med Heisjef",
+          en: "Toyota commercial with Heisjef",
+        },
+        format: {
+          no: "Reklamefilm",
+          en: "Commercial film",
+        },
+        role: {
+          no: "Produksjonsleder og Innspillingsleder",
+          en: "Production manager and 1st AD",
+        },
+        summary: {
+          no: "Toyota-reklame med Heisjef der Gard hadde ansvar for produksjonsledelse og innspillingsflyt på set.",
+          en: "Toyota commercial with Heisjef where Gard handled production management and set flow as 1st AD.",
+        },
+        externalVideo: vimeoAsset(
+          "1114284109",
+          {
+            no: "Toyota-reklame med Heisjef",
+            en: "Toyota commercial with Heisjef",
+          },
+          "https://i.vimeocdn.com/video/2052990391-1e1f2c18c2d8699d445128cbd1605e8656a863e0cc4dbaff91c3874a3776fd87-d_295x166?region=us",
+        ),
+        preview: true,
+      },
+      {
         slug: "continental-2023",
         client: "Continental / Yellow Banana",
         year: "2023",
