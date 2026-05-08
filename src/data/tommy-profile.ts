@@ -452,6 +452,32 @@ export const tommyPortfolioPage = {
       gallery: [],
     },
     {
+      slug: "continental-yellow-banana-heisjef",
+      type: "commercial",
+      client: "Continental / Yellow Banana / Heisjef",
+      title: sameText("Continental reklame med Yellow Banana og Heisjef"),
+      role: sameText("PA"),
+      impact: {
+        no: "Reklameproduksjon for Continental der Tommy bidro som PA i gjennomføringen på set.",
+        en: "Commercial production for Continental where Tommy contributed as PA during the shoot.",
+      },
+      summary: {
+        no: "Et Heisjef- og Yellow Banana-prosjekt for Continental, med Tommy som PA i produksjonsapparatet.",
+        en: "A Heisjef and Yellow Banana project for Continental, with Tommy as PA in the production team.",
+      },
+      links: [
+        externalLink("Se film", "https://vimeo.com/761019587"),
+      ],
+      poster: poster(
+        "https://i.vimeocdn.com/video/2053007281-04e79e51591c465accf1a9556c52addbabd5012aff546ca807daef556c1d3509-d_295x166?region=us",
+        "Still fra Continental-reklame med Yellow Banana og Heisjef",
+        "Still from Continental commercial with Yellow Banana and Heisjef",
+        "cover",
+        "landscape",
+      ),
+      gallery: [],
+    },
+    {
       slug: "ville-gleder",
       type: "commercial",
       client: "Ville Gleder",

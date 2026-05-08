@@ -120,6 +120,36 @@ const projectGroups: GardProjectGroup[] = [
         preview: true,
       },
       {
+        slug: "continental-yellow-banana-heisjef",
+        client: "Continental / Yellow Banana / Heisjef",
+        year: "2022",
+        title: {
+          no: "Continental reklame med Yellow Banana og Heisjef",
+          en: "Continental commercial with Yellow Banana and Heisjef",
+        },
+        format: {
+          no: "Reklamefilm",
+          en: "Commercial film",
+        },
+        role: {
+          no: "Innspillingsleder",
+          en: "1st AD",
+        },
+        summary: {
+          no: "Continental-reklame produsert med Yellow Banana og Heisjef, der Gard hadde rollen som innspillingsleder.",
+          en: "Continental commercial produced with Yellow Banana and Heisjef, with Gard working as 1st AD.",
+        },
+        externalVideo: vimeoAsset(
+          "761019587",
+          {
+            no: "Continental reklame med Yellow Banana og Heisjef",
+            en: "Continental commercial with Yellow Banana and Heisjef",
+          },
+          "https://i.vimeocdn.com/video/2053007281-04e79e51591c465accf1a9556c52addbabd5012aff546ca807daef556c1d3509-d_295x166?region=us",
+        ),
+        preview: true,
+      },
+      {
         slug: "continental-rudskogen",
         client: "Continental / Yellow Banana",
         year: "2024",
