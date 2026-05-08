@@ -26,7 +26,7 @@ import type {
   TeamMember,
   Testimonial,
 } from "@/data/site-content";
-import { aboutBullets, siteConfig } from "@/data/site-content";
+import { siteConfig, teamMembers } from "@/data/site-content";
 import { uiCopy } from "@/data/ui-copy";
 import type { LocalizedText } from "@/lib/i18n";
 import { resolveLocalizedValue } from "@/lib/i18n";
@@ -1078,26 +1078,6 @@ export function PageHero(props: {
   const heroTitleClassName = isDarkTheme ? "text-white" : "text-[color:var(--foreground)]";
   const heroDescriptionClassName = isDarkTheme ? "text-white/76" : "text-[var(--muted-2)]";
   const showAboutVisual = compact && visualKey === "about";
-  const aboutHeroStats = language === "no"
-    ? [
-        { value: "02", label: "Seniorer tett på" },
-        { value: "01", label: "Samlet produksjonsspor" },
-        { value: "OSL", label: "Reklamefilm / innhold" },
-      ]
-    : [
-        { value: "02", label: "Senior leads close to the work" },
-        { value: "01", label: "Shared production track" },
-        { value: "OSL", label: "Commercial film / content" },
-      ];
-  const aboutResponsibilityTracks = language === "no"
-    ? [
-        { label: "Tommy", text: "Produsent, budsjett, fremdrift og kundedialog." },
-        { label: "Gard", text: "Regi, fortelling, klipp og visuell retning." },
-      ]
-    : [
-        { label: "Tommy", text: "Producer, budget, momentum and client dialogue." },
-        { label: "Gard", text: "Direction, story, edit and visual direction." },
-      ];
 
   return (
     <section
@@ -1166,83 +1146,47 @@ export function PageHero(props: {
             </div>
 
             {showAboutVisual ? (
-              <aside
-                className={cn(
-                  "relative overflow-hidden rounded-[1.75rem] border p-4 sm:p-5 lg:p-6",
-                  isDarkTheme
-                    ? "border-white/10 bg-white/[0.055] shadow-[0_22px_70px_rgba(0,0,0,0.18)]"
-                    : "border-[color:var(--line)]/75 bg-white/74 shadow-[0_22px_70px_rgba(18,25,38,0.08)]",
-                )}
-              >
-                <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_16%_18%,rgba(255,255,255,0.18),transparent_30%),linear-gradient(135deg,rgba(255,255,255,0.08),transparent_46%)]" />
-                <div className="relative grid gap-5 lg:grid-cols-[minmax(0,0.82fr)_minmax(0,1.18fr)] lg:items-end">
-                  <div>
-                    <p className={cn("text-[0.66rem] font-semibold uppercase tracking-[0.2em]", heroEyebrowClassName)}>
-                      {language === "no" ? "Produksjonssystem" : "Production system"}
-                    </p>
-                    <h2 className={cn("mt-3 max-w-[11ch] text-[clamp(2rem,4.5vw,4.4rem)] font-semibold leading-[0.9] tracking-[-0.075em]", heroTitleClassName)}>
-                      {language === "no" ? "Lite team. Kort vei. Tett ansvar." : "Small team. Short path. Clear ownership."}
-                    </h2>
-                  </div>
-
-                  <div className="grid gap-2.5">
-                    {aboutResponsibilityTracks.map((item) => (
-                      <div
-                        key={item.label}
-                        className={cn(
-                          "rounded-[1.15rem] border px-3.5 py-3",
-                          isDarkTheme
-                            ? "border-white/10 bg-black/12"
-                            : "border-[color:var(--line)]/70 bg-[color:var(--surface-muted)]/74",
-                        )}
-                      >
-                        <div className="flex items-start justify-between gap-4">
-                          <span className={cn("text-sm font-semibold tracking-[-0.02em]", heroTitleClassName)}>
-                            {item.label}
-                          </span>
-                          <span className="mt-1 h-1.5 w-1.5 shrink-0 rounded-full bg-[color:var(--accent)]/70" />
-                        </div>
-                        <p className={cn("mt-1 text-sm leading-6", heroDescriptionClassName)}>
-                          {item.text}
-                        </p>
+              <div className="grid gap-3 sm:grid-cols-2 lg:gap-4">
+                {teamMembers.map((member) => (
+                  <Link
+                    key={member.name}
+                    href={member.href ?? "/om-oss"}
+                    className={cn(
+                      "group rounded-[1.55rem] border p-3 transition duration-300 hover:-translate-y-0.5",
+                      isDarkTheme
+                        ? "border-white/10 bg-white/[0.055] hover:border-white/18"
+                        : "border-[color:var(--line)]/75 bg-white/72 shadow-[0_18px_42px_rgba(18,25,38,0.08)] hover:border-[color:var(--line-strong)]",
+                    )}
+                  >
+                    <div className="relative aspect-[16/10] overflow-hidden rounded-[1.15rem] bg-[#090b10]">
+                      {member.image ? (
+                        <Image
+                          src={member.image}
+                          alt={member.imageAlt ? resolveLocalizedValue(member.imageAlt, language) : member.name}
+                          fill
+                          sizes="(min-width: 1280px) 24rem, (min-width: 1024px) 24vw, 100vw"
+                          className="object-cover object-top transition duration-500 group-hover:scale-[1.025]"
+                        />
+                      ) : null}
+                      <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(6,7,10,0.02),rgba(6,7,10,0.08)_42%,rgba(6,7,10,0.68)_100%)]" />
+                      <div className="grain-overlay absolute inset-0 opacity-18" />
+                      <div className="absolute inset-x-3 bottom-3">
+                        <span className="founder-profile-chip border-white/14 bg-white/10 text-white/86">
+                          {resolveLocalizedValue(member.role, language)}
+                        </span>
                       </div>
-                    ))}
-                  </div>
-                </div>
-
-                <div className="relative mt-5 grid gap-3 sm:grid-cols-3">
-                  {aboutHeroStats.map((item) => (
-                    <div
-                      key={item.label}
-                      className={cn(
-                        "rounded-[1.15rem] border px-3.5 py-3",
-                        isDarkTheme
-                          ? "border-white/10 bg-white/[0.045]"
-                          : "border-[color:var(--line)]/70 bg-[color:var(--surface)]/72",
-                      )}
-                    >
-                      <p className={cn("text-[1.45rem] font-semibold leading-none tracking-[-0.055em]", heroTitleClassName)}>
-                        {item.value}
-                      </p>
-                      <p className={cn("mt-2 text-[0.72rem] font-semibold uppercase tracking-[0.16em]", heroEyebrowClassName)}>
-                        {item.label}
+                    </div>
+                    <div className="px-1 pt-3">
+                      <h2 className={cn("text-[1.1rem] font-semibold leading-none tracking-[-0.04em]", heroTitleClassName)}>
+                        {member.name}
+                      </h2>
+                      <p className={cn("mt-2 text-sm leading-6", heroDescriptionClassName)}>
+                        {resolveLocalizedValue(member.summary, language)}
                       </p>
                     </div>
-                  ))}
-                </div>
-
-                <div className="relative mt-5 grid gap-2.5">
-                  {aboutBullets.map((bullet, index) => (
-                    <p
-                      key={`about-hero-bullet-${index}`}
-                      className={cn("flex gap-2.5 text-sm leading-6", heroDescriptionClassName)}
-                    >
-                      <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-[color:var(--accent)]/64" />
-                      <span>{resolveLocalizedValue(bullet, language)}</span>
-                    </p>
-                  ))}
-                </div>
-              </aside>
+                  </Link>
+                ))}
+              </div>
             ) : null}
           </div>
         </Reveal>
