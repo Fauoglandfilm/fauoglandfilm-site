@@ -478,6 +478,39 @@ export const tommyPortfolioPage = {
       gallery: [],
     },
     {
+      slug: "fix-drive-badeog",
+      type: "commercial",
+      client: "Fix & Drive / BådeOg",
+      title: sameText("Fix & Drive"),
+      role: sameText("Linjeprodusent"),
+      impact: {
+        no: "Reklamefilm for Fix & Drive der Tommy holdt linjeproduksjon og produksjonsflyt samlet.",
+        en: "Commercial film for Fix & Drive where Tommy kept line production and production flow aligned.",
+      },
+      summary: {
+        no: "Produksjon for BådeOg og Fix & Drive, med Tommy som linjeprodusent gjennom opptak og leveranse.",
+        en: "Production for BådeOg and Fix & Drive, with Tommy as line producer through shoot and delivery.",
+      },
+      links: [
+        externalLink(
+          "Se film",
+          "https://www.fixdrive.no/app/uploads/2023/09/FixDrive-Snobben-Lyskryss-30sek-Gratis-og-uforpliktende-16x9-1.mp4?_=1",
+        ),
+        externalLink(
+          "Les hos Fix & Drive",
+          "https://www.fixdrive.no/om-fix-drive/fix-drive-et-annerledes-bilverksted/",
+        ),
+      ],
+      poster: poster(
+        "/assets/team/tommy/portfolio/commercial/fix-drive-hovedfilm.jpg",
+        "Still fra Fix & Drive-reklame",
+        "Still from the Fix & Drive commercial",
+        "cover",
+        "landscape",
+      ),
+      gallery: [],
+    },
+    {
       slug: "ville-gleder",
       type: "commercial",
       client: "Ville Gleder",
