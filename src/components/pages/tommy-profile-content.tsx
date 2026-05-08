@@ -5,7 +5,6 @@ import Link from "next/link";
 import type { ReactNode } from "react";
 
 import { Reveal } from "@/components/motion/reveal";
-import { ProfileImageCard } from "@/components/pages/profile-image-card";
 import { useSitePreferences } from "@/components/providers/site-preferences";
 import { ButtonLink } from "@/components/ui/button-link";
 import { ArrowUpRightIcon, MailIcon, PhoneIcon } from "@/components/ui/icons";
@@ -345,7 +344,7 @@ export function TommyProfileContent() {
     <main>
       <section className="overflow-hidden bg-[radial-gradient(circle_at_top_left,rgba(255,255,255,0.14),transparent_24%),linear-gradient(180deg,#0b1220_0%,#0d1422_52%,#101723_100%)] pt-[6.35rem] sm:pt-28">
         <div className="site-container py-8 sm:py-10 lg:py-14">
-          <div className="grid gap-8 md:grid-cols-[minmax(0,1fr)_minmax(16rem,20rem)] md:items-end lg:grid-cols-[minmax(0,1fr)_minmax(18rem,22rem)] lg:gap-12">
+          <div className="grid gap-8 md:grid-cols-[minmax(0,0.82fr)_minmax(18rem,0.68fr)] md:items-end lg:gap-12">
             <Reveal className="max-w-3xl" delay={0.04} y={18}>
               <div className="max-w-[42rem] text-white">
                 <ButtonLink
@@ -376,13 +375,32 @@ export function TommyProfileContent() {
               </div>
             </Reveal>
 
-            <Reveal delay={0.08} y={18} className="w-full md:flex md:justify-end">
-              <ProfileImageCard
-                src={profile.portrait}
-                alt={resolveLocalizedValue(profile.portraitAlt, language)}
-                priority
-                sizes="(min-width: 1024px) 22rem, (min-width: 768px) 20rem, 72vw"
-              />
+            <Reveal delay={0.08} y={18}>
+              <aside className="rounded-[1.7rem] border border-white/10 bg-white/[0.055] p-4 shadow-[0_24px_80px_rgba(0,0,0,0.18)] sm:p-5">
+                <p className="text-[0.64rem] font-semibold uppercase tracking-[0.22em] text-white/58">
+                  {language === "no" ? "Produksjonsansvar" : "Production ownership"}
+                </p>
+                <div className="mt-4 grid gap-3">
+                  {tommyPortfolioPage.heroRoles.map((role, index) => (
+                    <div
+                      key={resolveLocalizedValue(role, language)}
+                      className="rounded-[1.15rem] border border-white/10 bg-black/12 px-3.5 py-3"
+                    >
+                      <div className="flex items-start justify-between gap-4">
+                        <span className="text-sm font-semibold text-white/88">
+                          {resolveLocalizedValue(role, language)}
+                        </span>
+                        <span className="text-[0.7rem] font-semibold tabular-nums text-white/42">
+                          0{index + 1}
+                        </span>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+                <p className="mt-4 text-sm leading-6 text-white/68">
+                  {resolveLocalizedValue(profile.tagline, language)}
+                </p>
+              </aside>
             </Reveal>
           </div>
         </div>
