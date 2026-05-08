@@ -26,7 +26,7 @@ import type {
   TeamMember,
   Testimonial,
 } from "@/data/site-content";
-import { aboutBullets, siteConfig } from "@/data/site-content";
+import { siteConfig } from "@/data/site-content";
 import { uiCopy } from "@/data/ui-copy";
 import type { LocalizedText } from "@/lib/i18n";
 import { resolveLocalizedValue } from "@/lib/i18n";
@@ -1147,57 +1147,27 @@ export function PageHero(props: {
 
             {showAboutVisual ? (
               <aside
+                aria-hidden="true"
                 className={cn(
-                  "relative overflow-hidden rounded-[1.65rem] border p-4 sm:p-5",
+                  "relative hidden min-h-[15rem] overflow-hidden rounded-[1.75rem] border lg:block",
                   isDarkTheme
-                    ? "border-white/10 bg-white/[0.055] shadow-[0_22px_70px_rgba(0,0,0,0.16)]"
-                    : "border-[color:var(--line)]/75 bg-white/74 shadow-[0_22px_70px_rgba(18,25,38,0.08)]",
+                    ? "border-white/10 bg-white/[0.045] shadow-[0_24px_80px_rgba(0,0,0,0.18)]"
+                    : "border-[color:var(--line)]/65 bg-white/56 shadow-[0_22px_70px_rgba(18,25,38,0.07)]",
                 )}
               >
-                <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_14%_18%,rgba(255,255,255,0.16),transparent_28%),linear-gradient(135deg,rgba(255,255,255,0.08),transparent_46%)]" />
-                <div className="relative">
-                  <p className={cn("text-[0.66rem] font-semibold uppercase tracking-[0.2em]", heroEyebrowClassName)}>
-                    {language === "no" ? "Slik deles ansvaret" : "How ownership is split"}
+                <div className="absolute inset-0 bg-[radial-gradient(circle_at_22%_18%,rgba(255,255,255,0.16),transparent_28%),radial-gradient(circle_at_78%_78%,rgba(122,168,255,0.10),transparent_32%),linear-gradient(135deg,rgba(255,255,255,0.08),transparent_45%)]" />
+                <div className="absolute left-1/2 top-1/2 h-[18rem] w-[18rem] -translate-x-1/2 -translate-y-1/2 rounded-full border border-[color:var(--line)]/45" />
+                <div className="absolute left-1/2 top-1/2 h-[11rem] w-[11rem] -translate-x-1/2 -translate-y-1/2 rounded-full border border-[color:var(--line)]/35" />
+                <div className="relative flex min-h-[15rem] flex-col items-center justify-center px-8 text-center">
+                  <BrandLogo
+                    className={cn(
+                      "w-full max-w-[24rem] opacity-[0.16]",
+                      isDarkTheme && "brightness-0 invert",
+                    )}
+                  />
+                  <p className={cn("mt-5 text-[0.68rem] font-semibold uppercase tracking-[0.28em]", heroEyebrowClassName)}>
+                    {language === "no" ? "Oslo / Reklamefilm / Produksjon" : "Oslo / Commercial Film / Production"}
                   </p>
-                  <div className="mt-4 grid gap-3">
-                    {aboutBullets.map((bullet, index) => (
-                      <div
-                        key={`about-hero-bullet-${index}`}
-                        className={cn(
-                          "rounded-[1.15rem] border px-3.5 py-3",
-                          isDarkTheme
-                            ? "border-white/10 bg-black/12"
-                            : "border-[color:var(--line)]/70 bg-[color:var(--surface-muted)]/74",
-                        )}
-                      >
-                        <div className="flex items-start gap-3">
-                          <span className={cn("text-sm font-semibold tabular-nums", heroEyebrowClassName)}>
-                            0{index + 1}
-                          </span>
-                          <p className={cn("text-sm leading-6", heroDescriptionClassName)}>
-                            {resolveLocalizedValue(bullet, language)}
-                          </p>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                  <div className="mt-4 grid grid-cols-3 gap-2.5">
-                    {["02", "01", "OSL"].map((item) => (
-                      <div
-                        key={item}
-                        className={cn(
-                          "rounded-[1rem] border px-3 py-2.5 text-center",
-                          isDarkTheme
-                            ? "border-white/10 bg-white/[0.04]"
-                            : "border-[color:var(--line)]/70 bg-[color:var(--surface)]/72",
-                        )}
-                      >
-                        <p className={cn("text-[1.12rem] font-semibold leading-none tracking-[-0.045em]", heroTitleClassName)}>
-                          {item}
-                        </p>
-                      </div>
-                    ))}
-                  </div>
                 </div>
               </aside>
             ) : null}
