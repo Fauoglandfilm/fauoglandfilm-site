@@ -26,7 +26,7 @@ import type {
   TeamMember,
   Testimonial,
 } from "@/data/site-content";
-import { siteConfig } from "@/data/site-content";
+import { siteConfig, teamMembers } from "@/data/site-content";
 import { uiCopy } from "@/data/ui-copy";
 import type { LocalizedText } from "@/lib/i18n";
 import { resolveLocalizedValue } from "@/lib/i18n";
@@ -1060,6 +1060,7 @@ export function PageHero(props: {
     description,
     primaryCta,
     secondaryCta,
+    visualKey,
     compact = false,
   } = props;
   const { language, theme } = useSitePreferences();
@@ -1076,6 +1077,7 @@ export function PageHero(props: {
   const heroEyebrowClassName = isDarkTheme ? "text-white/62" : "text-[var(--muted)]";
   const heroTitleClassName = isDarkTheme ? "text-white" : "text-[color:var(--foreground)]";
   const heroDescriptionClassName = isDarkTheme ? "text-white/76" : "text-[var(--muted-2)]";
+  const showAboutVisual = compact && visualKey === "about";
 
   return (
     <section
@@ -1088,48 +1090,102 @@ export function PageHero(props: {
     >
       <div className="site-container">
         <Reveal className={cn("w-full", compact ? "pb-4.5 sm:pb-5.5 lg:pb-5.5" : "py-10 sm:py-14 lg:py-16")} delay={0.04} y={18}>
-          <div className={cn(compact ? "max-w-[29rem]" : "max-w-[44rem]")}>
-            <span className={cn("hero-badge", heroEyebrowClassName)}>{resolvedEyebrow}</span>
-            <h1
-              className={cn(
-                heroTitleClassName,
-                compact
-                  ? "mt-1.75 max-w-[11.5ch] font-display text-[1.82rem] leading-[0.88] tracking-[-0.068em] sm:text-[2.2rem] lg:text-[2.7rem]"
-                  : "mt-3 page-title max-w-[13ch]",
-              )}
-            >
-              {compact && compactTitleLines.length > 1 ? (
-                compactTitleLines.map((line) => (
-                  <span key={line} className="block whitespace-nowrap">
-                    {line}
-                  </span>
-                ))
-              ) : (
-                resolvedTitle
-              )}
-            </h1>
-            <p
-              className={cn(
-                heroDescriptionClassName,
-                compact
-                  ? "mt-1.5 max-w-[25rem] text-[0.84rem] leading-5 sm:text-[0.9rem] sm:leading-5.5"
-                  : "mt-3.5 body-copy max-w-2xl sm:mt-4 sm:text-base sm:leading-7",
-              )}
-            >
-              {resolvedDescription}
-            </p>
-            {primaryCta || secondaryCta ? (
-              <div className={cn("flex flex-col gap-2 sm:flex-row sm:flex-wrap sm:gap-2.5", compact ? "mt-2.5 sm:mt-3" : "mt-5 sm:mt-6")}>
-                {primaryCta ? (
-                  <ButtonLink href={primaryCta.href} className="w-full sm:w-auto">
-                    {resolveLocalizedValue(primaryCta.label, language)}
-                  </ButtonLink>
-                ) : null}
-                {secondaryCta ? (
-                  <ButtonLink href={secondaryCta.href} variant="secondary" className="w-full sm:w-auto">
-                    {resolveLocalizedValue(secondaryCta.label, language)}
-                  </ButtonLink>
-                ) : null}
+          <div
+            className={cn(
+              showAboutVisual
+                ? "grid w-full gap-5 lg:grid-cols-[minmax(0,0.78fr)_minmax(30rem,1.22fr)] lg:items-end"
+                : compact
+                  ? "max-w-[29rem]"
+                  : "max-w-[44rem]",
+            )}
+          >
+            <div className={cn(showAboutVisual ? "max-w-[29rem]" : undefined)}>
+              <span className={cn("hero-badge", heroEyebrowClassName)}>{resolvedEyebrow}</span>
+              <h1
+                className={cn(
+                  heroTitleClassName,
+                  compact
+                    ? "mt-1.75 max-w-[11.5ch] font-display text-[1.82rem] leading-[0.88] tracking-[-0.068em] sm:text-[2.2rem] lg:text-[2.7rem]"
+                    : "mt-3 page-title max-w-[13ch]",
+                )}
+              >
+                {compact && compactTitleLines.length > 1 ? (
+                  compactTitleLines.map((line) => (
+                    <span key={line} className="block whitespace-nowrap">
+                      {line}
+                    </span>
+                  ))
+                ) : (
+                  resolvedTitle
+                )}
+              </h1>
+              <p
+                className={cn(
+                  heroDescriptionClassName,
+                  compact
+                    ? "mt-1.5 max-w-[25rem] text-[0.84rem] leading-5 sm:text-[0.9rem] sm:leading-5.5"
+                    : "mt-3.5 body-copy max-w-2xl sm:mt-4 sm:text-base sm:leading-7",
+                )}
+              >
+                {resolvedDescription}
+              </p>
+              {primaryCta || secondaryCta ? (
+                <div className={cn("flex flex-col gap-2 sm:flex-row sm:flex-wrap sm:gap-2.5", compact ? "mt-2.5 sm:mt-3" : "mt-5 sm:mt-6")}>
+                  {primaryCta ? (
+                    <ButtonLink href={primaryCta.href} className="w-full sm:w-auto">
+                      {resolveLocalizedValue(primaryCta.label, language)}
+                    </ButtonLink>
+                  ) : null}
+                  {secondaryCta ? (
+                    <ButtonLink href={secondaryCta.href} variant="secondary" className="w-full sm:w-auto">
+                      {resolveLocalizedValue(secondaryCta.label, language)}
+                    </ButtonLink>
+                  ) : null}
+                </div>
+              ) : null}
+            </div>
+
+            {showAboutVisual ? (
+              <div className="grid gap-3 sm:grid-cols-2 lg:gap-4">
+                {teamMembers.map((member) => (
+                  <Link
+                    key={member.name}
+                    href={member.href ?? "/om-oss"}
+                    className={cn(
+                      "group rounded-[1.55rem] border p-3 transition duration-300 hover:-translate-y-0.5",
+                      isDarkTheme
+                        ? "border-white/10 bg-white/[0.055] hover:border-white/18"
+                        : "border-[color:var(--line)]/75 bg-white/72 shadow-[0_18px_42px_rgba(18,25,38,0.08)] hover:border-[color:var(--line-strong)]",
+                    )}
+                  >
+                    <div className="relative aspect-[16/10] overflow-hidden rounded-[1.15rem] bg-[#090b10]">
+                      {member.image ? (
+                        <Image
+                          src={member.image}
+                          alt={member.imageAlt ? resolveLocalizedValue(member.imageAlt, language) : member.name}
+                          fill
+                          sizes="(min-width: 1280px) 24rem, (min-width: 1024px) 24vw, 100vw"
+                          className="object-cover object-top transition duration-500 group-hover:scale-[1.025]"
+                        />
+                      ) : null}
+                      <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(6,7,10,0.02),rgba(6,7,10,0.08)_42%,rgba(6,7,10,0.68)_100%)]" />
+                      <div className="grain-overlay absolute inset-0 opacity-18" />
+                      <div className="absolute inset-x-3 bottom-3">
+                        <span className="founder-profile-chip border-white/14 bg-white/10 text-white/86">
+                          {resolveLocalizedValue(member.role, language)}
+                        </span>
+                      </div>
+                    </div>
+                    <div className="px-1 pt-3">
+                      <h2 className={cn("text-[1.1rem] font-semibold leading-none tracking-[-0.04em]", heroTitleClassName)}>
+                        {member.name}
+                      </h2>
+                      <p className={cn("mt-2 text-sm leading-6", heroDescriptionClassName)}>
+                        {resolveLocalizedValue(member.summary, language)}
+                      </p>
+                    </div>
+                  </Link>
+                ))}
               </div>
             ) : null}
           </div>
