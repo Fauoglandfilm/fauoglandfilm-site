@@ -390,44 +390,82 @@ export function TommyProfileContent() {
 
       <section className="section-space pt-0">
         <div className="site-container">
-          <div className="grid gap-5 lg:grid-cols-[minmax(0,1.02fr)_minmax(18rem,0.98fr)] lg:items-center">
-            <Reveal>
-              <div className="media-frame relative min-h-[18rem] overflow-hidden rounded-[2rem] bg-[#090b10] sm:min-h-[23rem] lg:min-h-[30rem]">
-                <Image
-                  src={profile.supportingVisual}
-                  alt={resolveLocalizedValue(profile.supportingVisualAlt, language)}
-                  fill
-                  sizes="(min-width: 1280px) 46vw, (min-width: 1024px) 50vw, 100vw"
-                  className="object-cover"
-                />
-                <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(6,7,10,0.02),rgba(6,7,10,0.14)_46%,rgba(6,7,10,0.74)_100%)]" />
-                <div className="grain-overlay absolute inset-0 opacity-28" />
-              </div>
-            </Reveal>
+          <Reveal>
+            <article className="card-surface relative overflow-hidden rounded-[2rem] px-4 py-4 sm:px-5 sm:py-5 lg:px-6 lg:py-6">
+              <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_14%_18%,rgba(255,255,255,0.12),transparent_28%),linear-gradient(135deg,rgba(255,255,255,0.05),transparent_42%)]" />
+              <div className="relative grid gap-5 lg:grid-cols-[minmax(15rem,0.72fr)_minmax(0,1.28fr)] lg:items-stretch">
+                <aside className="rounded-[1.55rem] border border-[color:var(--line)]/75 bg-[color:var(--surface-muted)]/72 p-3 shadow-[inset_0_1px_0_rgba(255,255,255,0.12)] sm:p-4">
+                  <div className="media-frame relative aspect-[4/5] overflow-hidden rounded-[1.25rem] bg-[#090b10]">
+                    <Image
+                      src={profile.portrait}
+                      alt={resolveLocalizedValue(profile.portraitAlt, language)}
+                      fill
+                      sizes="(min-width: 1280px) 19rem, (min-width: 1024px) 24vw, 100vw"
+                      className="object-cover object-top"
+                    />
+                    <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(7,8,10,0.02),rgba(7,8,10,0.06)_44%,rgba(7,8,10,0.62)_100%)]" />
+                    <div className="grain-overlay absolute inset-0 opacity-20" />
+                    <div className="absolute inset-x-3 bottom-3">
+                      <span className="founder-profile-chip border-white/16 bg-white/10 text-white/86">
+                        {resolveLocalizedValue(profile.role, language)}
+                      </span>
+                    </div>
+                  </div>
 
-            <Reveal delay={0.06}>
-              <div className="card-surface rounded-[2rem] px-5 py-5 sm:px-6 sm:py-6 lg:px-7 lg:py-7">
-                <span className="eyebrow">{resolveLocalizedValue(profile.introEyebrow, language)}</span>
-                <h2 className="section-title mt-3 text-[color:var(--foreground)]">
-                  {resolveLocalizedValue(profile.introTitle, language)}
-                </h2>
-                <p className="body-lead mt-4 text-[var(--muted-2)]">
-                  {resolveLocalizedValue(profile.introBody, language)}
-                </p>
-              </div>
+                  <div className="mt-4 space-y-2">
+                    <p className="text-[0.64rem] font-semibold uppercase tracking-[0.2em] text-[var(--muted)]">
+                      {language === "no" ? "Produksjon / Oslo" : "Production / Oslo"}
+                    </p>
+                    <h2 className="text-[1.55rem] font-semibold leading-none tracking-[-0.055em] text-[color:var(--foreground)] sm:text-[1.8rem]">
+                      {profile.name}
+                    </h2>
+                    <p className="text-sm leading-6 text-[var(--muted-2)]">
+                      {resolveLocalizedValue(profile.tagline, language)}
+                    </p>
+                  </div>
+                </aside>
 
-              <div className="mt-6 flex flex-wrap gap-2.5">
-                {tommyPortfolioPage.heroRoles.map((role) => (
-                  <span
-                    key={resolveLocalizedValue(role, language)}
-                    className="founder-profile-chip founder-profile-chip-muted"
-                  >
-                    {resolveLocalizedValue(role, language)}
-                  </span>
-                ))}
+                <div className="flex min-w-0 flex-col justify-between gap-6 px-1 py-1 sm:px-2 sm:py-2 lg:px-4">
+                  <div>
+                    <span className="eyebrow">{resolveLocalizedValue(profile.introEyebrow, language)}</span>
+                    <h2 className="mt-3 max-w-[18ch] text-[clamp(2rem,4.2vw,4.25rem)] font-semibold leading-[0.95] tracking-[-0.07em] text-[color:var(--foreground)]">
+                      {resolveLocalizedValue(profile.introTitle, language)}
+                    </h2>
+                    <p className="mt-5 max-w-3xl text-[1rem] leading-7 text-[var(--muted-2)] sm:text-[1.05rem] sm:leading-8">
+                      {resolveLocalizedValue(profile.introBody, language)}
+                    </p>
+                  </div>
+
+                  <div className="space-y-4">
+                    <div className="flex flex-wrap gap-2.5">
+                      {tommyPortfolioPage.heroRoles.map((role) => (
+                        <span
+                          key={resolveLocalizedValue(role, language)}
+                          className="founder-profile-chip founder-profile-chip-muted"
+                        >
+                          {resolveLocalizedValue(role, language)}
+                        </span>
+                      ))}
+                    </div>
+
+                    <div className="grid gap-3 md:grid-cols-3">
+                      {tommyPortfolioPage.aboutHighlights.map((item) => (
+                        <div
+                          key={resolveLocalizedValue(item, language)}
+                          className="rounded-[1.2rem] border border-[color:var(--line)]/70 bg-[color:var(--surface-muted)]/68 p-4"
+                        >
+                          <span className="mb-3 block h-1.5 w-1.5 rounded-full bg-[color:var(--accent)]/70" />
+                          <p className="text-sm leading-6 text-[color:var(--foreground)]/90">
+                            {resolveLocalizedValue(item, language)}
+                          </p>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </div>
               </div>
-            </Reveal>
-          </div>
+            </article>
+          </Reveal>
         </div>
       </section>
 
