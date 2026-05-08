@@ -208,6 +208,36 @@ const projectGroups: GardProjectGroup[] = [
         preview: true,
       },
       {
+        slug: "mollers-tran-yellow-banana-heisjef",
+        client: "Møllers Tran / Yellow Banana / Heisjef",
+        year: "2022",
+        title: {
+          no: "Møllers Tran",
+          en: "Møllers Tran",
+        },
+        format: {
+          no: "Reklamefilm",
+          en: "Commercial film",
+        },
+        role: {
+          no: "Produksjonsleder",
+          en: "Production manager",
+        },
+        summary: {
+          no: "Møllers Tran-produksjon med Yellow Banana og Heisjef, der Gard hadde rollen som produksjonsleder.",
+          en: "Møllers Tran production with Yellow Banana and Heisjef, with Gard working as production manager.",
+        },
+        externalVideo: vimeoAsset(
+          "685504185",
+          {
+            no: "Møllers Tran",
+            en: "Møllers Tran",
+          },
+          "https://i.vimeocdn.com/video/2053019936-4495efbdb09c9eee3f4e54232a67736b3ce768ee86da3b9d2057502b075c72eb-d_295x166?region=us",
+        ),
+        preview: true,
+      },
+      {
         slug: "continental-2023",
         client: "Continental / Yellow Banana",
         year: "2023",
