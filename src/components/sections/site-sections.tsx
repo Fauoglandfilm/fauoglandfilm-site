@@ -666,7 +666,7 @@ export function TeamSection({
       eyebrow={copy.teamEyebrow}
       title={copy.teamTitle}
       description={copy.teamDescription}
-      className={compact ? "pt-0 pb-8 lg:pb-10" : undefined}
+      className={compact ? "!pt-0 !pb-8 lg:!pb-10" : undefined}
     >
       <div className="team-editorial-grid">
         <FloatingLayer className="team-editorial-rail">
