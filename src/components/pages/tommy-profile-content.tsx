@@ -2,18 +2,18 @@
 
 import Image from "next/image";
 import Link from "next/link";
+import type { ReactNode } from "react";
 
 import { Reveal } from "@/components/motion/reveal";
 import { ProfileImageCard } from "@/components/pages/profile-image-card";
 import { useSitePreferences } from "@/components/providers/site-preferences";
 import { ButtonLink } from "@/components/ui/button-link";
 import { ArrowUpRightIcon, MailIcon, PhoneIcon } from "@/components/ui/icons";
-import { SectionShell } from "@/components/ui/section-shell";
 import {
   tommyPortfolioPage,
   type TommyPortfolioImage,
   type TommyPortfolioLink,
-  type TommyRoleGroup,
+  type TommyRoleItem,
   type TommyShortFilmProject,
   type TommyShowcaseProject,
 } from "@/data/tommy-profile";
@@ -23,24 +23,6 @@ import { cn } from "@/lib/utils";
 
 function isExternalHref(href: string) {
   return href.startsWith("http://") || href.startsWith("https://");
-}
-
-function getAspectClass(image?: TommyPortfolioImage, fallback: "poster" | "landscape" = "poster") {
-  if (!image) {
-    return fallback === "landscape" ? "aspect-[16/9]" : "aspect-[0.72/1]";
-  }
-
-  switch (image.aspect) {
-    case "wide":
-      return "aspect-[2.2/1]";
-    case "landscape":
-      return "aspect-[16/10]";
-    case "square":
-      return "aspect-square";
-    case "portrait":
-    default:
-      return "aspect-[0.72/1]";
-  }
 }
 
 function ProjectLinkPill({ link }: { link: TommyPortfolioLink }) {
@@ -129,70 +111,59 @@ function ShortFilmCard({
   const credits = project.credits ?? [];
   const awards = project.awards ?? [];
   const festivals = project.festivals ?? [];
-  const creditsLabel = language === "no" ? "Credits" : "Credits";
-  const awardsLabel = language === "no" ? "Awards" : "Awards";
-  const festivalsLabel = language === "no" ? "Festivaler & seleksjoner" : "Festivals & selections";
-  const infoSections = [
-    { label: creditsLabel, items: credits },
-    { label: awardsLabel, items: awards },
-    { label: festivalsLabel, items: festivals },
+  const infoSections: ProjectDetailGroup[] = [
+    { label: language === "no" ? "Awards / priser" : "Awards", items: awards },
+    { label: language === "no" ? "Credits" : "Credits", items: credits },
+    { label: language === "no" ? "Festivaler & seleksjoner" : "Festivals & selections", items: festivals },
   ].filter((section) => section.items.length > 0);
 
   return (
     <Reveal delay={0.04 * index}>
-      <article className="card-surface overflow-hidden rounded-[2rem] p-4 sm:p-5 lg:p-6">
-        <div className="grid gap-5 lg:grid-cols-[minmax(14rem,17rem)_1fr] xl:grid-cols-[18rem_1fr] xl:gap-6">
+      <article className="card-surface group flex h-full flex-col overflow-hidden rounded-[1.7rem] transition duration-300 hover:-translate-y-1 hover:border-[color:var(--line-strong)]">
+        <div className="relative">
           <PosterButton
             image={project.poster}
             title={title}
-            className={cn("w-full", getAspectClass(project.poster))}
+            className="aspect-[16/10] w-full rounded-none border-0"
           />
+          <div className="grain-overlay absolute inset-0 opacity-20" />
+          <div className="absolute inset-x-3 bottom-3 z-[2] flex flex-wrap items-center gap-2 text-[0.58rem] font-semibold uppercase tracking-[0.18em] text-white/78">
+            <span>{project.year}</span>
+            <span className="h-1 w-1 rounded-full bg-white/32" />
+            <span>{language === "no" ? "Kortfilm" : "Short film"}</span>
+          </div>
+        </div>
 
-          <div className="flex flex-col gap-5">
-            <div>
-              <div className="flex flex-wrap items-center gap-2 text-[0.68rem] font-semibold uppercase tracking-[0.18em] text-[var(--muted)]">
-                <span>{project.year}</span>
-                <span className="h-1 w-1 rounded-full bg-[color:var(--muted)]/50" />
-                <span>{resolveLocalizedValue(project.role, language)}</span>
-                <span className="h-1 w-1 rounded-full bg-[color:var(--muted)]/50" />
-                <span>{language === "no" ? "Kortfilm" : "Short film"}</span>
-              </div>
-
-              <h3 className="mt-3 text-[1.5rem] font-semibold tracking-[-0.04em] text-[color:var(--foreground)] sm:text-[1.72rem]">
-                {title}
-              </h3>
-
-              <p className="mt-3 max-w-3xl text-[0.94rem] leading-7 text-[var(--muted-2)]">
-                {resolveLocalizedValue(project.logline, language)}
-              </p>
-            </div>
-
-            {infoSections.length ? (
-              <div className={cn("grid gap-4", infoSections.length >= 3 ? "xl:grid-cols-3" : infoSections.length === 2 ? "xl:grid-cols-2" : "xl:grid-cols-1")}>
-                {infoSections.map((section) => (
-                  <div key={section.label} className="rounded-[1.35rem] border border-[color:var(--line)]/70 bg-[color:var(--surface-muted)]/75 p-4">
-                    <p className="text-[0.7rem] font-semibold uppercase tracking-[0.18em] text-[var(--muted)]">
-                      {section.label}
-                    </p>
-                    <ul className="mt-3 space-y-2.5">
-                      {section.items.map((item) => (
-                        <li key={item} className="flex gap-2.5 text-sm leading-6 text-[color:var(--foreground)]/92">
-                          <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-[color:var(--accent)]/58" />
-                          <span>{item}</span>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                ))}
-              </div>
+        <div className="flex flex-1 flex-col px-4 py-4 sm:px-5 sm:py-5">
+          <div className="flex flex-wrap items-center gap-2">
+            <span className="founder-profile-chip">{resolveLocalizedValue(project.role, language)}</span>
+            {awards.length ? (
+              <span className="founder-profile-chip founder-profile-chip-muted">
+                {awards.length} {language === "no" ? "priser" : "awards"}
+              </span>
             ) : null}
+          </div>
 
-            <div className="flex flex-wrap gap-2">
+          <h3 className="mt-3 text-[1.18rem] font-semibold leading-[1.05] tracking-[-0.05em] text-[color:var(--foreground)] sm:text-[1.28rem]">
+            {title}
+          </h3>
+          <p className="mt-3 text-sm leading-6 text-[var(--muted-2)]">
+            {resolveLocalizedValue(project.logline, language)}
+          </p>
+
+          <div className="mt-4 grid gap-2">
+            {infoSections.map((section) => (
+              <ProjectDetails key={`${project.slug}-${section.label}`} section={section} />
+            ))}
+          </div>
+
+          {project.links.length ? (
+            <div className="mt-auto flex flex-wrap gap-2 pt-5">
               {project.links.map((link) => (
                 <ProjectLinkPill key={`${project.slug}-${link.href}`} link={link} />
               ))}
             </div>
-          </div>
+          ) : null}
         </div>
       </article>
     </Reveal>
@@ -211,34 +182,39 @@ function ShowcaseCard({
 
   return (
     <Reveal delay={0.05 * index}>
-      <article className="card-surface flex h-full flex-col overflow-hidden rounded-[1.85rem]">
+      <article className="card-surface group flex h-full flex-col overflow-hidden rounded-[1.7rem] transition duration-300 hover:-translate-y-1 hover:border-[color:var(--line-strong)]">
         {project.poster ? (
           <PosterButton
             image={project.poster}
             title={title}
-            className="aspect-[16/10] w-full rounded-none"
+            className="aspect-[16/10] w-full rounded-none border-0"
           />
         ) : null}
 
-        <div className="flex flex-1 flex-col gap-3 p-4 sm:gap-3.5 sm:p-5">
-          <div className="text-[0.66rem] font-semibold uppercase tracking-[0.18em] text-[var(--muted)]">{project.client}</div>
+        <div className="flex flex-1 flex-col px-4 py-4 sm:px-5 sm:py-5">
+          <div className="text-[0.66rem] font-semibold uppercase tracking-[0.18em] text-[var(--muted)]">
+            {project.client}
+          </div>
 
-          <h3 className="text-[1.14rem] font-semibold leading-[1.04] tracking-[-0.03em] text-[color:var(--foreground)] sm:text-[1.2rem]">
+          <div className="mt-3 flex flex-wrap items-center gap-2">
+            <span className="founder-profile-chip founder-profile-chip-muted">
+              {resolveLocalizedValue(project.role, language)}
+            </span>
+          </div>
+
+          <h3 className="mt-3 text-[1.18rem] font-semibold leading-[1.05] tracking-[-0.05em] text-[color:var(--foreground)] sm:text-[1.28rem]">
             {title}
           </h3>
 
-          <div className="flex flex-1 flex-col gap-2.5">
-            <p className="text-[0.92rem] font-medium leading-6 text-[color:var(--foreground)]/92">
-              {resolveLocalizedValue(project.impact, language)}
-            </p>
-
-            <p className="text-[0.9rem] leading-6 text-[var(--muted-2)]">
-              {resolveLocalizedValue(project.summary, language)}
-            </p>
-          </div>
+          <p className="mt-3 text-sm font-medium leading-6 text-[color:var(--foreground)]/92">
+            {resolveLocalizedValue(project.impact, language)}
+          </p>
+          <p className="mt-2 text-sm leading-6 text-[var(--muted-2)]">
+            {resolveLocalizedValue(project.summary, language)}
+          </p>
 
           {project.links.length ? (
-            <div className="mt-auto flex flex-wrap gap-2 pt-2">
+            <div className="mt-auto flex flex-wrap gap-2 pt-5">
               {project.links.map((link) => (
                 <ProjectLinkPill key={`${project.slug}-${link.href}`} link={link} />
               ))}
@@ -250,74 +226,114 @@ function ShowcaseCard({
   );
 }
 
-function RoleGroupCard({
-  group,
+type ProjectDetailGroup = {
+  label: string;
+  items: string[];
+};
+
+function ProjectDetails({ section }: { section: ProjectDetailGroup }) {
+  if (!section.items.length) {
+    return null;
+  }
+
+  return (
+    <details className="group/details rounded-[1.05rem] border border-[color:var(--line)]/70 bg-[color:var(--surface-muted)]/68 px-3 py-2.5">
+      <summary className="flex cursor-pointer list-none items-center justify-between gap-3 text-[0.64rem] font-semibold uppercase tracking-[0.16em] text-[var(--muted)] transition hover:text-[color:var(--foreground)]">
+        <span>{section.label}</span>
+        <span className="rounded-full border border-[color:var(--line)]/70 px-2 py-0.5 text-[0.58rem] text-[var(--muted-2)]">
+          {section.items.length}
+        </span>
+      </summary>
+      <ul className="mt-3 space-y-2.5">
+        {section.items.map((item) => (
+          <li key={item} className="flex gap-2.5 text-sm leading-6 text-[color:var(--foreground)]/92">
+            <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-[color:var(--accent)]/58" />
+            <span>{item}</span>
+          </li>
+        ))}
+      </ul>
+    </details>
+  );
+}
+
+function RoleItemCard({
+  item,
   index,
 }: {
-  group: TommyRoleGroup;
+  item: TommyRoleItem;
   index: number;
 }) {
   const { language } = useSitePreferences();
+  const title = resolveLocalizedValue(item.title, language);
 
   return (
     <Reveal delay={0.04 * index}>
-      <article className="glass-panel rounded-[2rem] px-5 py-5 sm:px-6 sm:py-6 lg:px-7 lg:py-7">
-        <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-          {group.items.filter((item) => item.poster).map((item) => {
-            const isActorsHub = item.slug === "the-actors-hub-oslo";
+      <article className="card-surface group flex h-full flex-col overflow-hidden rounded-[1.7rem] transition duration-300 hover:-translate-y-1 hover:border-[color:var(--line-strong)]">
+        <PosterButton
+          image={item.poster}
+          title={title}
+          className="aspect-[16/10] w-full rounded-none border-0"
+        />
 
-            return (
-              <div key={item.slug} className="min-w-0">
-                <div className="flex h-full flex-col gap-3">
-                  {item.poster ? (
-                    <div
-                      className={cn(
-                        "relative w-full shrink-0 overflow-hidden rounded-[1.45rem] border border-[color:var(--line)]/70",
-                        isActorsHub ? "bg-black" : "bg-[#0b0d12]",
-                        item.poster.aspect === "landscape" || item.poster.aspect === "wide"
-                          ? "aspect-[16/10]"
-                          : "aspect-[0.72/1]",
-                      )}
-                    >
-                      {isActorsHub ? (
-                        <div className="absolute inset-0 flex items-center justify-center bg-black p-5 sm:p-6">
-                          <Image
-                            src="/media/logos/clients/COLOR/actorshub_logo_white_NY-kopi.webp"
-                            alt={resolveLocalizedValue(item.poster.alt, language)}
-                            fill
-                            sizes="(min-width: 1280px) 14rem, (min-width: 1024px) 18vw, (min-width: 640px) 40vw, 100vw"
-                            className="object-contain p-5 sm:p-6"
-                          />
-                        </div>
-                      ) : (
-                        <Image
-                          src={item.poster.src}
-                          alt={resolveLocalizedValue(item.poster.alt, language)}
-                          fill
-                          sizes="(min-width: 1280px) 14rem, (min-width: 1024px) 18vw, (min-width: 640px) 40vw, 100vw"
-                          className={cn(item.poster.fit === "cover" ? "object-cover" : "object-contain p-1.5")}
-                        />
-                      )}
-                    </div>
-                  ) : null}
+        <div className="flex flex-1 flex-col px-4 py-4 sm:px-5 sm:py-5">
+          <span className="founder-profile-chip founder-profile-chip-muted w-fit">
+            {language === "no" ? "Film & TV" : "Film & TV"}
+          </span>
 
-                  <div className="min-w-0">
-                    <p className="text-sm font-semibold leading-6 text-[color:var(--foreground)]">
-                      {resolveLocalizedValue(item.title, language)}
-                    </p>
-                    {item.summary ? (
-                      <p className="mt-1.5 text-sm leading-6 text-[var(--muted-2)]">
-                        {resolveLocalizedValue(item.summary, language)}
-                      </p>
-                    ) : null}
-                  </div>
-                </div>
-              </div>
-            );
-          })}
+          <h3 className="mt-3 text-[1.18rem] font-semibold leading-[1.05] tracking-[-0.05em] text-[color:var(--foreground)] sm:text-[1.28rem]">
+            {title}
+          </h3>
+
+          {item.summary ? (
+            <p className="mt-3 text-sm leading-6 text-[var(--muted-2)]">
+              {resolveLocalizedValue(item.summary, language)}
+            </p>
+          ) : null}
+
+          {item.links?.length ? (
+            <div className="mt-auto flex flex-wrap gap-2 pt-5">
+              {item.links.map((link) => (
+                <ProjectLinkPill key={`${item.slug}-${link.href}`} link={link} />
+              ))}
+            </div>
+          ) : null}
         </div>
       </article>
     </Reveal>
+  );
+}
+
+function TommyGridSection({
+  id,
+  eyebrow,
+  title,
+  description,
+  children,
+}: {
+  id?: string;
+  eyebrow: string;
+  title: string;
+  description: string;
+  children: ReactNode;
+}) {
+  return (
+    <section id={id} className="section-space pt-0">
+      <div className="site-container">
+        <Reveal className="max-w-3xl">
+          <div className="space-y-3">
+            <span className="eyebrow">{eyebrow}</span>
+            <h2 className="section-title text-[color:var(--foreground)]">{title}</h2>
+            {description ? (
+              <p className="body-lead text-[var(--muted-2)]">{description}</p>
+            ) : null}
+          </div>
+        </Reveal>
+
+        <div className="mt-7 grid items-stretch gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+          {children}
+        </div>
+      </div>
+    </section>
   );
 }
 
@@ -374,9 +390,23 @@ export function TommyProfileContent() {
 
       <section className="section-space pt-0">
         <div className="site-container">
-          <Reveal className="max-w-5xl">
-            <article className="card-surface rounded-[2rem] px-5 py-5 sm:px-6 sm:py-6 lg:px-7 lg:py-7">
-              <div className="max-w-4xl">
+          <div className="grid gap-5 lg:grid-cols-[minmax(0,1.02fr)_minmax(18rem,0.98fr)] lg:items-center">
+            <Reveal>
+              <div className="media-frame relative min-h-[18rem] overflow-hidden rounded-[2rem] bg-[#090b10] sm:min-h-[23rem] lg:min-h-[30rem]">
+                <Image
+                  src={profile.supportingVisual}
+                  alt={resolveLocalizedValue(profile.supportingVisualAlt, language)}
+                  fill
+                  sizes="(min-width: 1280px) 46vw, (min-width: 1024px) 50vw, 100vw"
+                  className="object-cover"
+                />
+                <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(6,7,10,0.02),rgba(6,7,10,0.14)_46%,rgba(6,7,10,0.74)_100%)]" />
+                <div className="grain-overlay absolute inset-0 opacity-28" />
+              </div>
+            </Reveal>
+
+            <Reveal delay={0.06}>
+              <div className="card-surface rounded-[2rem] px-5 py-5 sm:px-6 sm:py-6 lg:px-7 lg:py-7">
                 <span className="eyebrow">{resolveLocalizedValue(profile.introEyebrow, language)}</span>
                 <h2 className="section-title mt-3 text-[color:var(--foreground)]">
                   {resolveLocalizedValue(profile.introTitle, language)}
@@ -396,146 +426,143 @@ export function TommyProfileContent() {
                   </span>
                 ))}
               </div>
-            </article>
-          </Reveal>
+            </Reveal>
+          </div>
         </div>
       </section>
 
-      <SectionShell
+      <TommyGridSection
         id="tommy-shortfilms"
         eyebrow={resolveLocalizedValue(tommyPortfolioPage.shortFilmsEyebrow, language)}
         title={resolveLocalizedValue(tommyPortfolioPage.shortFilmsTitle, language)}
         description={resolveLocalizedValue(tommyPortfolioPage.shortFilmsDescription, language)}
-        className="pt-0"
       >
-        <div className="grid gap-5">
-          {tommyPortfolioPage.shortFilms.map((project, index) => (
-            <ShortFilmCard
-              key={project.slug}
-              project={project}
-              index={index}
-            />
-          ))}
-        </div>
-      </SectionShell>
+        {tommyPortfolioPage.shortFilms.map((project, index) => (
+          <ShortFilmCard
+            key={project.slug}
+            project={project}
+            index={index}
+          />
+        ))}
+      </TommyGridSection>
 
-      <SectionShell
+      <TommyGridSection
         eyebrow={resolveLocalizedValue(tommyPortfolioPage.otherRolesEyebrow, language)}
         title={resolveLocalizedValue(tommyPortfolioPage.otherRolesTitle, language)}
         description={resolveLocalizedValue(tommyPortfolioPage.otherRolesDescription, language)}
-        className="pt-0"
       >
-        <div className="grid gap-5">
-          {tommyPortfolioPage.otherRoleGroups.map((group, index) => (
-            <RoleGroupCard
-              key={group.slug}
-              group={group}
-              index={index}
-            />
-          ))}
-        </div>
-      </SectionShell>
+        {tommyPortfolioPage.otherRoleGroups.flatMap((group) => group.items).map((item, index) => (
+          <RoleItemCard
+            key={item.slug}
+            item={item}
+            index={index}
+          />
+        ))}
+      </TommyGridSection>
 
-      <SectionShell
+      <TommyGridSection
         eyebrow={resolveLocalizedValue(tommyPortfolioPage.commercialEyebrow, language)}
         title={resolveLocalizedValue(tommyPortfolioPage.commercialTitle, language)}
         description={resolveLocalizedValue(tommyPortfolioPage.commercialDescription, language)}
-        className="pt-0"
       >
-        <div className="grid items-stretch gap-5 md:grid-cols-2 xl:gap-6">
-          {tommyPortfolioPage.commercialProjects.map((project, index) => (
-            <ShowcaseCard
-              key={project.slug}
-              project={project}
-              index={index}
-            />
-          ))}
-        </div>
-      </SectionShell>
+        {tommyPortfolioPage.commercialProjects.map((project, index) => (
+          <ShowcaseCard
+            key={project.slug}
+            project={project}
+            index={index}
+          />
+        ))}
+      </TommyGridSection>
 
-      <SectionShell
+      <TommyGridSection
         eyebrow={resolveLocalizedValue(tommyPortfolioPage.eventsEyebrow, language)}
         title={resolveLocalizedValue(tommyPortfolioPage.eventsTitle, language)}
         description={resolveLocalizedValue(tommyPortfolioPage.eventsDescription, language)}
-        className="pt-0"
       >
-        <div className="grid items-stretch gap-5 lg:grid-cols-2 xl:grid-cols-3">
-          {tommyPortfolioPage.eventProjects.map((project, index) => (
-            <ShowcaseCard
-              key={project.slug}
-              project={project}
-              index={index}
-            />
-          ))}
-        </div>
-      </SectionShell>
+        {tommyPortfolioPage.eventProjects.map((project, index) => (
+          <ShowcaseCard
+            key={project.slug}
+            project={project}
+            index={index}
+          />
+        ))}
+      </TommyGridSection>
 
-      <SectionShell
-        eyebrow={resolveLocalizedValue(tommyPortfolioPage.aboutEyebrow, language)}
-        title={resolveLocalizedValue(tommyPortfolioPage.aboutTitle, language)}
-        description={resolveLocalizedValue(tommyPortfolioPage.aboutDescription, language)}
-        className="pt-0"
-      >
-        <Reveal>
-          <article className="card-surface overflow-hidden rounded-[2rem] px-5 py-5 sm:px-6 sm:py-6 lg:px-7 lg:py-7">
-            <div className="grid gap-6 lg:grid-cols-[minmax(0,1.05fr)_minmax(0,0.95fr)]">
-              <div className="space-y-5">
-                <div className="space-y-3">
-                  {tommyPortfolioPage.aboutHighlights.map((item) => (
-                    <div key={resolveLocalizedValue(item, language)} className="flex gap-3">
-                      <span className="mt-[0.62rem] h-1.5 w-1.5 shrink-0 rounded-full bg-[color:var(--accent)]/58" />
-                      <p className="text-[0.98rem] leading-7 text-[color:var(--foreground)]/92">
-                        {resolveLocalizedValue(item, language)}
+      <section className="section-space pt-0">
+        <div className="site-container">
+          <Reveal className="max-w-3xl">
+            <div className="space-y-3">
+              <span className="eyebrow">{resolveLocalizedValue(tommyPortfolioPage.aboutEyebrow, language)}</span>
+              <h2 className="section-title text-[color:var(--foreground)]">
+                {resolveLocalizedValue(tommyPortfolioPage.aboutTitle, language)}
+              </h2>
+              <p className="body-lead text-[var(--muted-2)]">
+                {resolveLocalizedValue(tommyPortfolioPage.aboutDescription, language)}
+              </p>
+            </div>
+          </Reveal>
+
+          <Reveal>
+            <article className="card-surface mt-7 overflow-hidden rounded-[2rem] px-5 py-5 sm:px-6 sm:py-6 lg:px-7 lg:py-7">
+              <div className="grid gap-6 lg:grid-cols-[minmax(0,1.05fr)_minmax(0,0.95fr)]">
+                <div className="space-y-5">
+                  <div className="space-y-3">
+                    {tommyPortfolioPage.aboutHighlights.map((item) => (
+                      <div key={resolveLocalizedValue(item, language)} className="flex gap-3">
+                        <span className="mt-[0.62rem] h-1.5 w-1.5 shrink-0 rounded-full bg-[color:var(--accent)]/58" />
+                        <p className="text-[0.98rem] leading-7 text-[color:var(--foreground)]/92">
+                          {resolveLocalizedValue(item, language)}
+                        </p>
+                      </div>
+                    ))}
+                  </div>
+
+                  <div className="grid gap-3 sm:grid-cols-2">
+                    <a
+                      href={`mailto:${tommyPortfolioPage.contactEmail}`}
+                      className="inline-flex items-center gap-3 rounded-[1rem] border border-[color:var(--line)]/75 bg-[color:var(--surface-muted)]/76 px-4 py-3 text-sm font-medium text-[color:var(--foreground)] transition hover:border-[color:var(--accent)]/36"
+                    >
+                      <MailIcon className="h-4.5 w-4.5 shrink-0 text-[color:var(--accent)]/74" />
+                      <span className="truncate">{tommyPortfolioPage.contactEmail}</span>
+                    </a>
+                    <a
+                      href={siteConfig.phonePrimaryHref}
+                      className="inline-flex items-center gap-3 rounded-[1rem] border border-[color:var(--line)]/75 bg-[color:var(--surface-muted)]/76 px-4 py-3 text-sm font-medium text-[color:var(--foreground)] transition hover:border-[color:var(--accent)]/36"
+                    >
+                      <PhoneIcon className="h-4.5 w-4.5 shrink-0 text-[color:var(--accent)]/74" />
+                      <span>{tommyPortfolioPage.contactPhone}</span>
+                    </a>
+                  </div>
+                </div>
+
+                <div className="grid gap-4">
+                  {tommyPortfolioPage.aboutInfoGroups.map((group) => (
+                    <div
+                      key={resolveLocalizedValue(group.title, language)}
+                      className="rounded-[1.5rem] border border-[color:var(--line)]/70 bg-[color:var(--surface-muted)]/76 p-4"
+                    >
+                      <p className="text-[0.7rem] font-semibold uppercase tracking-[0.18em] text-[var(--muted)]">
+                        {resolveLocalizedValue(group.title, language)}
                       </p>
+                      <ul className="mt-3 space-y-2.5">
+                        {group.items.map((item) => (
+                          <li
+                            key={resolveLocalizedValue(item, language)}
+                            className="flex gap-2.5 text-sm leading-6 text-[var(--muted-2)]"
+                          >
+                            <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-[color:var(--accent)]/58" />
+                            <span>{resolveLocalizedValue(item, language)}</span>
+                          </li>
+                        ))}
+                      </ul>
                     </div>
                   ))}
                 </div>
-
-                <div className="grid gap-3 sm:grid-cols-2">
-                  <a
-                    href={`mailto:${tommyPortfolioPage.contactEmail}`}
-                    className="inline-flex items-center gap-3 rounded-[1rem] border border-[color:var(--line)]/75 bg-[color:var(--surface-muted)]/76 px-4 py-3 text-sm font-medium text-[color:var(--foreground)] transition hover:border-[color:var(--accent)]/36"
-                  >
-                    <MailIcon className="h-4.5 w-4.5 shrink-0 text-[color:var(--accent)]/74" />
-                    <span className="truncate">{tommyPortfolioPage.contactEmail}</span>
-                  </a>
-                  <a
-                    href={siteConfig.phonePrimaryHref}
-                    className="inline-flex items-center gap-3 rounded-[1rem] border border-[color:var(--line)]/75 bg-[color:var(--surface-muted)]/76 px-4 py-3 text-sm font-medium text-[color:var(--foreground)] transition hover:border-[color:var(--accent)]/36"
-                  >
-                    <PhoneIcon className="h-4.5 w-4.5 shrink-0 text-[color:var(--accent)]/74" />
-                    <span>{tommyPortfolioPage.contactPhone}</span>
-                  </a>
-                </div>
               </div>
-
-              <div className="grid gap-4">
-                {tommyPortfolioPage.aboutInfoGroups.map((group) => (
-                  <div
-                    key={resolveLocalizedValue(group.title, language)}
-                    className="rounded-[1.5rem] border border-[color:var(--line)]/70 bg-[color:var(--surface-muted)]/76 p-4"
-                  >
-                    <p className="text-[0.7rem] font-semibold uppercase tracking-[0.18em] text-[var(--muted)]">
-                      {resolveLocalizedValue(group.title, language)}
-                    </p>
-                    <ul className="mt-3 space-y-2.5">
-                      {group.items.map((item) => (
-                        <li
-                          key={resolveLocalizedValue(item, language)}
-                          className="flex gap-2.5 text-sm leading-6 text-[var(--muted-2)]"
-                        >
-                          <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-[color:var(--accent)]/58" />
-                          <span>{resolveLocalizedValue(item, language)}</span>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </article>
-        </Reveal>
-      </SectionShell>
+            </article>
+          </Reveal>
+        </div>
+      </section>
 
       <section className="section-space pt-0">
         <div className="site-container">
