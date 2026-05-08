@@ -26,7 +26,7 @@ import type {
   TeamMember,
   Testimonial,
 } from "@/data/site-content";
-import { siteConfig, teamMembers } from "@/data/site-content";
+import { aboutBullets, siteConfig } from "@/data/site-content";
 import { uiCopy } from "@/data/ui-copy";
 import type { LocalizedText } from "@/lib/i18n";
 import { resolveLocalizedValue } from "@/lib/i18n";
@@ -1093,7 +1093,7 @@ export function PageHero(props: {
           <div
             className={cn(
               showAboutVisual
-                ? "grid w-full gap-5 lg:grid-cols-[minmax(0,0.78fr)_minmax(30rem,1.22fr)] lg:items-end"
+                ? "grid w-full gap-5 lg:grid-cols-[minmax(0,0.78fr)_minmax(24rem,0.95fr)] lg:items-center"
                 : compact
                   ? "max-w-[29rem]"
                   : "max-w-[44rem]",
@@ -1146,47 +1146,60 @@ export function PageHero(props: {
             </div>
 
             {showAboutVisual ? (
-              <div className="grid gap-3 sm:grid-cols-2 lg:gap-4">
-                {teamMembers.map((member) => (
-                  <Link
-                    key={member.name}
-                    href={member.href ?? "/om-oss"}
-                    className={cn(
-                      "group rounded-[1.55rem] border p-3 transition duration-300 hover:-translate-y-0.5",
-                      isDarkTheme
-                        ? "border-white/10 bg-white/[0.055] hover:border-white/18"
-                        : "border-[color:var(--line)]/75 bg-white/72 shadow-[0_18px_42px_rgba(18,25,38,0.08)] hover:border-[color:var(--line-strong)]",
-                    )}
-                  >
-                    <div className="relative aspect-[16/10] overflow-hidden rounded-[1.15rem] bg-[#090b10]">
-                      {member.image ? (
-                        <Image
-                          src={member.image}
-                          alt={member.imageAlt ? resolveLocalizedValue(member.imageAlt, language) : member.name}
-                          fill
-                          sizes="(min-width: 1280px) 24rem, (min-width: 1024px) 24vw, 100vw"
-                          className="object-cover object-top transition duration-500 group-hover:scale-[1.025]"
-                        />
-                      ) : null}
-                      <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(6,7,10,0.02),rgba(6,7,10,0.08)_42%,rgba(6,7,10,0.68)_100%)]" />
-                      <div className="grain-overlay absolute inset-0 opacity-18" />
-                      <div className="absolute inset-x-3 bottom-3">
-                        <span className="founder-profile-chip border-white/14 bg-white/10 text-white/86">
-                          {resolveLocalizedValue(member.role, language)}
-                        </span>
+              <aside
+                className={cn(
+                  "relative overflow-hidden rounded-[1.65rem] border p-4 sm:p-5",
+                  isDarkTheme
+                    ? "border-white/10 bg-white/[0.055] shadow-[0_22px_70px_rgba(0,0,0,0.16)]"
+                    : "border-[color:var(--line)]/75 bg-white/74 shadow-[0_22px_70px_rgba(18,25,38,0.08)]",
+                )}
+              >
+                <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_14%_18%,rgba(255,255,255,0.16),transparent_28%),linear-gradient(135deg,rgba(255,255,255,0.08),transparent_46%)]" />
+                <div className="relative">
+                  <p className={cn("text-[0.66rem] font-semibold uppercase tracking-[0.2em]", heroEyebrowClassName)}>
+                    {language === "no" ? "Slik deles ansvaret" : "How ownership is split"}
+                  </p>
+                  <div className="mt-4 grid gap-3">
+                    {aboutBullets.map((bullet, index) => (
+                      <div
+                        key={`about-hero-bullet-${index}`}
+                        className={cn(
+                          "rounded-[1.15rem] border px-3.5 py-3",
+                          isDarkTheme
+                            ? "border-white/10 bg-black/12"
+                            : "border-[color:var(--line)]/70 bg-[color:var(--surface-muted)]/74",
+                        )}
+                      >
+                        <div className="flex items-start gap-3">
+                          <span className={cn("text-sm font-semibold tabular-nums", heroEyebrowClassName)}>
+                            0{index + 1}
+                          </span>
+                          <p className={cn("text-sm leading-6", heroDescriptionClassName)}>
+                            {resolveLocalizedValue(bullet, language)}
+                          </p>
+                        </div>
                       </div>
-                    </div>
-                    <div className="px-1 pt-3">
-                      <h2 className={cn("text-[1.1rem] font-semibold leading-none tracking-[-0.04em]", heroTitleClassName)}>
-                        {member.name}
-                      </h2>
-                      <p className={cn("mt-2 text-sm leading-6", heroDescriptionClassName)}>
-                        {resolveLocalizedValue(member.summary, language)}
-                      </p>
-                    </div>
-                  </Link>
-                ))}
-              </div>
+                    ))}
+                  </div>
+                  <div className="mt-4 grid grid-cols-3 gap-2.5">
+                    {["02", "01", "OSL"].map((item) => (
+                      <div
+                        key={item}
+                        className={cn(
+                          "rounded-[1rem] border px-3 py-2.5 text-center",
+                          isDarkTheme
+                            ? "border-white/10 bg-white/[0.04]"
+                            : "border-[color:var(--line)]/70 bg-[color:var(--surface)]/72",
+                        )}
+                      >
+                        <p className={cn("text-[1.12rem] font-semibold leading-none tracking-[-0.045em]", heroTitleClassName)}>
+                          {item}
+                        </p>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </aside>
             ) : null}
           </div>
         </Reveal>
