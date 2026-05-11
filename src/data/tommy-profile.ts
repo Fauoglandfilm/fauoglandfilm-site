@@ -137,7 +137,7 @@ export const tommyPortfolioPage = {
     en: "Short films & festivals",
   },
   shortFilmsDescription: {
-    no: "Prisvinnende kortfilmer og festivalprosjekter, sortert kronologisk og bygget for rask oversikt.",
+    no: "Prisvinnende kortfilmer og festivalprosjekter",
     en: "Award-winning short films and festival projects, ordered chronologically for a faster overview.",
   },
   shortFilms: [
