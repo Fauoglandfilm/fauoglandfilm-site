@@ -5,7 +5,7 @@ import { buildMetadata } from "@/lib/seo";
 export const metadata = buildMetadata({
   title: "Tommy R.A. Garland",
   description:
-    "Tommy R.A. Garland er producer, line producer og prosjektleder med erfaring fra prisvinnende kortfilm, reklame, event og større produksjoner.",
+    "Tommy R.A. Garland er kommersiell producer og prosjektleder med erfaring fra kundedialog, salg, markedsføring, reklame, event og B2B-produksjon.",
   path: "/team/tommy-garland",
 });
 

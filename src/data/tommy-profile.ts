@@ -108,17 +108,17 @@ export const tommyPortfolioPage = {
     en: "Tommy R.A. Garland",
   },
   heroTitle: {
-    no: "Producer med kontroll på prosjekt, budsjett og leveranse.",
-    en: "A producer who keeps project, budget and delivery under control.",
+    no: "Kommersiell producer med kontroll på kunde, prosjekt og leveranse.",
+    en: "A commercial producer who keeps clients, projects and delivery aligned.",
   },
   heroDescription: {
-    no: "Tommy kombinerer prisvinnende kortfilm, kommersielle produksjoner og eventer med tydelig produksjonsledelse. Han går inn som produsent, line producer og prosjektleder når prosjekter må lande på tid og budsjett.",
-    en: "Tommy combines award-winning short film, commercial productions and events with clear production leadership. He steps in as producer, line producer and project manager when projects need to land on time and on budget.",
+    no: "Tommy kombinerer produksjon, salg, markedsforståelse og prosjektledelse. Han tar ansvar for kundedialog, strategi, budsjett, logistikk og gjennomføring når prosjekter skal skape verdi og lande presist.",
+    en: "Tommy combines production, sales, marketing understanding and project leadership. He owns client dialogue, strategy, budgets, logistics and execution when projects need to create value and land precisely.",
   },
   heroRoles: [
-    sameText("Producer"),
+    sameText("Commercial Producer"),
     sameText("Line Producer"),
-    sameText("Project Manager"),
+    sameText("Project / Client Lead"),
   ],
   heroPrimaryCta: {
     no: "Book møte",
@@ -789,25 +789,25 @@ export const tommyPortfolioPage = {
     en: "About Tommy",
   },
   aboutTitle: {
-    no: "En lojal, fleksibel og leveringssterk produsent.",
-    en: "A loyal, flexible and delivery-focused producer.",
+    no: "En strukturert kommersiell operatør som får prosjekter, kunder og team i mål.",
+    en: "A structured commercial operator who gets projects, clients and teams over the line.",
   },
   aboutDescription: {
-    no: "Tommy jobber best i prosjekter der noen må holde trådene samlet. Han er sterk på produksjonsledelse, logistikk, budsjettkontroll og leveranser under press - og trives i rollen som den som sikrer at prosjektet faktisk lander.",
-    en: "Tommy works best in projects where someone needs to keep all the threads aligned. He is strong on production management, logistics, budget control and delivery under pressure - and thrives in the role of making sure the project actually lands.",
+    no: "Tommy jobber best når tempoet er høyt og mange hensyn må samles. Han er sterk på salg, kundedialog, markedsføring, produksjonsledelse, logistikk og budsjettkontroll - og trives i rollen som den som sikrer tydelig fremdrift fra første møte til ferdig leveranse.",
+    en: "Tommy works best when the pace is high and many moving parts need to align. He is strong on sales, client dialogue, marketing, production leadership, logistics and budget control - and thrives in the role of keeping momentum clear from first meeting to final delivery.",
   },
   aboutHighlights: [
     {
-      no: "Holder prosjekt, budsjett og fremdrift samlet fra brief til levering.",
-      en: "Keeps project, budget and timeline aligned from brief to delivery.",
+      no: "Leder kundedialog, salgsløp og forventninger slik at prosjektet får riktig retning tidlig.",
+      en: "Leads client dialogue, sales processes and expectations so the project gets the right direction early.",
     },
     {
-      no: "Komfortabel i krysningspunktet mellom kreativt arbeid, logistikk og kundedialog.",
-      en: "Comfortable at the intersection of creative work, logistics and client dialogue.",
+      no: "Kobler markedsforståelse, innhold og produksjon til konkrete mål, kanaler og kommersiell effekt.",
+      en: "Connects marketing understanding, content and production to clear goals, channels and commercial effect.",
     },
     {
-      no: "Erfaring fra film, TV, reklame, event og kulturproduksjon.",
-      en: "Experience across film, TV, advertising, events and cultural production.",
+      no: "Koordinerer team, logistikk, budsjetter og levering under press på reklame, event, film, innhold og B2B-produksjon.",
+      en: "Coordinates teams, logistics, budgets and delivery under pressure across advertising, events, film, content and B2B production.",
     },
   ] satisfies LocalizedText[],
   aboutInfoGroups: [
@@ -841,12 +841,12 @@ export const tommyPortfolioPage = {
     },
   ] satisfies TommyInfoGroup[],
   ctaTitle: {
-    no: "Trenger du en producer som får prosjektet helt i mål?",
-    en: "Need a producer who gets the project all the way over the line?",
+    no: "Trenger du en kommersiell prosjektleder som får prosessen helt i mål?",
+    en: "Need a commercial project lead who gets the process all the way over the line?",
   },
   ctaDescription: {
-    no: "Send en kort brief om mål, timing og omfang. Tommy og Fau&Land følger opp med anbefalt oppsett og neste steg.",
-    en: "Send a short brief about your goal, timing and scope. Tommy and Fau&Land will follow up with the recommended setup and next step.",
+    no: "Send en kort brief om mål, kunde, timing og omfang. Tommy og Fau&Land følger opp med anbefalt oppsett, tydelig prioritering og neste steg.",
+    en: "Send a short brief about goals, client, timing and scope. Tommy and Fau&Land will follow up with a recommended setup, clear priorities and next steps.",
   },
   ctaPrimaryLabel: {
     no: "Book møte",

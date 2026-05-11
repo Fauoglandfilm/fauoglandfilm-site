@@ -58,12 +58,12 @@ export const founderProfiles: FounderProfile[] = [
       en: "Producer and partner",
     },
     tagline: {
-      no: "Holder brief, budsjett og gjennomføring samlet fra første møte til ferdig leveranse.",
-      en: "Keeps brief, budget and execution aligned from the first conversation to final delivery.",
+      no: "Holder kunde, mål, budsjett og gjennomføring samlet fra første dialog til ferdig leveranse.",
+      en: "Keeps client, goals, budget and execution aligned from the first conversation to final delivery.",
     },
     summary: {
-      no: "Tommy kombinerer produsentansvar, kundedialog og prosjektledelse med erfaring fra reklame, event, TV og festivalnære kortfilmer.",
-      en: "Tommy combines producing, client dialogue and project leadership with experience across advertising, events, TV and festival-bound short films.",
+      no: "Tommy kombinerer kommersiell forståelse, kundedialog, salg, markedsføring og prosjektledelse med erfaring fra reklame, event, TV og kortfilm.",
+      en: "Tommy combines commercial understanding, client dialogue, sales, marketing and project leadership with experience across advertising, events, TV and short film.",
     },
     portrait: "/assets/team/tommy/images/tommy-garland-profile.avif",
     portraitAlt: {
@@ -86,12 +86,12 @@ export const founderProfiles: FounderProfile[] = [
       en: "Producer profile",
     },
     introTitle: {
-      no: "Et produsentblikk som kombinerer kontroll, tempo og kommersiell forståelse.",
-      en: "A producer's perspective that combines control, pace and commercial understanding.",
+      no: "Et kommersielt produsentblikk som kobler salg, strategi, tempo og gjennomføring.",
+      en: "A commercial producer's perspective connecting sales, strategy, pace and execution.",
     },
     introBody: {
-      no: "Tommy er producer og partner i Fau&Land Film, med utdanning fra Westerdals i Film & TV og produksjonsledelse fra Kristiania. Han leder produksjoner tett gjennom brief, logistikk, økonomi og kundeoppfølging, og har bygget erfaring på tvers av reklame, TV, event og uavhengig filmarbeid.",
-      en: "Tommy is a producer and partner at Fau&Land Film, with film and TV studies from Westerdals and production management training from Kristiania. He stays close to the brief, logistics, budget and client communication, with experience across advertising, TV, events and independent film work.",
+      no: "Tommy er producer og partner i Fau&Land Film, med bakgrunn fra Westerdals Film & TV og produksjonsledelse fra Kristiania. Han leder prosesser tett gjennom kundeoppfølging, salg, strategi, logistikk, økonomi og levering, og har bygget erfaring på tvers av reklame, event, film, innhold og B2B-produksjon.",
+      en: "Tommy is a producer and partner at Fau&Land Film, with film and TV studies from Westerdals and production management training from Kristiania. He leads processes closely through client follow-up, sales, strategy, logistics, budgets and delivery, with experience across advertising, events, film, content and B2B production.",
     },
     strengths: [
       {
