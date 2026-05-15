@@ -14,25 +14,36 @@ npm run dev
 
 ## Frilanseren-modul
 
-Modulen på `/frilanseren` dekker v1 av pilotflyten:
+Modulen på `/frilanseren` dekker første markedsplassversjon:
 
-- landing med rollevalg
-- registrering for arbeidsgiver og frilanser
-- innlogging og glemt passord
-- dashboard og profilredigering
+- offentlig frilanserdatabase med rolle, sted, tilgjengelighet, showreel og satser
+- offentlig arbeidsgiverdatabase med selskapsprofil og produksjonstyper
+- offentlig jobbtavle med rollefilter, sted, periode og honorarinformasjon
+- innlogging, registrering, glemt passord og dashboard
+- søknad/interesse på jobber for frilansere
+- kontaktforespørsler der e-post og telefon ikke vises offentlig
 - profilbilde for frilanser og firmalogo for arbeidsgiver
-- intern adminoversikt over registrerte brukere
+- enkel timeliste med lagring og printbar utskrift/PDF-rute
+- intern adminoversikt og modereringskø for profiler, jobber og rapporter
 - GDPR-handlinger for innsyn og sletting
 
 Det brukes kun nødvendige auth/session-cookies i dette produktområdet. Global analytics og tredjeparts tracking er slått av for `/frilanseren`.
 
 ## User Flow
 
-- `/frilanseren` → rollevalg → registrering → dashboard
+- `/frilanseren` → åpne frilansere, jobber og arbeidsgivere
+- `/frilanseren/frilansere` → offentlig profil → kontaktforespørsel etter innlogging
+- `/frilanseren/jobber` → jobbdetalj → meld interesse etter innlogging
+- `/frilanseren/arbeidsgivere` → offentlig arbeidsgiverprofil
+- `/frilanseren/timeliste` → lagre timeliste etter innlogging
+- `/frilanseren/register` → rollevalg → registrering → dashboard
 - `/frilanseren/login` → dashboard
-- `/frilanseren/dashboard` → `/frilanseren/profile`
+- `/frilanseren/dashboard` → `/frilanseren/dashboard/profil`
+- `/frilanseren/dashboard/jobber` for arbeidsgivere
+- `/frilanseren/dashboard/soknader` for frilansere
+- `/frilanseren/dashboard/timelister` for lagrede timelister
 - dashboard → `Be om innsyn i mine data` eller `Slett min konto og mine data`
-- adminbrukere kan gå til `/frilanseren/admin` for å se registrerte brukere
+- adminbrukere kan gå til `/frilanseren/admin` for å se registrerte brukere og godkjenne/skjule profiler og jobber
 
 ## Supabase-oppsett
 
@@ -45,6 +56,7 @@ Det brukes kun nødvendige auth/session-cookies i dette produktområdet. Global 
 5. Slå på `Confirm email` i Supabase Auth. Dette må være aktivt for at nye brukere skal få bekreftelsesmail og måtte aktivere kontoen før innlogging.
 6. Sett opp egen SMTP-leverandør i Supabase for produksjon. Standard e-posttjeneste er kun best effort og har lave grenser.
 7. SQL-skriptet oppretter også en privat Storage-bucket kalt `frilanseren-media` for profilbilder og firmalogoer.
+8. Nye markedsplassfunksjoner krever tabellene `jobs`, `job_roles`, `job_applications`, `contact_requests`, `timesheets`, `timesheet_entries`, `moderation_reports` og `notifications`.
 
 ## Miljøvariabler
 
@@ -78,7 +90,11 @@ For å teste auth-flyten lokalt:
 5. Last eventuelt opp profilbilde eller firmalogo i registrering eller på profilsiden.
 6. Bekreft at registreringen viser melding om bekreftelsesmail, og at et nytt forsøk med samme e-post gir beskjed om at adressen allerede er registrert.
 7. Verifiser at dashboard og profil er beskyttet, og at GDPR-knappene oppretter forespørsler i `data_requests`.
-8. Logg inn som adminbruker og kontroller at `/frilanseren/admin` viser registrerte kontoer og bekreftelsesstatus.
+8. Gjør en profil offentlig, logg inn som adminbruker, og godkjenn profilen i `/frilanseren/admin`.
+9. Kontroller at godkjente frilanser- og arbeidsgiverprofiler vises på `/frilanseren/frilansere` og `/frilanseren/arbeidsgivere`.
+10. Opprett en jobb fra `/frilanseren/dashboard/jobber`, godkjenn den som admin, og meld interesse fra en frilanskonto.
+11. Send en kontaktforespørsel fra en innlogget bruker og kontroller at kontaktinfo ikke vises offentlig.
+12. Opprett en timeliste på `/frilanseren/timeliste`, se den på `/frilanseren/dashboard/timelister`, og åpne utskrift/PDF-lenken.
 
 ## Deploy
 
