@@ -1,12 +1,13 @@
 "use server";
 
+import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 
 import { createServerComponentClient } from "@/lib/supabase/serverClient";
 
 import { contactRequestSchema, jobApplicationSchema, jobFormSchema, timesheetFormSchema } from "./market-validation";
 import { calculateTimesheetTotals } from "./timesheet";
-import { requireCurrentUserContext } from "./queries";
+import { requireAdminUser, requireCurrentUserContext } from "./queries";
 import { buildUniqueSlug } from "./slug";
 import type { FrilanserenActionState } from "./types";
 
@@ -251,4 +252,89 @@ export async function saveTimesheetAction(
   }
 
   redirect(`/frilanseren/dashboard/timelister?saved=${timesheet.id}`);
+}
+
+async function requireAdminSupabase() {
+  await requireAdminUser();
+  return createServerComponentClient();
+}
+
+function revalidateAdminModeration() {
+  revalidatePath("/frilanseren/admin");
+  revalidatePath("/frilanseren");
+}
+
+export async function approveFreelancerProfileAction(formData: FormData) {
+  const supabase = await requireAdminSupabase();
+  const userId = String(formData.get("user_id") ?? "");
+  const timestamp = new Date().toISOString();
+
+  await supabase
+    .from("freelancer_profiles")
+    .update({
+      moderation_status: "approved",
+      is_public: true,
+      approved_at: timestamp,
+    })
+    .eq("user_id", userId);
+  revalidateAdminModeration();
+}
+
+export async function hideFreelancerProfileAction(formData: FormData) {
+  const supabase = await requireAdminSupabase();
+  const userId = String(formData.get("user_id") ?? "");
+
+  await supabase.from("freelancer_profiles").update({ moderation_status: "hidden" }).eq("user_id", userId);
+  revalidateAdminModeration();
+}
+
+export async function approveEmployerProfileAction(formData: FormData) {
+  const supabase = await requireAdminSupabase();
+  const userId = String(formData.get("user_id") ?? "");
+  const timestamp = new Date().toISOString();
+
+  await supabase
+    .from("employer_profiles")
+    .update({
+      moderation_status: "approved",
+      verified_status: "approved",
+      is_public: true,
+      approved_at: timestamp,
+    })
+    .eq("user_id", userId);
+  revalidateAdminModeration();
+}
+
+export async function hideEmployerProfileAction(formData: FormData) {
+  const supabase = await requireAdminSupabase();
+  const userId = String(formData.get("user_id") ?? "");
+
+  await supabase
+    .from("employer_profiles")
+    .update({ moderation_status: "hidden", verified_status: "hidden" })
+    .eq("user_id", userId);
+  revalidateAdminModeration();
+}
+
+export async function approveJobAction(formData: FormData) {
+  const supabase = await requireAdminSupabase();
+  const jobId = String(formData.get("job_id") ?? "");
+
+  await supabase
+    .from("jobs")
+    .update({
+      moderation_status: "approved",
+      is_public: true,
+      status: "open",
+    })
+    .eq("id", jobId);
+  revalidateAdminModeration();
+}
+
+export async function hideJobAction(formData: FormData) {
+  const supabase = await requireAdminSupabase();
+  const jobId = String(formData.get("job_id") ?? "");
+
+  await supabase.from("jobs").update({ moderation_status: "hidden" }).eq("id", jobId);
+  revalidateAdminModeration();
 }

@@ -248,3 +248,83 @@ export async function getPublicJobBySlug(slug: string) {
   const [row] = await attachEmployerProfiles([data as JobRow]);
   return mapPublicJobRow(row);
 }
+
+export async function listPendingFreelancerProfilesForAdmin() {
+  if (!hasSupabaseAdminConfig()) {
+    return [];
+  }
+
+  const admin = createAdminClient();
+  const { data, error } = await admin
+    .from("freelancer_profiles")
+    .select("*, users_meta(full_name)")
+    .eq("is_public", true)
+    .eq("moderation_status", "pending")
+    .order("updated_at", { ascending: false });
+
+  if (error) {
+    throw error;
+  }
+
+  return data ?? [];
+}
+
+export async function listPendingEmployerProfilesForAdmin() {
+  if (!hasSupabaseAdminConfig()) {
+    return [];
+  }
+
+  const admin = createAdminClient();
+  const { data, error } = await admin
+    .from("employer_profiles")
+    .select("*, users_meta(full_name)")
+    .eq("is_public", true)
+    .eq("moderation_status", "pending")
+    .order("updated_at", { ascending: false });
+
+  if (error) {
+    throw error;
+  }
+
+  return data ?? [];
+}
+
+export async function listPendingJobsForAdmin() {
+  if (!hasSupabaseAdminConfig()) {
+    return [];
+  }
+
+  const admin = createAdminClient();
+  const { data, error } = await admin
+    .from("jobs")
+    .select("*, job_roles(role_tag)")
+    .eq("is_public", true)
+    .eq("moderation_status", "pending")
+    .order("updated_at", { ascending: false });
+
+  if (error) {
+    throw error;
+  }
+
+  const rows = await attachEmployerProfiles((data ?? []) as JobRow[]);
+  return rows.map(mapPublicJobRow);
+}
+
+export async function listModerationReportsForAdmin() {
+  if (!hasSupabaseAdminConfig()) {
+    return [];
+  }
+
+  const admin = createAdminClient();
+  const { data, error } = await admin
+    .from("moderation_reports")
+    .select("*")
+    .in("status", ["open", "reviewing"])
+    .order("created_at", { ascending: false });
+
+  if (error) {
+    throw error;
+  }
+
+  return data ?? [];
+}
