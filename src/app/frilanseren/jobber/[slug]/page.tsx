@@ -1,5 +1,6 @@
 import Link from "next/link";
 
+import { JobApplicationForm } from "@/components/frilanseren/job-application-form";
 import { MarketplaceShell } from "@/components/frilanseren/marketplace-shell";
 import { ButtonLink } from "@/components/ui/button-link";
 import { FREELANCER_ROLE_OPTIONS } from "@/lib/frilanseren/constants";
@@ -92,9 +93,7 @@ export default async function JobDetailPage({ params }: PageProps) {
           <p className="mt-2 text-sm leading-6 text-[var(--muted-2)]">
             Frilansere kan melde interesse etter innlogging. Arbeidsgiver får ikke e-post eller telefon før kontakt er akseptert.
           </p>
-          <ButtonLink className="mt-4" href="/frilanseren/login" variant="ghost">
-            Logg inn for å melde interesse
-          </ButtonLink>
+          <JobApplicationForm jobId={job.id} />
         </aside>
       </div>
     </MarketplaceShell>

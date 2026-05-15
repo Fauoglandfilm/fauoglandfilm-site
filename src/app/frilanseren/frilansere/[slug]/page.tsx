@@ -1,5 +1,6 @@
 import Link from "next/link";
 
+import { ContactRequestForm } from "@/components/frilanseren/contact-request-form";
 import { MarketplaceShell } from "@/components/frilanseren/marketplace-shell";
 import { ButtonLink } from "@/components/ui/button-link";
 import { FREELANCER_EXPERIENCE_OPTIONS, FREELANCER_ROLE_OPTIONS } from "@/lib/frilanseren/constants";
@@ -105,9 +106,7 @@ export default async function FreelancerDetailPage({ params }: PageProps) {
           <p className="mt-2 text-sm leading-6 text-[var(--muted-2)]">
             E-post og telefon deles først når kontaktforespørselen er sendt og akseptert.
           </p>
-          <ButtonLink className="mt-4" href="/frilanseren/login" variant="ghost">
-            Logg inn for kontakt
-          </ButtonLink>
+          <ContactRequestForm targetUserId={profile.user_id} />
         </aside>
       </div>
     </MarketplaceShell>
