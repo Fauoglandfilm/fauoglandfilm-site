@@ -16,17 +16,17 @@ import {
 import { buildProfileImagePath, getUploadedFile, validateImageFile } from "./media";
 import { upsertWithOptionalColumn } from "./profile-upsert";
 import { requireCurrentUserContext } from "./queries";
+import { publicEmployerProfileSchema, publicFreelancerProfileSchema } from "./market-validation";
 import {
   DUPLICATE_EMAIL_MESSAGE,
   findMatchingUserByEmail,
   looksLikeObfuscatedExistingUser,
   mapRegistrationErrorMessage,
 } from "./signup";
+import { buildUniqueSlug } from "./slug";
 import type { FrilanserenActionState } from "./types";
 import {
-  employerProfileSchema,
   employerRegistrationSchema,
-  freelancerProfileSchema,
   freelancerRegistrationSchema,
 } from "./validation";
 
@@ -43,6 +43,32 @@ function stringArrayFromFormData(formData: FormData, field: string) {
     .getAll(field)
     .map((value) => String(value).trim())
     .filter(Boolean);
+}
+
+function stringListFromText(value: FormDataEntryValue | null) {
+  return String(value ?? "")
+    .split(",")
+    .map((item) => item.trim())
+    .filter(Boolean);
+}
+
+async function buildProfileSlug(
+  table: "employer_profiles" | "freelancer_profiles",
+  source: string,
+  currentSlug: string | null | undefined,
+) {
+  if (currentSlug) {
+    return currentSlug;
+  }
+
+  const supabase = await createServerComponentClient();
+  const { data } = await supabase.from(table).select("slug");
+
+  return buildUniqueSlug(source, new Set((data ?? []).map((row) => String(row.slug)).filter(Boolean)), "profil");
+}
+
+function moderationStatusForPublicProfile(isPublic: boolean, existingStatus?: string | null) {
+  return isPublic ? "pending" : existingStatus ?? "pending";
 }
 
 function registrationUnavailableState(): FrilanserenActionState {
@@ -510,11 +536,16 @@ export async function updateEmployerProfileAction(
   const context = await requireCurrentUserContext();
   const logoFile = getUploadedFile(formData, "company_logo");
 
-  const payload = employerProfileSchema.safeParse({
+  const payload = publicEmployerProfileSchema.safeParse({
     full_name: formData.get("full_name"),
     company_name: formData.get("company_name"),
     production_types: stringArrayFromFormData(formData, "production_types"),
     annual_volume: formData.get("annual_volume"),
+    company_description: formData.get("company_description"),
+    website_url: formData.get("website_url"),
+    city: formData.get("city"),
+    region: formData.get("region"),
+    is_public: formData.get("is_public") === "on",
   });
 
   if (!payload.success) {
@@ -537,6 +568,7 @@ export async function updateEmployerProfileAction(
 
   const supabase = await createServerComponentClient();
   const admin = hasSupabaseAdminConfig() ? createAdminClient() : null;
+  const slug = await buildProfileSlug("employer_profiles", payload.data.company_name, context.employerProfile?.slug);
   const uploadResult = admin
     ? await uploadProfileImage(admin, context.userId, "employer", logoFile, context.employerProfile?.logo_path)
     : {
@@ -548,6 +580,11 @@ export async function updateEmployerProfileAction(
     .from("users_meta")
     .update({
       full_name: payload.data.full_name,
+      public_status: payload.data.is_public ? "public" : "private",
+      moderation_status: moderationStatusForPublicProfile(
+        payload.data.is_public,
+        context.userMeta?.moderation_status,
+      ),
     })
     .eq("id", context.userId);
 
@@ -562,6 +599,21 @@ export async function updateEmployerProfileAction(
         production_types: payload.data.production_types,
         annual_volume: payload.data.annual_volume,
         logo_path: uploadResult.path,
+        slug,
+        company_description: payload.data.company_description || null,
+        website_url: payload.data.website_url || null,
+        city: payload.data.city || null,
+        region: payload.data.region || null,
+        is_public: payload.data.is_public,
+        verified_status: moderationStatusForPublicProfile(
+          payload.data.is_public,
+          context.employerProfile?.verified_status,
+        ),
+        moderation_status: moderationStatusForPublicProfile(
+          payload.data.is_public,
+          context.employerProfile?.moderation_status,
+        ),
+        approved_at: payload.data.is_public ? null : context.employerProfile?.approved_at ?? null,
       },
       optionalColumn: "logo_path",
       execute: (upsertPayload) => supabase.from("employer_profiles").upsert(upsertPayload),
@@ -595,10 +647,21 @@ export async function updateFreelancerProfileAction(
   const context = await requireCurrentUserContext();
   const profileImageFile = getUploadedFile(formData, "profile_image");
 
-  const payload = freelancerProfileSchema.safeParse({
+  const payload = publicFreelancerProfileSchema.safeParse({
     full_name: formData.get("full_name"),
     roles: stringArrayFromFormData(formData, "roles"),
     experience_level: formData.get("experience_level"),
+    headline: formData.get("headline"),
+    bio: formData.get("bio"),
+    city: formData.get("city"),
+    region: formData.get("region"),
+    is_public: formData.get("is_public") === "on",
+    is_available: formData.get("is_available") === "on",
+    portfolio_links: context.freelancerProfile?.portfolio_links ?? [],
+    showreel_url: formData.get("showreel_url"),
+    license_tags: stringListFromText(formData.get("license_tags_text")),
+    rate_day: formData.get("rate_day"),
+    rate_hour: formData.get("rate_hour"),
   });
 
   if (!payload.success) {
@@ -621,6 +684,7 @@ export async function updateFreelancerProfileAction(
 
   const supabase = await createServerComponentClient();
   const admin = hasSupabaseAdminConfig() ? createAdminClient() : null;
+  const slug = await buildProfileSlug("freelancer_profiles", payload.data.full_name, context.freelancerProfile?.slug);
   const uploadResult = admin
     ? await uploadProfileImage(
         admin,
@@ -638,6 +702,11 @@ export async function updateFreelancerProfileAction(
     .from("users_meta")
     .update({
       full_name: payload.data.full_name,
+      public_status: payload.data.is_public ? "public" : "private",
+      moderation_status: moderationStatusForPublicProfile(
+        payload.data.is_public,
+        context.userMeta?.moderation_status,
+      ),
     })
     .eq("id", context.userId);
 
@@ -651,6 +720,25 @@ export async function updateFreelancerProfileAction(
         roles: payload.data.roles,
         experience_level: payload.data.experience_level,
         profile_image_path: uploadResult.path,
+        slug,
+        headline: payload.data.headline || null,
+        bio: payload.data.bio || null,
+        city: payload.data.city || null,
+        region: payload.data.region || null,
+        availability_status: payload.data.is_available ? "available" : "hidden",
+        is_public: payload.data.is_public,
+        is_available: payload.data.is_available,
+        portfolio_links: payload.data.portfolio_links,
+        showreel_url: payload.data.showreel_url || null,
+        license_tags: payload.data.license_tags,
+        rate_day: payload.data.rate_day,
+        rate_hour: payload.data.rate_hour,
+        public_contact_mode: "request",
+        moderation_status: moderationStatusForPublicProfile(
+          payload.data.is_public,
+          context.freelancerProfile?.moderation_status,
+        ),
+        approved_at: payload.data.is_public ? null : context.freelancerProfile?.approved_at ?? null,
       },
       optionalColumn: "profile_image_path",
       execute: (upsertPayload) => supabase.from("freelancer_profiles").upsert(upsertPayload),

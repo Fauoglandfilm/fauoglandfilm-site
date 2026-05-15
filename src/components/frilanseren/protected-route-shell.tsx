@@ -33,7 +33,7 @@ export function ProtectedRouteShell({
             <ButtonLink href="/frilanseren/dashboard" variant="ghost" size="compact">
               Dashboard
             </ButtonLink>
-            <ButtonLink href="/frilanseren/profile" variant="ghost" size="compact">
+            <ButtonLink href="/frilanseren/dashboard/profil" variant="ghost" size="compact">
               Profil
             </ButtonLink>
             <form action={signOutAction}>

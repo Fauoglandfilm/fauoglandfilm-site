@@ -4,6 +4,11 @@ export interface UserMeta {
   id: string;
   role: UserRole;
   full_name: string;
+  slug: string | null;
+  onboarding_status: string;
+  public_status: "private" | "public";
+  moderation_status: "pending" | "approved" | "rejected" | "hidden";
+  last_seen_at: string | null;
   created_at: string;
   updated_at: string;
   deleted_at: string | null;
@@ -15,6 +20,15 @@ export interface EmployerProfile {
   production_types: string[];
   annual_volume: "1_2" | "3_10" | "10_plus";
   logo_path: string | null;
+  slug: string | null;
+  company_description: string | null;
+  website_url: string | null;
+  city: string | null;
+  region: string | null;
+  is_public: boolean;
+  verified_status: "pending" | "approved" | "rejected" | "hidden";
+  moderation_status: "pending" | "approved" | "rejected" | "hidden";
+  approved_at: string | null;
   created_at: string;
   updated_at: string;
 }
@@ -24,6 +38,22 @@ export interface FreelancerProfile {
   roles: string[];
   experience_level: "0_2" | "3_7" | "8_plus";
   profile_image_path: string | null;
+  slug: string | null;
+  headline: string | null;
+  bio: string | null;
+  city: string | null;
+  region: string | null;
+  availability_status: "available" | "busy" | "hidden";
+  is_public: boolean;
+  is_available: boolean;
+  portfolio_links: Array<{ label: string; url: string }>;
+  showreel_url: string | null;
+  license_tags: string[];
+  rate_day: number | null;
+  rate_hour: number | null;
+  public_contact_mode: string;
+  moderation_status: "pending" | "approved" | "rejected" | "hidden";
+  approved_at: string | null;
   created_at: string;
   updated_at: string;
 }
