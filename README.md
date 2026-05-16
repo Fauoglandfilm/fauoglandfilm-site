@@ -58,6 +58,14 @@ Det brukes kun nødvendige auth/session-cookies i dette produktområdet. Global 
 7. SQL-skriptet oppretter også en privat Storage-bucket kalt `frilanseren-media` for profilbilder og firmalogoer.
 8. Nye markedsplassfunksjoner krever tabellene `jobs`, `job_roles`, `job_applications`, `contact_requests`, `timesheets`, `timesheet_entries`, `moderation_reports` og `notifications`.
 
+For production kan den additive markedsplassmigrasjonen også kjøres fra terminal når du har database-URI-en fra Supabase:
+
+```bash
+SUPABASE_DB_URL="postgresql://..." npm run db:migrate:frilanseren
+```
+
+Bruk Supabase sin production database connection string med passord og SSL. Scriptet skjuler brukernavn/passord i output og verifiserer at de nye tabellene finnes etterpå.
+
 ## Miljøvariabler
 
 Legg inn verdiene fra `.env.example` i `.env.local` lokalt og i Vercel for deploy.
