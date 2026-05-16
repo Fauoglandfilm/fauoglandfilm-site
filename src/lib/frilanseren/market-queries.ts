@@ -16,7 +16,7 @@ import {
   type JobRow,
 } from "./market-mappers";
 
-const MARKETPLACE_READ_TIMEOUT_MS = 1800;
+const MARKETPLACE_READ_TIMEOUT_MS = 900;
 
 function createMarketplaceReadSignal() {
   return AbortSignal.timeout(MARKETPLACE_READ_TIMEOUT_MS);
