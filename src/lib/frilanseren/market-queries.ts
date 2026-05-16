@@ -2,7 +2,7 @@ import "server-only";
 
 import { notFound } from "next/navigation";
 
-import { hasSupabaseAdminConfig } from "@/lib/env";
+import { hasSupabaseAdminConfig, hasSupabaseAuthConfig, missingSupabaseEnvs } from "@/lib/env";
 import { createAdminClient, createServerComponentClient } from "@/lib/supabase/serverClient";
 
 import { FRILANSEREN_MEDIA_BUCKET } from "./constants";
@@ -76,6 +76,18 @@ function logMarketplaceSchemaUnavailable(scope: string, error: SupabaseReadError
   });
 }
 
+function canReadMarketplace(scope: string) {
+  if (hasSupabaseAuthConfig()) {
+    return true;
+  }
+
+  console.error("[frilanseren/market-config-unavailable]", {
+    scope,
+    missing: missingSupabaseEnvs(),
+  });
+  return false;
+}
+
 async function mapFreelancerWithImage(row: FreelancerRow) {
   return {
     ...mapPublicFreelancerRow(row),
@@ -91,6 +103,10 @@ async function mapEmployerWithImage(row: EmployerRow) {
 }
 
 async function getEmployerProfileMap(employerUserIds: string[]) {
+  if (!canReadMarketplace("employer-profile-map")) {
+    return new Map<string, Pick<EmployerRow, "slug" | "company_name">>();
+  }
+
   const uniqueIds = Array.from(new Set(employerUserIds));
 
   if (!uniqueIds.length) {
@@ -133,6 +149,10 @@ async function attachEmployerProfiles(rows: JobRow[]) {
 }
 
 export async function listPublicFreelancers(options?: { role?: string; query?: string; limit?: number }) {
+  if (!canReadMarketplace("public-freelancers")) {
+    return [];
+  }
+
   const supabase = await createServerComponentClient();
   const searchTerm = sanitizeSearchTerm(options?.query);
   let query = supabase
@@ -166,6 +186,10 @@ export async function listPublicFreelancers(options?: { role?: string; query?: s
 }
 
 export async function getPublicFreelancerBySlug(slug: string) {
+  if (!canReadMarketplace("public-freelancer-detail")) {
+    notFound();
+  }
+
   const supabase = await createServerComponentClient();
   const { data, error } = await supabase
     .from("freelancer_profiles")
@@ -192,6 +216,10 @@ export async function getPublicFreelancerBySlug(slug: string) {
 }
 
 export async function listPublicEmployers(options?: { query?: string; limit?: number }) {
+  if (!canReadMarketplace("public-employers")) {
+    return [];
+  }
+
   const supabase = await createServerComponentClient();
   const searchTerm = sanitizeSearchTerm(options?.query);
   let query = supabase
@@ -221,6 +249,10 @@ export async function listPublicEmployers(options?: { query?: string; limit?: nu
 }
 
 export async function getPublicEmployerBySlug(slug: string) {
+  if (!canReadMarketplace("public-employer-detail")) {
+    notFound();
+  }
+
   const supabase = await createServerComponentClient();
   const { data, error } = await supabase
     .from("employer_profiles")
@@ -247,6 +279,10 @@ export async function getPublicEmployerBySlug(slug: string) {
 }
 
 export async function listPublicJobs(options?: { role?: string; query?: string; limit?: number }) {
+  if (!canReadMarketplace("public-jobs")) {
+    return [];
+  }
+
   const supabase = await createServerComponentClient();
   const searchTerm = sanitizeSearchTerm(options?.query);
   let query = supabase
@@ -284,6 +320,10 @@ export async function listPublicJobs(options?: { role?: string; query?: string; 
 }
 
 export async function getPublicJobBySlug(slug: string) {
+  if (!canReadMarketplace("public-job-detail")) {
+    notFound();
+  }
+
   const supabase = await createServerComponentClient();
   const { data, error } = await supabase
     .from("jobs")
