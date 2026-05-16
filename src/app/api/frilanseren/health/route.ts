@@ -27,6 +27,14 @@ type TableCheck = {
   message?: string;
 };
 
+type ConnectivityCheck = {
+  ok: boolean;
+  host: string | null;
+  status?: number;
+  durationMs?: number;
+  message?: string;
+};
+
 function sanitizeErrorMessage(message: string | undefined) {
   if (!message) {
     return undefined;
@@ -37,9 +45,31 @@ function sanitizeErrorMessage(message: string | undefined) {
     .replace(/eyJ[a-zA-Z0-9._-]+/g, "<token>");
 }
 
+function getSupabaseUrl() {
+  return process.env.NEXT_PUBLIC_SUPABASE_URL?.replace(/\/+$/, "") ?? null;
+}
+
+function getSupabaseKey() {
+  return process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || null;
+}
+
+function getSupabaseHost() {
+  const url = getSupabaseUrl();
+
+  if (!url) {
+    return null;
+  }
+
+  try {
+    return new URL(url).hostname;
+  } catch {
+    return "invalid-url";
+  }
+}
+
 function getSupabaseClient() {
-  const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
-  const key = process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+  const url = getSupabaseUrl();
+  const key = getSupabaseKey();
 
   if (!url || !key) {
     return null;
@@ -51,6 +81,47 @@ function getSupabaseClient() {
       persistSession: false,
     },
   });
+}
+
+async function checkSupabaseConnectivity(): Promise<ConnectivityCheck> {
+  const url = getSupabaseUrl();
+  const key = getSupabaseKey();
+  const host = getSupabaseHost();
+
+  if (!url || !key) {
+    return {
+      ok: false,
+      host,
+      message: "Supabase URL or key is missing.",
+    };
+  }
+
+  const startedAt = Date.now();
+
+  try {
+    const response = await fetch(`${url}/rest/v1/`, {
+      headers: {
+        apikey: key,
+        authorization: `Bearer ${key}`,
+      },
+      signal: AbortSignal.timeout(2_500),
+    });
+
+    return {
+      ok: response.ok,
+      host,
+      status: response.status,
+      durationMs: Date.now() - startedAt,
+      message: response.ok ? undefined : response.statusText,
+    };
+  } catch (error) {
+    return {
+      ok: false,
+      host,
+      durationMs: Date.now() - startedAt,
+      message: sanitizeErrorMessage(error instanceof Error ? error.message : String(error)),
+    };
+  }
 }
 
 async function checkTable(table: string): Promise<TableCheck> {
@@ -96,17 +167,29 @@ export async function GET() {
   const authMissing = missingSupabaseEnvs();
   const adminMissing = missingSupabaseEnvs({ includeAdmin: true });
   const canCheckTables = hasSupabaseAuthConfig();
-  const tableChecks = canCheckTables ? await Promise.all(MARKETPLACE_TABLES.map(checkTable)) : [];
+  const connectivity = canCheckTables
+    ? await checkSupabaseConnectivity()
+    : { ok: false, host: getSupabaseHost(), message: "Supabase auth environment is missing." };
+  const tableChecks =
+    canCheckTables && connectivity.ok ? await Promise.all(MARKETPLACE_TABLES.map(checkTable)) : [];
   const failedTables = tableChecks.filter((check) => !check.ok);
-  const ok = authMissing.length === 0 && failedTables.length === 0;
+  const ok = authMissing.length === 0 && connectivity.ok && failedTables.length === 0;
+  const status = ok
+    ? "ready"
+    : authMissing.length
+      ? "missing_env"
+      : !connectivity.ok
+        ? "supabase_unreachable"
+        : "schema_or_access_pending";
 
   return NextResponse.json(
     {
       ok,
-      status: ok ? "ready" : authMissing.length ? "missing_env" : "schema_or_access_pending",
+      status,
       release: process.env.VERCEL_GIT_COMMIT_SHA ?? process.env.NEXT_PUBLIC_VERCEL_GIT_COMMIT_SHA ?? null,
       checkedAt: new Date().toISOString(),
       supabase: {
+        connectivity,
         authEnv: {
           ok: hasSupabaseAuthConfig(),
           missing: authMissing,
