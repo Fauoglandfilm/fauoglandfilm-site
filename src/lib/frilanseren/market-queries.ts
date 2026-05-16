@@ -16,6 +16,12 @@ import {
   type JobRow,
 } from "./market-mappers";
 
+const MARKETPLACE_READ_TIMEOUT_MS = 1800;
+
+function createMarketplaceReadSignal() {
+  return AbortSignal.timeout(MARKETPLACE_READ_TIMEOUT_MS);
+}
+
 async function createSignedImageUrl(path: string | null | undefined) {
   if (!path || !hasSupabaseAdminConfig()) {
     return null;
@@ -129,7 +135,8 @@ async function getEmployerProfileMap(employerUserIds: string[]) {
     const { data, error } = await supabase
       .from("employer_profiles")
       .select("user_id, slug, company_name")
-      .in("user_id", uniqueIds);
+      .in("user_id", uniqueIds)
+      .abortSignal(createMarketplaceReadSignal());
 
     if (error) {
       if (isMarketplaceSchemaUnavailable(error)) {
@@ -188,7 +195,7 @@ export async function listPublicFreelancers(options?: { role?: string; query?: s
       query = query.or(`headline.ilike.%${searchTerm}%,city.ilike.%${searchTerm}%,region.ilike.%${searchTerm}%`);
     }
 
-    const { data, error } = await query;
+    const { data, error } = await query.abortSignal(createMarketplaceReadSignal());
 
     if (error) {
       if (isMarketplaceSchemaUnavailable(error)) {
@@ -219,6 +226,7 @@ export async function getPublicFreelancerBySlug(slug: string) {
       .eq("slug", slug)
       .eq("is_public", true)
       .eq("moderation_status", "approved")
+      .abortSignal(createMarketplaceReadSignal())
       .maybeSingle();
 
     if (error) {
@@ -264,7 +272,7 @@ export async function listPublicEmployers(options?: { query?: string; limit?: nu
       query = query.or(`company_name.ilike.%${searchTerm}%,city.ilike.%${searchTerm}%,region.ilike.%${searchTerm}%`);
     }
 
-    const { data, error } = await query;
+    const { data, error } = await query.abortSignal(createMarketplaceReadSignal());
 
     if (error) {
       if (isMarketplaceSchemaUnavailable(error)) {
@@ -295,6 +303,7 @@ export async function getPublicEmployerBySlug(slug: string) {
       .eq("slug", slug)
       .eq("is_public", true)
       .eq("moderation_status", "approved")
+      .abortSignal(createMarketplaceReadSignal())
       .maybeSingle();
 
     if (error) {
@@ -341,7 +350,7 @@ export async function listPublicJobs(options?: { role?: string; query?: string; 
       query = query.or(`title.ilike.%${searchTerm}%,description.ilike.%${searchTerm}%,location.ilike.%${searchTerm}%`);
     }
 
-    const { data, error } = await query;
+    const { data, error } = await query.abortSignal(createMarketplaceReadSignal());
 
     if (error) {
       if (isMarketplaceSchemaUnavailable(error)) {
@@ -380,6 +389,7 @@ export async function getPublicJobBySlug(slug: string) {
       .eq("is_public", true)
       .eq("moderation_status", "approved")
       .eq("status", "open")
+      .abortSignal(createMarketplaceReadSignal())
       .maybeSingle();
 
     if (error) {
