@@ -76,6 +76,21 @@ function logMarketplaceSchemaUnavailable(scope: string, error: SupabaseReadError
   });
 }
 
+function logMarketplaceReadUnavailable(scope: string, error: unknown) {
+  console.error("[frilanseren/market-read-unavailable]", {
+    scope,
+    message: error instanceof Error ? error.message : String(error),
+  });
+}
+
+function isNextNavigationSignal(error: unknown) {
+  if (!error || typeof error !== "object" || !("digest" in error)) {
+    return false;
+  }
+
+  return String((error as { digest?: unknown }).digest).startsWith("NEXT_");
+}
+
 function canReadMarketplace(scope: string) {
   if (hasSupabaseAuthConfig()) {
     return true;
@@ -103,40 +118,41 @@ async function mapEmployerWithImage(row: EmployerRow) {
 }
 
 async function getEmployerProfileMap(employerUserIds: string[]) {
-  if (!canReadMarketplace("employer-profile-map")) {
-    return new Map<string, Pick<EmployerRow, "slug" | "company_name">>();
-  }
-
   const uniqueIds = Array.from(new Set(employerUserIds));
 
-  if (!uniqueIds.length) {
+  if (!uniqueIds.length || !canReadMarketplace("employer-profile-map")) {
     return new Map<string, Pick<EmployerRow, "slug" | "company_name">>();
   }
 
-  const supabase = await createServerComponentClient();
-  const { data, error } = await supabase
-    .from("employer_profiles")
-    .select("user_id, slug, company_name")
-    .in("user_id", uniqueIds);
+  try {
+    const supabase = await createServerComponentClient();
+    const { data, error } = await supabase
+      .from("employer_profiles")
+      .select("user_id, slug, company_name")
+      .in("user_id", uniqueIds);
 
-  if (error) {
-    if (isMarketplaceSchemaUnavailable(error)) {
-      logMarketplaceSchemaUnavailable("employer-profile-map", error);
+    if (error) {
+      if (isMarketplaceSchemaUnavailable(error)) {
+        logMarketplaceSchemaUnavailable("employer-profile-map", error);
+      } else {
+        logMarketplaceReadUnavailable("employer-profile-map", error);
+      }
       return new Map<string, Pick<EmployerRow, "slug" | "company_name">>();
     }
 
-    throw error;
+    return new Map(
+      (data ?? []).map((row) => [
+        String(row.user_id),
+        {
+          slug: row.slug,
+          company_name: row.company_name,
+        },
+      ]),
+    );
+  } catch (error) {
+    logMarketplaceReadUnavailable("employer-profile-map", error);
+    return new Map<string, Pick<EmployerRow, "slug" | "company_name">>();
   }
-
-  return new Map(
-    (data ?? []).map((row) => [
-      String(row.user_id),
-      {
-        slug: row.slug,
-        company_name: row.company_name,
-      },
-    ]),
-  );
 }
 
 async function attachEmployerProfiles(rows: JobRow[]) {
@@ -153,36 +169,41 @@ export async function listPublicFreelancers(options?: { role?: string; query?: s
     return [];
   }
 
-  const supabase = await createServerComponentClient();
-  const searchTerm = sanitizeSearchTerm(options?.query);
-  let query = supabase
-    .from("freelancer_profiles")
-    .select("*, users_meta(full_name)")
-    .eq("is_public", true)
-    .eq("moderation_status", "approved")
-    .order("approved_at", { ascending: false })
-    .limit(clampLimit(options?.limit));
+  try {
+    const supabase = await createServerComponentClient();
+    const searchTerm = sanitizeSearchTerm(options?.query);
+    let query = supabase
+      .from("freelancer_profiles")
+      .select("*, users_meta(full_name)")
+      .eq("is_public", true)
+      .eq("moderation_status", "approved")
+      .order("approved_at", { ascending: false })
+      .limit(clampLimit(options?.limit));
 
-  if (options?.role) {
-    query = query.contains("roles", [options.role]);
-  }
+    if (options?.role) {
+      query = query.contains("roles", [options.role]);
+    }
 
-  if (searchTerm) {
-    query = query.or(`headline.ilike.%${searchTerm}%,city.ilike.%${searchTerm}%,region.ilike.%${searchTerm}%`);
-  }
+    if (searchTerm) {
+      query = query.or(`headline.ilike.%${searchTerm}%,city.ilike.%${searchTerm}%,region.ilike.%${searchTerm}%`);
+    }
 
-  const { data, error } = await query;
+    const { data, error } = await query;
 
-  if (error) {
-    if (isMarketplaceSchemaUnavailable(error)) {
-      logMarketplaceSchemaUnavailable("public-freelancers", error);
+    if (error) {
+      if (isMarketplaceSchemaUnavailable(error)) {
+        logMarketplaceSchemaUnavailable("public-freelancers", error);
+      } else {
+        logMarketplaceReadUnavailable("public-freelancers", error);
+      }
       return [];
     }
 
-    throw error;
+    return Promise.all((data ?? []).map((row) => mapFreelancerWithImage(row as FreelancerRow)));
+  } catch (error) {
+    logMarketplaceReadUnavailable("public-freelancers", error);
+    return [];
   }
-
-  return Promise.all((data ?? []).map((row) => mapFreelancerWithImage(row as FreelancerRow)));
 }
 
 export async function getPublicFreelancerBySlug(slug: string) {
@@ -190,29 +211,37 @@ export async function getPublicFreelancerBySlug(slug: string) {
     notFound();
   }
 
-  const supabase = await createServerComponentClient();
-  const { data, error } = await supabase
-    .from("freelancer_profiles")
-    .select("*, users_meta(full_name)")
-    .eq("slug", slug)
-    .eq("is_public", true)
-    .eq("moderation_status", "approved")
-    .maybeSingle();
+  try {
+    const supabase = await createServerComponentClient();
+    const { data, error } = await supabase
+      .from("freelancer_profiles")
+      .select("*, users_meta(full_name)")
+      .eq("slug", slug)
+      .eq("is_public", true)
+      .eq("moderation_status", "approved")
+      .maybeSingle();
 
-  if (error) {
-    if (isMarketplaceSchemaUnavailable(error)) {
-      logMarketplaceSchemaUnavailable("public-freelancer-detail", error);
+    if (error) {
+      if (isMarketplaceSchemaUnavailable(error)) {
+        logMarketplaceSchemaUnavailable("public-freelancer-detail", error);
+      } else {
+        logMarketplaceReadUnavailable("public-freelancer-detail", error);
+      }
       notFound();
     }
 
-    throw error;
-  }
+    if (!data) {
+      notFound();
+    }
 
-  if (!data) {
+    return mapFreelancerWithImage(data as FreelancerRow);
+  } catch (error) {
+    if (isNextNavigationSignal(error)) {
+      throw error;
+    }
+    logMarketplaceReadUnavailable("public-freelancer-detail", error);
     notFound();
   }
-
-  return mapFreelancerWithImage(data as FreelancerRow);
 }
 
 export async function listPublicEmployers(options?: { query?: string; limit?: number }) {
@@ -220,32 +249,37 @@ export async function listPublicEmployers(options?: { query?: string; limit?: nu
     return [];
   }
 
-  const supabase = await createServerComponentClient();
-  const searchTerm = sanitizeSearchTerm(options?.query);
-  let query = supabase
-    .from("employer_profiles")
-    .select("*, users_meta(full_name)")
-    .eq("is_public", true)
-    .eq("moderation_status", "approved")
-    .order("approved_at", { ascending: false })
-    .limit(clampLimit(options?.limit));
+  try {
+    const supabase = await createServerComponentClient();
+    const searchTerm = sanitizeSearchTerm(options?.query);
+    let query = supabase
+      .from("employer_profiles")
+      .select("*, users_meta(full_name)")
+      .eq("is_public", true)
+      .eq("moderation_status", "approved")
+      .order("approved_at", { ascending: false })
+      .limit(clampLimit(options?.limit));
 
-  if (searchTerm) {
-    query = query.or(`company_name.ilike.%${searchTerm}%,city.ilike.%${searchTerm}%,region.ilike.%${searchTerm}%`);
-  }
+    if (searchTerm) {
+      query = query.or(`company_name.ilike.%${searchTerm}%,city.ilike.%${searchTerm}%,region.ilike.%${searchTerm}%`);
+    }
 
-  const { data, error } = await query;
+    const { data, error } = await query;
 
-  if (error) {
-    if (isMarketplaceSchemaUnavailable(error)) {
-      logMarketplaceSchemaUnavailable("public-employers", error);
+    if (error) {
+      if (isMarketplaceSchemaUnavailable(error)) {
+        logMarketplaceSchemaUnavailable("public-employers", error);
+      } else {
+        logMarketplaceReadUnavailable("public-employers", error);
+      }
       return [];
     }
 
-    throw error;
+    return Promise.all((data ?? []).map((row) => mapEmployerWithImage(row as EmployerRow)));
+  } catch (error) {
+    logMarketplaceReadUnavailable("public-employers", error);
+    return [];
   }
-
-  return Promise.all((data ?? []).map((row) => mapEmployerWithImage(row as EmployerRow)));
 }
 
 export async function getPublicEmployerBySlug(slug: string) {
@@ -253,29 +287,37 @@ export async function getPublicEmployerBySlug(slug: string) {
     notFound();
   }
 
-  const supabase = await createServerComponentClient();
-  const { data, error } = await supabase
-    .from("employer_profiles")
-    .select("*, users_meta(full_name)")
-    .eq("slug", slug)
-    .eq("is_public", true)
-    .eq("moderation_status", "approved")
-    .maybeSingle();
+  try {
+    const supabase = await createServerComponentClient();
+    const { data, error } = await supabase
+      .from("employer_profiles")
+      .select("*, users_meta(full_name)")
+      .eq("slug", slug)
+      .eq("is_public", true)
+      .eq("moderation_status", "approved")
+      .maybeSingle();
 
-  if (error) {
-    if (isMarketplaceSchemaUnavailable(error)) {
-      logMarketplaceSchemaUnavailable("public-employer-detail", error);
+    if (error) {
+      if (isMarketplaceSchemaUnavailable(error)) {
+        logMarketplaceSchemaUnavailable("public-employer-detail", error);
+      } else {
+        logMarketplaceReadUnavailable("public-employer-detail", error);
+      }
       notFound();
     }
 
-    throw error;
-  }
+    if (!data) {
+      notFound();
+    }
 
-  if (!data) {
+    return mapEmployerWithImage(data as EmployerRow);
+  } catch (error) {
+    if (isNextNavigationSignal(error)) {
+      throw error;
+    }
+    logMarketplaceReadUnavailable("public-employer-detail", error);
     notFound();
   }
-
-  return mapEmployerWithImage(data as EmployerRow);
 }
 
 export async function listPublicJobs(options?: { role?: string; query?: string; limit?: number }) {
@@ -283,40 +325,45 @@ export async function listPublicJobs(options?: { role?: string; query?: string; 
     return [];
   }
 
-  const supabase = await createServerComponentClient();
-  const searchTerm = sanitizeSearchTerm(options?.query);
-  let query = supabase
-    .from("jobs")
-    .select("*, job_roles(role_tag)")
-    .eq("is_public", true)
-    .eq("moderation_status", "approved")
-    .eq("status", "open")
-    .order("created_at", { ascending: false })
-    .limit(clampLimit(options?.limit));
+  try {
+    const supabase = await createServerComponentClient();
+    const searchTerm = sanitizeSearchTerm(options?.query);
+    let query = supabase
+      .from("jobs")
+      .select("*, job_roles(role_tag)")
+      .eq("is_public", true)
+      .eq("moderation_status", "approved")
+      .eq("status", "open")
+      .order("created_at", { ascending: false })
+      .limit(clampLimit(options?.limit));
 
-  if (searchTerm) {
-    query = query.or(`title.ilike.%${searchTerm}%,description.ilike.%${searchTerm}%,location.ilike.%${searchTerm}%`);
-  }
+    if (searchTerm) {
+      query = query.or(`title.ilike.%${searchTerm}%,description.ilike.%${searchTerm}%,location.ilike.%${searchTerm}%`);
+    }
 
-  const { data, error } = await query;
+    const { data, error } = await query;
 
-  if (error) {
-    if (isMarketplaceSchemaUnavailable(error)) {
-      logMarketplaceSchemaUnavailable("public-jobs", error);
+    if (error) {
+      if (isMarketplaceSchemaUnavailable(error)) {
+        logMarketplaceSchemaUnavailable("public-jobs", error);
+      } else {
+        logMarketplaceReadUnavailable("public-jobs", error);
+      }
       return [];
     }
 
-    throw error;
+    const rows = await attachEmployerProfiles((data ?? []) as JobRow[]);
+    const jobs = rows.map(mapPublicJobRow);
+
+    if (!options?.role) {
+      return jobs;
+    }
+
+    return jobs.filter((job) => job.role_tags.includes(options.role as string));
+  } catch (error) {
+    logMarketplaceReadUnavailable("public-jobs", error);
+    return [];
   }
-
-  const rows = await attachEmployerProfiles((data ?? []) as JobRow[]);
-  const jobs = rows.map(mapPublicJobRow);
-
-  if (!options?.role) {
-    return jobs;
-  }
-
-  return jobs.filter((job) => job.role_tags.includes(options.role as string));
 }
 
 export async function getPublicJobBySlug(slug: string) {
@@ -324,31 +371,39 @@ export async function getPublicJobBySlug(slug: string) {
     notFound();
   }
 
-  const supabase = await createServerComponentClient();
-  const { data, error } = await supabase
-    .from("jobs")
-    .select("*, job_roles(role_tag)")
-    .eq("slug", slug)
-    .eq("is_public", true)
-    .eq("moderation_status", "approved")
-    .eq("status", "open")
-    .maybeSingle();
+  try {
+    const supabase = await createServerComponentClient();
+    const { data, error } = await supabase
+      .from("jobs")
+      .select("*, job_roles(role_tag)")
+      .eq("slug", slug)
+      .eq("is_public", true)
+      .eq("moderation_status", "approved")
+      .eq("status", "open")
+      .maybeSingle();
 
-  if (error) {
-    if (isMarketplaceSchemaUnavailable(error)) {
-      logMarketplaceSchemaUnavailable("public-job-detail", error);
+    if (error) {
+      if (isMarketplaceSchemaUnavailable(error)) {
+        logMarketplaceSchemaUnavailable("public-job-detail", error);
+      } else {
+        logMarketplaceReadUnavailable("public-job-detail", error);
+      }
       notFound();
     }
 
-    throw error;
-  }
+    if (!data) {
+      notFound();
+    }
 
-  if (!data) {
+    const [row] = await attachEmployerProfiles([data as JobRow]);
+    return mapPublicJobRow(row);
+  } catch (error) {
+    if (isNextNavigationSignal(error)) {
+      throw error;
+    }
+    logMarketplaceReadUnavailable("public-job-detail", error);
     notFound();
   }
-
-  const [row] = await attachEmployerProfiles([data as JobRow]);
-  return mapPublicJobRow(row);
 }
 
 export async function listPendingFreelancerProfilesForAdmin() {
