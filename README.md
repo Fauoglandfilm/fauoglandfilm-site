@@ -107,3 +107,11 @@ For å teste auth-flyten lokalt:
 ## Deploy
 
 Vercel deployer automatisk når nye commits pushes til GitHub-repoet.
+
+Etter deploy kan Frilanseren production-sjekkes uten secrets på:
+
+```bash
+curl https://fauoglandfilm.com/api/frilanseren/health
+```
+
+Endpointen returnerer `200` når Supabase-env og markedsplasstabeller er klare, og `503` med konkrete mangler når production fortsatt venter på env eller migrasjon.
