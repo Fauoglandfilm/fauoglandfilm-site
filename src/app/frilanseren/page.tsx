@@ -1,40 +1,117 @@
-import Link from "next/link";
-
-import { RoleSelector } from "@/components/frilanseren/role-selector";
+import { EmployerCard } from "@/components/frilanseren/employer-card";
+import { FreelancerCard } from "@/components/frilanseren/freelancer-card";
+import { JobCard } from "@/components/frilanseren/job-card";
+import { MarketplaceShell } from "@/components/frilanseren/marketplace-shell";
+import { SearchFilterBar } from "@/components/frilanseren/search-filter-bar";
+import { ButtonLink } from "@/components/ui/button-link";
+import { FREELANCER_ROLE_OPTIONS } from "@/lib/frilanseren/constants";
+import { listPublicEmployers, listPublicFreelancers, listPublicJobs } from "@/lib/frilanseren/market-queries";
 import { buildMetadata } from "@/lib/seo";
 
+export const dynamic = "force-dynamic";
+
 export const metadata = buildMetadata({
-  title: "Frilanseren",
-  description:
-    "Pilotplattform for filmfrilansere og arbeidsgivere med trygg innlogging, profiler og GDPR-flyter.",
+  title: "Filmlanseren",
+  description: "Finn filmarbeidere, jobber og produksjonsselskaper i norsk filmbransje.",
   path: "/frilanseren",
 });
 
-export default function FrilanserenEntryPage() {
+function EmptyPreview({ children }: { children: string }) {
   return (
-    <div className="mx-auto max-w-6xl space-y-10">
-      <section className="max-w-4xl space-y-4">
-        <span className="eyebrow">Pilotplattform</span>
-        <h1 className="font-display text-[clamp(2.4rem,6vw,4.3rem)] leading-[0.94] tracking-[-0.06em] text-[color:var(--foreground)]">
-          Plattform for filmfrilansere og arbeidsgivere
-        </h1>
-        <p className="max-w-3xl text-[1.08rem] leading-8 text-[var(--muted-2)]">
-          Vi bygger en norsk plattform som matcher filmfrilansere og arbeidsgivere – med kontrakter,
-          lønn og personvern ivaretatt fra dag én.
-        </p>
-        <p className="text-sm font-medium text-[var(--muted)]">
-          Første steg er enkelt: vi inviterer inn et utvalg arbeidsgivere og frilansere til pilot.
-        </p>
+    <div className="rounded-[1.4rem] border border-dashed border-[color:var(--line)] bg-[color:var(--surface)]/58 p-6 text-sm text-[var(--muted-2)]">
+      {children}
+    </div>
+  );
+}
+
+export default async function FrilanserenEntryPage() {
+  const [freelancers, jobs, employers] = await Promise.all([
+    listPublicFreelancers({ limit: 6 }),
+    listPublicJobs({ limit: 4 }),
+    listPublicEmployers({ limit: 4 }),
+  ]);
+
+  return (
+    <MarketplaceShell
+      title="Finn filmfolk, jobber og produksjonsselskaper"
+      description="Filmlanseren samler norsk filmbransje i en åpen markedsplass for frilansere, arbeidsgivere og oppdrag."
+      actions={
+        <>
+          <ButtonLink href="/frilanseren/register?role=freelancer">Opprett frilansprofil</ButtonLink>
+          <ButtonLink href="/frilanseren/register?role=employer" variant="ghost">
+            Legg ut jobb
+          </ButtonLink>
+        </>
+      }
+    >
+      <SearchFilterBar
+        action="/frilanseren/frilansere"
+        placeholder="Søk etter fotograf, klipper, produsent..."
+        roleOptions={FREELANCER_ROLE_OPTIONS}
+      />
+
+      <section className="grid gap-4">
+        <div className="flex items-end justify-between gap-4">
+          <div>
+            <h2 className="text-2xl font-semibold tracking-[-0.04em] text-[color:var(--foreground)]">Frilansere</h2>
+            <p className="text-sm text-[var(--muted-2)]">Profiler som er åpne og godkjent.</p>
+          </div>
+          <ButtonLink href="/frilanseren/frilansere" variant="ghost" size="compact">
+            Se alle
+          </ButtonLink>
+        </div>
+        {freelancers.length ? (
+          <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
+            {freelancers.map((profile) => (
+              <FreelancerCard key={profile.user_id} profile={profile} />
+            ))}
+          </div>
+        ) : (
+          <EmptyPreview>Ingen godkjente frilansprofiler er publisert ennå.</EmptyPreview>
+        )}
       </section>
 
-      <RoleSelector />
+      <section className="grid gap-4">
+        <div className="flex items-end justify-between gap-4">
+          <div>
+            <h2 className="text-2xl font-semibold tracking-[-0.04em] text-[color:var(--foreground)]">Åpne jobber</h2>
+            <p className="text-sm text-[var(--muted-2)]">Søk/interesse krever innlogging.</p>
+          </div>
+          <ButtonLink href="/frilanseren/jobber" variant="ghost" size="compact">
+            Se jobber
+          </ButtonLink>
+        </div>
+        {jobs.length ? (
+          <div className="grid gap-4 lg:grid-cols-2">
+            {jobs.map((job) => (
+              <JobCard key={job.id} job={job} />
+            ))}
+          </div>
+        ) : (
+          <EmptyPreview>Ingen åpne jobber er publisert ennå.</EmptyPreview>
+        )}
+      </section>
 
-      <div className="text-center text-sm text-[var(--muted-2)]">
-        Allerede bruker?{" "}
-        <Link href="/frilanseren/login" className="underline underline-offset-4">
-          Logg inn
-        </Link>
-      </div>
-    </div>
+      <section className="grid gap-4">
+        <div className="flex items-end justify-between gap-4">
+          <div>
+            <h2 className="text-2xl font-semibold tracking-[-0.04em] text-[color:var(--foreground)]">Arbeidsgivere</h2>
+            <p className="text-sm text-[var(--muted-2)]">Selskaper som er åpne og godkjent.</p>
+          </div>
+          <ButtonLink href="/frilanseren/arbeidsgivere" variant="ghost" size="compact">
+            Se arbeidsgivere
+          </ButtonLink>
+        </div>
+        {employers.length ? (
+          <div className="grid gap-4 md:grid-cols-2">
+            {employers.map((profile) => (
+              <EmployerCard key={profile.user_id} profile={profile} />
+            ))}
+          </div>
+        ) : (
+          <EmptyPreview>Ingen godkjente arbeidsgivere er publisert ennå.</EmptyPreview>
+        )}
+      </section>
+    </MarketplaceShell>
   );
 }

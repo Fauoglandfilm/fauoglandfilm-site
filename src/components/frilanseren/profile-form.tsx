@@ -8,9 +8,9 @@ import {
   FREELANCER_EXPERIENCE_OPTIONS,
   FREELANCER_ROLE_OPTIONS,
 } from "@/lib/frilanseren/constants";
-import type { EmployerProfile, FreelancerProfile, FrilanserenActionState, UserRole } from "@/lib/frilanseren/types";
 import { initialActionState } from "@/lib/frilanseren/action-state";
 import { updateEmployerProfileAction, updateFreelancerProfileAction } from "@/lib/frilanseren/actions";
+import type { EmployerProfile, FreelancerProfile, FrilanserenActionState, UserRole } from "@/lib/frilanseren/types";
 
 import { SubmitButton } from "./submit-button";
 
@@ -22,6 +22,10 @@ type ProfileFormProps = {
   employerProfile?: EmployerProfile | null;
   freelancerProfile?: FreelancerProfile | null;
 };
+
+function FieldError({ message }: { message?: string }) {
+  return message ? <p className="text-sm text-[#b42318]">{message}</p> : null;
+}
 
 export function ProfileForm({
   role,
@@ -36,12 +40,12 @@ export function ProfileForm({
   const imageLabel = role === "employer" ? "Firmalogo" : "Profilbilde";
 
   return (
-    <form action={formAction} className="space-y-5" encType="multipart/form-data">
+    <form action={formAction} className="space-y-6" encType="multipart/form-data">
       <div className="grid gap-4 md:grid-cols-2">
         <label className="block space-y-2">
           <span className="text-sm font-medium text-[color:var(--foreground)]">Navn</span>
           <input name="full_name" className="form-input" defaultValue={fullName} placeholder="Fornavn Etternavn" />
-          {state.fieldErrors?.full_name ? <p className="text-sm text-[#b42318]">{state.fieldErrors.full_name}</p> : null}
+          <FieldError message={state.fieldErrors?.full_name} />
         </label>
 
         <label className="block space-y-2">
@@ -74,15 +78,22 @@ export function ProfileForm({
               className="form-input file:mr-3 file:rounded-full file:border-0 file:bg-[color:var(--surface)] file:px-3 file:py-2 file:text-sm file:font-medium"
             />
             <p className="text-sm text-[var(--muted)]">Last opp JPG, PNG, WebP eller AVIF. Maks 2 MB.</p>
-            {role === "employer" && state.fieldErrors?.company_logo ? (
-              <p className="text-sm text-[#b42318]">{state.fieldErrors.company_logo}</p>
-            ) : null}
-            {role === "freelancer" && state.fieldErrors?.profile_image ? (
-              <p className="text-sm text-[#b42318]">{state.fieldErrors.profile_image}</p>
-            ) : null}
+            <FieldError message={role === "employer" ? state.fieldErrors?.company_logo : state.fieldErrors?.profile_image} />
           </div>
         </div>
       </div>
+
+      <label className="flex items-start gap-3 rounded-[1rem] border border-[color:var(--line)] bg-[color:var(--surface-muted)]/44 px-4 py-3">
+        <input
+          type="checkbox"
+          name="is_public"
+          className="mt-1"
+          defaultChecked={role === "employer" ? employerProfile?.is_public : freelancerProfile?.is_public}
+        />
+        <span className="text-sm leading-6 text-[color:var(--foreground)]">
+          Gjør profilen synlig i den åpne markedsplassen etter admin-godkjenning
+        </span>
+      </label>
 
       {role === "employer" ? (
         <>
@@ -94,10 +105,40 @@ export function ProfileForm({
               defaultValue={employerProfile?.company_name ?? ""}
               placeholder="Selskap / organisasjon"
             />
-            {state.fieldErrors?.company_name ? (
-              <p className="text-sm text-[#b42318]">{state.fieldErrors.company_name}</p>
-            ) : null}
+            <FieldError message={state.fieldErrors?.company_name} />
           </label>
+
+          <label className="block space-y-2">
+            <span className="text-sm font-medium text-[color:var(--foreground)]">Selskapsbeskrivelse</span>
+            <textarea
+              name="company_description"
+              rows={5}
+              className="form-input min-h-32"
+              defaultValue={employerProfile?.company_description ?? ""}
+              placeholder="Hva produserer dere, og hvilke typer folk leter dere ofte etter?"
+            />
+          </label>
+
+          <div className="grid gap-4 md:grid-cols-2">
+            <label className="block space-y-2">
+              <span className="text-sm font-medium text-[color:var(--foreground)]">Nettside</span>
+              <input
+                name="website_url"
+                type="url"
+                className="form-input"
+                defaultValue={employerProfile?.website_url ?? ""}
+                placeholder="https://"
+              />
+            </label>
+            <label className="block space-y-2">
+              <span className="text-sm font-medium text-[color:var(--foreground)]">By/sted</span>
+              <input name="city" className="form-input" defaultValue={employerProfile?.city ?? ""} placeholder="Oslo" />
+            </label>
+            <label className="block space-y-2">
+              <span className="text-sm font-medium text-[color:var(--foreground)]">Region</span>
+              <input name="region" className="form-input" defaultValue={employerProfile?.region ?? ""} placeholder="Oslo" />
+            </label>
+          </div>
 
           <fieldset className="space-y-3">
             <legend className="text-sm font-medium text-[color:var(--foreground)]">
@@ -119,9 +160,7 @@ export function ProfileForm({
                 </label>
               ))}
             </div>
-            {state.fieldErrors?.production_types ? (
-              <p className="text-sm text-[#b42318]">{state.fieldErrors.production_types}</p>
-            ) : null}
+            <FieldError message={state.fieldErrors?.production_types} />
           </fieldset>
 
           <fieldset className="space-y-3">
@@ -144,13 +183,88 @@ export function ProfileForm({
                 </label>
               ))}
             </div>
-            {state.fieldErrors?.annual_volume ? (
-              <p className="text-sm text-[#b42318]">{state.fieldErrors.annual_volume}</p>
-            ) : null}
+            <FieldError message={state.fieldErrors?.annual_volume} />
           </fieldset>
         </>
       ) : (
         <>
+          <div className="grid gap-4 md:grid-cols-2">
+            <label className="block space-y-2 md:col-span-2">
+              <span className="text-sm font-medium text-[color:var(--foreground)]">Overskrift</span>
+              <input
+                name="headline"
+                className="form-input"
+                defaultValue={freelancerProfile?.headline ?? ""}
+                placeholder="Filmfotograf med dokumentar- og reklameerfaring"
+              />
+            </label>
+            <label className="block space-y-2 md:col-span-2">
+              <span className="text-sm font-medium text-[color:var(--foreground)]">Bio</span>
+              <textarea
+                name="bio"
+                rows={5}
+                className="form-input min-h-32"
+                defaultValue={freelancerProfile?.bio ?? ""}
+                placeholder="Skriv kort om erfaring, type produksjoner og hva du ser etter."
+              />
+            </label>
+            <label className="block space-y-2">
+              <span className="text-sm font-medium text-[color:var(--foreground)]">By/sted</span>
+              <input name="city" className="form-input" defaultValue={freelancerProfile?.city ?? ""} placeholder="Oslo" />
+              <FieldError message={state.fieldErrors?.city} />
+            </label>
+            <label className="block space-y-2">
+              <span className="text-sm font-medium text-[color:var(--foreground)]">Region</span>
+              <input name="region" className="form-input" defaultValue={freelancerProfile?.region ?? ""} placeholder="Oslo" />
+            </label>
+            <label className="block space-y-2">
+              <span className="text-sm font-medium text-[color:var(--foreground)]">Showreel</span>
+              <input
+                name="showreel_url"
+                type="url"
+                className="form-input"
+                defaultValue={freelancerProfile?.showreel_url ?? ""}
+                placeholder="https://"
+              />
+            </label>
+            <label className="block space-y-2">
+              <span className="text-sm font-medium text-[color:var(--foreground)]">Sertifikater</span>
+              <input
+                name="license_tags_text"
+                className="form-input"
+                defaultValue={freelancerProfile?.license_tags.join(", ") ?? ""}
+                placeholder="Førerkort B, drone, lift"
+              />
+            </label>
+            <label className="block space-y-2">
+              <span className="text-sm font-medium text-[color:var(--foreground)]">Dagsats</span>
+              <input
+                name="rate_day"
+                type="number"
+                min="0"
+                className="form-input"
+                defaultValue={freelancerProfile?.rate_day ?? ""}
+                placeholder="6500"
+              />
+            </label>
+            <label className="block space-y-2">
+              <span className="text-sm font-medium text-[color:var(--foreground)]">Timesats</span>
+              <input
+                name="rate_hour"
+                type="number"
+                min="0"
+                className="form-input"
+                defaultValue={freelancerProfile?.rate_hour ?? ""}
+                placeholder="850"
+              />
+            </label>
+          </div>
+
+          <label className="flex items-start gap-3 rounded-[1rem] border border-[color:var(--line)] bg-[color:var(--surface-muted)]/44 px-4 py-3">
+            <input type="checkbox" name="is_available" className="mt-1" defaultChecked={freelancerProfile?.is_available} />
+            <span className="text-sm leading-6 text-[color:var(--foreground)]">Marker meg som ledig for oppdrag</span>
+          </label>
+
           <fieldset className="space-y-3">
             <legend className="text-sm font-medium text-[color:var(--foreground)]">
               Hva jobber du hovedsakelig med?
@@ -171,7 +285,7 @@ export function ProfileForm({
                 </label>
               ))}
             </div>
-            {state.fieldErrors?.roles ? <p className="text-sm text-[#b42318]">{state.fieldErrors.roles}</p> : null}
+            <FieldError message={state.fieldErrors?.roles} />
           </fieldset>
 
           <fieldset className="space-y-3">
@@ -194,9 +308,7 @@ export function ProfileForm({
                 </label>
               ))}
             </div>
-            {state.fieldErrors?.experience_level ? (
-              <p className="text-sm text-[#b42318]">{state.fieldErrors.experience_level}</p>
-            ) : null}
+            <FieldError message={state.fieldErrors?.experience_level} />
           </fieldset>
         </>
       )}
@@ -207,7 +319,7 @@ export function ProfileForm({
         </p>
       ) : null}
 
-      <SubmitButton label="Lagre endringer" pendingLabel="Lagrer …" />
+      <SubmitButton label="Lagre endringer" pendingLabel="Lagrer ..." />
     </form>
   );
 }

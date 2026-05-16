@@ -51,7 +51,7 @@ export const FREELANCER_EXPERIENCE_OPTIONS = [
 
 export const FRILANSEREN_PROTECTED_PATHS = [
   "/frilanseren/dashboard",
-  "/frilanseren/profile",
+  "/frilanseren/dashboard/profil",
   "/frilanseren/admin",
 ] as const;
 

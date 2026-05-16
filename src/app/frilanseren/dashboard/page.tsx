@@ -71,7 +71,7 @@ export default async function FrilanserenDashboardPage({ searchParams }: Frilans
       >
         {message ? <FeedbackBanner message={message} status={status === "error" ? "error" : "success"} /> : null}
         <AuthCard>
-          <ButtonLink href="/frilanseren/profile">Fullfør profilen</ButtonLink>
+          <ButtonLink href="/frilanseren/dashboard/profil">Fullfør profilen</ButtonLink>
         </AuthCard>
       </ProtectedRouteShell>
     );
@@ -97,7 +97,7 @@ export default async function FrilanserenDashboardPage({ searchParams }: Frilans
         <div className="grid gap-6 lg:grid-cols-[1.15fr_0.85fr]">
           <AuthCard
             title="Din profil"
-            footer={<ButtonLink href="/frilanseren/profile">Rediger profil</ButtonLink>}
+            footer={<ButtonLink href="/frilanseren/dashboard/profil">Rediger profil</ButtonLink>}
           >
             <div className="grid gap-5 md:grid-cols-[8rem_1fr]">
               {context.profileImageUrl ? (
@@ -173,7 +173,7 @@ export default async function FrilanserenDashboardPage({ searchParams }: Frilans
       <div className="grid gap-6 lg:grid-cols-[1.15fr_0.85fr]">
         <AuthCard
           title="Din profil"
-          footer={<ButtonLink href="/frilanseren/profile">Rediger profil</ButtonLink>}
+          footer={<ButtonLink href="/frilanseren/dashboard/profil">Rediger profil</ButtonLink>}
         >
           <div className="grid gap-5 md:grid-cols-[8rem_1fr]">
             {context.profileImageUrl ? (
