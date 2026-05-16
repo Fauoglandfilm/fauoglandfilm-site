@@ -49,6 +49,33 @@ function sanitizeSearchTerm(value: string | undefined) {
   return value?.trim().replace(/[,%]/g, " ") || undefined;
 }
 
+type SupabaseReadError = {
+  code?: string;
+  message?: string;
+};
+
+function isMarketplaceSchemaUnavailable(error: SupabaseReadError) {
+  if (!error) {
+    return false;
+  }
+
+  if (["PGRST200", "PGRST204", "PGRST205", "42P01", "42703"].includes(error.code ?? "")) {
+    return true;
+  }
+
+  return /schema cache|column .* does not exist|relation .* does not exist|could not find .* table/i.test(
+    error.message ?? "",
+  );
+}
+
+function logMarketplaceSchemaUnavailable(scope: string, error: SupabaseReadError) {
+  console.error("[frilanseren/market-schema-unavailable]", {
+    scope,
+    code: error.code,
+    message: error.message,
+  });
+}
+
 async function mapFreelancerWithImage(row: FreelancerRow) {
   return {
     ...mapPublicFreelancerRow(row),
@@ -77,6 +104,11 @@ async function getEmployerProfileMap(employerUserIds: string[]) {
     .in("user_id", uniqueIds);
 
   if (error) {
+    if (isMarketplaceSchemaUnavailable(error)) {
+      logMarketplaceSchemaUnavailable("employer-profile-map", error);
+      return new Map<string, Pick<EmployerRow, "slug" | "company_name">>();
+    }
+
     throw error;
   }
 
@@ -122,6 +154,11 @@ export async function listPublicFreelancers(options?: { role?: string; query?: s
   const { data, error } = await query;
 
   if (error) {
+    if (isMarketplaceSchemaUnavailable(error)) {
+      logMarketplaceSchemaUnavailable("public-freelancers", error);
+      return [];
+    }
+
     throw error;
   }
 
@@ -139,6 +176,11 @@ export async function getPublicFreelancerBySlug(slug: string) {
     .maybeSingle();
 
   if (error) {
+    if (isMarketplaceSchemaUnavailable(error)) {
+      logMarketplaceSchemaUnavailable("public-freelancer-detail", error);
+      notFound();
+    }
+
     throw error;
   }
 
@@ -167,6 +209,11 @@ export async function listPublicEmployers(options?: { query?: string; limit?: nu
   const { data, error } = await query;
 
   if (error) {
+    if (isMarketplaceSchemaUnavailable(error)) {
+      logMarketplaceSchemaUnavailable("public-employers", error);
+      return [];
+    }
+
     throw error;
   }
 
@@ -184,6 +231,11 @@ export async function getPublicEmployerBySlug(slug: string) {
     .maybeSingle();
 
   if (error) {
+    if (isMarketplaceSchemaUnavailable(error)) {
+      logMarketplaceSchemaUnavailable("public-employer-detail", error);
+      notFound();
+    }
+
     throw error;
   }
 
@@ -213,6 +265,11 @@ export async function listPublicJobs(options?: { role?: string; query?: string; 
   const { data, error } = await query;
 
   if (error) {
+    if (isMarketplaceSchemaUnavailable(error)) {
+      logMarketplaceSchemaUnavailable("public-jobs", error);
+      return [];
+    }
+
     throw error;
   }
 
@@ -238,6 +295,11 @@ export async function getPublicJobBySlug(slug: string) {
     .maybeSingle();
 
   if (error) {
+    if (isMarketplaceSchemaUnavailable(error)) {
+      logMarketplaceSchemaUnavailable("public-job-detail", error);
+      notFound();
+    }
+
     throw error;
   }
 
@@ -263,6 +325,11 @@ export async function listPendingFreelancerProfilesForAdmin() {
     .order("updated_at", { ascending: false });
 
   if (error) {
+    if (isMarketplaceSchemaUnavailable(error)) {
+      logMarketplaceSchemaUnavailable("admin-pending-freelancers", error);
+      return [];
+    }
+
     throw error;
   }
 
@@ -283,6 +350,11 @@ export async function listPendingEmployerProfilesForAdmin() {
     .order("updated_at", { ascending: false });
 
   if (error) {
+    if (isMarketplaceSchemaUnavailable(error)) {
+      logMarketplaceSchemaUnavailable("admin-pending-employers", error);
+      return [];
+    }
+
     throw error;
   }
 
@@ -303,6 +375,11 @@ export async function listPendingJobsForAdmin() {
     .order("updated_at", { ascending: false });
 
   if (error) {
+    if (isMarketplaceSchemaUnavailable(error)) {
+      logMarketplaceSchemaUnavailable("admin-pending-jobs", error);
+      return [];
+    }
+
     throw error;
   }
 
@@ -323,6 +400,11 @@ export async function listModerationReportsForAdmin() {
     .order("created_at", { ascending: false });
 
   if (error) {
+    if (isMarketplaceSchemaUnavailable(error)) {
+      logMarketplaceSchemaUnavailable("admin-moderation-reports", error);
+      return [];
+    }
+
     throw error;
   }
 
