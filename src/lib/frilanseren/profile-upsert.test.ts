@@ -1,7 +1,7 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 
-import { upsertWithOptionalColumn } from "./profile-upsert.ts";
+import { upsertWithOptionalColumn } from "./profile-upsert";
 
 test("upsertWithOptionalColumn succeeds without fallback when optional column exists", async () => {
   const calls: Array<Record<string, unknown>> = [];

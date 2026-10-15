@@ -39,7 +39,7 @@ export async function createServerComponentClient() {
   );
 }
 
-export function createMiddlewareClient(request: NextRequest) {
+export function createProxyClient(request: NextRequest) {
   let response = NextResponse.next({
     request: {
       headers: request.headers,

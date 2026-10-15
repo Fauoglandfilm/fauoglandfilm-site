@@ -218,7 +218,11 @@ export function Header() {
     }
 
     let cancelled = false;
-    setIsSearchIndexLoading(true);
+    const loadingFrame = window.requestAnimationFrame(() => {
+      if (!cancelled) {
+        setIsSearchIndexLoading(true);
+      }
+    });
 
     void import("@/data/site-content")
       .then(({ caseStudies, serviceAreas, teamMembers }) => {
@@ -273,6 +277,7 @@ export function Header() {
 
     return () => {
       cancelled = true;
+      window.cancelAnimationFrame(loadingFrame);
     };
   }, [language, searchOpen]);
 
@@ -338,13 +343,17 @@ export function Header() {
   }, [open]);
 
   useEffect(() => {
-    if (!usesAnimatedHomepageNavbar || scrolled || open || searchOpen) {
-      setNavbarPeekOpen(false);
+    if (usesAnimatedHomepageNavbar && !scrolled && !open && !searchOpen) {
+      return;
     }
+
+    const frame = window.requestAnimationFrame(() => setNavbarPeekOpen(false));
+    return () => window.cancelAnimationFrame(frame);
   }, [open, scrolled, searchOpen, usesAnimatedHomepageNavbar]);
 
   useEffect(() => {
-    setNavbarPeekOpen(false);
+    const frame = window.requestAnimationFrame(() => setNavbarPeekOpen(false));
+    return () => window.cancelAnimationFrame(frame);
   }, [pathname]);
 
   useEffect(() => {

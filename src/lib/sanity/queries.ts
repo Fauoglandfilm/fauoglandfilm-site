@@ -1,4 +1,4 @@
-import { defineQuery } from "next-sanity";
+import { defineQuery } from "groq";
 
 export const portfolioGroupsQuery = defineQuery(`
   *[_type == "portfolioGroup"] | order(title.no asc) {
