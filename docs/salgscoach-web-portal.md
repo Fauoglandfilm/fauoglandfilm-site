@@ -6,6 +6,12 @@ desktop app.
 
 ## Access model
 
+The portal uses the existing dedicated `Salgcoatch app` Supabase project
+(`lqmiyehmhbuflkacahdg`), not the separate `fauogland-frilanser` project.
+Set server-only `SALGSCOACH_SUPABASE_URL` and `SALGSCOACH_SUPABASE_ANON_KEY`.
+There is deliberately no fallback to `NEXT_PUBLIC_SUPABASE_*`. Its HTTP-only
+session cookie is named `salgscoach-session` and scoped to `/salgscoach`.
+
 Access is deliberately checked twice:
 
 1. `SALGSCOACH_ALLOWED_EMAILS` must contain the signed-in email in Vercel.
@@ -30,12 +36,14 @@ to remove login access.
 
 ## Safe deployment order
 
-1. Confirm the existing Supabase project is reachable and take a database
+1. Confirm the dedicated Salgscoach Supabase project is reachable and take a database
    backup. Stop if the health endpoint is not green.
 2. Run a read-only catalog preflight for existing `calls`, child tables,
    primary keys, unique indexes, RLS policies and the owner/ACL of
    `public.is_salgscoach_member()`. Resolve incompatible objects explicitly;
    never let a migration guess how legacy data should be rewritten.
+   `scripts/salgscoach-production-preflight.sql` provides the read-only catalog
+   query. Export its results and a separate actual data backup before writes.
 3. Review and apply the pending migrations in timestamp order. They include the
    complete desktop schema, the closed `source` allowlist with `wispr_flow`, RLS,
    minimum grants and the Salgscoach membership gate.
@@ -50,5 +58,7 @@ to remove login access.
 7. Enable desktop cloud sync only after a test call has completed every related
    table write successfully.
 
-Do not apply these migrations or enable sync while the production Supabase
-health check reports `supabase_unreachable`.
+Do not apply these migrations or enable sync while the dedicated Salgscoach
+project is paused or unreachable. The separate `/api/frilanseren/health` endpoint
+reports marketplace status; changing its project configuration is outside this
+portal deployment.

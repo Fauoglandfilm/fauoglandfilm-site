@@ -2,7 +2,7 @@ import "server-only";
 
 import { redirect } from "next/navigation";
 
-import { createServerComponentClient } from "@/lib/supabase/serverClient";
+import { createSalgscoachServerClient } from "./supabase";
 
 import { isAllowedSalgscoachEmail } from "./access-policy";
 
@@ -14,7 +14,7 @@ export function isSalgscoachUser(email: string | null | undefined) {
 }
 
 export async function hasActiveSalgscoachMembership(
-  supabase: Awaited<ReturnType<typeof createServerComponentClient>>,
+  supabase: Awaited<ReturnType<typeof createSalgscoachServerClient>>,
   userId: string,
 ) {
   const { data, error } = await supabase
@@ -28,7 +28,7 @@ export async function hasActiveSalgscoachMembership(
 }
 
 export async function requireSalgscoachUser() {
-  const supabase = await createServerComponentClient();
+  const supabase = await createSalgscoachServerClient();
   const {
     data: { user },
   } = await supabase.auth.getUser();

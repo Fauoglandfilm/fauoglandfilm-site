@@ -3,8 +3,8 @@
 import { redirect } from "next/navigation";
 import { z } from "zod";
 
-import { hasSupabaseAuthConfig } from "@/lib/env";
-import { createServerComponentClient } from "@/lib/supabase/serverClient";
+import { hasSalgscoachAuthConfig } from "./config";
+import { createSalgscoachServerClient } from "./supabase";
 
 import {
   hasActiveSalgscoachMembership,
@@ -39,11 +39,11 @@ export async function signInSalgscoachAction(
   });
   const next = safeSalgscoachPath(formData.get("next"));
 
-  if (!parsed.success || !hasSupabaseAuthConfig()) {
+  if (!parsed.success || !hasSalgscoachAuthConfig()) {
     return genericLoginError;
   }
 
-  const supabase = await createServerComponentClient();
+  const supabase = await createSalgscoachServerClient();
   const { data, error } = await supabase.auth.signInWithPassword(parsed.data);
 
   const hasAccess =
@@ -61,8 +61,8 @@ export async function signInSalgscoachAction(
 }
 
 export async function signOutSalgscoachAction() {
-  if (hasSupabaseAuthConfig()) {
-    const supabase = await createServerComponentClient();
+  if (hasSalgscoachAuthConfig()) {
+    const supabase = await createSalgscoachServerClient();
     await supabase.auth.signOut();
   }
   redirect("/salgscoach/login");

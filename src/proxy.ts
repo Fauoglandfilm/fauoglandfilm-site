@@ -1,6 +1,7 @@
 import { NextResponse, type NextRequest } from "next/server";
 
 import { createProxyClient } from "@/lib/supabase/serverClient";
+import { createSalgscoachProxyClient } from "@/lib/salgscoach/supabase";
 
 const protectedPrefixes = [
   "/frilanseren/dashboard",
@@ -30,7 +31,9 @@ export async function proxy(request: NextRequest) {
   }
 
   try {
-    const { supabase, getResponse } = createProxyClient(request);
+    const { supabase, getResponse } = pathname === "/salgscoach" || pathname.startsWith("/salgscoach/")
+      ? createSalgscoachProxyClient(request)
+      : createProxyClient(request);
     const {
       data: { user },
     } = await supabase.auth.getUser();
