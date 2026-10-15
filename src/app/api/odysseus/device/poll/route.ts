@@ -43,6 +43,9 @@ export async function POST(request: Request) {
     updated_at: now,
   });
   if (heartbeatError) {
+    console.error("[ODYSSEUS_PORTAL] heartbeat upsert failed", {
+      code: String(heartbeatError.code ?? "").trim() || "unknown_error",
+    });
     return NextResponse.json({ error: "heartbeat_failed" }, { status: 503 });
   }
 

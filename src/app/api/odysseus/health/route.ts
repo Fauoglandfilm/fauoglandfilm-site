@@ -28,13 +28,16 @@ export async function GET() {
     try {
       const { error } = await createAdminClient()
         .from("odysseus_devices")
-        .select("id")
+        .select("id,name,agent_version,last_seen_at,status_snapshot,created_at,updated_at")
         .limit(1)
         .abortSignal(AbortSignal.timeout(3_000));
-      backend = classifyOdysseusBackendProbe(true, error?.code);
+      backend = classifyOdysseusBackendProbe(
+        true,
+        error ? String(error.code ?? "").trim() || null : undefined,
+      );
       if (error) {
         console.error("[ODYSSEUS_HEALTH] readiness probe failed", {
-          code: error.code,
+          code: String(error.code ?? "").trim() || "unknown_error",
           readinessStatus: odysseusReadinessState(configReady, backend).readinessStatus,
         });
       }

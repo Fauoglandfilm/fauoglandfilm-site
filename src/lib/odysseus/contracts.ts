@@ -62,10 +62,13 @@ export function classifyOdysseusBackendProbe(
   if (!responseReceived) {
     return { backendReady: false, databaseReady: false, tableReady: false };
   }
-  if (!errorCode) {
+  // `undefined` is the only success sentinel. Supabase can return an error
+  // object without a populated PostgREST code (for example on a failed fetch).
+  // Treating an empty code as success created a false-green portal state.
+  if (errorCode === undefined) {
     return { backendReady: true, databaseReady: true, tableReady: true };
   }
-  if (MISSING_PORTAL_TABLE_CODES.has(errorCode)) {
+  if (typeof errorCode === "string" && MISSING_PORTAL_TABLE_CODES.has(errorCode)) {
     return { backendReady: true, databaseReady: true, tableReady: false };
   }
   return { backendReady: true, databaseReady: false, tableReady: false };
