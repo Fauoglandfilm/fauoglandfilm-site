@@ -74,7 +74,8 @@ const nextConfig: NextConfig = {
         headers: [
           { key: "X-Robots-Tag", value: "noindex, nofollow, noarchive" },
           { key: "Cache-Control", value: "private, no-store" },
-          { key: "Referrer-Policy", value: "no-referrer" },
+          // Keep form POST Origin available for CSRF checks; disclose no referrer externally.
+          { key: "Referrer-Policy", value: "same-origin" },
         ],
       },
     ];
