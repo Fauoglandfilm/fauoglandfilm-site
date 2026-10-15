@@ -13,6 +13,20 @@ export function isSalgscoachUser(email: string | null | undefined) {
   );
 }
 
+export async function hasActiveSalgscoachMembership(
+  supabase: Awaited<ReturnType<typeof createServerComponentClient>>,
+  userId: string,
+) {
+  const { data, error } = await supabase
+    .from("salgscoach_members")
+    .select("user_id")
+    .eq("user_id", userId)
+    .eq("active", true)
+    .maybeSingle();
+
+  return !error && data?.user_id === userId;
+}
+
 export async function requireSalgscoachUser() {
   const supabase = await createServerComponentClient();
   const {
@@ -23,6 +37,9 @@ export async function requireSalgscoachUser() {
     redirect("/salgscoach/login");
   }
   if (!isSalgscoachUser(user.email)) {
+    redirect("/salgscoach/login?error=no_access");
+  }
+  if (!(await hasActiveSalgscoachMembership(supabase, user.id))) {
     redirect("/salgscoach/login?error=no_access");
   }
 

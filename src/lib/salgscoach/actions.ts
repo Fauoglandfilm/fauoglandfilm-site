@@ -6,7 +6,10 @@ import { z } from "zod";
 import { hasSupabaseAuthConfig } from "@/lib/env";
 import { createServerComponentClient } from "@/lib/supabase/serverClient";
 
-import { isSalgscoachUser } from "./access";
+import {
+  hasActiveSalgscoachMembership,
+  isSalgscoachUser,
+} from "./access";
 import { safeSalgscoachPath } from "./access-policy";
 
 export type SalgscoachAuthState = {
@@ -43,7 +46,13 @@ export async function signInSalgscoachAction(
   const supabase = await createServerComponentClient();
   const { data, error } = await supabase.auth.signInWithPassword(parsed.data);
 
-  if (error || !isSalgscoachUser(data.user?.email)) {
+  const hasAccess =
+    !error &&
+    Boolean(data.user?.id) &&
+    isSalgscoachUser(data.user?.email) &&
+    (await hasActiveSalgscoachMembership(supabase, data.user!.id));
+
+  if (!hasAccess) {
     await supabase.auth.signOut();
     return genericLoginError;
   }

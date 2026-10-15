@@ -11,6 +11,7 @@ const dashboardUrl = new URL(
   import.meta.url,
 );
 const loginActionUrl = new URL("./actions.ts", import.meta.url);
+const accessUrl = new URL("./access.ts", import.meta.url);
 const loginFormUrl = new URL(
   "../../components/salgscoach/login-form.tsx",
   import.meta.url,
@@ -88,6 +89,19 @@ test("calls er låst til aktivt Salgscoach-medlem med RLS og minste privilegier"
     migration,
     /using \([\s\S]*?auth\.uid\(\)[\s\S]*?is_salgscoach_member\(\)[\s\S]*?\)\s+with check \([\s\S]*?auth\.uid\(\)[\s\S]*?is_salgscoach_member\(\)/i,
   );
+});
+
+test("webtilgang krever aktivt databasemedlemskap i tillegg til e-postallowlist", async () => {
+  const [access, actions] = await Promise.all([
+    readFile(accessUrl, "utf8"),
+    readFile(loginActionUrl, "utf8"),
+  ]);
+
+  assert.match(access, /\.from\("salgscoach_members"\)/);
+  assert.match(access, /\.eq\("user_id", userId\)/);
+  assert.match(access, /\.eq\("active", true\)/);
+  assert.match(access, /hasActiveSalgscoachMembership\(supabase, user\.id\)/);
+  assert.match(actions, /hasActiveSalgscoachMembership\(supabase, data\.user!\.id\)/);
 });
 
 test("dashboardspørringen har eksplisitt eierfilter i tillegg til RLS", async () => {
