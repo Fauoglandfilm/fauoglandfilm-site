@@ -3,16 +3,10 @@ import { NextResponse, type NextRequest } from "next/server";
 import { createServerClient } from "@supabase/ssr";
 
 import { hasSupabaseAuthConfig } from "@/lib/env";
+import { safeRedirectPath } from "@/lib/safe-redirect";
 
 const DEFAULT_NEXT = "/frilanseren/dashboard";
 const FAILURE_REDIRECT = "/frilanseren/login?error=auth_failed";
-
-function safeNextPath(raw: string | null): string {
-  if (!raw) return DEFAULT_NEXT;
-  // Only allow same-origin relative paths. Block "//evil.com" and absolute URLs.
-  if (!raw.startsWith("/") || raw.startsWith("//")) return DEFAULT_NEXT;
-  return raw;
-}
 
 function requireEnv(name: "NEXT_PUBLIC_SUPABASE_URL" | "NEXT_PUBLIC_SUPABASE_ANON_KEY") {
   const value = process.env[name];
@@ -22,7 +16,7 @@ function requireEnv(name: "NEXT_PUBLIC_SUPABASE_URL" | "NEXT_PUBLIC_SUPABASE_ANO
 
 export async function GET(request: NextRequest) {
   const requestUrl = new URL(request.url);
-  const next = safeNextPath(requestUrl.searchParams.get("next"));
+  const next = safeRedirectPath(requestUrl.searchParams.get("next"), DEFAULT_NEXT);
   const tokenHash = requestUrl.searchParams.get("token_hash");
   const type = requestUrl.searchParams.get("type");
   const code = requestUrl.searchParams.get("code");

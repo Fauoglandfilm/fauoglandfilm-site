@@ -1,9 +1,8 @@
 import { createHash, randomUUID } from "node:crypto";
 import { NextResponse } from "next/server";
 import { allowedBridgePath, BodyTooLarge, readLimitedBody, sameOrigin } from "@/lib/kulturarena/policy";
-import { authorizedKulturarenaUser, loadKulturarenaState } from "@/lib/kulturarena/server";
+import { authorizedKulturarenaUser, kulturarenaAdminClient, loadKulturarenaState } from "@/lib/kulturarena/server";
 import { DEVICE, SYSTEM, TENANT, seal, unseal, type Envelope } from "@/lib/kulturarena/crypto";
-import { createAdminClient } from "@/lib/supabase/serverClient";
 export const dynamic = "force-dynamic";
 export const runtime = "nodejs";
 export const maxDuration = 30;
@@ -19,7 +18,7 @@ async function proxy(request: Request, context: Context) {
   if (!path || path === "system" || path === "health") return NextResponse.json({ error: "Ikke funnet" }, { status: 404, headers });
   try {
     if (path === "state") return NextResponse.json(await loadKulturarenaState(), { headers });
-    const admin = createAdminClient().schema("kulturarena_portal");
+    const admin = kulturarenaAdminClient().schema("kulturarena_portal");
     if (commandId) {
       const { data, error } = await admin.from("commands").select("id,status,encrypted_result").eq("id", commandId).eq("tenant_id", TENANT).eq("device_id", DEVICE).eq("created_by", user.id).maybeSingle();
       if (error || !data) return NextResponse.json({ error: "Ikke funnet" }, { status: 404, headers });

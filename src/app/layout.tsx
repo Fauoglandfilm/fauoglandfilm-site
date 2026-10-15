@@ -2,13 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { Manrope, Playfair_Display, Sora } from "next/font/google";
 import Script from "next/script";
 
-import { CookieBanner } from "@/components/layout/cookie-banner";
-import { SitePreferencesProvider } from "@/components/providers/site-preferences";
-import { CookieConsentProvider } from "@/components/providers/cookie-consent";
-import { Footer } from "@/components/layout/footer";
-import { Header } from "@/components/layout/header";
-import { TrackingScripts } from "@/components/layout/tracking-scripts";
-import { OrganizationStructuredData } from "@/components/seo/organization-structured-data";
+import { SiteFrame } from "@/components/layout/site-frame";
 import { siteConfig } from "@/data/site-content";
 import { buildMetadata } from "@/lib/seo";
 
@@ -81,18 +75,7 @@ export default function RootLayout({
           strategy="beforeInteractive"
           dangerouslySetInnerHTML={{ __html: preferenceBootScript }}
         />
-        <OrganizationStructuredData />
-        <SitePreferencesProvider>
-          <CookieConsentProvider>
-            <TrackingScripts />
-            <div className="relative min-h-screen overflow-x-clip">
-              <Header />
-              {children}
-              <Footer />
-            </div>
-            <CookieBanner />
-          </CookieConsentProvider>
-        </SitePreferencesProvider>
+        <SiteFrame>{children}</SiteFrame>
       </body>
     </html>
   );

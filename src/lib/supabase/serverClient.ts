@@ -14,12 +14,14 @@ function requiredEnv(name: "NEXT_PUBLIC_SUPABASE_URL" | "NEXT_PUBLIC_SUPABASE_AN
   return value;
 }
 
-export async function createServerComponentClient(scope?: { name: string; path: string }) {
+type Connection = { url: string; key: string };
+
+export async function createServerComponentClient(scope?: { name: string; path: string }, connection?: Connection) {
   const cookieStore = await cookies();
 
   return createServerClient(
-    requiredEnv("NEXT_PUBLIC_SUPABASE_URL"),
-    requiredEnv("NEXT_PUBLIC_SUPABASE_ANON_KEY"),
+    connection?.url ?? requiredEnv("NEXT_PUBLIC_SUPABASE_URL"),
+    connection?.key ?? requiredEnv("NEXT_PUBLIC_SUPABASE_ANON_KEY"),
     {
       ...(scope ? { cookieOptions: { name: scope.name, path: scope.path, httpOnly: true, secure: process.env.NODE_ENV === "production", sameSite: "lax" as const } } : {}),
       cookies: {
@@ -40,7 +42,7 @@ export async function createServerComponentClient(scope?: { name: string; path: 
   );
 }
 
-export function createMiddlewareClient(request: NextRequest) {
+export function createProxyClient(request: NextRequest) {
   let response = NextResponse.next({
     request: {
       headers: request.headers,
@@ -82,10 +84,10 @@ export function createMiddlewareClient(request: NextRequest) {
   };
 }
 
-export function createAdminClient() {
+export function createAdminClient(connection?: Connection) {
   return createSupabaseClient(
-    requiredEnv("NEXT_PUBLIC_SUPABASE_URL"),
-    requiredEnv("SUPABASE_SERVICE_ROLE_KEY"),
+    connection?.url ?? requiredEnv("NEXT_PUBLIC_SUPABASE_URL"),
+    connection?.key ?? requiredEnv("SUPABASE_SERVICE_ROLE_KEY"),
     {
       auth: {
         autoRefreshToken: false,

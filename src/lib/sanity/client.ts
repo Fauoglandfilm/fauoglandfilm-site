@@ -1,4 +1,4 @@
-import { createClient } from "next-sanity";
+import { createClient } from "@sanity/client";
 
 import { appEnv } from "@/lib/env";
 import { apiVersion, dataset, isSanityEnabled, projectId } from "@/lib/sanity/env";

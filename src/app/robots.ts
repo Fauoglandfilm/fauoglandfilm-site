@@ -8,7 +8,7 @@ export default function robots(): MetadataRoute.Robots {
       {
         userAgent: "*",
         allow: "/",
-        disallow: ["/pitch", "/kulturarena"],
+        disallow: ["/pitch", "/kulturarena", "/salgscoach"],
       },
     ],
     sitemap: absoluteUrl("/sitemap.xml"),

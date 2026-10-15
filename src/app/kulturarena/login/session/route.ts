@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { hasKulturarenaAuthConfig, kulturarenaClient } from "@/lib/kulturarena/server";
-import { BodyTooLarge, KULTURARENA_USERNAME, readLimitedBody, sameOrigin } from "@/lib/kulturarena/policy";
+import { BodyTooLarge, readLimitedBody, sameOrigin } from "@/lib/kulturarena/policy";
+import { authorizedKulturarenaMember, kulturarenaMembers, resolveKulturarenaLogin } from "@/lib/kulturarena/access";
 
 export const dynamic = "force-dynamic";
 
@@ -19,10 +20,11 @@ export async function POST(request: Request) {
     const form = new URLSearchParams(await readLimitedBody(request, 4096));
     const username = String(form.get("username") || "").trim().toLowerCase();
     const password = String(form.get("password") || "");
-    if (username !== KULTURARENA_USERNAME || password.length < 1 || password.length > 512) return denied(request);
+    const members = kulturarenaMembers(), member = resolveKulturarenaLogin(username, members);
+    if (!member || password.length < 1 || password.length > 512) return denied(request);
     const supabase = await kulturarenaClient();
-    const { data, error } = await supabase.auth.signInWithPassword({ email: process.env.KULTURARENA_LOGIN_EMAIL!, password });
-    if (error || !data.user || data.user.id !== process.env.KULTURARENA_USER_ID) {
+    const { data, error } = await supabase.auth.signInWithPassword({ email: member.email, password });
+    if (error || data.user?.id !== member.user_id || !authorizedKulturarenaMember(data.user, members)) {
       if (data.session) await supabase.auth.signOut({ scope: "local" });
       return denied(request);
     }
