@@ -1,31 +1,20 @@
 import "server-only";
 
-import { getFrilanserenAdminEmails } from "@/lib/env";
+import { resolveOdysseusOwnerConfig } from "./contracts";
 
-const DEFAULT_OWNER_USERNAME = "tommy";
-
-function normalized(value: string | null | undefined) {
-  return String(value ?? "").trim().toLowerCase();
-}
+export { ODYSSEUS_DEVICE_ID } from "./contracts";
 
 export function getOdysseusOwnerConfig() {
-  const username = normalized(process.env.ODYSSEUS_OWNER_USERNAME) || DEFAULT_OWNER_USERNAME;
-  const configuredEmail = normalized(process.env.ODYSSEUS_OWNER_EMAIL);
-  const inheritedAdmin = getFrilanserenAdminEmails()[0] ?? "";
-
-  return {
-    username,
-    email: configuredEmail || inheritedAdmin,
-    ready: Boolean(configuredEmail || inheritedAdmin),
-  };
+  return resolveOdysseusOwnerConfig(
+    process.env.ODYSSEUS_OWNER_USERNAME,
+    process.env.ODYSSEUS_OWNER_EMAIL,
+  );
 }
 
 export function isOdysseusOwnerEmail(email: string | null | undefined) {
   const owner = getOdysseusOwnerConfig();
-  return owner.ready && normalized(email) === owner.email;
+  return owner.ready && String(email ?? "").trim().toLowerCase() === owner.email;
 }
-
-export const ODYSSEUS_DEVICE_ID = "mac-2";
 
 export const ODYSSEUS_COMMANDS = [
   "pause_system",

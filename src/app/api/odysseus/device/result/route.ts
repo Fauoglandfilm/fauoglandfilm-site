@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { z } from "zod";
 
 import { hasSupabaseAdminConfig } from "@/lib/env";
+import { runningOdysseusCommandScope } from "@/lib/odysseus/contracts";
 import { authenticateOdysseusDevice } from "@/lib/odysseus/device-auth";
 import { createAdminClient } from "@/lib/supabase/serverClient";
 
@@ -30,6 +31,7 @@ export async function POST(request: Request) {
 
   const admin = createAdminClient();
   const now = new Date().toISOString();
+  const scope = runningOdysseusCommandScope(parsed.data.command_id);
   const { data, error } = await admin
     .from("odysseus_commands")
     .update({
@@ -38,8 +40,9 @@ export async function POST(request: Request) {
       error_code: parsed.data.error_code ?? null,
       completed_at: now,
     })
-    .eq("id", parsed.data.command_id)
-    .eq("status", "running")
+    .eq("id", scope.id)
+    .eq("device_id", scope.deviceId)
+    .eq("status", scope.status)
     .select("id,action,status")
     .maybeSingle();
   if (error || !data) {
