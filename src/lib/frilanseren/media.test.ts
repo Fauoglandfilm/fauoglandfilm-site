@@ -1,7 +1,7 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 
-import { buildProfileImagePath, inferImageExtension, validateImageFile } from "./media.ts";
+import { buildProfileImagePath, inferImageExtension, validateImageFile } from "./media";
 
 test("image validation accepts supported files within size limit", () => {
   const file = new File(["demo"], "portrett.webp", { type: "image/webp" });

@@ -6,7 +6,7 @@ import {
   findMatchingUserByEmail,
   looksLikeObfuscatedExistingUser,
   mapRegistrationErrorMessage,
-} from "./signup.ts";
+} from "./signup";
 
 test("findMatchingUserByEmail matches existing emails case-insensitively", () => {
   const match = findMatchingUserByEmail(

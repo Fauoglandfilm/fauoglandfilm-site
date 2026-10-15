@@ -7,12 +7,12 @@ import {
   FREELANCER_EXPERIENCE_OPTIONS,
   FREELANCER_ROLE_OPTIONS,
   ROLE_OPTIONS,
-} from "./constants.ts";
+} from "./constants";
 import {
   employerRegistrationSchema,
   freelancerRegistrationSchema,
   loginSchema,
-} from "./validation.ts";
+} from "./validation";
 
 test("constants expose the supported Frilanseren role and profile options", () => {
   assert.deepEqual(ROLE_OPTIONS.map((option) => option.value), ["employer", "freelancer"]);

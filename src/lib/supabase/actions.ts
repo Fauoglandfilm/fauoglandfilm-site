@@ -12,6 +12,7 @@ import {
 
 import { absoluteAuthUrl } from "./auth";
 import { createServerComponentClient } from "./serverClient";
+import { safeRedirectPath } from "@/lib/safe-redirect";
 
 const loginErrorState: FrilanserenActionState = {
   status: "error",
@@ -27,16 +28,6 @@ function authUnavailableState(): FrilanserenActionState {
     message:
       "Innlogging er midlertidig utilgjengelig. Vi jobber med å få det opp igjen. Prøv igjen om litt.",
   };
-}
-
-function getSafeRedirectTarget(value: FormDataEntryValue | null) {
-  const target = String(value ?? "").trim();
-
-  if (!target.startsWith("/") || target.startsWith("//")) {
-    return "/frilanseren/dashboard";
-  }
-
-  return target;
 }
 
 function issueMapToFieldErrors(error: {
@@ -93,7 +84,7 @@ export async function signInWithPasswordAction(
     return loginErrorState;
   }
 
-  redirect(getSafeRedirectTarget(formData.get("next")));
+  redirect(safeRedirectPath(formData.get("next"), "/frilanseren/dashboard"));
 }
 
 export async function requestPasswordResetAction(
