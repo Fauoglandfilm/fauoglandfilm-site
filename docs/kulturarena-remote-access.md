@@ -100,3 +100,13 @@ it does not become a second writable CRM database. Existing local/Drive
 versioned backup remains authoritative for restore. Plaintext passwords and
 secret key files are deliberately excluded; credentials can be re-provisioned
 and encrypted cloud views regenerated from the restored local CRM.
+
+## Rollback
+
+Stop only the Kulturarena agent and revoke only its device token/owner access.
+Keep both tenants' databases and audit records intact. If the website change
+must be reverted, deploy the previously validated site commit through the
+existing hosting workflow; do not reset or restart Fau&Land services. Restore
+only Kulturarena from its verified consistent private-Drive backup, retaining
+the single-master guard. Re-provision Kulturarena secrets and repeat the
+hosted isolation and another-network checks before enabling access again.
