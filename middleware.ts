@@ -2,7 +2,12 @@ import { NextResponse, type NextRequest } from "next/server";
 
 import { createMiddlewareClient } from "@/lib/supabase/serverClient";
 
-const protectedPrefixes = ["/frilanseren/dashboard", "/frilanseren/profile", "/frilanseren/admin"] as const;
+const protectedPrefixes = [
+  "/frilanseren/dashboard",
+  "/frilanseren/profile",
+  "/frilanseren/admin",
+  "/odysseus",
+] as const;
 
 function isProtectedPath(pathname: string) {
   return protectedPrefixes.some((prefix) => pathname.startsWith(prefix));
@@ -10,6 +15,9 @@ function isProtectedPath(pathname: string) {
 
 export async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
+  if (pathname === "/odysseus/login" || pathname === "/odysseus/forgot-password") {
+    return NextResponse.next();
+  }
   const isProtected = isProtectedPath(pathname);
 
   if (!isProtected) {
@@ -34,7 +42,10 @@ export async function middleware(request: NextRequest) {
     // Fall through to login redirect so we never return a blind 500 from middleware.
   }
 
-  const loginUrl = new URL("/frilanseren/login", request.url);
+  const loginUrl = new URL(
+    pathname.startsWith("/odysseus") ? "/odysseus/login" : "/frilanseren/login",
+    request.url,
+  );
   const nextPath = `${request.nextUrl.pathname}${request.nextUrl.search}`;
 
   if (nextPath && nextPath.startsWith("/")) {
@@ -45,5 +56,10 @@ export async function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/frilanseren/dashboard/:path*", "/frilanseren/profile/:path*", "/frilanseren/admin/:path*"],
+  matcher: [
+    "/frilanseren/dashboard/:path*",
+    "/frilanseren/profile/:path*",
+    "/frilanseren/admin/:path*",
+    "/odysseus/:path*",
+  ],
 };
