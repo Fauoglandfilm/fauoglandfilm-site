@@ -4,6 +4,10 @@ import { z } from "zod";
 import { hasSupabaseAdminConfig } from "@/lib/env";
 import { authenticateOdysseusDevice } from "@/lib/odysseus/device-auth";
 import { ODYSSEUS_DEVICE_ID } from "@/lib/odysseus/config";
+import {
+  expiredOdysseusCommandUpdate,
+  odysseusCommandLeaseCutoff,
+} from "@/lib/odysseus/contracts";
 import { createAdminClient } from "@/lib/supabase/serverClient";
 
 export const runtime = "nodejs";
@@ -42,6 +46,37 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: "heartbeat_failed" }, { status: 503 });
   }
 
+  // A command whose result is ambiguous must never be executed again
+  // automatically. Expire it to a terminal state and require an explicit new
+  // owner action after the local outcome has been verified.
+  const { data: expired, error: leaseError } = await admin
+    .from("odysseus_commands")
+    .update(expiredOdysseusCommandUpdate(now))
+    .eq("device_id", ODYSSEUS_DEVICE_ID)
+    .eq("status", "running")
+    .lt("started_at", odysseusCommandLeaseCutoff())
+    .select("id,action");
+  if (leaseError) {
+    return NextResponse.json({ error: "lease_recovery_failed" }, { status: 503 });
+  }
+  if (expired?.length) {
+    const { error: auditError } = await admin.from("odysseus_audit_logs").insert(
+      expired.map((command) => ({
+        event_type: "command_lease_expired",
+        command_id: command.id,
+        detail: {
+          action: command.action,
+          retry_policy: "no_automatic_retry",
+        },
+      })),
+    );
+    if (auditError) {
+      console.error("[ODYSSEUS_PORTAL] failed to audit expired command leases", {
+        commandIds: expired.map((command) => command.id),
+      });
+    }
+  }
+
   const { data: queued, error: queueError } = await admin
     .from("odysseus_commands")
     .select("id,action,payload,created_at")
@@ -50,7 +85,10 @@ export async function POST(request: Request) {
     .order("created_at", { ascending: true })
     .limit(1)
     .maybeSingle();
-  if (queueError || !queued) {
+  if (queueError) {
+    return NextResponse.json({ error: "queue_read_failed" }, { status: 503 });
+  }
+  if (!queued) {
     return NextResponse.json({ ok: true, command: null });
   }
 

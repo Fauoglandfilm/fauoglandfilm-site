@@ -3,6 +3,10 @@ import type { Metadata } from "next";
 import { OdysseusAutoRefresh } from "@/components/odysseus/auto-refresh";
 import { enqueueOdysseusCommand, signOutOdysseusAction } from "@/lib/odysseus/actions";
 import { requireOdysseusOwner } from "@/lib/odysseus/auth";
+import {
+  ODYSSEUS_NAV_ITEMS,
+  readBoundedDailySendLimit,
+} from "@/lib/odysseus/contracts";
 import { loadOdysseusPortalState } from "@/lib/odysseus/data";
 
 export const dynamic = "force-dynamic";
@@ -39,6 +43,7 @@ export default async function OdysseusPage() {
   const commercial = objectAt(crm.commercial);
   const counters = objectAt(crm.counters);
   const control = objectAt(state.snapshot.system_control);
+  const dailySendLimit = readBoundedDailySendLimit(crm.daily_send_limit);
 
   return (
     <div className="mx-auto max-w-7xl space-y-7">
@@ -55,8 +60,8 @@ export default async function OdysseusPage() {
       {!state.configured ? <div className="rounded-2xl border border-amber-400/30 bg-amber-400/10 p-5 text-amber-100">Portaldatabasen er ikke ferdig aktivert: {state.error}</div> : null}
 
       <nav className="flex gap-2 overflow-x-auto pb-2 text-sm">
-        {["Oversikt", "Salg", "Utkast", "Oppfølging", "CRM-synk", "System", "Innstillinger", "Hendelser"].map((label) => (
-          <a key={label} href={`#${label.toLowerCase().replace("-", "")}`} className="whitespace-nowrap rounded-full border border-white/10 bg-white/[0.04] px-4 py-2 text-white/70">{label}</a>
+        {ODYSSEUS_NAV_ITEMS.map((item) => (
+          <a key={item.href} href={item.href} className="whitespace-nowrap rounded-full border border-white/10 bg-white/[0.04] px-4 py-2 text-white/70">{item.label}</a>
         ))}
       </nav>
 
@@ -111,9 +116,12 @@ export default async function OdysseusPage() {
         </article>
         <article id="innstillinger" className="rounded-[1.8rem] border border-white/10 bg-white/[0.055] p-6">
           <h2 className="text-2xl font-semibold tracking-[-0.04em]">Innstillinger</h2>
+          <p className="mt-2 text-sm text-white/50">
+            Gjeldende grense: {dailySendLimit ?? "Ikke tilgjengelig"}
+          </p>
           <form action={enqueueOdysseusCommand} className="mt-5 flex items-end gap-3">
             <input type="hidden" name="action" value="set_daily_send_limit" />
-            <label className="flex-1 text-sm text-white/60">Daglig utsendelsesgrense<input name="daily_limit" type="number" min="1" max="50" defaultValue={10} className="mt-2 w-full rounded-xl border border-white/15 bg-black/30 px-4 py-3 text-white" /></label>
+            <label className="flex-1 text-sm text-white/60">Daglig utsendelsesgrense<input name="daily_limit" type="number" min="1" max="50" defaultValue={dailySendLimit ?? undefined} placeholder={dailySendLimit ? undefined : "1–50"} className="mt-2 w-full rounded-xl border border-white/15 bg-black/30 px-4 py-3 text-white" /></label>
             <button className="rounded-xl bg-white px-4 py-3 font-semibold text-black">Lagre</button>
           </form>
         </article>
