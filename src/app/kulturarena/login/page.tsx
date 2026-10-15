@@ -10,8 +10,8 @@ export default async function KulturarenaLogin({ searchParams }: { searchParams:
     <main style={{ minHeight: "100dvh", display: "grid", placeItems: "center", background: "#f4f2ec", color: "#192a38", padding: "32px 20px" }}>
       <div style={{ width: "100%", maxWidth: 460 }}>
         <p style={{ fontSize: 12, fontWeight: 800, letterSpacing: "0.2em", color: "#a74332", textTransform: "uppercase", marginBottom: 22 }}>Kulturarena / salgssystem</p>
-        <h1 style={{ fontSize: 42, lineHeight: 1.1, letterSpacing: "-0.05em", marginBottom: 14 }}>Arbeidet følger deg.</h1>
-        <p style={{ color: "#63717b", lineHeight: 1.7, marginBottom: 28 }}>Din private oversikt over kunder, arrangementer og neste handling.</p>
+        <h1 style={{ fontSize: 36, lineHeight: 1.1, letterSpacing: "-0.04em", marginBottom: 14 }}>Kulturarena</h1>
+        <p style={{ color: "#63717b", lineHeight: 1.7, marginBottom: 28 }}>Kunder, eventer og oppgaver. Ett sted.</p>
         <form method="post" action="/kulturarena/login/session" style={{ background: "white", border: "1px solid #dddeda", borderRadius: 12, padding: 28, display: "grid", gap: 18 }}>
           <label style={{ display: "grid", gap: 7, fontSize: 13 }}>Brukernavn<input name="username" defaultValue={KULTURARENA_USERNAME} autoComplete="username" required maxLength={80} style={{ padding: "12px 14px", border: "1px solid #ccd1d1", borderRadius: 6, fontSize: 16 }} /></label>
           <label style={{ display: "grid", gap: 7, fontSize: 13 }}>Passord<input name="password" type="password" autoComplete="current-password" required maxLength={512} style={{ padding: "12px 14px", border: "1px solid #ccd1d1", borderRadius: 6, fontSize: 16 }} /></label>

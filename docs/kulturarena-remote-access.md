@@ -3,6 +3,13 @@
 Intended entry point: https://fauoglandfilm.com/kulturarena
 Dedicated username: tommy.kulturarena
 
+The public site has one Kulturarena navigation entry leading to its own login.
+The private interface and the Excel workbook use only three work areas:
+Kunder, Eventer and Oppgaver. Tables show the next action and date first;
+contact details, notes, AI drafts and optional financial fields open on demand.
+File downloads, backup details and activity stay under one help disclosure.
+The active workbook is Kulturarena CRM.xlsx in the private project folder.
+
 Status: prepared, not activated. This source does not create an account, apply
 SQL, configure production credentials or start the agent. Fau&Land portal
 readiness must be proven with a real database and command round trip first.
