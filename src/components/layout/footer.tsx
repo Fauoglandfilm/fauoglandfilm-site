@@ -23,6 +23,7 @@ import { FooterBackgroundGradient, TextHoverEffect } from "@/components/ui/hover
 import { navItems, siteConfig } from "@/data/site-content";
 import { uiCopy } from "@/data/ui-copy";
 import { resolveLocalizedValue } from "@/lib/i18n";
+import { isKulturarenaPath } from "@/lib/kulturarena/policy";
 
 const footerNavOrder = ["/tjenester", "/case", "/om-oss", "/faq", "/kontakt"] as const;
 type FooterThemeVarMap = Record<`--${string}`, string>;
@@ -163,7 +164,7 @@ export function Footer() {
   const hidesGlobalChrome =
     pathname?.startsWith("/pitch") ||
     pathname?.startsWith("/some-plan/view") ||
-    pathname?.startsWith("/frilanseren");
+    pathname?.startsWith("/frilanseren") || isKulturarenaPath(pathname);
   const footerThemeStyle = FOOTER_THEME_VARS[theme] as CSSProperties;
   const footerNavItems = footerNavOrder
     .map((href) => navItems.find((item) => item.href === href))

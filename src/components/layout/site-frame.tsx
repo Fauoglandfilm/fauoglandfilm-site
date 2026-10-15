@@ -11,7 +11,7 @@ import { CookieConsentProvider } from "@/components/providers/cookie-consent";
 import { SitePreferencesProvider } from "@/components/providers/site-preferences";
 import { OrganizationStructuredData } from "@/components/seo/organization-structured-data";
 
-const privatePortalPrefixes = ["/odysseus", "/salgscoach"] as const;
+const privatePortalPrefixes = ["/odysseus", "/salgscoach", "/kulturarena"] as const;
 
 export function isPrivatePortalPath(pathname: string) {
   return privatePortalPrefixes.some(

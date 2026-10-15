@@ -1,6 +1,8 @@
 "use client";
 
 import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { isKulturarenaPath } from "@/lib/kulturarena/policy";
 
 import { useCookieConsent } from "@/components/providers/cookie-consent";
 import { useSitePreferences } from "@/components/providers/site-preferences";
@@ -110,6 +112,7 @@ function PreferenceCard({
 }
 
 export function CookieBanner() {
+  const pathname = usePathname();
   const { language } = useSitePreferences();
   const {
     acceptAll,
@@ -128,6 +131,8 @@ export function CookieBanner() {
   };
 
   const showBanner = !hasMadeChoice;
+
+  if (isKulturarenaPath(pathname)) return null;
 
   return (
     <>

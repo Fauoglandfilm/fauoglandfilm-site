@@ -5,6 +5,7 @@ import { usePathname } from "next/navigation";
 import Script from "next/script";
 
 import { useCookieConsent } from "@/components/providers/cookie-consent";
+import { isKulturarenaPath } from "@/lib/kulturarena/policy";
 
 const GA4_ID = "G-D813C0VRPC";
 const META_PIXEL_ID = process.env.NEXT_PUBLIC_META_PIXEL_ID;
@@ -95,10 +96,10 @@ export function TrackingScripts() {
 
     (
       window as unknown as Record<`ga-disable-${string}`, boolean | undefined>
-    )[`ga-disable-${GA4_ID}`] = !analyticsEnabled;
-  }, [analyticsEnabled]);
+    )[`ga-disable-${GA4_ID}`] = !analyticsEnabled || isKulturarenaPath(pathname);
+  }, [analyticsEnabled, pathname]);
 
-  if (pathname?.startsWith("/frilanseren")) {
+  if (pathname?.startsWith("/frilanseren") || isKulturarenaPath(pathname)) {
     return null;
   }
 

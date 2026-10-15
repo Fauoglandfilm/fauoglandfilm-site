@@ -18,6 +18,7 @@ import { navItems } from "@/data/site-content";
 import { uiCopy } from "@/data/ui-copy";
 import { resolveLocalizedValue } from "@/lib/i18n";
 import { cn } from "@/lib/utils";
+import { isKulturarenaPath } from "@/lib/kulturarena/policy";
 
 type SegmentedToggleOption<T extends string> = {
   label?: string;
@@ -169,7 +170,7 @@ export function Header() {
   const hidesGlobalChrome =
     pathname?.startsWith("/pitch") ||
     pathname?.startsWith("/some-plan/view") ||
-    pathname?.startsWith("/frilanseren");
+    pathname?.startsWith("/frilanseren") || isKulturarenaPath(pathname);
   const menuLabel = language === "no" ? "Meny" : "Menu";
   const menuFooterCopy =
     language === "no"
