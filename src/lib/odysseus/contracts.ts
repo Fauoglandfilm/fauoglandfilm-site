@@ -58,8 +58,9 @@ const MISSING_PORTAL_TABLE_CODES = new Set(["42P01", "PGRST204", "PGRST205"]);
 export function classifyOdysseusBackendProbe(
   responseReceived: boolean,
   errorCode?: string | null,
+  responseStatus?: number,
 ) {
-  if (!responseReceived) {
+  if (!responseReceived || responseStatus === 0) {
     return { backendReady: false, databaseReady: false, tableReady: false };
   }
   // `undefined` is the only success sentinel. Supabase can return an error

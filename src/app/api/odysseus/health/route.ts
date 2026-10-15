@@ -26,7 +26,7 @@ export async function GET() {
 
   if (configReady) {
     try {
-      const { error } = await createAdminClient()
+      const { error, status } = await createAdminClient()
         .from("odysseus_devices")
         .select("id,name,agent_version,last_seen_at,status_snapshot,created_at,updated_at")
         .limit(1)
@@ -34,10 +34,13 @@ export async function GET() {
       backend = classifyOdysseusBackendProbe(
         true,
         error ? String(error.code ?? "").trim() || null : undefined,
+        error ? status : undefined,
       );
       if (error) {
         console.error("[ODYSSEUS_HEALTH] readiness probe failed", {
+          category: status === 0 ? "transport_error" : "database_error",
           code: String(error.code ?? "").trim() || "unknown_error",
+          status,
           readinessStatus: odysseusReadinessState(configReady, backend).readinessStatus,
         });
       }

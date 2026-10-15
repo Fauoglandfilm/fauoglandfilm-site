@@ -34,7 +34,7 @@ export async function POST(request: Request) {
 
   const admin = createAdminClient();
   const now = new Date().toISOString();
-  const { error: heartbeatError } = await admin.from("odysseus_devices").upsert({
+  const { error: heartbeatError, status: heartbeatStatus } = await admin.from("odysseus_devices").upsert({
     id: ODYSSEUS_DEVICE_ID,
     name: "Odysseus Server Mac #2",
     agent_version: parsed.data.agent_version,
@@ -44,7 +44,9 @@ export async function POST(request: Request) {
   });
   if (heartbeatError) {
     console.error("[ODYSSEUS_PORTAL] heartbeat upsert failed", {
+      category: heartbeatStatus === 0 ? "transport_error" : "database_error",
       code: String(heartbeatError.code ?? "").trim() || "unknown_error",
+      status: heartbeatStatus,
     });
     return NextResponse.json({ error: "heartbeat_failed" }, { status: 503 });
   }

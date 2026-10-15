@@ -93,6 +93,11 @@ test("backend readiness distinguishes network, database and table failures", () 
     databaseReady: false,
     tableReady: false,
   });
+  assert.deepEqual(classifyOdysseusBackendProbe(true, null, 0), {
+    backendReady: false,
+    databaseReady: false,
+    tableReady: false,
+  });
   assert.deepEqual(classifyOdysseusBackendProbe(true), {
     backendReady: true,
     databaseReady: true,
