@@ -14,21 +14,22 @@ function requiredEnv(name: "NEXT_PUBLIC_SUPABASE_URL" | "NEXT_PUBLIC_SUPABASE_AN
   return value;
 }
 
-export async function createServerComponentClient() {
+export async function createServerComponentClient(scope?: { name: string; path: string }) {
   const cookieStore = await cookies();
 
   return createServerClient(
     requiredEnv("NEXT_PUBLIC_SUPABASE_URL"),
     requiredEnv("NEXT_PUBLIC_SUPABASE_ANON_KEY"),
     {
+      ...(scope ? { cookieOptions: { name: scope.name, path: scope.path, httpOnly: true, secure: process.env.NODE_ENV === "production", sameSite: "lax" as const } } : {}),
       cookies: {
         getAll() {
-          return cookieStore.getAll();
+          return scope ? cookieStore.getAll().filter((c) => c.name === scope.name || c.name.startsWith(`${scope.name}.`)) : cookieStore.getAll();
         },
         setAll(cookiesToSet) {
           try {
             cookiesToSet.forEach(({ name, value, options }) => {
-              cookieStore.set(name, value, options);
+              cookieStore.set(name, value, scope ? { ...options, path: scope.path, httpOnly: true, secure: process.env.NODE_ENV === "production", sameSite: "lax" } : options);
             });
           } catch {
             // Server Components may be read-only. Middleware and Server Actions handle persistence.

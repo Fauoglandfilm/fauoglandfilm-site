@@ -62,6 +62,14 @@ const nextConfig: NextConfig = {
         source: "/(.*)",
         headers: [...baseSecurityHeaders, ...transportSecurityHeader],
       },
+      {
+        source: "/kulturarena/:path*",
+        headers: [
+          { key: "X-Robots-Tag", value: "noindex, nofollow, noarchive" },
+          { key: "Cache-Control", value: "private, no-store" },
+          { key: "Referrer-Policy", value: "no-referrer" },
+        ],
+      },
     ];
   },
   images: {
