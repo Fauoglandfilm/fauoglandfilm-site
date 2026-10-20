@@ -1,5 +1,4 @@
 import { redirect } from "next/navigation";
-
-export default function KulturarenaPage() {
-  redirect("/kulturarena/system");
-}
+import { KULTURARENA_WORKSPACE } from "@/lib/kulturarena/retired";
+export const dynamic = "force-dynamic";
+export default function KulturarenaWorkspace() { redirect(KULTURARENA_WORKSPACE); }
