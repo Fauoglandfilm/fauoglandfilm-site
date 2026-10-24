@@ -115,3 +115,23 @@ curl https://fauoglandfilm.com/api/frilanseren/health
 ```
 
 Endpointen returnerer `200` når Supabase-env og markedsplasstabeller er klare, og `503` med konkrete mangler når production fortsatt venter på env eller migrasjon.
+
+## Privat Odysseus-innlogging
+
+`/odysseus` og alle eierkommandoer krever eksplisitt konfigurert eier,
+provider-verifisert/bekreftet e-post, signert AAL2-påstand for samme bruker og
+en nåværende bekreftet TOTP-faktor. Passord alene gir bare tilgang til
+`/odysseus/mfa`, ikke kontrollrom, CRM-data eller kommandoer.
+
+Eieren starter selv autentikatoroppsettet etter innlogging. QR og oppsettnøkkel
+vises bare i privat svar, uten ekstern QR-tjeneste, URL-parametere eller logger.
+Koden verifiseres av Supabase; ny AAL2-session leses tilbake før tilgang gis.
+Bare et eksplisitt valgt, ufullført Odysseus-oppsett kan avbrytes her — aldri
+en bekreftet faktor eller en annen applikasjons faktor. Ingen faktorer opprettes
+ved sidevisning, build eller tester. Det finnes ingen «hopp over tofaktor».
+
+`npm test` tester adgangspolicyen med isolerte provider-fixtures. En lokal build
+og anonym redirect er ikke bevis for eierens reelle innlogging, OTP/cookies eller
+fjernkommandoer: disse må verifiseres separat med eieren. Denne endringen har
+ingen databasemigrasjon, oppretter ingen konto, sender ingen e-post, starter
+ingen Mac-agent og endrer ingen av Odysseus sine utsendingsporter.
