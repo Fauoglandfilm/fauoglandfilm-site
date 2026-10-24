@@ -53,7 +53,7 @@ export async function signInOdysseusAction(
     return { status: "error", message: "Feil brukernavn eller passord." };
   }
 
-  redirect("/odysseus");
+  redirect("/odysseus/mfa");
 }
 
 export async function requestOdysseusPasswordResetAction(

@@ -70,6 +70,14 @@ const nextConfig: NextConfig = {
         headers: [...baseSecurityHeaders, ...transportSecurityHeader],
       },
       {
+        source: "/odysseus/:path*",
+        headers: [
+          { key: "Cache-Control", value: "private, no-store" },
+          { key: "X-Robots-Tag", value: "noindex, nofollow, noarchive" },
+          { key: "Referrer-Policy", value: "same-origin" },
+        ],
+      },
+      {
         source: "/kulturarena/:path*",
         headers: [
           { key: "X-Robots-Tag", value: "noindex, nofollow, noarchive" },
