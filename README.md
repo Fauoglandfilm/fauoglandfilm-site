@@ -135,3 +135,9 @@ og anonym redirect er ikke bevis for eierens reelle innlogging, OTP/cookies elle
 fjernkommandoer: disse må verifiseres separat med eieren. Denne endringen har
 ingen databasemigrasjon, oppretter ingen konto, sender ingen e-post, starter
 ingen Mac-agent og endrer ingen av Odysseus sine utsendingsporter.
+
+Odysseus bruker en egen `odysseus-session`-cookie avgrenset til `/odysseus`,
+HttpOnly, SameSite=Lax og Secure i produksjon. Server Actions og proxy bruker
+samme avgrensning, inkludert chunkede cookies. Andre appcookies godtas ikke som
+portalinnlogging og overskrives ikke ved inn-/utlogging. Den eksisterende
+passordresettruten beholder sin opprinnelige PKCE-verifier; den åpner ikke portalen.

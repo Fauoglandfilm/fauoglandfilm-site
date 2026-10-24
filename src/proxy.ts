@@ -2,6 +2,7 @@ import { NextResponse, type NextRequest } from "next/server";
 
 import { createProxyClient } from "@/lib/supabase/serverClient";
 import { createSalgscoachProxyClient } from "@/lib/salgscoach/supabase";
+import { ODYSSEUS_SESSION_SCOPE } from "@/lib/odysseus/contracts";
 
 const protectedPrefixes = [
   "/frilanseren/dashboard",
@@ -33,7 +34,8 @@ export async function proxy(request: NextRequest) {
   try {
     const { supabase, getResponse } = pathname === "/salgscoach" || pathname.startsWith("/salgscoach/")
       ? createSalgscoachProxyClient(request)
-      : createProxyClient(request);
+      : createProxyClient(request, pathname === "/odysseus" || pathname.startsWith("/odysseus/")
+        ? ODYSSEUS_SESSION_SCOPE : undefined);
     const {
       data: { user },
     } = await supabase.auth.getUser();

@@ -6,9 +6,10 @@ import { createServerComponentClient } from "@/lib/supabase/serverClient";
 
 import { isOdysseusOwnerEmail } from "./config";
 import { loadOwnerAccess } from "./mfa-access";
+import { ODYSSEUS_SESSION_SCOPE } from "./contracts";
 
 export async function getOdysseusOwnerAccess() {
-  const supabase = await createServerComponentClient();
+  const supabase = await createServerComponentClient(ODYSSEUS_SESSION_SCOPE);
   return loadOwnerAccess(supabase.auth, isOdysseusOwnerEmail);
 }
 

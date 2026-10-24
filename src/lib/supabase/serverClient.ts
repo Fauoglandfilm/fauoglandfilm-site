@@ -3,6 +3,7 @@ import { NextResponse, type NextRequest } from "next/server";
 
 import { createClient as createSupabaseClient } from "@supabase/supabase-js";
 import { createServerClient } from "@supabase/ssr";
+import { cookiesForScope, cookieOptionsForScope, type AuthCookieScope } from "./cookie-scope";
 
 function requiredEnv(name: "NEXT_PUBLIC_SUPABASE_URL" | "NEXT_PUBLIC_SUPABASE_ANON_KEY" | "SUPABASE_SERVICE_ROLE_KEY") {
   const value = process.env[name];
@@ -16,7 +17,7 @@ function requiredEnv(name: "NEXT_PUBLIC_SUPABASE_URL" | "NEXT_PUBLIC_SUPABASE_AN
 
 type Connection = { url: string; key: string };
 
-export async function createServerComponentClient(scope?: { name: string; path: string }, connection?: Connection) {
+export async function createServerComponentClient(scope?: AuthCookieScope, connection?: Connection) {
   const cookieStore = await cookies();
 
   return createServerClient(
@@ -26,12 +27,12 @@ export async function createServerComponentClient(scope?: { name: string; path: 
       ...(scope ? { cookieOptions: { name: scope.name, path: scope.path, httpOnly: true, secure: process.env.NODE_ENV === "production", sameSite: "lax" as const } } : {}),
       cookies: {
         getAll() {
-          return scope ? cookieStore.getAll().filter((c) => c.name === scope.name || c.name.startsWith(`${scope.name}.`)) : cookieStore.getAll();
+          return cookiesForScope(cookieStore.getAll(), scope);
         },
         setAll(cookiesToSet) {
           try {
             cookiesToSet.forEach(({ name, value, options }) => {
-              cookieStore.set(name, value, scope ? { ...options, path: scope.path, httpOnly: true, secure: process.env.NODE_ENV === "production", sameSite: "lax" } : options);
+              cookieStore.set(name, value, cookieOptionsForScope(options, scope, process.env.NODE_ENV === "production"));
             });
           } catch {
             // Server Components may be read-only. Middleware and Server Actions handle persistence.
@@ -42,7 +43,7 @@ export async function createServerComponentClient(scope?: { name: string; path: 
   );
 }
 
-export function createProxyClient(request: NextRequest) {
+export function createProxyClient(request: NextRequest, scope?: AuthCookieScope) {
   let response = NextResponse.next({
     request: {
       headers: request.headers,
@@ -53,9 +54,10 @@ export function createProxyClient(request: NextRequest) {
     requiredEnv("NEXT_PUBLIC_SUPABASE_URL"),
     requiredEnv("NEXT_PUBLIC_SUPABASE_ANON_KEY"),
     {
+      ...(scope ? { cookieOptions: { name: scope.name, ...cookieOptionsForScope({}, scope, process.env.NODE_ENV === "production") } } : {}),
       cookies: {
         getAll() {
-          return request.cookies.getAll();
+          return cookiesForScope(request.cookies.getAll(), scope);
         },
         setAll(cookiesToSet) {
           cookiesToSet.forEach(({ name, value }) => {
@@ -69,7 +71,7 @@ export function createProxyClient(request: NextRequest) {
           });
 
           cookiesToSet.forEach(({ name, value, options }) => {
-            response.cookies.set(name, value, options);
+            response.cookies.set(name, value, cookieOptionsForScope(options, scope, process.env.NODE_ENV === "production"));
           });
         },
       },

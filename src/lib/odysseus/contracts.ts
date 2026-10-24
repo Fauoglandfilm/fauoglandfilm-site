@@ -1,4 +1,5 @@
 export const ODYSSEUS_DEVICE_ID = "mac-2";
+export const ODYSSEUS_SESSION_SCOPE = { name: "odysseus-session", path: "/odysseus" } as const;
 export const ODYSSEUS_COMMAND_LEASE_MS = 15 * 60 * 1_000;
 
 export const ODYSSEUS_NAV_ITEMS = [
