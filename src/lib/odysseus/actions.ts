@@ -9,6 +9,7 @@ import { hasSupabaseAdminConfig, hasSupabaseAuthConfig } from "@/lib/env";
 import { createAdminClient, createServerComponentClient } from "@/lib/supabase/serverClient";
 
 import { requireOdysseusOwner } from "./auth";
+import { ODYSSEUS_SESSION_SCOPE } from "./contracts";
 import {
   getOdysseusOwnerConfig,
   isOdysseusCommand,
@@ -43,7 +44,7 @@ export async function signInOdysseusAction(
     return { status: "error", message: "Feil brukernavn eller passord." };
   }
 
-  const supabase = await createServerComponentClient();
+  const supabase = await createServerComponentClient(ODYSSEUS_SESSION_SCOPE);
   const { data, error } = await supabase.auth.signInWithPassword({
     email: owner.email,
     password: parsed.data.password,
@@ -64,6 +65,8 @@ export async function requestOdysseusPasswordResetAction(
   const owner = getOdysseusOwnerConfig();
 
   if (owner.ready && username === owner.username && hasSupabaseAuthConfig()) {
+    // Existing /auth/confirm -> Frilanseren reset flow needs its original
+    // PKCE verifier scope. It must not create or replace an owner session.
     const supabase = await createServerComponentClient();
     await supabase.auth.resetPasswordForEmail(owner.email, {
       redirectTo: `${process.env.NEXT_PUBLIC_SITE_URL ?? "https://fauoglandfilm.com"}/auth/confirm?next=/frilanseren/reset-password`,
@@ -78,7 +81,7 @@ export async function requestOdysseusPasswordResetAction(
 
 export async function signOutOdysseusAction() {
   if (hasSupabaseAuthConfig()) {
-    const supabase = await createServerComponentClient();
+    const supabase = await createServerComponentClient(ODYSSEUS_SESSION_SCOPE);
     await supabase.auth.signOut();
   }
   redirect("/odysseus/login");
